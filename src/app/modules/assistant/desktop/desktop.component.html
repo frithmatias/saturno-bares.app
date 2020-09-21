@@ -1,0 +1,227 @@
+<div class="saturno-bg-tile-1">
+  <div class="saturno-card saturno-bg-grey-5 shadow-box animated fadeIn">
+
+    <div *ngIf="loading" class="mt-5 animated fadeIn">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading" class="animated fadeIn">
+      <!-- ======================================================== -->
+      <!-- DESKTOP -->
+      <!-- ======================================================== -->
+
+      <div class="card bg-light mb-4">
+        <div class="card-header banner-title">
+          <span>
+            ESCRITORIO {{ assistantService.desktop?.cd_desktop }}
+          </span>
+          <span *ngIf="comingClient">
+            <span class="mdi mdi-walk" style="float: right; color: green; font-size: x-large;"></span>
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="container">
+
+            <!------------------------------>
+            <!-- EN ATENCIÓN -->
+            <!------------------------------>
+
+            <div *ngIf="assistantService.ticket">
+              <div>
+
+                Atendiendo turno
+
+              </div>
+              <div class="banner-content xxxxl">
+                <div class="xxxl">
+                  {{ assistantService.ticket.id_skill?.cd_skill }}
+                  {{ assistantService.ticket.id_position }}
+                </div>
+              </div>
+            </div>
+
+            <!------------------------------>
+            <!-- OCIOSO -->
+            <!------------------------------>
+
+            <div *ngIf='message'>
+              {{message}}
+            </div>
+
+          </div>
+        </div>
+        <!------------------------------>
+        <!-- TIEMPOS DE ATENCION -->
+        <!------------------------------>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col p-0">
+              <div>TE</div>
+              <div>{{tmWaitingStr}}</div>
+            </div>
+            <div class="col p-0">
+              <div>TA</div>
+              <div>{{tmAttention}}</div>
+            </div>
+            <div class="col p-0">
+              <div>Tm</div>
+              <div>{{timerCount}}</div>
+            </div>
+            <div class="col p-0">
+              <div>TC</div>
+              <div>{{pendingTicketsCount}}</div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- NO SKILLS -->
+      <!-- ======================================================== -->
+
+      <div class="card bg-danger text-white p-3 mb-4" *ngIf="skillsAssistantThisCompany.length === 0">
+        <p>
+          Usted no tiene habilidades asignadas. Debe ir al administrador de asistentes, luego seleccionar el asistente
+          y allí asignarle skills / habilidades.
+
+          <button class="btn btn-danger btn-block btn-sm my-2" [routerLink]="['/admin/assistants']">ADMINISTRADOR DE
+            ASISTENTES</button>
+        </p>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- SKILL TABLE -->
+      <!-- ======================================================== -->
+
+      <div class="card bg-secondary mb-4">
+        <div class="card-content table-responsive-sm  p-2">
+          <mat-radio-group [(ngModel)]="skillSelected">
+
+            <table class="table table-sm text-white text-center">
+
+              <tr style="border-top: 0px; color: yellow;">
+                <td style="text-align: left; border: none;"></td>
+                <td style="text-align: left; border: none;">Skill</td>
+                <td style="text-align: right; border: none;"> En espera </td>
+              </tr>
+
+              <tr *ngFor="let waiting of pendingTicketsBySkill">
+                <td style="padding: 0; vertical-align: middle; font-size: 16px;">
+                  <!-- skill assigned to assistant -->
+
+                  <span *ngIf="waiting.assigned" class="mdi mdi-check" style="color: greenyellow"></span>
+
+                  <!-- skill is NOT assigned to assistant, input radio can reassign ticket -->
+                  <span *ngIf="!waiting.assigned && !waitForClient && assistantService.ticket">
+                    <mat-radio-button [value]="waiting.id" style="position: relative;
+                left: 4px;
+                top: 4px;"></mat-radio-button>
+                  </span>
+                </td>
+                <td style="text-align: left;">
+                  {{ waiting.tx_skill }}
+                </td>
+                <td style="text-align: right;">
+                  {{ waiting.tickets.length }}
+                </td>
+              </tr>
+
+            </table>
+
+          </mat-radio-group>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!------------------------------>
+<!-- ACTIONS -->
+<!------------------------------>
+
+<div class="container bg-light fixed-bottom shadow-box no-radius text-center py-1">
+  <div class="row">
+
+    <div class="col-4 col-sm-2 button-content">
+      <!-- priority slide -->
+      <mat-slide-toggle [(ngModel)]="blPriority" class="mx-2 my-1"
+        [disabled]="waitForClient || !assistantService.ticket || skillSelected === ''">
+        <span class="mdi mdi-human-wheelchair xl mx-1"></span>
+      </mat-slide-toggle>
+    </div>
+
+    <div class="col-4 col-sm-2 button-content">
+      <button class="btn btn-success button"
+        [ngClass]="{'button-disabled':waitForClient || !assistantService.ticket || skillSelected === ''}"
+        [disabled]="waitForClient || !assistantService.ticket || skillSelected === ''" (click)="reassignTicket()">
+        <!-- reassign ticket -->
+        <div>
+          <div class="mdi mdi-list-status xl"></div>
+        </div>
+        <div class="button-inner">
+          Asignar
+        </div>
+      </button>
+    </div>
+
+    <div class="col-4 col-sm-2 button-content">
+      <!-- next ticket -->
+      <button class="btn btn-success button" [disabled]="waitForClient || assistantService.ticket"
+        [ngClass]="{'button-disabled': waitForClient || assistantService.ticket}" (click)="takeTicket()">
+        <div>
+          <div class="mdi mdi-chevron-right xl"></div>
+        </div>
+        <div class="button-inner">
+          Siguiente
+        </div>
+      </button>
+    </div>
+
+    <div class="col-4 col-sm-2 button-content">
+      <!-- release ticket -->
+      <button class="btn btn-success button" (click)="releaseTicket()"
+        [disabled]="waitForClient || !assistantService.ticket"
+        [ngClass]="{'button-disabled': waitForClient || !assistantService.ticket}">
+        <div>
+          <div class="mdi mdi-replay xl"></div>
+        </div>
+        <div class="button-inner">
+          Soltar
+        </div>
+      </button>
+    </div>
+
+    <div class="col-4 col-sm-2 button-content">
+      <!-- end ticket -->
+      <button class="btn btn-success button" (click)="endTicket()"
+        [disabled]="waitForClient || !assistantService.ticket"
+        [ngClass]="{'button-disabled': waitForClient || !assistantService.ticket}">
+        <div>
+          <div class="mdi mdi-close xl"></div>
+        </div>
+        <div class="button-inner">
+          Finalizar
+        </div>
+      </button>
+    </div>
+
+    <div class="col-4 col-sm-2 button-content">
+      <button class="btn btn-danger button" (click)="releaseDesktop()" [disabled]="waitForClient"
+        [ngClass]="{'button-disabled': waitForClient}">
+        <div>
+          <div class="mdi mdi-power xl"></div>
+        </div>
+        <div class="button-inner">
+          Salir
+        </div>
+      </button>
+    </div>
+
+  </div>
+</div>

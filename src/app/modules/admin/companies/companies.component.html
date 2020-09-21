@@ -1,0 +1,40 @@
+<div class="saturno-card animated fadeIn"  [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+
+    <div class="card bg-success text-white">
+        <div class="card-header">
+            <span class="mdi mdi-storefront-outline"></span>
+            Mis empresas / comercios</div>
+        <div class="card-body table-responsive-sm">
+
+            <table class="table table-sm text-white">
+                <tr *ngFor="let company of companies">
+                    <td> {{company?.tx_company_name}} </td>
+                    <td>
+                        <span *ngIf="company._id===companyUpdated?._id"
+                            class="mdi mdi-check ml-2 list-crud-edit"></span>
+                    </td>
+                    <td style="text-align: right;">
+                        <span class="mdi mdi-pencil ml-2 list-crud-edit" (click)="editCompany(company)"></span>
+                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteCompany(company._id)"></span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="my-4"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="mdi mdi-plus-circle-outline"></span>
+            Alta de empresa</div>
+        <div class="card-body">
+
+            <app-company-create [companyEdit]="companyEdit" (newCompany)="newCompany($event)">
+            </app-company-create>
+
+        </div>
+    </div>
+
+</div>

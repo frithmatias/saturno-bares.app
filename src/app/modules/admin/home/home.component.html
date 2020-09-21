@@ -1,0 +1,308 @@
+<div class="saturno-card shadow-box animated fadeIn">
+
+  <!-- STEPPER OFF -->
+  <div *ngIf="!showIntro">
+    <div class="m-2 animated fadeIn">
+      <h4 class="mb-4">Bienvenido {{ loginService?.user.tx_name }}!</h4>
+
+      <button class="btn btn-primary btn-block" routerLink="/assistant/home">Atender</button>
+
+      <hr class="my-4">
+
+      <div *ngIf="loginService.user.id_company" class="card bg-danger text-white">
+        <div class="card-body" style="text-align: left;">
+
+          <div>
+            <p>
+              <span class="mdi mdi-headset lg mr-2"></span>
+              Atender Turnos
+            </p>
+            <p>
+              Para atender turnos sólo debe ingresar a su cuenta y luego ir al menú de Asistente y tomar un escritorio.
+            </p>
+
+          </div>
+          <hr>
+          <div>
+            <p>
+              <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span>
+              Generar Turnos
+            </p>
+            <p>
+              Para que sus clientes puedan crear turnos de su comercio o empresa, debe ofrecerles la
+              dirección web principal en saturno.live, ir a "OBTENER TURNO" y allí buscar su empresa por su nombre.
+            </p>
+            <p>
+              <a target="_blank" href="https://saturno.live">
+                https://saturno.live
+              </a>
+            </p>
+          </div>
+          <hr>
+          <p>
+            <span class="mdi mdi-shield-link-variant lg mr-2"></span>
+
+            Acceso directo a crear turnos
+          </p>
+          <p>
+            La dirección web de acceso directo a el panel de turnos de su comercio es:
+          </p>
+          <p>
+            <a target="_blank" href="https://saturno.live/#/public/{{loginService.user.id_company.tx_public_name}}">
+              https://saturno.live/#/public/{{loginService.user.id_company.tx_public_name}}
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- STEPPER ON -->
+  <mat-horizontal-stepper style="text-align: left;" *ngIf="showIntro" labelPosition="bottom" linear #stepper>
+
+    <!-- Welcome Step -->
+    <mat-step state="star">
+      <div class="m-2 animated fadeIn">
+        <div class="card-body">
+          <h4>Hola {{ loginService?.user.tx_name }}!</h4>
+
+          <p>
+            Este pequeño asistente le ayuda a crear todo lo necesario para comenzar a atender turnos.
+          </p>
+          <p>
+            No le llevará mas de un minuto y desde aquí puede hacer todo!.
+          </p>
+          <hr>
+          <button class="btn btn-success" matStepperNext>Comenzar</button>
+          <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- Company Step -->
+    <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
+
+
+
+      <!-- no companies, no attached company -->
+      <div *ngIf="adminService.companies?.length === 0">
+        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Comencemos</h4>
+
+        <p>
+          Usted no tiene ninguna empresa ó comercio registrado, desde aquí usted debe registrar al menos uno.
+        </p>
+        <hr>
+        <p>
+          Es importante que usted ingrese la dirección exacta. Esta dirección será visible para sus clientes
+          desde el menú público de turnos y le asegura a su cliente que esta obteniendo un turno en el comercio
+          correcto.
+        </p>
+      </div>
+
+      <!-- companies and attached company -->
+      <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
+        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Empresa creada! <span
+            class="mdi mdi-check text-success"></span></h4>
+
+        <p>
+          Puede seguir adelante con el asistente.
+        </p>
+        
+        <p class="card-text card-text">
+          Recuerde que puede crear mas comercios si dispone de sucursales y moverse entre ellos
+          seleccionándolos desde el menu principal.
+        </p>
+        <p style="text-align: center;">
+          <img src="assets/img/saturno-selector-empresas.png">
+        </p>
+
+      </div>
+
+      <hr>
+      <!-- previous / next -->
+      <div class="row" style="text-align: center;">
+        <div class="col">
+          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+            <span class="mdi mdi-arrow-left-circle xxl"></span>
+            <div>Anterior</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div *ngIf="adminService.companies || loginService.user?.id_company?._id" class="footer-icon-menu"
+            style="color: indigo;" (click)="stepperGoNext(stepper)">
+            <span class="mdi mdi-arrow-right-circle xxl"></span>
+            <div>Siguiente</div>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
+    </mat-step>
+
+    <!-- Skills Step -->
+    <mat-step state="playlist_add_check">
+
+      <h4 style="color: crimson;"><span class="mdi mdi-list-status mr-2"></span>Skills / Habilidades</h4>
+
+      <p>
+        Si no necesita mas de una línea de turnos puede omitir este paso y continuar.
+      </p>
+
+      <button class="btn btn-sm btn-block btn-danger" (click)="activateSkillExplanation=!activateSkillExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los skills / habilidades?
+      </button>
+
+      <div *ngIf="activateSkillExplanation" class="animated fadeIn my-3">
+        <p>
+          Las habilidades son diferentes segmentos que puede tener su negocio y que necesitan de diferentes capacidades
+          en la atención. Estas habilidades las debe asociar a sus asistentes. Cada asistente puede tener una o mas 
+          habilidades asignadas. Si crea habilidades su usuario con perfil de administrador tendra asignadas todas las 
+          habilidades creadas aquí.
+        </p>
+        <p>
+          Por ejemplo si se trata de una clínica usted podría querer generar turnos para las especialidades de "PEDIATRIA", "TRAUMATOLOGÍA", "CLINICA", etc.
+        </p>
+        <p>
+          Con las habilidades usted puede además definir circuitos de atención. Puede recibir un cliente que fué
+          atendido en un escritorio con una habilidad y enviarlo luego para ser atendido en un escritorio con otra
+          diferente. Al reasignar una habilidad a un turno, puede también establecer su prioridad de modo de enviarlo
+          al inicio o al fin de la cola de espera.
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="row" style="text-align: center;">
+        <div class="col">
+          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+            <span class="mdi mdi-arrow-left-circle xxl"></span>
+            <div>Anterior</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
+            <span class="mdi mdi-arrow-right-circle xxl"></span>
+            <div>Siguiente</div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <app-skills [nomargin]="true" [nopadding]="true"></app-skills>
+    </mat-step>
+
+    <!-- Desktops Step -->
+    <mat-step state="important_devices">
+
+
+      <h4 style="color: crimson;"><span class="mdi mdi-monitor mr-2"></span>Escritorios / Ventanillas</h4>
+
+
+      <p>
+        Si su comercio no require de múltiples lugares de atención puede omitir este paso y continuar.
+      </p>
+
+      <button class="btn btn-sm btn-block btn-secondary" (click)="activateDesktopExplanation=!activateDesktopExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Escritorios / Ventanillas?
+      </button>
+
+      <div *ngIf="activateDesktopExplanation" class="animated fadeIn my-3">
+        <p>
+          Los escritorios o ventanillas son los lugares físicos donde usted va a recibir a sus clientes cuando sean llamados y sólo necesitan un identificador 
+          que es simplemente una etiqueta. Estos identificadores pueden ser letras o números.
+        </p>
+        <p>
+          Por ejemplo: "1", "2", "A", "B", etc.
+        </p>
+        <p>
+          Este identificador debe colocarlo en cada escritorio de forma bien visible para que su cliente
+          pueda identificar fácilmente el escritorio desde el cual fue llamado. Si usted sólo dispone de un escritorio o 
+          un único lugar de recepción de clientes debe omitir este paso y continuar.
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="row" style="text-align: center;">
+        <div class="col">
+          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+            <span class="mdi mdi-arrow-left-circle xxl"></span>
+            <div>Anterior</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
+            <span class="mdi mdi-arrow-right-circle xxl"></span>
+            <div>Siguiente</div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <app-desktops [nomargin]="true" [nopadding]="true"></app-desktops>
+    </mat-step>
+
+    <!-- Assistants Step -->
+    <mat-step state="face">
+
+      <h4 style="color: crimson;"><span class="mdi mdi-headset mr-2"></span>Asistentes</h4>
+
+      <p>
+        Si no necesita mas usuarios que su propio usuario para atender turnos puede
+        omitir este paso y continuar.
+      </p>
+
+     
+      <button class="btn btn-sm btn-block btn-primary" (click)="activateAssistantExplanation=!activateAssistantExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Asistentes?
+      </button>
+
+      <div *ngIf="activateAssistantExplanation" class="animated fadeIn my-3">
+        <p>
+          Usted como usuario administrador puede atender turnos desde el menú de Asistentes. Si fueron creadas diferentes habilidades, 
+          su usario con perfil de administrador ya tiene asignadas todas las habilidades creadas. Sin embargo puede crear
+          aquí operadores / profesionales con rol de asistentes para esa tarea de atención.
+        </p>
+        <p>
+          Los asistentes que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo
+          login de usuario pero con la opción [ENTRAR] con su email y contraseña.
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="row" style="text-align: center;">
+        <div class="col">
+          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+            <span class="mdi mdi-arrow-left-circle xxl"></span>
+            <div>Anterior</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="footer-icon-menu" style="color: darkgreen;" (click)="endWizard()">
+            <span class="mdi mdi-check-circle xxl"></span>
+            <div>Finalizar</div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <app-assistants [nomargin]="true" [nopadding]="true"></app-assistants>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+  <div class="m-2">
+    <mat-slide-toggle [(ngModel)]="showIntro" (click)="toggleIntro()"> Ver introducción </mat-slide-toggle>
+  </div>
+
+</div>

@@ -1,0 +1,559 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height          : 100vh;
+    background-color: whitesmoke;
+}
+
+body {
+    margin      : 0;
+    font-family : Roboto, "Helvetica Neue", sans-serif;
+    font-style  : normal;
+    font-size   : medium;
+    font-weight : 300;
+    line-height : normal;
+    src         : local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
+    font-display: swap;
+}
+
+/* 
+Quita el color de background-color que el navegador pone automaticamente en los 
+inputs cuando llena el control con un valor automáticamente con auto-fill. 
+*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.btn {
+    border: none;
+}
+button:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+div:focus {
+    outline: none;
+}
+
+span:focus {
+    outline: none;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+
+mat-drawer-container {
+    flex: 1 1 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.pointer {
+    cursor: pointer;
+}
+
+.saturno-typo {
+    font-family   : monospace;
+    font-weight   : 300;
+    font-size     : x-large;
+    letter-spacing: .1em;
+    color         : coral;
+}
+
+
+/* -------------------------------------------------------------- */
+/* SATURNO STYLES  */
+/* -------------------------------------------------------------- */
+
+/* BACKGROUNDS  */
+
+.saturno-bg-tile-1 {
+    background-image: url('./assets/img/bgtile1.png');
+    background-size : 100px;
+}
+
+.saturno-bg-tile-2 {
+    background-image: url('./assets/img/bgtile2.png');
+    background-size : 80px;
+}
+
+.saturno-bg-tile-3 {
+    background-image: url('./assets/img/bgtile3.png');
+    background-size : 80px;
+}
+
+
+.saturno-bg-grey-5 {
+    background-color: rgba(217, 217, 217, .5);
+}
+
+.saturno-bg-white {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.saturno-bg-white-9 {
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.saturno-bg-white-6 {
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.saturno-bg-white-4 {
+    background-color: rgba(255, 255, 255, .4);
+}
+
+.saturno-card {
+    min-width: 18rem;
+    max-width: 25rem;
+    padding  : 1.2em;
+    margin   : 1em;
+    font-size: medium;
+}
+
+
+.shadow-box {
+    border-radius: 5px;
+    box-shadow   : 0px 1px 3px 0px #999
+}
+
+/* using childs */
+.nomargin {
+    margin: 0 !important;
+}
+
+.nopadding {
+    padding: 0 !important;
+}
+
+.saturno-minicard {
+    cursor          : pointer;
+    padding         : 1em;
+    background-color: white;
+    height          : 100%;
+}
+
+.saturno-minicard-title {
+    font-size  : large;
+    font-weight: 300;
+    color      : dimgrey;
+}
+
+.saturno-minicard-text {
+    font-size  : small;
+    font-family: system-ui;
+    color      : dimgrey;
+}
+
+.saturno-hr-red {
+    border-top: 5px solid rgb(255 0 0 / 70%);
+    width     : 50%;
+}
+
+.saturno-hr-green {
+    border-top: 5px solid rgb(0 180 0 / 70%);
+    width     : 50%;
+}
+
+.saturno-hr-blue {
+    border-top: 5px solid rgb(0 0 180 / 70%);
+    width     : 50%;
+}
+
+.saturno-hr-grey {
+    border-top: 5px solid rgb(180 180 180 / 70%);
+    width     : 50%;
+}
+
+.saturno-hr-pink {
+    border-top: 5px solid rgb(180 0 180 / 70%);
+    width     : 50%;
+}
+
+.footer {
+    position   : fixed;
+    bottom     : 0px;
+    width      : 100%;
+    align-items: center;
+}
+
+.footer-text {
+    text-align : center;
+    color      : rgb(157 157 157);
+    font-weight: lighter;
+    font-family: monospace;
+    margin-left: .2em;
+}
+
+.footer-icon {
+    text-align: center;
+    opacity   : 0.4;
+    font-size : large;
+}
+
+.desktop-panel-buttons {
+    font-size : 1.5rem;
+    /* margin : 0px; */
+    /* padding: 0px; */
+    position  : relative;
+    top       : -0.30rem;
+    left      : -0.30rem;
+}
+
+.button-content {
+    align-self : center;
+    line-height: 1.5em;
+    padding    : 5px;
+    margin     : 0px;
+}
+
+.saturno-card-mini-body {
+    font-size: xxx-large;
+    padding  : .1em;
+}
+
+.saturno-base {
+    height: 8em;
+}
+
+.saturno-footer {
+    background-color     : white;
+    padding-top          : .3em;
+    padding-bottom       : .3em;
+    position             : fixed;
+    right                : 0;
+    bottom               : 0;
+    left                 : 0;
+    z-index              : 1030;
+    /* unselectable */
+    -webkit-touch-callout: none;
+    -webkit-user-select  : none;
+    -khtml-user-select   : none;
+    -moz-user-select     : none;
+    -ms-user-select      : none;
+    user-select          : none;
+}
+
+.footer-icon-menu {
+    cursor   : pointer;
+    font-size: small;
+    opacity  : 0.8;
+    margin   : 0;
+    outline  : none;
+    color    : #55585a;
+
+}
+
+.button {
+    border       : none;
+    border-radius: 5px;
+    padding      : 8px;
+    width        : inherit;
+}
+
+.button-disabled {
+    background-color: #f1f1f1;
+    color           : #c7c7c7;
+}
+
+.button-inner {
+    font-weight: 300;
+    font-size  : large;
+}
+
+.accessible-icon {
+    font-size: xx-large;
+    position : relative;
+    left     : -3px;
+    top      : 3px;
+    color    : green;
+}
+
+/* list no warp */
+.mat-select-option-nowarp {
+    float: left;
+    width: max-content;
+}
+
+/* banner company search & welcome */
+.text-company {
+    color      : darkred;
+    font-size  : 2.5rem;
+    line-height: 2rem;
+    font-weight: 400;
+}
+
+/* cruds */
+.list-crud-delete {
+    vertical-align: middle;
+    color         : deeppink;
+    cursor        : pointer;
+}
+
+.list-crud-edit {
+    vertical-align: middle;
+    color         : lightgreen;
+    cursor        : pointer;
+
+}
+
+.list-crud-star {
+    vertical-align: middle;
+    color         : yellow;
+    cursor        : pointer;
+}
+
+.card-turnos-danger {
+    background-color: brown;
+}
+
+.card-turnos-primary {
+    background-color: darkslateblue;
+}
+
+.card-turnos-info {
+    background-color: darkslategrey;
+}
+
+
+/* sidenav */
+/* sidenav titles */
+.sidenav-title {
+    align-items: center;
+    cursor     : pointer;
+}
+
+.sidenav-title-icons {
+    font-size     : x-large;
+    color         : #449;
+    vertical-align: top;
+}
+
+
+.sidenav-title-text {
+    color         : #449;
+    font-size     : large;
+    vertical-align: bottom;
+    margin-left   : .5rem;
+    font-weight   : 400;
+}
+
+.input-icon {
+    position        : absolute;
+    top             : 0px;
+    right           : 5px;
+    font-size       : 14px;
+    cursor          : pointer;
+    width           : 25px;
+    height          : 23px;
+    /* border-radius: 11px; */
+    text-align      : center;
+    padding         : 3px;
+    color           : #776b6b;
+    font-size       : large;
+
+}
+
+/* sidenav items */
+.sidenav-item {
+    display    : flex;
+    align-items: center;
+    cursor     : pointer;
+    margin     : 1rem;
+}
+
+.sidenav-item-icons {
+    font-size     : x-large;
+    color         : #aaa;
+    vertical-align: top;
+}
+
+.sidenav-item-text {
+    color         : rgb(111, 111, 111);
+    font-size     : medium;
+    vertical-align: bottom;
+    margin-left   : .5rem;
+    font-weight   : 300;
+}
+
+
+
+.banner-title {
+    font-size  : x-large;
+    font-family: unset;
+    font-weight: 400;
+}
+
+.banner-content {
+    border-radius  : 0.3rem;
+    text-align     : center;
+    line-height    : normal;
+    justify-content: center;
+    margin         : .3rem;
+}
+
+.banner-footer {
+    font-size  : large;
+    font-weight: 200;
+}
+
+.opacity-10 {
+    opacity: 1;
+}
+
+.opacity-8 {
+    opacity: .8;
+}
+
+.opacity-6 {
+    opacity: .6;
+}
+
+.opacity-4 {
+    opacity: .4;
+}
+
+.opacity-2 {
+    opacity: .2;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.xxxxl {
+    font-size  : 4em;
+    font-weight: 500;
+}
+
+.xxxl {
+    font-size: xxx-large;
+}
+
+.xxl {
+    font-size: xx-large;
+}
+
+.xl {
+    font-size: x-large;
+}
+
+.lg {
+    font-size: large;
+}
+
+.md {
+    font-size: medium;
+}
+
+.sm {
+    font-size: small;
+}
+
+/* animate */
+/* animaciones */
+.animated {
+    -webkit-animation-duration : 1s;
+    animation-duration         : 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode        : both;
+}
+
+.fast {
+    -webkit-animation-duration : 0.4s;
+    animation-duration         : 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode        : both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+/* angular material re styling */
+.mat-horizontal-content-container {
+    padding: 0px !important;
+}
+
+.mat-expansion-panel-body {
+    padding: .5rem !important;
+}
+
+.mat-radio-outer-circle {
+    border-color: #ffd740;
+}
+
+.icon-home-phone {
+    height         : 75px !important;
+    color          : red;
+    opacity        : .6;
+    font-size      : 4em;
+    display        : flex !important;
+    justify-content: center;
+}
+
+.icon-home-card {
+    opacity  : .2;
+    font-size: 3em;
+}
+
+.mat-icon-center {
+    display        : flex !important;
+    justify-content: center;
+}
+
+.icon-search-company {
+    width    : 36px !important;
+    color    : darkgray;
+    font-size: 1.5em;
+    opacity  : .7;
+}
+
+.swal2-title {
+    font-size  : x-large !important;
+    font-weight: 300 !important;
+    color      : red !important;
+}
+
+.swal2-content {
+    font-size  : medium !important;
+    font-weight: 300 !important;
+}
+
+
+.mat-horizontal-stepper-header-container {
+    display: none !important;
+}

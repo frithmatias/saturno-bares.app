@@ -1,0 +1,14 @@
+<div>
+
+    <span class="icon-magnify" (click)="cleanInput(inputCompanyToolbar)"><i class="mdi mdi-magnify"></i></span>
+    <input class="input-company w-100" id="inputCompanyToolbar" #inputCompanyToolbar [matAutocomplete]="auto"
+        placeholder="Buscar comercio" (keyup)="findCompany(inputCompanyToolbar)" [value]="companySelected?.tx_company_name">
+    <span class="icon-close" (click)="cleanInput(inputCompanyToolbar)"><i class="mdi mdi-close"></i></span>
+
+    <mat-autocomplete (optionSelected)="setCompany($event.option.value)" #auto="matAutocomplete">
+        <mat-option [value]="company" *ngFor="let company of companies">
+            {{company.tx_company_name}}
+        </mat-option>
+    </mat-autocomplete>
+
+</div>

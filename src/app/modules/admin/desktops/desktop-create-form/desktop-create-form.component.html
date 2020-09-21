@@ -1,0 +1,12 @@
+<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma" (ngSubmit)="createDesktop(formDirective)">
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>ID Escritorio</mat-label>
+        <input matInput placeholder="Identificador de escritorio" formControlName="cdDesktop" name="cdDesktop" type="text" required>
+    </mat-form-field>
+
+    <div class="form-group text-center">
+        <button class="btn btn-success btn-block text-uppercase waves-effect waves-light" type="submit">Crear Escritorio</button>
+    </div>
+
+</form>

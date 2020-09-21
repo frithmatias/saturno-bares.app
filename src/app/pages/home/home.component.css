@@ -1,0 +1,8 @@
+.saturno-bg-home {
+    background-image: url('../../../assets/img/bghome.jpg');
+    background-size      : cover;
+    background-repeat    : no-repeat;
+    background-position  : center center;
+    background-blend-mode: lighten;
+    padding              : 1em;
+}

@@ -1,0 +1,85 @@
+<!-- WELCOME -->
+<div class="saturno-bg-tile-3 h-100 container-fluid">
+
+    <div class="row">
+        <div class="col-md"></div>
+        <div class="col-md">
+
+            <div class="saturno-card saturno-bg-white-4 shadow-box animated fadeIn">
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )">
+
+                    <!---------------------------------------------------------------------->
+                    <!-- EMAIL -->
+                    <!---------------------------------------------------------------------->
+                    <div class="my-2">
+                        <mat-form-field color="warn" logincss class="w-100">
+                            <mat-label>Ingrese su Email</mat-label>
+                            <input #inputEmail matInput placeholder="sumail@dominio.com" [ngModel]="email" name="email">
+                            <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
+                                    class="mdi mdi-close"></i></span>
+                        </mat-form-field>
+                    </div>
+
+                    <!---------------------------------------------------------------------->
+                    <!-- PASSWORD -->
+                    <!---------------------------------------------------------------------->
+                    <div class="my-2">
+                        <mat-form-field color="warn" logincss class="w-100">
+                            <mat-label>Ingrese su Password</mat-label>
+                            <input #inputPassword matInput placeholder="password" ngModel name="password"
+                                [type]="hidepass ? 'password' : 'text'" required>
+                            <span class="input-icon" (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hidepass"><i
+                                    class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="inputs-container rounded">
+
+                        <!---------------------------------------------------------------------->
+                        <!-- RECUERDEME -->
+                        <!---------------------------------------------------------------------->
+                        <div class="my-2" style="height:20px">
+                            <div class="checkbox checkbox-primary pull-left">
+                                <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox"
+                                    class="filled-in chk-col-light-blue">
+                                <label for="checkbox-signup" class="label"> &nbsp; Recordar E-mail </label>
+                            </div>
+                        </div>
+                        <hr>
+
+
+                        <!---------------------------------------------------------------------->
+                        <!-- INGRESAR / GOOGLE -->
+                        <!---------------------------------------------------------------------->
+                        <div class="row text-center p-0 w-100">
+                            <div class="col">
+                                <!-- Normal Login -->
+                                <button class="btn btn-success btn-block" type="submit">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="col">
+                                <!-- Google Login -->
+
+                                <button class="btn btn-danger btn-block" type="button" id="btnGoogle"
+                                    data-toggle="tooltip">
+                                     Google
+                                </button>
+                            </div>
+                        </div>
+
+                        <!---------------------------------------------------------------------->
+                        <!-- REGISTRARSE -->
+                        <!---------------------------------------------------------------------->
+                        <div class="mt-4 text-center label">
+                            No tenes cuenta? | <a routerLink="/register" class="text-primary m-l-5">Crear
+                                cuenta</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

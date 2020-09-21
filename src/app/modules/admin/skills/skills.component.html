@@ -1,0 +1,43 @@
+<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+
+    <div class="card bg-danger text-white">
+
+        <div class="card-header" style="align-items: center;">
+            <span class="mdi mdi-list-status"></span>
+            Habilidades
+        </div>
+
+        
+        
+        <div class="card-body table-responsive-sm">
+            <div *ngIf="!skills || skills?.length === 0" class="row align-items-center justify-content-center">
+                <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
+                <span>Un skill genérico fué creado</span>
+            </div>
+            <table class="table table-sm text-white">
+                <tr *ngFor="let skill of skills">
+                    <td> {{skill?.cd_skill}} </td>
+                    <td> {{skill?.tx_skill}} </td>
+                    <td style="text-align: right;">
+                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteSkill(skill._id)"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+
+    <div class="my-4"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="mdi mdi-plus-circle-outline"></span>
+            Alta de Skill</div>
+        <div class="card-body">
+            <app-skill-create-form (skillCreated)="skillCreated($event)"></app-skill-create-form>
+        </div>
+    </div>
+
+</div>

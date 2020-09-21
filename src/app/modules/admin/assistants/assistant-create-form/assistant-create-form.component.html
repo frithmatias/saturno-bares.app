@@ -1,0 +1,78 @@
+<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
+    (ngSubmit)="createAssistant(formDirective)">
+
+    <mat-form-field color="warn" logincss class="w-100">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="rol" name="rol" required>
+            <mat-option value="ADMIN_ROLE"> Administrador y Asistente</mat-option>
+            <mat-option value="ASSISTANT_ROLE"> Asistente </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Seleccione una empresa</mat-label>
+        <mat-select formControlName="idCompany" name="idCompany" #selectDesktop matNativeControl required>
+            <mat-option *ngFor="let company of adminService.companies" [value]="company._id" (click)="getSkills(company._id)">
+                {{company.tx_company_name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" formControlName="nombre" name="nombre" type="text" required
+            placeholder="Nombre">
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" name="email" type="email" required>
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Clave</mat-label>
+        <input matInput placeholder="Clave" formControlName="password" name="password" type="password" required
+            placeholder="Contraseña" autocomplete="new-password">
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Clave</mat-label>
+        <input matInput placeholder="Clave" formControlName="password2" name="password2" type="password" required
+            placeholder="Confirma contraseña" autocomplete="new-password">
+    </mat-form-field>
+
+    <div class="card mb-4" *ngIf="assistantEdit?.tx_role ==='ASSISTANT_ROLE' || !hasGenericSkillOnly">
+        <div class="card-header">SKILLS</div>
+        <div class="card-body p-0">
+            <mat-selection-list [ngModelOptions]="{standalone: true}" [(ngModel)]="selStrSkills">
+                <mat-list-option name="selStrSkills" *ngFor="let skill of skills"
+                    [value]="skill._id">
+                    <span class="mat-select-option-nowarp">{{skill.tx_skill}}</span>
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </div>
+
+
+    <div *ngIf="!assistantEdit" class="row text-center">
+        <div class="col">
+            <button *ngIf="!assistantEdit" class="btn btn-success btn-block text-uppercase" type="submit">
+                Crear Asistente
+            </button>
+        </div>
+    </div>
+    <div *ngIf="assistantEdit" class="row">
+        <div class="col w-100">
+            <button class="btn btn-danger btn-block text-uppercase" type="submit">
+                Guardar
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-warning btn-block text-uppercase" (click)="resetForm(formDirective)">
+                Limpiar
+            </button>
+        </div>
+    </div>
+
+
+</form>

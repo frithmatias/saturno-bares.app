@@ -1,0 +1,132 @@
+<div class="saturno-bg-tile-1">
+    <div class="saturno-card saturno-bg-grey-5 shadow-box animated fadeIn">
+
+        <div *ngIf="loading" class="animated fadeIn">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <div *ngIf="!loading" class="animated fadeIn">
+            <p class="lead">Bienvenido, desde aquí puede tomar escritorios y atender turnos.</p>
+
+            <!-- no company -->
+            <div *ngIf="!loginService.user.id_company" class="card lead bg-danger text-white p-3 my-4"
+                style="line-height: initial;">
+                No tiene asignada ningúna empresa. Debe seleccionarla desde el menú prinicipal.
+            </div>
+
+            <!-- no desktops -->
+            <div *ngIf="desktops?.length === 0" class="card lead bg-danger text-white p-3 my-4"
+                style="line-height: initial;">
+                No tiene escritorios creados. Debe darlos de alta desde el Menú de Administrador.
+            </div>
+
+            <div *ngIf="desktops?.length > 0 && loginService.user.id_company?._id">
+
+                <div class="container-fluid" *ngIf="myDesktop">
+                    <div class="row my-4">
+                        <div class="col">
+                            Usted tiene tomado el escritorio {{ myDesktop.cd_desktop }}
+                        </div>
+                    </div>
+                    <div class="row my-4">
+                        <div class="col">
+                            <button class="btn btn-success btn-block text-uppercase" role="button"
+                                (click)="takeDesktop( myDesktop )">
+                                Ingresar
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger btn-block text-uppercase" role="button"
+                                (click)="releaseDesktop( myDesktop )">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ======================================================== -->
+                <!-- TAKE / RELEASE DESKTOP -->
+                <!-- ======================================================== -->
+
+                <div class="my-4" *ngIf="!myDesktop">
+                    <div *ngIf="desktopsAvailable.length === 0" class="card bg-danger text-white p-2 my-4">
+                        Todos los escritorios estan tomados.
+                    </div>
+
+                    <div class="my-4" *ngIf="desktopsAvailable.length > 0">
+
+                        <mat-form-field class="w-100">
+                            <mat-label>Seleccione un escritorio</mat-label>
+                            <mat-select #selectDesktop matNativeControl required>
+                                <mat-option *ngFor="let desktop of desktopsAvailable" [value]="desktop">
+                                    {{desktop.cd_desktop}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button class="btn btn-success btn-block" role="button"
+                            (click)="takeDesktop( selectDesktop?.value )">
+                            Ingresar
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- ======================================================== -->
+                <!-- DESKTOPS TABLE -->
+                <!-- ======================================================== -->
+
+                <div class="card bg-secondary mb-4">
+                    <div class="card-content table-responsive-sm  p-2">
+
+                        <table class="table table-sm text-white text-center">
+
+                            <tr style="border-top: 0px; color: yellow;">
+                                <td style="text-align: left; border: none;">
+                                    <span class="mdi mdi-monitor mx-1"></span>
+                                    Escritorio </td>
+                                <td style="text-align: right; border: none;">
+                                    <span class="mdi mdi-face-agent mx-1"></span>
+                                    Asistente </td>
+                            </tr>
+
+                            <tr *ngFor="let desktop of desktops">
+                                <td style="text-align: left;">
+                                    {{desktop.cd_desktop}}
+                                </td>
+                                <td style="text-align: right;">
+                                    <div *ngIf="desktop.id_session">
+                                        {{desktop.id_session?.id_assistant.tx_name}}
+                                    </div>
+                                    <div *ngIf="!desktop.id_session" style="color: mediumspringgreen;">
+                                        Disponible
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <p> Recuerde que si se ausenta del escritorio debe finalizar la sesión del escritorio. Si usted
+            finaliza la sesión de user se finalizará también la sesión del escritorio. Si la sesión
+            del escritorio tenía asignada una sesión de turno, este turno finalizará.
+        </p>
+
+        <button class="btn btn-primary btn-block" routerLink="/assistant/dashboard" role="button">
+            <span class="mdi mdi-finance mx-1"></span>
+            Dashboard
+        </button>
+
+
+
+    </div>
+</div>

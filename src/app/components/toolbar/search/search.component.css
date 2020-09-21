@@ -1,0 +1,37 @@
+.icon-close {
+    position  : relative;
+    top       : 1px;
+    right     : 27px;
+    font-size : 14px;
+    cursor    : pointer;
+    width     : 25px;
+    height    : 23px;
+    text-align: center;
+    padding   : 3px;
+    color     : #9E9E9E;
+    font-size : large;
+
+}
+.icon-magnify {
+    position  : relative;
+    top       : 1px;
+    left     : 27px;
+    font-size : 14px;
+    cursor    : pointer;
+    width     : 25px;
+    height    : 23px;
+    text-align: center;
+    padding   : 3px;
+    color     : #9E9E9E;
+    font-size : large;
+
+}
+.input-company {
+    border       : none;
+    border-radius: 2px;
+    box-shadow   : 0px 1px 3px 0px #106a24;
+    padding      : .2em;
+    padding-left : 2em;
+    font-size    : medium;
+    color        : gray;
+}

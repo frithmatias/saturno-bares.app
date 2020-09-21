@@ -1,0 +1,30 @@
+.mat-toolbar {
+  font-family: system-ui;
+  background-color: #1dbd40;
+  color: white;
+  font-weight: 300;
+}
+
+.example-spacer {
+  color: black;
+  /* Tres valores: flex-grow | flex-shrink | flex-basis */
+  flex: 1 1 auto;
+}
+
+.saturno-title {
+  font-size     : 1.3em;
+  font-weight   : 200;
+  letter-spacing: .3em;
+  line-height: 1em;
+}
+
+.saturno-description {
+  font-size  : .7em;
+  font-weight: lighter;
+  line-height: normal;
+}
+
+img {
+  max-width:100%;
+max-height:100%;
+}

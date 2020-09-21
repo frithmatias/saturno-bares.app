@@ -1,0 +1,36 @@
+<div>
+
+    <div>
+        <div class="close-button">
+            <button class="btn btn-success btn-sm" (click)="closeChat()">Cerrar</button>
+        </div>
+        <!-- MESSAGES -->
+        <div #chatmessages id="chatmessages" class="row-messages">
+            <div *ngFor="let message of publicService.chatMessages" class="d-flex message"
+                [ngClass]="{'message-me': message.own}">
+                <div>
+                    {{ message.message }}
+                </div>
+                <div class="message-time ml-2">
+                    {{ message.time | messageTime }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-messages-send">
+        <!-- INPUT TEXT -->
+        <div class="col-10" style="align-self: center">
+            <!-- <mat-label>CONSULTA A INFORMES</mat-label> -->
+            <input type="text" autocomplete="off" class="chat-input" #textmsg matInput placeholder="INFORMES"
+                (keydown.enter)="sendMessage( textmsg, chatmessages )">
+        </div>
+
+        <!-- SEND BUTTON -->
+        <div class="col-2 p-0">
+            <button (click)="sendMessage( textmsg, chatmessages )" class="send-button" mat-mini-fab>
+                <span class="mdi mdi-send xl"></span>
+            </button>
+        </div>
+    </div>
+</div>

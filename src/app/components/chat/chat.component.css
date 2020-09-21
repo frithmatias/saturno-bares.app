@@ -1,0 +1,59 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+.close-button {
+    margin: .5em;
+    text-align: end;
+}
+
+.row-messages {
+    overflow: scroll;
+    height  : 70vh;
+}
+
+.row-messages-send {
+    position        : fixed;
+    bottom          : 0px;
+    left            : 0px;
+    width           : 110%;
+    padding         : .5rem;
+    background-color: darkslategrey;
+}
+
+.send-button {
+    color           : white;
+    background-color: seagreen;
+    box-shadow      : none;
+    border-radius: 50%;
+}
+
+.chat-input {
+    border          : 0px;
+    background-color: white;
+    width           : -webkit-fill-available;
+    border-radius   : .2em;
+    padding         : .5rem 1rem 0.5rem 1rem;
+}
+
+.message {
+    background-color: lightskyblue;
+    padding         : 0.5em;
+    font-size       : medium;
+    font-weight     : 300;
+    border-radius   : 5px;
+    margin          : .5em;
+    width           : max-content;
+    max-width       : 15em;
+}
+
+.message-me {
+    background-color: lightgoldenrodyellow;
+    margin-left     : auto;
+}
+
+.message-time {
+    font-size: small;
+    color    : cornflowerblue;
+    align-self: flex-end;
+}

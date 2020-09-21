@@ -1,0 +1,79 @@
+<div class="saturno-card shadow-box animated fadeIn">
+
+
+    <div *ngIf="publicService.company">
+
+      <h5 *ngIf="loading" class="card-title">
+        <span id="lblNuevoTicket">
+          Cargando...
+        </span>
+      </h5>
+
+      <div *ngIf="!loading">
+
+        <p class="lead">
+          ¡Bienvenido! Usted esta por sacar un turno para ser atendido en
+        </p>
+
+        <div class="card py-4 my-4">
+          <p class="text-company">
+            {{ publicService.company.tx_company_name }}
+          </p>
+          <p style="color: darkblue; font-size: 1rem; font-weight: 400;" class="my-0">
+            {{ publicService.company.tx_address_street }}
+            {{ publicService.company.tx_address_number }}
+            {{ publicService.company.cd_city }}
+          </p>
+        </div>
+
+      </div>
+
+      <div class="container">
+        <div class="row rounded border border-success mb-3">
+          <div class="col bg-success text-white p-2">
+            <div>
+              <span class="mdi mdi-human-wheelchair m-2" style="font-size: xx-large;"></span>
+              <span class="mdi mdi-human-pregnant m-2" style="font-size: xx-large;"></span>
+            </div>
+            <div>
+              <span class="mdi mdi-baby-carriage m-2" style="font-size: xx-large;"></span>
+              <span class="mdi mdi-human-cane m-2" style="font-size: xx-large;"></span>
+            </div>
+          </div>
+          <div class="col m-3">
+            <p class="text-uppercase mx-2 font-weight-bold">Prioritario</p>
+            <mat-slide-toggle [(ngModel)]="blPriority"></mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+
+      <button *ngFor="let skill of skills" class="btn btn-primary btn-block btn-lg rounded-0 text-uppercase"
+        (click)="createTicket(skill._id, false)">
+        {{skill.tx_skill}}
+      </button>
+      
+      
+      <button class="btn btn-danger btn-block btn-lg rounded-0 text-uppercase"
+        (click)="salir()">
+        Salir
+      </button>
+
+</div>
+
+
+<div class="saturno-footer">
+  <div class="row">
+    <div class="col">
+      <span class="footer-icon-menu" routerLink="/public/search">
+        <span class="mdi mdi-magnify xl"></span>
+        <div >Volver al buscador</div>
+      </span>
+    </div>
+    <div class="col">
+      <span class="footer-icon-menu" routerLink="/public/screen">
+        <span class="mdi mdi-monitor-dashboard xl"></span>
+        <div >Ver la pantalla</div>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<mat-drawer-container class="h-100">
+        
+    <app-toolbar (toggleSideNav)="toggle( sidenav )" [unreadMessages]="unreadMessages" (toggleChat)="toggle( chat )">
+    </app-toolbar>
+
+    <!-- sidenav -->
+    <mat-drawer #sidenav id="sidenav" mode="over">
+        <app-sidenav></app-sidenav>
+    </mat-drawer>
+
+    <!-- chat -->
+    <mat-drawer [(opened)]="opened" #chat id="chat" mode="over" position="end" class="col-md-8 col-lg-6 col-xl-4 mat-drawer-chat">
+        <app-chat (toggleChat)="toggle( chat )" [chatOpenStatus]="opened" (unreadMessages)="unreadMessages=$event">
+        </app-chat>
+    </mat-drawer>
+
+    <!-- container -->
+    <div class="h-100" style="text-align: -webkit-center;">
+        <router-outlet></router-outlet>
+    </div>
+    
+    <!-- <div class="saturno-base"></div> -->
+
+</mat-drawer-container>

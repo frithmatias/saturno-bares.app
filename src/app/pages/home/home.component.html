@@ -1,0 +1,127 @@
+<!-- WELCOME -->
+<div class="saturno-bg-home container-fluid">
+
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="col-md">
+
+      <div class="saturno-card saturno-bg-white-9 rounded animated fadeIn">
+        <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
+
+
+        <h2>Bienvenido</h2>
+        <p class="mb-2">Desde aquí puede obtener un turno y esperar donde usted quiera evitando salas de espera.
+        </p>
+        <hr class="saturno-hr-red">
+        <p class="mb-0">
+          <span class="mdi mdi-cellphone-sound icon-home-phone"></span>
+        </p>
+        <p class="my-0">Cuando llegue su turno nosotros le avisamos a su móvil.</p>
+
+        <hr>
+
+        <div>
+          <div>
+            <button class="btn btn-primary btn-block mb-2" routerLink="/public" role="button">
+              <span class="mdi mdi-bookmark"></span>
+              OBTENER TURNO
+            </button>
+          </div>
+          <div class="row mt-3" style="align-items: baseline;">
+            <div class="col" style="text-align: left;">
+              <span class="footer-text"></span>
+            </div>
+            <div class="col" style="text-align: right;">
+              <span class="mdi mdi-heart footer-icon ml-1" style="color:red; opacity: .7;"></span>
+              <span class="mdi mdi-bootstrap footer-icon ml-1"></span>
+              <span class="mdi mdi-angularjs footer-icon ml-1"></span>
+              <span class="mdi mdi-language-javascript footer-icon ml-1"></span>
+              <span class="mdi mdi-nodejs footer-icon ml-1"></span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ======================================================== -->
+<!-- MINI CARDS -->
+<!-- ======================================================== -->
+
+<div class="container-fluid row py-3 animated fadeIn justify-content-center">
+
+  <!-- como funciona? -->
+  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+    <div class="saturno-minicard shadow-box" routerLink="/howworks">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-cogs icon-home-card"></span>
+        </div>
+        <div>
+          ¿Cómo funciona?
+        </div>
+      </div>
+      <hr class="saturno-hr-green">
+      <div class="saturno-minicard-text">
+        Este pequeño asistente le explica como funciona este sistema.
+      </div>
+    </div>
+  </div>
+
+  <!-- registrar comercio -->
+  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+    <div class="saturno-minicard shadow-box" routerLink="/register">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-storefront-outline icon-home-card"></span>
+        </div>
+        <div>
+          Registrar mi comercio.
+        </div>
+      </div>
+      <hr class="saturno-hr-blue">
+      <div class="saturno-minicard-text">
+        Desde aquí puede registrar su comercio ó empresa y empezar a atender turnos.
+      </div>
+    </div>
+  </div>
+  <!-- registrar contacto -->
+  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+    <div class="saturno-minicard shadow-box" routerLink="/contact">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-file-document-edit-outline icon-home-card"></span>
+        </div>
+        <div>
+          Contacto
+        </div>
+      </div>
+      <hr class="saturno-hr-pink">
+      <div class="saturno-minicard-text">
+        Contactenos. Sus sugerencias son muy importantes para nosotros.
+      </div>
+    </div>
+  </div>
+  <!-- buscar comercio -->
+  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
+    <div class="saturno-minicard shadow-box" routerLink="/public/search">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-magnify icon-home-card"></span>
+        </div>
+        <div>
+          Buscar una empresa
+        </div>
+      </div>
+      <hr class="saturno-hr-red">
+      <div class="saturno-minicard-text">
+        Obtenga un turno de una empresa registrada.
+      </div>
+    </div>
+  </div>
+</div>

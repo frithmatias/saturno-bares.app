@@ -1,0 +1,47 @@
+<div class="animated saturno-card fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+
+    <div class="card bg-primary text-white">
+        <div class="card-header">
+            <span class="mdi mdi-headset"></span>
+
+            Asistentes</div>
+        <div class="card-body table-responsive-sm">
+
+            <table class="table table-sm text-white" id="wt-form">
+                <tr *ngFor="let assistant of assistants">
+                    <td style="width: 1px;">
+                        <span *ngIf="assistant.tx_role==='ADMIN_ROLE'" class="mdi mdi-police-badge-outline list-crud-star"></span>
+                        <span *ngIf="assistant.tx_role!=='ADMIN_ROLE'" class="mdi mdi-face-agent list-crud-star"></span>
+                    </td>
+                    <td>{{assistant?.tx_name | wordMaxLength : 8}} </td>
+                    <td>
+                        <span *ngIf="assistant._id===assistantUpdated"
+                            class="mdi mdi-check ml-2 list-crud-edit"></span>
+                    </td>
+                    <td style="text-align: right;">
+                        <span class="mdi mdi-pencil ml-2 list-crud-edit" (click)="editAssistant(assistant)"></span>
+                        <span *ngIf="assistant._id !== loginService.user._id"
+                            class="mdi mdi-delete ml-2 list-crud-delete"
+                            (click)="deleteAssistant(assistant._id)"></span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="my-4"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="mdi mdi-plus-circle-outline"></span>
+            Alta de asistente </div>
+        <div class="card-body">
+
+            <app-assistant-create-form [assistantEdit]="assistantEdit" (idAssistantUpdated)="assistantUpdated($event)">
+            </app-assistant-create-form>
+
+        </div>
+    </div>
+
+</div>
