@@ -4,7 +4,7 @@ import { User } from 'src/app/interfaces/user.interface';
 import { Subscription } from 'rxjs';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
-import { AssistantService } from '../../modules/assistant/assistant.service';
+import { WaiterService } from '../../modules/waiter/waiter.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,7 +20,7 @@ export class ToolbarComponent implements OnInit {
   userSuscription: Subscription;
   constructor(
     public loginService: LoginService,
-    public assistantService: AssistantService,
+    public waiterService: WaiterService,
     public publicService: PublicService,
     public router: Router
     ) { }

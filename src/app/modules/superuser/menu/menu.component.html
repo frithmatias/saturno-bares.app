@@ -11,7 +11,7 @@
             <!-- MENU SELECTOR -->
             <mat-form-field color="warn" class="w-100 bg-light">
                 <mat-label>Seleccione el menú</mat-label>
-                <mat-select #selectDesktop matNativeControl required>
+                <mat-select #selectTable matNativeControl required>
                     <mat-option *ngFor="let item of menuItems" (click)="getSubItems(item._id)" [value]="item._id">
                        <span class="{{item.tx_icon}} text-secondary"> <span class="mx-2">{{item.tx_titulo}}</span></span> 
                     </mat-option>
@@ -29,7 +29,7 @@
                             <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteMenuItem(item._id)"></span>
                         </td>
                     </tr>
-                </table> mdi-shield-star
+                </table>
             </div>
 
         </div>

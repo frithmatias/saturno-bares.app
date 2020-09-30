@@ -1,0 +1,45 @@
+<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+
+    <div class="card bg-secondary text-white">
+
+        <div class="card-header">
+            <span class="mdi mdi-table-furniture"> </span>
+            <span> Mesas </span>
+            <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
+        </div>
+
+        <div class="card-body table-responsive-sm">
+            <div *ngIf="!companyTables || companyTables?.length === 0" class="row align-items-center justify-content-center">
+                <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
+                <span>Una mesa genérica fué creada</span>
+            </div>
+            <table class="table table-sm text-white">
+                <tr *ngFor="let table of sectionTables">
+                    <td>{{table?.nm_table}}</td>
+                    <td>{{table?.nm_persons}}</td>
+                    <td>{{table?.tx_status}}</td>
+
+                    <td style="text-align: right;">
+                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteTable(table._id)"></span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="my-4"></div>
+
+    <div class="card">
+
+        <div class="card-header ">
+            <span class="mdi mdi-plus-circle-outline"></span>
+            Alta de Mesa</div>
+        <div class="card-body">
+
+            <app-table-create [sections]="sections" (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
+
+        </div>
+    </div>
+
+</div>

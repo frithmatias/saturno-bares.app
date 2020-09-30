@@ -15,12 +15,10 @@ import { PublicComponent } from './public.component';
 import { SearchComponent } from './search/search.component';
 import { MyticketComponent } from './myticket/myticket.component';
 import { TicketsComponent } from './tickets/tickets.component';
-import { ScreenComponent } from './screen/screen.component';
 
 
 @NgModule({
 	declarations: [
-		ScreenComponent,
 		TicketsComponent,
 		PublicComponent,
 		SearchComponent,

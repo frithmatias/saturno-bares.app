@@ -14,7 +14,7 @@ export interface Metrics {
 export interface MetricResponse {
 	ok: boolean;
     msg: string;
-	metrics: Metrics | null;
+	metric: Metrics | null;
 }
 
 export interface MetricsResponse {

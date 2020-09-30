@@ -19,7 +19,7 @@ export class MetricsService {
 		});
 
 		let data = { fcSel, idUser };
-		const url = environment.url + `/m/getusermetrics`;
+		const url = environment.url + `/metrics/getusermetrics`;
 		return this.http.post(url, data, { headers });
 	}
 

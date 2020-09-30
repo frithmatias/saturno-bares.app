@@ -65,10 +65,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
 
       let to: string;
-      if(this.publicService.ticket.id_socket === this.wsService.idSocket){
-        to = this.publicService.ticket.id_socket_desk;
+      if(this.publicService.ticket.id_socket_client === this.wsService.idSocket){
+        to = this.publicService.ticket.id_socket_waiter;
       } else {
-        to = this.publicService.ticket.id_socket;
+        to = this.publicService.ticket.id_socket_client;
       } 
       this.wsService.emit('mensaje-privado', { to, msg: message.value });
       this.scrollTop();

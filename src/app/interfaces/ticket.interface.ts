@@ -1,19 +1,23 @@
-import { Skill } from 'src/app/interfaces/skill.interface';
 import { Session } from './session.interface';
+import { Table } from './table.interface';
+import { Section } from './section.interface';
 // ========================================================
 // TICKET
 // ========================================================
 
 export interface Ticket {
-	id_root: string | null;
-	id_child: string | null;
-	bl_priority: boolean;
-	id_position: number;
-	id_socket: string;
-	id_socket_desk: string | null;
-	id_session: Session;
 	id_company: string;
-	id_skill: Skill;
+	id_socket_client: string;
+	id_socket_waiter: string | null;
+
+	// requested
+	id_section: Section; 
+	id_position: number;
+	
+	// assigned
+	id_session: Session; 
+	id_table: Table | null;
+	
 	tm_start: number;
 	tm_att: number | null;
 	tm_end: number | null;

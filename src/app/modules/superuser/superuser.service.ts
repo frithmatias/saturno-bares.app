@@ -18,7 +18,7 @@ export class SuperuserService {
       const headers = new HttpHeaders({
         'turnos-token': this.loginService.token
       });
-      const url = environment.url + '/su/createmenu';
+      const url = environment.url + '/superuser/createmenu';
       return this.http.post(url, menu, { headers });
     }
 
@@ -26,7 +26,7 @@ export class SuperuserService {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/su/readmenu/';
+		const url = environment.url + '/superuser/readmenu/';
 		return this.http.get(url, { headers });
 	}
   
@@ -34,7 +34,7 @@ export class SuperuserService {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/su/updatemenu';
+		const url = environment.url + '/superuser/updatemenu';
 		return this.http.post(url, menu, { headers });
 	}
 
@@ -42,7 +42,7 @@ export class SuperuserService {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/su/deletemenu/' + idMenu;
+		const url = environment.url + '/superuser/deletemenu/' + idMenu;
 		return this.http.delete(url, { headers }); 
 	}
 

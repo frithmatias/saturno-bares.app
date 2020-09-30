@@ -29,7 +29,6 @@ export class MyticketComponent implements OnInit {
 	coming: boolean = false;
 	scores = new Map();
 
-	allMytickets: Ticket[] = [];
 	myTicket: Ticket;
 	ticketTmEnd: number = null;
 
@@ -41,8 +40,7 @@ export class MyticketComponent implements OnInit {
 	ticketsWaiting: Ticket[] = [];
 	averageToAtt: string; // millisencods
 	ticketsAhead: number;
-	assistantWorking: number;
-	assistantWorkingMySkill: number;
+	waiterWorking: number;
 
 	private subjectUpdateTickets$ = new Subject();
 
@@ -124,14 +122,12 @@ export class MyticketComponent implements OnInit {
 		// ticketsEndDesc: se usa para el cálculo de tiempos de atención 
 		// sólo tickets ordenados del último finalizado al primero
 		// sólo la cantidad en TAIL,
-		// sólo para el skill del ticket del cliente
 
 		let ticketsEndDesc = this.ticketsEnd
 		.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
 		.slice(0, TAIL_LENGTH)
 		.filter(ticket => {
 			return (
-				ticket.id_skill._id === this.myTicket.id_skill._id && // calculo solo para el skill del ticket
 				ticket.tm_att !== null // elimino cancelados (tm_att===null && tm_end!=null)
 				);
 			});
@@ -143,11 +139,10 @@ export class MyticketComponent implements OnInit {
 		// ticketsSessionDesc: se usa para el cálculo de tiempos de ocio 
 		// sólo tickets ordenados por sesion finalizado al primero
 		// sólo la cantidad en TAIL,
-		// sólo para el skill del ticket del cliente
+		
 		let ticketsSessionDesc = this.ticketsEnd
 			.sort((a: Ticket, b: Ticket) => b.id_session > a.id_session ? -1 : 1)
 			.slice(0, TAIL_LENGTH)
-			.filter(ticket => ticket.id_skill._id === this.myTicket.id_skill._id)
 
 		// Ta, sumatoria de últimos tiempos de atención 
 		let sumTa = 0;
@@ -218,15 +213,15 @@ export class MyticketComponent implements OnInit {
 	}
 
 	updateMyTicket(): void {
-		if (this.myTicket) { // client and assistant
+		if (this.myTicket) { // client and waiter
 			// pick LAST ticket
 			const pickMyTicket = this.ticketsAll.filter(ticket => (
-				ticket.id_root === this.myTicket.id_root && ticket.id_child === null
+				ticket._id === this.myTicket._id
 			))[0];
 
 			if (pickMyTicket) {
 
-				if (pickMyTicket.tm_end !== null && pickMyTicket.id_child === null) {
+				if (pickMyTicket.tm_end !== null && pickMyTicket._id === null) {
 					// El ticket finalizó.
 					this.myTicket = null;
 					this.ticketTmEnd = pickMyTicket.tm_end;
@@ -236,9 +231,7 @@ export class MyticketComponent implements OnInit {
 					this.publicService.ticket = pickMyTicket;
 					localStorage.setItem('ticket', JSON.stringify(this.myTicket));
 
-					this.allMytickets = this.ticketsAll.filter(ticket => (
-						(ticket.id_root === pickMyTicket.id_root)
-					))
+
 				}
 			} 
 		}
@@ -250,7 +243,7 @@ export class MyticketComponent implements OnInit {
 
 	enCamino(): void {
 		this.coming = true;
-		let idSocketDesk = this.publicService.ticket.id_socket_desk;
+		let idSocketDesk = this.publicService.ticket.id_socket_waiter;
 		this.wsService.emit('cliente-en-camino', idSocketDesk);
 	}
 
@@ -272,7 +265,6 @@ export class MyticketComponent implements OnInit {
 	setScore(idTicket: string, cdScore: number): void {
 		this.scores.set(idTicket, cdScore);
 
-		if (this.allMytickets.length === this.scores.size) {
 			let dataScores: Score[] = [];
 
 			this.scores.forEach(function (valor, llave, mapaOrigen) {
@@ -303,7 +295,7 @@ export class MyticketComponent implements OnInit {
 					this.publicService.clearPublicSessionComplete();
 				}
 			})
-		}
+		
 	}
 
 	ngOnDestroy() {

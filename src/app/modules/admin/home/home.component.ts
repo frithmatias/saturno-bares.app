@@ -6,6 +6,7 @@ import { User } from '../../../interfaces/user.interface';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
 	selector: 'app-home',
@@ -23,13 +24,13 @@ export class HomeComponent implements OnInit {
 	userSuscription: Subscription;
 	user: User;
 	userAvailable = false;	
-	activateSkillExplanation = false;
-	activateDesktopExplanation = false;
-	activateAssistantExplanation = false;
+	activateTableExplanation = false;
+	activateWaiterExplanation = false;
 
 	constructor(
 		private loginService: LoginService,
 		public adminService: AdminService, 
+		public sharedService: SharedService,
 		private router: Router
 		) { }
 	ngOnInit() {
@@ -45,6 +46,7 @@ export class HomeComponent implements OnInit {
 			this.config = JSON.parse(localStorage.getItem('config'));
 			this.showIntro = this.config.intro;
 		}
+
 	}
 
 	toggleIntro() {
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit {
 		this.config.intro = false;
 		this.showIntro = false;
 		localStorage.setItem('config', JSON.stringify(this.config));
-		this.router.navigate(['/assistant/home']);
+		this.router.navigate(['/waiter/home']);
 	}
 
 	ngOnDestroy(): void {
@@ -74,8 +76,12 @@ export class HomeComponent implements OnInit {
 	}
 
 	stepperGoNext(stepper: MatStepper) {
-		this.scrollTop();
-		stepper.next();
+		if(this.adminService.companies?.length > 0 && this.loginService.user?.id_company?._id){
+			this.scrollTop();
+			stepper.next();
+		} else {
+			this.sharedService.snackShow('Use el formulario para crear un Bar / Resto!', 5000);
+		}
 	}
 	
 }

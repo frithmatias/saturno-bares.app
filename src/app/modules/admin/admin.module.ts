@@ -19,28 +19,32 @@ import { TicketsComponent } from './tickets/tickets.component';
 
 import { CompaniesComponent } from './companies/companies.component';
 import { CompanyCreateComponent } from './companies/company-create/company-create.component';
-import { SkillsComponent } from './skills/skills.component';
-import { SkillCreateFormComponent } from './skills/skill-create-form/skill-create-form.component';
-import { DesktopsComponent } from './desktops/desktops.component';
-import { DesktopCreateFormComponent } from './desktops/desktop-create-form/desktop-create-form.component';
-import { AssistantsComponent } from './assistants/assistants.component';
-import { AssistantCreateFormComponent } from './assistants/assistant-create-form/assistant-create-form.component';
+import { TablesComponent } from './tables/tables.component';
+import { TableCreateComponent } from './tables/table-create/table-create.component';
+import { WaitersComponent } from './waiters/waiters.component';
+import { WaiterCreateComponent } from './waiters/waiter-create/waiter-create.component';
+import { SectionsComponent } from './sections/sections.component';
+import { SectionCreateComponent } from './sections/section-create/section-create.component';
 
 @NgModule({
 	declarations: [
-		HomeComponent,
 		AdminComponent,
+		HomeComponent,
 		DashboardComponent,
 		ProfileComponent,
-		AssistantsComponent,
-		DesktopsComponent,
 		TicketsComponent,
-		AssistantCreateFormComponent,
-		DesktopCreateFormComponent,
-		SkillsComponent,
-		SkillCreateFormComponent,
+		
 		CompaniesComponent,
 		CompanyCreateComponent,
+		
+		SectionsComponent,
+		SectionCreateComponent,
+		
+		TablesComponent,
+		TableCreateComponent,
+		
+		WaitersComponent,
+		WaiterCreateComponent,
 
 	],
 	imports: [

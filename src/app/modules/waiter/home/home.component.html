@@ -1,0 +1,127 @@
+<div class="saturno-bg-tile-1">
+    <div class="saturno-card saturno-bg-grey-5 shadow-box animated fadeIn">
+
+        <div *ngIf="loading" class="animated fadeIn">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <div *ngIf="!loading" class="animated fadeIn">
+            <p class="lead">Bienvenido, desde aquí puede entrar a un sector y comenzar a atender mesas.</p>
+
+            <!-- no company -->
+            <div *ngIf="!loginService.user.id_company" class="card lead bg-danger text-white p-3 my-4"
+                style="line-height: initial;">
+                No tiene asignada ningúna empresa. Debe seleccionarla desde el menú prinicipal.
+            </div>
+
+            <!-- no tables -->
+            <div *ngIf="tables?.length === 0" class="card lead bg-danger text-white p-3 my-4"
+                style="line-height: initial;">
+                No hay mesas creadas. Debe crearlas desde el Menú de Administrador.
+            </div>
+
+            <div *ngIf="sections && loginService.user.id_company?._id">
+
+                <div *ngIf="section" class="container-fluid">
+                    <div class="row my-4">
+                        <div class="col">
+                            Usted tiene tomado el sector {{ section.tx_section }}
+                        </div>
+                    </div>
+                    <div class="row my-4">
+                        <div class="col">
+                            <button class="btn btn-success btn-block text-uppercase" role="button"
+                                (click)="takeSection( section )">
+                                Ingresar
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger btn-block text-uppercase" role="button"
+                                (click)="releaseSection( section )">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ======================================================== -->
+                <!-- TAKE / RELEASE SECTION -->
+                <!-- ======================================================== -->
+
+                <div *ngIf="!section" class="my-4">
+                    <div class="my-4" *ngIf="sectionsAvailable.length > 0">
+                        <mat-form-field class="w-100">
+                            <mat-label>Seleccione un sector</mat-label>
+                            <mat-select #selectSection matNativeControl required>
+                                <mat-option *ngFor="let table of sectionsAvailable" [value]="table">
+                                    {{table.tx_section}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button class="btn btn-success btn-block" role="button"
+                            (click)="takeSection( selectSection?.value )">
+                            Ingresar
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- ======================================================== -->
+                <!-- SECTIONS TABLE -->
+                <!-- ======================================================== -->
+
+                <div class="card bg-secondary mb-4">
+                    <div class="card-content table-responsive-sm  p-2">
+
+                        <table class="table table-sm text-white text-center">
+
+                            <tr style="border-top: 0px; color: yellow;">
+                                <td style="text-align: left; border: none;">
+                                    <span class="mdi mdi-select-group mx-1"></span>
+                                    Sector </td>
+                                <td style="text-align: right; border: none;">
+                                    <span class="mdi mdi-silverware-fork-knife mx-1"></span>
+                                    Camarero </td>
+                            </tr>
+
+                            <tr *ngFor="let section of sections">
+                                <td style="text-align: left;">
+                                    {{section.tx_section}}
+                                </td>
+                                <td style="text-align: right;">
+                                    <div *ngIf="section.id_session">
+                                        {{section.id_session?.id_waiter.tx_name}}
+                                    </div>
+                                    <div *ngIf="!section.id_session" style="color: mediumspringgreen;">
+                                        Disponible
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <p> Recuerde que si se ausenta del escritorio debe finalizar la sesión del escritorio. Si usted
+            finaliza la sesión de user se finalizará también la sesión del escritorio. Si la sesión
+            del escritorio tenía asignada una sesión de turno, este turno finalizará.
+        </p>
+
+        <button class="btn btn-primary btn-block" routerLink="/waiter/dashboard" role="button">
+            <span class="mdi mdi-finance mx-1"></span>
+            Dashboard
+        </button>
+
+
+
+    </div>
+</div>

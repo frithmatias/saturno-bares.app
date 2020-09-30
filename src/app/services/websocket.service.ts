@@ -42,8 +42,8 @@ export class WebsocketService {
 		return this.listen('update-public');
 	}
 
-	escucharUpdateDesktops(): Observable<string> {
-		return this.listen('update-desktops' || 'update-public');
+	escucharUpdateSections(): Observable<string> {
+		return this.listen('update-tables' || 'update-public');
 		
 	}
 

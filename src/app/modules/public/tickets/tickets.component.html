@@ -47,12 +47,8 @@
         </div>
       </div>
 
-      <button *ngFor="let skill of skills" class="btn btn-primary btn-block btn-lg rounded-0 text-uppercase"
-        (click)="createTicket(skill._id, false)">
-        {{skill.tx_skill}}
-      </button>
-      
-      
+      <!-- CREAR EL FORMULARIO DE BUSQUEDA DE MESA AQUÍ -->
+            
       <button class="btn btn-danger btn-block btn-lg rounded-0 text-uppercase"
         (click)="salir()">
         Salir

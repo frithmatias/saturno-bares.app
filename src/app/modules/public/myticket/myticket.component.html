@@ -12,7 +12,6 @@
                 SU TURNO
             </div>
             <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
-                {{ myTicket?.id_skill.cd_skill }}
                 {{ myTicket?.id_position }}
             </div>
             <div class="screen-myticket-text-footer mt-3" style="line-height: normal;" *ngIf="averageToAtt">
@@ -20,7 +19,7 @@
                     {{ averageToAtt}}
                 </span>
                 <span *ngIf="myTicket?.id_session">
-                    Pase por el escritorio {{ myTicket?.id_session?.id_desktop?.cd_desktop }}
+                    Pase por el escritorio {{ myTicket?.id_session?.id_table?.cd_table }}
                 </span>
             </div>
         </div>
@@ -39,10 +38,7 @@
 
                 <div class="text-white my-4 table-responsive-sm">
                     <table class="table table-sm text-white">
-                        <tr *ngFor="let ticket of allMytickets">
-                            <td class="xl py-2" style="width: 50%;text-align: left;">
-                                {{ ticket.id_skill?.tx_skill }}
-                            </td>
+                        <tr>
                             <td class="p-0 py-2">
                                 <span class="mdi mdi-star screen-icon-star"
                                     [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 1}"
@@ -94,9 +90,9 @@
                 </tr>
                 <tr *ngFor="let ticket of ticketsTail;">
                     <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_skill?.cd_skill }}{{ ticket.id_position }}</td>
+                        {{ ticket.id_position }}</td>
                     <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_session.id_desktop.cd_desktop }}</td>
+                        {{ ticket.id_session.id_table.cd_table }}</td>
                     <td style="padding: 0; vertical-align: middle;">
                         <span *ngIf="!ticket.tm_end" style="color: blueviolet">
                             <span class="mdi mdi-contactless-payment-circle-outline screen-history-icon"></span>

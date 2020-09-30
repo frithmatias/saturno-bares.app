@@ -1,0 +1,27 @@
+<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma" (ngSubmit)="createTable(formDirective)">
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Seleccione un sector</mat-label>
+        <mat-select formControlName="idSection" name="idSection" #selectSection matNativeControl required>
+            <mat-option *ngFor="let section of sections" [value]="section._id" (click)="sectionChange(section)">
+                {{section.tx_section}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>ID Mesa</mat-label>
+        <input matInput placeholder="Identificador de escritorio" formControlName="nmTable" name="nmTable" type="text" required>
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="w-100">
+        <mat-label>Cantidad de comensales</mat-label>
+        <input matInput placeholder="Identificador de escritorio" formControlName="nmPersons" name="nmPersons" type="text" required>
+    </mat-form-field>
+
+    <div class="form-group text-center">
+        <button class="btn btn-success btn-block text-uppercase waves-effect waves-light" type="submit">Crear Mesa</button>
+    </div>
+
+</form>

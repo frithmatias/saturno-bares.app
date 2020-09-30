@@ -115,7 +115,6 @@ export class CompanyCreateComponent implements OnInit {
 			)
 
 		} else {
-
 			this.adminService.createCompany(company).subscribe((data: CompanyResponse) => {
 				this.newCompany.emit(data.company);
 				this.resetForm(formDirective);

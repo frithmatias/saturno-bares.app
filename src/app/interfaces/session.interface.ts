@@ -1,27 +1,27 @@
 import { User } from './user.interface';
-import { Desktop } from './desktop.interface';
+import { Section } from './section.interface';
 
 // ========================================================
-// DESKTOPS
+// SECTOR SESSION
 // ========================================================
 
 export interface Session {
-	id_assistant: User;
-    id_desktop: Desktop;
+	id_waiter: string;
+	id_section: string;
     fc_start: Date;
     fc_end: Date;
 	__v: number;
 	_id: string;
 }
 
-export interface DesktopSessionResponse {
+export interface SessionResponse {
 	ok: boolean;
 	msg: string;
 	session: Session | null;
 }
 
-export interface DesktopSessionsResponse {
+export interface SessionsResponse {
 	ok: boolean;
 	msg: string;
-	session: Session[] | null;
+	sessions: Session[] | null;
 }

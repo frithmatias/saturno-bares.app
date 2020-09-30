@@ -8,10 +8,10 @@ import { environment } from '../../../environments/environment.prod';
 import { LoginService } from '../../services/login.service';
 
 // Interfaces
-import { Skill } from '../../interfaces/skill.interface';
 import { User, UserResponse } from '../../interfaces/user.interface';
 import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
-import { Desktop } from '../../interfaces/desktop.interface';
+import { Table } from '../../interfaces/table.interface';
+import { Section } from '../../interfaces/section.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,9 +19,9 @@ import { Desktop } from '../../interfaces/desktop.interface';
 export class AdminService {
 	
 	public companies: Company[] = [];
-	public skills: Skill[] = [];
-	public desktops: Desktop[] = [];
-	public assistants: User[] = [];
+	public sections: Section[] = [];
+	public waiters: User[] = [];
+	public tables: Table[] = [];
 	
 	public companiesSource = new Subject<Company[]>();
 	companies$ = this.companiesSource.asObservable();
@@ -31,7 +31,7 @@ export class AdminService {
 		private http: HttpClient, 
 		
 		) {
-			if (this.loginService.user?.tx_role === 'ADMIN_ROLE') {
+			if (this.loginService.user?.id_role === 'ADMIN_ROLE') {
 				this.readCompanies(this.loginService.user._id).subscribe(data => {
 					this.companies = data.companies;
 					this.companiesSource.next(data.companies);
@@ -40,7 +40,7 @@ export class AdminService {
 	}
 
 	// ========================================================
-	// Companies Methods
+	// Company Methods
 	// ========================================================
 
 	createCompany(company: Company) {
@@ -104,108 +104,100 @@ export class AdminService {
 	}
 
 	// ========================================================
-	// Skill Methods
+	// Section Methods
 	// ========================================================
 
-	createSkill(skill: Skill) {
+	createSection(section: Section) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/s/createskill';
-		return this.http.post(url, skill, { headers });
+		const url = environment.url + '/section/createsection';
+		return this.http.post(url, section, { headers });
 	}
 
-	readSkills(idCompany: string) {
+	readSections(idCompany: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/s/readskills/' + idCompany;
+		const url = environment.url + '/section/readsections/' + idCompany;
 		return this.http.get(url, { headers });
 	}
 
-	deleteSkill(idSkill: string) {
+	deleteSection(idSection: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/s/deleteskill/' + idSkill;
-		return this.http.delete(url, { headers });
-	}
-
-	readSkillsUser(idUser: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/s/readskillsuser/' + idUser;
-		return this.http.get(url, { headers });
-	}
-
-	// ========================================================
-	// Desktop Methods
-	// ========================================================
-
-	createDesktop(desktop: Desktop) {
-
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/d/createdesktop';
-		return this.http.post(url, desktop, { headers });
-	}
-
-	readDesktops(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/d/readdesktops/' + idCompany;
-		return this.http.get(url, { headers });
-	}
-
-	deleteDesktop(idDesktop: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/d/deletedesktop/' + idDesktop;
+		const url = environment.url + '/section/deletesection/' + idSection;
 		return this.http.delete(url, { headers });
 	}
 
 	// ========================================================
-	// Assistants Methods
+	// Table Methods
 	// ========================================================
 
-	createAssistant(assistant: User) {
+	createTable(table: Table) {
+
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/a/createassistant';
-		return this.http.post(url, assistant, { headers });
+		const url = environment.url + '/table/createtable';
+		return this.http.post(url, table, { headers });
 	}
 
-	readAssistants(idCompany: string) {
+	readTables(idCompany: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/a/readassistants/' + idCompany;
+		const url = environment.url + '/table/readtables/' + idCompany;
 		return this.http.get(url, { headers });
 	}
 
-	updateAssistant(assistant: User) {
+	deleteTable(idTable: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/a/updateassistant';
-		return this.http.post(url, assistant, { headers });
-	}
-
-	deleteAssistant(idAssistant: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/a/deleteassistant/' + idAssistant;
+		const url = environment.url + '/table/deletetable/' + idTable;
 		return this.http.delete(url, { headers });
 	}
 
-	readActiveSessionsBySkill(idSkill: string) {
-		const url = environment.url + '/a/readactivesessionsbyskill/' + idSkill;
+	// ========================================================
+	// Waiter Methods
+	// ========================================================
+
+	createWaiter(waiter: User) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/w/createwaiter';
+		return this.http.post(url, waiter, { headers });
+	}
+
+	readWaiters(idCompany: string) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/w/readwaiters/' + idCompany;
+		return this.http.get(url, { headers });
+	}
+
+	updateWaiter(waiter: User) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/w/updatewaiter';
+		return this.http.post(url, waiter, { headers });
+	}
+
+	deleteWaiter(idWaiter: string) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/w/deletewaiter/' + idWaiter;
+		return this.http.delete(url, { headers });
+	}
+
+	readActiveSessions(idCompany: string) {
+		const url = environment.url + '/w/readactivesessions/' + idCompany;
 		return this.http.get(url);
 	}
 

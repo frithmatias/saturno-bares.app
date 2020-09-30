@@ -5,7 +5,7 @@
     <div class="m-2 animated fadeIn">
       <h4 class="mb-4">Bienvenido {{ loginService?.user.tx_name }}!</h4>
 
-      <button class="btn btn-primary btn-block" routerLink="/assistant/home">Atender</button>
+      <button class="btn btn-primary btn-block" routerLink="/waiter/home">Atender</button>
 
       <hr class="my-4">
 
@@ -18,7 +18,7 @@
               Atender Turnos
             </p>
             <p>
-              Para atender turnos sólo debe ingresar a su cuenta y luego ir al menú de Asistente y tomar un escritorio.
+              Para atender turnos sólo debe ingresar a su cuenta y luego ir al menú de Camarero y tomar un escritorio.
             </p>
 
           </div>
@@ -68,7 +68,7 @@
           <h4>Hola {{ loginService?.user.tx_name }}!</h4>
 
           <p>
-            Este pequeño asistente le ayuda a crear todo lo necesario para comenzar a atender turnos.
+            Este pequeño asistente le ayuda a crear todo lo necesario para comenzar a atender las solicitudes de mesa de sus clientes.
           </p>
           <p>
             No le llevará mas de un minuto y desde aquí puede hacer todo!.
@@ -80,22 +80,20 @@
       </div>
     </mat-step>
 
-    <!-- Company Step -->
+    <!-- Resto Step -->
     <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
-
-
 
       <!-- no companies, no attached company -->
       <div *ngIf="adminService.companies?.length === 0">
-        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Comencemos</h4>
+        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Comencemos!</h4>
 
         <p>
-          Usted no tiene ninguna empresa ó comercio registrado, desde aquí usted debe registrar al menos uno.
+          Usted no tiene ninguna bar o restorant registrado, desde aquí usted debe registrar al menos uno.
         </p>
-        <hr>
+    
         <p>
-          Es importante que usted ingrese la dirección exacta. Esta dirección será visible para sus clientes
-          desde el menú público de turnos y le asegura a su cliente que esta obteniendo un turno en el comercio
+          Es importante que usted ingrese la dirección exacta de su comercio. Esta dirección será visible para sus clientes
+          desde el menú público de turnos y le asegura a su cliente que esta obteniendo un turno en el bar / restorant
           correcto.
         </p>
       </div>
@@ -142,86 +140,29 @@
       <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
     </mat-step>
 
-    <!-- Skills Step -->
-    <mat-step state="playlist_add_check">
-
-      <h4 style="color: crimson;"><span class="mdi mdi-list-status mr-2"></span>Skills / Habilidades</h4>
-
-      <p>
-        Si no necesita mas de una línea de turnos puede omitir este paso y continuar.
-      </p>
-
-      <button class="btn btn-sm btn-block btn-danger" (click)="activateSkillExplanation=!activateSkillExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los skills / habilidades?
-      </button>
-
-      <div *ngIf="activateSkillExplanation" class="animated fadeIn my-3">
-        <p>
-          Las habilidades son diferentes segmentos que puede tener su negocio y que necesitan de diferentes capacidades
-          en la atención. Estas habilidades las debe asociar a sus asistentes. Cada asistente puede tener una o mas 
-          habilidades asignadas. Si crea habilidades su usuario con perfil de administrador tendra asignadas todas las 
-          habilidades creadas aquí.
-        </p>
-        <p>
-          Por ejemplo si se trata de una clínica usted podría querer generar turnos para las especialidades de "PEDIATRIA", "TRAUMATOLOGÍA", "CLINICA", etc.
-        </p>
-        <p>
-          Con las habilidades usted puede además definir circuitos de atención. Puede recibir un cliente que fué
-          atendido en un escritorio con una habilidad y enviarlo luego para ser atendido en un escritorio con otra
-          diferente. Al reasignar una habilidad a un turno, puede también establecer su prioridad de modo de enviarlo
-          al inicio o al fin de la cola de espera.
-        </p>
-      </div>
-
-      <hr>
-
-      <div class="row" style="text-align: center;">
-        <div class="col">
-          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-            <span class="mdi mdi-arrow-left-circle xxl"></span>
-            <div>Anterior</div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
-            <span class="mdi mdi-arrow-right-circle xxl"></span>
-            <div>Siguiente</div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <app-skills [nomargin]="true" [nopadding]="true"></app-skills>
-    </mat-step>
-
-    <!-- Desktops Step -->
+    <!-- Sections Step -->
     <mat-step state="important_devices">
 
-
-      <h4 style="color: crimson;"><span class="mdi mdi-monitor mr-2"></span>Escritorios / Ventanillas</h4>
+      <h4 style="color: crimson;"><span class="mdi mdi-select-group mr-2"></span>Sectores</h4>
 
 
       <p>
-        Si su comercio no require de múltiples lugares de atención puede omitir este paso y continuar.
+        Si su comercio no require de múltiples sectores puede omitir este paso y continuar.
       </p>
 
-      <button class="btn btn-sm btn-block btn-secondary" (click)="activateDesktopExplanation=!activateDesktopExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Escritorios / Ventanillas?
+      <button class="btn btn-sm btn-block btn-secondary" (click)="activateSectorExplanation=!activateSectorExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Sectores?
       </button>
 
-      <div *ngIf="activateDesktopExplanation" class="animated fadeIn my-3">
+      <div *ngIf="activateSectorExplanation" class="animated fadeIn my-3">
         <p>
-          Los escritorios o ventanillas son los lugares físicos donde usted va a recibir a sus clientes cuando sean llamados y sólo necesitan un identificador 
-          que es simplemente una etiqueta. Estos identificadores pueden ser letras o números.
+          Los sectores o áreas son diferentes lugares físicos donde usted va a recibir a sus clientes.
         </p>
         <p>
-          Por ejemplo: "1", "2", "A", "B", etc.
+          Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", etc.
         </p>
         <p>
-          Este identificador debe colocarlo en cada escritorio de forma bien visible para que su cliente
-          pueda identificar fácilmente el escritorio desde el cual fue llamado. Si usted sólo dispone de un escritorio o 
+          Los sectores son lugares que su cliente puede elegir en el formulario de turnos. Si usted sólo dispone de un sector o 
           un único lugar de recepción de clientes debe omitir este paso y continuar.
         </p>
       </div>
@@ -246,13 +187,61 @@
 
       <hr>
 
-      <app-desktops [nomargin]="true" [nopadding]="true"></app-desktops>
+      <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
     </mat-step>
 
-    <!-- Assistants Step -->
+
+    <!-- Tables Step -->
+    <mat-step state="important_devices">
+
+
+      <h4 style="color: crimson;"><span class="mdi mdi-table-furniture mr-2"></span>Mesas</h4>
+
+
+      <p>
+        Aquí debe dar de alta todas las mesas para cada sector. Sólo debe ingresar el número de mesa y la cantidad de 
+        comensales que pueden sentarse en ellas.
+      </p>
+
+      <button class="btn btn-sm btn-block btn-secondary" (click)="activateTableExplanation=!activateTableExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son las Mesas?
+      </button>
+
+      <div *ngIf="activateTableExplanation" class="animated fadeIn my-3">
+        <p>
+          Las mesas son lugares donde puede agrupar comensales. Si usted tiene asientos en una barra puede definir cada 
+          asiento como una mesa con lugar para una sola persona. Debe identificarlas con números. Cada sector puede tener 
+          mesas que comienzen de la mesa 1 o puede asignarlas como usted prefiera. 
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="row" style="text-align: center;">
+        <div class="col">
+          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+            <span class="mdi mdi-arrow-left-circle xxl"></span>
+            <div>Anterior</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
+            <span class="mdi mdi-arrow-right-circle xxl"></span>
+            <div>Siguiente</div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
+    </mat-step>
+
+    <!-- Waiters Step -->
     <mat-step state="face">
 
-      <h4 style="color: crimson;"><span class="mdi mdi-headset mr-2"></span>Asistentes</h4>
+      <h4 style="color: crimson;"><span class="mdi mdi-face mr-2"></span>Camareros</h4>
 
       <p>
         Si no necesita mas usuarios que su propio usuario para atender turnos puede
@@ -260,18 +249,18 @@
       </p>
 
      
-      <button class="btn btn-sm btn-block btn-primary" (click)="activateAssistantExplanation=!activateAssistantExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Asistentes?
+      <button class="btn btn-sm btn-block btn-primary" (click)="activateWaiterExplanation=!activateWaiterExplanation">
+        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Camareros?
       </button>
 
-      <div *ngIf="activateAssistantExplanation" class="animated fadeIn my-3">
+      <div *ngIf="activateWaiterExplanation" class="animated fadeIn my-3">
         <p>
-          Usted como usuario administrador puede atender turnos desde el menú de Asistentes. Si fueron creadas diferentes habilidades, 
-          su usario con perfil de administrador ya tiene asignadas todas las habilidades creadas. Sin embargo puede crear
-          aquí operadores / profesionales con rol de asistentes para esa tarea de atención.
+          Usted como usuario administrador puede atender clientes desde el menú de Camareros. Al crear las mesas 
+          su usario con perfil de administrador ya tiene asignadas todas las mesas creadas. Sin embargo puede crear
+          aquí camarors o mozos para estas tareas.
         </p>
         <p>
-          Los asistentes que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo
+          Los camareros que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo
           login de usuario pero con la opción [ENTRAR] con su email y contraseña.
         </p>
       </div>
@@ -296,7 +285,7 @@
 
       <hr>
 
-      <app-assistants [nomargin]="true" [nopadding]="true"></app-assistants>
+      <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
     </mat-step>
 
   </mat-horizontal-stepper>

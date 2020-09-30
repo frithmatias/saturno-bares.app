@@ -119,10 +119,10 @@ export class LoginService {
 
 	logout() {
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
-		if (localStorage.getItem('assistant')) { localStorage.removeItem('assistant'); }
+		if (localStorage.getItem('waiter')) { localStorage.removeItem('waiter'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
-		if (localStorage.getItem('desktop')) { localStorage.removeItem('desktop'); }
+		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('ticket')) { localStorage.removeItem('ticket'); }
 
 		this.token = null;

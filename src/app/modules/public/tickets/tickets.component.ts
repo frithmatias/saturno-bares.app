@@ -3,10 +3,9 @@ import { WebsocketService } from '../../../services/websocket.service';
 import { Router } from '@angular/router';
 import { TicketResponse } from '../../../interfaces/ticket.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Skill } from '../../../interfaces/skill.interface';
-import { SkillsResponse } from '../../../interfaces/skill.interface';
 import { PublicService } from '../public.service';
 import Swal from 'sweetalert2';
+import { Table, TablesResponse } from '../../../interfaces/table.interface';
 
 @Component({
 	selector: 'app-tickets',
@@ -15,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class TicketsComponent implements OnInit {
 	loading: boolean = false;
-	skills: Skill[];
+	tables: Table[];
 	blPriority = false;
 	constructor(
 		private wsService: WebsocketService,
@@ -35,14 +34,14 @@ export class TicketsComponent implements OnInit {
 			} else {
 				let idCompany = this.publicService.company._id;
 				this.wsService.emit('enterCompany', idCompany);
-				this.publicService.readSkills(idCompany).subscribe((data: SkillsResponse) => {
-					this.skills = data.skills;
+				this.publicService.readTables(idCompany).subscribe((data: TablesResponse) => {
+					this.tables = data.tables;
 				})
 			}
 		}
 	}
 
-	createTicket(idSkill: string): void {
+	createTicket(): void {
 		
 		if (localStorage.getItem('user')){
 			Swal.fire({
@@ -57,7 +56,7 @@ export class TicketsComponent implements OnInit {
 
 		let idSocket = this.wsService.idSocket;
 		let blPriority = this.blPriority;
-		this.publicService.createTicket(idSkill, idSocket, blPriority).subscribe(
+		this.publicService.createTicket(idSocket, blPriority).subscribe(
 			(data: TicketResponse) => {
 				if (data.ok) {
 					localStorage.setItem('ticket', JSON.stringify(data.ticket));

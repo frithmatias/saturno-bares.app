@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SuperuserComponent } from './modules/superuser/superuser.component';
 import { MetricsComponent } from './modules/metrics/metrics.component';
 import { AdminComponent } from './modules/admin/admin.component';
-import { AssistantComponent } from './modules/assistant/assistant.component';
+import { WaiterComponent } from './modules/waiter/waiter.component';
 import { PublicComponent } from './modules/public/public.component';
 
 // pages
@@ -38,10 +38,10 @@ const appRoutes: Routes = [
 	  component: PublicComponent,
 	  loadChildren: () => import('./modules/public/public.module').then((m) => m.PublicModule)},
 	
-	{ path: 'assistant',
+	{ path: 'waiter',
 	  canLoad: [LoginGuard, TokenGuard],
-	  component: AssistantComponent,
-	  loadChildren: () => import('./modules/assistant/assistant.module').then((m) => m.AssistantModule)},
+	  component: WaiterComponent,
+	  loadChildren: () => import('./modules/waiter/waiter.module').then((m) => m.WaiterModule)},
 	
 	{ path: 'admin',
 	  canLoad: [LoginGuard, TokenGuard, AdminGuard],

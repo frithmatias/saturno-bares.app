@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Company } from '../../interfaces/company.interface';
 import { environment } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
-import { SkillsResponse } from '../../interfaces/skill.interface';
+import { TablesResponse } from '../../interfaces/table.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -62,12 +62,12 @@ export class PublicService {
     return this.http.get(environment.url + '/c/readcompany/' + txPublicName);
   }
 
-  readSkills(idCompany: string): Observable<SkillsResponse> {
-    return this.http.get<SkillsResponse>(environment.url + '/s/readskills/' + idCompany);
+  readTables(idCompany: string): Observable<TablesResponse> {
+    return this.http.get<TablesResponse>(environment.url + '/section/readtables/' + idCompany);
   }
 
-  createTicket(idSkill: string, idSocket: string, blPriority: boolean = false): Observable<object> {
-    let data = { idSkill, idSocket, blPriority };
+  createTicket(idSocket: string, blPriority: boolean = false): Observable<object> {
+    let data = { idSocket, blPriority };
     return this.http.post(environment.url + '/t/createticket/', data);
   }
 

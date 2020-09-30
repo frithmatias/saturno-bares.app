@@ -2,7 +2,7 @@
     (ngSubmit)="createCompany(formDirective)">
 
     <mat-form-field color="warn" logincss class="w-100">
-        <mat-label>Nombre de la Empresa</mat-label>
+        <mat-label>Nombre del Bar / Restorant</mat-label>
         <mat-error>Esta Empresa ya se encuentra registrada!</mat-error>
         <input matInput placeholder="Nombre de la empresa" formControlName="company" name="company" type="text" required
             (keyup)="checkCompanyExists()">

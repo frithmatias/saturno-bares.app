@@ -12,7 +12,7 @@ export class SuperuserGuard implements CanLoad {
 	) { }
 
 	canLoad() {
-		if (this.loginService.user.tx_role = "SUPERUSER_ROLE") {
+		if (this.loginService.user.id_role = "SUPERUSER_ROLE") {
 			return true;
 		} else {
 			return false;

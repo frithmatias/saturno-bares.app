@@ -10,7 +10,7 @@ export class AdminGuard implements CanLoad {
 	) { }
 
 	canLoad() {
-		if (this.loginService.user.tx_role === 'ADMIN_ROLE') {
+		if (this.loginService.user.id_role === 'ADMIN_ROLE') {
 			return true;
 		} else {
 			this.loginService.logout();
