@@ -79,7 +79,7 @@ export class SectionComponent implements OnInit {
 		await this.getTickets();
 
 		// hot subjects subscribe to socket.io listeners
-		this.wsService.escucharUpdateSections().subscribe(this.subjectUpdateTickets$);
+		this.wsService.updateTicketsWaiters().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(() => {
 			this.getTickets();
 		});
@@ -191,33 +191,12 @@ export class SectionComponent implements OnInit {
 	}
 
 	async releaseSection() {
-		if (this.tickets.length > 0) {
-			let snackMsg = 'Tiene una sesiones de mesa activas. ¿Desea finalizarlas?';
-			return await this.askForContinue(snackMsg).then(() => {
-				// end ticket session
-				let idTickets = this.tickets.map(ticket => ticket._id);
-				idTickets.forEach(idTicket => {
-					this.waiterService.endTicket(idTicket).subscribe((resp: TicketResponse) => {
-						if (resp.ok) {
-							let idSection = this.waiterService.section._id;
-							this.clearTicketsSessions();
-							this.waiterService.releaseSection(idSection).subscribe((data: TableResponse) => {
-								if (data.ok) {
-									this.clearSectionSession();
-								} else {
-									this.message = resp.msg;
-								}
-							})
-						}
-					})
 
-				})
-			}).catch(() => {
-				return;
-			})
+		if (this.tickets.length > 0) {
+			this.message = 'No puede cerrar la sesión, tiene una sesiones de mesa activas.';
+			return;
 		}
 
-		// end table session
 		let idSection = this.waiterService.section._id;
 		this.waiterService.releaseSection(idSection).subscribe((data: TableResponse) => {
 			if (data.ok) {
@@ -282,7 +261,7 @@ export class SectionComponent implements OnInit {
 					this.waitForClient = true;
 					this.message = '';
 					this.tickets.push(resp.ticket);
-					localStorage.setItem('ticket', JSON.stringify(resp.ticket));
+					localStorage.setItem('tickets', JSON.stringify(resp.ticket));
 
 					// Seteo el tiempo que el cliente estuvo en espera desde que saco su turno hasta que fué atendido
 					this.tmStrWait = this.waiterService.getTimeInterval(resp.ticket.tm_start, resp.ticket.tm_att);

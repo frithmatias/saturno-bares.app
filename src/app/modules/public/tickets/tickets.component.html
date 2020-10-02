@@ -1,75 +1,100 @@
 <div class="saturno-card shadow-box animated fadeIn">
 
 
-    <div *ngIf="publicService.company">
+  <div *ngIf="publicService.company">
 
-      <h5 *ngIf="loading" class="card-title">
-        <span id="lblNuevoTicket">
-          Cargando...
-        </span>
-      </h5>
+    <h5 *ngIf="loading" class="card-title">
+      <span id="lblNuevoTicket">
+        Cargando...
+      </span>
+    </h5>
 
-      <div *ngIf="!loading">
+    <div *ngIf="!loading">
 
-        <p class="lead">
-          ¡Bienvenido! Usted esta por sacar un turno para ser atendido en
+      <p class="lead">
+        ¡Bienvenido! Usted esta por sacar un turno para ser atendido en
+      </p>
+
+      <div class="card py-4 my-4">
+        <p class="text-company">
+          {{ publicService.company.tx_company_name }}
         </p>
-
-        <div class="card py-4 my-4">
-          <p class="text-company">
-            {{ publicService.company.tx_company_name }}
-          </p>
-          <p style="color: darkblue; font-size: 1rem; font-weight: 400;" class="my-0">
-            {{ publicService.company.tx_address_street }}
-            {{ publicService.company.tx_address_number }}
-            {{ publicService.company.cd_city }}
-          </p>
-        </div>
-
+        <p style="color: darkblue; font-size: 1rem; font-weight: 400;" class="my-0">
+          {{ publicService.company.tx_address_street }}
+          {{ publicService.company.tx_address_number }}
+          {{ publicService.company.cd_city }}
+        </p>
       </div>
 
-      <div class="container">
-        <div class="row rounded border border-success mb-3">
-          <div class="col bg-success text-white p-2">
-            <div>
-              <span class="mdi mdi-human-wheelchair m-2" style="font-size: xx-large;"></span>
-              <span class="mdi mdi-human-pregnant m-2" style="font-size: xx-large;"></span>
-            </div>
-            <div>
-              <span class="mdi mdi-baby-carriage m-2" style="font-size: xx-large;"></span>
-              <span class="mdi mdi-human-cane m-2" style="font-size: xx-large;"></span>
-            </div>
-          </div>
-          <div class="col m-3">
-            <p class="text-uppercase mx-2 font-weight-bold">Prioritario</p>
-            <mat-slide-toggle [(ngModel)]="blPriority"></mat-slide-toggle>
-          </div>
-        </div>
-      </div>
-
-      <!-- CREAR EL FORMULARIO DE BUSQUEDA DE MESA AQUÍ -->
-            
-      <button class="btn btn-danger btn-block btn-lg rounded-0 text-uppercase"
-        (click)="salir()">
-        Salir
-      </button>
-
-</div>
-
-
-<div class="saturno-footer">
-  <div class="row">
-    <div class="col">
-      <span class="footer-icon-menu" routerLink="/public/search">
-        <span class="mdi mdi-magnify xl"></span>
-        <div >Volver al buscador</div>
-      </span>
     </div>
-    <div class="col">
-      <span class="footer-icon-menu" routerLink="/public/screen">
-        <span class="mdi mdi-monitor-dashboard xl"></span>
-        <div >Ver la pantalla</div>
-      </span>
+
+    <div class="container">
+      <div class="row rounded border border-success mb-3">
+        <div class="col bg-success text-white p-2">
+          <div>
+            <span class="mdi mdi-human-wheelchair m-2" style="font-size: xx-large;"></span>
+            <span class="mdi mdi-human-pregnant m-2" style="font-size: xx-large;"></span>
+          </div>
+          <div>
+            <span class="mdi mdi-baby-carriage m-2" style="font-size: xx-large;"></span>
+            <span class="mdi mdi-human-cane m-2" style="font-size: xx-large;"></span>
+          </div>
+        </div>
+        <div class="col m-3">
+          <p class="text-uppercase mx-2 font-weight-bold">Prioritario</p>
+          <mat-slide-toggle [(ngModel)]="blPriority"></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREAR EL FORMULARIO DE BUSQUEDA DE MESA AQUÍ -->
+    <form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+
+      <mat-form-field color="warn" logincss class="w-100">
+        <mat-label>Cantidad de Personas</mat-label>
+        <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons" type="number"
+          required>
+      </mat-form-field>
+
+      <mat-form-field color="warn" logincss class="w-100">
+        <mat-label>Sector</mat-label>
+        <mat-select formControlName="idSection" name="idSection" required>
+          <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <div class="row mx-0">
+        <button class="col btn btn-danger btn-block btn-lg rounded-0 text-uppercase mr-1 my-2" (click)="salir()">
+          Salir
+        </button>
+        <button class="col btn btn-success btn-block btn-lg rounded-0 text-uppercase ml-1 my-2" (click)="createTicket()">
+          Solicitar
+        </button>
+      </div>
+
+
+
+    </form>
+
+
+
+  </div>
+
+
+  <div class="saturno-footer">
+    <div class="row">
+      <div class="col">
+        <span class="footer-icon-menu" routerLink="/public/search">
+          <span class="mdi mdi-magnify xl"></span>
+          <div>Volver al buscador</div>
+        </span>
+      </div>
+      <div class="col">
+        <span class="footer-icon-menu" routerLink="/public/screen">
+          <span class="mdi mdi-monitor-dashboard xl"></span>
+          <div>Ver la pantalla</div>
+        </span>
+      </div>
     </div>
   </div>
-</div>

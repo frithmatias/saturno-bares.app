@@ -38,12 +38,12 @@ export class WebsocketService {
 		});
 	}
 
-	escucharUpdatePublic(): Observable<string> {
-		return this.listen('update-public');
+	updateTicketsClients(): Observable<string> {
+		return this.listen('update-clients');
 	}
 
-	escucharUpdateSections(): Observable<string> {
-		return this.listen('update-tables' || 'update-public');
+	updateTicketsWaiters(): Observable<string> {
+		return this.listen('update-waiters' || 'update-clients');
 		
 	}
 

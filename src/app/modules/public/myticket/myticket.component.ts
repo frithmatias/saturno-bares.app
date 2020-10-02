@@ -66,7 +66,7 @@ export class MyticketComponent implements OnInit {
 		body.classList.remove('container');
 
 		// listen for tickets
-		this.wsService.escucharUpdatePublic().subscribe(this.subjectUpdateTickets$);
+		this.wsService.updateTicketsClients().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(() => {
 			this.getTickets();
 		});

@@ -6,6 +6,7 @@ import { Company } from '../../interfaces/company.interface';
 import { environment } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { TablesResponse } from '../../interfaces/table.interface';
+import { SectionsResponse } from '../../interfaces/section.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,11 @@ export class PublicService {
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { 
+  ) {
 
-    
-  
-		if (localStorage.getItem('company')) {
+
+
+    if (localStorage.getItem('company')) {
       this.company = JSON.parse(localStorage.getItem('company'));
 
       if (localStorage.getItem('ticket')) {
@@ -43,17 +44,17 @@ export class PublicService {
         this.router.navigate(['/public/tickets']);
       }
 
-    } 
-    
+    }
+
 
 
   }
 
 
   // ========================================================
-	// Public Methods
-	// ========================================================
-  
+  // Public Methods
+  // ========================================================
+
   findCompany(pattern: string): Observable<object> {
     return this.http.get(environment.url + '/c/findcompany/' + pattern);
   }
@@ -62,12 +63,13 @@ export class PublicService {
     return this.http.get(environment.url + '/c/readcompany/' + txPublicName);
   }
 
-  readTables(idCompany: string): Observable<TablesResponse> {
-    return this.http.get<TablesResponse>(environment.url + '/section/readtables/' + idCompany);
+  readSections(idCompany: string): Observable<SectionsResponse> {
+    return this.http.get<SectionsResponse>(environment.url + '/section/readsections/' + idCompany);
   }
 
-  createTicket(idSocket: string, blPriority: boolean = false): Observable<object> {
-    let data = { idSocket, blPriority };
+
+  createTicket(idSocket: string, blPriority: boolean, nmPersons: number, idSection: string): Observable<object> {
+    let data = { idSocket, blPriority, nmPersons, idSection };
     return this.http.post(environment.url + '/t/createticket/', data);
   }
 
