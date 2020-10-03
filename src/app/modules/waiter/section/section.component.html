@@ -101,7 +101,7 @@
               </div>
               <div> 
                 <mat-slide-toggle [checked]="table.tx_status==='idle'" class="mx-2 my-1"
-                [disabled]="waitForClient || table.tx_status==='busy'">
+                [disabled]="waitForClient || table.tx_status==='busy'" (click)="toggleTableStatus(table)">
                 <span *ngIf="table.tx_status==='busy'">
                   Mesa Ocupada
                 </span>

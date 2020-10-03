@@ -45,9 +45,7 @@ export class TableCreateComponent implements OnInit {
 		const table: Table = {
 			id_section: this.forma.value.idSection,
 			nm_table: this.forma.value.nmTable,
-			nm_persons: this.forma.value.nmPersons,
-			tx_status: 'paused',
-			id_ticket: null
+			nm_persons: this.forma.value.nmPersons
 		};
 
 		this.adminService.createTable(table).subscribe((data: TableResponse) => {

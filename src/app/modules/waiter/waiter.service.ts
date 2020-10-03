@@ -67,7 +67,14 @@ export class WaiterService {
 			'turnos-token': this.loginService.token
 		});
 		const url = environment.url + '/table/readsectiontables/' + idSection;
-		console.log(url)
+		return this.http.get(url, { headers });
+	}
+
+	toggleTableStatus(idTable: string) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/table/toggletablestatus/' + idTable;
 		return this.http.get(url, { headers });
 	}
 

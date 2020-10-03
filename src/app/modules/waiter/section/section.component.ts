@@ -109,7 +109,7 @@ export class SectionComponent implements OnInit {
 			const sectionTickets = data.tickets.filter(ticket => {
 				return (
 					// obtengo todos los tickets atendidos, no finalizados para el sector del camarero
-					ticket.id_session.id_section === this.waiterService.section._id &&
+					ticket.id_session?.id_section === this.waiterService.section._id &&
 					ticket.tm_att !== null &&
 					ticket.tm_end === null
 				);
@@ -124,23 +124,23 @@ export class SectionComponent implements OnInit {
 
 
 			const ticketsPendingThisSection = data.tickets.filter(
-				ticket => ticket.tm_end === null && 
-				ticket.id_section._id === this.waiterService.section._id
+				ticket => ticket.tm_end === null &&
+					ticket.id_section._id === this.waiterService.section._id
 			);
-			
+
 			const ticketsPendingAllSections = data.tickets.filter(ticket => ticket.tm_end === null);
-			
+
 			this.pendingTicketsCount = ticketsPendingThisSection.length;
-			
+
 			if (ticketsPendingThisSection.length > 0) {
 				this.message = `Hay ${ticketsPendingThisSection.length} clientes esparando una mesa.`;
 			} else {
 				this.message = `No hay solicitud de mesa para este sector.`
 			}
-			
+
 			// table of pending tickets by section
 			this.pendingBySection = [];
-			
+
 			for (let section of this.sections) {
 				this.pendingBySection.push({
 					'id': section._id,
@@ -173,7 +173,7 @@ export class SectionComponent implements OnInit {
 	clearTicketsSessions() { // close ALL client sessions
 		delete this.tickets;
 		delete this.waiterService.chatMessages;
-		if( localStorage.getItem('tickets')) {localStorage.removeItem('tickets')};
+		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets') };
 		this.tmStrWait = '--:--:--';
 		this.tmStrAtt = '--:--:--';
 		this.timerCount = TABLE_TIME_OUT;
@@ -222,8 +222,8 @@ export class SectionComponent implements OnInit {
 	readSectionTables(): Promise<Table[]> {
 		return new Promise((resolve, reject) => {
 			let idSection = this.waiterService.section._id;
-			console.log(this)
 			this.waiterService.readSectionTables(idSection).subscribe((data: TablesResponse) => {
+				console.log('MESAS:', data.tables)
 				if (data.ok) {
 					resolve(data.tables);
 				} else {
@@ -244,6 +244,26 @@ export class SectionComponent implements OnInit {
 			});
 		})
 	}
+
+	toggleTableStatus = (table: Table) => {
+		let idTable = table._id;
+		this.waiterService.toggleTableStatus(idTable).subscribe((data: TableResponse) => {
+			console.log(data)
+			if(data.ok){
+				let updatedTable = this.tables.filter(table => table._id === data.table._id)[0];
+				updatedTable.tx_status = data.table.tx_status;
+			}
+		},
+		()=>{
+			// on error update all sliders stats
+			this.readSectionTables();
+		})
+	}
+
+	// ========================================================
+	// ACTIONS
+	// ========================================================
+
 
 	async takeTicket() {
 
@@ -305,14 +325,14 @@ export class SectionComponent implements OnInit {
 							});
 
 							timerEnd.then(() => {
-									const timer_cliente$ = interval(1000);
+								const timer_cliente$ = interval(1000);
+								const start_cliente = new Date().getTime();
+								// finalizo el tiempo de espera del cliente, comienza el tiempo del asistente.
+								this.tmStrAttSub = timer_cliente$.subscribe((data) => {
 									const start_cliente = new Date().getTime();
-									// finalizo el tiempo de espera del cliente, comienza el tiempo del asistente.
-									this.tmStrAttSub = timer_cliente$.subscribe((data) => {
-										const start_cliente = new Date().getTime();
-										this.tmStrAtt = this.waiterService.getTimeInterval(start_cliente, + new Date());
-									});
+									this.tmStrAtt = this.waiterService.getTimeInterval(start_cliente, + new Date());
 								});
+							});
 						});
 				}
 			});
