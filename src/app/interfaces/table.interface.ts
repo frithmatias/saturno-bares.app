@@ -1,4 +1,5 @@
 import { Session } from './session.interface';
+import { tableSession } from './table.session.interface';
 // ========================================================
 // DESKTOPS
 // ========================================================
@@ -8,7 +9,7 @@ export interface Table {
 	nm_table: number, // 15, 16, 17, etc, número de mesa
 	nm_persons: number,  
 	tx_status?: string, // idle, paused, busy
-	id_session?: string | null,
+	id_session?: tableSession,
 	__v?: number,
 	_id?: string,
 }

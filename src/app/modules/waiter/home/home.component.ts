@@ -77,7 +77,6 @@ export class HomeComponent implements OnInit {
 
   readSections(idCompany: string): void {
     this.waiterService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-      console.log(data)
       if(data.ok){
         this.sections = data.sections;
         this.sectionsAvailable = this.sections.filter(section => section.id_session === null);

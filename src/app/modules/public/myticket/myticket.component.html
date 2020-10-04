@@ -92,7 +92,7 @@
                     <td style="text-align: center;" class="screen-history-text">
                         {{ ticket.id_position }}</td>
                     <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_session.id_table.cd_table }}</td>
+                        </td>
                     <td style="padding: 0; vertical-align: middle;">
                         <span *ngIf="!ticket.tm_end" style="color: blueviolet">
                             <span class="mdi mdi-contactless-payment-circle-outline screen-history-icon"></span>
@@ -118,14 +118,14 @@
     <div class="row">
 
         <div class="col-6 button-content">
-            <button [disabled]="!myTicket" [ngClass]="{'button-disabled':!myTicket}" class="btn btn-danger button"
-                (click)="cancelTicket()">
+            <button [disabled]="myTicket?.bl_called" class="btn btn-success button"
+                [ngClass]="{'button-disabled':myTicket?.bl_called}" (click)="callWaiter()">
                 <!-- cancel ticket -->
                 <div>
-                    <span class="mdi mdi-power xxl"></span>
+                    <span class="mdi mdi-silverware-fork-knife xxl"></span>
                 </div>
                 <div class="button-inner">
-                    Cancelar Turno
+                    Llamar al mozo
                 </div>
             </button>
         </div>
@@ -139,6 +139,18 @@
                 </div>
                 <div class="button-inner">
                     ¡En camino!
+                </div>
+            </button>
+        </div>
+        <div class="col-6 button-content">
+            <button [disabled]="!myTicket" [ngClass]="{'button-disabled':!myTicket}" class="btn btn-danger button"
+                (click)="endTicket()">
+                <!-- cancel ticket -->
+                <div>
+                    <span class="mdi mdi-power xxl"></span>
+                </div>
+                <div class="button-inner">
+                    Cerrar Turno
                 </div>
             </button>
         </div>

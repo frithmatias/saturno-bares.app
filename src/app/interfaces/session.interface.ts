@@ -1,6 +1,3 @@
-import { User } from './user.interface';
-import { Section } from './section.interface';
-
 // ========================================================
 // SECTOR SESSION
 // ========================================================

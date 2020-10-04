@@ -41,7 +41,6 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     let idUser = this.loginService.user._id;
     this.MetricsService.getUserMetrics(fcSel, idUser).subscribe((data: MetricResponse) => {
-      console.log(data)
       this.metrics = data.metric;
       this.loading = false;
     }, () => { this.loading = false; })

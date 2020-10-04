@@ -67,16 +67,13 @@ export class SectionsComponent implements OnInit, OnDestroy {
   }
 
   sectionCreated(section: Section): void {
-    console.log(section)
     this.sections.push(section);
   }
 
   readSections(idCompany: string) {
     return new Promise((resolve, reject) => {
       this.adminService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-        console.log(data)
         if(data.ok){
-          
           this.sections = data.sections; // filter default_section
           this.adminService.sections = data.sections;
           resolve(data.sections);

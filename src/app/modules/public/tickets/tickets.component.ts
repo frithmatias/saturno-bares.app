@@ -43,7 +43,6 @@ export class TicketsComponent implements OnInit {
 				let idCompany = this.publicService.company._id;
 				this.wsService.emit('enterCompany', idCompany);
 				this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-					console.log(data)
 					this.sections = data.sections;
 				})
 			}

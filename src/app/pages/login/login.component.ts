@@ -53,7 +53,10 @@ export class LoginComponent implements OnInit {
 			this.loginService.login(gtoken, null, false).subscribe(
 				data => {
 					if (data.ok) {
-						if (data.user.id_company) { this.wsService.emit('enterCompany', data.user.id_company._id); }
+						if (data.user.id_company) { 
+							let idCompany = data.user.id_company._id;
+							this.wsService.emit('enterCompany', idCompany); 
+						}
 						// window.location.href = '#/admin';
 
 						this.router.navigate([data.home]);			
@@ -86,7 +89,10 @@ export class LoginComponent implements OnInit {
 		this.loginService.login(null, user, forma.value.recuerdame).subscribe(
 		data => {
 			if (data.ok) {
-				if (data.user.id_company) { this.wsService.emit('enterCompany', data.user.id_company._id); }
+				if (data.user.id_company) { 
+					let idCompany = data.user.id_company._id;
+					this.wsService.emit('enterCompany', idCompany); 
+				}
 				this.router.navigate([data.home]);
 			}
 		},

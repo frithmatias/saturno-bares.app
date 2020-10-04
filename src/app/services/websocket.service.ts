@@ -4,8 +4,8 @@ import { Observable, of } from 'rxjs';
 import { AjaxError } from 'rxjs/ajax';
 import { catchError, take, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TicketResponse } from '../interfaces/ticket.interface';
 import { PublicService } from '../modules/public/public.service';
+import { User } from '../interfaces/user.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,7 +20,7 @@ export class WebsocketService {
 		private snack: MatSnackBar,
 	) {
 		this.escucharConexiones();
-		this.escucharActualizarTicket();
+		this.escucharSocketActualizado();
 	}
 
 	escucharConexiones(): void {
@@ -43,14 +43,11 @@ export class WebsocketService {
 	}
 
 	updateTicketsWaiters(): Observable<string> {
-		return this.listen('update-waiters' || 'update-clients');
-		
+		return this.listen('update-waiters');
 	}
 
-	escucharActualizarTicket(): void {
-		this.listen('ticket-updated').subscribe((data: any) => {
-			this.snack.open('Se actualizo la sesión remota', null, { duration: 1000 });
-			localStorage.setItem('ticket', JSON.stringify(data.ticket));
+	escucharSocketActualizado(): void {
+		this.listen('socket-updated').subscribe((data: any) => {
 		});
 	}
 
@@ -72,52 +69,54 @@ export class WebsocketService {
 	}
 
 	updateSocket(): void {
-		// sólo actualiza el socket si existe un ticket
-		if (localStorage.getItem('ticket')) {
 
-			// si se reinicia el browser obtengo el ticket de la LS
-			let myTicket = JSON.parse(localStorage.getItem('ticket'));
+		// Sólo si ya existe un usuario loguado o un ticket (cliente)
 		
-			// preparo la data
-			let idTicket = myTicket._id;
-			let oldSocket = localStorage.getItem('session') ? myTicket.id_socket_desk : myTicket.id_socket;
-			let newSocket = this.idSocket;
+		if (localStorage.getItem('user')) { // admin / user
 
-			// oldSocket se envía como bandera para definir si es escritorio o público
-			this.publicService.actualizarSocket(idTicket, oldSocket, newSocket).pipe(
-				catchError(this.manejaError)
-			).subscribe((data: TicketResponse) => {
-				// actualizó ok en bd
-				if (data.ok) {
-					if (myTicket) {
-						if (localStorage.getItem('session')) {
-							myTicket.id_socket_desk = this.idSocket;
-						} else {
-							myTicket.id_socket = this.idSocket;
-						}
-					}
-					// actualizo en LS
-					localStorage.setItem('ticket', JSON.stringify(myTicket));
+			// update localstorage
+			let user: User = JSON.parse(localStorage.getItem('user'));
+			user.id_socket = this.idSocket;
+			localStorage.setItem('user', JSON.stringify(user));
+			
+			// Enter new socket user to company room
+			let idCompany = user.id_company._id;
+			this.emit('enterCompany', idCompany);
 
-					// lo ingreso en la sala de la company
-					this.emit('enterCompany', data.ticket.id_company);
-				}
-			});
+			// todo: obtener los tickets de section.component y rular por cada uno para actualizarlos en la bd
+			// todo: hacerlo desde el servicio de waiters para evitar traer los tickets a este servicio público.
 		}
-	}
 
-	emit(evento: string, payload?: any, callback?: () => void): void {
-		this.socket.emit(evento, payload, callback);
+		if (localStorage.getItem('ticket')) { // client
+			
+			// update localstorage
+			let ticket = JSON.parse(localStorage.getItem('ticket'));
+			ticket.id_socket = this.idSocket; 
+			localStorage.setItem('ticket', JSON.stringify(ticket));
+			
+			// Enter new socket client to company room
+			let idCompany = ticket.id_company;
+			this.emit('enterCompany', idCompany);
+			
+			// oldSocket se envía como bandera para definir si es escritorio o público
+			let idTicket = ticket._id;
+			let newSocket = this.idSocket;
+			this.publicService.actualizarSocket(idTicket, newSocket, true).pipe(
+				catchError(this.manejaError)
+			)
 	}
+}
 
-	listen(evento: string): Observable<string> {
-		return this.socket.fromEvent(evento);
-	}
+emit(evento: string, payload ?: any, callback ?: () => void): void {
+	this.socket.emit(evento, payload, callback);
+}
 
-	manejaError = (err: AjaxError) => {
-		// error al actualizar el socket, el socket anterior no existe
-		localStorage.removeItem('turno');
-		return of<AjaxError>(err);  // <b
-	}
+listen(evento: string): Observable < string > {
+	return this.socket.fromEvent(evento);
+}
+
+manejaError = (err: AjaxError) => {
+	return of<AjaxError>(err);  // <b
+}
 
 }

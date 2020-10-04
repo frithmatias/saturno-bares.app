@@ -79,13 +79,18 @@ export class PublicService {
     return this.http.get(url);
   }
 
-  actualizarSocket(idTicket: string, oldSocket: string, newSocket: string): Observable<object> {
-    const socketsData = { idTicket, oldSocket, newSocket };
+  actualizarSocket(idTicket: string, newSocket: string, isClient: boolean): Observable<object> {
+    const socketsData = { idTicket, newSocket, isClient };
     return this.http.put(environment.url + '/t/actualizarsocket', socketsData);
   }
 
-  cancelTicket(idTicket: string) {
-    return this.http.get(environment.url + '/t/cancelticket/' + idTicket);
+  callWaiter(idTicket: string) {
+    return this.http.get(environment.url + '/t/callwaiter/' + idTicket);
+  }
+
+
+  endTicket(idTicket: string) {
+    return this.http.post(environment.url + '/t/endticket/', { idTicket });
   }
 
   sendScores(cdScores: any) {

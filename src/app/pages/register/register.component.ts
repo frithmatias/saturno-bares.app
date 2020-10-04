@@ -129,7 +129,8 @@ export class RegisterComponent implements OnInit {
 			this.loginService.login(gtoken, null, false).subscribe(
 				data => {
 					if (data.ok) {
-						if (data.user.id_company) { this.wsService.emit('enterCompany', data.user.id_company._id); }
+						let idCompany = data.user.id_company._id;
+						if (data.user.id_company) { this.wsService.emit('enterCompany', idCompany); }
 						window.location.href = '#/admin';
 						// this.router.navigate(['/admin']);				
 					}

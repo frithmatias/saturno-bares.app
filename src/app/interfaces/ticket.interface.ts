@@ -7,20 +7,19 @@ import { Section } from './section.interface';
 
 export interface Ticket {
 	id_company: string;
-	id_socket_client: string;
-	id_socket_waiter: string | null;
-
-	// requested
 	id_section: Section; 
-	id_position: number;
-	
-	// assigned
 	id_session: Session; 
-	id_table: Table | null;
-	
-	tm_start: number;
-	tm_att: number | null;
-	tm_end: number | null;
+	nm_persons: number;
+	bl_priority: boolean;
+	bl_called: boolean;
+	tx_status: string; // assigned [privided, assigned, queued, requested]
+    id_position: number; // assigned
+    id_socket_client: string; // primary
+    id_socket_waiter?: string | null; // assigned
+    tm_start: number;
+    tm_provided?: number | null;
+    tm_att?: number | null;
+    tm_end?: number | null;
 	_id: string;
 }
 

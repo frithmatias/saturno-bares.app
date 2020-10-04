@@ -5,7 +5,8 @@ export interface User {
 	tx_email: string;
     tx_password?: string;
 	id_company?: Company;
-    bl_google?: boolean;
+	bl_google?: boolean;
+	id_socket?: string;
     tx_img?: string | null;
 	id_role?: string;
 	cd_pricing?: number;

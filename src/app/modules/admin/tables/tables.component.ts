@@ -72,7 +72,6 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
   
   tableCreated(table: Table): void {
-    console.log(table);
     this.companyTables.push(table);
   }
 
@@ -82,7 +81,6 @@ export class TablesComponent implements OnInit, OnDestroy {
         if(data.ok){
           this.sections = data.sections;
           this.adminService.sections = data.sections;
-          console.log(this.sections);
           resolve(data.sections);
         }
       });
@@ -93,7 +91,6 @@ export class TablesComponent implements OnInit, OnDestroy {
   readTables(idCompany: string) {
     return new Promise((resolve, reject) => {
       this.adminService.readTables(idCompany).subscribe((data: TablesResponse) => {
-        console.log(data)
         if(data.ok){
           this.companyTables = data.tables;
           this.sectionTables = data.tables;

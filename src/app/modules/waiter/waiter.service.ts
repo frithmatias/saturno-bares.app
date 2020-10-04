@@ -9,6 +9,7 @@ import { LoginService } from '../../services/login.service';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Section } from '../../interfaces/section.interface';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -85,17 +86,6 @@ export class WaiterService {
 	}
 
 
-	// actions
-
-	takeTicket(idSession: string, idSocketDesk: string): Observable<object> {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const deskData = { idSession, idSocketDesk };
-		const url = environment.url + `/t/taketicket`;
-		return this.http.post(url, deskData, { headers });
-	}
-
 	releaseTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
 		const headers = new HttpHeaders({
@@ -113,6 +103,17 @@ export class WaiterService {
 		const url = environment.url + '/t/reassignticket';
 		return this.http.post(url, data, { headers });
 	}
+
+
+	attendedTicket(idTicket: string): Observable<object> {
+		const data = { idTicket };
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/t/attendedticket';
+		return this.http.post(url, data, { headers });
+	}
+
 
 	endTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };

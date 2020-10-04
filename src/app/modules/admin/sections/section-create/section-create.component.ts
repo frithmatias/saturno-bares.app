@@ -31,7 +31,6 @@ export class SectionCreateComponent implements OnInit {
 	}
 
 	createSection(formDirective: FormGroupDirective) {
-console.log(this.forma)
 		if (this.forma.invalid) {
 			return;
 		}

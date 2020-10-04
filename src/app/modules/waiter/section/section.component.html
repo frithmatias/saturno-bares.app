@@ -72,7 +72,8 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="bg-white px-0 mx-0">
-                  <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-account-supervisor-circle text-danger mx-2"></span>
+                  <span *ngIf="table.id_session?.id_ticket.bl_called" class="xl mdi mdi-bell text-danger mx-2"></span>
+                  <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle text-danger mx-2"></span>
                   <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle text-secondary mx-2"></span>
                   <span *ngIf="table.tx_status==='idle'" class="xl mdi mdi-check-circle text-success mx-2"></span>
 
@@ -115,10 +116,10 @@
               </div>
             </div>
 
+            <!------------------------------>
+            <!-- TICKET INFO & ACTIONS -->
+            <!------------------------------>
             <div class="card-footer">
-              <!------------------------------>
-              <!-- TICKET INFO -->
-              <!------------------------------>
               <div class="row">
                 <div class="col p-0">
                   <div>TE</div>
@@ -143,7 +144,7 @@
               <!------------------------------>
               <div class="row">
                 <!-- priority slide -->
-                <div class="col button-content">
+                <div class="col-4 button-content">
                   <mat-slide-toggle [(ngModel)]="blPriority" class="mx-2 my-1"
                     [disabled]="waitForClient || !table.tx_status==='busy' || sectionSelected === ''">
                     <span class="mdi mdi-priority-high xl mx-1"></span>
@@ -151,7 +152,7 @@
                 </div>
 
                 <!-- reassign ticket -->
-                <div class="col button-content">
+                <div class="col-4 button-content">
                   <button class="btn btn-success button"
                     [ngClass]="{'button-disabled':waitForClient || !tickets || sectionSelected === ''}"
                     [disabled]="waitForClient || !table.tx_status==='busy' || sectionSelected === ''" (click)="reassignTicket(ticket)">
@@ -164,21 +165,21 @@
                   </button>
                 </div>
 
-                <!-- next ticket -->
-                <!-- <div class="col button-content">
-                <button class="btn btn-success button" [disabled]="waitForClient || tickets"
-                  [ngClass]="{'button-disabled': waitForClient || table.tx_status==='busy'}" (click)="takeTicket()">
-                  <div>
-                    <div class="mdi mdi-chevron-right xl"></div>
-                  </div>
-                  <div class="button-inner">
-                    Siguiente
-                  </div>
-                </button>
-              </div> -->
+                <!-- attened ticket -->
+                <div class="col-4 button-content">
+                  <button class="btn btn-success button" (click)="attendedTicket(table.id_session?.id_ticket)"
+                    [disabled]="!table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'" [ngClass]="{'button-disabled': !table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'}">
+                    <div>
+                      <div class="mdi mdi-bell xl"></div>
+                    </div>
+                    <div class="button-inner">
+                      Atendido
+                    </div>
+                  </button>
+                </div> 
 
                 <!-- release ticket -->
-                <div class="col button-content">
+                <div class="col-4 button-content">
                   <button class="btn btn-success button" (click)="releaseTicket(ticket)"
                     [disabled]="waitForClient || table.tx_status!=='busy'" [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
                     <div>
@@ -191,8 +192,8 @@
                 </div>
 
                 <!-- end ticket -->
-                <div class="col button-content">
-                  <button class="btn btn-danger button" (click)="endTicket(ticket)"
+                <div class="col-4 button-content">
+                  <button class="btn btn-danger button" (click)="endTicket(table.id_session?.id_ticket)"
                     [disabled]="waitForClient || table.tx_status!=='busy'" [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
                     <div>
                       <div class="mdi mdi-close xl"></div>

@@ -67,20 +67,14 @@ export class SectionComponent implements OnInit {
 			return;
 		}
 
-		await this.readSections().then((data: Section[]) => {
-			this.sections = data;
-		}).catch(() => { this.snack.open('Error al obtener los sectores', null, { duration: 2000 }); })
-
-		await this.readSectionTables().then((data: Table[]) => {
-			this.tables = data;
-		}).catch(() => { this.snack.open('Error al obtener los sectores', null, { duration: 2000 }); })
-
-
-		await this.getTickets();
+		this.readSections()
+		this.readSectionTables()
+		this.getTickets();
 
 		// hot subjects subscribe to socket.io listeners
 		this.wsService.updateTicketsWaiters().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(() => {
+			this.readSectionTables()
 			this.getTickets();
 		});
 
@@ -98,10 +92,9 @@ export class SectionComponent implements OnInit {
 		});
 
 		this.loading = false;
-		console.log(this);
 	}
 
-	async getTickets() {
+	getTickets() {
 		// traigo todos los tickets para el sector seleccionado (todas sus mesas)
 		let idCompany = this.loginService.user.id_company?._id;
 		return this.waiterService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
@@ -152,8 +145,6 @@ export class SectionComponent implements OnInit {
 			}
 			this.loading = false;
 		})
-
-
 	}
 
 	clearTicketSession(ticket: Ticket) { // close ONE client session
@@ -170,18 +161,10 @@ export class SectionComponent implements OnInit {
 		this.getTickets();
 	}
 
-	clearTicketsSessions() { // close ALL client sessions
-		delete this.tickets;
-		delete this.waiterService.chatMessages;
-		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets') };
-		this.tmStrWait = '--:--:--';
-		this.tmStrAtt = '--:--:--';
-		this.timerCount = TABLE_TIME_OUT;
-		this.waitForClient = false;
-		if (this.tmStrWaitSub) { this.tmStrWaitSub.unsubscribe(); }
-		if (this.tmStrAttSub) { this.tmStrAttSub.unsubscribe(); }
-		if (this.tmExtraTimeSub) { this.tmExtraTimeSub.unsubscribe(); }
-		this.getTickets();
+	clearTableSession(ticket: Ticket) {
+		let table = this.tables.filter(table => table.id_session?.id_ticket._id === ticket._id)[0];
+		table.tx_status = 'paused';
+		table.id_session = null;
 	}
 
 	clearSectionSession() {
@@ -190,7 +173,7 @@ export class SectionComponent implements OnInit {
 		this.router.navigate(['waiter/home']);
 	}
 
-	async releaseSection() {
+	releaseSection() {
 
 		if (this.tickets.length > 0) {
 			this.message = 'No puede cerrar la sesión, tiene una sesiones de mesa activas.';
@@ -206,31 +189,25 @@ export class SectionComponent implements OnInit {
 
 	}
 
-	readSections(): Promise<Section[]> {
-		return new Promise((resolve, reject) => {
-			let idCompany = this.waiterService.section.id_company;
-			this.waiterService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-				if (data.ok) {
-					resolve(data.sections);
-				} else {
-					reject([])
-				}
-			})
+	readSections() {
+
+		let idCompany = this.waiterService.section.id_company;
+		this.waiterService.readSections(idCompany).subscribe((data: SectionsResponse) => {
+			if (data.ok) {
+				this.sections = data.sections;
+			}
 		})
+
 	}
 
-	readSectionTables(): Promise<Table[]> {
-		return new Promise((resolve, reject) => {
-			let idSection = this.waiterService.section._id;
-			this.waiterService.readSectionTables(idSection).subscribe((data: TablesResponse) => {
-				console.log('MESAS:', data.tables)
-				if (data.ok) {
-					resolve(data.tables);
-				} else {
-					reject([])
-				}
-			})
+	readSectionTables() {
+		let idSection = this.waiterService.section._id;
+		this.waiterService.readSectionTables(idSection).subscribe((data: TablesResponse) => {
+			if (data.ok) {
+				this.tables = data.tables;
+			}
 		})
+
 	}
 
 	askForContinue(snackMsg: string): Promise<boolean> {
@@ -246,99 +223,23 @@ export class SectionComponent implements OnInit {
 	}
 
 	toggleTableStatus = (table: Table) => {
+
 		let idTable = table._id;
 		this.waiterService.toggleTableStatus(idTable).subscribe((data: TableResponse) => {
-			console.log(data)
-			if(data.ok){
-				let updatedTable = this.tables.filter(table => table._id === data.table._id)[0];
-				updatedTable.tx_status = data.table.tx_status;
+			if (data.ok) {
+				let tableToChangeStatus = this.tables.filter(table => table._id === data.table._id)[0];
+				tableToChangeStatus.tx_status = data.table.tx_status;
 			}
 		},
-		()=>{
-			// on error update all sliders stats
-			this.readSectionTables();
-		})
+			() => {
+				// on error update all sliders stats
+				this.readSectionTables();
+			})
 	}
 
 	// ========================================================
 	// ACTIONS
 	// ========================================================
-
-
-	async takeTicket() {
-
-		if (!this.tickets) {
-
-			let idSession = this.waiterService.section.id_session._id;
-			let idSocketDesk = this.wsService.idSocket;
-
-			this.waiterService.takeTicket(idSession, idSocketDesk).subscribe((resp: TicketResponse) => {
-				this.snack.open(resp.msg, null, { duration: 2000 });
-				if (!resp.ok) { // no tickets
-					this.waitForClient = false;
-					this.message = resp.msg;
-				} else {
-					this.waitForClient = true;
-					this.message = '';
-					this.tickets.push(resp.ticket);
-					localStorage.setItem('tickets', JSON.stringify(resp.ticket));
-
-					// Seteo el tiempo que el cliente estuvo en espera desde que saco su turno hasta que fué atendido
-					this.tmStrWait = this.waiterService.getTimeInterval(resp.ticket.tm_start, resp.ticket.tm_att);
-
-					// DESKTOP WAITING TIMERS
-					const encamino$ = this.wsService.escucharEnCamino();
-					const timer_timeout$ = interval(1000).pipe(map(num => num + 1), take(TABLE_TIME_OUT));
-					let timeIsOut = false;
-					this.tmStrWaitSub = timer_timeout$.pipe(
-						tap(num => this.timerCount = TABLE_TIME_OUT - num),
-						takeUntil(encamino$)
-					).subscribe(
-						data => {	// next
-							if (data >= TABLE_TIME_OUT - 1) { timeIsOut = true; }
-						},
-						undefined, 	// error
-						() => { 	// complete
-							const timerEnd = new Promise((resolve) => {
-								if (timeIsOut) { // Cliente no envió en camino, el operador puede cerrar el turno. 
-									this.waitForClient = false;
-									this.comingClient = false;
-									resolve();
-								} else { // Cliente envió en camino, corre un segundo observable que adiciona tiempo de espera.
-									this.waitForClient = true;
-									this.comingClient = true;
-									const timer_extratime$ = interval(1000).pipe(
-										map(num => num + 1),
-										take(TABLE_TIME_EXTRA)
-									);
-
-									this.tmExtraTimeSub = timer_extratime$.subscribe(
-										num => this.timerCount = TABLE_TIME_EXTRA - num,  // next
-										undefined, 	// error
-										() => { 	// complete
-											this.waitForClient = false;
-											this.comingClient = false;
-											resolve();
-										});
-								}
-
-							});
-
-							timerEnd.then(() => {
-								const timer_cliente$ = interval(1000);
-								const start_cliente = new Date().getTime();
-								// finalizo el tiempo de espera del cliente, comienza el tiempo del asistente.
-								this.tmStrAttSub = timer_cliente$.subscribe((data) => {
-									const start_cliente = new Date().getTime();
-									this.tmStrAtt = this.waiterService.getTimeInterval(start_cliente, + new Date());
-								});
-							});
-						});
-				}
-			});
-		}
-		this.getTickets();
-	}
 
 	async releaseTicket(ticket: Ticket) {
 		if (this.tickets) {
@@ -379,13 +280,14 @@ export class SectionComponent implements OnInit {
 	}
 
 	async endTicket(ticket: Ticket) {
+		let idTicket = ticket._id;
 		if (this.tickets) {
 			let snackMsg = 'Desea finalizar el ticket actual?'
 			await this.askForContinue(snackMsg).then(() => {
-				let idTicket = ticket._id;
 				this.waiterService.endTicket(idTicket).subscribe((resp: TicketResponse) => {
 					if (resp.ok) {
 						this.clearTicketSession(ticket);
+						this.clearTableSession(ticket);
 						this.message = resp.msg;
 					}
 				})
@@ -393,6 +295,16 @@ export class SectionComponent implements OnInit {
 				return;
 			})
 		}
+	}
+
+	attendedTicket = (idTicket: string) => {
+		this.waiterService.attendedTicket(idTicket).subscribe((resp: TicketResponse) => {
+			if (resp.ok) {
+				let table = this.tables.filter(table => table.id_session?.id_ticket._id === resp.ticket._id)[0];
+				table.id_session.id_ticket.bl_called = false;
+				this.message = resp.msg;
+			}
+		})
 	}
 
 	ngOnDestroy() {

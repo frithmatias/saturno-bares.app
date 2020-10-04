@@ -247,11 +247,21 @@ export class MyticketComponent implements OnInit {
 		this.wsService.emit('cliente-en-camino', idSocketDesk);
 	}
 
-	cancelTicket(): void {
+	callWaiter(): void {
+		let idTicket = this.myTicket._id;
+		this.publicService.callWaiter(idTicket).subscribe((data: TicketResponse) => {
+			if (data.ok) {
+				this.myTicket.bl_called = true;
+				this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
+			}
+		});
+	}
+
+	endTicket(): void {
 		this.snack.open('Desea cancelar el turno?', 'SI, CANCELAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
 			if (data.dismissedByAction) {
 				let idTicket = this.myTicket._id;
-				this.publicService.cancelTicket(idTicket).subscribe((data: TicketResponse) => {
+				this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
 					if (data.ok) {
 						this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
 						this.publicService.clearPublicSession();

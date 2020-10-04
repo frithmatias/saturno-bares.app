@@ -37,7 +37,6 @@ export class TableCreateComponent implements OnInit {
 	}
 
 	createTable(formDirective: FormGroupDirective) {
-		console.log(this.forma)
 		if (this.forma.invalid) {
 			return;
 		}
