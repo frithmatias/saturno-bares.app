@@ -15,6 +15,7 @@ import { Subject, interval, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
+import { ScoreItemsResponse, ScoreItem } from '../../../interfaces/score.interface';
 
 const TAIL_LENGTH = 10;
 
@@ -29,7 +30,7 @@ export class MyticketComponent implements OnInit {
 	coming: boolean = false;
 	scores = new Map();
 
-	myTicket: Ticket;
+	ticket: Ticket;
 	ticketTmEnd: number = null;
 
 	lastTicket: Ticket;
@@ -41,6 +42,8 @@ export class MyticketComponent implements OnInit {
 	averageToAtt: string; // millisencods
 	ticketsAhead: number;
 	waiterWorking: number;
+
+	scoreItems: ScoreItem[] = []
 
 	private subjectUpdateTickets$ = new Subject();
 
@@ -54,12 +57,12 @@ export class MyticketComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		
+
 		if (!this.publicService.ticket) {
 			this.router.navigate(['/public/tickets']);
 			this.sharedService.snackShow('Debe obtener un turno primero.', 5000)
 			return;
-		} 
+		}
 
 		this.coming = false;
 		const body = document.getElementsByTagName('body')[0];
@@ -72,25 +75,27 @@ export class MyticketComponent implements OnInit {
 		});
 
 		if (this.publicService.company && this.publicService.ticket) {
-			this.myTicket = this.publicService.ticket;
+			this.ticket = this.publicService.ticket;
 			let idCompany = this.publicService.company._id;
 			this.publicService.getTickets(idCompany);
 		} else {
 			this.router.navigate(['/public']);
 			this.snack.open('Por favor ingrese una empresa primero!', null, { duration: 5000 });
-		} 
+		}
 
 		this.getTickets();
 	}
 
 	async getTickets() {
 		// traigo todos los tickets
-		if(!this.myTicket){
+		if (!this.ticket) {
 			return;
 		}
-		let idCompany = this.myTicket.id_company;
+		let idCompany = this.ticket.id_company;
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
 			if (data.ok) {
+
+
 
 				this.ticketsAll = data.tickets;
 				this.ticketsEnd = data.tickets.filter(ticket => ticket.tm_end !== null);
@@ -100,16 +105,16 @@ export class MyticketComponent implements OnInit {
 				this.lastTicket = this.ticketsTail[0];
 				this.updateMyTicket();
 
-				if (this.myTicket?.id_session) {
+				if (this.ticket?.id_session) {
 					this.timer = interval(500).subscribe(data => {
 						this.showAlert = !this.showAlert;
 					})
 				} else {
-					if(this.timer){this.timer.unsubscribe();}
+					if (this.timer) { this.timer.unsubscribe(); }
 					this.showAlert = false;
 				}
 
-				if (this.myTicket) { this.calculateTimeToAtt(); } 
+				if (this.ticket) { this.calculateTimeToAtt(); }
 				const audio = new Audio();
 				audio.src = '../../assets/bell.wav';
 				audio.load();
@@ -124,22 +129,22 @@ export class MyticketComponent implements OnInit {
 		// sólo la cantidad en TAIL,
 
 		let ticketsEndDesc = this.ticketsEnd
-		.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
-		.slice(0, TAIL_LENGTH)
-		.filter(ticket => {
-			return (
-				ticket.tm_att !== null // elimino cancelados (tm_att===null && tm_end!=null)
+			.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
+			.slice(0, TAIL_LENGTH)
+			.filter(ticket => {
+				return (
+					ticket.tm_att !== null // elimino cancelados (tm_att===null && tm_end!=null)
 				);
 			});
-			
-			if (ticketsEndDesc.length === 0 ){
-				this.averageToAtt = 'Sin datos todavía'
-				return;
-			}
+
+		if (ticketsEndDesc.length === 0) {
+			this.averageToAtt = 'Sin datos todavía'
+			return;
+		}
 		// ticketsSessionDesc: se usa para el cálculo de tiempos de ocio 
 		// sólo tickets ordenados por sesion finalizado al primero
 		// sólo la cantidad en TAIL,
-		
+
 		let ticketsSessionDesc = this.ticketsEnd
 			.sort((a: Ticket, b: Ticket) => b.id_session > a.id_session ? -1 : 1)
 			.slice(0, TAIL_LENGTH)
@@ -187,7 +192,7 @@ export class MyticketComponent implements OnInit {
 		// cuantos tengo adelante
 		let count = 0;
 		for (let ticket of this.ticketsWaiting) {
-			if (ticket._id === this.myTicket._id) {
+			if (ticket._id === this.ticket._id) {
 				break;
 			} else {
 				count++;
@@ -213,27 +218,25 @@ export class MyticketComponent implements OnInit {
 	}
 
 	updateMyTicket(): void {
-		if (this.myTicket) { // client and waiter
-			// pick LAST ticket
+		if (this.ticket) {
+
 			const pickMyTicket = this.ticketsAll.filter(ticket => (
-				ticket._id === this.myTicket._id
+				ticket._id === this.ticket._id
 			))[0];
 
 			if (pickMyTicket) {
-
-				if (pickMyTicket.tm_end !== null && pickMyTicket._id === null) {
+				if (pickMyTicket.tm_end !== null) {
 					// El ticket finalizó.
-					this.myTicket = null;
-					this.ticketTmEnd = pickMyTicket.tm_end;
-					this.publicService.clearPublicSession();
+					this.getScoreItems().then(() => {
+						this.ticketTmEnd = pickMyTicket.tm_end;
+						this.publicService.clearPublicSession();
+					})
 				} else {
-					this.myTicket = pickMyTicket;
+					this.ticket = pickMyTicket;
 					this.publicService.ticket = pickMyTicket;
-					localStorage.setItem('ticket', JSON.stringify(this.myTicket));
-
-
+					localStorage.setItem('ticket', JSON.stringify(this.ticket));
 				}
-			} 
+			}
 		}
 	}
 
@@ -248,10 +251,10 @@ export class MyticketComponent implements OnInit {
 	}
 
 	callWaiter(): void {
-		let idTicket = this.myTicket._id;
+		let idTicket = this.ticket._id;
 		this.publicService.callWaiter(idTicket).subscribe((data: TicketResponse) => {
 			if (data.ok) {
-				this.myTicket.bl_called = true;
+				this.ticket.bl_called = true;
 				this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
 			}
 		});
@@ -260,7 +263,7 @@ export class MyticketComponent implements OnInit {
 	endTicket(): void {
 		this.snack.open('Desea cancelar el turno?', 'SI, CANCELAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
 			if (data.dismissedByAction) {
-				let idTicket = this.myTicket._id;
+				let idTicket = this.ticket._id;
 				this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
 					if (data.ok) {
 						this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
@@ -272,15 +275,28 @@ export class MyticketComponent implements OnInit {
 		});
 	}
 
-	setScore(idTicket: string, cdScore: number): void {
-		this.scores.set(idTicket, cdScore);
+	getScoreItems() {
+		return new Promise(resolve => {
+			console.log(this.ticket)
+			let idSection = this.ticket.id_section._id;
+			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
+				this.scoreItems = data.scoreitems;
+				console.log(data)
+				resolve();
+			})
+		})
+	}
 
+	setScore(idItem: string, nmScore: number): void {
+		this.scores.set(idItem, nmScore);
+
+		if(this.scores.size === this.scoreItems.length){
+			let idTicket = this.ticket._id;
 			let dataScores: Score[] = [];
-
 			this.scores.forEach(function (valor, llave, mapaOrigen) {
-				dataScores.push({ id_ticket: llave, cd_score: valor });
+				
+				dataScores.push({ id_ticket: idTicket, id_scoreitem: llave, cd_score: valor });
 			});
-
 
 			this.publicService.sendScores(dataScores).subscribe((d) => {
 			})
@@ -296,7 +312,7 @@ export class MyticketComponent implements OnInit {
 					toast.addEventListener('mouseleave', Swal.resumeTimer)
 				}
 			})
-
+	
 			Toast.fire({
 				icon: 'success',
 				title: '¡Gracias!'
@@ -305,7 +321,13 @@ export class MyticketComponent implements OnInit {
 					this.publicService.clearPublicSessionComplete();
 				}
 			})
-		
+		}
+
+
+
+
+
+
 	}
 
 	ngOnDestroy() {
@@ -318,6 +340,7 @@ export class MyticketComponent implements OnInit {
 
 interface Score {
 	id_ticket: string,
+	id_scoreitem: string,
 	cd_score: number
 }
 

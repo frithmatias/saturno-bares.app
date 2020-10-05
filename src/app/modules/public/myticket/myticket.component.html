@@ -7,19 +7,19 @@
         <!------------------------------>
         <!-- SU TURNO REDONDO -->
         <!------------------------------>
-        <div class="screen-myticket-container shadow-box my-3" *ngIf="myTicket">
+        <div class="screen-myticket-container shadow-box my-3" *ngIf="ticket">
             <div class="screen-myticket-text-header">
                 SU TURNO
             </div>
             <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
-                {{ myTicket?.id_position }}
+                {{ ticket?.id_position }}
             </div>
             <div class="screen-myticket-text-footer mt-3" style="line-height: normal;" *ngIf="averageToAtt">
-                <span *ngIf="!myTicket?.id_session">
+                <span *ngIf="!ticket?.id_session">
                     {{ averageToAtt}}
                 </span>
-                <span *ngIf="myTicket?.id_session">
-                    Pase por el escritorio {{ myTicket?.id_session?.id_table?.cd_table }}
+                <span *ngIf="ticket?.id_session">
+                    Pase a la mesa {{ ticket?.id_session?.id_table?.nm_table }}
                 </span>
             </div>
         </div>
@@ -27,41 +27,45 @@
         <!------------------------------>
         <!-- FINALIZADO -->
         <!------------------------------>
-        <div class="card text-white bg-danger my-4" *ngIf="myTicket===null && ticketTmEnd!==null">
+        <div class="card text-white bg-danger my-4" *ngIf="ticketTmEnd!==null">
             <div class="card-header screen-text-title">SU OPINION</div>
             <div class="banner-content p-3" style="background-color: rgb(141, 51, 51)">
 
                 <div class="xl">¡Su turno ha finalizado!</div>
 
-                <div *ngIf="allMytickets.length > 0" class="md">¿Podría dejarnos su opinión
+                <div class="md">¿Podría dejarnos su opinión
                     sobre la calidad de atención?</div>
 
                 <div class="text-white my-4 table-responsive-sm">
                     <table class="table table-sm text-white">
-                        <tr>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 1}"
-                                    (click)="setScore(ticket._id, 1)"></span>
+                        <tr *ngFor="let item of scoreItems">
+                            <td class="xl py-2" style="width: 50%;text-align: left;">
+                                {{ item.tx_item }}
                             </td>
                             <td class="p-0 py-2">
                                 <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 2}"
-                                    (click)="setScore(ticket._id, 2)"></span> </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 3}"
-                                    (click)="setScore(ticket._id, 3)"></span>
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
+                                    (click)="setScore(item._id, 1)"></span>
                             </td>
                             <td class="p-0 py-2">
                                 <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 4}"
-                                    (click)="setScore(ticket._id, 4)"></span>
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
+                                    (click)="setScore(item._id, 2)"></span>
                             </td>
                             <td class="p-0 py-2">
                                 <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(ticket._id) >= 5}"
-                                    (click)="setScore(ticket._id, 5)"></span>
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
+                                    (click)="setScore(item._id, 3)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
+                                    (click)="setScore(item._id, 4)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
+                                    (click)="setScore(item._id, 5)"></span>
                             </td>
                         </tr>
                     </table>
@@ -114,12 +118,12 @@
 <!-- ======================================================== -->
 <!-- PUBLIC BUTTONS -->
 <!-- ======================================================== -->
-<div *ngIf="myTicket" class="container bg-light fixed-bottom shadow-box no-radius text-center py-1">
+<div *ngIf="ticket" class="container bg-light fixed-bottom shadow-box no-radius text-center py-1">
     <div class="row">
 
         <div class="col-6 button-content">
-            <button [disabled]="myTicket?.bl_called" class="btn btn-success button"
-                [ngClass]="{'button-disabled':myTicket?.bl_called}" (click)="callWaiter()">
+            <button [disabled]="ticket?.bl_called" class="btn btn-success button"
+                [ngClass]="{'button-disabled':ticket?.bl_called}" (click)="callWaiter()">
                 <!-- cancel ticket -->
                 <div>
                     <span class="mdi mdi-silverware-fork-knife xxl"></span>
@@ -131,8 +135,8 @@
         </div>
 
         <div class="col-6 button-content">
-            <button [disabled]="!myTicket?.id_session || coming" class="btn btn-success button"
-                [ngClass]="{'button-disabled':!myTicket?.id_session || coming}" (click)="enCamino()">
+            <button [disabled]="!ticket?.id_session || coming" class="btn btn-success button"
+                [ngClass]="{'button-disabled':!ticket?.id_session || coming}" (click)="enCamino()">
                 <!-- cancel ticket -->
                 <div>
                     <span class="mdi mdi-walk xxl"></span>
@@ -143,7 +147,7 @@
             </button>
         </div>
         <div class="col-6 button-content">
-            <button [disabled]="!myTicket" [ngClass]="{'button-disabled':!myTicket}" class="btn btn-danger button"
+            <button [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}" class="btn btn-danger button"
                 (click)="endTicket()">
                 <!-- cancel ticket -->
                 <div>
@@ -158,7 +162,7 @@
     </div>
 </div>
 
-<div *ngIf="!myTicket" class="saturno-footer">
+<div *ngIf="!ticket" class="saturno-footer">
     <div class="row">
         <div class="col">
             <span class="footer-icon-menu" routerLink="/home">

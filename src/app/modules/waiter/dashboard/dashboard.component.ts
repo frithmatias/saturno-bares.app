@@ -18,7 +18,7 @@ import { MetricResponse, Metrics, MetricsResponse } from '../../../interfaces/me
 })
 export class DashboardComponent implements OnInit {
   loading = false;
-  metrics: Metrics = { total: 0, avg: 0, tickets: [] }
+  metrics: Metrics = { total: 0, avg: 0, tickets: [] };
   date: Date = new Date();
 
   constructor(

@@ -93,8 +93,13 @@ export class PublicService {
     return this.http.post(environment.url + '/t/endticket/', { idTicket });
   }
 
+  getScoreItems(idSection: string) {
+    const url = environment.url + `/p/getscoreitems/` + idSection;
+    return this.http.get(url);
+  }
+
   sendScores(cdScores: any) {
-    const url = environment.url + `/p/scores`;
+    const url = environment.url + `/p/postscores`;
     return this.http.post(url, cdScores);
   }
 
