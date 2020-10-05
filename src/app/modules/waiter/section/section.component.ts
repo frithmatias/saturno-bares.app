@@ -78,19 +78,6 @@ export class SectionComponent implements OnInit {
 			this.getTickets();
 		});
 
-		this.wsService.escucharTicketCancelled().subscribe(this.subjectTurnoCancelado$);
-		this.subjectTurnoCancelado$.subscribe((idCancelledTicket: string) => {
-			// obtengo los tickets activos dentro de la sección del camarero
-			let activeTickets = this.tickets.filter(ticket => ticket.tm_att !== null && ticket.tm_end === null);
-			// si el ticket cancelado esta incluido en los tickets activos, lo cancelo.
-			if (activeTickets.map(ticket => ticket._id).includes(idCancelledTicket)) {
-				let ticketToCancel = activeTickets.filter(ticket => ticket._id === idCancelledTicket)[0];
-				this.snack.open('El turno fue cancelado por el cliente', null, { duration: 10000 });
-				this.clearTicketSession(ticketToCancel);
-				this.getTickets();
-			}
-		});
-
 		this.loading = false;
 	}
 
@@ -103,10 +90,10 @@ export class SectionComponent implements OnInit {
 				return (
 					// obtengo todos los tickets atendidos, no finalizados para el sector del camarero
 					ticket.id_session?.id_section === this.waiterService.section._id &&
-					ticket.tm_att !== null &&
 					ticket.tm_end === null
 				);
 			});
+
 			if (sectionTickets) {
 				this.message = 'Tiene clientes en sus mesas'
 				this.tickets = sectionTickets;
@@ -139,7 +126,7 @@ export class SectionComponent implements OnInit {
 					'id': section._id,
 					'assigned': this.waiterService.section._id === section._id,
 					'cd_table': section.tx_section,
-					'tickets': ticketsPendingAllSections.filter(ticket => ticket.id_session.id_section === section._id && ticket.tm_end === null)
+					'tickets': ticketsPendingAllSections.filter(ticket => ticket.id_session?.id_section === section._id && ticket.tm_end === null)
 				});
 
 			}
