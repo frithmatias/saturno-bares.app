@@ -51,14 +51,14 @@ export class MenuComponent implements OnInit {
   }
   
   deleteMenuItem(idMenuItem: string): void {
-    this.sharedService.snackShow('Desea eliminar el menu?', 5000, 'ELIMINAR').then((ok: boolean) => {
+    this.sharedService.snack('Desea eliminar el menu?', 5000, 'ELIMINAR').then((ok: boolean) => {
       if (ok) {
         this.superuserService.deleteMenu(idMenuItem).subscribe((data: MenuResponse) => {
-          this.sharedService.snackShow(data.msg, 5000);
+          this.sharedService.snack(data.msg, 5000);
           this.submenuItems = this.submenuItems.filter(menu => menu._id != idMenuItem);
         },
           (err: MenuResponse) => {
-            this.sharedService.snackShow(err.msg, 5000);
+            this.sharedService.snack(err.msg, 5000);
           }
         )
       }

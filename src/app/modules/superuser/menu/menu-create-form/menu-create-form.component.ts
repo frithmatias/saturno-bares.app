@@ -70,7 +70,7 @@ export class MenuCreateFormComponent implements OnInit {
     this.menuForm?.patchValue({id_parent: this.idMenuSelected});
 
     if (this.menuForm.invalid) {
-      this.sharedService.snackShow('Formulario invalido', 2000);
+      this.sharedService.snack('Formulario invalido', 2000);
       return;
     }
 
@@ -89,20 +89,20 @@ export class MenuCreateFormComponent implements OnInit {
       this.superuserService.updateMenu(menu).subscribe((data: MenuResponse) => {
         if (data.ok) {
           this.itemUpdated.emit(data.menuitem);
-          this.sharedService.snackShow(data.msg, 5000);
+          this.sharedService.snack(data.msg, 5000);
           this.resetForm(formDirective);
         }
       }, (err: HttpErrorResponse) => {
-        this.sharedService.snackShow(err.error.msg, 5000);
+        this.sharedService.snack(err.error.msg, 5000);
       })
     } else {
       this.superuserService.createMenu(menu).subscribe((data: MenuResponse) => {
         this.itemUpdated.emit(data.menuitem);
-        this.sharedService.snackShow(data.msg, 5000);
+        this.sharedService.snack(data.msg, 5000);
         this.resetForm(formDirective);
         formDirective.resetForm();
       }, (err: HttpErrorResponse) => {
-        this.sharedService.snackShow(err.error.msg, 5000);
+        this.sharedService.snack(err.error.msg, 5000);
       }
       )
     }

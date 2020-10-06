@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
       let idCompany = this.loginService.user.id_company._id;
       this.readSections(idCompany);
     } else {
-      this.sharedService.snackShow('No tiene una empresa seleccionada', 5000);
+      this.sharedService.snack('No tiene una empresa seleccionada', 5000);
       this.loading = false;
       return;
     }

@@ -15,7 +15,7 @@ import { Subject, interval, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
-import { ScoreItemsResponse, ScoreItem } from '../../../interfaces/score.interface';
+import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 
 const TAIL_LENGTH = 10;
 
@@ -25,25 +25,18 @@ const TAIL_LENGTH = 10;
 	styleUrls: ['./myticket.component.css']
 })
 export class MyticketComponent implements OnInit {
+
 	timer: Subscription;
 	showAlert = false;
 	coming: boolean = false;
-	scores = new Map();
-
 	ticket: Ticket;
 	ticketTmEnd: number = null;
-
-	lastTicket: Ticket;
-	ticketsAll: Ticket[] = [];
-	ticketsCalled: Ticket[] = [];
+	tickets: Ticket[] = [];
 	ticketsTail: Ticket[] = [];
-	ticketsEnd: Ticket[] = [];
-	ticketsWaiting: Ticket[] = [];
 	averageToAtt: string; // millisencods
 	ticketsAhead: number;
-	waiterWorking: number;
-
 	scoreItems: ScoreItem[] = []
+	scores = new Map();
 
 	private subjectUpdateTickets$ = new Subject();
 
@@ -60,7 +53,7 @@ export class MyticketComponent implements OnInit {
 
 		if (!this.publicService.ticket) {
 			this.router.navigate(['/public/tickets']);
-			this.sharedService.snackShow('Debe obtener un turno primero.', 5000)
+			this.sharedService.snack('Debe obtener un turno primero.', 5000)
 			return;
 		}
 
@@ -87,25 +80,19 @@ export class MyticketComponent implements OnInit {
 	}
 
 	async getTickets() {
-		// traigo todos los tickets
-		if (!this.ticket) {
-			return;
-		}
+		if (!this.ticket) {	return;	}
 		let idCompany = this.ticket.id_company;
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
 			if (data.ok) {
+				this.tickets = data.tickets;
+				this.ticketsTail = data.tickets
+					.filter(ticket => ticket.tm_provided !== null)
+					.sort((a: Ticket, b: Ticket) => b.tm_provided - a.tm_provided)
+					.slice(0, TAIL_LENGTH);
+				console.log(this.ticketsTail)
+				this.pickMyTicket();
 
-
-
-				this.ticketsAll = data.tickets;
-				this.ticketsEnd = data.tickets.filter(ticket => ticket.tm_end !== null);
-				this.ticketsWaiting = data.tickets.filter(ticket => ticket.tm_end === null);
-				this.ticketsCalled = data.tickets.filter(ticket => ticket.tm_att !== null);
-				this.ticketsTail = [...this.ticketsCalled].sort((a: Ticket, b: Ticket) => b.tm_att - a.tm_att).slice(0, TAIL_LENGTH);
-				this.lastTicket = this.ticketsTail[0];
-				this.updateMyTicket();
-
-				if (this.ticket?.id_session) {
+				if (this.ticket?.id_session && !this.timer) {
 					this.timer = interval(500).subscribe(data => {
 						this.showAlert = !this.showAlert;
 					})
@@ -114,7 +101,8 @@ export class MyticketComponent implements OnInit {
 					this.showAlert = false;
 				}
 
-				if (this.ticket) { this.calculateTimeToAtt(); }
+				if (this.ticket && this.ticket.tm_provided === null) { this.calculateTimeToAtt(); }
+
 				const audio = new Audio();
 				audio.src = '../../assets/bell.wav';
 				audio.load();
@@ -123,12 +111,33 @@ export class MyticketComponent implements OnInit {
 		})
 	}
 
+	pickMyTicket(): void {
+		const pickMyTicket = this.tickets.filter(ticket => (
+			ticket._id === this.ticket._id
+		))[0];
+		if (pickMyTicket) {
+			if (pickMyTicket.tm_end !== null) {
+				this.getScoreItems().then(() => {
+					this.ticketTmEnd = pickMyTicket.tm_end;
+					this.publicService.clearPublicSession();
+				})
+			} else {
+				this.ticket = pickMyTicket;
+				this.publicService.ticket = pickMyTicket;
+				localStorage.setItem('ticket', JSON.stringify(this.ticket));
+			}
+		}
+	}
+
 	calculateTimeToAtt(): void {
+		let ticketsEnd = this.tickets.filter(ticket => ticket.tm_end !== null);
+		let ticketsWaiting = this.tickets.filter(ticket => ticket.tm_end === null);
+
 		// ticketsEndDesc: se usa para el cálculo de tiempos de atención 
 		// sólo tickets ordenados del último finalizado al primero
 		// sólo la cantidad en TAIL,
-
-		let ticketsEndDesc = this.ticketsEnd
+		console.log('calculando tiempos de atención...')
+		let ticketsEndDesc = ticketsEnd
 			.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
 			.slice(0, TAIL_LENGTH)
 			.filter(ticket => {
@@ -145,7 +154,7 @@ export class MyticketComponent implements OnInit {
 		// sólo tickets ordenados por sesion finalizado al primero
 		// sólo la cantidad en TAIL,
 
-		let ticketsSessionDesc = this.ticketsEnd
+		let ticketsSessionDesc = ticketsEnd
 			.sort((a: Ticket, b: Ticket) => b.id_session > a.id_session ? -1 : 1)
 			.slice(0, TAIL_LENGTH)
 
@@ -191,7 +200,7 @@ export class MyticketComponent implements OnInit {
 
 		// cuantos tengo adelante
 		let count = 0;
-		for (let ticket of this.ticketsWaiting) {
+		for (let ticket of ticketsWaiting) {
 			if (ticket._id === this.ticket._id) {
 				break;
 			} else {
@@ -214,30 +223,7 @@ export class MyticketComponent implements OnInit {
 		let AvgTo = sumTo / ticketsEndDesc.length;
 
 		let AvgAtt = ((AvgTa + AvgTo) * (this.ticketsAhead)) + ((AvgTa + AvgTo) / 4);
-		this.averageToAtt = `Será atendido en ${moment.duration(AvgAtt).humanize()}`;
-	}
-
-	updateMyTicket(): void {
-		if (this.ticket) {
-
-			const pickMyTicket = this.ticketsAll.filter(ticket => (
-				ticket._id === this.ticket._id
-			))[0];
-
-			if (pickMyTicket) {
-				if (pickMyTicket.tm_end !== null) {
-					// El ticket finalizó.
-					this.getScoreItems().then(() => {
-						this.ticketTmEnd = pickMyTicket.tm_end;
-						this.publicService.clearPublicSession();
-					})
-				} else {
-					this.ticket = pickMyTicket;
-					this.publicService.ticket = pickMyTicket;
-					localStorage.setItem('ticket', JSON.stringify(this.ticket));
-				}
-			}
-		}
+		this.averageToAtt = `Su mesa estará lista en ${moment.duration(AvgAtt).humanize()}`;
 	}
 
 	toggle(chat): void {
@@ -277,7 +263,6 @@ export class MyticketComponent implements OnInit {
 
 	getScoreItems() {
 		return new Promise(resolve => {
-			console.log(this.ticket)
 			let idSection = this.ticket.id_section._id;
 			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
 				this.scoreItems = data.scoreitems;
@@ -290,15 +275,18 @@ export class MyticketComponent implements OnInit {
 	setScore(idItem: string, nmScore: number): void {
 		this.scores.set(idItem, nmScore);
 
-		if(this.scores.size === this.scoreItems.length){
+		if (this.scores.size === this.scoreItems.length) {
 			let idTicket = this.ticket._id;
 			let dataScores: Score[] = [];
 			this.scores.forEach(function (valor, llave, mapaOrigen) {
-				
+
 				dataScores.push({ id_ticket: idTicket, id_scoreitem: llave, cd_score: valor });
 			});
 
-			this.publicService.sendScores(dataScores).subscribe((d) => {
+			this.publicService.sendScores(dataScores).subscribe((d: ScoresResponse) => {
+				if(d.ok){
+					delete this.ticket;
+				}
 			})
 
 			const Toast = Swal.mixin({
@@ -312,7 +300,7 @@ export class MyticketComponent implements OnInit {
 					toast.addEventListener('mouseleave', Swal.resumeTimer)
 				}
 			})
-	
+
 			Toast.fire({
 				icon: 'success',
 				title: '¡Gracias!'

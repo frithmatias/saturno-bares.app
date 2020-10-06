@@ -27,8 +27,8 @@
 
               <tr style="border-top: 0px; color: yellow;">
                 <td style="text-align: left; border: none;"></td>
-                <td style="text-align: left; border: none;"> Mesa </td>
-                <td style="text-align: right; border: none;"> En espera </td>
+                <td style="text-align: left; border: none;"> Sector </td>
+                <td style="text-align: right; border: none;"> Cola </td>
               </tr>
 
               <tr *ngFor="let section of pendingBySection">
@@ -44,7 +44,7 @@
                   </span>
                 </td>
                 <td style="text-align: left;">
-                  {{ section.tx_section }}
+                  {{ section.section }}
                 </td>
                 <td style="text-align: right;">
                   {{ section.tickets.length }}
@@ -72,6 +72,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="bg-white px-0 mx-0">
+
                   <span *ngIf="table.id_session?.id_ticket.bl_called" class="xl mdi mdi-bell text-danger mx-2"></span>
                   <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle text-danger mx-2"></span>
                   <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle text-secondary mx-2"></span>
@@ -135,7 +136,7 @@
                 </div>
                 <div class="col p-0">
                   <div>TC</div>
-                  <div>{{pendingTicketsCount}}</div>
+                  <div>-</div>
                 </div>
               </div>
 

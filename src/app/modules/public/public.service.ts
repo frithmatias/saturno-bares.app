@@ -17,7 +17,6 @@ export class PublicService {
   ticket: Ticket;
 
   tickets: Ticket[] = [];
-  allMytickets: Ticket[] = [];
 
   chatMessages: {
     own: boolean,
@@ -75,7 +74,7 @@ export class PublicService {
 
   getTickets(idCompany: string) {
     if (!idCompany) { return; }
-    const url = environment.url + '/t/gettickets/' + idCompany;
+    const url = environment.url + '/t/readtickets/' + idCompany;
     return this.http.get(url);
   }
 
@@ -123,7 +122,6 @@ export class PublicService {
 
   clearPublicSessionComplete(): void {
     this.router.navigate(['/public']);
-    this.allMytickets = null;
   }
 
 }

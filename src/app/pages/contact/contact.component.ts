@@ -23,7 +23,7 @@ showContactData = false;
   enviar( f: NgForm): void {
 
     if (f.invalid) {
-      this.sharedService.snackShow('Por favor verifique los datos ingresados.', 2000);
+      this.sharedService.snack('Por favor verifique los datos ingresados.', 2000);
       return;
     }
 
@@ -37,7 +37,7 @@ showContactData = false;
     
     this.publicService.sendContact(contact).subscribe( (resp: any) => {
       f.reset();
-      this.sharedService.snackShow(`Gracias! Recibimos su mensaje.`, 2000, 'Aceptar').finally(() => {
+      this.sharedService.snack(`Gracias! Recibimos su mensaje.`, 2000, 'Aceptar').finally(() => {
         this.router.navigate(['/home'])
       })
     })

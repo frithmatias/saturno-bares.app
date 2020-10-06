@@ -16,3 +16,18 @@ export interface ScoreItemsResponse {
 	msg: string;
 	scoreitems: ScoreItem[] | null;
 }
+
+
+export interface Score {
+	cd_score: number, 
+	id_scoreitem?: string, // idle, paused, busy
+	id_ticket?: string,
+	__v?: number,
+	_id?: string,
+}
+
+export interface ScoresResponse {
+	ok: boolean;
+	msg: string;
+	scores: Score[] | null;
+}

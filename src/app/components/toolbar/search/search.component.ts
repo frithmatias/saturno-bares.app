@@ -37,10 +37,10 @@ export class SearchComponent implements OnInit {
           this.companies = data.companies;
         } else {
           e.value = '';
-          this.sharedService.snackShow('No existen resultados.', 2000, null);
+          this.sharedService.snack('No existen resultados.', 2000, null);
         }
       }, () => {
-        this.sharedService.snackShow('Error al obtener las empresas', 2000, null);
+        this.sharedService.snack('Error al obtener las empresas', 2000, null);
       })
       // this.router.navigate(['/public', e.value]);
     }

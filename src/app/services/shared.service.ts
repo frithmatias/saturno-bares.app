@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SharedService {
 
   constructor(
-    private snack: MatSnackBar
+    private _snack: MatSnackBar
   ) { }
 
 
@@ -39,9 +39,9 @@ export class SharedService {
 		stepper.reset();
 	}
 
-	snackShow(msg: string, dur: number, button?: string): Promise<boolean> {
+	snack(msg: string, dur: number, button?: string): Promise<boolean> {
 		return new Promise((resolve) => {
-			this.snack.open(msg, button, { duration: dur }).afterDismissed().subscribe(data => {
+			this._snack.open(msg, button, { duration: dur }).afterDismissed().subscribe(data => {
 				if (data.dismissedByAction) {
 					resolve(true);
 				} else {

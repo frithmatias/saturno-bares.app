@@ -5,16 +5,16 @@
     <div class="saturno-card m-0">
 
         <!------------------------------>
-        <!-- SU TURNO REDONDO -->
+        <!-- SU TURNO -->
         <!------------------------------>
-        <div class="screen-myticket-container shadow-box my-3" *ngIf="ticket">
+        <div class="screen-myticket-container shadow-box my-3" *ngIf="ticketTmEnd===null">
             <div class="screen-myticket-text-header">
                 SU TURNO
             </div>
             <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
                 {{ ticket?.id_position }}
             </div>
-            <div class="screen-myticket-text-footer mt-3" style="line-height: normal;" *ngIf="averageToAtt">
+            <div class="screen-myticket-text-footer mt-3" style="line-height: normal;">
                 <span *ngIf="!ticket?.id_session">
                     {{ averageToAtt}}
                 </span>
@@ -27,14 +27,16 @@
         <!------------------------------>
         <!-- FINALIZADO -->
         <!------------------------------>
+
         <div class="card text-white bg-danger my-4" *ngIf="ticketTmEnd!==null">
             <div class="card-header screen-text-title">SU OPINION</div>
             <div class="banner-content p-3" style="background-color: rgb(141, 51, 51)">
 
                 <div class="xl">¡Su turno ha finalizado!</div>
 
-                <div class="md">¿Podría dejarnos su opinión
-                    sobre la calidad de atención?</div>
+                <div class="md">
+                    ¿Podría dejarnos su opinión?
+                </div>
 
                 <div class="text-white my-4 table-responsive-sm">
                     <table class="table table-sm text-white">

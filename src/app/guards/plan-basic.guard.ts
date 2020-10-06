@@ -17,7 +17,7 @@ export class PlanBasicGuard implements CanLoad {
       if(this.loginService.user.cd_pricing > 0){
         return true;
       } else {
-        this.sharedService.snackShow('Su plan no incluye esta sección.', 2000)
+        this.sharedService.snack('Su plan no incluye esta sección.', 2000)
         this.router.navigate(['/pricing']); 
         return false;
       }

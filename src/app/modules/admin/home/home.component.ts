@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
 			this.scrollTop();
 			stepper.next();
 		} else {
-			this.sharedService.snackShow('Use el formulario para crear un Bar / Resto!', 5000);
+			this.sharedService.snack('Use el formulario para crear un Bar / Resto!', 5000);
 		}
 	}
 	

@@ -55,19 +55,12 @@ export class WaiterService {
 		return this.http.post(url, data, { headers });
 	}
 
+
 	readTables(idCompany: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/section/readtables/' + idCompany;
-		return this.http.get(url, { headers });
-	}
-
-	readSectionTables(idSection: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
-		const url = environment.url + '/table/readsectiontables/' + idSection;
+		const url = environment.url + '/table/readtables/' + idCompany;
 		return this.http.get(url, { headers });
 	}
 
@@ -79,9 +72,9 @@ export class WaiterService {
 		return this.http.get(url, { headers });
 	}
 
-	getTickets(idCompany: string) {
+	readTickets(idCompany: string) {
 		if (!idCompany) { return; }
-		const url = environment.url + '/t/gettickets/' + idCompany;
+		const url = environment.url + '/t/readtickets/' + idCompany;
 		return this.http.get(url);
 	}
 

@@ -30,7 +30,7 @@ export class TokenGuard implements CanLoad {
 		// verifica si el token expiro
 		const expira = this.expira(payload.exp); // 1599861832
 		if (expira) {
-			this.sharedServcie.snackShow('La sesión expiró. Debe iniciar sesión nuevamente.', 5000);
+			this.sharedServcie.snack('La sesión expiró. Debe iniciar sesión nuevamente.', 5000);
 			this.loginService.logout();
 			this.router.navigate(['/home']);
 			return false;
