@@ -94,7 +94,7 @@ export class SectionComponent implements OnInit {
 		this.subjectUpdateTickets$.complete();
 		this.subjectTurnoCancelado$.complete();
 	}
-		
+
 	// ========================================================
 	// READ METHODS
 	// ========================================================
@@ -167,7 +167,7 @@ export class SectionComponent implements OnInit {
 	// ========================================================
 	// SESSION METHODS
 	// ========================================================
-	
+
 	clearTicketSession = (ticket: Ticket) => { // close ONE client session
 		this.tickets = this.tickets.filter(thisTicket => thisTicket._id !== ticket._id);
 		this.waiterService.chatMessages = this.waiterService.chatMessages.filter(message => message.id_ticket !== ticket._id)
@@ -235,8 +235,6 @@ export class SectionComponent implements OnInit {
 				this.readTables();
 			})
 	}
-
-
 
 	// ========================================================
 	// TICKET METHODS

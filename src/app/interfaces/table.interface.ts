@@ -8,7 +8,7 @@ export interface Table {
 	id_section: string, 
 	nm_table: number, // 15, 16, 17, etc, número de mesa
 	nm_persons: number,  
-	tx_status?: string, // idle, paused, busy
+	tx_status?: string, // idle, paused, busy, reserved 
 	id_session?: tableSession,
 	__v?: number,
 	_id?: string,
