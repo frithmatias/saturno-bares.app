@@ -46,6 +46,7 @@ export class SectionComponent implements OnInit {
 
 	sections: Section[] = [];
 	tables: Table[] = [];
+	table: Table;
 	tickets: Ticket[] = [];
 
 	sectionSelected: string = ''; // reassign
@@ -216,6 +217,10 @@ export class SectionComponent implements OnInit {
 	// TABLE METHODS
 	// ========================================================
 
+	setTable = (table: Table) => {
+		this.table = table;
+	}
+
 	toggleTableStatus = (table: Table) => {
 
 		let idTable = table._id;
@@ -230,6 +235,8 @@ export class SectionComponent implements OnInit {
 				this.readTables();
 			})
 	}
+
+
 
 	// ========================================================
 	// TICKET METHODS
