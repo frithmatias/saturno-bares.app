@@ -14,6 +14,7 @@ import { WaiterComponent } from './waiter.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SectionComponent } from './section/section.component';
+import { RequestedComponent } from './section/requested/requested.component';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { SectionComponent } from './section/section.component';
     WaiterComponent, 
     HomeComponent,
     DashboardComponent, 
-    SectionComponent
+    SectionComponent, RequestedComponent
   ],
   imports: [
     FormsModule,

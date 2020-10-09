@@ -55,7 +55,6 @@ export class WaiterService {
 		return this.http.post(url, data, { headers });
 	}
 
-
 	readTables(idCompany: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
@@ -72,12 +71,20 @@ export class WaiterService {
 		return this.http.get(url, { headers });
 	}
 
+	reserveTables(idTicket: string, cdTables: number[]) {
+		const data = { idTicket, cdTables };
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/table/reservetables';
+		return this.http.post(url, data, { headers });
+	}
+
 	readTickets(idCompany: string) {
 		if (!idCompany) { return; }
 		const url = environment.url + '/t/readtickets/' + idCompany;
 		return this.http.get(url);
 	}
-
 
 	releaseTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
@@ -97,7 +104,6 @@ export class WaiterService {
 		return this.http.post(url, data, { headers });
 	}
 
-
 	attendedTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
 		const headers = new HttpHeaders({
@@ -106,7 +112,6 @@ export class WaiterService {
 		const url = environment.url + '/t/attendedticket';
 		return this.http.post(url, data, { headers });
 	}
-
 
 	endTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };

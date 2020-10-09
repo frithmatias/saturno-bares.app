@@ -13,7 +13,7 @@ export interface Ticket {
 	bl_priority: boolean;
 	bl_called: boolean;
 	tx_status: string; // assigned [privided, assigned, queued, requested]
-	cd_tables?: [number]; // only for requested and assigned tickets
+	cd_tables?: number[]; // only for requested and assigned tickets
     id_position: number; // assigned
     id_socket_client: string; // primary
     id_socket_waiter?: string | null; // assigned

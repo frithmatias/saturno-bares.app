@@ -89,7 +89,6 @@ export class MyticketComponent implements OnInit {
 					.filter(ticket => ticket.tm_provided !== null)
 					.sort((a: Ticket, b: Ticket) => b.tm_provided - a.tm_provided)
 					.slice(0, TAIL_LENGTH);
-				console.log(this.ticketsTail)
 				this.pickMyTicket();
 
 				if (this.ticket?.id_session && !this.timer) {
@@ -136,7 +135,6 @@ export class MyticketComponent implements OnInit {
 		// ticketsEndDesc: se usa para el cálculo de tiempos de atención 
 		// sólo tickets ordenados del último finalizado al primero
 		// sólo la cantidad en TAIL,
-		console.log('calculando tiempos de atención...')
 		let ticketsEndDesc = ticketsEnd
 			.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
 			.slice(0, TAIL_LENGTH)
@@ -266,7 +264,6 @@ export class MyticketComponent implements OnInit {
 			let idSection = this.ticket.id_section._id;
 			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
 				this.scoreItems = data.scoreitems;
-				console.log(data)
 				resolve();
 			})
 		})
