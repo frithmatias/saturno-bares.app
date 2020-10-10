@@ -1,5 +1,5 @@
 <div class="saturno-bg-tile-1">
-  <div class="saturno-card saturno-bg-grey-5 shadow-box animated fadeIn">
+  <div class="saturno-card p-0 animated fadeIn">
 
     <div *ngIf="loading" class="mt-5 animated fadeIn">
       <mat-spinner></mat-spinner>
@@ -15,17 +15,17 @@
         <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              <span class="xl mdi mdi-select-group text-warning"></span>
               <span class="sidenav-title-text mx-2">Sectores</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="card bg-secondary mb-4">
+          <div class="card bg-secondary mb-3">
             <div class="card-body table-responsive-sm  p-2">
               <div class="text-white m-3" *ngIf='message'>
                 {{message}}
               </div>
 
               <mat-radio-group [(ngModel)]="sectionSelected">
-
                 <table class="table table-sm text-white text-center">
 
                   <tr style="border-top: 0px; color: yellow;">
@@ -59,10 +59,25 @@
                   </tr>
 
                 </table>
-
               </mat-radio-group>
 
             </div>
+          </div>
+          <div class="mb-2">
+            <button class="btn btn-danger p-0 col-4" (click)="releaseSection()" [disabled]="waitForClient"
+              [ngClass]="{'button-disabled': waitForClient}">
+
+              <table width="100%" class="shadow-box">
+                <tr>
+                  <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                    <div class="mdi mdi-power xl"></div>
+                  </td>
+                  <td>
+                    Salir
+                  </td>
+                </tr>
+              </table>
+            </button>
           </div>
         </mat-expansion-panel>
 
@@ -73,18 +88,19 @@
         <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              <span class="xl mdi mdi-silverware-fork-knife text-warning"></span>
               <span class="sidenav-title-text mx-2">Mis Mesas</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
+
           <div class="container row px-0 mb-4">
             <div *ngFor="let table of tables" class="col-4 px-0 p-1">
               <div class="btn btn-block p-0" [ngClass]="{
-            'btn-success': table.tx_status==='idle',
-            'btn-danger': table.tx_status==='busy',
-            'btn-secondary': table.tx_status==='paused',
-            'btn-dark': table.tx_status==='reserved'
-          }" (click)="selectTable(table)">
-
+                  'btn-success': table.tx_status==='idle',
+                  'btn-danger': table.tx_status==='busy',
+                  'btn-secondary': table.tx_status==='paused',
+                  'btn-dark': table.tx_status==='reserved'
+              }" (click)="selectTable(table)">
                 <table width="100%" class="shadow-box">
                   <tr>
                     <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
@@ -119,126 +135,146 @@
           <!-- TABLE & TICKET ACTIONS -->
           <!------------------------------>
 
-          <div class="card bg-light animated fadeIn" *ngIf="table">
-            <div class="card-header xl">Mesa {{table.nm_table}}</div>
+          <div *ngIf="table">
+
+            <div *ngIf="table.tx_status==='busy'" class="banner-content xl">
+              Mesa {{table.nm_table}}: Turno {{ table.id_session?.id_ticket?.id_position }}
+            </div>
+            <div *ngIf="table.tx_status!=='busy'" class="banner-content xl">
+              Mesa {{table.nm_table}}: Sin clientes
+            </div>
+
             <div>
-              <div class="card-body">
-                <div *ngIf="table.tx_status==='busy'">
-                  <div>
-                    Atendiendo turno
-                  </div>
-                  <div class="banner-content xxxl">
-                    {{ table.id_ticket?.id_position }}
-                  </div>
+              <mat-slide-toggle [checked]="table.tx_status==='idle'" class="mx-2 my-1"
+                [disabled]="waitForClient || table.tx_status==='busy'" (click)="toggleTableStatus(table)">
+                <span *ngIf="table.tx_status==='busy'">Mesa Ocupada</span>
+                <span *ngIf="table.tx_status==='paused'">Activar Mesa</span>
+                <span *ngIf="table.tx_status==='idle'">Mesa Activada!</span>
+              </mat-slide-toggle>
+            </div>
+
+            <div class="card-footer">
+              <div class="row">
+                <div class="col p-0">
+                  <div>TE</div>
+                  <div>{{tmWaitingStr}}</div>
                 </div>
-                <div>
-                  <mat-slide-toggle [checked]="table.tx_status==='idle'" class="mx-2 my-1"
-                    [disabled]="waitForClient || table.tx_status==='busy'" (click)="toggleTableStatus(table)">
-                    <span *ngIf="table.tx_status==='busy'">
-                      Mesa Ocupada
-                    </span>
-                    <span *ngIf="table.tx_status==='paused'">
-                      Activar Mesa
-                    </span>
-                    <span *ngIf="table.tx_status==='idle'">
-                      Mesa Activada!
-                    </span>
-                  </mat-slide-toggle>
+                <div class="col p-0">
+                  <div>TA</div>
+                  <div>{{tmAttention}}</div>
                 </div>
-              </div>
-              <div *ngIf="table.id_session" class="card-footer">
-                <div class="row">
-                  <div class="col p-0">
-                    <div>TE</div>
-                    <div>{{tmWaitingStr}}</div>
-                  </div>
-                  <div class="col p-0">
-                    <div>TA</div>
-                    <div>{{tmAttention}}</div>
-                  </div>
-                  <div class="col p-0">
-                    <div>Tm</div>
-                    <div>{{timerCount}}</div>
-                  </div>
-                  <div class="col p-0">
-                    <div>TC</div>
-                    <div>-</div>
-                  </div>
+                <div class="col p-0">
+                  <div>Tm</div>
+                  <div>{{timerCount}}</div>
                 </div>
-
-                <!------------------------------>
-                <!-- ACTIONS -->
-                <!------------------------------>
-                <div class="row">
-                  <!-- priority slide -->
-                  <div class="col-4 button-content">
-                    <mat-slide-toggle [(ngModel)]="blPriority" class="mx-2 my-1"
-                      [disabled]="waitForClient || !table.tx_status==='busy' || sectionSelected === ''">
-                      <span class="mdi mdi-priority-high xl mx-1"></span>
-                    </mat-slide-toggle>
-                  </div>
-
-                  <!-- reassign ticket -->
-                  <div class="col-4 button-content">
-                    <button class="btn btn-success button"
-                      [ngClass]="{'button-disabled':waitForClient || !tickets || sectionSelected === ''}"
-                      [disabled]="waitForClient || !table.tx_status==='busy' || sectionSelected === ''"
-                      (click)="reassignTicket(ticket)">
-                      <div>
-                        <div class="mdi mdi-list-status xl"></div>
-                      </div>
-                      <div class="button-inner">
-                        Mover
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- attened ticket -->
-                  <div class="col-4 button-content">
-                    <button class="btn btn-success button" (click)="attendedTicket(table.id_session?.id_ticket)"
-                      [disabled]="!table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': !table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'}">
-                      <div>
-                        <div class="mdi mdi-bell xl"></div>
-                      </div>
-                      <div class="button-inner">
-                        Atendido
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- release ticket -->
-                  <div class="col-4 button-content">
-                    <button class="btn btn-success button" (click)="releaseTicket(ticket)"
-                      [disabled]="waitForClient || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
-                      <div>
-                        <div class="mdi mdi-replay xl"></div>
-                      </div>
-                      <div class="button-inner">
-                        Soltar
-                      </div>
-                    </button>
-                  </div>
-
-                  <!-- end ticket -->
-                  <div class="col-4 button-content">
-                    <button class="btn btn-danger button" (click)="endTicket(table.id_session?.id_ticket)"
-                      [disabled]="waitForClient || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
-                      <div>
-                        <div class="mdi mdi-close xl"></div>
-                      </div>
-                      <div class="button-inner">
-                        Finalizar
-                      </div>
-                    </button>
-                  </div>
-
+                <div class="col p-0">
+                  <div>TC</div>
+                  <div>-</div>
                 </div>
               </div>
             </div>
+
+            <!------------------------------>
+            <!-- ACTIONS -->
+            <!------------------------------>
+
+            <div class="container row px-0">
+              <!-- priority slide -->
+              <div class="col-4 px-0 p-1">
+                <button class="btn btn-block p-0">
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-priority-high xl"></span>
+                      </td>
+                      <td>
+                        <mat-slide-toggle [(ngModel)]="blPriority" class="mx-2 my-1"
+                          [disabled]="waitForClient || !table.id_session || sectionSelected === ''">
+                        </mat-slide-toggle>
+                      </td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
+              <!-- reassign ticket -->
+              <div class="col-4 px-0 p-1">
+                <button class="btn btn-primary btn-block p-0"
+                  [ngClass]="{'button-disabled':waitForClient || !table.id_session || sectionSelected === ''}"
+                  [disabled]="waitForClient || !table.id_session || sectionSelected === ''"
+                  (click)="reassignTicket(table.id_session?.id_ticket)">
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-arrow-right-bold-circle-outline xl"></span>
+                      </td>
+                      <td>
+                        Mover
+                      </td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
+              <!-- attened ticket -->
+              <div class="col-4 px-0 p-1">
+                <button class="btn btn-primary btn-block p-0" (click)="attendedTicket(table.id_session?.id_ticket)"
+                  [disabled]="!table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'"
+                  [ngClass]="{'button-disabled': !table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'}">
+
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-bell xl"></span>
+                      </td>
+                      <td>
+                        Atendido
+                      </td>
+                    </tr>
+                  </table>
+
+                </button>
+              </div>
+
+              <!-- release ticket -->
+              <div class="col-4 px-0 p-1">
+                <button class="btn btn-primary btn-block p-0" (click)="releaseTicket(table.id_session?.id_ticket)"
+                  [disabled]="waitForClient || table.tx_status!=='busy'"
+                  [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-replay xl"></span>
+                      </td>
+                      <td>
+                        Soltar
+                      </td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
+              <!-- end ticket -->
+              <div class="col-4 px-0 p-1">
+                <button class="btn btn-danger btn-block p-0" (click)="endTicket(table.id_session?.id_ticket)"
+                  [disabled]="waitForClient || table.tx_status!=='busy'"
+                  [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-close xl"></span>
+                      </td>
+                      <td>
+                        Finalizar
+                      </td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
+            </div>
           </div>
+
         </mat-expansion-panel>
 
         <!------------------------------>
@@ -247,21 +283,19 @@
 
         <mat-expansion-panel *ngIf="requested.length > 0">
 
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header class="bg-danger">
             <mat-panel-title>
-              <span class="sidenav-title-text mx-2">Mesas Requeridas</span>
+              <span class="xl mdi mdi-alert text-warning"></span>
+              <span class="sidenav-title-text text-warning">Mesas Requeridas</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
 
           <mat-accordion multi="false">
             <mat-expansion-panel *ngFor="let ticket of requested">
 
-              <mat-expansion-panel-header class="bg-danger">
+              <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <div class="lg text-white">
-                    <span *ngIf="ticket.tx_status==='requested'" class="xl mdi mdi-eye text-white"></span>
-                    <span *ngIf="ticket.tx_status==='assigned'" class="xl mdi mdi-check-circle text-white"></span>
-
+                  <div class="lg text-danger">
                     Turno {{ticket.id_position}}: {{ ticket.nm_persons }} personas
                   </div>
                 </mat-panel-title>
@@ -291,8 +325,69 @@
                 </div>
               </div>
 
-              <div class="btn btn-success btn-block" (click)="reserveTables(ticket)"><span class="mdi mdi-content-save"></span> Guardar </div>
+              <div class="btn btn-success btn-block" (click)="assignTables(ticket, false)"><span
+                  class="mdi mdi-content-save"></span> Asignar </div>
+              <div class="btn btn-secondary btn-block" (click)="assignTables(ticket, true)"><span
+                  class="mdi mdi-content-save"></span> Asignar y Proveer </div>
 
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </mat-expansion-panel>
+
+        <!------------------------------>
+        <!-- TAIL -->
+        <!------------------------------>
+
+        <mat-expansion-panel *ngIf="waiting.length > 0">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="xl mdi mdi-format-list-numbered text-primary"></span>
+              <span class="sidenav-title-text">Cola</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-accordion multi="false">
+            <mat-expansion-panel *ngFor="let ticket of waiting">
+
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <div class="lg text-danger">
+                    {{ticket.id_position}} <span class="mdi mdi-human-male"> {{ ticket.nm_persons }} </span>
+                    {{ticket.tx_status}}
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="container row px-0 mb-4">
+                <div *ngFor="let table of tables" class="col-4 px-0 p-1">
+                  <div class="btn btn-block p-0" [ngClass]="{
+              'btn-success': ticket.cd_tables.includes(table.nm_table),
+              'btn-secondary': !ticket.cd_tables.includes(table.nm_table)
+            }" (click)="setReserve(table, ticket)">
+
+                    <table width="100%" class="shadow-box">
+                      <tr>
+                        <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                          <span class="xl">{{table.nm_table}}</span>
+                        </td>
+                        <td>
+                          <span *ngIf="ticket.cd_tables.includes(table.nm_table)"
+                            class="xl mdi mdi-check-circle text-white"></span>
+                          <span *ngIf="!ticket.cd_tables.includes(table.nm_table)"
+                            class="lg mdi mdi-human-male text-warning">{{table.nm_persons}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn btn-success btn-block" (click)="assignTables(ticket, false)"><span
+                  class="mdi mdi-content-save"></span> Asignar </div>
+              <div class="btn btn-secondary btn-block" (click)="assignTables(ticket, true)"><span
+                  class="mdi mdi-content-save"></span> Asignar y Proveer </div>
             </mat-expansion-panel>
           </mat-accordion>
 
@@ -300,25 +395,6 @@
 
 
       </mat-accordion>
-    </div>
-  </div>
-</div>
-
-
-<div class="container bg-light fixed-bottom shadow-box no-radius text-center py-1">
-  <div class="row">
-
-    <!-- exit section -->
-    <div class="col button-content">
-      <button class="btn btn-danger button" (click)="releaseSection()" [disabled]="waitForClient"
-        [ngClass]="{'button-disabled': waitForClient}">
-        <div>
-          <div class="mdi mdi-power xl"></div>
-        </div>
-        <div class="button-inner">
-          Salir
-        </div>
-      </button>
     </div>
   </div>
 </div>

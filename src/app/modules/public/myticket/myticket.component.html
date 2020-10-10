@@ -19,7 +19,7 @@
                     {{ averageToAtt}}
                 </span>
                 <span *ngIf="ticket?.id_session">
-                    Pase a la mesa {{ ticket?.id_session?.id_table?.nm_table }}
+                    Pase a la mesa {{ ticket?.id_session?.id_tables?.nm_table }}
                 </span>
             </div>
         </div>
@@ -98,7 +98,7 @@
                     <td style="text-align: center;" class="screen-history-text">
                         {{ ticket.id_position }}</td>
                     <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_session.id_table.nm_table }}</td>
+                        {{ ticket.id_session.id_tables.nm_table }}</td>
                     <td style="padding: 0; vertical-align: middle;">
                         <span *ngIf="!ticket.tm_end" style="color: blueviolet">
                             <span class="mdi mdi-contactless-payment-circle-outline screen-history-icon"></span>

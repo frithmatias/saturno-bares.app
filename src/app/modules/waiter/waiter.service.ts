@@ -55,11 +55,11 @@ export class WaiterService {
 		return this.http.post(url, data, { headers });
 	}
 
-	readTables(idCompany: string) {
+	readSectionTables(idSection: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/table/readtables/' + idCompany;
+		const url = environment.url + '/table/readsectiontables/' + idSection;
 		return this.http.get(url, { headers });
 	}
 
@@ -71,12 +71,12 @@ export class WaiterService {
 		return this.http.get(url, { headers });
 	}
 
-	reserveTables(idTicket: string, cdTables: number[]) {
-		const data = { idTicket, cdTables };
+	assignTables(idTicket: string, cdTables: number[], blProvide: boolean = false) {
+		const data = { idTicket, cdTables, blProvide };
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		const url = environment.url + '/table/reservetables';
+		const url = environment.url + '/table/assigntables';
 		return this.http.post(url, data, { headers });
 	}
 
@@ -86,8 +86,8 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
-	releaseTicket(idTicket: string): Observable<object> {
-		const data = { idTicket };
+	releaseTicket(ticket: Ticket): Observable<object> {
+		const data = { ticket };
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});

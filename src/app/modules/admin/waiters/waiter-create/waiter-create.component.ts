@@ -66,7 +66,6 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		if (changes.waiterEdit.currentValue?.id_company._id) {
 			let idCompany = changes.waiterEdit.currentValue.id_company._id;
 			this.forma?.patchValue({ idCompany });
-			this.getTables(idCompany);
 		}
 		
 		this.forma?.patchValue({
@@ -77,12 +76,6 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 			password2: '******'
 		})
 
-	}
-
-	getTables(idCompany: string) {
-		this.adminService.readTables(idCompany).subscribe(() => {
-
-		})
 	}
 
 	// validators

@@ -64,6 +64,7 @@ export class MyticketComponent implements OnInit {
 		// listen for tickets
 		this.wsService.updateTicketsClients().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(() => {
+			console.log('Backend solicita actualizar tickets...')
 			this.getTickets();
 		});
 
@@ -114,6 +115,7 @@ export class MyticketComponent implements OnInit {
 		const pickMyTicket = this.tickets.filter(ticket => (
 			ticket._id === this.ticket._id
 		))[0];
+		console.log('Ticket picked:', pickMyTicket)
 		if (pickMyTicket) {
 			if (pickMyTicket.tm_end !== null) {
 				this.getScoreItems().then(() => {

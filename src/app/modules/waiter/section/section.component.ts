@@ -45,7 +45,12 @@ export class SectionComponent implements OnInit {
 
 	sections: Section[] = [];
 	tickets: Ticket[] = [];
+
+	queued: Ticket[] = [];
 	requested: Ticket[] = [];
+	assigned: Ticket[] = [];
+	waiting: Ticket[] = [];
+
 	tables: Table[] = [];
 	table: Table;
 
@@ -76,17 +81,23 @@ export class SectionComponent implements OnInit {
 		}
 
 		this.sections = await this.readSections()
-		this.tables = await this.readTables()
+		this.tables = await this.readSectionTables()
 		this.tickets = await this.readTickets();
 		this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
+		this.waiting = this.tickets.filter(ticket =>
+			ticket.tx_status === 'queued' ||
+			ticket.tx_status === 'assigned' ||
+			(ticket.tx_status === 'finished' && ticket.tm_provided === null)
+		);
 
 		// hot subjects subscribe to socket.io listeners
 		this.wsService.updateTicketsWaiters().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(async () => {
-			this.tables = await this.readTables()
+			this.tables = await this.readSectionTables()
 			this.tickets = await this.readTickets();
 			this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
-			console.log('acutalizando...', this.tables, this.tickets)
+			this.waiting = this.tickets.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned');
+
 		});
 
 		this.loading = false;
@@ -101,7 +112,7 @@ export class SectionComponent implements OnInit {
 	// READ METHODS
 	// ========================================================
 
-	readSections = ():Promise<Section[]> => {
+	readSections = (): Promise<Section[]> => {
 		return new Promise((resolve, reject) => {
 			let idCompany = this.waiterService.section.id_company;
 			this.waiterService.readSections(idCompany)
@@ -115,14 +126,14 @@ export class SectionComponent implements OnInit {
 		})
 	}
 
-	readTables = (): Promise<Table[]> => {
+	readSectionTables = (): Promise<Table[]> => {
 		return new Promise((resolve, reject) => {
-			let idCompany = this.waiterService.section.id_company;
-			this.waiterService.readTables(idCompany)
+			let idSection = this.waiterService.section._id;
+			this.waiterService.readSectionTables(idSection)
 				.subscribe(
 					(data: TablesResponse) => {
+						console.log(data)
 						if (data.ok) {
-							console.log(data)
 							resolve(data.tables);
 						} else { reject([]); }
 					},
@@ -135,47 +146,47 @@ export class SectionComponent implements OnInit {
 
 			let idCompany = this.loginService.user.id_company?._id;
 			return this.waiterService.readTickets(idCompany)
-			.subscribe((data: TicketsResponse) => {
+				.subscribe((data: TicketsResponse) => {
 
-				const sectionTickets = data.tickets.filter(ticket => {
-					return (
-						ticket.id_section._id === this.waiterService.section._id &&
-						ticket.tm_end === null
-					);
-				});
-
-				if (sectionTickets) {
-					this.message = 'Tiene clientes en sus mesas'
-					resolve(sectionTickets);
-				} else {
-					delete this.tickets;
-					reject([]);
-				}
-	
-				
-				const ticketsPendingAllSections = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null);
-				const ticketsPendingThisSection = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null &&
-						ticket.id_section._id === this.waiterService.section._id
-				);
-	
-				if (ticketsPendingThisSection.length > 0) {
-					this.message = `Hay ${ticketsPendingThisSection.length} clientes esparando una mesa.`;
-				} else {
-					this.message = `No hay solicitud de mesa para este sector.`
-					
-				}
-				this.pendingBySection = [];
-				for (let section of this.sections) {
-					this.pendingBySection.push({
-						'id': section._id,
-						'assigned': this.waiterService.section._id === section._id,
-						'section': section.tx_section,
-						'queued': ticketsPendingAllSections.filter(ticket => ticket.id_section._id === section._id && ticket.tm_end === null && ticket.tx_status === 'queued').length,
-						'requested': ticketsPendingAllSections.filter(ticket => ticket.id_section._id === section._id && ticket.tm_end === null && ticket.tx_status === 'requested').length
+					const sectionTickets = data.tickets.filter(ticket => {
+						return (
+							ticket.id_section._id === this.waiterService.section._id &&
+							ticket.tm_end === null
+						);
 					});
-				}
-				this.loading = false;
-			})
+
+					if (sectionTickets) {
+						this.message = 'Tiene clientes en sus mesas'
+						resolve(sectionTickets);
+					} else {
+						delete this.tickets;
+						reject([]);
+					}
+
+
+					const ticketsPendingAllSections = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null);
+					const ticketsPendingThisSection = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null &&
+						ticket.id_section._id === this.waiterService.section._id
+					);
+
+					if (ticketsPendingThisSection.length > 0) {
+						this.message = `Hay ${ticketsPendingThisSection.length} clientes esparando una mesa.`;
+					} else {
+						this.message = `No hay solicitud de mesa para este sector.`
+
+					}
+					this.pendingBySection = [];
+					for (let section of this.sections) {
+						this.pendingBySection.push({
+							'id': section._id,
+							'assigned': this.waiterService.section._id === section._id,
+							'section': section.tx_section,
+							'queued': ticketsPendingAllSections.filter(ticket => ticket.id_section._id === section._id && ticket.tm_end === null && ticket.tx_status === 'queued').length,
+							'requested': ticketsPendingAllSections.filter(ticket => ticket.id_section._id === section._id && ticket.tm_end === null && ticket.tx_status === 'requested').length
+						});
+					}
+					this.loading = false;
+				})
 
 		})
 	}
@@ -216,7 +227,8 @@ export class SectionComponent implements OnInit {
 	releaseSection = () => {
 
 		if (this.tickets.length > 0) {
-			this.message = 'No puede cerrar la sesión, tiene una sesiones de mesa activas.';
+			this.message = 'No puede cerrar la sesión tiene mesas ocupadas.';
+			this.sharedService.snack(this.message, 5000);
 			return;
 		}
 
@@ -234,25 +246,26 @@ export class SectionComponent implements OnInit {
 	// ========================================================
 
 	selectTable = (table: Table) => {
+		console.log(table)
 		this.table = table;
 	}
 
 	setReserve = (table: Table, ticket: Ticket) => {
 		console.log(table, ticket)
-		ticket.cd_tables = ticket.cd_tables.includes(table.nm_table) ?  ticket.cd_tables.filter(numtable => numtable !== table.nm_table) : [...ticket.cd_tables, table.nm_table];
-		
+		ticket.cd_tables = ticket.cd_tables.includes(table.nm_table) ? ticket.cd_tables.filter(numtable => numtable !== table.nm_table) : [...ticket.cd_tables, table.nm_table];
+
 	}
 
-	reserveTables = (ticket: Ticket) => {
+	assignTables = (ticket: Ticket, blProvide: boolean) => {
 		let idTicket = ticket._id;
 		let cdTables = ticket.cd_tables;
-		this.waiterService.reserveTables(idTicket, cdTables).subscribe((resp: TicketResponse) => {
-			if(resp.ok){
+		this.waiterService.assignTables(idTicket, cdTables, blProvide).subscribe((resp: TicketResponse) => {
+			if (resp.ok) {
 				this.sharedService.snack('Las mesas fueron reservadas con exito!', 2000);
 			} else {
 				this.sharedService.snack('Error al reservar las mesas!', 2000);
 			}
-		},()=> {this.sharedService.snack('Error al reservar las mesas!', 2000);})
+		}, () => { this.sharedService.snack('Error al reservar las mesas!', 2000); })
 	}
 
 	toggleTableStatus = (table: Table) => {
@@ -266,7 +279,7 @@ export class SectionComponent implements OnInit {
 		},
 			() => {
 				// on error update all sliders stats
-				this.readTables();
+				this.readSectionTables();
 			})
 	}
 
@@ -275,24 +288,31 @@ export class SectionComponent implements OnInit {
 	// ========================================================
 
 	releaseTicket = (ticket: Ticket) => {
-		if (this.tickets) {
-			let snackMsg = 'Desea soltar el ticket y devolverlo a su estado anterior?';
-			this.sharedService.snack(snackMsg, 5000, 'ACEPTAR').then((resp: boolean) => {
-				if (resp) {
-					let idTicket = ticket._id;
-					this.waiterService.releaseTicket(idTicket).subscribe((resp: TicketResponse) => {
-						if (resp.ok) {
-							this.tickets = this.tickets.filter(ticket => ticket._id !== ticket._id);
-							this.clearTicketSession(ticket);
-							this.message = resp.msg;
-						}
-					})
-				}
-			})
+		if (!ticket) {
+			this.sharedService.snack('Error. No hay clientes en esta mesa.', 5000);
+			return;
 		}
+
+		let snackMsg = 'Desea soltar el ticket y devolverlo a su estado anterior?';
+		this.sharedService.snack(snackMsg, 5000, 'ACEPTAR').then((resp: boolean) => {
+			if (resp) {
+				this.waiterService.releaseTicket(ticket).subscribe((resp: TicketResponse) => {
+					if (resp.ok) {
+						this.tickets = this.tickets.filter(ticket => ticket._id !== ticket._id);
+						this.clearTicketSession(ticket);
+						this.message = resp.msg;
+					}
+				})
+			}
+		})
+
 	}
 
 	reassignTicket = (ticket: Ticket) => {
+		if (!ticket) {
+			this.sharedService.snack('Error. No hay clientes en esta mesa.', 5000);
+			return;
+		}
 		let snackMsg = 'Desea enviar el ticket al skill seleccionado?'
 		this.sharedService.snack(snackMsg, 5000, 'ACEPTAR').then((resp: boolean) => {
 			if (resp) {

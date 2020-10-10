@@ -356,9 +356,9 @@ mat-drawer-container {
 .sidenav-title-text {
     color         : #449;
     font-size     : large;
-    vertical-align: bottom;
     margin-left   : .5rem;
     font-weight   : 400;
+    align-self: center;
 }
 
 .input-icon {
