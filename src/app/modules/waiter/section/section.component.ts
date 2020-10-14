@@ -132,7 +132,6 @@ export class SectionComponent implements OnInit {
 			this.waiterService.readSectionTables(idSection)
 				.subscribe(
 					(data: TablesResponse) => {
-						console.log(data)
 						if (data.ok) {
 							resolve(data.tables);
 						} else { reject([]); }
@@ -246,14 +245,11 @@ export class SectionComponent implements OnInit {
 	// ========================================================
 
 	selectTable = (table: Table) => {
-		console.log(table)
 		this.table = table;
 	}
 
 	setReserve = (table: Table, ticket: Ticket) => {
-		console.log(table, ticket)
 		ticket.cd_tables = ticket.cd_tables.includes(table.nm_table) ? ticket.cd_tables.filter(numtable => numtable !== table.nm_table) : [...ticket.cd_tables, table.nm_table];
-
 	}
 
 	assignTables = (ticket: Ticket, blProvide: boolean) => {

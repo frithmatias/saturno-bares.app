@@ -2,5 +2,5 @@
 Sistema de reserva de turnos para salas de espera con demanda espontánea.
 
 # URL 
-[Saturno](https://saturno.live)
+[Saturno.FUN](https://saturno.fun)
 

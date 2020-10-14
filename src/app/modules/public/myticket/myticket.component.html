@@ -18,9 +18,18 @@
                 <span *ngIf="!ticket?.id_session">
                     {{ averageToAtt}}
                 </span>
-                <span *ngIf="ticket?.id_session">
-                    Pase a la mesa {{ ticket?.id_session?.id_tables?.nm_table }}
+
+
+                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables.length === 1">
+                    Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
                 </span>
+                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables.length > 1">
+                    Pase a las mesas 
+                    <span *ngFor="let table of ticket?.id_session?.id_tables">
+                        {{ table.nm_table }}
+                    </span>
+                </span>
+
             </div>
         </div>
 

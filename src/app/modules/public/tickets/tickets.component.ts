@@ -65,8 +65,8 @@ export class TicketsComponent implements OnInit {
 		let idSocket = this.wsService.idSocket;
 		let blPriority = this.blPriority;
 		let nmPersons = this.ticketForm.value.nmPersons;
-		let	idSection = this.ticketForm.value.idSection;
-		
+		let idSection = this.ticketForm.value.idSection;
+
 		this.publicService.createTicket(idSocket, blPriority, nmPersons, idSection).subscribe(
 			(data: TicketResponse) => {
 				if (data.ok) {
