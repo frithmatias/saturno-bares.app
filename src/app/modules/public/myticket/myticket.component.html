@@ -20,10 +20,10 @@
                 </span>
 
 
-                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables.length === 1">
+                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
                     Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
                 </span>
-                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables.length > 1">
+                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
                     Pase a las mesas 
                     <span *ngFor="let table of ticket?.id_session?.id_tables">
                         {{ table.nm_table }}
@@ -133,8 +133,8 @@
     <div class="row">
 
         <div class="col-6 button-content">
-            <button [disabled]="ticket?.bl_called" class="btn btn-success button"
-                [ngClass]="{'button-disabled':ticket?.bl_called}" (click)="callWaiter()">
+            <button [disabled]="ticket?.tx_call" class="btn btn-success button"
+                [ngClass]="{'button-disabled':ticket?.tx_call}" (click)="callWaiter('waiter')">
                 <!-- cancel ticket -->
                 <div>
                     <span class="mdi mdi-silverware-fork-knife xxl"></span>
@@ -157,19 +157,31 @@
                 </div>
             </button>
         </div>
+
         <div class="col-6 button-content">
             <button [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}" class="btn btn-danger button"
+                (click)="callWaiter('account')">
+                <!-- cancel ticket -->
+                <div>
+                    <span class="mdi mdi-file-document-edit-outline xxl"></span>
+                </div>
+                <div class="button-inner">
+                    Pedir la Cuenta
+                </div>
+            </button>
+        </div>
+        <div class="col-6 button-content">
+            <button [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}" class="btn btn-dark button"
                 (click)="endTicket()">
                 <!-- cancel ticket -->
                 <div>
                     <span class="mdi mdi-power xxl"></span>
                 </div>
                 <div class="button-inner">
-                    Cerrar Turno
+                    Cancelar mi Turno
                 </div>
             </button>
         </div>
-
     </div>
 </div>
 

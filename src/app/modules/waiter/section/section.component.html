@@ -29,24 +29,12 @@
                 <table class="table table-sm text-white text-center">
 
                   <tr style="border-top: 0px; color: yellow;">
-                    <td style="text-align: left; border: none;"></td>
                     <td style="text-align: left; border: none;"> Sector </td>
                     <td style="text-align: center; border: none;"> Requeridos </td>
                     <td style="text-align: center; border: none;"> Cola </td>
                   </tr>
 
                   <tr *ngFor="let section of pendingBySection">
-                    <td style="padding: 0; vertical-align: middle; font-size: 16px;">
-                      <!-- section of waiter -->
-                      <span *ngIf="section.assigned" class="mdi mdi-check" style="color: greenyellow"></span>
-
-                      <!-- other sections -->
-                      <span *ngIf="!section.assigned && !waitForClient && tickets">
-                        <mat-radio-button [value]="section.id" style="position: relative;
-                left: 4px;
-                top: 4px;"></mat-radio-button>
-                      </span>
-                    </td>
                     <td style="text-align: left;">
                       {{ section.section }}
                     </td>
@@ -86,12 +74,17 @@
         <!------------------------------>
 
         <mat-expansion-panel expanded>
+
           <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="xl mdi mdi-silverware-fork-knife text-warning"></span>
               <span class="sidenav-title-text mx-2">Mis Mesas</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
+
+          <!------------------------------>
+          <!-- TABLES -->
+          <!------------------------------>
 
           <div class="container row px-0 mb-4">
             <div *ngFor="let table of tables" class="col-4 px-0 p-1">
@@ -108,21 +101,30 @@
                     </td>
                     <td>
                       <span *ngIf="table.id_session">
-                        <span *ngIf="table.id_session?.id_ticket.bl_called">
-                          <span *ngIf="!table.id_session?.id_ticket.tm_att"
-                            class="xl mdi mdi-book-open-variant text-white"></span>
-                          <span *ngIf="table.id_session?.id_ticket.tm_att"
-                            class="xl mdi mdi-silverware-fork-knife text-white"></span>
+                        <span *ngIf="table.id_session?.id_ticket.tx_call">
+
+                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'"
+                            class="xl mdi mdi-book-open-variant text-warning"></span>
+                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
+                            class="xl mdi mdi-silverware-fork-knife text-warning"></span>
+                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
+                            class="xl mdi mdi-file-document-edit-outline text-warning"></span>
+
+
                         </span>
-                        <span *ngIf="!table.id_session?.id_ticket.bl_called">
-                          <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle text-white"></span>
+                        <span *ngIf="!table.id_session?.id_ticket.tx_call">
+                          <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle-outline text-white"
+                            style="opacity: .8;"></span>
                         </span>
                       </span>
+
                       <span *ngIf="!table.id_session">
-                        <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle text-white"
-                          style="opacity: .7;"></span>
-                        <span *ngIf="table.tx_status==='idle'" class="xl mdi mdi-check-circle text-white"></span>
-                        <span *ngIf="table.tx_status==='reserved'" class="xl mdi mdi-stop-circle text-white"></span>
+                        <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle-outline text-white"
+                          style="opacity: .8;"></span>
+                        <span *ngIf="table.tx_status==='idle'" class="xl mdi mdi-check-circle-outline text-white"
+                          style="opacity: .8;"></span>
+                        <span *ngIf="table.tx_status==='reserved'" class="xl mdi mdi-stop-circle-outline text-white"
+                          style="opacity: .8;"></span>
                       </span>
                     </td>
                   </tr>
@@ -132,46 +134,24 @@
           </div>
 
           <!------------------------------>
-          <!-- TABLE & TICKET ACTIONS -->
+          <!-- CLIENT / TICKET -->
           <!------------------------------>
 
           <div *ngIf="table">
-
-            <div *ngIf="table.tx_status==='busy'" class="banner-content xl">
-              Mesa {{table.nm_table}}: Turno {{ table.id_session?.id_ticket?.id_position }}
-            </div>
-            <div *ngIf="table.tx_status!=='busy'" class="banner-content xl">
-              Mesa {{table.nm_table}}: Sin clientes
-            </div>
-
-            <div>
-              <mat-slide-toggle [checked]="table.tx_status==='idle'" class="mx-2 my-1"
-                [disabled]="waitForClient || table.tx_status==='busy'" (click)="toggleTableStatus(table)">
-                <span *ngIf="table.tx_status==='busy'">Mesa Ocupada</span>
-                <span *ngIf="table.tx_status==='paused'">Activar Mesa</span>
-                <span *ngIf="table.tx_status==='idle'">Mesa Activada!</span>
-              </mat-slide-toggle>
-            </div>
-
-            <div class="card-footer">
-              <div class="row">
-                <div class="col p-0">
-                  <div>TE</div>
-                  <div>{{tmWaitingStr}}</div>
-                </div>
-                <div class="col p-0">
-                  <div>TA</div>
-                  <div>{{tmAttention}}</div>
-                </div>
-                <div class="col p-0">
-                  <div>Tm</div>
-                  <div>{{timerCount}}</div>
-                </div>
-                <div class="col p-0">
-                  <div>TC</div>
-                  <div>-</div>
-                </div>
-              </div>
+            <div class="banner-content xl">
+              Mesa {{table.nm_table}}:
+              <span *ngIf="table.tx_status==='busy'">
+                Ocupada
+              </span>
+              <span *ngIf="table.tx_status==='paused'">
+                Pausada
+              </span>
+              <span *ngIf="table.tx_status==='idle'">
+                Esperando clientes
+              </span>
+              <span *ngIf="table.tx_status==='reserved'">
+                Reservada
+              </span>
             </div>
 
             <!------------------------------>
@@ -179,9 +159,32 @@
             <!------------------------------>
 
             <div class="container row px-0">
+
+              <!-- activate table -->
+              <div class="col-4 px-0 p-1">
+                <button 
+                class="btn btn-block p-0"
+                [ngClass]="{ 'button-disabled': table.tx_status==='busy', 'btn-success': table.tx_status==='idle', 'btn-secondary': table.tx_status==='paused'}"
+                (click)="toggleTableStatus(table)"
+                >
+                  <table width="100%" class="shadow-box">
+                    <tr>
+                      <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                        <span class="mdi mdi-power xl"></span>
+                      </td>
+                      <td>
+                        {{table.tx_status}}
+                      </td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
               <!-- priority slide -->
               <div class="col-4 px-0 p-1">
-                <button class="btn btn-block p-0">
+                <button class="btn btn-block p-0"
+                [ngClass]="{'button-disabled': !table.id_session}"
+                >
                   <table width="100%" class="shadow-box">
                     <tr>
                       <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
@@ -219,8 +222,8 @@
               <!-- attened ticket -->
               <div class="col-4 px-0 p-1">
                 <button class="btn btn-primary btn-block p-0" (click)="attendedTicket(table.id_session?.id_ticket)"
-                  [disabled]="!table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'"
-                  [ngClass]="{'button-disabled': !table.id_session?.id_ticket.bl_called || table.tx_status!=='busy'}">
+                  [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status!=='busy'"
+                  [ngClass]="{'button-disabled': !table.id_session?.id_ticket.tx_call || table.tx_status!=='busy'}">
 
                   <table width="100%" class="shadow-box">
                     <tr>
@@ -273,6 +276,7 @@
               </div>
 
             </div>
+
           </div>
 
         </mat-expansion-panel>
@@ -324,11 +328,20 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
 
-              <div class="btn btn-success btn-block" (click)="assignTables(ticket, false)"><span
-                  class="mdi mdi-content-save"></span> Asignar </div>
-              <div class="btn btn-secondary btn-block" (click)="assignTables(ticket, true)"><span
-                  class="mdi mdi-content-save"></span> Asignar y Proveer </div>
+                <div class="col">
+                  <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)"><span
+                      class="mdi mdi-clock"></span> Asignar
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary btn-block" (click)="assignTables(ticket, true)"><span
+                      class="mdi mdi-clock-check"></span>
+                    Proveer Ahora
+                  </button>
+                </div>
+              </div>
 
             </mat-expansion-panel>
           </mat-accordion>
@@ -336,7 +349,7 @@
         </mat-expansion-panel>
 
         <!------------------------------>
-        <!-- TAIL -->
+        <!-- QUEUED -->
         <!------------------------------>
 
         <mat-expansion-panel *ngIf="waiting.length > 0">
@@ -383,16 +396,23 @@
                   </div>
                 </div>
               </div>
-
-              <div class="btn btn-success btn-block" (click)="assignTables(ticket, false)"><span
-                  class="mdi mdi-content-save"></span> Asignar </div>
-              <div class="btn btn-secondary btn-block" (click)="assignTables(ticket, true)"><span
-                  class="mdi mdi-content-save"></span> Asignar y Proveer </div>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)"><span
+                      class="mdi mdi-clock"></span> Asignar
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary btn-block" (click)="assignTables(ticket, true)"><span
+                      class="mdi mdi-clock-check"></span>
+                    Proveer Ahora
+                  </button>
+                </div>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
 
         </mat-expansion-panel>
-
 
       </mat-accordion>
     </div>

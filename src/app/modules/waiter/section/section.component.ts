@@ -29,6 +29,7 @@ export interface Tile {
 	styleUrls: ['./section.component.css']
 })
 export class SectionComponent implements OnInit {
+
 	loading = false;
 	waitForClient: boolean = false;
 	comingClient: boolean = false;
@@ -42,17 +43,19 @@ export class SectionComponent implements OnInit {
 	tmStrAttSub: Subscription;
 	tmExtraTimeSub: Subscription;
 	message: string = '';
-
-	sections: Section[] = [];
-	tickets: Ticket[] = [];
-
+	
 	queued: Ticket[] = [];
 	requested: Ticket[] = [];
 	assigned: Ticket[] = [];
 	waiting: Ticket[] = [];
-
+	
+	sections: Section[] = [];
+	section: Section;
+	
 	tables: Table[] = [];
 	table: Table;
+	
+	tickets: Ticket[] = [];
 
 	sectionSelected: string = ''; // reassign
 	blPriority = false;
@@ -80,9 +83,12 @@ export class SectionComponent implements OnInit {
 			return;
 		}
 
-		this.sections = await this.readSections()
-		this.tables = await this.readSectionTables()
-		this.tickets = await this.readTickets();
+		this.sections = this.waiterService.sections;
+		this.section = this.waiterService.section;
+
+		await this.readSectionTables();
+		await this.readTickets();
+		
 		this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
 		this.waiting = this.tickets.filter(ticket =>
 			ticket.tx_status === 'queued' ||
@@ -93,8 +99,8 @@ export class SectionComponent implements OnInit {
 		// hot subjects subscribe to socket.io listeners
 		this.wsService.updateTicketsWaiters().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(async () => {
-			this.tables = await this.readSectionTables()
-			this.tickets = await this.readTickets();
+			await this.readSectionTables()
+			await this.readTickets();
 			this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
 			this.waiting = this.tickets.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned');
 
@@ -112,31 +118,22 @@ export class SectionComponent implements OnInit {
 	// READ METHODS
 	// ========================================================
 
-	readSections = (): Promise<Section[]> => {
-		return new Promise((resolve, reject) => {
-			let idCompany = this.waiterService.section.id_company;
-			this.waiterService.readSections(idCompany)
-				.subscribe(
-					(data: SectionsResponse) => {
-						if (data.ok) {
-							resolve(data.sections);
-						} else { reject([]); }
-					},
-					() => { reject([]); })
-		})
-	}
-
 	readSectionTables = (): Promise<Table[]> => {
 		return new Promise((resolve, reject) => {
 			let idSection = this.waiterService.section._id;
 			this.waiterService.readSectionTables(idSection)
-				.subscribe(
-					(data: TablesResponse) => {
+				.subscribe((data: TablesResponse) => {
 						if (data.ok) {
-							resolve(data.tables);
+							this.tables = data.tables;
+							localStorage.setItem('tables', JSON.stringify(data.tables));
+							resolve();
 						} else { reject([]); }
 					},
-					() => { reject([]); })
+					() => { 
+					
+						if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
+						reject([]); 
+					})
 		})
 	}
 
@@ -147,24 +144,23 @@ export class SectionComponent implements OnInit {
 			return this.waiterService.readTickets(idCompany)
 				.subscribe((data: TicketsResponse) => {
 
-					const sectionTickets = data.tickets.filter(ticket => {
+					this.tickets = data.tickets.filter(ticket => {
 						return (
 							ticket.id_section._id === this.waiterService.section._id &&
 							ticket.tm_end === null
 						);
 					});
 
-					if (sectionTickets) {
+					if (this.tickets) {
 						this.message = 'Tiene clientes en sus mesas'
-						resolve(sectionTickets);
+						resolve(this.tickets);
 					} else {
 						delete this.tickets;
 						reject([]);
 					}
 
-
-					const ticketsPendingAllSections = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null);
-					const ticketsPendingThisSection = data.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null &&
+					const ticketsPendingAllSections = this.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null);
+					const ticketsPendingThisSection = this.tickets.filter(ticket => ticket.tm_provided === null && ticket.tm_end === null &&
 						ticket.id_section._id === this.waiterService.section._id
 					);
 
@@ -216,6 +212,7 @@ export class SectionComponent implements OnInit {
 	clearSectionSession = () => {
 		delete this.waiterService.section;
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
+		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
 		this.router.navigate(['waiter/home']);
 	}
 
@@ -271,6 +268,8 @@ export class SectionComponent implements OnInit {
 			if (data.ok) {
 				let tableToChangeStatus = this.tables.filter(table => table._id === data.table._id)[0];
 				tableToChangeStatus.tx_status = data.table.tx_status;
+				table.tx_status = data.table.tx_status;
+				
 			}
 		},
 			() => {
@@ -350,7 +349,7 @@ export class SectionComponent implements OnInit {
 		this.waiterService.attendedTicket(idTicket).subscribe((resp: TicketResponse) => {
 			if (resp.ok) {
 				let table = this.tables.filter(table => table.id_session?.id_ticket._id === resp.ticket._id)[0];
-				table.id_session.id_ticket.bl_called = false;
+				table.id_session.id_ticket.tx_call = null;
 				this.message = resp.msg;
 			}
 		})

@@ -83,10 +83,9 @@ export class PublicService {
     return this.http.put(environment.url + '/t/actualizarsocket', socketsData);
   }
 
-  callWaiter(idTicket: string) {
-    return this.http.get(environment.url + '/t/callwaiter/' + idTicket);
+  callWaiter(idTicket: string, txCall: string) {
+    return this.http.post(environment.url + '/t/callwaiter/', {idTicket, txCall});
   }
-
 
   endTicket(idTicket: string) {
     return this.http.post(environment.url + '/t/endticket/', { idTicket });

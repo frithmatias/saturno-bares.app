@@ -16,6 +16,7 @@ import { tap } from 'rxjs/operators';
 })
 export class WaiterService {
 
+	sections: Section[] = [];
 	section: Section = null;
 
 	chatMessages: {
@@ -29,14 +30,7 @@ export class WaiterService {
 	constructor(
 		private http: HttpClient,
 		private loginService: LoginService
-	) {
-
-		if (localStorage.getItem('section')) {
-			this.section = JSON.parse(localStorage.getItem('section'));
-		}
-
-	
-	}
+	) {}
 
 	readSections(idCompany: string) {
 		const headers = new HttpHeaders({

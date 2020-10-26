@@ -16,7 +16,6 @@ import { SectionResponse, Section, SectionsResponse } from '../../../interfaces/
 export class HomeComponent implements OnInit {
   loading = false;
   sections: Section[] = [];
-  sectionsAvailable: Section[] = [];
   section: Section;
   userSuscription: Subscription
   user: User;
@@ -32,6 +31,10 @@ export class HomeComponent implements OnInit {
 
     this.loading = true;
 
+    if (localStorage.getItem('section')) {
+			this.section = JSON.parse(localStorage.getItem('section'));
+		}
+
     if (this.loginService.user.id_company?._id) {
       let idCompany = this.loginService.user.id_company._id;
       this.readSections(idCompany);
@@ -41,12 +44,12 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    
     this.userSuscription = this.loginService.user$.subscribe(data => {
       if (data) {
         this.readSections(data.id_company._id);
       }
     })
+    
   }
 
   takeSection(section: Section): void {
@@ -55,7 +58,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    if(this.waiterService.section){
+    if (this.waiterService.section) {
       this.router.navigate(['/waiter/section']);
       return;
     }
@@ -72,43 +75,36 @@ export class HomeComponent implements OnInit {
       } else {
         this.snack.open('No se pudo tomar un escritorio', null, { duration: 2000 });
       }
-    })
+    },()=>{})
   }
 
   readSections(idCompany: string): void {
     this.waiterService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-      if(data.ok){
+      if (data.ok) {
         this.sections = data.sections;
-        this.sectionsAvailable = this.sections.filter(section => section.id_session === null);
-        this.section = this.sections.filter(section => section.id_session?.id_section === this.waiterService.section?._id && this.waiterService.section)[0]
-      }
-
-      if (this.section) {
-        this.waiterService.section = this.section;
-        localStorage.setItem('section', JSON.stringify(this.section));
+        this.waiterService.sections = this.sections;
       } else {
-        delete this.waiterService.section;
-        if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
+        delete this.sections;
+        delete this.waiterService.sections;
       }
-
     },
-    ()=>{this.loading = false;},()=>{this.loading = false;});
+      () => { this.loading = false; }, () => { this.loading = false; });
   }
 
   releaseSection(section: Section): void {
-    
+
     this.loading = true;
 
     let idSection = section._id;
     let idCompany = this.loginService.user.id_company._id;
     this.waiterService.releaseSection(idSection).subscribe(data => {
       this.readSections(idCompany);
-      
+
     },
-    ()=>{this.loading = false;},()=>{this.loading = false;})
+      () => { this.loading = false; }, () => { this.loading = false; })
   }
 
   ngOnDestroy(): void {
-    if(this.userSuscription){this.userSuscription.unsubscribe();}
+    if (this.userSuscription) { this.userSuscription.unsubscribe(); }
   }
 }

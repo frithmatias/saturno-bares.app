@@ -80,7 +80,7 @@ export class MyticketComponent implements OnInit {
 	}
 
 	async getTickets() {
-		if (!this.ticket) {	return;	}
+		if (!this.ticket) { return; }
 		let idCompany = this.ticket.id_company;
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
 			if (data.ok) {
@@ -229,36 +229,45 @@ export class MyticketComponent implements OnInit {
 		chat.toggle();
 	}
 
+	// ---------------------
+	// Client actions
+
 	enCamino(): void {
 		this.coming = true;
 		let idSocketDesk = this.publicService.ticket.id_socket_waiter;
 		this.wsService.emit('cliente-en-camino', idSocketDesk);
 	}
 
-	callWaiter(): void {
+	callWaiter(txCall: string) {
 		let idTicket = this.ticket._id;
-		this.publicService.callWaiter(idTicket).subscribe((data: TicketResponse) => {
+		this.publicService.callWaiter(idTicket, txCall).subscribe((data: TicketResponse) => {
 			if (data.ok) {
-				this.ticket.bl_called = true;
+				this.ticket.tx_call = data.ticket.tx_call;
 				this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
 			}
 		});
 	}
 
-	endTicket(): void {
-		this.snack.open('Desea cancelar el turno?', 'SI, CANCELAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
-			if (data.dismissedByAction) {
-				let idTicket = this.ticket._id;
-				this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
-					if (data.ok) {
-						this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
-						this.publicService.clearPublicSession();
-						this.router.navigate(['/public']);
-					}
-				});
-			}
-		});
+	endTicket() {
+		return new Promise(resolve => {
+			this.sharedService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then((ok) => {
+				if (ok) {
+					let idTicket = this.ticket._id;
+					this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
+						if (data.ok) {
+							resolve();
+							this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
+							this.publicService.clearPublicSession();
+							this.router.navigate(['/public']);
+						}
+					});
+				}
+			})
+		})
 	}
+
+
+	// ---------------------
 
 	getScoreItems() {
 		return new Promise(resolve => {
@@ -282,7 +291,7 @@ export class MyticketComponent implements OnInit {
 			});
 
 			this.publicService.sendScores(dataScores).subscribe((d: ScoresResponse) => {
-				if(d.ok){
+				if (d.ok) {
 					delete this.ticket;
 				}
 			})

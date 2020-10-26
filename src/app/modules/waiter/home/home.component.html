@@ -51,12 +51,12 @@
                 <!-- ======================================================== -->
 
                 <div *ngIf="!section" class="my-4">
-                    <div class="my-4" *ngIf="sectionsAvailable.length > 0">
+                    <div class="my-4">
                         <mat-form-field class="w-100">
                             <mat-label>Seleccione un sector</mat-label>
                             <mat-select #selectSection matNativeControl required>
-                                <mat-option *ngFor="let table of sectionsAvailable" [value]="table">
-                                    {{table.tx_section}}
+                                <mat-option *ngFor="let section of sections" [value]="section">
+                                    {{section.tx_section}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
