@@ -43,21 +43,22 @@ export class SectionComponent implements OnInit {
 	tmStrAttSub: Subscription;
 	tmExtraTimeSub: Subscription;
 	message: string = '';
-	
+
 	queued: Ticket[] = [];
 	requested: Ticket[] = [];
 	assigned: Ticket[] = [];
 	waiting: Ticket[] = [];
-	
+
 	sections: Section[] = [];
 	section: Section;
-	
+
 	tables: Table[] = [];
 	table: Table;
-	
+
 	tickets: Ticket[] = [];
 
-	sectionSelected: string = ''; // reassign
+	sectionSelected: string = ''; // reassign section
+	tableSelected: string = ''; // reassign table
 	blPriority = false;
 
 	private subjectUpdateTickets$ = new Subject();
@@ -88,7 +89,7 @@ export class SectionComponent implements OnInit {
 
 		await this.readSectionTables();
 		await this.readTickets();
-		
+
 		this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
 		this.waiting = this.tickets.filter(ticket =>
 			ticket.tx_status === 'queued' ||
@@ -99,7 +100,7 @@ export class SectionComponent implements OnInit {
 		// hot subjects subscribe to socket.io listeners
 		this.wsService.updateTicketsWaiters().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(async () => {
-			await this.readSectionTables()
+			await this.readSectionTables().then( () => {return} )
 			await this.readTickets();
 			this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
 			this.waiting = this.tickets.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned');
@@ -123,16 +124,16 @@ export class SectionComponent implements OnInit {
 			let idSection = this.waiterService.section._id;
 			this.waiterService.readSectionTables(idSection)
 				.subscribe((data: TablesResponse) => {
-						if (data.ok) {
-							this.tables = data.tables;
-							localStorage.setItem('tables', JSON.stringify(data.tables));
-							resolve();
-						} else { reject([]); }
-					},
-					() => { 
-					
+					if (data.ok) {
+						this.tables = data.tables;
+						localStorage.setItem('tables', JSON.stringify(data.tables));
+						resolve();
+					} else { reject([]); }
+				},
+					() => {
+
 						if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
-						reject([]); 
+						reject([]);
 					})
 		})
 	}
@@ -265,11 +266,13 @@ export class SectionComponent implements OnInit {
 
 		let idTable = table._id;
 		this.waiterService.toggleTableStatus(idTable).subscribe((data: TableResponse) => {
+			console.log(data)
 			if (data.ok) {
 				let tableToChangeStatus = this.tables.filter(table => table._id === data.table._id)[0];
 				tableToChangeStatus.tx_status = data.table.tx_status;
 				table.tx_status = data.table.tx_status;
-				
+			} else {
+				this.sharedService.snack(data.msg, 2000);
 			}
 		},
 			() => {
@@ -328,6 +331,9 @@ export class SectionComponent implements OnInit {
 	}
 
 	endTicket = (ticket: Ticket) => {
+		if (!ticket) {
+			this.sharedService.snack('Seleccione una mesa primero', 3000);
+		}
 		let idTicket = ticket._id;
 		if (this.tickets) {
 			let snackMsg = 'Desea finalizar el ticket actual?'

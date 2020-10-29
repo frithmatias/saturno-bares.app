@@ -209,7 +209,11 @@
 
       <div *ngIf="activateTableExplanation" class="animated fadeIn my-3">
         <p>
-          Las mesas son lugares donde puede agrupar comensales. Si usted tiene asientos en una barra puede definir cada 
+          Las mesas son lugares donde puede agrupar comensales. Las mesas son indivisibles, es decir que si usted asigna un número de mesa a una 
+          mesa conformada por dos o mas mesas más pequeñas, el sistema podra juntarlas con otras mesas pero NO podra separarlas. 
+        </p>
+        <p>
+          Si usted tiene asientos en una barra puede definir cada 
           asiento como una mesa con lugar para una sola persona. Debe identificarlas con números. Cada sector puede tener 
           mesas que comienzen de la mesa 1 o puede asignarlas como usted prefiera. 
         </p>
@@ -255,9 +259,8 @@
 
       <div *ngIf="activateWaiterExplanation" class="animated fadeIn my-3">
         <p>
-          Usted como usuario administrador puede atender clientes desde el menú de Camareros. Al crear las mesas 
-          su usario con perfil de administrador ya tiene asignadas todas las mesas creadas. Sin embargo puede crear
-          aquí camarors o mozos para estas tareas.
+          Usted como usuario administrador puede atender a sus clientes desde el menú de Camareros. Sin embargo puede crear
+          aquí usuarios con el rol de mozos o camareros para estas tareas.
         </p>
         <p>
           Los camareros que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo

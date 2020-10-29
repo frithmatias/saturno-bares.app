@@ -12,6 +12,7 @@ export interface Ticket {
 	nm_persons: number;
 	bl_priority: boolean;
 	tx_call: string;
+	tm_call: number;
 	tx_status: string; // assigned [privided, assigned, queued, requested]
 	cd_tables?: number[]; // only for requested and assigned tickets
     id_position: number; // assigned
