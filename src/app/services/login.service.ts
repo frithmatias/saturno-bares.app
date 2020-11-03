@@ -123,7 +123,8 @@ export class LoginService {
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
 
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
-
+		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
+		
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
 		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 

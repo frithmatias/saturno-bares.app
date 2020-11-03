@@ -1,13 +1,11 @@
 <div class="saturno-bg-tile-1">
   <div class="saturno-card p-0 animated fadeIn">
-
     <div *ngIf="loading" class="mt-5 animated fadeIn">
       <mat-spinner></mat-spinner>
     </div>
 
     <div *ngIf="!loading" class="animated fadeIn">
       <mat-accordion multi="true">
-
         <!------------------------------>
         <!-- SECTIONS -->
         <!------------------------------>
@@ -20,49 +18,50 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="card bg-secondary mb-3">
-            <div class="card-body table-responsive-sm  p-2">
-              <div class="text-white m-3" *ngIf='message'>
-                {{message}}
+            <div class="card-body table-responsive-sm p-2">
+              <div class="text-white m-3" *ngIf="message">
+                {{ message }}
               </div>
 
               <mat-radio-group [(ngModel)]="sectionSelected">
                 <table class="table table-sm text-white text-center">
-
-                  <tr style="border-top: 0px; color: yellow;">
-                    <td style="text-align: left; border: none;"> Sector </td>
-                    <td style="text-align: center; border: none;"> Requeridos </td>
-                    <td style="text-align: center; border: none;"> Cola </td>
+                  <tr style="border-top: 0px; color: yellow">
+                    <td style="text-align: left; border: none">Sector</td>
+                    <td style="text-align: center; border: none">Requeridos</td>
+                    <td style="text-align: center; border: none">Cola</td>
                   </tr>
 
                   <tr *ngFor="let section of pendingBySection">
-                    <td style="text-align: left;">
+                    <td style="text-align: left">
                       {{ section.section }}
                     </td>
-                    <td style="text-align: center;">
+                    <td style="text-align: center">
                       {{ section.requested }}
                     </td>
-                    <td style="text-align: center;">
+                    <td style="text-align: center">
                       {{ section.queued }}
                     </td>
                   </tr>
-
                 </table>
               </mat-radio-group>
-
             </div>
           </div>
           <div class="mb-2">
-            <button class="btn btn-danger p-0 col-4" (click)="releaseSection()" [disabled]="waitForClient"
-              [ngClass]="{'button-disabled': waitForClient}">
-
+            <button
+              class="btn btn-danger p-0 col-4"
+              (click)="releaseSection()"
+              [disabled]="waitForClient"
+              [ngClass]="{ 'button-disabled': waitForClient }"
+            >
               <table width="100%" class="shadow-box">
                 <tr>
-                  <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
+                  <td
+                    class="rounded-left"
+                    style="background-color: rgba(50, 50, 50, 0.3)"
+                  >
                     <div class="mdi mdi-power xl"></div>
                   </td>
-                  <td>
-                    Salir
-                  </td>
+                  <td>Salir</td>
                 </tr>
               </table>
             </button>
@@ -74,118 +73,177 @@
         <!------------------------------>
 
         <mat-expansion-panel expanded>
-
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <span class="xl mdi mdi-silverware-fork-knife text-warning"></span>
-              <span class="sidenav-title-text mx-2">Mesas del sector {{section.tx_section}}</span>
+              <span
+                class="xl mdi mdi-silverware-fork-knife text-warning"
+              ></span>
+              <span class="sidenav-title-text mx-2"
+                >Mesas del sector {{ section.tx_section }}</span
+              >
             </mat-panel-title>
           </mat-expansion-panel-header>
 
+          <mat-checkbox [(ngModel)]="listmode" (click)="setListMode()" class="example-margin"
+            >Modo Lista</mat-checkbox
+          >
           <!------------------------------>
           <!-- TABLES LIST -->
           <!------------------------------>
-          <div class="card bg-secondary mb-3">
-            <div class="card-body table-responsive-sm  p-2">
-              <div class="text-white m-3" *ngIf='message'>
-                {{message}}
+          <div *ngIf="listmode" class="card bg-secondary mb-3">
+            <div class="card-body table-responsive-sm p-2">
+              <div class="text-white m-3" *ngIf="message">
+                {{ message }}
               </div>
 
               <mat-radio-group [(ngModel)]="tableSelected">
                 <table class="table table-sm text-white text-center">
-
-                  <tr style="border-top: 0px; color: yellow;">
-                    <td style="text-align: left; border: none;"> MESA </td>
-                    <td style="text-align: center; border: none;"> ACCION </td>
-                    <td style="text-align: center; border: none;"> ESTADO </td>
+                  <tr style="border-top: 0px; color: yellow">
+                    <td style="text-align: left; border: none">Mesa</td>
+                    <td style="text-align: center; border: none">Estado</td>
+                    <td style="text-align: center; border: none">Ocup.</td>
+                    <td style="text-align: center; border: none">Acción</td>
+                    <td style="text-align: center; border: none">Espera</td>
+                    <td style="text-align: right; border: none">Estado</td>
                   </tr>
 
-                  <tr *ngFor="let table of tables" class="pointer">
-                    <td style="text-align: left;" [ngClass]="{
-                      'text-success': table.tx_status==='idle',
-                      'text-danger': table.tx_status==='busy',
-                      'text-light': table.tx_status==='paused',
-                      'text-dark': table.tx_status==='reserved'
-                  }" (click)="selectTable(table)">
+                  <tr
+                    *ngFor="let table of tables"
+                    class="pointer"
+                    (click)="selectTable(table)"
+                    [ngClass]="{
+                      'text-white, bg-success': table.tx_status === 'idle',
+                      'text-white, bg-danger': table.tx_status === 'busy',
+                      'text-white, bg-secondary': table.tx_status === 'paused',
+                      'text-white, bg-dark': table.tx_status === 'reserved'
+                    }"
+                  >
+                    <td style="padding: 0.2rem; text-align: left">
                       {{ table.nm_table }}
                     </td>
-
-
-                    <td style="text-align: center;">
-
-                      <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'"
-                        class="xl mdi mdi-book-open-variant text-warning"></span>
-                      <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
-                        class="xl mdi mdi-silverware-fork-knife text-warning"></span>
-                      <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
-                        class="xl mdi mdi-file-document-edit-outline text-warning"></span>
-
+                    <td
+                      style="padding: 0.2rem; text-align: center"
+                      (click)="selectTable(table)"
+                    >
+                      {{ table.tx_status }}
                     </td>
-
-
-
-                    <td style="text-align: center;" [ngClass]="{
-                      'text-success': table.tx_status==='idle',
-                      'text-danger': table.tx_status==='busy',
-                      'text-light': table.tx_status==='paused',
-                      'text-dark': table.tx_status==='reserved'
-                  }">
-
-                      <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle-outline"></span>
-                      <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle-outline"></span>
-                      <span *ngIf="table.tx_status==='idle'" class="xl mdi mdi-check-circle-outline"></span>
-                      <span *ngIf="table.tx_status==='reserved'" class="xl mdi mdi-stop-circle-outline"></span>
-
+                    <td style="padding: 0.2rem; text-align: center">
+                      {{ table?.id_session?.id_ticket.tm_provided | intervalToHms }}
+                    </td>
+                    <td style="padding: 0.2rem; text-align: center">
+                      <span
+                        *ngIf="table.id_session?.id_ticket.tx_call === 'card'"
+                        class="lg mdi mdi-book-open-variant text-warning"
+                      ></span>
+                      <span
+                        *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
+                        class="lg mdi mdi-silverware-fork-knife text-warning"
+                      ></span>
+                      <span
+                        *ngIf="
+                          table.id_session?.id_ticket.tx_call === 'account'
+                        "
+                        class="lg mdi mdi-file-document-edit-outline text-warning"
+                      ></span>
+                    </td>
+                    <td style="padding: 0.2rem; text-align: center">
+                      {{ table?.id_session?.id_ticket.tm_call | intervalToHms }}
+                    </td>
+                    <td style="padding: 0.2rem; text-align: right">
+                      <span
+                        *ngIf="table.tx_status === 'busy'"
+                        class="lg mdi mdi-minus-circle-outline"
+                      ></span>
+                      <span
+                        *ngIf="table.tx_status === 'paused'"
+                        class="lg mdi mdi-pause-circle-outline"
+                      ></span>
+                      <span
+                        *ngIf="table.tx_status === 'idle'"
+                        class="lg mdi mdi-check-circle-outline"
+                      ></span>
+                      <span
+                        *ngIf="table.tx_status === 'reserved'"
+                        class="lg mdi mdi-stop-circle-outline"
+                      ></span>
                     </td>
                   </tr>
-
                 </table>
               </mat-radio-group>
-
             </div>
           </div>
 
           <!------------------------------>
           <!-- TABLES BUTTONS -->
           <!------------------------------>
-          <div class="container row px-0 mb-4">
+
+          <div *ngIf="!listmode" class="container row px-0 mb-4">
             <div *ngFor="let table of tables" class="col-4 px-0 p-1">
-              <div class="btn btn-block p-0" [ngClass]="{
-                  'btn-success': table.tx_status==='idle',
-                  'btn-danger': table.tx_status==='busy',
-                  'btn-secondary': table.tx_status==='paused',
-                  'btn-dark': table.tx_status==='reserved'
-              }" (click)="selectTable(table)">
+              <div
+                class="btn btn-block p-0"
+                [ngClass]="{
+                  'btn-success': table.tx_status === 'idle',
+                  'btn-danger': table.tx_status === 'busy',
+                  'btn-secondary': table.tx_status === 'paused',
+                  'btn-dark': table.tx_status === 'reserved'
+                }"
+                (click)="selectTable(table)"
+              >
                 <table width="100%" class="shadow-box">
                   <tr>
-                    <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
-                      <span class="xl">{{table.nm_table}}</span>
+                    <td
+                      class="rounded-left"
+                      style="background-color: rgba(50, 50, 50, 0.3)"
+                    >
+                      <span class="xl">{{ table.nm_table }}</span>
                     </td>
                     <td>
                       <span *ngIf="table.id_session">
                         <span *ngIf="table.id_session?.id_ticket.tx_call">
-
-                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'"
-                            class="xl mdi mdi-book-open-variant text-warning"></span>
-                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
-                            class="xl mdi mdi-silverware-fork-knife text-warning"></span>
-                          <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
-                            class="xl mdi mdi-file-document-edit-outline text-warning"></span>
-
+                          <span
+                            *ngIf="
+                              table.id_session?.id_ticket.tx_call === 'card'
+                            "
+                            class="xl mdi mdi-book-open-variant text-warning"
+                          ></span>
+                          <span
+                            *ngIf="
+                              table.id_session?.id_ticket.tx_call === 'waiter'
+                            "
+                            class="xl mdi mdi-silverware-fork-knife text-warning"
+                          ></span>
+                          <span
+                            *ngIf="
+                              table.id_session?.id_ticket.tx_call === 'account'
+                            "
+                            class="xl mdi mdi-file-document-edit-outline text-warning"
+                          ></span>
                         </span>
                         <span *ngIf="!table.id_session?.id_ticket.tx_call">
-                          <span *ngIf="table.tx_status==='busy'" class="xl mdi mdi-minus-circle-outline text-white"
-                            style="opacity: .8;"></span>
+                          <span
+                            *ngIf="table.tx_status === 'busy'"
+                            class="xl mdi mdi-minus-circle-outline text-white"
+                            style="opacity: 0.8"
+                          ></span>
                         </span>
                       </span>
 
                       <span *ngIf="!table.id_session">
-                        <span *ngIf="table.tx_status==='paused'" class="xl mdi mdi-pause-circle-outline text-white"
-                          style="opacity: .8;"></span>
-                        <span *ngIf="table.tx_status==='idle'" class="xl mdi mdi-check-circle-outline text-white"
-                          style="opacity: .8;"></span>
-                        <span *ngIf="table.tx_status==='reserved'" class="xl mdi mdi-stop-circle-outline text-white"
-                          style="opacity: .8;"></span>
+                        <span
+                          *ngIf="table.tx_status === 'paused'"
+                          class="xl mdi mdi-pause-circle-outline text-white"
+                          style="opacity: 0.8"
+                        ></span>
+                        <span
+                          *ngIf="table.tx_status === 'idle'"
+                          class="xl mdi mdi-check-circle-outline text-white"
+                          style="opacity: 0.8"
+                        ></span>
+                        <span
+                          *ngIf="table.tx_status === 'reserved'"
+                          class="xl mdi mdi-stop-circle-outline text-white"
+                          style="opacity: 0.8"
+                        ></span>
                       </span>
                     </td>
                   </tr>
@@ -201,70 +259,94 @@
           <div *ngIf="table">
             <div class="card bg-light">
               <div class="card-header">
-                Mesa {{table.nm_table}}:
-                <span *ngIf="table.tx_status==='busy'"> Ocupada </span>
-                <span *ngIf="table.tx_status==='paused'"> Pausada </span>
-                <span *ngIf="table.tx_status==='idle'"> Esperando clientes </span>
-                <span *ngIf="table.tx_status==='reserved'"> Reservada </span>
+                Mesa {{ table.nm_table }}:
+                <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
+                <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
+                <span *ngIf="table.tx_status === 'idle'">
+                  Esperando clientes
+                </span>
+                <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
               </div>
 
               <div class="card-body">
-
                 <div *ngIf="table?.id_session">
                   <table class="table table-sm text-center">
                     <tr>
-                      <td style="text-align: left; border: none;"> Turno </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.id_position }} </td>
+                      <td style="text-align: left; border: none">Turno</td>
+                      <td style="text-align: right; border: none">
+                        {{ table?.id_session?.id_ticket.id_position }}
+                      </td>
                     </tr>
                     <tr>
-                      <td style="text-align: left; border: none;"> Comensales </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.nm_persons }} </td>
+                      <td style="text-align: left; border: none">Comensales</td>
+                      <td style="text-align: right; border: none">
+                        {{ table?.id_session?.id_ticket.nm_persons }}
+                      </td>
                     </tr>
                     <tr>
-                    
-                      <td style="text-align: left; border: none;"> Prioridad </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.bl_priority}} </td>
+                      <td style="text-align: left; border: none">Prioridad</td>
+                      <td style="text-align: right; border: none">
+                        {{ table?.id_session?.id_ticket.bl_priority }}
+                      </td>
                     </tr>
                     <tr>
-                      
-                      <td style="text-align: left; border: none;"> Provisión </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.tm_provided  | intervalToHms }} </td>
+                      <td style="text-align: left; border: none">Provisión</td>
+                      <td style="text-align: right; border: none">
+                        {{
+                          table?.id_session?.id_ticket.tm_provided
+                            | intervalToHms
+                        }}
+                      </td>
                     </tr>
                     <tr>
-                      
-                      <td style="text-align: left; border: none;"> Atención </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.tm_att  | intervalToHms }} </td>
-                    
+                      <td style="text-align: left; border: none">Atención</td>
+                      <td style="text-align: right; border: none">
+                        {{
+                          table?.id_session?.id_ticket.tm_att | intervalToHms
+                        }}
+                      </td>
                     </tr>
                     <tr>
-                      
-                      <td style="text-align: left; border: none;"> Solicitud de asistencia </td>
-                      <td style="text-align: right; border: none;"> {{ table?.id_session?.id_ticket.tm_call  | intervalToHms }} </td>
-                    
+                      <td style="text-align: left; border: none">
+                        Solicitud de asistencia
+                      </td>
+                      <td style="text-align: right; border: none">
+                        {{
+                          table?.id_session?.id_ticket.tm_call | intervalToHms
+                        }}
+                      </td>
                     </tr>
                   </table>
                 </div>
 
-                <hr>
+                <hr />
 
                 <!------------------------------>
                 <!-- ACTIONS -->
                 <!------------------------------>
 
                 <div class="container row px-0">
-
                   <!-- activate table -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-block p-0"
-                      [ngClass]="{ 'button-disabled': table.tx_status==='busy', 'btn-success': table.tx_status==='idle', 'btn-secondary': table.tx_status==='paused'}"
-                      (click)="toggleTableStatus(table)">
+                    <button
+                      class="btn btn-block p-0"
+                      [ngClass]="{
+                        'button-disabled': table.tx_status === 'busy',
+                        'btn-success': table.tx_status === 'idle',
+                        'btn-secondary': table.tx_status === 'paused'
+                      }"
+                      (click)="toggleTableStatus(table)"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
                             <span class="mdi mdi-power xl"></span>
                           </td>
                           <td width="100%">
-                            {{table.tx_status}}
+                            {{ table.tx_status }}
                           </td>
                         </tr>
                       </table>
@@ -273,15 +355,27 @@
 
                   <!-- priority slide -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-block p-0" [ngClass]="{'button-disabled': !table.id_session}">
+                    <button
+                      class="btn btn-block p-0"
+                      [ngClass]="{ 'button-disabled': !table.id_session }"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
                             <span class="mdi mdi-priority-high xl"></span>
                           </td>
                           <td width="100%">
-                            <mat-slide-toggle [(ngModel)]="blPriority"
-                              [disabled]="waitForClient || !table.id_session || sectionSelected === ''">
+                            <mat-slide-toggle
+                              [(ngModel)]="blPriority"
+                              [disabled]="
+                                waitForClient ||
+                                !table.id_session ||
+                                sectionSelected === ''
+                              "
+                            >
                             </mat-slide-toggle>
                           </td>
                         </tr>
@@ -291,18 +385,32 @@
 
                   <!-- reassign ticket -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-primary btn-block p-0"
-                      [ngClass]="{'button-disabled':waitForClient || !table.id_session || sectionSelected === ''}"
-                      [disabled]="waitForClient || !table.id_session || sectionSelected === ''"
-                      (click)="reassignTicket(table.id_session?.id_ticket)">
+                    <button
+                      class="btn btn-primary btn-block p-0"
+                      [ngClass]="{
+                        'button-disabled':
+                          waitForClient ||
+                          !table.id_session ||
+                          sectionSelected === ''
+                      }"
+                      [disabled]="
+                        waitForClient ||
+                        !table.id_session ||
+                        sectionSelected === ''
+                      "
+                      (click)="reassignTicket(table.id_session?.id_ticket)"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
-                            <span class="mdi mdi-arrow-right-bold-circle-outline xl"></span>
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
+                            <span
+                              class="mdi mdi-arrow-right-bold-circle-outline xl"
+                            ></span>
                           </td>
-                          <td width="100%">
-                            Mover
-                          </td>
+                          <td width="100%">Mover</td>
                         </tr>
                       </table>
                     </button>
@@ -310,37 +418,53 @@
 
                   <!-- attened ticket -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-primary btn-block p-0" (click)="attendedTicket(table.id_session?.id_ticket)"
-                      [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': !table.id_session?.id_ticket.tx_call || table.tx_status!=='busy'}">
-
+                    <button
+                      class="btn btn-primary btn-block p-0"
+                      (click)="attendedTicket(table.id_session?.id_ticket)"
+                      [disabled]="
+                        !table.id_session?.id_ticket.tx_call ||
+                        table.tx_status !== 'busy'
+                      "
+                      [ngClass]="{
+                        'button-disabled':
+                          !table.id_session?.id_ticket.tx_call ||
+                          table.tx_status !== 'busy'
+                      }"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
                             <span class="mdi mdi-bell xl"></span>
                           </td>
-                          <td width="100%">
-                            Atendido
-                          </td>
+                          <td width="100%">Atendido</td>
                         </tr>
                       </table>
-
                     </button>
                   </div>
 
                   <!-- release ticket -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-primary btn-block p-0" (click)="releaseTicket(table.id_session?.id_ticket)"
-                      [disabled]="waitForClient || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
+                    <button
+                      class="btn btn-primary btn-block p-0"
+                      (click)="releaseTicket(table.id_session?.id_ticket)"
+                      [disabled]="waitForClient || table.tx_status !== 'busy'"
+                      [ngClass]="{
+                        'button-disabled':
+                          waitForClient || table.tx_status !== 'busy'
+                      }"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
                             <span class="mdi mdi-replay xl"></span>
                           </td>
-                          <td width="100%">
-                            Soltar
-                          </td>
+                          <td width="100%">Soltar</td>
                         </tr>
                       </table>
                     </button>
@@ -348,28 +472,32 @@
 
                   <!-- end ticket -->
                   <div class="col-4 p-1">
-                    <button class="btn btn-danger btn-block p-0" (click)="endTicket(table.id_session?.id_ticket)"
-                      [disabled]="waitForClient || table.tx_status!=='busy'"
-                      [ngClass]="{'button-disabled': waitForClient || table.tx_status!=='busy'}">
+                    <button
+                      class="btn btn-danger btn-block p-0"
+                      (click)="endTicket(table.id_session?.id_ticket)"
+                      [disabled]="waitForClient || table.tx_status !== 'busy'"
+                      [ngClass]="{
+                        'button-disabled':
+                          waitForClient || table.tx_status !== 'busy'
+                      }"
+                    >
                       <table width="100%" class="shadow-box">
                         <tr>
-                          <td class="rounded-left px-1" style="background-color: rgba(50,50,50,.3);">
+                          <td
+                            class="rounded-left px-1"
+                            style="background-color: rgba(50, 50, 50, 0.3)"
+                          >
                             <span class="mdi mdi-close xl"></span>
                           </td>
-                          <td width="100%">
-                            Finalizar
-                          </td>
+                          <td width="100%">Finalizar</td>
                         </tr>
                       </table>
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
-
-
         </mat-expansion-panel>
 
         <!------------------------------>
@@ -377,7 +505,6 @@
         <!------------------------------>
 
         <mat-expansion-panel *ngIf="requested.length > 0">
-
           <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="xl mdi mdi-alert text-danger"></span>
@@ -386,33 +513,49 @@
           </mat-expansion-panel-header>
 
           <mat-accordion multi="false">
-            <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
-
+            <mat-expansion-panel
+              class="noshadow"
+              *ngFor="let ticket of requested"
+            >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div class="lg text-danger">
-                    Turno {{ticket.id_position}} solicita mesa para {{ ticket.nm_persons }}
+                    Turno {{ ticket.id_position }} solicita mesa para
+                    {{ ticket.nm_persons }}
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div class="container row px-0 mb-4">
                 <div *ngFor="let table of tables" class="col-4 px-0 p-1">
-                  <div class="btn btn-block p-0" [ngClass]="{
-              'btn-success': ticket.cd_tables.includes(table.nm_table),
-              'btn-secondary': !ticket.cd_tables.includes(table.nm_table)
-            }" (click)="setReserve(table, ticket)">
-
+                  <div
+                    class="btn btn-block p-0"
+                    [ngClass]="{
+                      'btn-success': ticket.cd_tables.includes(table.nm_table),
+                      'btn-secondary': !ticket.cd_tables.includes(
+                        table.nm_table
+                      )
+                    }"
+                    (click)="setReserve(table, ticket)"
+                  >
                     <table width="100%" class="shadow-box">
                       <tr>
-                        <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
-                          <span class="xl">{{table.nm_table}}</span>
+                        <td
+                          class="rounded-left"
+                          style="background-color: rgba(50, 50, 50, 0.3)"
+                        >
+                          <span class="xl">{{ table.nm_table }}</span>
                         </td>
                         <td>
-                          <span *ngIf="ticket.cd_tables.includes(table.nm_table)"
-                            class="xl mdi mdi-check-circle text-white"></span>
-                          <span *ngIf="!ticket.cd_tables.includes(table.nm_table)"
-                            class="lg mdi mdi-human-male text-warning">{{table.nm_persons}}</span>
+                          <span
+                            *ngIf="ticket.cd_tables.includes(table.nm_table)"
+                            class="xl mdi mdi-check-circle text-white"
+                          ></span>
+                          <span
+                            *ngIf="!ticket.cd_tables.includes(table.nm_table)"
+                            class="lg mdi mdi-human-male text-warning"
+                            >{{ table.nm_persons }}</span
+                          >
                         </td>
                       </tr>
                     </table>
@@ -420,23 +563,26 @@
                 </div>
               </div>
               <div class="row">
-
                 <div class="col">
-                  <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)"><span
-                      class="mdi mdi-clock"></span> Asignar
+                  <button
+                    class="btn btn-info btn-block"
+                    (click)="assignTables(ticket, false)"
+                  >
+                    <span class="mdi mdi-clock"></span> Asignar
                   </button>
                 </div>
                 <div class="col">
-                  <button class="btn btn-primary btn-block" (click)="assignTables(ticket, true)"><span
-                      class="mdi mdi-clock-check"></span>
-                    Proveer Ahora
+                  <button
+                    class="btn btn-primary btn-block"
+                    (click)="assignTables(ticket, true)"
+                  >
+                    <span class="mdi mdi-clock-check"></span>
+                    Asignar con Prioridad
                   </button>
                 </div>
               </div>
-
             </mat-expansion-panel>
           </mat-accordion>
-
         </mat-expansion-panel>
 
         <!------------------------------>
@@ -444,7 +590,6 @@
         <!------------------------------>
 
         <mat-expansion-panel *ngIf="waiting.length > 0">
-
           <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="xl mdi mdi-format-list-numbered text-warning"></span>
@@ -453,34 +598,49 @@
           </mat-expansion-panel-header>
 
           <mat-accordion multi="false">
-            <mat-expansion-panel class="noshadow" *ngFor="let ticket of waiting">
-
+            <mat-expansion-panel
+              class="noshadow"
+              *ngFor="let ticket of waiting"
+            >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div class="lg text-danger">
-                    Turno {{ticket.id_position}} espera mesa para {{ ticket.nm_persons }}
-
+                    Turno {{ ticket.id_position }} espera mesa para
+                    {{ ticket.nm_persons }}
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
               <div class="container row px-0 mb-4">
                 <div *ngFor="let table of tables" class="col-4 px-0 p-1">
-                  <div class="btn btn-block p-0" [ngClass]="{
-              'btn-success': ticket.cd_tables.includes(table.nm_table),
-              'btn-secondary': !ticket.cd_tables.includes(table.nm_table)
-            }" (click)="setReserve(table, ticket)">
-
+                  <div
+                    class="btn btn-block p-0"
+                    [ngClass]="{
+                      'btn-success': ticket.cd_tables.includes(table.nm_table),
+                      'btn-secondary': !ticket.cd_tables.includes(
+                        table.nm_table
+                      )
+                    }"
+                    (click)="setReserve(table, ticket)"
+                  >
                     <table width="100%" class="shadow-box">
                       <tr>
-                        <td class="rounded-left" style="background-color: rgba(50,50,50,.3);">
-                          <span class="xl">{{table.nm_table}}</span>
+                        <td
+                          class="rounded-left"
+                          style="background-color: rgba(50, 50, 50, 0.3)"
+                        >
+                          <span class="xl">{{ table.nm_table }}</span>
                         </td>
                         <td>
-                          <span *ngIf="ticket.cd_tables.includes(table.nm_table)"
-                            class="xl mdi mdi-check-circle text-white"></span>
-                          <span *ngIf="!ticket.cd_tables.includes(table.nm_table)"
-                            class="lg mdi mdi-human-male text-warning">{{table.nm_persons}}</span>
+                          <span
+                            *ngIf="ticket.cd_tables.includes(table.nm_table)"
+                            class="xl mdi mdi-check-circle text-white"
+                          ></span>
+                          <span
+                            *ngIf="!ticket.cd_tables.includes(table.nm_table)"
+                            class="lg mdi mdi-human-male text-warning"
+                            >{{ table.nm_persons }}</span
+                          >
                         </td>
                       </tr>
                     </table>
@@ -489,22 +649,27 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)"><span
-                      class="mdi mdi-clock"></span> Asignar
+                  <button
+                    class="btn btn-info btn-block"
+                    (click)="assignTables(ticket, false)"
+                  >
+                    <span class="mdi mdi-clock"></span> Asignar
                   </button>
                 </div>
                 <div class="col">
-                  <button class="btn btn-primary btn-block" (click)="assignTables(ticket, true)"><span
-                      class="mdi mdi-clock-check"></span>
-                    Proveer Ahora
+                  <button
+                    class="btn btn-primary btn-block"
+                    (click)="assignTables(ticket, true)"
+                  >
+                    <span class="mdi mdi-clock-check"></span>
+                    Asignar con Prioridad
                   </button>
                 </div>
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-
         </mat-expansion-panel>
-
       </mat-accordion>
     </div>
   </div>
+</div>

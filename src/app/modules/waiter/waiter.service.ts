@@ -65,8 +65,8 @@ export class WaiterService {
 		return this.http.get(url, { headers });
 	}
 
-	assignTables(idTicket: string, cdTables: number[], blProvide: boolean = false) {
-		const data = { idTicket, cdTables, blProvide };
+	assignTables(idTicket: string, cdTables: number[], blPriority: boolean = false) {
+		const data = { idTicket, cdTables, blPriority };
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});

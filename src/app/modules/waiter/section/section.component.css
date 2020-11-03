@@ -1,9 +1,13 @@
 .button-disabled {
     background-color: #f1f1f1;
-    color: #c7c7c7;
+    color           : #c7c7c7;
 }
 
 .noshadow {
-    box-shadow: none;
+    box-shadow      : none;
     background-color: lightgray;
+}
+
+.text-paused {
+    color: #adadad;
 }

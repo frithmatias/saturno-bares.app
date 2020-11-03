@@ -9,7 +9,7 @@ export class IntervalToHmsPipe implements PipeTransform {
   transform(timeFrom: number, timeTo?: number): string {
     console.log(timeFrom, timeTo)
     if(!timeTo) timeTo = + new Date();
-    if(!timeFrom) return 'sin datos';
+    if(!timeFrom) return '-';
     let interval = timeTo - timeFrom;
     let duration = moment.duration(interval);
     let h = duration.hours();
