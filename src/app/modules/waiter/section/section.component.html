@@ -88,7 +88,7 @@
             >Modo Lista</mat-checkbox
           >
           <!------------------------------>
-          <!-- TABLES LIST -->
+          <!-- TABLES [LIST MODE] -->
           <!------------------------------>
           <div *ngIf="listmode" class="card bg-secondary mb-3">
             <div class="card-body table-responsive-sm p-2">
@@ -128,7 +128,10 @@
                       {{ table.tx_status }}
                     </td>
                     <td style="padding: 0.2rem; text-align: center">
-                      {{ table?.id_session?.id_ticket.tm_provided | intervalToHms }}
+                      <span *ngIf="table.tx_status ==='busy'">
+
+                        {{ busyTablesTimes.get(table.nm_table).tm_provided}}
+                      </span>
                     </td>
                     <td style="padding: 0.2rem; text-align: center">
                       <span
@@ -147,7 +150,9 @@
                       ></span>
                     </td>
                     <td style="padding: 0.2rem; text-align: center">
-                      {{ table?.id_session?.id_ticket.tm_call | intervalToHms }}
+                      <span *ngIf="table.tx_status ==='busy'">
+                        {{ busyTablesTimes.get(table.nm_table).tm_call }}
+                      </span>
                     </td>
                     <td style="padding: 0.2rem; text-align: right">
                       <span
@@ -174,7 +179,7 @@
           </div>
 
           <!------------------------------>
-          <!-- TABLES BUTTONS -->
+          <!-- TABLES [BUTTONS MODE] -->
           <!------------------------------>
 
           <div *ngIf="!listmode" class="container row px-0 mb-4">

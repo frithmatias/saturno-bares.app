@@ -25,6 +25,7 @@ import {
 
 // libraries
 import { Subscription, Subject, interval } from 'rxjs';
+import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 
 const TABLE_TIME_OUT = 2; // 60 segundos
 const TABLE_TIME_EXTRA = 5; // 120 segundos
@@ -63,6 +64,9 @@ export class SectionComponent implements OnInit {
   tableSelected: string = ''; // reassign table
   blPriority = false;
 
+  mytimer: number;
+  busyTablesTimes = new Map(); // tables times
+
   private subjectUpdateTickets$ = new Subject();
   private subjectTurnoCancelado$ = new Subject();
 
@@ -71,7 +75,8 @@ export class SectionComponent implements OnInit {
     public waiterService: WaiterService,
     public sharedService: SharedService,
     private wsService: WebsocketService,
-    private router: Router
+    private router: Router,
+    private intervalToHmsPipe: IntervalToHmsPipe
   ) {}
 
   // ========================================================
@@ -79,8 +84,7 @@ export class SectionComponent implements OnInit {
   // ========================================================
 
   async ngOnInit() {
-
-	if (!this.waiterService.section) {
+    if (!this.waiterService.section) {
       this.router.navigate(['/waiter/home']);
       return;
     }
@@ -92,23 +96,32 @@ export class SectionComponent implements OnInit {
     console.log(config);
     this.listmode = config ? config.listmode : false;
 
-	// get sections
+    // get sections
     this.sections = this.waiterService.sections;
     this.section = this.waiterService.section;
 
-	// timers observer
-	let counter$ = interval(1000).subscribe((data)=>{
-		console.log(data)
-	})
+    // timers observer
 
-	
-    await this.readSectionTables();
+    await this.readSectionTables().then(() => {
+      let counter$ = interval(1000).subscribe((newsecond) => {
+        newsecond = newsecond * 1000;
+        for (let table of this.tables) {
+          if (table.tx_status === 'busy') {
+            this.busyTablesTimes.set(table.nm_table, {
+              tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided),
+              tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call),
+            });
+            console.log(this.busyTablesTimes);
+          }
+        }
+      });
+    });
     await this.readTickets();
 
     this.requested = this.tickets.filter(
       (ticket) => ticket.tx_status === 'requested'
-	);
-	
+    );
+
     this.waiting = this.tickets.filter(
       (ticket) =>
         ticket.tx_status === 'queued' ||
@@ -241,7 +254,7 @@ export class SectionComponent implements OnInit {
       (message) => message.id_ticket !== ticket._id
     );
 
-	this.readTickets();
+    this.readTickets();
   };
 
   clearTableSession = (ticket: Ticket) => {
