@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 // services
@@ -77,7 +77,12 @@ export class SectionComponent implements OnInit {
     private wsService: WebsocketService,
     private router: Router,
     private intervalToHmsPipe: IntervalToHmsPipe
-  ) {}
+  ) { }
+
+  @HostListener('click', ['$event'])
+  onClick(btn: MouseEvent) {
+    // console.log('button', btn);
+  }
 
   // ========================================================
   // NG LIFE CYCLES
@@ -93,7 +98,6 @@ export class SectionComponent implements OnInit {
 
     // listmode config
     let config = JSON.parse(localStorage.getItem('config'));
-    console.log(config);
     this.listmode = config ? config.listmode : false;
 
     // get sections
@@ -104,18 +108,20 @@ export class SectionComponent implements OnInit {
 
     await this.readSectionTables().then(() => {
       let counter$ = interval(1000).subscribe((newsecond) => {
+        let busyTables = this.tables.filter(table => table.tx_status === 'busy');
         newsecond = newsecond * 1000;
-        for (let table of this.tables) {
+        for (let table of busyTables) {
           if (table.tx_status === 'busy') {
-            this.busyTablesTimes.set(table.nm_table, {
-              tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided),
-              tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call),
-            });
-            console.log(this.busyTablesTimes);
+            this.busyTablesTimes.set(table.nm_table,
+              {
+                tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided),
+                tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call),
+              });
           }
         }
       });
     });
+
     await this.readTickets();
 
     this.requested = this.tickets.filter(
@@ -201,18 +207,18 @@ export class SectionComponent implements OnInit {
             reject([]);
           }
 
-          const ticketsPendingAllSections = this.tickets.filter(
+          const ticketsWaiting = this.tickets.filter(
             (ticket) => ticket.tm_provided === null && ticket.tm_end === null
           );
-          const ticketsPendingThisSection = this.tickets.filter(
+          const ticketsWaitingThisSection = this.tickets.filter(
             (ticket) =>
               ticket.tm_provided === null &&
               ticket.tm_end === null &&
               ticket.id_section._id === this.waiterService.section._id
           );
 
-          if (ticketsPendingThisSection.length > 0) {
-            this.message = `Hay ${ticketsPendingThisSection.length} clientes esparando una mesa.`;
+          if (ticketsWaitingThisSection.length > 0) {
+            this.message = `Hay ${ticketsWaitingThisSection.length} clientes esparando una mesa.`;
           } else {
             this.message = `No hay solicitud de mesa para este sector.`;
           }
@@ -222,13 +228,13 @@ export class SectionComponent implements OnInit {
               id: section._id,
               assigned: this.waiterService.section._id === section._id,
               section: section.tx_section,
-              queued: ticketsPendingAllSections.filter(
+              queued: ticketsWaiting.filter(
                 (ticket) =>
                   ticket.id_section._id === section._id &&
                   ticket.tm_end === null &&
                   ticket.tx_status === 'queued'
               ).length,
-              requested: ticketsPendingAllSections.filter(
+              requested: ticketsWaiting.filter(
                 (ticket) =>
                   ticket.id_section._id === section._id &&
                   ticket.tm_end === null &&
@@ -335,7 +341,6 @@ export class SectionComponent implements OnInit {
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {
-        console.log(data);
         if (data.ok) {
           let tableToChangeStatus = this.tables.filter(
             (table) => table._id === data.table._id

@@ -69,9 +69,7 @@ export class WebsocketService {
 	}
 
 	updateSocket(): void {
-		console.log('updating socket', this.idSocket)
 		// Sólo si ya existe un usuario loguado o un ticket (cliente)
-		
 		if (localStorage.getItem('user')) { // admin / user
 
 			// update localstorage
@@ -102,9 +100,7 @@ export class WebsocketService {
 			let idTicket = ticket._id;
 			let newSocket = this.idSocket;
 			let isClient = true;
-			this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => {
-				console.log(data)
-			})
+			this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => {})
 	}
 }
 

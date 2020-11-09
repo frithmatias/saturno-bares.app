@@ -80,7 +80,6 @@ export class PublicService {
 
   actualizarSocket(idTicket: string, newSocket: string, isClient: boolean): Observable<object> {
     const socketsData = { idTicket, newSocket, isClient };
-    console.log(socketsData)
     return this.http.put(environment.url + '/t/actualizarsocket', socketsData);
   }
 

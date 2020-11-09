@@ -13,9 +13,6 @@ export class IntervalToHmsPipe implements PipeTransform {
     if(!timeTo) timeTo = + new Date();
     if(!timeFrom) return '-';
     let interval = timeTo - timeFrom;
-    console.log('timeTo', timeTo, 'timeFrom', timeFrom)
-
-    console.log('interval', interval)
     let duration = moment.duration(interval);
     let h = duration.hours();
     let m = duration.minutes();

@@ -5,7 +5,7 @@
 
 .noshadow {
     box-shadow      : none;
-    background-color: lightgray;
+    background-color: gainsboro;
 }
 
 .text-paused {
