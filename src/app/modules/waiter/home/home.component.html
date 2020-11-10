@@ -22,22 +22,22 @@
 
             <div *ngIf="sections && loginService.user.id_company?._id">
 
-                <div *ngIf="section" class="container-fluid">
+                <div *ngIf="session" class="container-fluid">
                     <div class="row my-4">
                         <div class="col">
-                            Usted tiene tomado el sector {{ section.tx_section }}
+                            Usted tiene tomado el sector {{ session.id_section.tx_section }}
                         </div>
                     </div>
                     <div class="row my-4">
                         <div class="col">
                             <button class="btn btn-success btn-block text-uppercase" role="button"
-                                (click)="takeSection( section )">
+                                (click)="takeSection( session.id_section )">
                                 Ingresar
                             </button>
                         </div>
                         <div class="col">
                             <button class="btn btn-danger btn-block text-uppercase" role="button"
-                                (click)="releaseSection( section )">
+                                (click)="releaseSection( session.id_section )">
                                 Cerrar
                             </button>
                         </div>
@@ -50,7 +50,7 @@
                 <!-- TAKE / RELEASE SECTION -->
                 <!-- ======================================================== -->
 
-                <div *ngIf="!section" class="my-4">
+                <div *ngIf="!session" class="my-4">
                     <div class="my-4">
                         <mat-form-field class="w-100">
                             <mat-label>Seleccione un sector</mat-label>
@@ -83,8 +83,8 @@
                                     <span class="mdi mdi-select-group mx-1"></span>
                                     Sector </td>
                                 <td style="text-align: right; border: none;">
-                                    <span class="mdi mdi-silverware-fork-knife mx-1"></span>
-                                    Camarero </td>
+                                    <span class="mdi mdi-face mx-1"></span>
+                                    Camareros </td>
                             </tr>
 
                             <tr *ngFor="let section of sections">
@@ -92,12 +92,7 @@
                                     {{section.tx_section}}
                                 </td>
                                 <td style="text-align: right;">
-                                    <div *ngIf="section.id_session">
-                                        {{section.id_session?.id_waiter.tx_name}}
-                                    </div>
-                                    <div *ngIf="!section.id_session" style="color: mediumspringgreen;">
-                                        Disponible
-                                    </div>
+                                    {{sessions.get(section.tx_section)}}
                                 </td>
                             </tr>
                         </table>

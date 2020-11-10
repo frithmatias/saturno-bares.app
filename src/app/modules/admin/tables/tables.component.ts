@@ -18,8 +18,8 @@ export class TablesComponent implements OnInit, OnDestroy {
 
   sections: Section[] = [];
   sectionSelected: Section;
-  sectionTables: Table[] = [];
-  companyTables: Table[] = [];
+  tables: Table[] = [];
+
   user: User;
   userSubscription: Subscription;
 
@@ -37,14 +37,16 @@ export class TablesComponent implements OnInit, OnDestroy {
 
       if (this.user.id_company) {
         let idCompany = this.user.id_company._id;
-        this.readSections(idCompany);
         this.readTables(idCompany);
+        this.readSections(idCompany);
       }
 
       this.userSubscription = this.loginService.user$.subscribe(data => {
         if (data) {
           this.user = data;
-          if (data.id_company) { this.readTables(data.id_company._id); }
+          let idCompany = data.id_company._id;
+          this.readTables(idCompany)
+          this.readSections(idCompany)
         }
       });
 
@@ -56,7 +58,7 @@ export class TablesComponent implements OnInit, OnDestroy {
       if (data.dismissedByAction) {
         this.adminService.deleteTable(idTable).subscribe((data: TableResponse) => {
           this.snack.open(data.msg, null, { duration: 5000 });
-          this.companyTables = this.companyTables.filter(table => table._id != idTable);
+          this.tables = this.tables.filter(table => table._id != idTable);
         },
           (err: TableResponse) => {
             this.snack.open(err.msg, null, { duration: 5000 });
@@ -68,37 +70,29 @@ export class TablesComponent implements OnInit, OnDestroy {
 
   sectionChanged(section: Section): void {
     this.sectionSelected = section;
-    this.sectionTables = this.companyTables.filter(table => table.id_section === section._id)
+    this.tables = this.tables.filter(table => table.id_section === section._id)
   }
-  
+
   tableCreated(table: Table): void {
-    this.companyTables.push(table);
+    this.tables.push(table);
   }
 
   readSections(idCompany: string) {
-    return new Promise((resolve, reject) => {
-      this.adminService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-        if(data.ok){
-          this.sections = data.sections;
-          this.adminService.sections = data.sections;
-          resolve(data.sections);
-        }
-      });
-    })
+    this.adminService.readSections(idCompany).subscribe((data: SectionsResponse) => {
+      if (data.ok) {
+        this.sections = data.sections;
+        this.adminService.sections = data.sections;
+      }
+    });
   }
 
-
   readTables(idCompany: string) {
-    return new Promise((resolve, reject) => {
-      this.adminService.readTables(idCompany).subscribe((data: TablesResponse) => {
-        if(data.ok){
-          this.companyTables = data.tables;
-          this.sectionTables = data.tables;
-          this.adminService.tables = data.tables;
-          resolve(data.tables);
-        }
-      });
-    })
+    this.adminService.readTables(idCompany).subscribe((data: TablesResponse) => {
+      if (data.ok) {
+        this.tables = data.tables;
+        this.adminService.tables = data.tables;
+      }
+    });
   }
 
   ngOnDestroy(): void {

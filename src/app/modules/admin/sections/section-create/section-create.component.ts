@@ -31,6 +31,7 @@ export class SectionCreateComponent implements OnInit {
 	}
 
 	createSection(formDirective: FormGroupDirective) {
+		
 		if (this.forma.invalid) {
 			return;
 		}
@@ -38,7 +39,6 @@ export class SectionCreateComponent implements OnInit {
 		const section: Section = {
 			id_company: this.loginService.user.id_company._id,
 			tx_section: this.forma.value.txSection,
-			id_session: null,
 			__v: null,
 			_id: null
 		};

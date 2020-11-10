@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Section } from '../../interfaces/section.interface';
-import { tap } from 'rxjs/operators';
+import { Session } from '../../interfaces/session.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,7 +17,7 @@ import { tap } from 'rxjs/operators';
 export class WaiterService {
 
 	sections: Section[] = [];
-	section: Section = null;
+	session: Session = null;
 
 	chatMessages: {
 		id_ticket: string,
@@ -30,13 +30,21 @@ export class WaiterService {
 	constructor(
 		private http: HttpClient,
 		private loginService: LoginService
-	) {}
+	) { }
 
 	readSections(idCompany: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
 		const url = environment.url + '/section/readsections/' + idCompany;
+		return this.http.get(url, { headers });
+	}
+
+	readSessions(idCompany: string) {
+		const headers = new HttpHeaders({
+			'turnos-token': this.loginService.token
+		});
+		const url = environment.url + '/section/readsessions/' + idCompany;
 		return this.http.get(url, { headers });
 	}
 
@@ -116,14 +124,25 @@ export class WaiterService {
 		return this.http.post(url, data, { headers });
 	}
 
-	releaseSection(idSection: string) {
+	releaseSection(idSection: string, idWaiter: string) {
 		const headers = new HttpHeaders({
 			'turnos-token': this.loginService.token
 		});
-		let data = { idSection }
+		let data = { idSection, idWaiter }
 		const url = environment.url + '/section/releasesection';
 		return this.http.post(url, data, { headers });
 	}
+
+	clearSectionSession = () => {
+		delete this.session;
+		
+		if (localStorage.getItem('session')) {
+			localStorage.removeItem('session');
+		}
+		if (localStorage.getItem('tables')) {
+			localStorage.removeItem('tables');
+		}
+	};
 
 	getTimeInterval(from: number, to?: number): string {
 		let interval = to - from;

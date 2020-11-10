@@ -7,9 +7,8 @@ import { Session } from './session.interface';
 export interface Section {
 	id_company: string,
     tx_section: string, // terraza, patio, etc
-    id_session: Session | null,
-	__v: number;
-	_id: string;
+	__v?: number;
+	_id?: string;
 }
 
 export interface SectionResponse {

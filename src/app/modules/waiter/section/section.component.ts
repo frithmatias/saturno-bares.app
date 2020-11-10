@@ -18,14 +18,14 @@ import {
   TableResponse,
   TablesResponse,
 } from '../../../interfaces/table.interface';
-import {
-  Section,
-  SectionsResponse,
-} from '../../../interfaces/section.interface';
+
+import { Section } from '../../../interfaces/section.interface';
+
 
 // libraries
 import { Subscription, Subject, interval } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
+import { SessionResponse } from '../../../interfaces/session.interface';
 
 const TABLE_TIME_OUT = 2; // 60 segundos
 const TABLE_TIME_EXTRA = 5; // 120 segundos
@@ -89,7 +89,7 @@ export class SectionComponent implements OnInit {
   // ========================================================
 
   async ngOnInit() {
-    if (!this.waiterService.section) {
+    if (!this.waiterService.session) {
       this.router.navigate(['/waiter/home']);
       return;
     }
@@ -102,7 +102,8 @@ export class SectionComponent implements OnInit {
 
     // get sections
     this.sections = this.waiterService.sections;
-    this.section = this.waiterService.section;
+    this.section = this.waiterService.session.id_section;
+
 
     // timers observer
 
@@ -165,7 +166,7 @@ export class SectionComponent implements OnInit {
 
   readSectionTables = (): Promise<Table[]> => {
     return new Promise((resolve, reject) => {
-      let idSection = this.waiterService.section._id;
+      let idSection = this.waiterService.session.id_section._id;
       this.waiterService.readSectionTables(idSection).subscribe(
         (data: TablesResponse) => {
           if (data.ok) {
@@ -194,7 +195,7 @@ export class SectionComponent implements OnInit {
         .subscribe((data: TicketsResponse) => {
           this.tickets = data.tickets.filter((ticket) => {
             return (
-              ticket.id_section._id === this.waiterService.section._id &&
+              ticket.id_section._id === this.waiterService.session.id_section._id &&
               ticket.tm_end === null
             );
           });
@@ -214,7 +215,7 @@ export class SectionComponent implements OnInit {
             (ticket) =>
               ticket.tm_provided === null &&
               ticket.tm_end === null &&
-              ticket.id_section._id === this.waiterService.section._id
+              ticket.id_section._id === this.waiterService.session.id_section._id
           );
 
           if (ticketsWaitingThisSection.length > 0) {
@@ -226,7 +227,7 @@ export class SectionComponent implements OnInit {
           for (let section of this.sections) {
             this.pendingBySection.push({
               id: section._id,
-              assigned: this.waiterService.section._id === section._id,
+              assigned: this.waiterService.session.id_section._id === section._id,
               section: section.tx_section,
               queued: ticketsWaiting.filter(
                 (ticket) =>
@@ -271,34 +272,29 @@ export class SectionComponent implements OnInit {
     table.id_session = null;
   };
 
-  clearSectionSession = () => {
-    delete this.waiterService.section;
-    if (localStorage.getItem('section')) {
-      localStorage.removeItem('section');
-    }
-    if (localStorage.getItem('tables')) {
-      localStorage.removeItem('tables');
-    }
-    this.router.navigate(['waiter/home']);
-  };
+
 
   // ========================================================
   // SECTION METHODS
   // ========================================================
 
   releaseSection = () => {
+
     if (this.tickets.length > 0) {
       this.message = 'No puede cerrar la sesión tiene mesas ocupadas.';
       this.sharedService.snack(this.message, 5000);
       return;
     }
 
-    let idSection = this.waiterService.section._id;
+    let idSection = this.waiterService.session.id_section._id;
+    let idWaiter = this.loginService.user._id;
+
     this.waiterService
-      .releaseSection(idSection)
-      .subscribe((data: TableResponse) => {
+      .releaseSection(idSection, idWaiter)
+      .subscribe((data: SessionResponse) => {
         if (data.ok) {
-          this.clearSectionSession();
+          this.waiterService.clearSectionSession();
+          this.router.navigate(['waiter/home']);
         }
       });
   };
@@ -456,8 +452,15 @@ export class SectionComponent implements OnInit {
   };
 
   setListMode = () => {
-    let config = JSON.parse(localStorage.getItem('config'));
-    config.listmode = !this.listmode;
-    localStorage.setItem('config', JSON.stringify(config));
+
+    if (localStorage.getItem('config')) {
+      let config = JSON.parse(localStorage.getItem('config'));
+      config.listmode = !this.listmode;
+      localStorage.setItem('config', JSON.stringify(config));
+    } else {
+      let config = { listmode: true };
+      localStorage.setItem('config', JSON.stringify(config));
+    }
+
   };
 }

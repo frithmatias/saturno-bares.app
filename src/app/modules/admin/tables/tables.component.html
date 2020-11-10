@@ -9,12 +9,12 @@
         </div>
 
         <div class="card-body table-responsive-sm">
-            <div *ngIf="!companyTables || companyTables?.length === 0" class="row align-items-center justify-content-center">
+            <div *ngIf="!tables || tables?.length === 0" class="row align-items-center justify-content-center">
                 <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
                 <span>Una mesa genérica fué creada</span>
             </div>
             <table class="table table-sm text-white">
-                <tr *ngFor="let table of sectionTables">
+                <tr *ngFor="let table of tables">
                     <td>{{table?.nm_table}}</td>
                     <td>{{table?.nm_persons}}</td>
                     <td>{{table?.tx_status}}</td>
