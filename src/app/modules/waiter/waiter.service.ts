@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 
 import { Ticket } from '../../interfaces/ticket.interface';
-import { Table } from '../../interfaces/table.interface';
-
 import { LoginService } from '../../services/login.service';
-
 import { Observable } from 'rxjs';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Section } from '../../interfaces/section.interface';
 import { Session } from '../../interfaces/session.interface';
 
@@ -33,53 +30,35 @@ export class WaiterService {
 	) { }
 
 	readSections(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/section/readsections/' + idCompany;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	readSessions(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/section/readsessions/' + idCompany;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	takeSection(idSection: string, idWaiter: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		let data = { idSection, idWaiter }
 		const url = environment.url + '/section/takesection';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	readSectionTables(idSection: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/readsectiontables/' + idSection;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	toggleTableStatus(idTable: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/toggletablestatus/' + idTable;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	assignTables(idTicket: string, cdTables: number[], blPriority: boolean = false) {
 		const data = { idTicket, cdTables, blPriority };
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/assigntables';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	readTickets(idCompany: string) {
@@ -90,52 +69,37 @@ export class WaiterService {
 
 	releaseTicket(ticket: Ticket): Observable<object> {
 		const data = { ticket };
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/t/releaseticket';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	reassignTicket(idTicket: string, idSession: string, blPriority: boolean): Observable<object> {
 		const data = { idTicket, idSession, blPriority };
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/t/reassignticket';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	attendedTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/t/attendedticket';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	endTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/t/endticket';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	releaseSection(idSection: string, idWaiter: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		let data = { idSection, idWaiter }
 		const url = environment.url + '/section/releasesection';
-		return this.http.post(url, data, { headers });
+		return this.http.post(url, data);
 	}
 
 	clearSectionSession = () => {
 		delete this.session;
-		
+
 		if (localStorage.getItem('session')) {
 			localStorage.removeItem('session');
 		}

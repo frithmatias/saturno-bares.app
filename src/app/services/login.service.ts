@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/interfaces/user.interface';
 import { map, catchError } from 'rxjs/operators';
 import { throwError, Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -75,10 +75,12 @@ export class LoginService {
 		);
 	}
 
-	estaLogueado() {
-		if ((this.token.length < 5) || (typeof this.token === 'undefined') || (this.token === 'undefined')) {
+	logged() {
+		console.log(!this.token)
+		if (!this.token) {
 			return false;
-		}
+		} 
+
 		const payload = JSON.parse(atob(this.token.split('.')[1]));
 		const ahora = new Date().getTime() / 1000;
 		if (payload.exp < ahora) {
@@ -99,12 +101,8 @@ export class LoginService {
 		const url = environment.url + '/u/updatetoken';
 		// url += '?token=' + this.token;
 
-		const headers = new HttpHeaders({
-			'turnos-token': this.token
-		});
-
 		let data = { user: this.user };
-		return this.http.post(url, data, { headers })
+		return this.http.post(url, data)
 			.pipe(map((resp: any) => {
 				if (resp.ok) {
 					this.token = resp.newtoken;
@@ -124,7 +122,7 @@ export class LoginService {
 
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
-		
+
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
 		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 

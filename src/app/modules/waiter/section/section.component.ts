@@ -334,6 +334,7 @@ export class SectionComponent implements OnInit {
   };
 
   toggleTableStatus = (table: Table) => {
+    if(table.tx_status === 'busy') return;
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 
 // services
@@ -44,52 +44,37 @@ export class AdminService {
 	// ========================================================
 
 	createCompany(company: Company) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		let data = { company };
 		const url = environment.url + '/c/create';
-		return this.http.post(url, data, { headers }).pipe(tap((data: CompanyResponse) => {
+		return this.http.post(url, data).pipe(tap((data: CompanyResponse) => {
 			this.attachCompany(data.company);
 		}))
 	}
 
 	readCompanies(idUser: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/c/readcompanies/' + idUser;
-		return this.http.get(url, { headers }).pipe(tap((data: CompaniesResponse) => {
+		return this.http.get(url).pipe(tap((data: CompaniesResponse) => {
 			this.companies = data.companies;
 			this.companiesSource.next(data.companies);
 		}));
 	}
 
 	updateCompany(company: Company) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/c/update';
-		return this.http.post(url, company, { headers });
+		return this.http.post(url, company);
 	}
 
 	deleteCompany(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/c/deletecompany/' + idCompany;
-		return this.http.delete(url, { headers });
+		return this.http.delete(url);
 	}
 
 	attachCompany(company: Company) {
 		// return new user object with populated company
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		let data = { company };
 		let idUser = this.loginService.user._id;
 		const url = environment.url + '/u/attachcompany/' + idUser;
-		this.http.post(url, data, { headers }).subscribe((data: UserResponse) => {
+		this.http.post(url, data).subscribe((data: UserResponse) => {
 			// obtengo el usuario con el nuevo id_company populado
 			if (data.ok) {
 				this.loginService.pushUser(data.user);
@@ -108,27 +93,18 @@ export class AdminService {
 	// ========================================================
 
 	createSection(section: Section) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/section/createsection';
-		return this.http.post(url, section, { headers });
+		return this.http.post(url, section);
 	}
 
 	readSections(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/section/readsections/' + idCompany;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	deleteSection(idSection: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/section/deletesection/' + idSection;
-		return this.http.delete(url, { headers });
+		return this.http.delete(url);
 	}
 
 	// ========================================================
@@ -137,27 +113,18 @@ export class AdminService {
 
 	createTable(table: Table) {
 
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/createtable';
-		return this.http.post(url, table, { headers });
+		return this.http.post(url, table);
 	}
 
 	readTables(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/readtables/' + idCompany;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	deleteTable(idTable: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/table/deletetable/' + idTable;
-		return this.http.delete(url, { headers });
+		return this.http.delete(url);
 	}
 
 	// ========================================================
@@ -165,35 +132,23 @@ export class AdminService {
 	// ========================================================
 
 	createWaiter(waiter: User) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/w/createwaiter';
-		return this.http.post(url, waiter, { headers });
+		return this.http.post(url, waiter);
 	}
 
 	readWaiters(idCompany: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/w/readwaiters/' + idCompany;
-		return this.http.get(url, { headers });
+		return this.http.get(url);
 	}
 
 	updateWaiter(waiter: User) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/w/updatewaiter';
-		return this.http.post(url, waiter, { headers });
+		return this.http.post(url, waiter);
 	}
 
 	deleteWaiter(idWaiter: string) {
-		const headers = new HttpHeaders({
-			'turnos-token': this.loginService.token
-		});
 		const url = environment.url + '/w/deletewaiter/' + idWaiter;
-		return this.http.delete(url, { headers });
+		return this.http.delete(url);
 	}
 
 	readActiveSessions(idCompany: string) {

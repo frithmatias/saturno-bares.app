@@ -24,7 +24,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
 
 // MODULES
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './modules/material.module';
 import { ComponentsModule } from './components/components.module';
 
@@ -36,6 +36,7 @@ import { LoginGuard } from './guards/login.guard';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HowWorksComponent } from './pages/how-works/how-works.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
+import { TokenService } from './interceptors/token.service';
 
 @NgModule({
 	declarations: [
@@ -63,7 +64,8 @@ import { PricingComponent } from './pages/pricing/pricing.component';
 		AdminGuard,
 		TokenGuard,
 		LoginGuard,
-		{provide: MAT_DATE_LOCALE, useValue: 'es'}
+		{ provide: HTTP_INTERCEPTORS, useClass: TokenService, multi: true }, // para que este a la escucha de TODAS las peticiones
+		{ provide: MAT_DATE_LOCALE, useValue: 'es' }
 	],
 	bootstrap: [AppComponent]
 })
