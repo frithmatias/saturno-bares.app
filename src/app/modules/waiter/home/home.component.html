@@ -22,22 +22,22 @@
 
             <div *ngIf="sections && loginService.user.id_company?._id">
 
-                <div *ngIf="session" class="container-fluid">
+                <div *ngIf="waiterService.session" class="container-fluid">
                     <div class="row my-4">
                         <div class="col">
-                            Usted tiene tomado el sector {{ session.id_section.tx_section }}
+                            Usted tiene tomado el sector {{ waiterService.session.id_section.tx_section }}
                         </div>
                     </div>
                     <div class="row my-4">
                         <div class="col">
                             <button class="btn btn-success btn-block text-uppercase" role="button"
-                                (click)="takeSection( session.id_section )">
+                                (click)="takeSection( waiterService.session.id_section )">
                                 Ingresar
                             </button>
                         </div>
                         <div class="col">
                             <button class="btn btn-danger btn-block text-uppercase" role="button"
-                                (click)="releaseSection( session.id_section )">
+                                (click)="releaseSection( waiterService.session.id_section )">
                                 Cerrar
                             </button>
                         </div>
@@ -50,7 +50,7 @@
                 <!-- TAKE / RELEASE SECTION -->
                 <!-- ======================================================== -->
 
-                <div *ngIf="!session" class="my-4">
+                <div *ngIf="!waiterService.session" class="my-4">
                     <div class="my-4">
                         <mat-form-field class="w-100">
                             <mat-label>Seleccione un sector</mat-label>

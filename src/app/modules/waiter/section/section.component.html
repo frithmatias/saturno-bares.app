@@ -6,7 +6,7 @@
     </div>
 
     <div *ngIf="!loading" class="animated fadeIn">
-      <mat-accordion multi="false">
+      <mat-accordion multi="true">
 
         <!------------------------------>
         <!-- SECTIONS -->
@@ -26,21 +26,38 @@
 
               <mat-radio-group [(ngModel)]="sectionSelected">
                 <table class="table table-sm text-white text-center">
-                  <tr style="border-top: 0px; color: yellow">
-                    <td style="text-align: left; border: none">Sector</td>
-                    <td style="text-align: center; border: none">Requeridos</td>
-                    <td style="text-align: center; border: none">Cola</td>
+                  <tr>
+                    <td style="text-align: center; border: none"></td>
+                    <td colspan="3" style="text-align: center; border: none">Mesas</td>
+                    <td colspan="2" style="text-align: center; border: none">Turnos</td>
+                  </tr>
+                  <tr style="border-top: 0px; background-color: whitesmoke;">
+                    <td class="xl mdi mdi-select-group text-warning" style="text-align: left; border: none"></td>
+                    <td class="xl mdi mdi-minus-circle-outline text-danger" style="text-align: center; border: none"></td>
+                    <td class="xl mdi mdi-check-circle-outline text-success" style="text-align: center; border: none"></td>
+                    <td class="xl mdi mdi-pause-circle-outline text-secondary" style="text-align: center; border: none"></td>
+                    <td class="xl mdi mdi-alert-box text-danger" style="text-align: center; border: none"></td>
+                    <td class="xl mdi mdi-format-list-numbered text-primary" style="text-align: center; border: none"></td>
                   </tr>
 
-                  <tr *ngFor="let section of pendingBySection">
+                  <tr *ngFor="let section of sections">
                     <td style="text-align: left">
-                      {{ section.section }}
+                      {{ section.tx_section }}
                     </td>
                     <td style="text-align: center">
-                      {{ section.requested }}
+                      {{ tablesDataBySection.get(section.tx_section).busy }}
                     </td>
                     <td style="text-align: center">
-                      {{ section.queued }}
+                      {{ tablesDataBySection.get(section.tx_section).idle }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ tablesDataBySection.get(section.tx_section).paused }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ ticketsDataBySection.get(section.tx_section).requested }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ ticketsDataBySection.get(section.tx_section).queued }}
                     </td>
                   </tr>
                 </table>
@@ -263,18 +280,15 @@
                         'button-disabled': table.tx_status === 'busy',
                         'btn-success': table.tx_status === 'idle',
                         'btn-secondary': table.tx_status === 'paused'
-                      }" [disabled]="table.tx_status === 'busy'" >
+                      }" [disabled]="table.tx_status === 'busy'">
                       <table width="100%" class="shadow-box">
                         <tr>
                           <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                             <span class="mdi mdi-power xl"></span>
                           </td>
                           <td width="100%">
-                            <mat-slide-toggle 
-                            style="color: tomato;"
-                            (click)="toggleTableStatus(table)"
-                            [checked]="table.tx_status !== 'paused'" 
-                            [disabled]="table.tx_status === 'busy'">
+                            <mat-slide-toggle style="color: tomato;" (click)="toggleTableStatus(table)"
+                              [checked]="table.tx_status !== 'paused'" [disabled]="table.tx_status === 'busy'">
                             </mat-slide-toggle>
                           </td>
                         </tr>
@@ -284,19 +298,17 @@
 
                   <!-- priority slide -->
                   <div class="col-6 col-sm-6 col-md-4 p-1">
-                    <button 
-                    class="btn btn-block p-0" 
-                    [ngClass]="{ 'button-disabled': !table.id_session || sectionSelected === '' }"
-                    [disabled]="!table.id_session || sectionSelected === ''">
+                    <button class="btn btn-block p-0"
+                      [ngClass]="{ 'button-disabled': !table.id_session || sectionSelected === '' }"
+                      [disabled]="!table.id_session || sectionSelected === ''">
                       <table width="100%" class="shadow-box">
                         <tr>
                           <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                             <span class="mdi mdi-priority-high xl"></span>
                           </td>
                           <td width="100%">
-                            <mat-slide-toggle 
-                            [(ngModel)]="blPriority" 
-                            [disabled]="!table.id_session || sectionSelected === ''">
+                            <mat-slide-toggle [(ngModel)]="blPriority"
+                              [disabled]="!table.id_session || sectionSelected === ''">
                             </mat-slide-toggle>
                           </td>
                         </tr>

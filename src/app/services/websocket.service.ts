@@ -42,7 +42,7 @@ export class WebsocketService {
 		return this.listen('update-clients');
 	}
 
-	updateTicketsWaiters(): Observable<string> {
+	updateTablesWaiters(): Observable<string> {
 		return this.listen('update-waiters');
 	}
 

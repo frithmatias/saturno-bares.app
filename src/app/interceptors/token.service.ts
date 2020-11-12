@@ -46,7 +46,7 @@ export class TokenService implements HttpInterceptor {
   }
 
   manejarError(error: HttpErrorResponse) {
-    console.warn(error);
+    console.warn(error.error);
     if (error.error.code == 1001) {
       this.sharedService.snack(error.error.msg, 5000);
       this.loginService.logout();

@@ -45,8 +45,8 @@ export class WaiterService {
 		return this.http.post(url, data);
 	}
 
-	readSectionTables(idSection: string) {
-		const url = environment.url + '/table/readsectiontables/' + idSection;
+	readTables(idCompany: string) {
+		const url = environment.url + '/table/readtables/' + idCompany;
 		return this.http.get(url);
 	}
 

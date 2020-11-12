@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'src/app/interfaces/user.interface';
 import { Subscription } from 'rxjs';
 import { WaiterService } from '../../../modules/waiter/waiter.service';
 import { LoginService } from '../../../services/login.service';
@@ -18,9 +17,7 @@ export class HomeComponent implements OnInit {
   loading = false;
   sections: Section[] = [];
   sessions = new Map();
-
-  session: Session;
-  userSuscription: Subscription
+  userSuscription: Subscription;
 
   constructor(
     private router: Router,
@@ -33,11 +30,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.loading = true;
-
-    if (localStorage.getItem('session')) {
-      this.session = JSON.parse(localStorage.getItem('session'));
-    }
-
     if (this.loginService.user.id_company?._id) {
       let idCompany = this.loginService.user.id_company._id;
       this.readSections(idCompany);
@@ -53,7 +45,7 @@ export class HomeComponent implements OnInit {
         this.readSections(data.id_company._id);
       }
     })
-
+ 
   }
 
   takeSection(section: Section): void {
@@ -98,6 +90,14 @@ export class HomeComponent implements OnInit {
   readSessions(idCompany: string): void {
     this.waiterService.readSessions(idCompany).subscribe((data: SessionsResponse) => {
       if (data.ok) {
+        
+        // pick my session
+        let mySession = data.sessions.filter(session => session.id_waiter === this.loginService.user._id);
+        this.waiterService.session = mySession[0];
+        localStorage.setItem('session', JSON.stringify(this.waiterService.session));
+
+
+        console.log(mySession)
         for ( let sector of this.sections ) {
           this.sessions.set(sector.tx_section, data.sessions.filter(session => session.id_section.tx_section === sector.tx_section).length)
         }
@@ -117,7 +117,6 @@ export class HomeComponent implements OnInit {
         let idCompany = this.loginService.user.id_company._id;
         this.readSessions(idCompany);
         this.waiterService.clearSectionSession();
-        delete this.session;
       }
     })
   }
