@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpErrorResponse, HttpHandler, HttpEvent, HttpRequest, HttpInterceptor } from '@angular/common/http';
+import { HttpHeaders, HttpErrorResponse, HttpHandler, HttpEvent, HttpRequest, HttpInterceptor, HttpResponse } from '@angular/common/http';
 import { LoginService } from '../services/login.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService implements HttpInterceptor {
 
-  constructor(private loginService: LoginService) { }
+  constructor(
+    private loginService: LoginService, 
+    private sharedService: SharedService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -23,7 +27,9 @@ export class TokenService implements HttpInterceptor {
         headers: headers
       })
 
-      return next.handle(reqClone).pipe(catchError(this.manejarError));
+      return next.handle(reqClone).pipe(
+        tap(this.manejarRespuesta),
+        catchError(this.manejarError.bind(this)));
 
     } else {
 
@@ -33,10 +39,19 @@ export class TokenService implements HttpInterceptor {
 
   }
 
-  manejarError(error: HttpErrorResponse) {
-    console.warn('Ocurrio un error en la petición', error);
-    return throwError('Error personalizado'); // Devuelve un error al suscriptor de mi observable.
+  manejarRespuesta(resp: HttpResponse<any>) {
+    if (resp.type > 0) {
+      console.log(resp.body);
+    }
   }
 
+  manejarError(error: HttpErrorResponse) {
+    console.warn(error);
+    if (error.error.code == 1001) {
+      this.sharedService.snack(error.error.msg, 5000);
+      this.loginService.logout();
+		}
+    return throwError(''); // Devuelve un error al suscriptor de mi observable.
+  }
 
 }

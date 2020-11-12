@@ -271,6 +271,7 @@
                           </td>
                           <td width="100%">
                             <mat-slide-toggle 
+                            style="color: tomato;"
                             (click)="toggleTableStatus(table)"
                             [checked]="table.tx_status !== 'paused'" 
                             [disabled]="table.tx_status === 'busy'">

@@ -76,11 +76,9 @@ export class LoginService {
 	}
 
 	logged() {
-		console.log(!this.token)
 		if (!this.token) {
 			return false;
 		} 
-
 		const payload = JSON.parse(atob(this.token.split('.')[1]));
 		const ahora = new Date().getTime() / 1000;
 		if (payload.exp < ahora) {
@@ -116,6 +114,7 @@ export class LoginService {
 	}
 
 	logout() {
+
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
