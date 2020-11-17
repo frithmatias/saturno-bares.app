@@ -15,6 +15,9 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SectionComponent } from './section/section.component';
 import { RequestedComponent } from './section/requested/requested.component';
+import { QueuedComponent } from './section/queued/queued.component';
+import { TablesComponent } from './section/tables/tables.component';
+import { SectionsComponent } from './section/sections/sections.component';
 
 
 @NgModule({
@@ -22,7 +25,7 @@ import { RequestedComponent } from './section/requested/requested.component';
     WaiterComponent, 
     HomeComponent,
     DashboardComponent, 
-    SectionComponent, RequestedComponent
+    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent
   ],
   imports: [
     FormsModule,

@@ -11,11 +11,6 @@
   color: orange;
 }
 
-.button-disabled {
-  background-color: #f1f1f1;
-  color           : grey;
-  border          : solid 1px grey;
-}
 
 /*---------------------------------------------------*/
 /* my ticket rounded */

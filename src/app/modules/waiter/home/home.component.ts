@@ -97,10 +97,10 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('session', JSON.stringify(this.waiterService.session));
 
 
-        console.log(mySession)
         for ( let sector of this.sections ) {
           this.sessions.set(sector.tx_section, data.sessions.filter(session => session.id_section.tx_section === sector.tx_section).length)
         }
+        
       } else {
         delete this.sessions;
       }

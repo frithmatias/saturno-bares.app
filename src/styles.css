@@ -64,6 +64,15 @@ mat-drawer-container {
 
 
 
+.button-disabled {
+    background-color: #f1f1f1 !important; 
+    color           : #c7c7c7 !important;
+} 
+
+.noshadow {
+    box-shadow      : none;
+    background-color: gainsboro;
+}
 
 
 
@@ -272,11 +281,6 @@ mat-drawer-container {
     border-radius: 5px;
     padding      : 8px;
     width        : inherit;
-}
-
-.button-disabled {
-    background-color: #f1f1f1;
-    color           : #c7c7c7;
 }
 
 .button-inner {

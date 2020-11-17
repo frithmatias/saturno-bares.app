@@ -7,14 +7,25 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Section } from '../../interfaces/section.interface';
 import { Session } from '../../interfaces/session.interface';
+import { Table } from '../../interfaces/table.interface';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class WaiterService {
 
+	// busy tables times
+
+
+	// set on home
 	sections: Section[] = [];
 	session: Session = null;
+	sectionSelected: string = ''; // reassign section
+
+	// set on section
+	tables: Table[] = [];
+	tickets: Ticket[] = [];
+
 
 	chatMessages: {
 		id_ticket: string,
@@ -97,6 +108,12 @@ export class WaiterService {
 		return this.http.post(url, data);
 	}
 
+
+  // ========================================================
+  // SESSION METHODS
+  // ========================================================
+
+
 	clearSectionSession = () => {
 		delete this.session;
 
@@ -107,6 +124,11 @@ export class WaiterService {
 			localStorage.removeItem('tables');
 		}
 	};
+
+
+
+
+
 
 	getTimeInterval(from: number, to?: number): string {
 		let interval = to - from;

@@ -1,39 +1,39 @@
         <!------------------------------>
-        <!-- REQUESTED -->
+        <!-- QUEUED -->
         <!------------------------------>
         <mat-expansion-panel>
+
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <span class="xl mdi mdi-alert-box text-danger"></span>
-                <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}})</span>
+                <span class="xl mdi mdi-format-list-numbered text-primary"></span>
+                <span class="sidenav-title-text mx-2">Cola ({{waiting.length}})</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="card bg-danger text-white" *ngIf="requested.length == 0">
+  
+            <div class="card bg-danger text-white" *ngIf="waiting.length == 0">
               <div class="card-header lg">
-                No existen requeridos
+                No hay clientes esperando mesa
               </div>
             </div>
-            <mat-accordion multi="false" *ngIf="requested.length > 0">
-              <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
+  
+            <mat-accordion multi="false" *ngIf="waiting.length > 0">
+              <mat-expansion-panel class="noshadow" *ngFor="let ticket of waiting">
+  
+                <!-- header -->
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <div *ngIf="ticket.cd_tables.length > 0">
                       <span class="text-success xl mr-2 mdi mdi-checkbox-marked"></span>
                     </div>
                     <div *ngIf="ticket.cd_tables.length == 0">
-                      <span class="text-danger xl mr-2 mdi mdi-help-box"></span>
+                      <span class="text-danger xl mr-2 mdi mdi-alert-box"></span>
                     </div>
                     Turno {{ ticket.id_position }}: mesa para {{ ticket.nm_persons }}
                   </mat-panel-title>
                 </mat-expansion-panel-header>
   
+                <!-- tables -->
                 <div class="container row px-0 mb-4">
-                  <div class="card bg-danger text-warning mb-3">
-                    <div class="card-body">
-                      Por favor seleccione las mesas necesarias para aprovisionar un pedido de mesa para
-                      {{ticket.nm_persons}} personas.
-                    </div>
-                  </div>
                   <div *ngFor="let table of tables" class="col-4 px-0 p-1">
                     <div class="btn btn-block p-0" [ngClass]="{
                         'btn-success': ticket.cd_tables.includes(table.nm_table),
@@ -57,6 +57,8 @@
                     </div>
                   </div>
                 </div>
+  
+                <!-- buttons -->
                 <div class="row">
                   <div class="col">
                     <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)">
@@ -70,7 +72,8 @@
                     </button>
                   </div>
                 </div>
+  
               </mat-expansion-panel>
             </mat-accordion>
-          </mat-expansion-panel>
   
+          </mat-expansion-panel>

@@ -1,0 +1,68 @@
+        <!------------------------------>
+        <!-- SECTIONS -->
+        <!------------------------------>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="xl mdi mdi-select-group text-success"></span>
+                <span class="sidenav-title-text mx-2">Sectores ({{waiterService.sections.length}})</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card bg-secondary mb-3">
+              <div class="card-body table-responsive-sm p-2">
+  
+                <mat-radio-group [(ngModel)]="waiterService.sectionSelected">
+                  <table *ngIf="tablesDataBySection.size > 0 && ticketsDataBySection.size > 0" class="table table-sm text-white text-center">
+                    <tr>
+                      <td style="text-align: left; border: none">Sector</td>
+                      <td colspan="3" style="text-align: center; border: none">Mesas</td>
+                      <td colspan="2" style="text-align: center; border: none">Turnos</td>
+                    </tr>
+                    <tr style="border-top: 0px; background-color: whitesmoke;">
+                      <td class="xl mdi mdi-select-group text-warning" style="text-align: left; border: none"></td>
+                      <td class="xl mdi mdi-minus-circle-outline text-danger" style="text-align: center; border: none"></td>
+                      <td class="xl mdi mdi-check-circle-outline text-success" style="text-align: center; border: none"></td>
+                      <td class="xl mdi mdi-pause-circle-outline text-secondary" style="text-align: center; border: none"></td>
+                      <td class="xl mdi mdi-alert-box text-danger" style="text-align: center; border: none"></td>
+                      <td class="xl mdi mdi-format-list-numbered text-primary" style="text-align: center; border: none"></td>
+                    </tr>
+  
+                    <tr *ngFor="let section of waiterService.sections">
+                      <td style="text-align: left">
+                        {{ section.tx_section }}
+                        <span *ngIf="tablesDataBySection.get(section.tx_section).sectionselected" class="mdi mdi-check lg text-warning"></span>
+                      </td>
+                      <td style="text-align: center">
+                        {{ tablesDataBySection.get(section.tx_section).busy }}
+                      </td>
+                      <td style="text-align: center">
+                        {{ tablesDataBySection.get(section.tx_section).idle }}
+                      </td>
+                      <td style="text-align: center">
+                        {{ tablesDataBySection.get(section.tx_section).paused }}
+                      </td>
+                      <td style="text-align: center">
+                        {{ ticketsDataBySection.get(section.tx_section).requested }}
+                      </td>
+                      <td style="text-align: center">
+                        {{ ticketsDataBySection.get(section.tx_section).queued }}
+                      </td>
+                    </tr>
+                  </table>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div class="mb-2">
+              <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
+                <table width="100%" class="shadow-box">
+                  <tr>
+                    <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                      <div class="mdi mdi-power xl"></div>
+                    </td>
+                    <td>Salir</td>
+                  </tr>
+                </table>
+              </button>
+            </div>
+          </mat-expansion-panel>
+  
