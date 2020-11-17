@@ -1,76 +1,100 @@
-        <!------------------------------>
-        <!-- REQUESTED -->
-        <!------------------------------>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="xl mdi mdi-alert-box text-danger"></span>
-                <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}})</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="card bg-danger text-white" *ngIf="requested.length == 0">
-              <div class="card-header lg">
-                No existen requeridos
-              </div>
-            </div>
-            <mat-accordion multi="false" *ngIf="requested.length > 0">
-              <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <div *ngIf="ticket.cd_tables.length > 0">
-                      <span class="text-success xl mr-2 mdi mdi-checkbox-marked"></span>
-                    </div>
-                    <div *ngIf="ticket.cd_tables.length == 0">
-                      <span class="text-danger xl mr-2 mdi mdi-help-box"></span>
-                    </div>
-                    Turno {{ ticket.id_position }}: mesa para {{ ticket.nm_persons }}
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-  
-                <div class="container row px-0 mb-4">
-                  <div class="card bg-danger text-white mb-3">
-                    <div class="card-body p-1">
-                      Por favor seleccioná las mesas necesarias para aprovisionar este pedido para
-                      {{ticket.nm_persons}} personas.
-                    </div>
-                  </div>
-                  <div *ngFor="let table of tables" class="col-4 px-0 p-1">
-                    <div class="btn btn-block p-0" [ngClass]="{
+<!------------------------------>
+<!-- REQUESTED -->
+<!------------------------------>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <span class="xl mdi mdi-alert-box text-danger"></span>
+      <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}})</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="card bg-danger text-white" *ngIf="requested.length == 0">
+    <div class="card-header lg">
+      No existen requeridos
+    </div>
+  </div>
+  <mat-accordion multi="false" *ngIf="requested.length > 0">
+    <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div *ngIf="ticket.cd_tables.length > 0">
+            <span class="text-success xl mr-2 mdi mdi-checkbox-marked"></span>
+          </div>
+          <div *ngIf="ticket.cd_tables.length == 0">
+            <span class="text-danger xl mr-2 mdi mdi-help-box"></span>
+          </div>
+          Turno {{ ticket.id_position }}: mesa para {{ ticket.nm_persons }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="container row px-0 mb-4">
+        <div class="card bg-danger text-white mb-3">
+          <div class="card-body p-1">
+            Por favor seleccioná las mesas necesarias para aprovisionar este pedido para
+            {{ticket.nm_persons}} personas.
+          </div>
+        </div>
+        <div *ngFor="let table of tables" class="col-4 px-0 p-1">
+          <div class="btn btn-block p-0" [ngClass]="{
                         'btn-success': ticket.cd_tables.includes(table.nm_table),
                         'btn-secondary': !ticket.cd_tables.includes(
                           table.nm_table
                         )
                       }" (click)="setReserve(table, ticket)">
-                      <table width="100%" class="shadow-box">
-                        <tr>
-                          <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                            <span class="xl">{{ table.nm_table }}</span>
-                          </td>
-                          <td>
-                            <span *ngIf="ticket.cd_tables.includes(table.nm_table)"
-                              class="xl mdi mdi-check-circle text-white"></span>
-                            <span *ngIf="!ticket.cd_tables.includes(table.nm_table)"
-                              class="lg mdi mdi-human-male text-warning">{{ table.nm_persons }}</span>
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <button class="btn btn-info btn-block" (click)="assignTables(ticket, false)">
-                      <span class="mdi mdi-clock"></span> Asignar
-                    </button>
-                  </div>
-                  <div class="col">
-                    <button class="btn btn-primary btn-block" (click)="assignTables(ticket, true)">
-                      <span class="mdi mdi-clock-check"></span>
-                      Asignar con Prioridad
-                    </button>
-                  </div>
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
-          </mat-expansion-panel>
-  
+            <table width="100%" class="shadow-box">
+              <tr>
+                <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                  <span class="xl">{{ table.nm_table }}</span>
+                </td>
+                <td>
+                  <span *ngIf="ticket.cd_tables.includes(table.nm_table)"
+                    class="xl mdi mdi-check-circle text-white"></span>
+                  <span *ngIf="!ticket.cd_tables.includes(table.nm_table)"
+                    class="lg mdi mdi-human-male text-warning">{{ table.nm_persons }}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="container row">
+
+        <!-- ASSIGN TABLES -->
+        <div class="col">
+          <button class="btn btn-primary btn-block p-0" (click)="assignTables(ticket, assignWithPriority)">
+            <table width="100%" class="shadow-box">
+              <tr>
+                <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
+                  <span class="mdi mdi-hand-pointing-right xl"></span>
+                </td>
+                <td width="100%">
+                  Asignar
+                </td>
+              </tr>
+            </table>
+          </button>
+        </div>
+
+        <!-- PRIORITY -->
+        <div class="col">
+          <button class="btn btn-info btn-block p-0">
+            <table width="100%" class="shadow-box">
+              <tr>
+                <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
+                  <span class="mdi mdi-priority-high xl"></span>
+                </td>
+                <td width="100%">
+                  <mat-slide-toggle [(ngModel)]="assignWithPriority">
+                  </mat-slide-toggle>
+                </td>
+              </tr>
+            </table>
+          </button>
+        </div>
+
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-expansion-panel>

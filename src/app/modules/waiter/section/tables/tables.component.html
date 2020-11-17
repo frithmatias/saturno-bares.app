@@ -53,13 +53,14 @@
                             </span>
                         </td>
                         <td style="padding: 0.2rem; text-align: center">
+                            <span *ngIf="table.id_session?.id_ticket.tx_call === null && table.id_session?.id_ticket.tm_provided !== null"
+                                class="lg mdi mdi-hand-okay text-warning"></span>
                             <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'"
                                 class="lg mdi mdi-book-open-variant text-warning"></span>
                             <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
                                 class="lg mdi mdi-silverware-fork-knife text-warning"></span>
-                            <span *ngIf="
-                            table.id_session?.id_ticket.tx_call === 'account'
-                          " class="lg mdi mdi-file-document-edit-outline text-warning"></span>
+                            <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
+                                class="lg mdi mdi-file-document-edit-outline text-warning"></span>
                         </td>
                         <td style="padding: 0.2rem; text-align: center">
                             <span *ngIf="table.tx_status === 'busy' && busyTablesTimes.get(table.nm_table)">
@@ -235,11 +236,9 @@
 
                     <!-- reassign ticket -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
-                        <button 
-                        [disabled]="!table.id_session || waiterService.sectionSelected === ''"
-                        [ngClass]="{'button-disabled': !table.id_session || waiterService.sectionSelected === ''}"
-                        class="btn btn-primary btn-block p-0"
-                        (click)="reassignTicket(table.id_session?.id_ticket)">
+                        <button [disabled]="!table.id_session || waiterService.sectionSelected === ''"
+                            [ngClass]="{'button-disabled': !table.id_session || waiterService.sectionSelected === ''}"
+                            class="btn btn-primary btn-block p-0" (click)="reassignTicket(table.id_session?.id_ticket)">
                             <table width="100%" class="shadow-box">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
@@ -254,8 +253,8 @@
                     <!-- attened ticket -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-primary btn-block p-0"
-                            (click)="attendedTicket(table.id_session?.id_ticket)" 
-                            [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'" 
+                            (click)="attendedTicket(table.id_session?.id_ticket)"
+                            [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'"
                             [ngClass]="{'button-disabled': !table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'}">
                             <table width="100%" class="shadow-box">
                                 <tr>

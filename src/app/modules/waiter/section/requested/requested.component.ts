@@ -14,6 +14,7 @@ export class RequestedComponent implements OnInit {
 
   @Input() tickets: Ticket[];
   @Input() tables: Table[];
+  assignWithPriority: boolean = false;
 
   requested: Ticket[];
   constructor(
