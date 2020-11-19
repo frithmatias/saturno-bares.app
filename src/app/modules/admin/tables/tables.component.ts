@@ -18,11 +18,11 @@ export class TablesComponent implements OnInit, OnDestroy {
 
   sections: Section[] = [];
   sectionsMap = new Map();
-
   sectionSelected: Section;
+
   tables: Table[] = [];
   tablesSection: Table[] = [];
-
+  tableNew: Table;
 
   user: User;
   userSubscription: Subscription;
@@ -75,14 +75,16 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
 
   sectionChanged(section: Section): void {
-    console.log(section)
     this.sectionSelected = section;
     this.tablesSection = this.tables.filter(table => table.id_section === section._id)
   }
 
   tableCreated(table: Table): void {
+    this.tableNew = table;
     this.tables.push(table);
+    this.tables.sort((a, b) => a.nm_table - b.nm_table)
     this.tablesSection.push(table);
+    this.tablesSection.sort((a, b) => a.nm_table - b.nm_table)
   }
 
   readSections(idCompany: string) {

@@ -21,7 +21,7 @@
                     <td class="xl text-warning text-center mdi mdi-cog-box"></td>
                     <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
                 </thead>
-                <tr *ngFor="let table of tablesSection">
+                <tr *ngFor="let table of tablesSection" [ngClass]="{'bg-success':table._id === tableNew?._id}">
                     <td>{{sectionsMap.get(table?.id_section)}}</td>
                     <td>{{table?.nm_table}}</td>
                     <td class="text-center">{{table?.nm_persons}}</td>
