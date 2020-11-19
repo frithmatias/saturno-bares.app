@@ -18,6 +18,8 @@ export class TableCreateComponent implements OnInit {
 	@Output() sectionChanged: EventEmitter<Section> = new EventEmitter();
 
 	@Input() sections: Section[] = [];
+	@Input() tablesSection: Table[] = [];
+
 	
  	forma: FormGroup;
 	constructor(
@@ -39,6 +41,14 @@ export class TableCreateComponent implements OnInit {
 	createTable(formDirective: FormGroupDirective) {
 		if (this.forma.invalid) {
 			return;
+		}
+
+		// verifico que el número de mesa no exista dentro del sector.
+		for ( let table of this.tablesSection ) {
+			if (this.forma.controls.nmTable.value === table.nm_table) {
+				this.sharedService.snack('Ya existe una mesa con el id: ' + table.nm_table + ' !', 3000);
+				return;
+			}
 		}
 
 		const table: Table = {

@@ -61,6 +61,7 @@ export class LoginService {
 		const url = environment.url + api;
 
 		return this.http.post(url, data).pipe(map((resp: any) => {
+			console.log(resp)
 			localStorage.setItem('token', JSON.stringify(resp.token));
 			localStorage.setItem('menu', JSON.stringify(resp.menu));
 			localStorage.setItem('user', JSON.stringify(resp.user));

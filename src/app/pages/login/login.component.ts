@@ -53,11 +53,12 @@ export class LoginComponent implements OnInit {
 			this.loginService.login(gtoken, null, false).subscribe(
 				data => {
 					if (data.ok) {
+						console.log(data)
 						if (data.user.id_company) { 
 							let idCompany = data.user.id_company._id;
-							this.wsService.emit('enterCompany', idCompany); 
+							//this.wsService.emit('enterCompany', idCompany); 
 						}
-						// window.location.href = '#/admin';
+						//  window.location.href = '#/admin';
 
 						this.router.navigate([data.home]);			
 					}

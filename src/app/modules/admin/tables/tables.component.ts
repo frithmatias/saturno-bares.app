@@ -17,8 +17,12 @@ export class TablesComponent implements OnInit, OnDestroy {
   @Input() nopadding: boolean;
 
   sections: Section[] = [];
+  sectionsMap = new Map();
+
   sectionSelected: Section;
   tables: Table[] = [];
+  tablesSection: Table[] = [];
+
 
   user: User;
   userSubscription: Subscription;
@@ -59,6 +63,8 @@ export class TablesComponent implements OnInit, OnDestroy {
         this.adminService.deleteTable(idTable).subscribe((data: TableResponse) => {
           this.snack.open(data.msg, null, { duration: 5000 });
           this.tables = this.tables.filter(table => table._id != idTable);
+          this.tablesSection = this.tablesSection.filter(table => table._id != idTable);
+
         },
           (err: TableResponse) => {
             this.snack.open(err.msg, null, { duration: 5000 });
@@ -69,18 +75,23 @@ export class TablesComponent implements OnInit, OnDestroy {
   }
 
   sectionChanged(section: Section): void {
+    console.log(section)
     this.sectionSelected = section;
-    this.tables = this.tables.filter(table => table.id_section === section._id)
+    this.tablesSection = this.tables.filter(table => table.id_section === section._id)
   }
 
   tableCreated(table: Table): void {
     this.tables.push(table);
+    this.tablesSection.push(table);
   }
 
   readSections(idCompany: string) {
     this.adminService.readSections(idCompany).subscribe((data: SectionsResponse) => {
       if (data.ok) {
         this.sections = data.sections;
+        for (let section of data.sections) {
+          this.sectionsMap.set(section._id, section.tx_section);
+        }
         this.adminService.sections = data.sections;
       }
     });
@@ -90,6 +101,7 @@ export class TablesComponent implements OnInit, OnDestroy {
     this.adminService.readTables(idCompany).subscribe((data: TablesResponse) => {
       if (data.ok) {
         this.tables = data.tables;
+        this.tablesSection = data.tables;
         this.adminService.tables = data.tables;
       }
     });

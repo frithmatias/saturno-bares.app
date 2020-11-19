@@ -14,12 +14,20 @@
                 <span>Una mesa genérica fué creada</span>
             </div>
             <table class="table table-sm text-white">
-                <tr *ngFor="let table of tables">
+                <thead>
+                    <td class="xl text-warning mdi mdi-select-group"></td>
+                    <td class="xl text-warning">#</td>
+                    <td class="xl text-warning text-center mdi mdi-account-box-outline"></td>
+                    <td class="xl text-warning text-center mdi mdi-cog-box"></td>
+                    <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
+                </thead>
+                <tr *ngFor="let table of tablesSection">
+                    <td>{{sectionsMap.get(table?.id_section)}}</td>
                     <td>{{table?.nm_table}}</td>
-                    <td>{{table?.nm_persons}}</td>
-                    <td>{{table?.tx_status}}</td>
+                    <td class="text-center">{{table?.nm_persons}}</td>
+                    <td class="text-center">{{table?.tx_status}}</td>
 
-                    <td style="text-align: right;">
+                    <td class="text-right">
                         <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteTable(table._id)"></span>
                     </td>
                 </tr>
@@ -37,7 +45,7 @@
             Alta de Mesa</div>
         <div class="card-body">
 
-            <app-table-create [sections]="sections" (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
+            <app-table-create [sections]="sections" [tablesSection]="tablesSection" (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
 
         </div>
     </div>
