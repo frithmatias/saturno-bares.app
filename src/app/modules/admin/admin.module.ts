@@ -25,6 +25,7 @@ import { WaitersComponent } from './waiters/waiters.component';
 import { WaiterCreateComponent } from './waiters/waiter-create/waiter-create.component';
 import { SectionsComponent } from './sections/sections.component';
 import { SectionCreateComponent } from './sections/section-create/section-create.component';
+import { WizardComponent } from './wizard/wizard.component';
 
 @NgModule({
 	declarations: [
@@ -45,6 +46,7 @@ import { SectionCreateComponent } from './sections/section-create/section-create
 		
 		WaitersComponent,
 		WaiterCreateComponent,
+		WizardComponent,
 
 	],
 	imports: [

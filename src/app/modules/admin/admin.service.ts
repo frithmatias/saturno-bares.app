@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 
@@ -10,33 +10,29 @@ import { LoginService } from '../../services/login.service';
 // Interfaces
 import { User, UserResponse } from '../../interfaces/user.interface';
 import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
-import { Table } from '../../interfaces/table.interface';
-import { Section } from '../../interfaces/section.interface';
+import { Table, TablesResponse } from '../../interfaces/table.interface';
+import { Section, SectionsResponse } from '../../interfaces/section.interface';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AdminService {
-	
+
 	public companies: Company[] = [];
 	public sections: Section[] = [];
+	public sectionsMap = new Map();
+	public tablesSection: Table[] = [];
+
 	public waiters: User[] = [];
 	public tables: Table[] = [];
+	public userSubscription: Subscription;
 	
-	public companiesSource = new Subject<Company[]>();
-	companies$ = this.companiesSource.asObservable();
-
 	constructor(
 		private loginService: LoginService,
-		private http: HttpClient, 
-		
-		) {
-			if (this.loginService.user?.id_role === 'ADMIN_ROLE') {
-				this.readCompanies(this.loginService.user._id).subscribe(data => {
-					this.companies = data.companies;
-					this.companiesSource.next(data.companies);
-				})
-			}
+		private http: HttpClient,
+
+	) {
+
 	}
 
 	// ========================================================
@@ -53,10 +49,9 @@ export class AdminService {
 
 	readCompanies(idUser: string) {
 		const url = environment.url + '/c/readcompanies/' + idUser;
-		return this.http.get(url).pipe(tap((data: CompaniesResponse) => {
+		return this.http.get(url).subscribe((data: CompaniesResponse) => {
 			this.companies = data.companies;
-			this.companiesSource.next(data.companies);
-		}));
+		});
 	}
 
 	updateCompany(company: Company) {
@@ -99,7 +94,12 @@ export class AdminService {
 
 	readSections(idCompany: string) {
 		const url = environment.url + '/section/readsections/' + idCompany;
-		return this.http.get(url);
+		return this.http.get(url).subscribe((data: SectionsResponse) => {
+			this.sections = data.sections;
+			for (let section of data.sections) {
+				this.sectionsMap.set(section._id, section.tx_section);
+			}
+		})
 	}
 
 	deleteSection(idSection: string) {
@@ -112,14 +112,18 @@ export class AdminService {
 	// ========================================================
 
 	createTable(table: Table) {
-
 		const url = environment.url + '/table/createtable';
 		return this.http.post(url, table);
 	}
 
 	readTables(idCompany: string) {
 		const url = environment.url + '/table/readtables/' + idCompany;
-		return this.http.get(url);
+		return this.http.get(url).subscribe((data: TablesResponse) => {
+			if (data.ok) {
+				this.tables = data.tables;
+				this.tablesSection = data.tables;
+			}
+		});
 	}
 
 	deleteTable(idTable: string) {

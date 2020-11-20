@@ -30,7 +30,6 @@ export class TokenService implements HttpInterceptor {
       return next.handle(reqClone).pipe(
         tap(this.manejarRespuesta),
         catchError(this.manejarError.bind(this)));
-
     } else {
 
       return next.handle(req);
@@ -47,8 +46,9 @@ export class TokenService implements HttpInterceptor {
 
   manejarError(error: HttpErrorResponse) {
     console.warn(error.error);
-    if (error.error.code == 1001) {
-      this.sharedService.snack(error.error.msg, 5000);
+    this.sharedService.snack(error.error.msg, 5000);
+
+    if (error.error.code == 1001) { // token expired
       this.loginService.logout();
 		}
     return throwError(''); // Devuelve un error al suscriptor de mi observable.

@@ -16,6 +16,8 @@ export class LoginService {
 	menu: any[] = [];
 
 	public user: User;
+
+	// user observable
 	public userSource = new Subject<User>();
 	user$ = this.userSource.asObservable();
 
@@ -61,7 +63,6 @@ export class LoginService {
 		const url = environment.url + api;
 
 		return this.http.post(url, data).pipe(map((resp: any) => {
-			console.log(resp)
 			localStorage.setItem('token', JSON.stringify(resp.token));
 			localStorage.setItem('menu', JSON.stringify(resp.menu));
 			localStorage.setItem('user', JSON.stringify(resp.user));
@@ -127,9 +128,9 @@ export class LoginService {
 		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 
 
-		this.token = null;
-		this.menu = null;
-		this.user = null;
+		delete this.token;
+		delete this.menu;
+		delete this.user;
 
 		this.userSource.next(null)
 		this.router.navigate(['/home']);

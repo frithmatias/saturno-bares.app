@@ -2,17 +2,16 @@
 
     <div *ngIf="!companySelected" class="jumbotron text-dark">
         
-        <h2>Ingrese la empresa</h2>
-               
+        
         <span class="mdi mdi-domain icon-search-company"></span>
         <span class="mdi mdi-store icon-search-company"></span>
         <span class="mdi mdi-hospital-building icon-search-company"></span>
         <span class="mdi mdi-storefront-outline icon-search-company"></span>
         <span class="mdi mdi-office-building icon-search-company"></span>
-        <hr>
-        <p>La empresa debe estar registrada, por ejemplo "Pizza Taz". Si desea registrar un comercio haga click <a routerLink="/register">aquí</a></p>
 
-        <div class="my-2">
+        <div class="xl my-3 text-danger">Encontrar un comercio</div>
+
+        <div>
 
             <mat-form-field color="warn" logincss class="w-100">
                 <mat-label>Ingrese la empresa aquí</mat-label>

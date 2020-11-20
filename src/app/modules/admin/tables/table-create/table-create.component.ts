@@ -16,12 +16,10 @@ import { Section } from '../../../../interfaces/section.interface';
 export class TableCreateComponent implements OnInit {
 	@Output() tableCreated: EventEmitter<Table> = new EventEmitter();
 	@Output() sectionChanged: EventEmitter<Section> = new EventEmitter();
-
 	@Input() sections: Section[] = [];
 	@Input() tablesSection: Table[] = [];
 
-	
- 	forma: FormGroup;
+	forma: FormGroup;
 	constructor(
 		public adminService: AdminService,
 		private loginService: LoginService,
@@ -30,7 +28,6 @@ export class TableCreateComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-
 		this.forma = new FormGroup({
 			idSection: new FormControl(null, Validators.required),
 			nmTable: new FormControl(null, Validators.required),
@@ -61,16 +58,15 @@ export class TableCreateComponent implements OnInit {
 			this.tableCreated.emit(data.table);
 			this.snack.open(data.msg, null, { duration: 5000 });
 			this.resetForm(formDirective);
-		},
-			(err: any) => {
-				this.snack.open(err.error.msg, null, { duration: 5000 });
-			}
-		)
+
+			// persist selected section option on select control
+			this.forma.patchValue({idSection: data.table.id_section})
+			
+		})
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
-		this.forma.reset();
 		this.sharedService.scrollTop();
 	}
 

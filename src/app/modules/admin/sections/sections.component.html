@@ -8,12 +8,12 @@
         </div>
 
         <div class="card-body table-responsive-sm">
-            <div *ngIf="!sections || sections?.length === 0" class="row align-items-center justify-content-center">
+            <div *ngIf="!adminService.sections || adminService.sections?.length === 0" class="row align-items-center justify-content-center">
                 <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
                 <span>Un sector genérico fué creado</span>
             </div>
             <table class="table table-sm text-white">
-                <tr *ngFor="let section of sections">
+                <tr *ngFor="let section of adminService.sections">
                     <td>{{section?.tx_section}}</td>
                     <td style="text-align: right;">
                         <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteSection(section)"></span>

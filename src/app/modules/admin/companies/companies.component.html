@@ -7,7 +7,7 @@
         <div class="card-body table-responsive-sm">
 
             <table class="table table-sm text-white">
-                <tr *ngFor="let company of companies">
+                <tr *ngFor="let company of adminService.companies">
                     <td> {{company?.tx_company_name}} </td>
                     <td>
                         <span *ngIf="company._id===companyUpdated?._id"

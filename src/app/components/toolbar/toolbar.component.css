@@ -16,12 +16,29 @@
   font-weight   : 200;
   letter-spacing: .3em;
   line-height: 1em;
+  text-transform: uppercase;
 }
 
 .saturno-description {
   font-size  : .7em;
   font-weight: lighter;
   line-height: normal;
+}
+
+.company-title {
+  font-weight: 300;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.company-slogan {
+  line-height: normal;
+  font-weight: 200;
+  font-style: italic;
+  color: yellow;
+  font-family: monospace;
+  letter-spacing: .2em;
+  opacity: 0.8;
 }
 
 img {

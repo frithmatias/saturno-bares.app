@@ -1,300 +1,147 @@
-<div class="saturno-card shadow-box animated fadeIn">
+<div class="saturno-card m-0 animated fadeIn">
+  <h4 class="mb-4">Bienvenido {{ loginService?.user.tx_name }}!</h4>
 
-  <!-- STEPPER OFF -->
-  <div *ngIf="!showIntro">
-    <div class="m-2 animated fadeIn">
-      <h4 class="mb-4">Bienvenido {{ loginService?.user.tx_name }}!</h4>
+  <!-- ======================================================== -->
+  <!-- MINI CARDS -->
+  <!-- ======================================================== -->
 
-      <button class="btn btn-primary btn-block" routerLink="/waiter/home">Atender</button>
+  <div class="p-0 animated fadeIn justify-content-center">
 
-      <hr class="my-4">
-
-      <div *ngIf="loginService.user.id_company" class="card bg-danger text-white">
-        <div class="card-body" style="text-align: left;">
-
-          <div>
-            <p>
-              <span class="mdi mdi-headset lg mr-2"></span>
-              Atender Turnos
-            </p>
-            <p>
-              Para atender turnos sólo debe ingresar a su cuenta y luego ir al menú de Camarero y tomar un escritorio.
-            </p>
-
-          </div>
-          <hr>
-          <div>
-            <p>
-              <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span>
-              Generar Turnos
-            </p>
-            <p>
-              Para que sus clientes puedan crear turnos de su comercio o empresa, debe ofrecerles la
-              dirección web principal en saturno.live, ir a "OBTENER TURNO" y allí buscar su empresa por su nombre.
-            </p>
-            <p>
-              <a target="_blank" href="https://saturno.live">
-                https://saturno.live
-              </a>
-            </p>
-          </div>
-          <hr>
-          <p>
-            <span class="mdi mdi-shield-link-variant lg mr-2"></span>
-
-            Acceso directo a crear turnos
-          </p>
-          <p>
-            La dirección web de acceso directo a el panel de turnos de su comercio es:
-          </p>
-          <p>
-            <a target="_blank" href="https://saturno.live/#/public/{{loginService.user.id_company.tx_public_name}}">
-              https://saturno.live/#/public/{{loginService.user.id_company.tx_public_name}}
-            </a>
-          </p>
+    <!-- asistente -->
+    <div class="saturno-minicard shadow-box my-3" routerLink="/admin/wizard">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-wizard-hat icon-home-card"></span>
         </div>
+        <div>
+          Iniciar el Asistente
+        </div>
+      </div>
+      <hr class="saturno-hr-green">
+      <div class="saturno-minicard-text">
+        Este pequeño asistente le ayuda paso a paso en el proceso de crear o modificar sus comercios, sectores, mesas,
+        asistentes y
+        todo lo necesario para atender a sus clientes.
       </div>
     </div>
+
+    <!-- tomar un sector -->
+    <div class="saturno-minicard shadow-box my-3" routerLink="/waiter/home">
+      <div class="saturno-minicard-title">
+        <div>
+          <span class="mdi mdi-select-group icon-home-card"></span>
+        </div>
+        <div>
+          Tomar un Sector
+        </div>
+      </div>
+      <hr class="saturno-hr-blue">
+      <div class="saturno-minicard-text">
+        Desde aquí puede tomar un sector, gestionar sus mesas y ateneder a sus clientes.
+      </div>
+    </div>
+
+
+    <!-- tomar un sector -->
+    <div class="saturno-minicard shadow-box my-3" routerLink="/waiter/home">
+      <div class="table-responsive-sm">
+        <table class="table table-sm mb-0 text-secondary text-center">
+
+          <tr>
+            <td style="text-align: left;">
+              Bares / Restorants
+              <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
+              <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+
+            </td>
+            <td style="text-align: right;">
+              {{ adminService.companies.length }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">
+              Sectores
+              <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
+              <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
+            </td>
+            <td style="text-align: right;">
+              {{ adminService.sections.length }}
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">
+              Mesas
+              <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
+              <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
+            </td>
+            <td style="text-align: right;">
+              {{ adminService.tables.length }}
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 
 
-  <!-- STEPPER ON -->
-  <mat-horizontal-stepper style="text-align: left;" *ngIf="showIntro" labelPosition="bottom" linear #stepper>
+  <hr class="my-4">
 
-    <!-- Welcome Step -->
-    <mat-step state="star">
-      <div class="m-2 animated fadeIn">
-        <div class="card-body">
-          <h4>Hola {{ loginService?.user.tx_name }}!</h4>
+  <div *ngIf="loginService.user.id_company" class="card bg-danger text-white">
+    <div class="card-body" style="text-align: left;">
 
-          <p>
-            Este pequeño asistente le ayuda a crear todo lo necesario para comenzar a atender las solicitudes de mesa de sus clientes.
-          </p>
-          <p>
-            No le llevará mas de un minuto y desde aquí puede hacer todo!.
-          </p>
-          <hr>
-          <button class="btn btn-success" matStepperNext>Comenzar</button>
-          <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-        </div>
-      </div>
-    </mat-step>
-
-    <!-- Resto Step -->
-    <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
-
-      <!-- no companies, no attached company -->
-      <div *ngIf="adminService.companies?.length === 0">
-        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Comencemos!</h4>
-
+      <div>
         <p>
-          Usted no tiene ninguna bar o restorant registrado, desde aquí usted debe registrar al menos uno.
+          <span class="mdi mdi-headset lg mr-2"></span>
+          Administradores y Camareros
         </p>
-    
         <p>
-          Es importante que usted ingrese la dirección exacta de su comercio. Esta dirección será visible para sus clientes
-          desde el menú público de turnos y le asegura a su cliente que esta obteniendo un turno en el bar / restorant
-          correcto.
-        </p>
-      </div>
-
-      <!-- companies and attached company -->
-      <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
-        <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Empresa creada! <span
-            class="mdi mdi-check text-success"></span></h4>
-
-        <p>
-          Puede seguir adelante con el asistente.
-        </p>
-        
-        <p class="card-text card-text">
-          Recuerde que puede crear mas comercios si dispone de sucursales y moverse entre ellos
-          seleccionándolos desde el menu principal.
-        </p>
-        <p style="text-align: center;">
-          <img src="assets/img/saturno-selector-empresas.png">
+          Para gestionar mesas y turnos sólo debe ingresar a su cuenta y luego ir al menú de Camarero y tomar un sector.
         </p>
 
-      </div>
-
-      <hr>
-      <!-- previous / next -->
-      <div class="row" style="text-align: center;">
-        <div class="col">
-          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-            <span class="mdi mdi-arrow-left-circle xxl"></span>
-            <div>Anterior</div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div *ngIf="adminService.companies || loginService.user?.id_company?._id" class="footer-icon-menu"
-            style="color: indigo;" (click)="stepperGoNext(stepper)">
-            <span class="mdi mdi-arrow-right-circle xxl"></span>
-            <div>Siguiente</div>
-          </div>
-        </div>
       </div>
       <hr>
-
-      <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
-    </mat-step>
-
-    <!-- Sections Step -->
-    <mat-step state="important_devices">
-
-      <h4 style="color: crimson;"><span class="mdi mdi-select-group mr-2"></span>Sectores</h4>
-
+      <div>
+        <p>
+          <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span>
+          Sus clientes
+        </p>
+        <p>
+          Para que sus clientes puedan crear turnos de su comercio debe ofrecerles la
+          dirección web principal en saturno.fun y buscar su empresa en el buscador.
+        </p>
+        <p>
+          <a target="_blank" href="https://saturno.fun">
+            https://saturno.fun
+          </a>
+        </p>
+      </div>
 
       <p>
-        Si su comercio no require de múltiples sectores puede omitir este paso y continuar.
+        También puede usar un link o acceso directo a su comercio en:
       </p>
-
-      <button class="btn btn-sm btn-block btn-secondary" (click)="activateSectorExplanation=!activateSectorExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Sectores?
-      </button>
-
-      <div *ngIf="activateSectorExplanation" class="animated fadeIn my-3">
-        <p>
-          Los sectores o áreas son diferentes lugares físicos donde usted va a recibir a sus clientes.
-        </p>
-        <p>
-          Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", etc.
-        </p>
-        <p>
-          Los sectores son lugares que su cliente puede elegir en el formulario de turnos. Si usted sólo dispone de un sector o 
-          un único lugar de recepción de clientes debe omitir este paso y continuar.
-        </p>
-      </div>
-
-      <hr>
-
-      <div class="row" style="text-align: center;">
-        <div class="col">
-          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-            <span class="mdi mdi-arrow-left-circle xxl"></span>
-            <div>Anterior</div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
-            <span class="mdi mdi-arrow-right-circle xxl"></span>
-            <div>Siguiente</div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
-    </mat-step>
-
-
-    <!-- Tables Step -->
-    <mat-step state="important_devices">
-
-
-      <h4 style="color: crimson;"><span class="mdi mdi-table-furniture mr-2"></span>Mesas</h4>
-
-
       <p>
-        Aquí debe dar de alta todas las mesas para cada sector. Sólo debe ingresar el número de mesa y la cantidad de 
-        comensales que pueden sentarse en ellas.
+        <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}">
+          https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}
+        </a>
       </p>
-
-      <button class="btn btn-sm btn-block btn-secondary" (click)="activateTableExplanation=!activateTableExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son las Mesas?
-      </button>
-
-      <div *ngIf="activateTableExplanation" class="animated fadeIn my-3">
-        <p>
-          Las mesas son lugares donde puede agrupar comensales. Las mesas son indivisibles, es decir que si usted asigna un número de mesa a una 
-          mesa conformada por dos o mas mesas más pequeñas, el sistema podra juntarlas con otras mesas pero NO podra separarlas. 
-        </p>
-        <p>
-          Si usted tiene asientos en una barra puede definir cada 
-          asiento como una mesa con lugar para una sola persona. Debe identificarlas con números. Cada sector puede tener 
-          mesas que comienzen de la mesa 1 o puede asignarlas como usted prefiera. 
-        </p>
-      </div>
-
-      <hr>
-
-      <div class="row" style="text-align: center;">
-        <div class="col">
-          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-            <span class="mdi mdi-arrow-left-circle xxl"></span>
-            <div>Anterior</div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
-            <span class="mdi mdi-arrow-right-circle xxl"></span>
-            <div>Siguiente</div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
-    </mat-step>
-
-    <!-- Waiters Step -->
-    <mat-step state="face">
-
-      <h4 style="color: crimson;"><span class="mdi mdi-face mr-2"></span>Camareros</h4>
-
-      <p>
-        Si no necesita mas usuarios que su propio usuario para atender turnos puede
-        omitir este paso y continuar.
-      </p>
-
-     
-      <button class="btn btn-sm btn-block btn-primary" (click)="activateWaiterExplanation=!activateWaiterExplanation">
-        <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Camareros?
-      </button>
-
-      <div *ngIf="activateWaiterExplanation" class="animated fadeIn my-3">
-        <p>
-          Usted como usuario administrador puede atender a sus clientes desde el menú de Camareros. Sin embargo puede crear
-          aquí usuarios con el rol de mozos o camareros para estas tareas.
-        </p>
-        <p>
-          Los camareros que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo
-          login de usuario pero con la opción [ENTRAR] con su email y contraseña.
-        </p>
-      </div>
-
-      <hr>
-
-      <div class="row" style="text-align: center;">
-        <div class="col">
-          <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-            <span class="mdi mdi-arrow-left-circle xxl"></span>
-            <div>Anterior</div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="footer-icon-menu" style="color: darkgreen;" (click)="endWizard()">
-            <span class="mdi mdi-check-circle xxl"></span>
-            <div>Finalizar</div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
-    </mat-step>
-
-  </mat-horizontal-stepper>
-
-  <div class="m-2">
-    <mat-slide-toggle [(ngModel)]="showIntro" (click)="toggleIntro()"> Ver introducción </mat-slide-toggle>
+    </div>
   </div>
-
 </div>

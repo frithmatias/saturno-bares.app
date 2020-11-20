@@ -8,17 +8,17 @@ import { WaitersComponent } from './waiters/waiters.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { SectionsComponent } from './sections/sections.component';
+import { WizardComponent } from './wizard/wizard.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'wizard', component: WizardComponent },
   { path: 'companies', component: CompaniesComponent },
   { path: 'sections', component: SectionsComponent },
-
   { path: 'tables', component: TablesComponent },
   { path: 'waiters', component: WaitersComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tickets', component: TicketsComponent },
-
 	{ path: '', redirectTo: '/admin/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}
 

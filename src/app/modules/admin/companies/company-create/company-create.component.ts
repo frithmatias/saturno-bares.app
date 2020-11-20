@@ -34,17 +34,19 @@ export class CompanyCreateComponent implements OnInit {
 		// this.publicUrl = location.origin + '/#/public/';
 		let defaults = {
 			company: '',
-			addressStreet: '',
 			companyString: '',
+			companySlogan: '',
+			addressStreet: '',
 			addressNumber: '',
 			city: ''
 		}
 		this.forma = new FormGroup({
 			company: new FormControl(defaults.company, [Validators.required, this.validatorSetId.bind(this)]),
 			companyString: new FormControl({ value: '', disabled: true }),
-			city: new FormControl(defaults.city, Validators.required),
+			companySlogan: new FormControl(defaults.companySlogan, Validators.required),
 			addressStreet: new FormControl(defaults.addressStreet, Validators.required),
 			addressNumber: new FormControl(defaults.addressNumber, Validators.required),
+			city: new FormControl(defaults.city, Validators.required),
 		});
 	}
 
@@ -52,6 +54,7 @@ export class CompanyCreateComponent implements OnInit {
 	ngOnChanges(changes: SimpleChanges): void {
 		this.forma?.patchValue({
 			company: changes.companyEdit.currentValue.tx_company_name,
+			companySlogan: changes.companyEdit.currentValue.tx_company_slogan,
 			city: changes.companyEdit.currentValue.cd_city,
 			addressStreet: changes.companyEdit.currentValue.tx_address_street,
 			addressNumber: changes.companyEdit.currentValue.tx_address_number
@@ -89,13 +92,14 @@ export class CompanyCreateComponent implements OnInit {
 	createCompany(formDirective: FormGroupDirective) {
 
 		if (this.forma.invalid) {
-			this.snack.open('Faltan datos por favor verifique', 'Aceptar', { duration: 5000 });
+			this.sharedService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
 			return;
 		}
 
 		const company: any = {
 			id_user: this.loginService.user._id,
 			tx_company_name: this.forma.value.company,
+			tx_company_slogan: this.forma.value.companySlogan,
 			tx_public_name: this.publicName,
 			cd_city: this.forma.value.city,
 			tx_address_street: this.forma.value.addressStreet,

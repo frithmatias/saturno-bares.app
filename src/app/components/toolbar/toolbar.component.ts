@@ -16,8 +16,7 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
   hiddenBadge: boolean;
-  user: User;
-  userSuscription: Subscription;
+
   constructor(
     public loginService: LoginService,
     public waiterService: WaiterService,
@@ -25,12 +24,7 @@ export class ToolbarComponent implements OnInit {
     public router: Router
     ) { }
 
-  ngOnInit(): void { 
-    this.user = this.loginService.user;
-    this.userSuscription = this.loginService.user$.subscribe(data => {
-      this.user = data;
-    })
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: any) {
     this.hiddenBadge = false;
@@ -48,7 +42,5 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this.userSuscription.unsubscribe();
-  }
+
 }

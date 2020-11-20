@@ -302,13 +302,6 @@ mat-drawer-container {
     width: max-content;
 }
 
-/* banner company search & welcome */
-.text-company {
-    color      : darkred;
-    font-size  : 2.5rem;
-    line-height: 2rem;
-    font-weight: 400;
-}
 
 /* cruds */
 .list-crud-delete {
@@ -539,12 +532,6 @@ mat-drawer-container {
     justify-content: center;
 }
 
-.icon-search-company {
-    width    : 36px !important;
-    color    : darkgray;
-    font-size: 1.5em;
-    opacity  : .7;
-}
 
 .swal2-title {
     font-size  : x-large !important;

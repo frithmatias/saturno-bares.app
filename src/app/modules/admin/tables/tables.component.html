@@ -9,7 +9,7 @@
         </div>
 
         <div class="card-body table-responsive-sm">
-            <div *ngIf="!tables || tables?.length === 0" class="row align-items-center justify-content-center">
+            <div *ngIf="!adminService.tables || adminService.tables?.length === 0" class="row align-items-center justify-content-center">
                 <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
                 <span>Una mesa genérica fué creada</span>
             </div>
@@ -21,8 +21,8 @@
                     <td class="xl text-warning text-center mdi mdi-cog-box"></td>
                     <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
                 </thead>
-                <tr *ngFor="let table of tablesSection" [ngClass]="{'bg-success':table._id === tableNew?._id}">
-                    <td>{{sectionsMap.get(table?.id_section)}}</td>
+                <tr *ngFor="let table of adminService.tablesSection" [ngClass]="{'bg-success':table._id === tableNew?._id}">
+                    <td>{{adminService.sectionsMap.get(table?.id_section)}}</td>
                     <td>{{table?.nm_table}}</td>
                     <td class="text-center">{{table?.nm_persons}}</td>
                     <td class="text-center">{{table?.tx_status}}</td>
@@ -45,7 +45,8 @@
             Alta de Mesa</div>
         <div class="card-body">
 
-            <app-table-create [sections]="sections" [tablesSection]="tablesSection" (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
+            <app-table-create [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
+                (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
 
         </div>
     </div>

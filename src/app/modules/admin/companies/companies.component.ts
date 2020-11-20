@@ -16,40 +16,21 @@ import { User } from '../../../interfaces/user.interface';
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.css']
 })
-export class CompaniesComponent implements OnInit, OnDestroy {
+export class CompaniesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-  companies: Company[];
+
   companyEdit: Company;  // company enviada al child
   companyUpdated: Company; // company recibida del child
-  user: User;
-  userSubscription: Subscription;
 
   constructor(
-    private adminService: AdminService,
+    public adminService: AdminService,
     private loginService: LoginService,
     private snack: MatSnackBar
   ) { }
 
-  ngOnInit(): void {
-    this.user = this.loginService.user;
+  ngOnInit(): void { }
 
-    if (this.user._id) {
-
-      let idUser = this.user._id;
-      this.readCompanies(idUser);
-    }
-
-    this.userSubscription = this.loginService.user$.subscribe(data => {
-      if (data) {
-        this.user = data;
-      }
-    })
-  }
-
-  ngOnChanges(changes) {
-
-  }
 
   editCompany(company: Company): void {
     this.companyEdit = company
@@ -57,8 +38,6 @@ export class CompaniesComponent implements OnInit, OnDestroy {
 
   newCompany(company: Company): void {
     this.companyUpdated = company;
-    let idUser = this.user._id;
-    this.readCompanies(idUser);
   }
 
   deleteCompany(idCompany: string): void {
@@ -66,12 +45,10 @@ export class CompaniesComponent implements OnInit, OnDestroy {
       if (data.dismissedByAction) {
         this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
           this.snack.open(data.msg, null, { duration: 2000 });
-          this.companies = this.companies.filter(company => company._id != idCompany);
-          this.adminService.companies = this.companies;
-          this.adminService.companiesSource.next(this.companies);
-          if (idCompany === this.user.id_company?._id) {
-            this.user.id_company = null;
-            localStorage.setItem('user', JSON.stringify(this.user));
+          this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
+          if (idCompany === this.loginService.user.id_company?._id) {
+            this.loginService.user.id_company = null;
+            localStorage.setItem('user', JSON.stringify(this.loginService.user));
           }
         }, (err: CompanyResponse) => {
           this.snack.open(err.msg, null, { duration: 2000 });
@@ -81,14 +58,4 @@ export class CompaniesComponent implements OnInit, OnDestroy {
     })
   }
 
-  readCompanies(idUser: string): void {
-    this.adminService.readCompanies(idUser).subscribe((data: CompaniesResponse) => {
-      this.companies = data.companies;
-      this.adminService.companies = data.companies;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-  }
 }

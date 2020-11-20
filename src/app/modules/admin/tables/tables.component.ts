@@ -1,60 +1,32 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
-import { Table, TablesResponse, TableResponse } from '../../../interfaces/table.interface';
+import { Table, TableResponse } from '../../../interfaces/table.interface';
 import { User } from 'src/app/interfaces/user.interface';
+import { Section  } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
-import { LoginService } from '../../../services/login.service';
-import { Section, SectionsResponse } from '../../../interfaces/section.interface';
 
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css']
 })
-export class TablesComponent implements OnInit, OnDestroy {
+export class TablesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-
-  sections: Section[] = [];
-  sectionsMap = new Map();
-  sectionSelected: Section;
-
-  tables: Table[] = [];
-  tablesSection: Table[] = [];
-  tableNew: Table;
-
-  user: User;
+  
   userSubscription: Subscription;
-
+  sectionSelected: Section;
+  tableNew: Table;
+  
   constructor(
-    private adminService: AdminService,
-    private loginService: LoginService,
+    public adminService: AdminService,
     private snack: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-
-    if (this.loginService.user) {
-
-      this.user = this.loginService.user;
-
-      if (this.user.id_company) {
-        let idCompany = this.user.id_company._id;
-        this.readTables(idCompany);
-        this.readSections(idCompany);
-      }
-
-      this.userSubscription = this.loginService.user$.subscribe(data => {
-        if (data) {
-          this.user = data;
-          let idCompany = data.id_company._id;
-          this.readTables(idCompany)
-          this.readSections(idCompany)
-        }
-      });
-
-    }
+    this.adminService.sections = this.adminService.sections;
+    this.adminService.tables = this.adminService.tables;
   }
 
   deleteTable(idTable: string): void {
@@ -62,9 +34,8 @@ export class TablesComponent implements OnInit, OnDestroy {
       if (data.dismissedByAction) {
         this.adminService.deleteTable(idTable).subscribe((data: TableResponse) => {
           this.snack.open(data.msg, null, { duration: 5000 });
-          this.tables = this.tables.filter(table => table._id != idTable);
-          this.tablesSection = this.tablesSection.filter(table => table._id != idTable);
-
+          this.adminService.tables = this.adminService.tables.filter(table => table._id != idTable);
+          this.adminService.tablesSection = this.adminService.tablesSection.filter(table => table._id != idTable);
         },
           (err: TableResponse) => {
             this.snack.open(err.msg, null, { duration: 5000 });
@@ -76,40 +47,15 @@ export class TablesComponent implements OnInit, OnDestroy {
 
   sectionChanged(section: Section): void {
     this.sectionSelected = section;
-    this.tablesSection = this.tables.filter(table => table.id_section === section._id)
+    this.adminService.tablesSection = this.adminService.tables.filter(table => table.id_section === section._id)
   }
 
   tableCreated(table: Table): void {
     this.tableNew = table;
-    this.tables.push(table);
-    this.tables.sort((a, b) => a.nm_table - b.nm_table)
-    this.tablesSection.push(table);
-    this.tablesSection.sort((a, b) => a.nm_table - b.nm_table)
+    this.adminService.tables.push(table);
+    this.adminService.tables.sort((a, b) => a.nm_table - b.nm_table)
+    this.adminService.tablesSection.push(table);
+    this.adminService.tablesSection.sort((a, b) => a.nm_table - b.nm_table)
   }
 
-  readSections(idCompany: string) {
-    this.adminService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-      if (data.ok) {
-        this.sections = data.sections;
-        for (let section of data.sections) {
-          this.sectionsMap.set(section._id, section.tx_section);
-        }
-        this.adminService.sections = data.sections;
-      }
-    });
-  }
-
-  readTables(idCompany: string) {
-    this.adminService.readTables(idCompany).subscribe((data: TablesResponse) => {
-      if (data.ok) {
-        this.tables = data.tables;
-        this.tablesSection = data.tables;
-        this.adminService.tables = data.tables;
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-  }
 }

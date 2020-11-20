@@ -13,9 +13,6 @@ export class TokenGuard implements CanLoad {
 		public router: Router
 	) { }
 
-	// verifica primero si expiro el token, si expiro devuelve false y lo manda al login
-	// si no expiro verifica si tiene que renovar (es cuando defino un tiempo proximo a vencer)
-	// si tiene que renovar devuelve true y sino, devuelve false.
 	canLoad(): Promise<boolean> | boolean {
 		const token = this.loginService.token;
 		if (!token) {
@@ -30,7 +27,7 @@ export class TokenGuard implements CanLoad {
 		// verifica si el token expiro
 		const expira = this.expira(payload.exp); // 1599861832
 		if (expira) {
-			this.sharedServcie.snack('La sesión expiró. Debe iniciar sesión nuevamente.', 5000);
+			this.sharedServcie.snack('La sesión expiró. Inicie sesión nuevamente.', 5000);
 			this.loginService.logout();
 			this.router.navigate(['/home']);
 			return false;

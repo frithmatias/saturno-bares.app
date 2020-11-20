@@ -1,6 +1,4 @@
 <div class="saturno-card shadow-box animated fadeIn">
-
-
   <div *ngIf="publicService.company">
 
     <h5 *ngIf="loading" class="card-title">
@@ -11,15 +9,15 @@
 
     <div *ngIf="!loading">
 
-      <p class="lead">
+      <p class="lg text-secondary">
         ¡Bienvenido! Usted esta por sacar un turno para ser atendido en
       </p>
 
-      <div class="card py-4 my-4">
-        <p class="text-company">
+      <div class="card pb-2 pt-4 mb-4">
+        <p class="xxl text-primary">
           {{ publicService.company.tx_company_name }}
         </p>
-        <p style="color: darkblue; font-size: 1rem; font-weight: 400;" class="my-0">
+        <p class="lg text-secondary">
           {{ publicService.company.tx_address_street }}
           {{ publicService.company.tx_address_number }}
           {{ publicService.company.cd_city }}
@@ -65,22 +63,16 @@
 
 
       <div class="row mx-0">
-        <button class="col btn btn-danger btn-block btn-lg rounded-0 text-uppercase mr-1 my-2" (click)="salir()">
+        <button class="col btn btn-danger btn-block rounded-0 mr-1 my-2" (click)="salir()">
           Salir
         </button>
-        <button class="col btn btn-success btn-block btn-lg rounded-0 text-uppercase ml-1 my-2" (click)="createTicket()">
+        <button class="col btn btn-success btn-block rounded-0 ml-1 my-2"
+          (click)="createTicket()">
           Solicitar
         </button>
       </div>
-
-
-
     </form>
-
-
-
   </div>
-
 
   <div class="saturno-footer">
     <div class="row">
@@ -98,3 +90,4 @@
       </div>
     </div>
   </div>
+</div>
