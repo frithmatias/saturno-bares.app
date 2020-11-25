@@ -1,4 +1,4 @@
-<div class="saturno-bg-tile-1">
+<div class="saturno-bg-tile-1 h-100">
     <div class="saturno-card saturno-bg-grey-5 shadow-box animated fadeIn">
 
         <div *ngIf="loading" class="animated fadeIn">
@@ -6,18 +6,18 @@
         </div>
 
         <div *ngIf="!loading" class="animated fadeIn">
-            <p class="lead">Bienvenido, desde aquí puede entrar a un sector y comenzar a atender mesas.</p>
+            <p class="lead">Bienvenido, desde acá podés entrar a un sector y comenzar a atender mesas.</p>
 
             <!-- no company -->
             <div *ngIf="!loginService.user.id_company" class="card lead bg-danger text-white p-3 my-4"
                 style="line-height: initial;">
-                No tiene asignada ningúna empresa. Debe seleccionarla desde el menú prinicipal.
+                No tenés asignada ningúna empresa. Tenés seleccionarla desde el menú prinicipal.
             </div>
 
             <!-- no tables -->
             <div *ngIf="tables?.length === 0" class="card lead bg-danger text-white p-3 my-4"
                 style="line-height: initial;">
-                No hay mesas creadas. Debe crearlas desde el Menú de Administrador.
+                No hay mesas creadas. Tenés que crearlas desde el Menú de Administrador.
             </div>
 
             <div *ngIf="sections && loginService.user.id_company?._id">
@@ -25,7 +25,7 @@
                 <div *ngIf="waiterService.session" class="container-fluid">
                     <div class="row my-4">
                         <div class="col">
-                            Usted tiene tomado el sector {{ waiterService.session.id_section.tx_section }}
+                            Tenés tomado el sector {{ waiterService.session.id_section.tx_section }}
                         </div>
                     </div>
                     <div class="row my-4">
@@ -104,19 +104,10 @@
 
         </div>
 
-        <hr class="my-4">
-
-        <p> Recuerde que si se ausenta del escritorio debe finalizar la sesión del escritorio. Si usted
-            finaliza la sesión de user se finalizará también la sesión del escritorio. Si la sesión
-            del escritorio tenía asignada una sesión de turno, este turno finalizará.
-        </p>
-
         <button class="btn btn-primary btn-block" routerLink="/waiter/dashboard" role="button">
             <span class="mdi mdi-finance mx-1"></span>
             Dashboard
         </button>
-
-
 
     </div>
 </div>

@@ -125,7 +125,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 					this.resetForm(formDirective);
 				}
 			}, (err: HttpErrorResponse) => {
-				this.snack.open(err.error.msg, null, { duration: 5000 });
+				this.snack.open(err.error, null, { duration: 5000 });
 			})
 
 		} else {
@@ -136,7 +136,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 					this.snack.open(data.msg, null, { duration: 5000 });
 					this.resetForm(formDirective);
 				}, (err: HttpErrorResponse) => {
-					this.snack.open(err.error.msg, null, { duration: 5000 });
+					this.snack.open(err.error, null, { duration: 5000 });
 				}
 			)
 		}

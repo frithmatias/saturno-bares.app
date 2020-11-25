@@ -1,0 +1,52 @@
+<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+
+    <div class="card bg-secondary text-white">
+
+        <div class="card-header">
+            <span class="mdi mdi-poll-box"> </span>
+            <span> Encuesta </span>
+            <span *ngIf="sectionSelected"> para el sector {{sectionSelected.tx_section}}</span>
+        </div>
+
+        <div class="card-body table-responsive-sm">
+
+            <div *ngIf="!scoreItems || scoreItems?.length === 0" class="row align-items-center justify-content-center">
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span>Debe crear aquí al menos un item</span>
+            </div>
+            
+            <table *ngIf="scoreItemsSection.length > 0" class="table table-sm text-white">
+                <thead>
+                    <td class="xl text-warning mdi mdi-select-group"></td>
+                    <td class="xl text-warning">#</td>
+                    <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
+                </thead>
+                <tr *ngFor="let item of scoreItemsSection" [ngClass]="{'bg-success':item._id === newItem?._id}">
+                    <td>{{adminService.sectionsMap.get(item?.id_section)}}</td>
+                    <td>{{item?.tx_item}}</td>
+
+                    <td class="text-right">
+                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteScoreItem(item._id)"></span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="my-4"></div>
+
+    <div class="card">
+
+        <div class="card-header ">
+            <span class="mdi mdi-plus-circle-outline"></span>
+            Crear un item de encuesta</div>
+        <div class="card-body">
+
+            <app-poll-create [sections]="adminService.sections" [scoreItemsSection]="scoreItems"
+                (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)"></app-poll-create>
+
+        </div>
+    </div>
+
+</div>

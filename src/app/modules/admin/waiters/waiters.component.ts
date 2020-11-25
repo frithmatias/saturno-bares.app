@@ -73,7 +73,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
   deleteWaiter(idWaiter: string): void {
     if(idWaiter === this.loginService.user._id){
-      this.sharedService.snack('Usted no puede borrar su propio usuario!', 2000);
+      this.sharedService.snack('No podés borrar tu propio usuario!', 2000);
       return;
     }
     this.snack.open('Desea eliminar el asistente?', 'ELIMINAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {

@@ -16,6 +16,7 @@ import { Section } from '../../../interfaces/section.interface';
 // libraries
 import { Subject, interval } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
+import { SessionResponse } from '../../../interfaces/session.interface';
 
 export interface Tile {
   color: string;
@@ -155,6 +156,23 @@ export class SectionComponent implements OnInit {
     });
   };
 
+
+  
+  releaseSection = () => {
+
+    let idSection = this.waiterService.session.id_section._id;
+    let idWaiter = this.loginService.user._id;
+
+    this.waiterService
+      .releaseSection(idSection, idWaiter)
+      .subscribe((data: SessionResponse) => {
+        if (data.ok) {
+          this.waiterService.clearSectionSession();
+          this.router.navigate(['waiter/home']);
+        }
+      });
+  };
+  
   ngOnDestroy = (): void => {
     this.subjectUpdateWaiters$.complete();
   }

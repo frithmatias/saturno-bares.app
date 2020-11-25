@@ -3,14 +3,14 @@
     <div class="card bg-secondary text-white">
 
         <div class="card-header">
-            <span class="mdi mdi-monitor"></span>
+            <span class="mdi mdi-select-group"></span>
             Sectores
         </div>
 
         <div class="card-body table-responsive-sm">
             <div *ngIf="!adminService.sections || adminService.sections?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
-                <span>Un sector genérico fué creado</span>
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span>Debe crear aquí al menos un sector</span>
             </div>
             <table class="table table-sm text-white">
                 <tr *ngFor="let section of adminService.sections">

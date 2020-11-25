@@ -22,6 +22,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    if(this.adminService.companies.length === 0 && this.loginService.user){
+      let idUser = this.loginService.user._id;
+      this.adminService.readCompanies(idUser);
+    }
 
     this.userSubscription = this.loginService.user$.subscribe((user: User) => {
       if(user?._id){

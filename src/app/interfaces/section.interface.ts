@@ -6,7 +6,8 @@ import { Session } from './session.interface';
 
 export interface Section {
 	id_company: string,
-    tx_section: string, // terraza, patio, etc
+	tx_section: string, // terraza, patio, etc
+	ar_scoreitems: string[];
 	__v?: number;
 	_id?: string;
 }

@@ -8,11 +8,11 @@
                     <h4>Hola {{ loginService?.user.tx_name }}!</h4>
 
                     <p>
-                        Este pequeño asistente le ayuda a crear todo lo necesario para comenzar a atender las
-                        solicitudes de mesa de sus clientes.
+                        Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a atender las
+                        solicitudes de mesa de tus clientes.
                     </p>
                     <p>
-                        No le llevará mas de un minuto y desde aquí puede hacer todo!.
+                        No te llevará mas de un minuto y desde acá podés hacer todo.
                     </p>
                     <hr>
                     <button class="btn btn-success" matStepperNext>Comenzar</button>
@@ -20,7 +20,7 @@
             </div>
         </mat-step>
 
-        <!-- Resto Step -->
+        <!-- Companies Step -->
         <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
 
             <!-- no companies, no attached company -->
@@ -28,15 +28,13 @@
                 <h4 style="color: crimson;"><span class="mdi mdi-storefront-outline mr-2"></span>Comencemos!</h4>
 
                 <p>
-                    Usted no tiene ninguna bar o restorant registrado, desde aquí usted debe registrar al menos uno.
+                    Si no tenés ningún bar o restorant registrado desde acá tenés que registrar al menos uno.
                 </p>
 
                 <p>
-                    Es importante que usted ingrese la dirección exacta de su comercio. Esta dirección será visible para
-                    sus clientes
-                    desde el menú público de turnos y le asegura a su cliente que esta obteniendo un turno en el bar /
-                    restorant
-                    correcto.
+                    Es importante que ingreses la dirección exacta de tu comercio. Esta dirección será visible para
+                    tus clientes desde el menú público de turnos y les asegura que están obteniendo un turno en el bar /
+                    restorant correcto.
                 </p>
             </div>
 
@@ -46,12 +44,13 @@
                         class="mdi mdi-check text-success"></span></h4>
 
                 <p>
-                    Puede seguir adelante con el asistente.
+                    Podés seguir adelante con el asistente.
                 </p>
 
                 <p class="card-text card-text">
-                    Recuerde que puede crear mas comercios si dispone de sucursales y moverse entre ellos
-                    seleccionándolos desde el menu principal.
+                    Recordá que podés crear mas comercios si disponés de sucursales y luego podés cambiar de comercio
+                    seleccionandolo
+                    desde el menu principal.
                 </p>
                 <p style="text-align: center;">
                     <img src="assets/img/saturno-selector-empresas.png">
@@ -83,13 +82,13 @@
         </mat-step>
 
         <!-- Sections Step -->
-        <mat-step state="important_devices">
+        <mat-step [completed]="adminService.sections?.length > 0" state="important_devices">
 
             <h4 style="color: crimson;"><span class="mdi mdi-select-group mr-2"></span>Sectores</h4>
 
 
             <p>
-                Si su comercio no require de múltiples sectores puede omitir este paso y continuar.
+                Si tu comercio no require de múltiples sectores podés omitir este paso y continuar.
             </p>
 
             <button class="btn btn-sm btn-block btn-secondary"
@@ -97,17 +96,17 @@
                 <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Sectores?
             </button>
 
-            <div *ngIf="activateSectorExplanation" class="animated fadeIn my-3">
+            <div *ngIf="activateSectorExplanation" class="bg-whatis animated fadeIn">
                 <p>
-                    Los sectores o áreas son diferentes lugares físicos donde usted va a recibir a sus clientes.
+                    Los sectores o áreas son diferentes lugares físicos donde vas a recibir a tus clientes.
                 </p>
                 <p>
-                    Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", etc.
+                    Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
                 </p>
                 <p>
-                    Los sectores son lugares que su cliente puede elegir en el formulario de turnos. Si usted sólo
-                    dispone de un sector o
-                    un único lugar de recepción de clientes debe omitir este paso y continuar.
+                    Los sectores son lugares que tu cliente puede elegir en el formulario de turnos al momento
+                    de pedir una mesa. Los camareros podrán elegir un sector para comenzar a atender mesas
+                    luego de iniciar sesión.
                 </p>
             </div>
 
@@ -122,7 +121,12 @@
                 </div>
 
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
+                    <div *ngIf="adminService.sections?.length > 0" class="footer-icon-menu" style="color: indigo;"
+                        (click)="stepperGoNext(stepper)">
+                        <span class="mdi mdi-arrow-right-circle xxl"></span>
+                        <div>Siguiente</div>
+                    </div>
+                    <div *ngIf="adminService.sections?.length === 0" class="no-selection" style="color: lightgray;">
                         <span class="mdi mdi-arrow-right-circle xxl"></span>
                         <div>Siguiente</div>
                     </div>
@@ -134,18 +138,17 @@
             <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
         </mat-step>
 
-
         <!-- Tables Step -->
-        <mat-step state="important_devices">
+        <mat-step [completed]="adminService.tables?.length > 0" state="important_devices">
 
 
             <h4 style="color: crimson;"><span class="mdi mdi-table-furniture mr-2"></span>Mesas</h4>
 
 
             <p>
-                Aquí debe dar de alta todas las mesas para cada sector. Sólo debe ingresar el número de mesa y la
-                cantidad de
-                comensales que pueden sentarse en ellas.
+                Acá tenés que dar de alta todas las mesas para cada sector. Sólo tenés que ingresar el número de mesa y
+                la
+                cantidad máxima de personas que pueden sentarse en ellas.
             </p>
 
             <button class="btn btn-sm btn-block btn-secondary"
@@ -153,18 +156,16 @@
                 <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son las Mesas?
             </button>
 
-            <div *ngIf="activateTableExplanation" class="animated fadeIn my-3">
+            <div *ngIf="activateTableExplanation" class="bg-whatis animated fadeIn">
                 <p>
-                    Las mesas son lugares donde puede agrupar comensales. Las mesas son indivisibles, es decir que si
-                    usted asigna un número de mesa a una
-                    mesa conformada por dos o mas mesas más pequeñas, el sistema podra juntarlas con otras mesas pero NO
-                    podra separarlas.
+                    Las mesas son lugares donde podés agrupar comensales y tenés que identificarlas con números. Las mesas son indivisibles, 
+                    es decir que si asignás un número de mesa a una mesa compuesta por dos o mas mesas más pequeñas, el sistema
+                    podra juntarlas con otras mesas en el caso de que un cliente lo requiera, pero el sistema NO podra
+                    separarlas.
                 </p>
                 <p>
-                    Si usted tiene asientos en una barra puede definir cada
-                    asiento como una mesa con lugar para una sola persona. Debe identificarlas con números. Cada sector
-                    puede tener
-                    mesas que comienzen de la mesa 1 o puede asignarlas como usted prefiera.
+                    Si tenés asientos en una barra podés definir cada asiento como una mesa con lugar para una sola
+                    persona. 
                 </p>
             </div>
 
@@ -179,7 +180,12 @@
                 </div>
 
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: indigo;" (click)="stepperGoNext(stepper)">
+                    <div *ngIf="adminService.tables?.length > 0" class="footer-icon-menu" style="color: indigo;"
+                        (click)="stepperGoNext(stepper)">
+                        <span class="mdi mdi-arrow-right-circle xxl"></span>
+                        <div>Siguiente</div>
+                    </div>
+                    <div *ngIf="adminService.tables?.length === 0" class="no-selection" style="color: lightgray;">
                         <span class="mdi mdi-arrow-right-circle xxl"></span>
                         <div>Siguiente</div>
                     </div>
@@ -191,13 +197,68 @@
             <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
         </mat-step>
 
+
+        <!-- Poll Step -->
+        <mat-step state="important_devices">
+
+            <h4 style="color: crimson;"><span class="mdi mdi-poll-box mr-2"></span>Encuesta</h4>
+          
+            <p>
+                Acá podés dar de alta algunas preguntas que podes hacerle a tus clientes cuando finaliza su sesión y se retiran. 
+                Sólo tenés que ingresar una palabra o pregunta corta para que puedan calificar como "Calidad de Atención", "Comida", 
+                "Limpieza", "Rapidez en atención", etc.
+            </p>
+
+            <button class="btn btn-sm btn-block btn-secondary"
+                (click)="activateTableExplanation=!activateTableExplanation">
+                <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son las Encuestas?
+            </button>
+
+            <div *ngIf="activateTableExplanation" class="bg-whatis animated fadeIn">
+                <p>
+                    Las encuestas son una serie de preguntas o items que tu cliente puede calificar de 1 a 5 estrellas. Estos items
+                    a calificar le aparecen en su telefono cuando la sesion termina, es decir cuando el camarero finaliza la sesión 
+                    y se retiran del lugar. Estas calificaciones podes verlas por item y por sector dentro del menú Encuestas del 
+                    menú Administrador.
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="row" style="text-align: center;">
+                <div class="col">
+                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-arrow-left-circle xxl"></span>
+                        <div>Anterior</div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div *ngIf="adminService.tables?.length > 0" class="footer-icon-menu" style="color: indigo;"
+                        (click)="stepperGoNext(stepper)">
+                        <span class="mdi mdi-arrow-right-circle xxl"></span>
+                        <div>Siguiente</div>
+                    </div>
+                    <div *ngIf="adminService.tables?.length === 0" class="no-selection" style="color: lightgray;">
+                        <span class="mdi mdi-arrow-right-circle xxl"></span>
+                        <div>Siguiente</div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <app-poll [nomargin]="true" [nopadding]="true"></app-poll>
+        </mat-step>
+
+
         <!-- Waiters Step -->
         <mat-step state="face">
 
-            <h4 style="color: crimson;"><span class="mdi mdi-face mr-2"></span>Camareros</h4>
+            <h4 style="color: crimson;"><span class="mdi mdi-account-tie mr-2"></span>Camareros</h4>
 
             <p>
-                Si no necesita mas usuarios que su propio usuario para atender turnos puede
+                Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
                 omitir este paso y continuar.
             </p>
 
@@ -207,15 +268,14 @@
                 <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Camareros?
             </button>
 
-            <div *ngIf="activateWaiterExplanation" class="animated fadeIn my-3">
+            <div *ngIf="activateWaiterExplanation" class="bg-whatis animated fadeIn">
                 <p>
-                    Usted como usuario administrador puede atender a sus clientes desde el menú de Camareros. Sin
-                    embargo puede crear
-                    aquí usuarios con el rol de mozos o camareros para estas tareas.
+                    Ya podés atender mesas porque tu usuario administrador tiene también el rol de camarero. Sin
+                    embargo podés crear acá usuarios con el rol de mozos o camareros especialmente para estas tareas.
                 </p>
                 <p>
-                    Los camareros que usted puede crear aquí, deben ingresar a sus cuentas desde el mismo
-                    login de usuario pero con la opción [ENTRAR] con su email y contraseña.
+                    Una vez creados los camareros que podés crear acá, deben ingresar a sus cuentas desde el mismo
+                    login de usuario pero con la opción [ENTRAR] con su email y contraseña que vos les asignes acá.
                 </p>
             </div>
 

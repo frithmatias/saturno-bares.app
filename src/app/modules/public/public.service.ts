@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Company } from '../../interfaces/company.interface';
 import { environment } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
-import { TablesResponse } from '../../interfaces/table.interface';
 import { SectionsResponse } from '../../interfaces/section.interface';
 
 @Injectable({

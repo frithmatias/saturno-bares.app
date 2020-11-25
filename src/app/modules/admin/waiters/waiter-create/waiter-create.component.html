@@ -12,7 +12,7 @@
     <mat-form-field color="warn" class="w-100">
         <mat-label>Seleccione una empresa</mat-label>
         <mat-select formControlName="idCompany" name="idCompany" #selectTable matNativeControl required>
-            <mat-option *ngFor="let company of adminService.companies" [value]="company._id" (click)="getTables(company._id)">
+            <mat-option *ngFor="let company of adminService.companies" [value]="company._id">
                 {{company.tx_company_name}}
             </mat-option>
         </mat-select>

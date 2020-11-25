@@ -30,6 +30,7 @@ input:-webkit-autofill:active {
 .btn {
     border: none;
 }
+
 button:focus {
     outline: none;
 }
@@ -61,21 +62,74 @@ mat-drawer-container {
 
 
 
-
-
-
 .button-disabled {
-    background-color: #f1f1f1 !important; 
+    background-color: #f1f1f1 !important;
     color           : #c7c7c7 !important;
-} 
+}
 
 .noshadow {
     box-shadow      : none;
     background-color: gainsboro;
 }
 
+/* ================================================= */
+/* TOOLBAR */
+/* ================================================= */
 
+.mat-toolbar {
+    font-family     : system-ui;
+    background-color: #3a3a3a;
+    color           : white;
+    font-weight     : 300;
+}
 
+.example-spacer {
+    color          : black;
+    /* Tres valores: flex-grow | flex-shrink | flex-basis */
+    flex           : 1 1 auto;
+}
+
+.saturno-title {
+    font-size     : 1.3em;
+    font-weight   : 200;
+    letter-spacing: .3em;
+    line-height   : 1em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+}
+
+.saturno-description {
+    font-size  : .7em;
+    font-weight: lighter;
+    line-height: normal;
+}
+
+.company-title {
+    font-weight   : 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+
+}
+
+.company-slogan {
+    line-height   : normal;
+    font-weight   : 200;
+    font-style    : italic;
+    color         : yellow;
+    font-family   : monospace;
+    letter-spacing: .2em;
+    opacity       : 0.8;
+}
+
+img {
+    max-width : 100%;
+    max-height: 100%;
+}
+
+/* ================================================= */
+/* END TOOLBAR */
+/* ================================================= */
 
 
 
@@ -266,6 +320,15 @@ mat-drawer-container {
     user-select          : none;
 }
 
+.no-selection {
+    -webkit-touch-callout: none;
+    -webkit-user-select  : none;
+    -khtml-user-select   : none;
+    -moz-user-select     : none;
+    -ms-user-select      : none;
+    user-select          : none;
+}
+
 .footer-icon-menu {
     cursor   : pointer;
     font-size: small;
@@ -336,27 +399,6 @@ mat-drawer-container {
 }
 
 
-/* sidenav */
-/* sidenav titles */
-.sidenav-title {
-    align-items: center;
-    cursor     : pointer;
-}
-
-.sidenav-title-icons {
-    font-size     : x-large;
-    color         : #449;
-    vertical-align: top;
-}
-
-
-.sidenav-title-text {
-    color         : #449;
-    font-size     : large;
-    margin-left   : .5rem;
-    font-weight   : 400;
-    align-self: center;
-}
 
 .input-icon {
     position        : absolute;
@@ -373,30 +415,6 @@ mat-drawer-container {
     font-size       : large;
 
 }
-
-/* sidenav items */
-.sidenav-item {
-    display    : flex;
-    align-items: center;
-    cursor     : pointer;
-    margin     : 1rem;
-}
-
-.sidenav-item-icons {
-    font-size     : x-large;
-    color         : #aaa;
-    vertical-align: top;
-}
-
-.sidenav-item-text {
-    color         : rgb(111, 111, 111);
-    font-size     : medium;
-    vertical-align: bottom;
-    margin-left   : .5rem;
-    font-weight   : 300;
-}
-
-
 
 .banner-title {
     font-size  : x-large;
@@ -547,4 +565,9 @@ mat-drawer-container {
 
 .mat-horizontal-stepper-header-container {
     display: none !important;
+}
+
+
+.saturno-bg-dark {
+    background-color: #3a3a3a;
 }

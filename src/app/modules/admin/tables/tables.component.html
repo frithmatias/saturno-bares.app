@@ -9,11 +9,13 @@
         </div>
 
         <div class="card-body table-responsive-sm">
+
             <div *ngIf="!adminService.tables || adminService.tables?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-check-circle-outline xxl mx-2 text-warning"></span>
-                <span>Una mesa genérica fué creada</span>
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span>Debe crear aquí al menos una mesa</span>
             </div>
-            <table class="table table-sm text-white">
+            
+            <table *ngIf="adminService.tablesSection?.length > 0" class="table table-sm text-white">
                 <thead>
                     <td class="xl text-warning mdi mdi-select-group"></td>
                     <td class="xl text-warning">#</td>

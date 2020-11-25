@@ -33,11 +33,11 @@ export class TicketsComponent implements OnInit {
 		});
 
 		if (this.publicService.ticket) {
-			this.snack.open('Usted ya tiene un turno!', null, { duration: 2000 });
+			this.snack.open('Ya tenés un turno!', null, { duration: 2000 });
 			this.router.navigate(['/public/myticket']);
 		} else {
 			if (!this.publicService.company) {
-				this.snack.open('Por favor ingrese una empresa primero.', null, { duration: 2000 });
+				this.snack.open('Por favor ingresá una empresa primero.', null, { duration: 2000 });
 				this.router.navigate(['/public']);
 			} else {
 				let idCompany = this.publicService.company._id;
@@ -54,8 +54,8 @@ export class TicketsComponent implements OnInit {
 		if (localStorage.getItem('user')) {
 			Swal.fire({
 				icon: 'error',
-				title: 'Tiene una sesión de usuario activa',
-				text: 'Usted está en una página de acceso al público pero tiene una sesión de usuario activa. Para obtener un turno debe cerrar la sesión de usuario o abrir una pestaña en modo incógnito.',
+				title: 'Estás haciendo pruebas?',
+				text: 'Estás en una página de acceso al público pero tenés una sesión de usuario activa. Para obtener un turno tenés cerrar la sesión de usuario o abrir una pestaña en modo incógnito.',
 			})
 			return;
 		}

@@ -1,0 +1,35 @@
+.sidenav-title-icons {
+    font-size     : x-large;
+    color         : rgb(244, 94, 94);
+    vertical-align: top;
+}
+
+
+.sidenav-title-text {
+    color      : rgb(43, 43, 43);
+    font-size  : large;
+    margin-left: .5rem;
+    font-weight: 400;
+    align-self : center;
+}
+
+.sidenav-item {
+    display    : flex;
+    align-items: center;
+    cursor     : pointer;
+    margin     : 1rem;
+}
+
+.sidenav-item-icons {
+    font-size     : x-large;
+    color         : #aaa;
+    vertical-align: top;
+}
+
+.sidenav-item-text {
+    color         : rgb(111, 111, 111);
+    font-size     : medium;
+    vertical-align: bottom;
+    margin-left   : .5rem;
+    font-weight   : 300;
+}

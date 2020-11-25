@@ -43,7 +43,7 @@ export class CompanyCreateComponent implements OnInit {
 		this.forma = new FormGroup({
 			company: new FormControl(defaults.company, [Validators.required, this.validatorSetId.bind(this)]),
 			companyString: new FormControl({ value: '', disabled: true }),
-			companySlogan: new FormControl(defaults.companySlogan, Validators.required),
+			companySlogan: new FormControl(defaults.companySlogan),
 			addressStreet: new FormControl(defaults.addressStreet, Validators.required),
 			addressNumber: new FormControl(defaults.addressNumber, Validators.required),
 			city: new FormControl(defaults.city, Validators.required),

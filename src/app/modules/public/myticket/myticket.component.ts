@@ -17,7 +17,7 @@ import moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 
-const TAIL_LENGTH = 10;
+const TAIL_LENGTH = 5;
 
 @Component({
 	selector: 'app-myticket',

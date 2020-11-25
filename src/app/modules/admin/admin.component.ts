@@ -22,30 +22,20 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // read companies
-    if (this.loginService.user?.id_role === 'ADMIN_ROLE') {
-      let idUser = this.loginService.user._id;
-      this.adminService.readCompanies(idUser);
-    }
-
-    // tables and sections depends on company selected
+    let idUser = this.loginService.user._id;
     let idCompany = this.loginService.user.id_company._id;
+
+    this.adminService.readCompanies(idUser);
     this.adminService.readTables(idCompany);
     this.adminService.readSections(idCompany);
 
-    // subscribe to hot observable to hear company changes
     this.userSubscription = this.loginService.user$.subscribe(user => {
       if (user) {
-        this.loginService.user = user;
         let idCompany = user.id_company._id;
         this.adminService.readTables(idCompany)
         this.adminService.readSections(idCompany)
       }
     });
+
   }
-
-
-
-
-
 }

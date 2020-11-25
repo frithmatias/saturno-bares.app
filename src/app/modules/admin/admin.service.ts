@@ -12,28 +12,28 @@ import { User, UserResponse } from '../../interfaces/user.interface';
 import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
 import { Table, TablesResponse } from '../../interfaces/table.interface';
 import { Section, SectionsResponse } from '../../interfaces/section.interface';
+import { ScoreItem, ScoreItemsResponse } from '../../interfaces/score.interface';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AdminService {
 
+
 	public companies: Company[] = [];
 	public sections: Section[] = [];
+	public tables: Table[] = [];
+	public waiters: User[] = [];
+
+	public userSubscription: Subscription;
 	public sectionsMap = new Map();
 	public tablesSection: Table[] = [];
 
-	public waiters: User[] = [];
-	public tables: Table[] = [];
-	public userSubscription: Subscription;
-	
 	constructor(
 		private loginService: LoginService,
 		private http: HttpClient,
 
-	) {
-
-	}
+	) {}
 
 	// ========================================================
 	// Company Methods
@@ -119,10 +119,8 @@ export class AdminService {
 	readTables(idCompany: string) {
 		const url = environment.url + '/table/readtables/' + idCompany;
 		return this.http.get(url).subscribe((data: TablesResponse) => {
-			if (data.ok) {
-				this.tables = data.tables;
-				this.tablesSection = data.tables;
-			}
+			this.tables = data.tables;
+			this.tablesSection = data.tables;
 		});
 	}
 
@@ -130,6 +128,26 @@ export class AdminService {
 		const url = environment.url + '/table/deletetable/' + idTable;
 		return this.http.delete(url);
 	}
+
+	// ========================================================
+	// Poll Methods
+	// ========================================================
+
+	createScoreItem(scoreItem: ScoreItem) {
+		const url = environment.url + '/scoreitem/createscoreitem';
+		return this.http.post(url, scoreItem);
+	}
+
+	readScoreItems(idCompany: string) {
+		const url = environment.url + '/scoreitem/readscoreitems/' + idCompany;
+		return this.http.get(url);
+	}
+
+	deleteScoreItem(idScoreItem: string) {
+		const url = environment.url + '/scoreitem/deletescoreitem/' + idScoreItem;
+		return this.http.delete(url);
+	}
+
 
 	// ========================================================
 	// Waiter Methods

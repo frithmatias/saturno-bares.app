@@ -1,7 +1,7 @@
 <!-- ======================================================== -->
 <!-- TICKETS SCREEN -->
 <!-- ======================================================== -->
-<div class="saturno-bg-tile-1 h-100">
+<div class="saturno-bg-tile-1">
     <div class="saturno-card m-0">
 
         <!------------------------------>
@@ -24,7 +24,7 @@
                     Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
                 </span>
                 <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
-                    Pase a las mesas 
+                    Pase a las mesas
                     <span *ngFor="let table of ticket?.id_session?.id_tables">
                         {{ table.nm_table }}
                     </span>
@@ -37,20 +37,20 @@
         <!-- FINALIZADO -->
         <!------------------------------>
 
-        <div class="card text-white bg-danger my-4" *ngIf="ticketTmEnd!==null">
-            <div class="card-header screen-text-title">SU OPINION</div>
-            <div class="banner-content p-3" style="background-color: rgb(141, 51, 51)">
+        <div class="card text-white bg-dark p-3 my-4" *ngIf="ticketTmEnd!==null">
 
-                <div class="xl">¡Su turno ha finalizado!</div>
+            <div class="xl">¡Gracias por su visita!</div>
 
-                <div class="md">
+            <div *ngIf="scoreItems.length > 0">
+
+                <div class="md my-3 text-warning">
                     ¿Podría dejarnos su opinión?
                 </div>
 
-                <div class="text-white my-4 table-responsive-sm">
-                    <table class="table table-sm text-white">
+                <div class="text-white mt-4 table-responsive-sm">
+                    <table class="table table-sm text-white m-0">
                         <tr *ngFor="let item of scoreItems">
-                            <td class="xl py-2" style="width: 50%;text-align: left;">
+                            <td class="lg py-2">
                                 {{ item.tx_item }}
                             </td>
                             <td class="p-0 py-2">
@@ -81,11 +81,71 @@
                         </tr>
                     </table>
                 </div>
-
-
             </div>
+
         </div>
 
+        <!-- ======================================================== -->
+        <!-- PUBLIC BUTTONS -->
+        <!-- ======================================================== -->
+
+        <div class="container row px-0">
+
+            <!-- <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
+            <table width="100%" class="shadow-box">
+              <tr>
+                <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                  <div class="mdi mdi-power xl"></div>
+                </td>
+                <td>Salir</td>
+              </tr>
+            </table>
+          </button> -->
+
+            <div class="col-12 col-sm-6 col-lg-4 p-1">
+                <button class="btn btn-success btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
+                    [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}"
+                    (click)="callWaiter('waiter')">
+                    <table width="100%" class="shadow-box">
+                        <tr>
+                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                                <div class="mdi mdi-silverware-fork-knife xl"></div>
+                            </td>
+                            <td>Llamar al mozo</td>
+                        </tr>
+                    </table>
+                </button>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4 p-1">
+                <button class="btn btn-danger btn-block p-0" [disabled]="!ticket?.id_session"
+                    [ngClass]="{'button-disabled':!ticket?.id_session}" (click)="callWaiter('account')">
+                    <table width="100%" class="shadow-box">
+                        <tr>
+                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                                <div class="mdi mdi-file-document-edit-outline xl"></div>
+                            </td>
+                            <td> Pedir la Cuenta</td>
+                        </tr>
+                    </table>
+                </button>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4 p-1">
+                <button class="btn btn-dark btn-block p-0" [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}"
+                    (click)="endTicket()">
+                    <table width="100%" class="shadow-box">
+                        <tr>
+                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                                <div class="mdi mdi-power xl"></div>
+                            </td>
+                            <td> Cancelar mi Turno</td>
+                        </tr>
+                    </table>
+                </button>
+            </div>
+
+        </div>
 
         <!-- ======================================================== -->
         <!-- HISTORIAL DE LLAMADAS -->
@@ -123,75 +183,7 @@
             </table>
 
         </div>
-    </div>
-</div>
 
-<!-- ======================================================== -->
-<!-- PUBLIC BUTTONS -->
-<!-- ======================================================== -->
-<div *ngIf="ticket" class="container bg-light fixed-bottom shadow-box no-radius text-center py-1">
-    <div class="row">
 
-        <div class="col-6 button-content">
-            <button [disabled]="ticket?.tx_call" class="btn btn-success button"
-                [ngClass]="{'button-disabled':ticket?.tx_call}" (click)="callWaiter('waiter')">
-                <!-- cancel ticket -->
-                <div>
-                    <span class="mdi mdi-silverware-fork-knife xxl"></span>
-                </div>
-                <div class="button-inner">
-                    Llamar al mozo
-                </div>
-            </button>
-        </div>
-
-        <div class="col-6 button-content">
-            <button [disabled]="!ticket?.id_session || coming" class="btn btn-success button"
-                [ngClass]="{'button-disabled':!ticket?.id_session || coming}" (click)="enCamino()">
-                <!-- cancel ticket -->
-                <div>
-                    <span class="mdi mdi-walk xxl"></span>
-                </div>
-                <div class="button-inner">
-                    ¡En camino!
-                </div>
-            </button>
-        </div>
-
-        <div class="col-6 button-content">
-            <button [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}" class="btn btn-danger button"
-                (click)="callWaiter('account')">
-                <!-- cancel ticket -->
-                <div>
-                    <span class="mdi mdi-file-document-edit-outline xxl"></span>
-                </div>
-                <div class="button-inner">
-                    Pedir la Cuenta
-                </div>
-            </button>
-        </div>
-        <div class="col-6 button-content">
-            <button [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}" class="btn btn-dark button"
-                (click)="endTicket()">
-                <!-- cancel ticket -->
-                <div>
-                    <span class="mdi mdi-power xxl"></span>
-                </div>
-                <div class="button-inner">
-                    Cancelar mi Turno
-                </div>
-            </button>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="!ticket" class="saturno-footer">
-    <div class="row">
-        <div class="col">
-            <span class="footer-icon-menu" routerLink="/home">
-                <span class="mdi mdi-home xl"></span>
-                <div>Inicio</div>
-            </span>
-        </div>
     </div>
 </div>

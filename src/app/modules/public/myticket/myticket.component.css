@@ -1,10 +1,7 @@
 .screen-icon-star {
   cursor   : pointer;
-  transform: scale(2);
-  color    : #b64444;
-  top      : 3px;
-  position : relative;
-  font-size: xx-large;
+  color    : #5e5e5e;
+  font-size: x-large;
 }
 
 .screen-icon-star-on {

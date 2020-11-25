@@ -1,0 +1,13 @@
+.scoreitem-input {
+    border   : 1px solid #ddd;
+    padding  : .4rem;
+    font-size: medium;
+    color    : #555;
+    border-radius: .3rem;
+}
+
+.x-close {
+    position: relative;
+    top     : 0px;
+    right   : 22px;
+}

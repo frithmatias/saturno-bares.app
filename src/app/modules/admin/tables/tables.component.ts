@@ -24,10 +24,7 @@ export class TablesComponent implements OnInit {
     private snack: MatSnackBar
   ) { }
 
-  ngOnInit(): void {
-    this.adminService.sections = this.adminService.sections;
-    this.adminService.tables = this.adminService.tables;
-  }
+  ngOnInit(): void {}
 
   deleteTable(idTable: string): void {
     this.snack.open('Desea eliminar la mesa?', 'ELIMINAR', { duration: 5000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {

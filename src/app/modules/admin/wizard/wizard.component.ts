@@ -31,7 +31,7 @@ export class WizardComponent implements OnInit {
   ngOnInit(): void {}
 
   endWizard() {
-		this.router.navigate(['/waiter/home']);
+		this.router.navigate(['/admin/home']);
   }
 
   scrollTop() {
@@ -46,12 +46,12 @@ export class WizardComponent implements OnInit {
 	stepperGoNext(stepper: MatStepper) {
 
 		if (this.adminService.companies?.length === 0) {
-			this.sharedService.snack('Para continuar debe primero crear un comercio', 5000);
+			this.sharedService.snack('Para continuar tenés que crear un comercio primero', 5000);
 			return;
 		}
 
 		if (!this.loginService.user?.id_company?._id) {
-			this.sharedService.snack('Seleccione una empresa desde el menú para continuar.', 5000);
+			this.sharedService.snack('Seleccioná una empresa desde el menú para continuar.', 5000);
 			return;
 		}
 
