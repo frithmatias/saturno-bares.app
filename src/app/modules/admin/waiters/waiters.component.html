@@ -1,28 +1,26 @@
 <div class="animated saturno-card fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
-    <div class="card bg-primary text-white">
+    <div class="card bg-light text-dark">
         <div class="card-header">
-            <span class="mdi mdi-account-tie"></span>
-
-            Camareros</div>
+            <span class="mdi mdi-account-tie"></span> Mis Camareros</div>
         <div class="card-body table-responsive-sm">
 
-            <table class="table table-sm text-white" id="wt-form">
+            <table class="table table-sm text-dark" id="wt-form">
                 <tr *ngFor="let waiter of waiters">
                     <td style="width: 1px;">
                         <span *ngIf="waiter.id_role==='ADMIN_ROLE'"
-                            class="mdi mdi-police-badge-outline list-crud-star"></span>
+                            class="mdi mdi-police-badge-outline text-primary"></span>
                         <span *ngIf="waiter.id_role!=='ADMIN_ROLE'"
-                            class="mdi mdi-silverware-fork-knife list-crud-star"></span>
+                            class="mdi mdi-silverware-fork-knife text-primary"></span>
                     </td>
                     <td>{{waiter?.tx_name | wordMaxLength : 8}} </td>
                     <td>
-                        <span *ngIf="waiter._id===waiterUpdated" class="mdi mdi-check ml-2 list-crud-edit"></span>
+                        <span *ngIf="waiter._id===waiterUpdated" class="mdi mdi-check ml-2"></span>
                     </td>
                     <td style="text-align: right;">
-                        <span class="mdi mdi-pencil ml-2 list-crud-edit" (click)="editWaiter(waiter)"></span>
-                        <span *ngIf="waiter._id !== loginService.user._id" class="mdi mdi-delete ml-2 list-crud-delete"
-                            (click)="deleteWaiter(waiter._id)"></span>
+                        <span class="mdi mdi-pencil ml-2 text-success pointer" (click)="editWaiter(waiter)"></span>
+                        <span *ngIf="waiter._id !== loginService.user._id"
+                            class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteWaiter(waiter._id)"></span>
                     </td>
                 </tr>
             </table>
@@ -33,7 +31,7 @@
     <div class="my-4"></div>
 
     <div class="card bg-warning sm p-2 text-center">
-        Tené en cuenta que los mozos / camareros que puedés dar de alta acá deben ingresar con email y contraseña 
+        Tené en cuenta que los mozos / camareros que puedés dar de alta acá deben ingresar con email y contraseña
         desde el login de usuarios.
     </div>
 
@@ -44,7 +42,7 @@
         <div class="card-header">
             <span class="mdi mdi-plus-circle-outline"></span>
             Alta de asistente </div>
-            <div class="card-body">
+        <div class="card-body">
             <app-waiter-create [waiterEdit]="waiterEdit" (idWaiterUpdated)="waiterUpdated($event)"></app-waiter-create>
         </div>
     </div>

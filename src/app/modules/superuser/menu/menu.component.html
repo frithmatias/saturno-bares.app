@@ -25,8 +25,8 @@
                         <td class="{{item?.tx_icon}}" style="color: gold;"></td>
                         <td>{{item?.tx_titulo}} </td>
                         <td style="text-align: right;">
-                            <span class="mdi mdi-pencil ml-2 list-crud-edit" (click)="editMenuItem(item)"></span>
-                            <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteMenuItem(item._id)"></span>
+                            <span class="mdi mdi-pencil ml-2 text-success pointer" (click)="editMenuItem(item)"></span>
+                            <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteMenuItem(item._id)"></span>
                         </td>
                     </tr>
                 </table>

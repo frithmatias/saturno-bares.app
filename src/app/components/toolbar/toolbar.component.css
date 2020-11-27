@@ -1,0 +1,56 @@
+.saturno-title {
+    font-size     : 1em;
+    font-weight   : 200;
+    letter-spacing: .1em;
+    line-height   : 1em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+}
+
+.saturno-description {
+    font-size  : .7em;
+    font-weight: lighter;
+    line-height: normal;
+    color: #a2a2a2;
+    letter-spacing: .01em;
+}
+
+.bar-resto {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: .8em;
+    letter-spacing: .2em;
+    font-weight: 200;
+    color: yellow;
+}
+
+.mat-toolbar {
+    font-family     : system-ui;
+    background-color: #3a3a3a;
+    color           : white;
+    font-weight     : 300;
+}
+
+.example-spacer {
+    color          : black;
+    /* Tres valores: flex-grow | flex-shrink | flex-basis */
+    flex           : 1 1 auto;
+}
+
+
+.company-title {
+    font-weight   : 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+
+}
+
+.company-slogan {
+    line-height   : normal;
+    font-weight   : 200;
+    font-style    : italic;
+    color         : yellow;
+    font-family   : monospace;
+    letter-spacing: .2em;
+    opacity       : 0.8;
+}

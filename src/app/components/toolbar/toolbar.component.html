@@ -1,25 +1,23 @@
 <mat-toolbar class="mat-toolbar px-2">
 
-
-    <!-- MENU -->
-
+    <!-- TOGGLE MENU ICON -->
     <span *ngIf="loginService.user" class="mdi mdi-menu xl pointer" (click)="toggle('sidenav')">
-
-        <span class="example-spacer"></span>
+        <!-- <span class="example-spacer"></span> -->
     </span>
-    <!-- <img *ngIf="!loginService.user" src="../../../assets/img/saturn.png"> -->
 
     <!-- SATURNO LOGO -->
     <div *ngIf="!loginService.user && !publicService.company" routerLink="/home" class="d-none d-sm-block pointer">
         <span class="ml-3" style="float:left;">
-            <div class="saturno-title">
-                SATURNO
+            <div>
+                <span class="saturno-title">SATURNO
+                    <span class="text-warning">Bar<span class="sm">&</span>Resto</span>
+                </span>
             </div>
             <div class="saturno-description">
                 Sistema de Administración de Turnos
             </div>
         </span>
-        <span class="example-spacer"></span>
+        <!-- <span class="example-spacer"></span> -->
     </div>
 
     <!-- SEARCH / COMPANY NAME -->
@@ -33,24 +31,12 @@
     </div>
 
     <div *ngIf="!loginService.user?.id_company?.tx_company_name && !publicService.company"
-        class="col-10 col-sm-6 col-md-7 col-lg-8">
+        class="col-8 col-sm-6 col-md-7 col-lg-8">
         <app-search></app-search>
     </div>
 
-    <!-- ICONS CHAT / LOGIN / LOGOUT -->
-
-
-    <!-- Chat Icon -->
-    <!-- <span *ngIf="publicService.ticket || waiterService.tickets" (click)="toggle('chat')"
-                    [matBadge]="unreadMessages" [matBadgeHidden]="hiddenBadge" matBadgeColor="warn" matBadgeSize="small"
-                    class="mdi mdi-message-text xl pointer mx-3"></span> -->
-
-    <!-- Login Icon -->
-
-    <span class="example-spacer"></span>
-    
-    <div *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
-        <div class="mdi mdi-account-circle xl pointer"></div>
+    <div class="w-100" *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
+        <div class="mdi mdi-account-circle xl pointer text-right mr-2"></div>
     </div>
 
     <!-- User logged Icon -->

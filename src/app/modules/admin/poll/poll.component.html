@@ -1,32 +1,32 @@
 <div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
-    <div class="card bg-secondary text-white">
+    <div class="card bg-light text-dark">
 
         <div class="card-header">
             <span class="mdi mdi-poll-box"> </span>
-            <span> Encuesta </span>
+            <span> Mis encuestas </span>
             <span *ngIf="sectionSelected"> para el sector {{sectionSelected.tx_section}}</span>
         </div>
 
         <div class="card-body table-responsive-sm">
 
             <div *ngIf="!scoreItems || scoreItems?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
                 <span>Debe crear aquí al menos un item</span>
             </div>
             
-            <table *ngIf="scoreItemsSection.length > 0" class="table table-sm text-white">
+            <table *ngIf="scoreItemsSection.length > 0" class="table table-sm text-dark">
                 <thead>
-                    <td class="xl text-warning mdi mdi-select-group"></td>
-                    <td class="xl text-warning">#</td>
-                    <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
+                    <td class="xl text-success mdi mdi-select-group"></td>
+                    <td class="xl text-success">#</td>
+                    <td class="xl text-success text-right mdi mdi-gesture-tap-button"></td>
                 </thead>
                 <tr *ngFor="let item of scoreItemsSection" [ngClass]="{'bg-success':item._id === newItem?._id}">
                     <td>{{adminService.sectionsMap.get(item?.id_section)}}</td>
                     <td>{{item?.tx_item}}</td>
 
                     <td class="text-right">
-                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteScoreItem(item._id)"></span>
+                        <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteScoreItem(item._id)"></span>
                     </td>
                 </tr>
             </table>

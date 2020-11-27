@@ -1,22 +1,22 @@
 <div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
-    <div class="card bg-secondary text-white">
+    <div class="card bg-light text-dark">
 
         <div class="card-header">
             <span class="mdi mdi-select-group"></span>
-            Sectores
+            Mis Sectores de {{ loginService.user.id_company.tx_company_name}}
         </div>
 
         <div class="card-body table-responsive-sm">
             <div *ngIf="!adminService.sections || adminService.sections?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
                 <span>Debe crear aquí al menos un sector</span>
             </div>
-            <table class="table table-sm text-white">
+            <table class="table table-sm text-dark">
                 <tr *ngFor="let section of adminService.sections">
                     <td>{{section?.tx_section}}</td>
                     <td style="text-align: right;">
-                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteSection(section)"></span>
+                        <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteSection(section)"></span>
                     </td>
                 </tr>
             </table>

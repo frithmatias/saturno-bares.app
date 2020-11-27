@@ -3,6 +3,7 @@ import { AdminService } from '../admin.service';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Section, SectionResponse } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-sections',
@@ -16,6 +17,7 @@ export class SectionsComponent implements OnInit  {
   userSubscription: Subscription;
 
   constructor(
+    public loginService: LoginService,
     public adminService: AdminService,
     private snack: MatSnackBar
   ) { }

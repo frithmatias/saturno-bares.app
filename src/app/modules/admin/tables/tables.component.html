@@ -1,27 +1,27 @@
 <div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
-    <div class="card bg-secondary text-white">
+    <div class="card bg-light text-dark">
 
         <div class="card-header">
             <span class="mdi mdi-table-furniture"> </span>
-            <span> Mesas </span>
+            <span> Mis Mesas </span>
             <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
         </div>
 
         <div class="card-body table-responsive-sm">
 
             <div *ngIf="!adminService.tables || adminService.tables?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-warning"></span>
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
                 <span>Debe crear aquí al menos una mesa</span>
             </div>
             
-            <table *ngIf="adminService.tablesSection?.length > 0" class="table table-sm text-white">
+            <table *ngIf="adminService.tablesSection?.length > 0" class="table table-sm text-dark">
                 <thead>
-                    <td class="xl text-warning mdi mdi-select-group"></td>
-                    <td class="xl text-warning">#</td>
-                    <td class="xl text-warning text-center mdi mdi-account-box-outline"></td>
-                    <td class="xl text-warning text-center mdi mdi-cog-box"></td>
-                    <td class="xl text-warning text-right mdi mdi-gesture-tap-button"></td>
+                    <td class="xl text-success mdi mdi-select-group"></td>
+                    <td class="xl text-success">#</td>
+                    <td class="xl text-success text-center mdi mdi-account-box-outline"></td>
+                    <td class="xl text-success text-center mdi mdi-cog-box"></td>
+                    <td class="xl text-success text-right mdi mdi-gesture-tap-button"></td>
                 </thead>
                 <tr *ngFor="let table of adminService.tablesSection" [ngClass]="{'bg-success':table._id === tableNew?._id}">
                     <td>{{adminService.sectionsMap.get(table?.id_section)}}</td>
@@ -30,7 +30,7 @@
                     <td class="text-center">{{table?.tx_status}}</td>
 
                     <td class="text-right">
-                        <span class="mdi mdi-delete ml-2 list-crud-delete" (click)="deleteTable(table._id)"></span>
+                        <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteTable(table._id)"></span>
                     </td>
                 </tr>
             </table>

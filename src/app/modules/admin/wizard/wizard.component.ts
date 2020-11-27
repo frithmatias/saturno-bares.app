@@ -8,36 +8,32 @@ import { LoginService } from '../../../services/login.service';
 
 
 @Component({
-  selector: 'app-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.css'],
+	selector: 'app-wizard',
+	templateUrl: './wizard.component.html',
+	styleUrls: ['./wizard.component.css'],
 	providers: [{
 		provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false }
 	}]
 })
 export class WizardComponent implements OnInit {
 
-  activateSectorExplanation = false;
+	activateSectorExplanation = false;
 	activateTableExplanation = false;
 	activateWaiterExplanation = false;
-  
-  constructor(
-    private router: Router,
-    public loginService: LoginService,
-    public adminService: AdminService,
+
+	constructor(
+		private router: Router,
+		public loginService: LoginService,
+		public adminService: AdminService,
 		public sharedService: SharedService
-  ) { }
+	) { }
 
-  ngOnInit(): void {}
+	ngOnInit(): void { }
 
-  endWizard() {
+	endWizard() {
 		this.router.navigate(['/admin/home']);
-  }
-
-  scrollTop() {
-		document.body.scrollTop = 0; // Safari
-		document.documentElement.scrollTop = 0; // Other
 	}
+
 
 	stepperGoBack(stepper: MatStepper) {
 		stepper.previous();
@@ -55,7 +51,7 @@ export class WizardComponent implements OnInit {
 			return;
 		}
 
-		this.scrollTop();
+		this.sharedService.scrollTop();
 		stepper.next();
 	}
 }
