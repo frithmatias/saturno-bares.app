@@ -17,7 +17,6 @@ export class PollCreateComponent implements OnInit {
 	@Output() scoreItemCreated: EventEmitter<ScoreItem> = new EventEmitter();
 	@Output() sectionChanged: EventEmitter<Section> = new EventEmitter();
 	@Input() sections: Section[] = [];
-	@Input() scoreItemsSection: ScoreItem[] = [];
 
 	forma: FormGroup;
 	constructor(

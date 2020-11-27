@@ -12,10 +12,10 @@ export class HomeComponent implements OnInit {
 
 	@ViewChild('stepper') stepper: MatStepper;
 	publicURL: string;
-
 	constructor(
 		public loginService: LoginService,
 		public adminService: AdminService
 	) { }
 	ngOnInit() { }
+
 }

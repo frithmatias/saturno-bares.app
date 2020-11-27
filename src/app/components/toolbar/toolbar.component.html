@@ -1,9 +1,9 @@
 <mat-toolbar class="mat-toolbar px-2">
 
     <!-- TOGGLE MENU ICON -->
-    <span *ngIf="loginService.user" class="mdi mdi-menu xl pointer" (click)="toggle('sidenav')">
+    <div *ngIf="loginService.user" class="mdi mdi-menu xl pointer" (click)="toggle('sidenav')">
         <!-- <span class="example-spacer"></span> -->
-    </span>
+    </div>
 
     <!-- SATURNO LOGO -->
     <div *ngIf="!loginService.user && !publicService.company" routerLink="/home" class="d-none d-sm-block pointer">
@@ -20,7 +20,7 @@
         <!-- <span class="example-spacer"></span> -->
     </div>
 
-    <!-- SEARCH / COMPANY NAME -->
+    <!-- COMPANY NAME -->
     <div class="container text-center mb-1" *ngIf="loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name">
         <div class="company-title lg">
             {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name}}
@@ -30,16 +30,18 @@
         </div>
     </div>
 
+    <!-- SEARCH -->
     <div *ngIf="!loginService.user?.id_company?.tx_company_name && !publicService.company"
-        class="col-8 col-sm-6 col-md-7 col-lg-8">
+        class="col-9 col-sm-6 col-md-7 col-lg-8 col-xl-9">
         <app-search></app-search>
     </div>
 
+    <!-- LOG IN -->
     <div class="w-100" *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
         <div class="mdi mdi-account-circle xl pointer text-right mr-2"></div>
     </div>
 
-    <!-- User logged Icon -->
+    <!-- LOGGED IN -->
     <div *ngIf="loginService.user">
         <span class="mdi mdi-account-circle xl pointer" [matMenuTriggerFor]="menu"></span>
         <mat-menu #menu="matMenu">

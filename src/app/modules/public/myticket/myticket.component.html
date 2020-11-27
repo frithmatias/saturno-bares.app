@@ -1,97 +1,97 @@
 <!-- ======================================================== -->
 <!-- TICKETS SCREEN -->
 <!-- ======================================================== -->
-<div class="saturno-bg-tile-1">
-    <div class="saturno-card m-0">
 
-        <!------------------------------>
-        <!-- SU TURNO -->
-        <!------------------------------>
-        <div class="screen-myticket-container shadow-box my-3" *ngIf="ticketTmEnd===null">
-            <div class="screen-myticket-text-header">
-                SU TURNO
+<div class="saturno-card m-0">
+
+    <!------------------------------>
+    <!-- SU TURNO -->
+    <!------------------------------>
+    <div class="screen-myticket-container shadow-box my-3" *ngIf="ticketTmEnd===null">
+        <div class="screen-myticket-text-header">
+            SU TURNO
+        </div>
+        <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
+            {{ ticket?.id_position }}
+        </div>
+        <div class="screen-myticket-text-footer mt-3" style="line-height: normal;">
+            <span *ngIf="!ticket?.id_session">
+                {{ averageToAtt}}
+            </span>
+
+
+            <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
+                Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
+            </span>
+            <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
+                Pase a las mesas
+                <span *ngFor="let table of ticket?.id_session?.id_tables">
+                    {{ table.nm_table }}
+                </span>
+            </span>
+
+        </div>
+    </div>
+
+    <!------------------------------>
+    <!-- FINALIZADO -->
+    <!------------------------------>
+
+    <div class="card text-white bg-dark p-3 my-4" *ngIf="ticketTmEnd!==null">
+
+        <div class="xl">¡Gracias por su visita!</div>
+
+        <div *ngIf="scoreItems.length > 0">
+
+            <div class="md my-3 text-warning">
+                ¿Podría dejarnos su opinión?
             </div>
-            <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
-                {{ ticket?.id_position }}
-            </div>
-            <div class="screen-myticket-text-footer mt-3" style="line-height: normal;">
-                <span *ngIf="!ticket?.id_session">
-                    {{ averageToAtt}}
-                </span>
 
-
-                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
-                    Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
-                </span>
-                <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
-                    Pase a las mesas
-                    <span *ngFor="let table of ticket?.id_session?.id_tables">
-                        {{ table.nm_table }}
-                    </span>
-                </span>
-
+            <div class="text-white mt-4 table-responsive-sm">
+                <table class="table table-sm text-white m-0">
+                    <tr *ngFor="let item of scoreItems">
+                        <td class="lg py-2">
+                            {{ item.tx_item }}
+                        </td>
+                        <td class="p-0 py-2">
+                            <span class="mdi mdi-star screen-icon-star"
+                                [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
+                                (click)="setScore(item._id, 1)"></span>
+                        </td>
+                        <td class="p-0 py-2">
+                            <span class="mdi mdi-star screen-icon-star"
+                                [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
+                                (click)="setScore(item._id, 2)"></span>
+                        </td>
+                        <td class="p-0 py-2">
+                            <span class="mdi mdi-star screen-icon-star"
+                                [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
+                                (click)="setScore(item._id, 3)"></span>
+                        </td>
+                        <td class="p-0 py-2">
+                            <span class="mdi mdi-star screen-icon-star"
+                                [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
+                                (click)="setScore(item._id, 4)"></span>
+                        </td>
+                        <td class="p-0 py-2">
+                            <span class="mdi mdi-star screen-icon-star"
+                                [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
+                                (click)="setScore(item._id, 5)"></span>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <!------------------------------>
-        <!-- FINALIZADO -->
-        <!------------------------------>
+    </div>
 
-        <div class="card text-white bg-dark p-3 my-4" *ngIf="ticketTmEnd!==null">
+    <!-- ======================================================== -->
+    <!-- PUBLIC BUTTONS -->
+    <!-- ======================================================== -->
 
-            <div class="xl">¡Gracias por su visita!</div>
+    <div class="container row px-0" *ngIf="ticketTmEnd===null">
 
-            <div *ngIf="scoreItems.length > 0">
-
-                <div class="md my-3 text-warning">
-                    ¿Podría dejarnos su opinión?
-                </div>
-
-                <div class="text-white mt-4 table-responsive-sm">
-                    <table class="table table-sm text-white m-0">
-                        <tr *ngFor="let item of scoreItems">
-                            <td class="lg py-2">
-                                {{ item.tx_item }}
-                            </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
-                                    (click)="setScore(item._id, 1)"></span>
-                            </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
-                                    (click)="setScore(item._id, 2)"></span>
-                            </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
-                                    (click)="setScore(item._id, 3)"></span>
-                            </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
-                                    (click)="setScore(item._id, 4)"></span>
-                            </td>
-                            <td class="p-0 py-2">
-                                <span class="mdi mdi-star screen-icon-star"
-                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
-                                    (click)="setScore(item._id, 5)"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ======================================================== -->
-        <!-- PUBLIC BUTTONS -->
-        <!-- ======================================================== -->
-
-        <div class="container row px-0">
-
-            <!-- <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
+        <!-- <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
             <table width="100%" class="shadow-box">
               <tr>
                 <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
@@ -102,88 +102,85 @@
             </table>
           </button> -->
 
-            <div class="col-12 col-sm-6 col-lg-4 p-1">
-                <button class="btn btn-success btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
-                    [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}"
-                    (click)="callWaiter('waiter')">
-                    <table width="100%" class="shadow-box">
-                        <tr>
-                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                                <div class="mdi mdi-silverware-fork-knife xl"></div>
-                            </td>
-                            <td>Llamar al mozo</td>
-                        </tr>
-                    </table>
-                </button>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-4 p-1">
-                <button class="btn btn-danger btn-block p-0" [disabled]="!ticket?.id_session"
-                    [ngClass]="{'button-disabled':!ticket?.id_session}" (click)="callWaiter('account')">
-                    <table width="100%" class="shadow-box">
-                        <tr>
-                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                                <div class="mdi mdi-file-document-edit-outline xl"></div>
-                            </td>
-                            <td> Pedir la Cuenta</td>
-                        </tr>
-                    </table>
-                </button>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-4 p-1">
-                <button class="btn btn-dark btn-block p-0" [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}"
-                    (click)="endTicket()">
-                    <table width="100%" class="shadow-box">
-                        <tr>
-                            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                                <div class="mdi mdi-power xl"></div>
-                            </td>
-                            <td> Cancelar mi Turno</td>
-                        </tr>
-                    </table>
-                </button>
-            </div>
-
+        <div class="col-12 col-sm-6 col-lg-4 p-1">
+            <button class="btn btn-success btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
+                [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}" (click)="callWaiter('waiter')">
+                <table width="100%" class="shadow-box">
+                    <tr>
+                        <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                            <div class="mdi mdi-silverware-fork-knife xl"></div>
+                        </td>
+                        <td>Llamar al mozo</td>
+                    </tr>
+                </table>
+            </button>
         </div>
 
-        <!-- ======================================================== -->
-        <!-- HISTORIAL DE LLAMADAS -->
-        <!-- ======================================================== -->
-
-        <div class="card shadow-box p-2 my-4">
-            <table class="w-100 table-sm text-center">
-                <tr>
-                    <td class="screen-history-title"> TURNO </td>
-                    <td class="screen-history-title"> MESA</td>
-                    <td class="screen-history-title"> ESTADO </td>
-                </tr>
-                <tr *ngIf="ticketsTail.length === 0">
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-                <tr *ngFor="let ticket of ticketsTail;">
-                    <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_position }}</td>
-                    <td style="text-align: center;" class="screen-history-text">
-                        {{ ticket.id_session.id_tables.nm_table }}</td>
-                    <td style="padding: 0; vertical-align: middle;">
-                        <span *ngIf="!ticket.tm_end" style="color: blueviolet">
-                            <span class="mdi mdi-contactless-payment-circle-outline screen-history-icon"></span>
-                        </span>
-                        <span *ngIf="ticket.id_child && ticket.tm_end" style="color: red">
-                            <span class="mdi mdi-arrow-left-circle-outline screen-history-icon"></span>
-                        </span>
-                        <span *ngIf="!ticket.id_child && ticket.tm_end" style="color: green">
-                            <span class="mdi mdi-check-circle-outline screen-history-icon"></span>
-                        </span>
-                    </td>
-                </tr>
-            </table>
-
+        <div class="col-12 col-sm-6 col-lg-4 p-1">
+            <button class="btn btn-danger btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
+                [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}" (click)="callWaiter('account')">
+                <table width="100%" class="shadow-box">
+                    <tr>
+                        <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                            <div class="mdi mdi-file-document-edit-outline xl"></div>
+                        </td>
+                        <td> Pedir la Cuenta</td>
+                    </tr>
+                </table>
+            </button>
         </div>
 
+        <div class="col-12 col-sm-6 col-lg-4 p-1">
+            <button class="btn btn-dark btn-block p-0" [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}"
+                (click)="endTicket()">
+                <table width="100%" class="shadow-box">
+                    <tr>
+                        <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                            <div class="mdi mdi-power xl"></div>
+                        </td>
+                        <td> Cancelar mi Turno</td>
+                    </tr>
+                </table>
+            </button>
+        </div>
 
     </div>
+
+    <!-- ======================================================== -->
+    <!-- HISTORIAL DE LLAMADAS -->
+    <!-- ======================================================== -->
+
+    <div class="card shadow-box p-2 my-4" *ngIf="ticketTmEnd===null">
+        <table class="w-100 table-sm text-center">
+            <tr>
+                <td class="screen-history-title"> TURNO </td>
+                <td class="screen-history-title"> MESA</td>
+                <td class="screen-history-title"> ESTADO </td>
+            </tr>
+            <tr *ngIf="ticketsTail.length === 0">
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+            <tr *ngFor="let ticket of ticketsTail;">
+                <td style="text-align: center;" class="screen-history-text">
+                    {{ ticket.id_position }}</td>
+                <td style="text-align: center;" class="screen-history-text">
+                    {{ ticket.id_session.id_tables.nm_table }}</td>
+                <td style="padding: 0; vertical-align: middle;">
+                    <span *ngIf="!ticket.tm_end" style="color: blueviolet">
+                        <span class="mdi mdi-contactless-payment-circle-outline screen-history-icon"></span>
+                    </span>
+                    <span *ngIf="ticket.id_child && ticket.tm_end" style="color: red">
+                        <span class="mdi mdi-arrow-left-circle-outline screen-history-icon"></span>
+                    </span>
+                    <span *ngIf="!ticket.id_child && ticket.tm_end" style="color: green">
+                        <span class="mdi mdi-check-circle-outline screen-history-icon"></span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
 </div>

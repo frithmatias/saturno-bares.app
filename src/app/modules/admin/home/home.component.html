@@ -1,168 +1,175 @@
-<div class="saturno-card m-0 animated fadeIn">
-  <h4 class="text-primary mb-4">Bienvenido {{ loginService?.user.tx_name }}!</h4>
+<div class="p-4 animated fadeIn">
 
-  <!-- ======================================================== -->
-  <!-- MINI CARDS -->
-  <!-- ======================================================== -->
+  <div class="text-dark lg">Bienvenido {{ loginService?.user.tx_name }}!</div>
 
-  <div class="p-0 animated fadeIn justify-content-center">
+  <div class="row">
 
-    <!-- asistente -->
-    <div class="saturno-minicard shadow-box my-3" routerLink="/admin/wizard">
-      <div class="saturno-minicard-title">
-        <div>
-          <span class="mdi mdi-wizard-hat icon-home-card"></span>
+    <div class="col-sm-0 col-md-2"></div>
+    
+    <div class="col-12 col-sm-6 col-md-4">
+      <!-- WIZARD -->
+      <div class="saturno-minicard shadow-box my-3" routerLink="/admin/wizard">
+        <div class="saturno-minicard-title">
+          <div>
+            <span class="mdi mdi-wizard-hat icon-home-card"></span>
+          </div>
+          <div>
+            Iniciar el Asistente
+          </div>
         </div>
-        <div>
-          Iniciar el Asistente
+        <hr class="saturno-hr-green">
+
+        <div class="saturno-minicard-text">
+          <table
+            *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
+            <tr>
+              <td class="mdi mdi-close-circle-outline text-danger xxxl pl-3"></td>
+              <td class="p-3">
+                La empresa seleccionada no tiene los sectores / mesas creadas para comenzar a recibir clientes. Usá este
+                pequeño
+                asistente que te ayudará paso a paso en el proceso de crear bares o restorants, sectores, mesas,
+                camareros y todo lo necesario para atender a tus clientes.
+              </td>
+            </tr>
+          </table>
+
+          <table
+            *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
+            <tr>
+              <td class="mdi mdi-check-circle-outline text-success xxxl"></td>
+              <td class="p-3">
+                La empresa seleccionada tiene sectores y mesas creadas para comenzar a recibir clientes. Podés usar este
+                pequeño
+                asistente para modificarlos o crear mas mesas, sectores o camareros.
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
-      <hr class="saturno-hr-green">
 
-      <div class="saturno-minicard-text">
-        <table
-          *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
-          <tr>
-            <td class="mdi mdi-close-circle-outline text-danger xxxl pl-3"></td>
-            <td class="p-3">
-              La empresa seleccionada no tiene los sectores / mesas creadas para comenzar a recibir clientes. Usá este
-              pequeño
-              asistente que te ayudará paso a paso en el proceso de crear bares o restorants, sectores, mesas,
-              camareros y todo lo necesario para atender a tus clientes.
-            </td>
-          </tr>
-        </table>
+      <!-- TOMAR SECTOR -->
+      <div class="saturno-minicard shadow-box my-3" *ngIf="
+        adminService.companies.length > 0 && 
+        adminService.sections.length > 0 &&
+        adminService.tables.length > 0" routerLink="/waiter/home">
+        <div class="saturno-minicard-title">
+          <div>
+            <span class="mdi mdi-select-group icon-home-card"></span>
+          </div>
+          <div>
+            Tomar un Sector
+          </div>
+        </div>
+        <hr class="saturno-hr-blue">
+        <div class="saturno-minicard-text">
+          Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
+        </div>
+      </div>
+    </div>
 
-        <table
-          *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
-          <tr>
-            <td class="mdi mdi-check-circle-outline text-success xxxl"></td>
-            <td class="p-3">
-              La empresa seleccionada tiene sectores y mesas creadas para comenzar a recibir clientes. Podés usar este
-              pequeño
-              asistente para modificarlos o crear mas mesas, sectores o camareros.
-            </td>
-          </tr>
-        </table>
+    <div class="col-12 col-sm-6 col-md-4">
+
+      <!-- COMPANY TABLE INFO -->
+      <div class="saturno-minicard shadow-box my-3" routerLink="/waiter/home">
+        <div class="card-header">{{ this.loginService.user.id_company.tx_company_name }}</div>
+        <div class="table-responsive-sm">
+          <table class="table text-secondary table-sm mb-0 text-center">
+
+            <tr>
+              <td style="text-align: left;">
+                <span class="text-primary mdi mdi-storefront"></span>
+                Bares / Restorants
+                <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
+                <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+
+              </td>
+              <td style="text-align: right;">
+                {{ adminService.companies.length }}
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">
+                <span class="text-primary mdi mdi-select-group"></span>
+                Sectores
+                <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
+                <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
+              </td>
+              <td style="text-align: right;">
+                {{ adminService.sections.length }}
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">
+                <span class="text-primary mdi mdi-table-chair"></span>
+                Mesas
+                <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
+                <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
+              </td>
+              <td style="text-align: right;">
+                {{ adminService.tables.length }}
+              </td>
+            </tr>
+          </table>
+
+          <div *ngIf="
+  adminService.companies.length === 0 || 
+  adminService.sections.length === 0 ||
+  adminService.tables.length === 0" class="table bg-warning sm p-2 rounded text-dark text-center">
+            Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
+              routerLink="/admin/wizard">"Iniciar el Asistente"</span>
+            para crear todo lo necesario.
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER INFO -->
+      <div class="saturno-minicard shadow-box my-3" *ngIf="loginService.user.id_company">
+        <div class="card-body" style="text-align: left;">
+
+          <div>
+            <p>
+              <span class="mdi mdi-headset lg mr-2"></span>
+              Administradores y Camareros
+            </p>
+            <p>
+              Para gestionar mesas y turnos sólo tenés que ingresar a tu cuenta y luego ir al menú de Camarero y tomar
+              un
+              sector.
+            </p>
+
+          </div>
+          <hr>
+          <div>
+            <p>
+              <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span>
+              Tus clientes
+            </p>
+            <p>
+              Para que tus clientes puedan crear turnos de tu comercio tenés que ofrecerles la
+              dirección web principal en saturno.fun y una vez ahí buscar tu empresa en el buscador.
+            </p>
+            <p>
+              <a target="_blank" href="https://saturno.fun">
+                https://saturno.fun
+              </a>
+            </p>
+          </div>
+
+          <p>
+            También puede usar un link o acceso directo a tu comercio en:
+          </p>
+          <p>
+            <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}">
+              https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}
+            </a>
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- tomar un sector -->
-    <div *ngIf="
-    adminService.companies.length > 0 && 
-    adminService.sections.length > 0 &&
-    adminService.tables.length > 0" class="saturno-minicard shadow-box my-3" routerLink="/waiter/home">
-      <div class="saturno-minicard-title">
-        <div>
-          <span class="mdi mdi-select-group icon-home-card"></span>
-        </div>
-        <div>
-          Tomar un Sector
-        </div>
-      </div>
-      <hr class="saturno-hr-blue">
-      <div class="saturno-minicard-text">
-        Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
-      </div>
-    </div>
-
-
-    <!-- tomar un sector -->
-    <div class="saturno-minicard shadow-box text-secondary my-3" routerLink="/waiter/home">
-      <div class="card-header">{{ this.loginService.user.id_company.tx_company_name }}</div>
-      <div class="table-responsive-sm">
-        <table class="table text-secondary table-sm mb-0 text-center">
-
-          <tr>
-            <td style="text-align: left;">
-              <span class="text-primary mdi mdi-storefront"></span>
-              Bares / Restorants
-              <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
-              <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
-
-            </td>
-            <td style="text-align: right;">
-              {{ adminService.companies.length }}
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left;">
-              <span class="text-primary mdi mdi-select-group"></span>
-              Sectores
-              <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
-              <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
-            </td>
-            <td style="text-align: right;">
-              {{ adminService.sections.length }}
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: left;">
-              <span class="text-primary mdi mdi-table-chair"></span>
-              Mesas
-              <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
-              <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
-            </td>
-            <td style="text-align: right;">
-              {{ adminService.tables.length }}
-            </td>
-          </tr>
-        </table>
-        <hr>
-
-        <div *ngIf="
-adminService.companies.length === 0 || 
-adminService.sections.length === 0 ||
-adminService.tables.length === 0" class="table bg-warning sm p-2 rounded text-dark text-center">
-          Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
-            routerLink="/admin/wizard">"Iniciar el Asistente"</span>
-          para crear todo lo necesario.
-        </div>
-
-      </div>
-    </div>
+    <div class="col-sm-0 col-md2"></div>
 
   </div>
 
-  <div *ngIf="loginService.user.id_company" class="card bg-danger text-white">
-    <div class="card-body" style="text-align: left;">
-
-      <div>
-        <p>
-          <span class="mdi mdi-headset lg mr-2"></span>
-          Administradores y Camareros
-        </p>
-        <p>
-          Para gestionar mesas y turnos sólo tenés que ingresar a tu cuenta y luego ir al menú de Camarero y tomar un
-          sector.
-        </p>
-
-      </div>
-      <hr>
-      <div>
-        <p>
-          <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span>
-          Tus clientes
-        </p>
-        <p>
-          Para que tus clientes puedan crear turnos de tu comercio tenés que ofrecerles la
-          dirección web principal en saturno.fun y una vez ahí buscar tu empresa en el buscador.
-        </p>
-        <p>
-          <a target="_blank" href="https://saturno.fun">
-            https://saturno.fun
-          </a>
-        </p>
-      </div>
-
-      <p>
-        También puede usar un link o acceso directo a tu comercio en:
-      </p>
-      <p>
-        <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}">
-          https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}
-        </a>
-      </p>
-    </div>
-  </div>
 </div>

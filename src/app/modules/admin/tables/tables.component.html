@@ -10,9 +10,9 @@
 
         <div class="card-body table-responsive-sm">
 
-            <div *ngIf="!adminService.tables || adminService.tables?.length === 0" class="row align-items-center justify-content-center">
+            <div *ngIf="!adminService.tables || adminService.tables?.length === 0 || !adminService.tablesSection || adminService.tablesSection?.length === 0" class="row align-items-center justify-content-center">
                 <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>Debe crear aquí al menos una mesa</span>
+                <span>No hay mesas en este sector</span>
             </div>
             
             <table *ngIf="adminService.tablesSection?.length > 0" class="table table-sm text-dark">

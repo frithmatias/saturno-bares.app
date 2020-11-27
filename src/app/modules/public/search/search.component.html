@@ -1,39 +1,43 @@
-<div class="saturno-card saturno-bg-white shadow-box animated fadeIn">
+<div class="saturno-card animated fadeIn">
 
-    <div *ngIf="!companySelected" class="jumbotron text-dark">
+    <div *ngIf="!companySelected" class="text-dark">
         
+        <div class="card my-3">
         
-        <span class="mdi mdi-domain icon-search-company"></span>
-        <span class="mdi mdi-store icon-search-company"></span>
-        <span class="mdi mdi-hospital-building icon-search-company"></span>
-        <span class="mdi mdi-storefront-outline icon-search-company"></span>
-        <span class="mdi mdi-office-building icon-search-company"></span>
-
-        <div class="xl my-3 text-danger">Encontrar un comercio</div>
-
-        <div>
-
-            <mat-form-field color="warn" logincss class="w-100">
-                <mat-label>Ingrese la empresa aquí</mat-label>
-                <input id="inputCompany" #inputCompany matInput [matAutocomplete]="auto" placeholder="Empresa S.A."
-                    (keyup)="findCompany(inputCompany)" [value]="companySelected?.tx_company_name">
-                <span class="input-icon" (click)="cleanInput(inputCompany)"><i class="mdi mdi-close"></i></span>
-            </mat-form-field>
-
-            <mat-autocomplete (optionSelected)="setCompany($event.option.value)" #auto="matAutocomplete">
-                <mat-option [value]="company" *ngFor="let company of companies">
-                    {{company.tx_company_name}}
-                </mat-option>
-            </mat-autocomplete>
+        <div class="card-header text-danger">
+            Encontrar un Bar / Resto
         </div>
+        <div class="card-body">
+            Puede buscar aquí un bar o restorant para ver la dispoinibilidad y reservar una mesa.
+
+            <div class="mt-4">
+                <mat-form-field color="warn" logincss class="w-100">
+                    <mat-label>Ingrese la empresa aquí</mat-label>
+                    <input id="inputCompany" #inputCompany matInput [matAutocomplete]="auto" placeholder="Empresa S.A."
+                        (keyup)="findCompany(inputCompany)" [value]="companySelected?.tx_company_name">
+                    <span class="input-icon" (click)="cleanInput(inputCompany)"><i class="mdi mdi-close"></i></span>
+                </mat-form-field>
+        
+                <mat-autocomplete (optionSelected)="setCompany($event.option.value)" #auto="matAutocomplete">
+                    <mat-option [value]="company" *ngFor="let company of companies">
+                        {{company.tx_company_name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+
+        </div>
+
+
+     
     </div>
 
     <div *ngIf="companySelected" class="animated fadeIn jumbotron">
         <p class="lead">
-            Estás por ir hacia la recepción de turnos de
+            Estás por ir hacia la recepción de
         </p>
         <div class="card py-4 my-4">
-            <p class="text-company">
+            <p class="xxl text-primary">
                 {{ companySelected.tx_company_name }}
             </p>
             <p style="color: darkblue; font-size: 1rem; font-weight: 400;" class="my-0">
@@ -45,10 +49,11 @@
         <button class="btn btn-success btn-lg btn-block" (click)="goToCompany()">Ir a
             {{companySelected.tx_company_name}}
         </button>
+        <div class="pointer mt-3" (click)="companySelected = null">
+            Volver al buscador
+        </div>
     </div>
 
-    <div style="cursor: pointer;" routerLink="/">
-        Volver al inicio
-    </div>
+
     
 </div>

@@ -119,7 +119,7 @@ export class PublicService {
   }
 
   clearPublicSessionComplete(): void {
-    this.router.navigate(['/public']);
+    this.router.navigate(['/home']);
   }
 
 }

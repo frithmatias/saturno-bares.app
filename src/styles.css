@@ -89,23 +89,6 @@ mat-drawer-container {
 /* SATURNO STYLES  */
 /* -------------------------------------------------------------- */
 
-/* BACKGROUNDS  */
-
-.saturno-bg-tile-1 {
-    background-image: url('./assets/img/bgtile1.png');
-    background-size : 100px;
-}
-
-.saturno-bg-tile-2 {
-    background-image: url('./assets/img/bgtile2.png');
-    background-size : 80px;
-}
-
-.saturno-bg-tile-3 {
-    background-image: url('./assets/img/bgtile3.png');
-    background-size : 80px;
-}
-
 
 .saturno-bg-grey-5 {
     background-color: rgba(217, 217, 217, .5);
@@ -127,14 +110,21 @@ mat-drawer-container {
     background-color: rgba(255, 255, 255, .4);
 }
 
+
+
 .saturno-card {
     min-width: 18rem;
     max-width: 25rem;
     padding  : 1.2em;
-    margin   : 1em;
     font-size: medium;
 }
 
+.saturno-card-wide {
+    min-width: 18rem;
+    max-width: 45rem;
+    padding  : 1.2em;
+    font-size: medium;
+}
 
 .shadow-box {
     border-radius: 5px;
@@ -154,7 +144,6 @@ mat-drawer-container {
     cursor          : pointer;
     padding         : 1em;
     background-color: white;
-    height          : 100%;
 }
 
 .saturno-minicard-title {
@@ -487,6 +476,3 @@ mat-drawer-container {
 }
 
 
-.saturno-bg-dark {
-    background-color: #3a3a3a;
-}

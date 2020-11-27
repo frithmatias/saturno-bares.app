@@ -10,11 +10,11 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <div class="card bg-danger text-white" *ngIf="waiting.length == 0">
-    <div class="card-header lg">
-      No hay clientes esperando mesa
-    </div>
-  </div>
+  <div class="text-dark" *ngIf="waiting.length == 0">
+
+    No hay clientes esperando mesa
+
+</div>
 
   <mat-accordion multi="false" *ngIf="waiting.length > 0">
     <mat-expansion-panel class="noshadow" *ngFor="let ticket of waiting">

@@ -4,17 +4,18 @@
 
         <div class="card-header">
             <span class="mdi mdi-poll-box"> </span>
-            <span> Mis encuestas </span>
-            <span *ngIf="sectionSelected"> para el sector {{sectionSelected.tx_section}}</span>
+            <span> Mi encuesta </span>
+            <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
         </div>
 
         <div class="card-body table-responsive-sm">
 
-            <div *ngIf="!scoreItems || scoreItems?.length === 0" class="row align-items-center justify-content-center">
+            <div *ngIf="!scoreItems || scoreItems?.length === 0 || !scoreItemsSection || scoreItemsSection?.length === 0" class="
+                row align-items-center justify-content-center">
                 <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>Debe crear aquí al menos un item</span>
+                <span>No hay items en este sector</span>
             </div>
-            
+
             <table *ngIf="scoreItemsSection.length > 0" class="table table-sm text-dark">
                 <thead>
                     <td class="xl text-success mdi mdi-select-group"></td>
@@ -26,7 +27,8 @@
                     <td>{{item?.tx_item}}</td>
 
                     <td class="text-right">
-                        <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteScoreItem(item._id)"></span>
+                        <span class="mdi mdi-delete ml-2 text-danger pointer"
+                            (click)="deleteScoreItem(item._id)"></span>
                     </td>
                 </tr>
             </table>
@@ -43,8 +45,9 @@
             Crear un item de encuesta</div>
         <div class="card-body">
 
-            <app-poll-create [sections]="adminService.sections" [scoreItemsSection]="scoreItems"
-                (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)"></app-poll-create>
+            <app-poll-create *ngIf="adminService.sections" [sections]="adminService.sections"
+                (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)">
+            </app-poll-create>
 
         </div>
     </div>

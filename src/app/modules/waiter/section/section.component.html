@@ -1,32 +1,35 @@
-<div class="saturno-bg-tile-1 h-100">
-  <div class="saturno-card p-0 animated fadeIn" *ngIf="waiterService.session">
-    <div *ngIf="loading" class="mt-5 animated fadeIn">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div *ngIf="!loading" class="animated fadeIn">
-      <div class="card saturno-bg-dark company-title my-2 p-2">
-          - {{waiterService.session.id_section.tx_section}} -
-      </div>
-      <div>
-        <mat-accordion multi="true">
-          <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection"></app-sections>
-          <app-tables [tables]="waiterService.tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
-          <app-requested [tables]="waiterService.tables" [tickets]="waiterService.tickets"></app-requested>
-          <app-queued [tables]="waiterService.tables" [tickets]="waiterService.tickets"></app-queued>
-        </mat-accordion>
-      </div>
-      <div class="my-4">
-        <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
-          <table width="100%" class="shadow-box">
-            <tr>
-              <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                <div class="mdi mdi-power xl"></div>
-              </td>
-              <td>Salir</td>
-            </tr>
-          </table>
-        </button>
-      </div>
-    </div>
+<div class="saturno-card animated fadeIn" *ngIf="waiterService.session">
+  <div *ngIf="loading" class="mt-5 animated fadeIn">
+    <mat-spinner></mat-spinner>
   </div>
-</div> 
+  <div *ngIf="!loading" class="animated fadeIn">
+
+    <div class="text-dark text-uppercase my-2 p-2">
+      - {{waiterService.session.id_section.tx_section}} -
+    </div>
+    
+    <div class="my-4">
+      <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
+        <table width="100%" class="shadow-box">
+          <tr>
+            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+              <div class="mdi mdi-power xl"></div>
+            </td>
+            <td>Salir</td>
+          </tr>
+        </table>
+      </button>
+    </div>
+
+    <div>
+      <mat-accordion multi="true">
+        <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
+        </app-sections>
+        <app-tables [tables]="waiterService.tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
+        <app-requested [tables]="waiterService.tables" [tickets]="waiterService.tickets"></app-requested>
+        <app-queued [tables]="waiterService.tables" [tickets]="waiterService.tickets"></app-queued>
+      </mat-accordion>
+    </div>
+
+  </div>
+</div>

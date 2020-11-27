@@ -8,10 +8,10 @@
       <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}})</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div class="card bg-danger text-white" *ngIf="requested.length == 0">
-    <div class="card-header lg">
-      No existen requeridos
-    </div>
+  <div class="text-dark" *ngIf="requested.length == 0">
+
+    No hay requerimientos de mesas especiales
+
   </div>
   <mat-accordion multi="false" *ngIf="requested.length > 0">
     <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
