@@ -66,8 +66,8 @@ export class PublicService {
   }
 
 
-  createTicket(idSocket: string, blPriority: boolean, nmPersons: number, idSection: string): Observable<object> {
-    let data = { idSocket, blPriority, nmPersons, idSection };
+  createTicket(idSocket: string, nmPersons: number, idSection: string): Observable<object> {
+    let data = { idSocket, nmPersons, idSection };
     return this.http.post(environment.url + '/t/createticket/', data);
   }
 

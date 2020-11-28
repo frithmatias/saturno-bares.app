@@ -22,11 +22,6 @@ export class WaiterService {
 	session: Session = null;
 	sectionSelected: string = ''; // reassign section
 
-	// set on section
-	tables: Table[] = [];
-	tickets: Ticket[] = [];
-
-
 	chatMessages: {
 		id_ticket: string,
 		bl_own: boolean,

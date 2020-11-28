@@ -14,15 +14,14 @@ import { TableResponse } from '../../../../interfaces/table.interface';
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent implements OnInit {
-  listmode = false;
   
+  @Input() tables: Table[] = [];
+  @Input() tickets: Ticket[] = [];
+  @Input() busyTablesTimes: any;
+
+  listmode = false;
   tableSelected: string = ''; // reassign table
   blPriority = false;
-
-  @Input() tables: Table[];
-  @Input() busyTablesTimes: any;
-  // tables
-
   table: Table;
 
   constructor(
@@ -80,7 +79,7 @@ export class TablesComponent implements OnInit {
             .releaseTicket(ticket)
             .subscribe((resp: TicketResponse) => {
               if (resp.ok) {
-                this.waiterService.tickets = this.waiterService.tickets.filter(
+                this.tickets = this.tickets.filter(
                   (ticket) => ticket._id !== ticket._id
                 );
                 this.clearTicketSession(ticket);
@@ -122,7 +121,7 @@ export class TablesComponent implements OnInit {
       this.sharedService.snack('Seleccione una mesa primero', 3000);
     }
     let idTicket = ticket._id;
-    if (this.waiterService.tickets) {
+    if (this.tickets) {
       let snackMsg = 'Desea finalizar el ticket actual?';
       this.sharedService
         .snack(snackMsg, 5000, 'ACEPTAR')
@@ -169,7 +168,7 @@ export class TablesComponent implements OnInit {
 
   clearTicketSession = (ticket: Ticket) => {
     // close ONE client session
-    this.waiterService.tickets = this.waiterService.tickets.filter(
+    this.tickets = this.tickets.filter(
       (thisTicket) => thisTicket._id !== ticket._id
     );
   };

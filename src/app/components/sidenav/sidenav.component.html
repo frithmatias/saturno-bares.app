@@ -23,7 +23,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div *ngFor="let sub of item.subitems" routerLink="/{{sub.tx_url}}" class="sidenav-item">
+                <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}" class="sidenav-item">
                     <span class="{{ sub.tx_icon }} sidenav-item-icons"></span>
                     <span class="sidenav-item-text">{{ sub.tx_titulo}}</span>
                 </div>

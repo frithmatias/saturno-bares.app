@@ -1,31 +1,31 @@
-<div class="container-fluid p-3 h-100 saturno-bg-grey-5">
+<div class="h-100 saturno-bg-grey-5 pt-sm-5">
     <div class="saturno-card-wide shadow-box bg-light animated fadeIn">
-    
+
         <div class="row">
-    
+
             <!---------------------------------------------------------------------->
             <!-- GOOGLE LOGIN -->
             <!---------------------------------------------------------------------->
-            <div class="col-md">
-    
-                <div class="jumbotron m-0 py-5 text-dark">
+            <div class="col-sm">
+                <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
-                    <h2>Bienvenido</h2>
-                    <hr class="saturno-hr-red my-4">
-                    <p class="lead" style="font-size: medium;">Entrar con mi cuenta de Google.</p>
+                    <div class="my-2 xl text-danger text-uppercase">¡ Bienvenido !</div>
+                    <hr class="my-4 saturno-hr-red">
+                    <div class="my-2 md">Entrar con mi cuenta de Google.</div>
                     <button class="btn btn-danger btn-block" type="button" id="btnGoogle" data-toggle="tooltip">
                         Google
                     </button>
+                    <div class="sm pointer mt-3" routerLink="/home"><b>Ir al Inicio</b></div>
+
                 </div>
-    
             </div>
-    
+
             <!---------------------------------------------------------------------->
             <!-- NORMAL LOGIN -->
             <!---------------------------------------------------------------------->
-            <div class="col-md mt-4 mt-md-0">
+            <div class="col-sm mt-4 mt-md-0">
                 <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )">
-    
+
                     <div class="my-2">
                         <mat-form-field color="warn" logincss class="w-100">
                             <mat-label>Ingrese su Email</mat-label>
@@ -34,7 +34,7 @@
                                     class="mdi mdi-close"></i></span>
                         </mat-form-field>
                     </div>
-    
+
                     <!---------------------------------------------------------------------->
                     <!-- PASSWORD -->
                     <!---------------------------------------------------------------------->
@@ -48,43 +48,35 @@
                                     class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
                         </mat-form-field>
                     </div>
-    
-    
-                    <!---------------------------------------------------------------------->
-                    <!-- RECUERDEME -->
-                    <!---------------------------------------------------------------------->
-                    <div class="my-2" style="height:20px">
-                        <div class="checkbox checkbox-primary pull-left">
-                            <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox"
-                                class="filled-in chk-col-light-blue">
-                            <label for="checkbox-signup" class="label"> &nbsp; Recordar E-mail </label>
-                        </div>
-                    </div>
-    
+
+
                     <!---------------------------------------------------------------------->
                     <!-- ENTER BUTTON -->
                     <!---------------------------------------------------------------------->
-                    <div class="row text-center p-0 w-100">
-                        <div class="col">
+                    <div class="text-center my-3 w-100">
+                        <span class="mr-2">
                             <!-- Normal Login -->
-                            <button class="btn btn-success px-4" type="submit">
+                            <button class="btn btn-success btn-sm px-4" type="submit">
                                 Entrar
                             </button>
-                        </div>
+                        </span>
+                        <span class="ml-2">
+                            <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox">
+                            <label for="checkbox-signup" class="label"> &nbsp; Recordar cuenta</label>
+                        </span>
                     </div>
-    
+
                     <!---------------------------------------------------------------------->
                     <!-- CREAR CUENTA LINK -->
                     <!---------------------------------------------------------------------->
-    
-                    <div class="border-top bg-light text-dark text-center label pt-2 mt-3">
+
+                    <div class="border-top bg-light text-dark text-center label pt-2">
                         <span class="p-2">No tenés cuenta?</span>
-                        <span class="p-2 text-primary pointer" routerLink="/register" ><b>Registrarme</b></span>
-                        <span class="p-2 text-success pointer" routerLink="/home" ><b>Ir al Inicio</b></span>
+                        <span class="p-2 text-primary pointer" routerLink="/register"><b>Registrarme</b></span>
                     </div>
                 </form>
             </div>
         </div>
-    
+
     </div>
 </div>

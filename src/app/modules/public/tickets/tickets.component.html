@@ -1,4 +1,4 @@
-<div class="saturno-card  animated fadeIn">
+<div class="saturno-card shadow-box m-3 animated fadeIn">
   <div *ngIf="publicService.company">
 
     <h5 *ngIf="loading" class="card-title">
@@ -10,7 +10,7 @@
     <div *ngIf="!loading">
 
       <p class="lg text-secondary">
-        ¡Bienvenido! Estás por pedir una mesa en
+        Estás por pedir una mesa en
       </p>
 
       <div class="card pb-2 pt-4 mb-4">
@@ -26,24 +26,6 @@
 
     </div>
 
-    <div class="container">
-      <div class="row rounded border border-success mb-3">
-        <div class="col bg-success text-white p-2">
-          <div>
-            <span class="mdi mdi-human-wheelchair m-2" style="font-size: xx-large;"></span>
-            <span class="mdi mdi-human-pregnant m-2" style="font-size: xx-large;"></span>
-          </div>
-          <div>
-            <span class="mdi mdi-baby-carriage m-2" style="font-size: xx-large;"></span>
-            <span class="mdi mdi-human-cane m-2" style="font-size: xx-large;"></span>
-          </div>
-        </div>
-        <div class="col m-3">
-          <p class="text-uppercase mx-2 font-weight-bold">Prioritario</p>
-          <mat-slide-toggle [(ngModel)]="blPriority"></mat-slide-toggle>
-        </div>
-      </div>
-    </div>
 
     <!-- CREAR EL FORMULARIO DE BUSQUEDA DE MESA AQUÍ -->
     <form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">

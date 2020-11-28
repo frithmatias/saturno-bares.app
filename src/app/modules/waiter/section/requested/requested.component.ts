@@ -12,19 +12,16 @@ import { TicketResponse } from '../../../../interfaces/ticket.interface';
 })
 export class RequestedComponent implements OnInit {
 
-  @Input() tickets: Ticket[];
+  @Input() requested: Ticket[];
   @Input() tables: Table[];
   assignWithPriority: boolean = false;
 
-  requested: Ticket[];
   constructor(
     public sharedService: SharedService,
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {
-    this.requested = this.tickets.filter(ticket => ticket.tx_status === 'requested');
-  }
+  ngOnInit(): void {}
 
 
   setReserve = (table: Table, ticket: Ticket) => {

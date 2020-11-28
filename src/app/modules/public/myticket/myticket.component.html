@@ -7,7 +7,7 @@
     <!------------------------------>
     <!-- SU TURNO -->
     <!------------------------------>
-    <div class="screen-myticket-container shadow-box my-3" *ngIf="ticketTmEnd===null">
+    <div class="screen-myticket-container shadow-minicard my-3" *ngIf="ticketTmEnd===null">
         <div class="screen-myticket-text-header">
             SU TURNO
         </div>
@@ -91,21 +91,10 @@
 
     <div class="container row px-0" *ngIf="ticketTmEnd===null">
 
-        <!-- <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
-            <table width="100%" class="shadow-box">
-              <tr>
-                <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-                  <div class="mdi mdi-power xl"></div>
-                </td>
-                <td>Salir</td>
-              </tr>
-            </table>
-          </button> -->
-
-        <div class="col-12 col-sm-6 col-lg-4 p-1">
+        <div class="col-12 col-sm-6 p-1">
             <button class="btn btn-success btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
                 [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}" (click)="callWaiter('waiter')">
-                <table width="100%" class="shadow-box">
+                <table width="100%" class="shadow-minicard">
                     <tr>
                         <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
                             <div class="mdi mdi-silverware-fork-knife xl"></div>
@@ -116,10 +105,10 @@
             </button>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4 p-1">
+        <div class="col-12 col-sm-6 p-1">
             <button class="btn btn-danger btn-block p-0" [disabled]="ticket?.tx_call || !ticket?.id_session"
                 [ngClass]="{'button-disabled':ticket?.tx_call || !ticket?.id_session}" (click)="callWaiter('account')">
-                <table width="100%" class="shadow-box">
+                <table width="100%" class="shadow-minicard">
                     <tr>
                         <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
                             <div class="mdi mdi-file-document-edit-outline xl"></div>
@@ -130,15 +119,15 @@
             </button>
         </div>
 
-        <div class="col-12 col-sm-6 col-lg-4 p-1">
+        <div class="col-12 col-sm-6 p-1">
             <button class="btn btn-dark btn-block p-0" [disabled]="!ticket" [ngClass]="{'button-disabled':!ticket}"
                 (click)="endTicket()">
-                <table width="100%" class="shadow-box">
+                <table width="100%" class="shadow-minicard">
                     <tr>
                         <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
                             <div class="mdi mdi-power xl"></div>
                         </td>
-                        <td> Cancelar mi Turno</td>
+                        <td> Cancelar Turno</td>
                     </tr>
                 </table>
             </button>
@@ -150,7 +139,7 @@
     <!-- HISTORIAL DE LLAMADAS -->
     <!-- ======================================================== -->
 
-    <div class="card shadow-box p-2 my-4" *ngIf="ticketTmEnd===null">
+    <div class="card shadow-minicard p-2 my-4" *ngIf="ticketTmEnd===null">
         <table class="w-100 table-sm text-center">
             <tr>
                 <td class="screen-history-title"> TURNO </td>

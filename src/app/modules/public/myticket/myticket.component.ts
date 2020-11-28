@@ -258,7 +258,7 @@ export class MyticketComponent implements OnInit {
 							resolve();
 							this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
 							this.publicService.clearPublicSession();
-							this.router.navigate(['/public']);
+							this.router.navigate(['/home']);
 						}
 					});
 				}

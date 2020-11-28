@@ -63,11 +63,10 @@ export class TicketsComponent implements OnInit {
 		this.loading = true;
 
 		let idSocket = this.wsService.idSocket;
-		let blPriority = this.blPriority;
 		let nmPersons = this.ticketForm.value.nmPersons;
 		let idSection = this.ticketForm.value.idSection;
 
-		this.publicService.createTicket(idSocket, blPriority, nmPersons, idSection).subscribe(
+		this.publicService.createTicket(idSocket, nmPersons, idSection).subscribe(
 			(data: TicketResponse) => {
 				if (data.ok) {
 					localStorage.setItem('ticket', JSON.stringify(data.ticket));

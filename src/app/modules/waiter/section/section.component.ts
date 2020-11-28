@@ -41,6 +41,16 @@ export class SectionComponent implements OnInit {
   // data for tables
   busyTablesTimes = new Map(); // tables times
 
+
+  // data for queued and requested 
+  tickets: Ticket[] = [];
+  tables: Table[] = [];
+
+  // data for requested
+  requested: Ticket[] = [];
+  queued: Ticket[] = [];
+
+
   private subjectUpdateWaiters$ = new Subject();
 
   constructor(
@@ -84,7 +94,8 @@ export class SectionComponent implements OnInit {
       this.waiterService.readTables(idCompany).subscribe(
         (data: TablesResponse) => {
           if (data.ok) {
-            this.waiterService.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
+
+            this.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
 
             // tables data for sections table
             for (let section of this.waiterService.sections) {
@@ -99,7 +110,7 @@ export class SectionComponent implements OnInit {
 
 
             let counter$ = interval(1000).subscribe(() => {
-              for (let table of this.waiterService.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.tx_status === 'busy')) {
+              for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.tx_status === 'busy')) {
                 if (table.id_session) {
                   this.busyTablesTimes.set(table.nm_table, {
                     tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided),
@@ -132,9 +143,17 @@ export class SectionComponent implements OnInit {
         .readTickets(idCompany)
         .subscribe((data: TicketsResponse) => {
 
-          this.waiterService.tickets = data.tickets;
+          this.tickets = data.tickets;
 
-          // tickets data for sections table
+          // for input requested child
+          this.requested = this.tickets.filter(ticket => ticket.id_section._id === this.waiterService.session.id_section._id &&
+            ticket.tm_end === null && ticket.tx_status === 'requested')
+
+          // for input queued child  
+          this.queued = this.tickets.filter(ticket => ticket.id_section._id === this.waiterService.session.id_section._id &&
+            ticket.tm_end === null && ticket.tx_status === 'queued')
+
+          // for input sections child
           for (let section of this.waiterService.sections) {
             this.ticketsDataBySection.set(section.tx_section, {
               id: section._id,
@@ -157,7 +176,7 @@ export class SectionComponent implements OnInit {
   };
 
 
-  
+
   releaseSection = () => {
 
     let idSection = this.waiterService.session.id_section._id;
@@ -172,7 +191,7 @@ export class SectionComponent implements OnInit {
         }
       });
   };
-  
+
   ngOnDestroy = (): void => {
     this.subjectUpdateWaiters$.complete();
   }

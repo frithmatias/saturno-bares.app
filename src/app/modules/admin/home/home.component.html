@@ -8,7 +8,7 @@
     
     <div class="col-12 col-sm-6 col-md-4">
       <!-- WIZARD -->
-      <div class="saturno-minicard shadow-box my-3" routerLink="/admin/wizard">
+      <div class="saturno-minicard shadow-minicard my-3" routerLink="/admin/wizard">
         <div class="saturno-minicard-title">
           <div>
             <span class="mdi mdi-wizard-hat icon-home-card"></span>
@@ -48,7 +48,7 @@
       </div>
 
       <!-- TOMAR SECTOR -->
-      <div class="saturno-minicard shadow-box my-3" *ngIf="
+      <div class="saturno-minicard shadow-minicard my-3" *ngIf="
         adminService.companies.length > 0 && 
         adminService.sections.length > 0 &&
         adminService.tables.length > 0" routerLink="/waiter/home">
@@ -70,7 +70,7 @@
     <div class="col-12 col-sm-6 col-md-4">
 
       <!-- COMPANY TABLE INFO -->
-      <div class="saturno-minicard shadow-box my-3" routerLink="/waiter/home">
+      <div class="saturno-minicard shadow-minicard my-3" routerLink="/waiter/home">
         <div class="card-header">{{ this.loginService.user.id_company.tx_company_name }}</div>
         <div class="table-responsive-sm">
           <table class="table text-secondary table-sm mb-0 text-center">
@@ -124,7 +124,7 @@
       </div>
 
       <!-- FOOTER INFO -->
-      <div class="saturno-minicard shadow-box my-3" *ngIf="loginService.user.id_company">
+      <div class="saturno-minicard shadow-minicard my-3" *ngIf="loginService.user.id_company">
         <div class="card-body" style="text-align: left;">
 
           <div>

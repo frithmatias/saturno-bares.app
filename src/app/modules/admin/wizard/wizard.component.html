@@ -3,7 +3,7 @@
 
         <!-- Welcome Step -->
         <mat-step state="star">
-            <div class="m-2 animated fadeIn">
+            <div class="card bg-light text-dark mb-4">
                 <div class="card-body">
                     <h4>Hola {{ loginService?.user.tx_name }}!</h4>
 
@@ -15,7 +15,9 @@
                         No te llevará mas de un minuto y desde acá podés hacer todo.
                     </p>
                     <hr>
-                    <button class="btn btn-success" matStepperNext>Comenzar</button>
+                    <div class="w-100 text-center">
+                        <button class="btn btn-success" matStepperNext>Comenzar</button>
+                    </div>
                 </div>
             </div>
         </mat-step>

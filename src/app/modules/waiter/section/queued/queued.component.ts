@@ -11,7 +11,7 @@ import { SharedService } from '../../../../services/shared.service';
   styleUrls: ['./queued.component.css']
 })
 export class QueuedComponent implements OnInit {
-  @Input() tickets: Ticket[];
+  @Input() queued: Ticket[];
   @Input() tables: Table[];
 
   waiting: Ticket[];
@@ -20,9 +20,7 @@ export class QueuedComponent implements OnInit {
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {
-    this.waiting = this.tickets.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned');
-  }
+  ngOnInit(): void {}
 
   setReserve = (table: Table, ticket: Ticket) => {
     ticket.cd_tables = ticket.cd_tables.includes(table.nm_table)

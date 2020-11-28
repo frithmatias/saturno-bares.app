@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit {
 				cookiepolicy: 'single_host_origin',
 				scope: 'profile email'
 			});
-			this.attachSignin(document.getElementById('btnGoogle'));
+			this.attachSignin(document.getElementById('btnGoogleRegister'));
 		});
 	}
 

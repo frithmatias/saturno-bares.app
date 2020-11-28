@@ -5,7 +5,7 @@
 
     <!-- sidenav -->
     <mat-drawer #sidenav id="sidenav" mode="over">
-        <app-sidenav></app-sidenav>
+        <app-sidenav (toggleSideNav)="toggle( sidenav )"></app-sidenav>
     </mat-drawer>
 
     <!-- chat -->

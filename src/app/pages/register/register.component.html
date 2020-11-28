@@ -1,33 +1,30 @@
-<div class="container-fluid p-3 h-100 saturno-bg-grey-5">
+<div class="h-100 saturno-bg-grey-5 pt-sm-5">
     <div class="saturno-card-wide shadow-box bg-light animated fadeIn">
+
         <div class="row">
 
-            <div class="col-md">
-                <form ngNativeValidate #f="ngForm">
-                    <div class="jumbotron m-0 py-5 text-dark">
+            <!---------------------------------------------------------------------->
+            <!-- GOOGLE REGISTRATION -->
+            <!---------------------------------------------------------------------->
+            <div class="col-sm">
+                <div class="jumbotron m-0 py-5 h-100 text-dark">
 
-                        <h2>Registro</h2>
-                        <p class="lead" style="font-size: medium;">Desde acá podés registrar tu comercio. </p>
-
-                        <hr class="saturno-hr my-4">
-
-                        <p class="lead" style="font-size: medium;">Registrarme con mi cuenta de Google.</p>
-
-                        <button class="btn btn-danger btn-block" type="button" id="btnGoogle" data-toggle="tooltip">
-                            Google
-                        </button>
-
-                    </div>
-                </form>
+                    <div class="my-2 xl text-danger text-uppercase">Registro</div>
+                    <div class="my-2 md">Desde acá podés registrar tu comercio. </div>
+                    <hr class="my-4 saturno-hr-red">
+                    <div class="my-2 md">Registrarme con mi cuenta de Google.</div>
+                    <button class="btn btn-danger btn-block" type="button" id="btnGoogleRegister" data-toggle="tooltip">
+                        Google
+                    </button>
+                    <div class="sm pointer mt-3" routerLink="/home"><b>Ir al Inicio</b></div>
+                </div>
             </div>
 
-            <div class="col-md mt-4 mt-md-0">
-
+            <div class="col-sm mt-4 mt-md-0">
                 <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
 
                     <mat-form-field color="warn" logincss class="w-100">
                         <mat-label>Tu Nombre</mat-label>
-
                         <input matInput placeholder="Diego Perez" formControlName="name" name="name" type="text"
                             required>
                     </mat-form-field>
@@ -60,8 +57,7 @@
 
                     <div class="border-top bg-light text-dark text-center label pt-2 mt-3">
                         <span class="p-2">Ya tenés cuenta?</span>
-                        <span class="p-2 text-primary pointer" routerLink="/login" ><b>Entrar</b></span>
-                        <span class="p-2 text-success pointer" routerLink="/home" ><b>Ir al Inicio</b></span>
+                        <span class="p-2 text-primary pointer" routerLink="/login"><b>Entrar</b></span>
                     </div>
                 </form>
 

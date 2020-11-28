@@ -85,7 +85,7 @@
                     'btn-secondary': table.tx_status === 'paused',
                     'btn-dark': table.tx_status === 'reserved'
                   }" (click)="selectTable(table)">
-                <table width="100%" class="shadow-box">
+                <table width="100%" class="shadow-minicard">
                     <tr>
                         <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
                             <span class="xl">{{ table.nm_table }}</span>
@@ -198,7 +198,7 @@
                           'btn-success': table.tx_status === 'idle',
                           'btn-secondary': table.tx_status === 'paused'
                         }" [disabled]="table.tx_status === 'busy'">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-power xl"></span>
@@ -219,7 +219,7 @@
                         <button class="btn btn-block p-0"
                             [ngClass]="{ 'button-disabled': !table.id_session || waiterService.sectionSelected === '' }"
                             [disabled]="!table.id_session || waiterService.sectionSelected === ''">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-priority-high xl"></span>
@@ -239,7 +239,7 @@
                         <button [disabled]="!table.id_session || waiterService.sectionSelected === ''"
                             [ngClass]="{'button-disabled': !table.id_session || waiterService.sectionSelected === ''}"
                             class="btn btn-primary btn-block p-0" (click)="reassignTicket(table.id_session?.id_ticket)">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-arrow-right-bold-circle-outline xl"></span>
@@ -256,7 +256,7 @@
                             (click)="attendedTicket(table.id_session?.id_ticket)"
                             [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'"
                             [ngClass]="{'button-disabled': !table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'}">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-bell xl"></span>
@@ -272,7 +272,7 @@
                         <button class="btn btn-primary btn-block p-0"
                             (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'"
                             [ngClass]="{'button-disabled': table.tx_status !== 'busy'}">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-replay xl"></span>
@@ -288,7 +288,7 @@
                         <button class="btn btn-danger btn-block p-0" (click)="endTicket(table.id_session?.id_ticket)"
                             [disabled]="table.tx_status !== 'busy'"
                             [ngClass]="{'button-disabled': table.tx_status !== 'busy'}">
-                            <table width="100%" class="shadow-box">
+                            <table width="100%" class="shadow-minicard">
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                                         <span class="mdi mdi-close xl"></span>

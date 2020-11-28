@@ -1,13 +1,13 @@
 .sidenav-title-icons {
-    font-size     : x-large;
-    color         : rgb(244, 94, 94);
+    font-size     : large;
+    color         : #d94949;
     vertical-align: top;
 }
 
 
 .sidenav-title-text {
-    color      : rgb(43, 43, 43);
-    font-size  : large;
+    color      : #474747;
+    font-size  : medium;
     margin-left: .5rem;
     font-weight: 400;
     align-self : center;
@@ -17,18 +17,19 @@
     display    : flex;
     align-items: center;
     cursor     : pointer;
-    margin     : 1rem;
+    margin     : .3rem;
+    margin-left: 1.5rem;
 }
 
 .sidenav-item-icons {
-    font-size     : x-large;
-    color         : #aaa;
+    font-size     : large;
+    color         : #595e93;
     vertical-align: top;
 }
 
 .sidenav-item-text {
     color         : rgb(111, 111, 111);
-    font-size     : medium;
+    font-size     : small;
     vertical-align: bottom;
     margin-left   : .5rem;
     font-weight   : 300;

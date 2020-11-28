@@ -111,6 +111,9 @@ mat-drawer-container {
 }
 
 
+/*
+400px -> 25rem
+*/
 
 .saturno-card {
     min-width: 18rem;
@@ -120,13 +123,27 @@ mat-drawer-container {
 }
 
 .saturno-card-wide {
+    /*sm: 36rem 575px*/
     min-width: 18rem;
-    max-width: 45rem;
+    max-width: 36rem;
     padding  : 1.2em;
     font-size: medium;
 }
 
-.shadow-box {
+@media (max-width: 575px) {
+    .saturno-card-wide {
+        height: 100vh;
+    }
+}
+
+@media (min-width: 575px) {
+    .shadow-box {
+        border-radius: 5px;
+        box-shadow   : 0px 1px 3px 0px #999
+    }
+}
+
+.shadow-minicard {
     border-radius: 5px;
     box-shadow   : 0px 1px 3px 0px #999
 }
@@ -474,5 +491,3 @@ mat-drawer-container {
 .mat-horizontal-stepper-header-container {
     display: none !important;
 }
-
-
