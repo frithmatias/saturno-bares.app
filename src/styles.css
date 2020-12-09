@@ -50,16 +50,18 @@ span:focus {
     outline: none;
 }
 
+.mapboxgl-canvas:focus {
+    outline: none;
+    border:none;
+}
+
 td {
     vertical-align: middle !important;
 }
 
-
 mat-drawer-container {
     flex: 1 1 auto;
 }
-
-
 
 .button-disabled {
     background-color: #f1f1f1 !important;
@@ -88,20 +90,12 @@ mat-drawer-container {
 /* SATURNO STYLES  */
 /* -------------------------------------------------------------- */
 
-.saturno-bg-grey-9 {
-    background-color: rgba(217, 217, 217, .9);
-}
-
 .saturno-bg-grey-5 {
     background-color: rgba(217, 217, 217, .5);
 }
 
-.saturno-bg-white {
-    background-color: rgba(255, 255, 255, 1);
-}
-
-.saturno-bg-white-9 {
-    background-color: rgba(255, 255, 255, .9);
+.saturno-bg-white-8 {
+    background-color: rgba(255, 255, 255, .8);
 }
 
 .saturno-bg-white-6 {
@@ -112,6 +106,26 @@ mat-drawer-container {
     background-color: rgba(255, 255, 255, .4);
 }
 
+.saturno-bg-white-2 {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+
+.saturno-bg-dark-8 {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.saturno-bg-dark-6 {
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.saturno-bg-dark-4 {
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.saturno-bg-dark-2 {
+    background-color: rgba(0, 0, 0, .2);
+}
 
 /*
 400px -> 25rem
@@ -119,21 +133,21 @@ mat-drawer-container {
 
 .saturno-card {
     min-width: 18rem;
-    max-width: 25rem;
+    max-width: 36rem;
     padding  : 1.2em;
     font-size: medium;
 }
 
-.saturno-card-wide {
-    /*sm: 36rem 575px*/
+.saturno-card-login {
     min-width: 18rem;
     max-width: 36rem;
     padding  : 1.2em;
     font-size: medium;
 }
 
+
 @media (max-width: 575px) {
-    .saturno-card-wide {
+    .saturno-card-login {
         height: 100vh;
     }
 }

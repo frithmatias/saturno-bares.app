@@ -34,7 +34,8 @@ export class CompanyCreateComponent implements OnInit {
 	localidadesControl = new FormControl();
 
 	// en localidades guardo la lista de localidades en el AUTOCOMPLETE
-	localidades: any[] = [];
+	localidades: Location[] = [];
+
 	constructor(
 		private adminService: AdminService,
 		private loginService: LoginService,
@@ -51,6 +52,7 @@ export class CompanyCreateComponent implements OnInit {
 			txCompanyString: '',
 			txCompanySlogan: '',
 			txCompanyLocation: '',
+			cdCompanyLocation: '',
 			txAddressStreet: '',
 			txAddressNumber: '',
 			txCompanyLat: '',
@@ -62,10 +64,11 @@ export class CompanyCreateComponent implements OnInit {
 			txCompanyString: new FormControl({ value: '', disabled: true }),
 			txCompanySlogan: new FormControl(defaults.txCompanySlogan),
 			txCompanyLocation: new FormControl(defaults.txCompanyLocation, Validators.required),
+			cdCompanyLocation: new FormControl(defaults.cdCompanyLocation, Validators.required),
 			txAddressStreet: new FormControl(defaults.txAddressStreet, Validators.required),
 			txAddressNumber: new FormControl(defaults.txAddressNumber, Validators.required),
-			txCompanyLat: new FormControl({value: defaults.txCompanyLat, disabled: true}, Validators.required),
-			txCompanyLng: new FormControl({value: defaults.txCompanyLng, disabled: true}, Validators.required),
+			txCompanyLat: new FormControl({ value: defaults.txCompanyLat, disabled: true }, Validators.required),
+			txCompanyLng: new FormControl({ value: defaults.txCompanyLng, disabled: true }, Validators.required),
 		});
 
 		this.localidadesControl.valueChanges.subscribe(data => {
@@ -93,24 +96,35 @@ export class CompanyCreateComponent implements OnInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		console.log(changes)
-
-		if(changes.companyEdit.currentValue === undefined) { return; }
+		if (changes.companyEdit.currentValue === undefined) { return; }
 
 		this.forma?.patchValue({
 			txCompanyName: changes.companyEdit.currentValue.tx_company_name,
 			txCompanySlogan: changes.companyEdit.currentValue.tx_company_slogan,
-			txCompanyLocation: changes.companyEdit.currentValue.tx_company_location,
 			txCompanyLat: changes.companyEdit.currentValue.tx_company_lat,
 			txCompanyLng: changes.companyEdit.currentValue.tx_company_lng,
 			txAddressStreet: changes.companyEdit.currentValue.tx_address_street,
 			txAddressNumber: changes.companyEdit.currentValue.tx_address_number
 		})
 
+		// localidadesControl espera un objeto que luego va a "parsear" [displayWith] con el metodo setLocalidad
+		let cdLocation = changes.companyEdit.currentValue.cd_company_location;
+		let txLocation = changes.companyEdit.currentValue.tx_company_location.split(',');
+		txLocation = txLocation.map(loc => loc.trim());
+		this.localidadesControl.setValue({
+			properties:
+			{
+				id: cdLocation,
+				nombre: txLocation[0],
+				departamento: { nombre: txLocation[1] },
+				provincia: { nombre: txLocation[2] }
 
+			}
+		});
+
+		// move map to location
 		let lat = changes.companyEdit.currentValue.tx_company_lat;
 		let lng = changes.companyEdit.currentValue.tx_company_lng;
-
 		this.centerMap = [lng, lat]
 	}
 
@@ -143,8 +157,6 @@ export class CompanyCreateComponent implements OnInit {
 	}
 
 	createCompany(formDirective: FormGroupDirective) {
-		
-		console.log(this.forma); // raw para que incluya los value de los controles disabled.
 
 		if (this.forma.invalid) {
 			this.sharedService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
@@ -156,6 +168,7 @@ export class CompanyCreateComponent implements OnInit {
 			tx_company_name: this.forma.value.txCompanyName,
 			tx_company_slogan: this.forma.value.txCompanySlogan,
 			tx_company_string: this.txCompanyString,
+			cd_company_location: this.forma.value.cdCompanyLocation,
 			tx_company_location: this.forma.value.txCompanyLocation,
 			tx_address_street: this.forma.value.txAddressStreet,
 			tx_address_number: this.forma.value.txAddressNumber,
@@ -163,7 +176,7 @@ export class CompanyCreateComponent implements OnInit {
 			tx_company_lng: this.forma.getRawValue().txCompanyLng
 		};
 
-
+		
 		if (this.companyEdit) {
 			company._id = this.companyEdit._id;
 			this.adminService.updateCompany(company).subscribe((data: CompanyResponse) => {
@@ -198,20 +211,26 @@ export class CompanyCreateComponent implements OnInit {
 		this.sharedService.scrollTop();
 	}
 
-
 	setLocalidad(localidad: Location) {
-		this.centerMap = localidad.geometry.coordinates;
-		this.forma.patchValue({
-			txCompanyLocation: localidad.properties.id
-		});
-	}
+		if (localidad) {
+			if (localidad.geometry?.coordinates) this.centerMap = localidad.geometry.coordinates;
 
+			let provinciaNombre = localidad.properties.provincia.nombre;
+			if (provinciaNombre.toLowerCase() === 'Ciudad Autónoma de Buenos Aires'.toLowerCase()) {
+				provinciaNombre = 'CABA';
+			}
 
-	getInputLocalidadNombre(value: any) {
-		if (value) {
-			const capval = this.capitalizarPipe.transform(value.properties.nombre + ', ' + value.properties.departamento.nombre + ', ' + value.properties.provincia.nombre);
-			this.forma.patchValue
-			return capval;
+			const capitalizedLocation =
+				this.capitalizarPipe.transform(localidad.properties.nombre) + ', ' +
+				this.capitalizarPipe.transform(localidad.properties.departamento.nombre) + ', ' +
+				this.capitalizarPipe.transform(provinciaNombre);
+
+			this.forma.patchValue({
+				txCompanyLocation: capitalizedLocation,
+				cdCompanyLocation: localidad.properties.id
+			});
+
+			return capitalizedLocation;
 		}
 	}
 

@@ -4,8 +4,8 @@
     <mat-form-field color="warn" logincss class="w-100">
         <mat-label>Nombre del Bar / Restorant</mat-label>
         <mat-error>Esta Empresa ya se encuentra registrada!</mat-error>
-        <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName" type="text" required
-            (keyup)="checkCompanyExists()">
+        <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName"
+            type="text" required (keyup)="checkCompanyExists()">
     </mat-form-field>
 
     <mat-form-field color="warn" logincss class="w-100">
@@ -21,15 +21,14 @@
     </mat-form-field>
 
     <mat-form-field color="warn" logincss class="w-100">
-        <mat-label>Ingrese localidad</mat-label>
+        <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
         <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
             (click)="cleanInput()" />
         <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
     </mat-form-field>
 
     <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
-    <mat-autocomplete (optionSelected)="setLocalidad($event.option.value)" iniciocss #auto="matAutocomplete"
-        [displayWith]="getInputLocalidadNombre.bind(this)">
+    <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
         <mat-option [value]="option" *ngFor="let option of localidades">
             {{ option.properties.nombre | capitalizarPipe }},
             {{ option.properties.departamento.nombre }},
@@ -37,15 +36,16 @@
         </mat-option>
     </mat-autocomplete>
 
-
     <mat-form-field color="warn" logincss class="w-100">
         <mat-label>Calle</mat-label>
-        <input matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text" required>
+        <input matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text"
+            required>
     </mat-form-field>
 
     <mat-form-field color="warn" logincss class="w-100">
         <mat-label>Altura</mat-label>
-        <input matInput placeholder="1234" formControlName="txAddressNumber" name="txAddressNumber" type="text" required>
+        <input matInput placeholder="1234" formControlName="txAddressNumber" name="txAddressNumber" type="text"
+            required>
     </mat-form-field>
 
 
@@ -53,6 +53,11 @@
     <!-- CONTROLES LAT LNG Y MAPA -->
     <!---------------------------------------------------------------------->
 
+    <div class="card my-2">
+        <div class="card-body sm text-dark">
+            Por favor buscá y marcá en el mapa la ubicación exacta de tu Bar / Resto
+        </div>
+    </div>
 
     <!---------------------------------------------------------------------->
     <!-- LAT -->
@@ -64,29 +69,30 @@
     <!---------------------------------------------------------------------->
     <input type="text" placeholder="lng" class="coords-input" formControlName="txCompanyLng" />
 
-
     <!---------------------------------------------------------------------->
     <!-- MAPBOX -->
     <!---------------------------------------------------------------------->
     <app-map [(center)]="centerMap" (newMarker)="setCoords($event)"></app-map>
 
-    <div *ngIf="!companyEdit" class="row text-center">
-        <div class="col">
-            <button *ngIf="!companyEdit" class="btn btn-success btn-block text-uppercase" type="submit">
-                Crear Comercio
-            </button>
+    <div class="container pt-4 px-0">
+        <div *ngIf="!companyEdit" class="row text-center">
+            <div class="col">
+                <button *ngIf="!companyEdit" class="btn btn-success btn-block text-uppercase" type="submit">
+                    Crear Comercio
+                </button>
+            </div>
         </div>
-    </div>
-    <div *ngIf="companyEdit" class="row">
-        <div class="col w-100">
-            <button class="btn btn-danger btn-block text-uppercase" type="submit">
-                Guardar
-            </button>
-        </div>
-        <div class="col">
-            <button class="btn btn-warning btn-block text-uppercase" (click)="resetForm(formDirective)">
-                Limpiar
-            </button>
+        <div *ngIf="companyEdit" class="row">
+            <div class="col w-100">
+                <button class="btn btn-danger btn-block text-uppercase" type="submit">
+                    Guardar
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn btn-warning btn-block text-uppercase" (click)="resetForm(formDirective)">
+                    Limpiar
+                </button>
+            </div>
         </div>
     </div>
 

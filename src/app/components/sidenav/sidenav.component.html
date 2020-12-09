@@ -1,36 +1,36 @@
-<div>
+<div class="text-white h-100">
     <mat-form-field *ngIf="adminService.companies?.length > 0" color="warn" class="p-2 w-100">
         <mat-label>Seleccione una empresa</mat-label>
-        <mat-select formControlName="idCompany" [value]="loginService.user?.id_company?._id" name="idCompany" #selectTable
-            matNativeControl required>
-            <mat-option *ngFor="let company of adminService.companies" [value]="company._id" (click)="attachCompany(company)">
+        <mat-select formControlName="idCompany" [value]="loginService.user?.id_company?._id" name="idCompany"
+            #selectTable matNativeControl required>
+            <mat-option *ngFor="let company of adminService.companies" [value]="company._id"
+                (click)="attachCompany(company)">
                 {{company.tx_company_name}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <mat-accordion multi="false">
 
 
-        <!-- MENU -->
-        <div *ngFor="let item of loginService.menu">
-            <mat-expansion-panel [expanded]="item.tx_titulo === 'Camarero'">
 
-                <mat-expansion-panel-header>
-                    <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">
-                        <span class="{{ item.tx_icon }} sidenav-title-icons"></span>
-                        <span class="sidenav-title-text mx-2">{{ item.tx_titulo }}</span>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
+    <!-- MENU -->
+    <div *ngFor="let item of loginService.menu">
+        <mat-expansion-panel [expanded]="item.tx_titulo === 'Camarero'">
 
-                <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}" class="sidenav-item">
-                    <span class="{{ sub.tx_icon }} sidenav-item-icons"></span>
-                    <span class="sidenav-item-text">{{ sub.tx_titulo}}</span>
-                </div>
+            <mat-expansion-panel-header>
+                <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">
+                    <span class="{{ item.tx_icon }} sidenav-title-icons"></span>
+                    <span class="sidenav-title-text mx-2">{{ item.tx_titulo }}</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-            </mat-expansion-panel>
-        </div>
+            <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}"
+                class="sidenav-item">
+                <span class="{{ sub.tx_icon }} sidenav-item-icons"></span>
+                <span class="sidenav-item-text">{{ sub.tx_titulo}}</span>
+            </div>
 
-    </mat-accordion>
+        </mat-expansion-panel>
+    </div>
 
 </div>

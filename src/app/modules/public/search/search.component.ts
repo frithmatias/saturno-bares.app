@@ -44,10 +44,10 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  goToCompany(companySelected: any): void {
+  goToCompany(companySelected: Company): void {
       localStorage.setItem('company', JSON.stringify(companySelected));
       this.publicService.company = companySelected;
-      this.router.navigate(['/public/', companySelected.tx_public_name]);
+      this.router.navigate(['/public/', companySelected.tx_company_string]);
   }
 
   cleanInput(inputCompany) {

@@ -73,7 +73,7 @@
       <div class="saturno-minicard shadow-minicard my-3" routerLink="/waiter/home">
         <div class="card-header">{{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}</div>
         <div class="table-responsive-sm">
-          <table class="table text-secondary table-sm mb-0 text-center">
+          <table class="table text-secondary table-sm mb-0 sm text-center">
 
             <tr>
               <td style="text-align: left;">
@@ -114,7 +114,7 @@
           <div *ngIf="
   adminService.companies.length === 0 || 
   adminService.sections.length === 0 ||
-  adminService.tables.length === 0" class="table bg-warning sm p-2 rounded text-dark text-center">
+  adminService.tables.length === 0" class="card bg-warning sm p-2 mt-2 rounded text-dark text-center">
             Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
               routerLink="/admin/wizard">"Iniciar el Asistente"</span>
             para crear todo lo necesario.

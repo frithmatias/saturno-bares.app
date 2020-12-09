@@ -37,6 +37,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HowWorksComponent } from './pages/how-works/how-works.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
 import { TokenService } from './interceptors/token.service';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
 	declarations: [
@@ -57,6 +58,7 @@ import { TokenService } from './interceptors/token.service';
 		ReactiveFormsModule,
 		HttpClientModule,
 		AppRoutingModule,
+		PipesModule,
 		SocketIoModule.forRoot(config)
 	],
 	exports: [],

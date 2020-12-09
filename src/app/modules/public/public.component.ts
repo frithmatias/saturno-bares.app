@@ -31,8 +31,9 @@ export class PublicComponent implements OnInit {
     this.route.params.subscribe((data: any) => {
 
       if (data.company) {
-        let txCompany = data.company;
-        this.publicService.readCompany(txCompany).subscribe((resp: any) => {
+        let txCompanyString = data.company;
+        this.publicService.readCompany(txCompanyString).subscribe((resp: any) => {
+
           if (resp.ok) {
             localStorage.setItem('company', JSON.stringify(resp.company));
             this.publicService.company = resp.company;

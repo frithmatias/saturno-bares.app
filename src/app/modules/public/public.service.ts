@@ -52,50 +52,40 @@ export class PublicService {
 
   }
 
-	// busca localidades según pattern al iniciar el servicio
-	buscarLocalidades(pattern):Promise<LocationsResponse> {
-		return new Promise((resolve, reject) => {
-			const regex = new RegExp(/^[a-z ñ0-9]+$/i);
-			if (!regex.test(pattern) && pattern) {
-				this.sharedService.snack('¡Ingrese sólo caracteres alfanuméricos!', 2000);
-				reject();
-				return;
-			}
+  buscarLocalidades(pattern): Promise<LocationsResponse> {
+    return new Promise((resolve, reject) => {
+      const regex = new RegExp(/^[a-z ñ0-9]+$/i);
+      if (!regex.test(pattern) && pattern) {
+        this.sharedService.snack('¡Ingrese sólo caracteres alfanuméricos!', 2000);
+        reject();
+        return;
+      }
 
-		// Con el fin de evitar sobrecargar al server con peticiones de datos duplicados, le pido al backend
-			// que me envíe resultados SOLO cuando ingreso tres caracteres, a partir de esos resultados
-			// el filtro lo hace el cliente en el frontend con los datos ya almacenados en this.localidades.
-			const url = environment.url + '/p/locations/' + pattern;
-			this.http.get(url).subscribe((resp: LocationsResponse) => {
-				if (resp.ok) {
-					resolve(resp);
-					return resp;
-				}
-			}); 
-		});
-
-
+      const url = environment.url + '/p/locations/' + pattern;
+      this.http.get(url).subscribe((resp: LocationsResponse) => {
+        if (resp.ok) {
+          resolve(resp);
+          return resp;
+        }
+      });
+    });
   }
-  
 
-
-
-  // ========================================================
-  // Public Methods
-  // ========================================================
+  buscarBaresEnLocalidad(idLocation: string) {
+    return this.http.get(environment.url + '/p/findinlocation/' + idLocation);
+  }
 
   findCompany(pattern: string): Observable<object> {
     return this.http.get(environment.url + '/c/findcompany/' + pattern);
   }
 
-  readCompany(txPublicName: string): Observable<object> {
-    return this.http.get(environment.url + '/c/readcompany/' + txPublicName);
+  readCompany(txCompanyString: string): Observable<object> {
+    return this.http.get(environment.url + '/c/readcompany/' + txCompanyString);
   }
 
   readSections(idCompany: string): Observable<SectionsResponse> {
     return this.http.get<SectionsResponse>(environment.url + '/section/readsections/' + idCompany);
   }
-
 
   createTicket(idSocket: string, nmPersons: number, idSection: string): Observable<object> {
     let data = { idSocket, nmPersons, idSection };
@@ -114,7 +104,7 @@ export class PublicService {
   }
 
   callWaiter(idTicket: string, txCall: string) {
-    return this.http.post(environment.url + '/t/callwaiter/', {idTicket, txCall});
+    return this.http.post(environment.url + '/t/callwaiter/', { idTicket, txCall });
   }
 
   endTicket(idTicket: string) {

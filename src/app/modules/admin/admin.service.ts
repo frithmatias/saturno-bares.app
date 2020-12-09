@@ -40,9 +40,8 @@ export class AdminService {
 	// ========================================================
 
 	createCompany(company: Company) {
-		let data = { company };
 		const url = environment.url + '/c/create';
-		return this.http.post(url, data).pipe(tap((data: CompanyResponse) => {
+		return this.http.post(url, company).pipe(tap((data: CompanyResponse) => {
 			this.attachCompany(data.company);
 		}))
 	}

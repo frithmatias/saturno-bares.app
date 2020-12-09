@@ -12,4 +12,11 @@
 #mapbox {
   height: 300px;
   width: 100%;
+  border-radius: 1em;
+}
+
+.no-scroll {
+  position: relative;
+    /* overflow-y: scroll; */
+    width: 100%;
 }

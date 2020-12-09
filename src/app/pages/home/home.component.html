@@ -8,18 +8,18 @@
     <div class="col-md"></div>
     <div class="col-md">
 
-      <div class="saturno-card saturno-bg-white-9 rounded animated fadeIn">
+      <div class="p-4 saturno-bg-white-8 rounded animated fadeIn">
         <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
 
 
         <h2>Bienvenido</h2>
-        <p class="mb-2">Desde aquí puede pedir una mesa y esperar donde usted quiera.
+        <p class="mb-2">Desde acá podes pedir una mesa y esperar donde prefieras.
         </p>
         <hr class="saturno-hr-red">
         <p class="mb-0">
           <span class="mdi mdi-cellphone-sound icon-home-phone"></span>
         </p>
-        <p class="my-0">Cuando encontremos una mesa disponible nosotros le avisamos a su móvil.</p>
+        <p class="my-0">Cuando una mesa esté disponible nosotros te avisamos a tu móvil.</p>
 
         <hr>
 
@@ -51,10 +51,32 @@
   </div>
 </div>
 
+
+
+
 <!-- ======================================================== -->
 <!-- MAPA -->
 <!-- ======================================================== -->
-<app-map></app-map>
+
+<div class="container-fluid my-4">
+  <mat-form-field color="warn" logincss class="w-100">
+    <mat-label>Busca bares / restorants en tu ciudad, localidad o barrio</mat-label>
+    <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
+        (click)="cleanInput()" />
+    <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
+  </mat-form-field>
+  
+  <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
+  <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
+    <mat-option [value]="option" *ngFor="let option of localidades">
+        {{ option.properties.nombre | capitalizarPipe }},
+        {{ option.properties.departamento.nombre }},
+        {{ option.properties.provincia.nombre }}
+    </mat-option>
+  </mat-autocomplete>
+  
+  <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
+</div>
 
 <!-- ======================================================== -->
 <!-- MINI CARDS -->
