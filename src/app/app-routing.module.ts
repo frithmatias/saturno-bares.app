@@ -20,7 +20,6 @@ import { HowWorksComponent } from './pages/how-works/how-works.component';
 import { LoginGuard } from './guards/login.guard';
 import { TokenGuard } from './guards/token.guard';
 import { AdminGuard } from './guards/admin.guard';
-import { PlanBasicGuard } from './guards/plan-basic.guard';
 import { SuperuserGuard } from './guards/superuser.guard';
 import { PricingComponent } from './pages/pricing/pricing.component';
 

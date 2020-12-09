@@ -6,8 +6,10 @@ export interface Company {
 	id_user: string;
 	tx_company_name: string;
 	tx_company_slogan: string;
-	tx_public_name: string;
-    cd_city: string;
+	tx_company_string: string;
+	tx_company_location: string;
+    tx_company_lat: string;
+    tx_company_lng: string;
     tx_address_street: string;
     tx_address_number: string;
 	__v?: number;

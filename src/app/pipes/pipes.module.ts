@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CapitalizarPipe } from './capitalizar.pipe';
 import { DomseguroPipe } from './domseguro.pipe';
 import { GetidstringPipe } from './getidstring.pipe';
 import { IntervalToHmsPipe } from './interval-to-hms.pipe';
@@ -13,7 +14,8 @@ import { WordMaxLengthPipe } from './word-max-length.pipe';
     IntervalToHmsPipe,
     MessageTimePipe,
     TimeToHmsPipe,
-    WordMaxLengthPipe
+    WordMaxLengthPipe,
+    CapitalizarPipe
   ],
   imports: [],
   exports: [
@@ -22,7 +24,8 @@ import { WordMaxLengthPipe } from './word-max-length.pipe';
     IntervalToHmsPipe,
     MessageTimePipe,
     TimeToHmsPipe,
-    WordMaxLengthPipe
+    WordMaxLengthPipe,
+    CapitalizarPipe
   ]
 })
 export class PipesModule { }

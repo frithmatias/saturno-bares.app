@@ -50,7 +50,7 @@ import { PollCreateComponent } from './poll/poll-create/poll-create.component';
 		WaiterCreateComponent,
 		WizardComponent,
 		PollComponent,
-		PollCreateComponent,
+		PollCreateComponent
 
 	],
 	imports: [

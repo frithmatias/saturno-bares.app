@@ -15,7 +15,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class PollComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-  
+
   userSubscription: Subscription;
   sectionSelected: Section;
   scoreItems: ScoreItem[] = [];
@@ -30,8 +30,8 @@ export class PollComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let idCompany = this.loginService.user.id_company._id;
-    this.readScoreItems(idCompany);
+    let idCompany = this.loginService.user.id_company?._id;
+    if (idCompany) { this.readScoreItems(idCompany); }
   }
 
 

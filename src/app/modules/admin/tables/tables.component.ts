@@ -5,6 +5,7 @@ import { Table, TableResponse } from '../../../interfaces/table.interface';
 import { User } from 'src/app/interfaces/user.interface';
 import { Section  } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-tables',
@@ -20,6 +21,7 @@ export class TablesComponent implements OnInit {
   tableNew: Table;
   
   constructor(
+    public loginService: LoginService,
     public adminService: AdminService,
     private snack: MatSnackBar
   ) { }

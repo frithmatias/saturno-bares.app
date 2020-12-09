@@ -6,11 +6,16 @@ import { Company } from '../../interfaces/company.interface';
 import { environment } from '../../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { SectionsResponse } from '../../interfaces/section.interface';
+import { FormControl } from '@angular/forms';
+import { LocationsResponse, Location } from '../../interfaces/location.interface';
+import { SharedService } from '../../services/shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicService {
+
+
 
   company: Company;
   ticket: Ticket;
@@ -26,6 +31,7 @@ export class PublicService {
 
 
   constructor(
+    private sharedService: SharedService,
     private http: HttpClient,
     private router: Router
   ) {
@@ -44,9 +50,34 @@ export class PublicService {
 
     }
 
+  }
+
+	// busca localidades según pattern al iniciar el servicio
+	buscarLocalidades(pattern):Promise<LocationsResponse> {
+		return new Promise((resolve, reject) => {
+			const regex = new RegExp(/^[a-z ñ0-9]+$/i);
+			if (!regex.test(pattern) && pattern) {
+				this.sharedService.snack('¡Ingrese sólo caracteres alfanuméricos!', 2000);
+				reject();
+				return;
+			}
+
+		// Con el fin de evitar sobrecargar al server con peticiones de datos duplicados, le pido al backend
+			// que me envíe resultados SOLO cuando ingreso tres caracteres, a partir de esos resultados
+			// el filtro lo hace el cliente en el frontend con los datos ya almacenados en this.localidades.
+			const url = environment.url + '/p/locations/' + pattern;
+			this.http.get(url).subscribe((resp: LocationsResponse) => {
+				if (resp.ok) {
+					resolve(resp);
+					return resp;
+				}
+			}); 
+		});
 
 
   }
+  
+
 
 
   // ========================================================

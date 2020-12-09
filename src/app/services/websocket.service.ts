@@ -76,44 +76,44 @@ export class WebsocketService {
 			let user: User = JSON.parse(localStorage.getItem('user'));
 			user.id_socket = this.idSocket;
 			localStorage.setItem('user', JSON.stringify(user));
-			
+
 			// Enter new socket user to company room
-			let idCompany = user.id_company._id;
-			this.emit('enterCompany', idCompany);
+			let idCompany = user.id_company?._id;
+			if (idCompany) { this.emit('enterCompany', idCompany); }
 
 			// todo: obtener los tickets de section.component y rular por cada uno para actualizarlos en la bd
 			// todo: hacerlo desde el servicio de waiters para evitar traer los tickets a este servicio público.
 		}
 
 		if (localStorage.getItem('ticket')) { // client
-			
+
 			// update localstorage
 			let ticket = JSON.parse(localStorage.getItem('ticket'));
-			ticket.id_socket = this.idSocket; 
+			ticket.id_socket = this.idSocket;
 			localStorage.setItem('ticket', JSON.stringify(ticket));
-			
+
 			// Enter new socket client to company room
 			let idCompany = ticket.id_company;
 			this.emit('enterCompany', idCompany);
-			
+
 			// oldSocket se envía como bandera para definir si es escritorio o público
 			let idTicket = ticket._id;
 			let newSocket = this.idSocket;
 			let isClient = true;
-			this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => {})
+			this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => { })
+		}
 	}
-}
 
-emit(evento: string, payload ?: any, callback ?: () => void): void {
-	this.socket.emit(evento, payload, callback);
-}
+	emit(evento: string, payload?: any, callback?: () => void): void {
+		this.socket.emit(evento, payload, callback);
+	}
 
-listen(evento: string): Observable < string > {
-	return this.socket.fromEvent(evento);
-}
+	listen(evento: string): Observable<string> {
+		return this.socket.fromEvent(evento);
+	}
 
-manejaError = (err: AjaxError) => {
-	return of<AjaxError>(err);  // <b
-}
+	manejaError = (err: AjaxError) => {
+		return of<AjaxError>(err);  // <b
+	}
 
 }

@@ -1,0 +1,15 @@
+
+.browser-no-access-location {
+  background-color: #574a4c;
+  color: whitesmoke;
+  padding: 1em;
+  border-radius: .5em;
+  font-size: small;
+  line-height: 1.8em;
+  font-family: monospace;
+}
+
+#mapbox {
+  height: 300px;
+  width: 100%;
+}

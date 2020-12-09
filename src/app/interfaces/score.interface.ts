@@ -1,5 +1,5 @@
 // ========================================================
-// DESKTOPS
+// Score Items
 // ========================================================
 
 export interface ScoreItem {
@@ -21,6 +21,9 @@ export interface ScoreItemsResponse {
 	scoreitems: ScoreItem[] | null;
 }
 
+// ========================================================
+// Score 
+// ========================================================
 
 export interface Score {
 	cd_score: number, 

@@ -12,7 +12,6 @@ body {
     font-size   : medium;
     font-weight : 300;
     line-height : normal;
-    src         : local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
     font-display: swap;
 }
 
@@ -89,6 +88,9 @@ mat-drawer-container {
 /* SATURNO STYLES  */
 /* -------------------------------------------------------------- */
 
+.saturno-bg-grey-9 {
+    background-color: rgba(217, 217, 217, .9);
+}
 
 .saturno-bg-grey-5 {
     background-color: rgba(217, 217, 217, .5);
@@ -491,3 +493,29 @@ mat-drawer-container {
 .mat-horizontal-stepper-header-container {
     display: none !important;
 }
+
+
+/*
+-------------------------------------------
+MAPBOX 
+-------------------------------------------
+*/
+
+.mapboxgl-popup-content {
+    padding: 0px;
+    top    : 0px;
+    left   : 10px;
+}
+
+.mapboxgl-popup {
+    display  : block;
+    transform: none !important;
+}
+
+.mapboxgl-popup-tip {
+    visibility: hidden;
+}
+
+/* .mapboxgl-canvas {
+    position: relative !important;
+} */

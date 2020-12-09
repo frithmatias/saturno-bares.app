@@ -71,7 +71,7 @@
 
       <!-- COMPANY TABLE INFO -->
       <div class="saturno-minicard shadow-minicard my-3" routerLink="/waiter/home">
-        <div class="card-header">{{ this.loginService.user.id_company.tx_company_name }}</div>
+        <div class="card-header">{{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}</div>
         <div class="table-responsive-sm">
           <table class="table text-secondary table-sm mb-0 text-center">
 
@@ -160,8 +160,8 @@
             También puede usar un link o acceso directo a tu comercio en:
           </p>
           <p>
-            <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}">
-              https://saturno.fun/#/public/{{loginService.user.id_company.tx_public_name}}
+            <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}">
+              https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}
             </a>
           </p>
         </div>

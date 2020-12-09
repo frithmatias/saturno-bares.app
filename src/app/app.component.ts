@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { MatDrawer } from '@angular/material/sidenav/drawer';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +9,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
   opened: boolean;
   unreadMessages: number;
-  constructor(private router: Router) {}
-  toggle(htmlRef: MatSidenav): void {
+  constructor() {}
+  toggle(htmlRef: MatDrawer ): void {
     htmlRef.toggle();
   }
 }

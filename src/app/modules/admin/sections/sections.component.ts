@@ -10,7 +10,7 @@ import { LoginService } from '../../../services/login.service';
   templateUrl: './sections.component.html',
   styleUrls: ['./sections.component.css']
 })
-export class SectionsComponent implements OnInit  {
+export class SectionsComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
@@ -22,7 +22,7 @@ export class SectionsComponent implements OnInit  {
     private snack: MatSnackBar
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   deleteSection(section: Section): void {
     this.snack.open(`Desea eliminar el sector ${section.tx_section}`, 'ELIMINAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {

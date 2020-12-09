@@ -55,7 +55,7 @@ export class SearchComponent implements OnInit {
     if (this.companySelected) {
       localStorage.setItem('company', JSON.stringify(this.companySelected));
       this.publicService.company = this.companySelected;
-      this.router.navigate(['/public/', this.companySelected.tx_public_name]);
+      this.router.navigate(['/public/', this.companySelected.tx_company_string]);
     }
   }
 

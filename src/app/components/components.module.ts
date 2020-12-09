@@ -9,13 +9,15 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatComponent } from './chat/chat.component';
 import { RouterModule } from '@angular/router';
 import { SearchComponent } from './toolbar/search/search.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     ToolbarComponent,
     SidenavComponent,
     ChatComponent,
-    SearchComponent
+    SearchComponent,
+    MapComponent
   ],
   imports: [
     RouterModule,
@@ -26,7 +28,10 @@ import { SearchComponent } from './toolbar/search/search.component';
   exports: [
     ToolbarComponent,
     SidenavComponent,
-    ChatComponent
+    ChatComponent,
+    SearchComponent,
+    MapComponent
+
   ]
 })
 export class ComponentsModule { }

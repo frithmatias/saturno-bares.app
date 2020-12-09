@@ -3,16 +3,16 @@ import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class SharedService {
 
-  constructor(
-    private _snack: MatSnackBar
-  ) { }
+	constructor(
+		private _snack: MatSnackBar
+	) { }
 
 
-  
+
 	// ========================================================
 	// Login Methods
 	// ========================================================
@@ -49,6 +49,7 @@ export class SharedService {
 				}
 			})
 		})
-  }
-  
+	}
+
+
 }

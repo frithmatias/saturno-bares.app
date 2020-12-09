@@ -23,11 +23,13 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
 
     let idUser = this.loginService.user._id;
-    let idCompany = this.loginService.user.id_company._id;
-
     this.adminService.readCompanies(idUser);
-    this.adminService.readTables(idCompany);
-    this.adminService.readSections(idCompany);
+
+    let idCompany = this.loginService.user.id_company?._id;
+    if (idCompany) {
+      this.adminService.readTables(idCompany);
+      this.adminService.readSections(idCompany);
+    }
 
     this.userSubscription = this.loginService.user$.subscribe(user => {
       if (user) {
