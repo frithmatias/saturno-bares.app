@@ -3,90 +3,91 @@
 <!-- ======================================================== -->
 
 <div class="saturno-bg-home container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-md"></div>
+      <div class="col-md">
+        <mat-card>
+          <div class="p-4 animated fadeIn">
+            <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
 
-  <div class="row">
-    <div class="col-md"></div>
-    <div class="col-md">
+            <h2>Bienvenido</h2>
+            <p class="mb-2">Desde acá podes pedir una mesa y esperar donde prefieras.
+            </p>
+            <hr class="saturno-hr-red">
+            <p class="mb-0">
+              <span class="mdi mdi-cellphone-sound icon-home-phone"></span>
+            </p>
+            <p class="my-0">Cuando una mesa esté disponible nosotros te avisamos a tu móvil.</p>
 
-      <div class="p-4 saturno-bg-white-8 rounded animated fadeIn">
-        <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
+            <hr>
 
-
-        <h2>Bienvenido</h2>
-        <p class="mb-2">Desde acá podes pedir una mesa y esperar donde prefieras.
-        </p>
-        <hr class="saturno-hr-red">
-        <p class="mb-0">
-          <span class="mdi mdi-cellphone-sound icon-home-phone"></span>
-        </p>
-        <p class="my-0">Cuando una mesa esté disponible nosotros te avisamos a tu móvil.</p>
-
-        <hr>
-
-        <div>
-          <div>
-            <button class="btn btn-primary btn-block mb-2" routerLink="/public" role="button">
-              <span class="mdi mdi-bookmark"></span>
-              BUSCAR UN BAR / RESTO
-            </button>
-          </div>
-          <div class="row mt-3" style="align-items: baseline;">
-            <div class="col" style="text-align: left;">
-              <span class="footer-text"></span>
+            <div>
+              <div>
+                <button class="btn btn-primary btn-block mb-2" routerLink="/public" role="button">
+                  <span class="mdi mdi-bookmark"></span>
+                  BUSCAR UN BAR / RESTO
+                </button>
+              </div>
+              <div class="row mt-3" style="align-items: baseline;">
+                <div class="col" style="text-align: left;">
+                  <span class="footer-text"></span>
+                </div>
+                <div class="col" style="text-align: right;">
+                  <span class="mdi mdi-heart footer-icon ml-1" style="color:red; opacity: .7;"></span>
+                  <span class="mdi mdi-bootstrap footer-icon ml-1"></span>
+                  <span class="mdi mdi-angularjs footer-icon ml-1"></span>
+                  <span class="mdi mdi-language-javascript footer-icon ml-1"></span>
+                  <span class="mdi mdi-nodejs footer-icon ml-1"></span>
+                </div>
+              </div>
             </div>
-            <div class="col" style="text-align: right;">
-              <span class="mdi mdi-heart footer-icon ml-1" style="color:red; opacity: .7;"></span>
-              <span class="mdi mdi-bootstrap footer-icon ml-1"></span>
-              <span class="mdi mdi-angularjs footer-icon ml-1"></span>
-              <span class="mdi mdi-language-javascript footer-icon ml-1"></span>
-              <span class="mdi mdi-nodejs footer-icon ml-1"></span>
-            </div>
+
+
           </div>
-        </div>
-
-
+        </mat-card>
       </div>
-
     </div>
   </div>
 </div>
-
-
-
 
 <!-- ======================================================== -->
 <!-- MAPA -->
 <!-- ======================================================== -->
 
-<div class="container-fluid my-4">
-  <mat-form-field color="warn" logincss class="w-100">
-    <mat-label>Busca bares / restorants en tu ciudad, localidad o barrio</mat-label>
-    <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
-        (click)="cleanInput()" />
-    <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
-  </mat-form-field>
-  
-  <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
-  <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
-    <mat-option [value]="option" *ngFor="let option of localidades">
-        {{ option.properties.nombre | capitalizarPipe }},
-        {{ option.properties.departamento.nombre }},
-        {{ option.properties.provincia.nombre }}
-    </mat-option>
-  </mat-autocomplete>
-  
-  <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
+<div class="container">
+  <div class="row">
+    <div class="col-12 my-2">
+      <mat-form-field color="warn" logincss class="w-100">
+        <mat-label>Busca por ciudad, localidad o barrio</mat-label>
+        <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
+          (click)="cleanInput()" />
+        <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
+      </mat-form-field>
+
+      <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
+      <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
+        <mat-option [value]="option" *ngFor="let option of localidades">
+          {{ option.properties.nombre | capitalizarPipe }},
+          {{ option.properties.departamento.nombre }},
+          {{ option.properties.provincia.nombre }}
+        </mat-option>
+      </mat-autocomplete>
+
+      <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
+    </div>
+  </div>
 </div>
 
 <!-- ======================================================== -->
 <!-- MINI CARDS -->
 <!-- ======================================================== -->
 
-<div class="container-fluid row py-3 animated fadeIn justify-content-center">
+<div class="container row animated fadeIn justify-content-center">
 
   <!-- como funciona? -->
-  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
-    <div class="saturno-minicard shadow-minicard" routerLink="/howworks">
+  <div class="col-sm-6 col-md-4 col-lg-3 my-2 px-sm-2 p-0">
+    <mat-card routerLink="/howworks">
       <div class="saturno-minicard-title">
         <div>
           <span class="mdi mdi-cogs icon-home-card"></span>
@@ -99,12 +100,12 @@
       <div class="saturno-minicard-text">
         Este pequeño asistente le explica como funciona este sistema.
       </div>
-    </div>
+    </mat-card>
   </div>
 
   <!-- registrar comercio -->
-  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
-    <div class="saturno-minicard shadow-minicard" routerLink="/register">
+  <div class="col-sm-6 col-md-4 col-lg-3 my-2 px-sm-2 p-0">
+    <mat-card routerLink="/register">
       <div class="saturno-minicard-title">
         <div>
           <span class="mdi mdi-storefront-outline icon-home-card"></span>
@@ -117,12 +118,12 @@
       <div class="saturno-minicard-text">
         Desde acá podés registrar tu comercio ó empresa y empezar a atender turnos.
       </div>
-    </div>
+    </mat-card>
   </div>
 
   <!-- registrar contacto -->
-  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
-    <div class="saturno-minicard shadow-minicard" routerLink="/contact">
+  <div class="col-sm-6 col-md-4 col-lg-3 my-2 px-sm-2 p-0">
+    <mat-card routerLink="/contact">
       <div class="saturno-minicard-title">
         <div>
           <span class="mdi mdi-file-document-edit-outline icon-home-card"></span>
@@ -135,12 +136,12 @@
       <div class="saturno-minicard-text">
         Contactenos. Sus sugerencias son muy importantes para nosotros.
       </div>
-    </div>
+    </mat-card>
   </div>
 
   <!-- buscar comercio -->
-  <div class="col-sm-6 col-md-4 col-lg-3 p-4">
-    <div class="saturno-minicard shadow-minicard" routerLink="/public/search">
+  <div class="col-sm-6 col-md-4 col-lg-3 my-2 px-sm-2 p-0">
+    <mat-card routerLink="/public/search">
       <div class="saturno-minicard-title">
         <div>
           <span class="mdi mdi-magnify icon-home-card"></span>
@@ -153,7 +154,7 @@
       <div class="saturno-minicard-text">
         Obtenga un turno de una empresa registrada.
       </div>
-    </div>
+    </mat-card>
   </div>
 
 </div>

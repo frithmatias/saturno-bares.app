@@ -14,15 +14,21 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { PublicComponent } from './public.component';
 import { SearchComponent } from './search/search.component';
 import { MyticketComponent } from './myticket/myticket.component';
-import { TicketsComponent } from './tickets/tickets.component';
+import { CompanyPageComponent } from './company-page/company-page.component';
+import { HomeComponent } from './company-page/home/home.component';
+import { MenuComponent } from './company-page/menu/menu.component';
+import { TableComponent } from './company-page/table/table.component';
 
 
 @NgModule({
 	declarations: [
-		TicketsComponent,
+		CompanyPageComponent,
 		PublicComponent,
 		SearchComponent,
-		MyticketComponent
+		MyticketComponent,
+		HomeComponent,
+		MenuComponent,
+		TableComponent
 	],
 	imports: [
 		CommonModule,

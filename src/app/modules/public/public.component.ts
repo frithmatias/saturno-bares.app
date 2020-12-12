@@ -37,7 +37,7 @@ export class PublicComponent implements OnInit {
           if (resp.ok) {
             localStorage.setItem('company', JSON.stringify(resp.company));
             this.publicService.company = resp.company;
-            this.router.navigate(['/public/tickets'])
+            this.router.navigate(['/public/companypage'])
           }
 
         },

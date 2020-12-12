@@ -1,55 +1,63 @@
 <div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
-    <div class="card bg-light text-dark">
+    <mat-card>
 
-        <div class="card-header">
-            <span class="mdi mdi-poll-box"> </span>
-            <span> Mi encuesta </span>
-            <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
+        <mat-card-header>
+            <mat-card-title>
+                <span class="mdi mdi-poll-box"> </span>
+                <span> Mi encuesta </span>
+                <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
+            </mat-card-title>
+        </mat-card-header>
+
+        <div *ngIf="!scoreItemsSection || scoreItemsSection?.length === 0"
+            class="row align-items-center justify-content-center">
+            <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
+            <span>No hay items en este sector</span>
         </div>
 
-        <div class="card-body table-responsive-sm">
 
-            <div *ngIf="!scoreItems || scoreItems?.length === 0 || !scoreItemsSection || scoreItemsSection?.length === 0" class="
-                row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>No hay items en este sector</span>
-            </div>
+        <div *ngIf="scoreItemsSection && scoreItemsSection?.length > 0">
 
-            <table *ngIf="scoreItemsSection.length > 0" class="table table-sm text-dark">
-                <thead>
-                    <td class="xl text-success mdi mdi-select-group"></td>
-                    <td class="xl text-success">#</td>
-                    <td class="xl text-success text-right mdi mdi-gesture-tap-button"></td>
-                </thead>
-                <tr *ngFor="let item of scoreItemsSection" [ngClass]="{'bg-success':item._id === newItem?._id}">
-                    <td>{{adminService.sectionsMap.get(item?.id_section)}}</td>
-                    <td>{{item?.tx_item}}</td>
-
-                    <td class="text-right">
-                        <span class="mdi mdi-delete ml-2 text-danger pointer"
-                            (click)="deleteScoreItem(item._id)"></span>
+            <table mat-table [dataSource]="scoreItemsSection">
+                <ng-container matColumnDef="id_section">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">
+                        {{adminService.sectionsMap.get(element.id_section)}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tx_item">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Item a Calificar </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_item}}</td>
+                </ng-container>
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
+                    <td mat-cell *matCellDef="let element" class="text-right">
+                        <span class="mdi mdi-delete ml-2 xl text-danger pointer"
+                            (click)="deleteScoreItem(element._id)"></span>
                     </td>
-                </tr>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
         </div>
-    </div>
 
-    <div class="my-4"></div>
+    </mat-card>
 
-    <div class="card">
+    <mat-card>
 
-        <div class="card-header ">
-            <span class="mdi mdi-plus-circle-outline"></span>
-            Crear un item de encuesta</div>
-        <div class="card-body">
+        <mat-card-header>
+            <mat-card-title>
+                <span class="mdi mdi-plus-circle-outline"></span>
+                Crear un item de encuesta
+            </mat-card-title>
+        </mat-card-header>
 
-            <app-poll-create *ngIf="adminService.sections" [sections]="adminService.sections"
-                (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)">
-            </app-poll-create>
+        <app-poll-create *ngIf="adminService.sections" [sections]="adminService.sections"
+            (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)">
+        </app-poll-create>
 
-        </div>
-    </div>
+    </mat-card>
 
 </div>

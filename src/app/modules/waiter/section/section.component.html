@@ -4,13 +4,13 @@
   </div>
   <div *ngIf="!loading" class="animated fadeIn">
 
-    <div class="text-dark text-uppercase my-2 p-2">
-      - {{waiterService.session.id_section.tx_section}} -
+    <div class="text-uppercase xxl my-2 p-2">
+      - SECTOR {{waiterService.session.id_section.tx_section}} -
     </div>
     
     <div class="my-4">
       <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
-        <table width="100%" class="shadow-minicard">
+        <table width="100%" >
           <tr>
             <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
               <div class="mdi mdi-power xl"></div>

@@ -1,4 +1,4 @@
-<div class="saturno-card shadow-box m-3 animated fadeIn">
+<div class="saturno-card  m-3 animated fadeIn">
   <div *ngIf="publicService.company">
 
     <h5 *ngIf="loading" class="card-title">
@@ -8,11 +8,6 @@
     </h5>
 
     <div *ngIf="!loading">
-
-      <p class="lg text-secondary">
-        Estás por pedir una mesa en
-      </p>
-
       <div class="card pb-2 pt-4 mb-4">
         <p class="xxl text-primary">
           {{ publicService.company.tx_company_name }}
@@ -23,7 +18,6 @@
           {{ publicService.company.cd_city }}
         </p>
       </div>
-
     </div>
 
 
@@ -48,8 +42,7 @@
         <button class="col btn btn-danger btn-block rounded-0 mr-1 my-2" (click)="salir()">
           Salir
         </button>
-        <button class="col btn btn-success btn-block rounded-0 ml-1 my-2"
-          (click)="createTicket()">
+        <button class="col btn btn-success btn-block rounded-0 ml-1 my-2" (click)="createTicket()">
           Solicitar
         </button>
       </div>

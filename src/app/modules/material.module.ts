@@ -17,10 +17,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio'; 
+import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
 	declarations: [],
@@ -44,7 +48,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatRadioModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		MatTabsModule,
+		MatCardModule,
+		MatTableModule
 	],
 	exports: [
 		MatStepperModule,
@@ -66,7 +73,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatRadioModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		MatTabsModule,
+		MatCardModule,
+		MatTableModule
 	]
 })
 export class MaterialModule { }

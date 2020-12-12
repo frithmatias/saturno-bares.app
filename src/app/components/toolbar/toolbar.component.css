@@ -5,29 +5,25 @@
     line-height   : 1em;
     text-transform: uppercase;
     color         : whitesmoke;
+    font-family   : system-ui;
 }
 
 .saturno-description {
-    font-size  : .7em;
-    font-weight: lighter;
-    line-height: normal;
-    color: #a2a2a2;
+    font-size     : .7em;
+    font-weight   : lighter;
+    line-height   : normal;
+    color         : #ffffff;
     letter-spacing: .01em;
+    font-family   : system-ui;
+
 }
 
 .bar-resto {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: .8em;
+    font-family   : 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size     : .8em;
     letter-spacing: .2em;
-    font-weight: 200;
-    color: yellow;
-}
-
-.mat-toolbar {
-    font-family     : system-ui;
-    background-color: #3a3a3a;
-    color           : white;
-    font-weight     : 300;
+    font-weight   : 200;
+    color         : yellow;
 }
 
 .example-spacer {
@@ -42,7 +38,7 @@
     letter-spacing: .2em;
     text-transform: uppercase;
     color         : whitesmoke;
-
+    font-family   : system-ui;
 }
 
 .company-slogan {
@@ -53,4 +49,42 @@
     font-family   : monospace;
     letter-spacing: .2em;
     opacity       : 0.8;
+}
+
+
+.box-deeppurple {
+    width: 2em;
+    height: 2em;
+    background-color: #fff;
+    border-top: .5em solid #673ab7;
+    margin: .5em;
+}
+
+.box-indigo {
+    width: 2em;
+    height: 2em;
+    background-color: #fff;
+    border-top: .5em solid #3f51b5;
+    margin: .5em;
+
+
+}
+
+.box-pink {
+    width: 2em;
+    height: 2em;
+    background-color: #303030;
+    border-top: .5em solid #c2185b;
+    margin: .5em;
+
+}
+
+.box-purple {
+    width: 2em;
+    height: 2em;
+    background-color: #303030;
+    border-top: .5em solid #7b1fa2;
+    margin: .5em;
+
+
 }

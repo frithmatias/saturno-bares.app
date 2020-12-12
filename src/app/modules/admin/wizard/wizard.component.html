@@ -3,8 +3,8 @@
 
         <!-- Welcome Step -->
         <mat-step state="star">
-            <div class="card bg-light text-dark mb-4">
-                <div class="card-body">
+            <mat-card>
+                <div class="saturno-minicard-text">
                     <h4>Hola {{ loginService?.user.tx_name }}!</h4>
 
                     <p>
@@ -16,10 +16,11 @@
                     </p>
                     <hr>
                     <div class="w-100 text-center">
-                        <button class="btn btn-success" matStepperNext>Comenzar</button>
+                        <button mat-raised-button matStepperNext color="accent">
+                            Comenzar!</button>
                     </div>
                 </div>
-            </div>
+            </mat-card>
         </mat-step>
 
         <!-- Companies Step -->
@@ -27,9 +28,9 @@
 
             <!-- no companies, no attached company -->
             <div *ngIf="adminService.companies?.length === 0">
-                <div class="card bg-light text-dark mb-4">
-                    <div class="card-header"><span class="mdi mdi-storefront-outline mr-2"></span>Sectores</div>
-                    <div class="card-body">
+                <mat-card>
+                    <span class="mdi mdi-storefront-outline mr-2"></span>Crear un Bar / Resto
+                    <div class="saturno-minicard-text">
                         <p>
                             Si no tenés ningún bar o restorant registrado desde acá tenés que registrar al menos uno.
                         </p>
@@ -42,15 +43,19 @@
                             restorant correcto.
                         </p>
                     </div>
-                </div>
+                </mat-card>
             </div>
 
             <!-- companies and attached company -->
             <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
-                <div class="card bg-light text-dark mb-4">
-                    <div class="card-header"><span class="mdi mdi-storefront-outline mr-2"></span>Empresa creada!
-                        <span class="mdi mdi-check text-success"></span></div>
-                    <div class="card-body">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            <span class="mdi mdi-storefront-outline mr-2"></span>Empresa creada!
+                            <span class="mdi mdi-check text-success"></span>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <div class="saturno-minicard-text">
                         <p>
                             Podés seguir adelante con el asistente.
                         </p>
@@ -64,26 +69,21 @@
                             <img src="assets/img/saturno-selector-empresas.png">
                         </p>
                     </div>
-                </div>
+                </mat-card>
             </div>
 
             <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
 
             <!-- previous / next -->
-            <div class="row mt-4" style="text-align: center;">
+            <div class="row my-2" style="text-align: center;">
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-arrow-left-circle xxl"></span>
-                        <div>Anterior</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
+                        < Atras</button>
                 </div>
 
                 <div class="col">
-                    <div *ngIf="adminService.companies || loginService.user?.id_company?._id" class="footer-icon-menu"
-                        style="color: indigo;" (click)="stepperGoNext(stepper)">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
+                    <button *ngIf="adminService.companies || loginService.user?.id_company?._id" mat-raised-button
+                        color="primary" (click)="stepperGoNext(stepper)">Siguiente ></button>
                 </div>
             </div>
 
@@ -93,40 +93,41 @@
         <!-- Sections Step -->
         <mat-step [completed]="adminService.sections?.length > 0" state="important_devices">
 
-            <div class="card bg-light text-dark mb-4">
-                <div class="card-header"><span class="mdi mdi-select-group mr-2"></span>Sectores</div>
-                <div class="card-body">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span class="mdi mdi-select-group mr-2"></span>Sectores
+                    </mat-card-title>
+                </mat-card-header>
+
+                <div class="saturno-minicard-text">
+
                     <p>
-                        Desde acá podes crear los diferentes sectores o áreas que componen tu bar o resto. Tus 
-                        clientes podrán elegir uno de estos sectores al momento de solicitar una mesa, y los 
+                        Desde acá podes crear los diferentes sectores o áreas que componen tu bar o resto. Tus
+                        clientes podrán elegir uno de estos sectores al momento de solicitar una mesa, y los
                         camareros podran entrar a ellos para atender las mesas dentro de ese sector.
                     </p>
                     <p>
                         Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
                     </p>
                 </div>
-            </div>
+            </mat-card>
 
-           <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
+            <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
 
-            <div class="row mt-4" style="text-align: center;">
+
+            <!-- previous / next -->
+            <div class="row my-2" style="text-align: center;">
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-arrow-left-circle xxl"></span>
-                        <div>Anterior</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
+                        < Atras</button>
                 </div>
 
                 <div class="col">
-                    <div *ngIf="adminService.sections?.length > 0" class="footer-icon-menu" style="color: indigo;"
-                        (click)="stepperGoNext(stepper)">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
-                    <div *ngIf="adminService.sections?.length === 0" class="no-selection" style="color: lightgray;">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
+                    <button *ngIf="adminService.sections?.length > 0" mat-raised-button color="primary"
+                        (click)="stepperGoNext(stepper)">Siguiente ></button>
+                    <button *ngIf="adminService.sections?.length === 0" mat-raised-button disabled
+                        (click)="stepperGoNext(stepper)">Siguiente ></button>
                 </div>
             </div>
 
@@ -136,9 +137,15 @@
         <!-- Tables Step -->
         <mat-step [completed]="adminService.tables?.length > 0" state="important_devices">
 
-            <div class="card bg-light text-dark mb-4">
-                <div class="card-header"><span class="mdi mdi-table-furniture mr-2"></span>Mesas</div>
-                <div class="card-body">
+
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span class="mdi mdi-table-furniture mr-2"></span>Mesas
+                    </mat-card-title>
+                </mat-card-header>
+
+                <div class="saturno-minicard-text">
 
                     <p>
                         Acá tenés que dar de alta todas las mesas para cada sector. Sólo tenés que ingresar el número de
@@ -148,7 +155,7 @@
                     </p>
 
                 </div>
-            </div>
+            </mat-card>
 
             <div class="mb-4">
                 <button class="btn btn-sm btn-block btn-secondary"
@@ -176,81 +183,73 @@
 
             <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
 
-
-            <div class="row mt-4" style="text-align: center;">
+            <!-- previous / next -->
+            <div class="row my-2" style="text-align: center;">
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-arrow-left-circle xxl"></span>
-                        <div>Anterior</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
+                        < Atras</button>
                 </div>
 
                 <div class="col">
-                    <div *ngIf="adminService.tables?.length > 0" class="footer-icon-menu" style="color: indigo;"
-                        (click)="stepperGoNext(stepper)">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
-                    <div *ngIf="adminService.tables?.length === 0" class="no-selection" style="color: lightgray;">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
+                    <button *ngIf="adminService.tables?.length > 0" mat-raised-button color="primary"
+                        (click)="stepperGoNext(stepper)">Siguiente ></button>
+                    <button *ngIf="adminService.tables?.length === 0" mat-raised-button disabled
+                        (click)="stepperGoNext(stepper)">Siguiente ></button>
                 </div>
             </div>
-
 
         </mat-step>
 
         <!-- Poll Step -->
         <mat-step state="important_devices">
-            <div class="card bg-light text-dark mb-4">
-                <div class="card-header"><span class="mdi mdi-poll-box mr-2"></span>Encuesta</div>
-                <div class="card-body">
+
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span class="mdi mdi-poll-box mr-2"></span>Encuesta
+                    </mat-card-title>
+                </mat-card-header>
+
+                <div class="saturno-minicard-text">
 
                     <p>
-                        Acá podés dar de alta algunas preguntas que tu cliente puede responder para calificar 
-                        de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes 
+                        Acá podés dar de alta algunas preguntas que tu cliente puede responder para calificar
+                        de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes
                         crear una encuesta distinta para cada sector.
                     </p>
                     <p>
                         Por ejemplo podría calificar items como "Atención", "Comida", "Limpieza", etc.
                     </p>
                 </div>
-            </div>
+            </mat-card>
 
             <app-poll [nomargin]="true" [nopadding]="true"></app-poll>
 
-
-            <div class="row mt-4" style="text-align: center;">
+            <!-- previous / next -->
+            <div class="row my-2" style="text-align: center;">
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-arrow-left-circle xxl"></span>
-                        <div>Anterior</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
+                        < Atras</button>
                 </div>
 
                 <div class="col">
-                    <div *ngIf="adminService.tables?.length > 0" class="footer-icon-menu" style="color: indigo;"
-                        (click)="stepperGoNext(stepper)">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
-                    <div *ngIf="adminService.tables?.length === 0" class="no-selection" style="color: lightgray;">
-                        <span class="mdi mdi-arrow-right-circle xxl"></span>
-                        <div>Siguiente</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoNext(stepper)">Siguiente ></button>
                 </div>
             </div>
-
-
         </mat-step>
 
         <!-- Waiters Step -->
         <mat-step state="face">
 
-            <div class="card bg-light text-dark mb-4">
-                <div class="card-header"><span class="mdi mdi-account-tie mr-2"></span>Camareros</div>
-                <div class="card-body">
+
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span class="mdi mdi-account-tie mr-2"></span>Camareros
+                    </mat-card-title>
+                </mat-card-header>
+
+                <div class="saturno-minicard-text">
 
                     <p>
                         Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
@@ -258,7 +257,7 @@
                     </p>
 
                 </div>
-            </div>
+            </mat-card>
 
             <div class="mb-4">
                 <button class="btn btn-sm btn-block btn-secondary"
@@ -280,22 +279,16 @@
 
             <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
 
-            <div class="row mt-4" style="text-align: center;">
+            <div class="row my-2" style="text-align: center;">
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: red;" (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-arrow-left-circle xxl"></span>
-                        <div>Anterior</div>
-                    </div>
+                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
+                        < Atras</button>
                 </div>
 
                 <div class="col">
-                    <div class="footer-icon-menu" style="color: darkgreen;" (click)="endWizard()">
-                        <span class="mdi mdi-check-circle xxl"></span>
-                        <div>Finalizar</div>
-                    </div>
+                    <button mat-raised-button color="warn" (click)="endWizard()">Finalizar</button>
                 </div>
             </div>
-
 
         </mat-step>
 

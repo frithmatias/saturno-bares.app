@@ -196,7 +196,7 @@ export class MapComponent implements OnInit {
 		// que el mapa tiene que viajar hacia un solo punto con flyTo.
 		if (center[0][0] === center[1][0] && center[0][1] === center[1][1]) {
 			// 	this.map.zoomTo(this.mapZoom, { duration: 4000 });
-			if (this.map) { this.map.flyTo({ center: [String(center[0][0]), String(center[0][1])] }); }
+			if (this.map) { this.map.flyTo({ center: [String(center[0][0]), String(center[0][1])] , zoom: 15}); }
 		} else {
 			// centro desde el marker mas SO hacia el marker mas NE
 			this.map.fitBounds(center, {

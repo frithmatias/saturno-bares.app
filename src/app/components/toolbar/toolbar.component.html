@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-toolbar px-2">
+<mat-toolbar color="primary" class="mat-toolbar-off px-2">
 
     <!-- TOGGLE MENU ICON -->
     <div *ngIf="loginService.user" class="mdi mdi-menu xl pointer" (click)="toggle('sidenav')">
@@ -21,7 +21,8 @@
     </div>
 
     <!-- COMPANY NAME -->
-    <div class="container text-center mb-1" *ngIf="loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name">
+    <div class="container text-center mb-1"
+        *ngIf="loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name">
         <div class="company-title lg">
             {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name}}
         </div>
@@ -32,42 +33,61 @@
 
     <!-- SEARCH -->
     <div *ngIf="!loginService.user?.id_company?.tx_company_name && !publicService.company"
-        class="col-9 col-sm-6 col-md-7 col-lg-8 col-xl-9">
+        class="col-9 col-sm-5 col-md-6 col-lg-7 col-xl-8 pl-0 pr-5">
         <app-search></app-search>
     </div>
 
     <!-- LOG IN -->
-    <div class="w-100" *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
+    <div class="w-100" *ngIf="!loginService.user && !publicService.ticket && !publicService.company"
+        routerLink="/login">
         <div class="mdi mdi-account-circle xl pointer text-right mr-2"></div>
     </div>
 
+    <!-- Theme selector -->
+    <button mat-button [matMenuTriggerFor]="colorpicker" class="xl mdi mdi-invert-colors"></button>
+
+    <mat-menu #colorpicker="matMenu">
+        <div class="d-flex px-2">
+            <div class="box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
+            <div class="box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
+            <div class="box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
+            <div class="box-purple" (click)="changeTheme('purple-green.css')"></div>
+        </div>
+    </mat-menu>
+
     <!-- LOGGED IN -->
     <div *ngIf="loginService.user">
-        <span class="mdi mdi-account-circle xl pointer" [matMenuTriggerFor]="menu"></span>
+        <span class="mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu"></span>
         <mat-menu #menu="matMenu">
-            <span *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" mat-menu-item class="mdi mdi-shield-star-outline footer-icon-menu mx-2 xl" 
-            routerLink="/admin/home">
-                <span class="ml-3 md" style="vertical-align: bottom;">Home de Administrador</span>
-            </span>
-            
-            <span mat-menu-item class="mdi mdi-account-tie-outline footer-icon-menu mx-2 xl" routerLink="/waiter/home">
-                <span class="ml-3 md" style="vertical-align: bottom;">Home de Camarero</span>
-            </span>
-            <span mat-menu-item class="mdi mdi-view-dashboard-variant footer-icon-menu mx-2 xl"
-                routerLink="/waiter/dashboard">
-                <span class="ml-3 md" style="vertical-align: bottom;">Mis métricas</span>
-            </span>
-            <span mat-menu-item class="mdi mdi-account-circle footer-icon-menu mx-2 xl" routerLink="/waiter/profile">
-                <span class="ml-3 md" style="vertical-align: bottom;">{{loginService.user.tx_name}}</span>
-            </span>
-            <span mat-menu-item disabled class="mdi mdi-email footer-icon-menu mx-2 xl" routerLink="/waiter/profile">
-                <span class="ml-3 md" style="vertical-align: bottom;">{{loginService.user.tx_email}}</span>
-            </span>
-            <div class="p-2">
+
+            <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" mat-menu-item>
+                <span class="xl text-danger mdi mdi-shield-star-outline mx-2" routerLink="/admin/home"></span>
+                <span class="ml-2 align-middle">Home de Administrador</span>
+            </div>
+
+            <div mat-menu-item>
+                <span class="xl text-danger mdi mdi-account-tie-outline mx-2" routerLink="/waiter/home"></span>
+                <span class="ml-2 align-middle">Home de Camarero</span>
+            </div>
+            <div mat-menu-item>
+                <span class="xl text-danger mdi mdi-view-dashboard-variant mx-2" routerLink="/waiter/dashboard"></span>
+                <span class="ml-2 align-middle">Mis métricas</span>
+            </div>
+            <div mat-menu-item>
+                <span class="xl text-danger mdi mdi-account-circle mx-2" routerLink="/waiter/profile"></span>
+                <span class="ml-2 align-middle">{{loginService.user.tx_name}}</span>
+            </div>
+            <div mat-menu-item>
+                <span disabled class="xl text-danger mdi mdi-email mx-2" routerLink="/waiter/profile"></span>
+                <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
+            </div>
+            <hr>
+            <div class="px-2 pb-2">
                 <button class="btn btn-sm btn-block btn-danger" (click)="loginService.logout()"> Salir
                 </button>
             </div>
         </mat-menu>
+
 
     </div>
 

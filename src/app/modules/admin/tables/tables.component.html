@@ -1,56 +1,66 @@
-<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}" *ngIf="loginService.user.id_company">
+<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}"
+    *ngIf="loginService.user.id_company">
 
-    <div class="card bg-light text-dark">
+    <mat-card>
 
-        <div class="card-header">
-            <span class="mdi mdi-table-furniture"> </span>
-            <span> Mis Mesas </span>
-            <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
+        <mat-card-header>
+            <mat-card-title>
+                <span> Mis Mesas </span>
+                <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
+            </mat-card-title>
+        </mat-card-header>
+
+        <div *ngIf="!adminService.tablesSection || 
+                    adminService.tablesSection?.length === 0" class="row align-items-center justify-content-center">
+            <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
+            <span>No hay mesas en este sector</span>
         </div>
 
-        <div class="card-body table-responsive-sm">
-
-            <div *ngIf="!adminService.tables || adminService.tables?.length === 0 || !adminService.tablesSection || adminService.tablesSection?.length === 0" class="row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>No hay mesas en este sector</span>
-            </div>
-            
-            <table *ngIf="adminService.tablesSection?.length > 0" class="table table-sm text-dark">
-                <thead>
-                    <td class="xl text-success mdi mdi-select-group"></td>
-                    <td class="xl text-success">#</td>
-                    <td class="xl text-success text-center mdi mdi-account-box-outline"></td>
-                    <td class="xl text-success text-center mdi mdi-cog-box"></td>
-                    <td class="xl text-success text-right mdi mdi-gesture-tap-button"></td>
-                </thead>
-                <tr *ngFor="let table of adminService.tablesSection" [ngClass]="{'bg-success':table._id === tableNew?._id}">
-                    <td>{{adminService.sectionsMap.get(table?.id_section)}}</td>
-                    <td>{{table?.nm_table}}</td>
-                    <td class="text-center">{{table?.nm_persons}}</td>
-                    <td class="text-center">{{table?.tx_status}}</td>
-
-                    <td class="text-right">
-                        <span class="mdi mdi-delete ml-2 text-danger pointer" (click)="deleteTable(table._id)"></span>
+        <div *ngIf="adminService.tablesSection && adminService.tablesSection?.length > 0">
+            <table mat-table [dataSource]="adminService.tablesSection">
+                <ng-container matColumnDef="id_section">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">
+                        {{adminService.sectionsMap.get(element.id_section)}}</td>
+                </ng-container>
+                <ng-container matColumnDef="nm_table">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> No.# </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">{{element.nm_table}}</td>
+                </ng-container>
+                <ng-container matColumnDef="nm_persons">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Personas </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">{{element.nm_persons}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tx_status">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Estado </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_status}}</td>
+                </ng-container>
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
+                    <td mat-cell *matCellDef="let element" class="text-right">
+                        <span class="mdi mdi-delete ml-2 xl text-danger pointer" (click)="deleteTable(element._id)"></span>
                     </td>
-                </tr>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-
         </div>
-    </div>
 
-    <div class="my-4"></div>
+    </mat-card>
 
-    <div class="card">
+    <mat-card>
 
-        <div class="card-header ">
-            <span class="mdi mdi-plus-circle-outline"></span>
-            Alta de Mesa</div>
-        <div class="card-body">
+        <mat-card-header>
+            <mat-card-title>
+                <span class="mdi mdi-plus-circle-outline"></span>
+                Crear una Mesa
+            </mat-card-title>
+        </mat-card-header>
 
-            <app-table-create [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
-                (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
+        <app-table-create [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
+            (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
 
-        </div>
-    </div>
+    </mat-card>
 
 </div>

@@ -8,10 +8,8 @@
       <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}}) </span>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div class="text-dark" *ngIf="requested.length == 0">
-
+  <div *ngIf="requested.length == 0">
     No hay requerimientos de mesas especiales
-
   </div>
   <mat-accordion multi="false" *ngIf="requested.length > 0">
     <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
@@ -41,7 +39,7 @@
                           table.nm_table
                         )
                       }" (click)="setReserve(table, ticket)">
-            <table width="100%" class="shadow-minicard">
+            <table width="100%" >
               <tr>
                 <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
                   <span class="xl">{{ table.nm_table }}</span>
@@ -63,7 +61,7 @@
         <!-- ASSIGN TABLES -->
         <div class="col">
           <button class="btn btn-primary btn-block p-0" (click)="assignTables(ticket, assignWithPriority)">
-            <table width="100%" class="shadow-minicard">
+            <table width="100%" >
               <tr>
                 <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                   <span class="mdi mdi-hand-pointing-right xl"></span>
@@ -79,7 +77,7 @@
         <!-- PRIORITY -->
         <div class="col">
           <button class="btn btn-info btn-block p-0">
-            <table width="100%" class="shadow-minicard">
+            <table width="100%" >
               <tr>
                 <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
                   <span class="mdi mdi-priority-high xl"></span>

@@ -16,6 +16,8 @@ export class TablesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
   
+  displayedColumns: string[] = ['id_section','nm_table','nm_persons','tx_status','_id'];
+
   userSubscription: Subscription;
   sectionSelected: Section;
   tableNew: Table;

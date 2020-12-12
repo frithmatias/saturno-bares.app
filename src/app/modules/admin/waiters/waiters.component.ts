@@ -20,6 +20,9 @@ import { User, UsersResponse, UserResponse } from '../../../interfaces/user.inte
 export class WaitersComponent implements OnInit, OnDestroy {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
+
+  displayedColumns: string[] = ['id_role','tx_name', '_id'];
+
   waiters: User[];
   waiterEdit: User | String;
   idWaiterUpdated: string;
@@ -50,7 +53,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
         }
       })
     }
-    
+    console.log(this)
   }
 
 

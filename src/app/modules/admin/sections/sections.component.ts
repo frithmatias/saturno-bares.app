@@ -11,8 +11,11 @@ import { LoginService } from '../../../services/login.service';
   styleUrls: ['./sections.component.css']
 })
 export class SectionsComponent implements OnInit {
+  
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
+
+  displayedColumns: string[] = ['tx_section','_id'];
 
   userSubscription: Subscription;
 

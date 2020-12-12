@@ -16,6 +16,8 @@ export class PollComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
+  displayedColumns: string[] = ['id_section','tx_item', '_id'];
+
   userSubscription: Subscription;
   sectionSelected: Section;
   scoreItems: ScoreItem[] = [];

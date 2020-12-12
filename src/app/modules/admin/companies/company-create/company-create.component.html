@@ -77,19 +77,18 @@
     <div class="container pt-4 px-0">
         <div *ngIf="!companyEdit" class="row text-center">
             <div class="col">
-                <button *ngIf="!companyEdit" class="btn btn-success btn-block text-uppercase" type="submit">
-                    Crear Comercio
-                </button>
+                <button mat-raised-button color="accent" type="submit">
+                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Bar / Resto</button>
             </div>
         </div>
         <div *ngIf="companyEdit" class="row">
             <div class="col w-100">
-                <button class="btn btn-danger btn-block text-uppercase" type="submit">
+                <button mat-raised-button color="accent" type="submit">
                     Guardar
                 </button>
             </div>
             <div class="col">
-                <button class="btn btn-warning btn-block text-uppercase" (click)="resetForm(formDirective)">
+                <button mat-raised-button color="warn" (click)="resetForm(formDirective)">
                     Limpiar
                 </button>
             </div>

@@ -20,6 +20,8 @@ export class CompaniesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
+  displayedColumns: string[] = ['tx_company_name', 'tx_address_street', 'tx_address_number', '_id'];
+
   companyEdit: Company;  // company enviada al child
   companyUpdated: Company; // company recibida del child
 

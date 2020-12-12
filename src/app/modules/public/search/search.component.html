@@ -1,12 +1,12 @@
 <div class="saturno-card animated fadeIn p-4">
-       
-        <div class="card">
-        
-        <div class="card-header text-danger">
-            Encontrar un Bar / Resto
-        </div>
-        <div class="card-body">
-            Puede buscar aquí un bar o restorant para ver la dispoinibilidad y reservar una mesa.
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Encontrar un Bar / Resto</mat-card-title>
+            <mat-card-subtitle>Puede buscar aquí un bar o restorant para ver la dispoinibilidad y reservar una mesa.
+            </mat-card-subtitle>
+
+        </mat-card-header>
+        <mat-card-content>
 
             <div class="mt-4">
                 <mat-form-field color="warn" logincss class="w-100">
@@ -15,16 +15,15 @@
                         (keyup)="findCompany(inputCompany)">
                     <span class="input-icon" (click)="cleanInput(inputCompany)"><i class="mdi mdi-close"></i></span>
                 </mat-form-field>
-        
+
                 <mat-autocomplete (optionSelected)="goToCompany($event.option.value)" #auto="matAutocomplete">
                     <mat-option [value]="company" *ngFor="let company of companies">
                         {{company.tx_company_name}}
                     </mat-option>
                 </mat-autocomplete>
             </div>
-        </div>
 
-        </div>
+        </mat-card-content>
 
-    
+    </mat-card>
 </div>

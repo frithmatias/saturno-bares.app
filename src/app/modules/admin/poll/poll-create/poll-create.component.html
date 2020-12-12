@@ -1,4 +1,5 @@
-<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma" (ngSubmit)="createTable(formDirective)">
+<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
+    (ngSubmit)="createTable(formDirective)">
 
     <mat-form-field color="warn" class="w-100">
         <mat-label>Seleccione un sector</mat-label>
@@ -15,8 +16,12 @@
         <input matInput placeholder="Item a calificar" formControlName="txItem" name="txItem" type="text" required>
     </mat-form-field>
 
-    <div class="form-group text-center">
-        <button class="btn btn-success btn-block text-uppercase waves-effect waves-light" type="submit">Crear Item</button>
+    <div class="container pt-4 px-0">
+        <div class="row text-center">
+            <div class="col">
+                <button mat-raised-button color="accent" type="submit">
+                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Item a Calificar</button>
+            </div>
+        </div>
     </div>
-
 </form>

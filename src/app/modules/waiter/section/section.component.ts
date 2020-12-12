@@ -146,11 +146,11 @@ export class SectionComponent implements OnInit {
           this.tickets = data.tickets;
 
           // for input requested child
-          this.requested = this.tickets.filter(ticket => ticket.id_section._id === this.waiterService.session.id_section._id &&
+          this.requested = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
             ticket.tm_end === null && ticket.tx_status === 'requested')
 
           // for input queued child  
-          this.queued = this.tickets.filter(ticket => ticket.id_section._id === this.waiterService.session.id_section._id &&
+          this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
             ticket.tm_end === null && ticket.tx_status === 'queued')
 
           // for input sections child
@@ -159,11 +159,11 @@ export class SectionComponent implements OnInit {
               id: section._id,
               sectionselected: this.waiterService.session.id_section._id === section._id,
               queued: data.tickets.filter((ticket) =>
-                ticket.id_section._id === section._id &&
+                ticket.id_section?._id === section._id &&
                 ticket.tm_end === null &&
                 (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')).length,
               requested: data.tickets.filter((ticket) =>
-                ticket.id_section._id === section._id &&
+                ticket.id_section?._id === section._id &&
                 ticket.tm_end === null &&
                 ticket.tx_status === 'requested').length
             });

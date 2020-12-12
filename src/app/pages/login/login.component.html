@@ -1,82 +1,86 @@
-<div class="h-100 saturno-bg-grey-5 pt-sm-5">
-    <div class="saturno-card-login shadow-box bg-light animated fadeIn">
+<div class="h-100 pt-sm-5">
+    <div class="saturno-card-wide animated fadeIn">
 
-        <div class="row">
+        <mat-card>
 
-            <!---------------------------------------------------------------------->
-            <!-- GOOGLE LOGIN -->
-            <!---------------------------------------------------------------------->
-            <div class="col-sm">
-                <div class="jumbotron m-0 py-3 h-100 text-dark">
-                    <!-- Google Login -->
-                    <div class="my-2 xl text-danger text-uppercase">LOGIN</div>
-                    <hr class="my-4 saturno-hr-red">
-                    <div class="my-2 md">Entrar con mi cuenta de Google.</div>
-                    <button class="btn btn-danger btn-block" type="button" id="btnGoogle" data-toggle="tooltip">
-                        Google
-                    </button>
-                    <div class="sm pointer mt-3" routerLink="/home"><b>Ir al Inicio</b></div>
+            <div class="row">
 
+                <!---------------------------------------------------------------------->
+                <!-- GOOGLE LOGIN -->
+                <!---------------------------------------------------------------------->
+                <div class="col-sm">
+                    <div class="jumbotron m-0 py-3 h-100 text-dark">
+                        <!-- Google Login -->
+                        <div class="my-2 xl text-danger text-uppercase">LOGIN</div>
+                        <hr class="my-4 saturno-hr-red">
+                        <div class="my-2 md">Entrar con mi cuenta de Google.</div>
+                        <button class="btn btn-danger btn-block" type="button" id="btnGoogle" data-toggle="tooltip">
+                            Google
+                        </button>
+                        <div class="sm pointer mt-3" routerLink="/home"><b>Ir al Inicio</b></div>
+                    </div>
+                </div>
+
+                <!---------------------------------------------------------------------->
+                <!-- NORMAL LOGIN -->
+                <!---------------------------------------------------------------------->
+                <div class="col-sm mt-4 mt-md-0">
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )">
+
+                        <div class="my-2">
+                            <mat-form-field class="w-100">
+                                <mat-label>Ingrese su Email</mat-label>
+                                <input #inputEmail type="text" matInput placeholder="sumail@dominio.com"
+                                    [ngModel]="email" name="email">
+                                <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
+                                        class="mdi mdi-close"></i></span>
+                            </mat-form-field>
+                        </div>
+
+                        <!---------------------------------------------------------------------->
+                        <!-- PASSWORD -->
+                        <!---------------------------------------------------------------------->
+                        <div class="my-2">
+                            <mat-form-field class="w-100">
+                                <mat-label>Ingrese su Password</mat-label>
+                                <input #inputPassword matInput placeholder="password" ngModel name="password"
+                                    [type]="hidepass ? 'password' : 'text'" required>
+                                <span class="input-icon" (click)="hidepass = !hidepass"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass"><i
+                                        class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
+                            </mat-form-field>
+                        </div>
+
+
+                        <!---------------------------------------------------------------------->
+                        <!-- ENTER BUTTON -->
+                        <!---------------------------------------------------------------------->
+                        <div class="text-center my-3 w-100">
+                            <span class="mr-2">
+                                <!-- Normal Login -->
+                                <button class="btn btn-success btn-sm px-4" type="submit">
+                                    Entrar
+                                </button>
+                            </span>
+                            <span class="ml-2">
+                                <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox">
+                                <label for="checkbox-signup" class="label"> &nbsp; Recordar cuenta</label>
+                            </span>
+                        </div>
+
+                        <!---------------------------------------------------------------------->
+                        <!-- CREAR CUENTA LINK -->
+                        <!---------------------------------------------------------------------->
+
+                        <div class="border-top text-center label pt-2">
+                            <span class="p-2">No tenés cuenta?</span>
+                            <span class="p-2 text-primary pointer" routerLink="/register"><b>Registrarme</b></span>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </mat-card>
 
-            <!---------------------------------------------------------------------->
-            <!-- NORMAL LOGIN -->
-            <!---------------------------------------------------------------------->
-            <div class="col-sm mt-4 mt-md-0">
-                <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )">
-
-                    <div class="my-2">
-                        <mat-form-field color="warn" logincss class="w-100">
-                            <mat-label>Ingrese su Email</mat-label>
-                            <input #inputEmail matInput placeholder="sumail@dominio.com" [ngModel]="email" name="email">
-                            <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
-                                    class="mdi mdi-close"></i></span>
-                        </mat-form-field>
-                    </div>
-
-                    <!---------------------------------------------------------------------->
-                    <!-- PASSWORD -->
-                    <!---------------------------------------------------------------------->
-                    <div class="my-2">
-                        <mat-form-field color="warn" logincss class="w-100">
-                            <mat-label>Ingrese su Password</mat-label>
-                            <input #inputPassword matInput placeholder="password" ngModel name="password"
-                                [type]="hidepass ? 'password' : 'text'" required>
-                            <span class="input-icon" (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"
-                                [attr.aria-pressed]="hidepass"><i
-                                    class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
-                        </mat-form-field>
-                    </div>
-
-
-                    <!---------------------------------------------------------------------->
-                    <!-- ENTER BUTTON -->
-                    <!---------------------------------------------------------------------->
-                    <div class="text-center my-3 w-100">
-                        <span class="mr-2">
-                            <!-- Normal Login -->
-                            <button class="btn btn-success btn-sm px-4" type="submit">
-                                Entrar
-                            </button>
-                        </span>
-                        <span class="ml-2">
-                            <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox">
-                            <label for="checkbox-signup" class="label"> &nbsp; Recordar cuenta</label>
-                        </span>
-                    </div>
-
-                    <!---------------------------------------------------------------------->
-                    <!-- CREAR CUENTA LINK -->
-                    <!---------------------------------------------------------------------->
-
-                    <div class="border-top bg-light text-dark text-center label pt-2">
-                        <span class="p-2">No tenés cuenta?</span>
-                        <span class="p-2 text-primary pointer" routerLink="/register"><b>Registrarme</b></span>
-                    </div>
-                </form>
-            </div>
-        </div>
 
     </div>
 </div>

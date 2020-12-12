@@ -43,4 +43,9 @@ export class ToolbarComponent implements OnInit {
   }
 
 
+  changeTheme(style: string): void {
+    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+    cssLink.href = `./assets/css/${style}`;
+
+  }
 }

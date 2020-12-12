@@ -53,26 +53,25 @@
         </div>
     </div>
 
-
-    <div *ngIf="!waiterEdit" class="row text-center">
-        <div class="col">
-            <button *ngIf="!waiterEdit" class="btn btn-success btn-block text-uppercase" type="submit">
-                Crear Camarero
-            </button>
+    <div class="container pt-4 px-0">
+        <div *ngIf="!waiterEdit" class="row text-center">
+            <div class="col">
+                <button mat-raised-button color="accent" type="submit">
+                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Camarero</button>
+            </div>
+        </div>
+        <div *ngIf="waiterEdit" class="row">
+            <div class="col w-100">
+                <button mat-raised-button color="accent" type="submit">
+                    Guardar
+                </button>
+            </div>
+            <div class="col">
+                <button mat-raised-button color="warn" (click)="resetForm(formDirective)">
+                    Limpiar
+                </button>
+            </div>
         </div>
     </div>
-    <div *ngIf="waiterEdit" class="row">
-        <div class="col w-100">
-            <button class="btn btn-danger btn-block text-uppercase" type="submit">
-                Guardar
-            </button>
-        </div>
-        <div class="col">
-            <button class="btn btn-warning btn-block text-uppercase" (click)="resetForm(formDirective)">
-                Limpiar
-            </button>
-        </div>
-    </div>
-
 
 </form>

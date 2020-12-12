@@ -10,24 +10,21 @@
         </mat-select>
     </mat-form-field>
 
-
-
-
     <!-- MENU -->
     <div *ngFor="let item of loginService.menu">
         <mat-expansion-panel [expanded]="item.tx_titulo === 'Camarero'">
 
             <mat-expansion-panel-header>
                 <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">
-                    <span class="{{ item.tx_icon }} sidenav-title-icons"></span>
-                    <span class="sidenav-title-text mx-2">{{ item.tx_titulo }}</span>
+                    <span class="text-danger xl {{ item.tx_icon }}"></span>
+                    <span class="mx-2 align-self-center">{{ item.tx_titulo }}</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
             <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}"
-                class="sidenav-item">
-                <span class="{{ sub.tx_icon }} sidenav-item-icons"></span>
-                <span class="sidenav-item-text">{{ sub.tx_titulo}}</span>
+                class="ml-3 my-2 md pointer">
+                <span class="text-primary lg {{ sub.tx_icon }}"></span>
+                <span class="mx-2 saturno-minicard-text align-self-center">{{ sub.tx_titulo}}</span>
             </div>
 
         </mat-expansion-panel>
