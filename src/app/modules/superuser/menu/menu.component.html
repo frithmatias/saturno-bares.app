@@ -9,7 +9,7 @@
         <div class="card-body bg-light rounded">
 
             <!-- MENU SELECTOR -->
-            <mat-form-field color="warn" class="w-100 bg-light">
+            <mat-form-field class="w-100 bg-light">
                 <mat-label>Seleccione el menú</mat-label>
                 <mat-select #selectTable matNativeControl required>
                     <mat-option *ngFor="let item of menuItems" (click)="getSubItems(item._id)" [value]="item._id">

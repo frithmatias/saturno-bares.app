@@ -5,10 +5,10 @@
 <div class="saturno-bg-home container-fluid">
   <div class="container">
     <div class="row">
-      <div class="col-md"></div>
-      <div class="col-md">
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
         <mat-card>
-          <div class="p-4 animated fadeIn">
+          <div class="animated fadeIn">
             <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
 
             <h2>Bienvenido</h2>
@@ -25,22 +25,31 @@
             <div>
               <div>
                 <button class="btn btn-primary btn-block mb-2" routerLink="/public" role="button">
-                  <span class="mdi mdi-bookmark"></span>
+                  <span class="mdi mdi-glass-mug-variant"></span>
                   BUSCAR UN BAR / RESTO
                 </button>
               </div>
-              <div class="row mt-3" style="align-items: baseline;">
-                <div class="col" style="text-align: left;">
-                  <span class="footer-text"></span>
+
+
+
+              <div class="container px-0 pt-4">
+
+                <div class="row">
+                  <div class="col-6 d-flex justify-content-start">
+                    <div class="copyright pointer"><a href="https://matiasfrith.com.ar">Matías Frith</a> <span
+                        class="mdi mdi-copyright"> | 2020</span></div>
+                  </div>
+                  <div class="col-6 d-flex justify-content-end">
+                    <div class="tech-div mx-1 tech-angular"></div>
+                    <div class="tech-div mx-1 tech-nodejs"></div>
+                    <div class="tech-div mx-1 tech-js"></div>
+                    <div class="tech-div mx-1 tech-ts"></div>
+                  </div>
+  
                 </div>
-                <div class="col" style="text-align: right;">
-                  <span class="mdi mdi-heart footer-icon ml-1" style="color:red; opacity: .7;"></span>
-                  <span class="mdi mdi-bootstrap footer-icon ml-1"></span>
-                  <span class="mdi mdi-angularjs footer-icon ml-1"></span>
-                  <span class="mdi mdi-language-javascript footer-icon ml-1"></span>
-                  <span class="mdi mdi-nodejs footer-icon ml-1"></span>
-                </div>
+
               </div>
+
             </div>
 
 
@@ -58,7 +67,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12 my-2">
-      <mat-form-field color="warn" logincss class="w-100">
+      <mat-form-field class="w-100">
         <mat-label>Busca por ciudad, localidad o barrio</mat-label>
         <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
           (click)="cleanInput()" />

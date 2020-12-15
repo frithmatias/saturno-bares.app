@@ -32,80 +32,84 @@ export class MapComponent implements OnInit {
   mapZoom = 14;
   geolocationDenied = false; // browser permission
 
-	markerNewPlace: any; // Marker para el mapa nuevo Bar / Resto
-	markersHome: any[] = []; // Markers del mapa en Home.
-	markerInserted = false; // en crear company, es necesario crear solo un marker
+  markerNewPlace: any; // Marker para el mapa nuevo Bar / Resto
+  markersHome: any[] = []; // Markers del mapa en Home.
+  markerInserted = false; // en crear company, es necesario crear solo un marker
 
   constructor(
     public sharedService: SharedService,
-    private router: Router, 
+    private router: Router,
     private imagenPipe: ImagenPipe
-    ) { }
+  ) { }
 
-  async ngOnInit(): Promise<any>  {
+  async ngOnInit(): Promise<any> {
     await this.inicializarMapa(this.mapbox);
   }
 
   async ngOnChanges(changes: SimpleChanges) {
 
-		if (!this.map) {
-			await this.inicializarMapa(this.mapbox);
+    if (!this.map) {
+      await this.inicializarMapa(this.mapbox);
     }
-    
 
-		// =======================================================================
-		// SI CAMBIAN LOS AVISOS
-		// =======================================================================
-		if ((changes.companies !== undefined) && (changes.companies.currentValue !== undefined) && changes.companies.currentValue.length > 0) {
-			if (this.router.url === '/home') { // solo si estoy en la page AVISOS voy a crear los puntos en el mapa
 
-				// =======================================================================
-				// MUESTRO ICONOS Y POPUPS DE LOS NUEVOS AVISOS
-				// =======================================================================
-				this.companies.forEach((company: any) => {
-					if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
-						// MARKER POPUP DATA
-						const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-							`
-							<div class="card rounded">
-							<div class="card-body">
-							<hr>  
-							<h5 class="card-title" style="font-weight: 600;">${company.tx_company_name}</h5>
-							  <h6><p>${company.tx_company_slogan}</p></h6>
-							  <a href="#/public/${company.tx_company_string}">
+    // =======================================================================
+    // SI CAMBIAN LOS AVISOS
+    // =======================================================================
+    if ((changes.companies !== undefined) && (changes.companies.currentValue !== undefined) && changes.companies.currentValue.length > 0) {
+      if (this.router.url === '/home') { // solo si estoy en la page AVISOS voy a crear los puntos en el mapa
+
+        // =======================================================================
+        // MUESTRO ICONOS Y POPUPS DE LOS NUEVOS AVISOS
+        // =======================================================================
+
+        this.companies.forEach((company: any) => {
+          if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
+            // MARKER POPUP DATA
+            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+              `
+							
+              <div class="p-2">
+             
+     
+              <h5 class="text-dark">${company.tx_company_name}</h5>
+          	  <h6 class="text-secondary">${company.tx_address_street} ${company.tx_address_number}</h6>
+              
+              <hr>
+              <a href="#/public/${company.tx_company_string}">
 							  	<button class="btn btn-primary btn-block btn-sm">
-                    <i class="mdi mdi-content-paste"></i> Ir a este lugar! 
+                    <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
                   </button>
-							  </a>
+						  </a>
 							</div>
-						  </div>
+						 
 							`
-						);
+            );
 
-						// CREATE MARKER
-						const icon = document.createElement('div');
-						icon.className = 'marker';
-						icon.style.backgroundImage = 'url(\'../../../assets/img/map/duff-beer.svg\')';
-						icon.style.width = '30px';
+            // CREATE MARKER
+            const icon = document.createElement('div');
+            icon.className = 'marker';
+            icon.style.backgroundImage = 'url(\'../../../assets/img/map/duff-beer.svg\')';
+            icon.style.width = '30px';
             icon.style.height = '30px';
             icon.style.backgroundSize = 'contain';
-						const newmarker = new mapboxgl.Marker(icon)
-							.setLngLat([company.tx_company_lng, company.tx_company_lat])
-							.setPopup(popup) // sets a popup on this marker
-							.addTo(this.map);
-						this.markersHome.push(newmarker);
+            const newmarker = new mapboxgl.Marker(icon)
+              .setLngLat([company.tx_company_lng, company.tx_company_lat])
+              .setPopup(popup) // sets a popup on this marker
+              .addTo(this.map);
+            this.markersHome.push(newmarker);
 
-					}
-				});
+          }
+        });
 
-			}
-		} else {
-			if (this.markersHome.length > 0) {
-				this.markersHome.forEach(marker => {
-					marker.remove();
-				});
-			}
-		}
+      }
+    } else {
+      if (this.markersHome.length > 0) {
+        this.markersHome.forEach(marker => {
+          marker.remove();
+        });
+      }
+    }
 
     // =======================================================================
     // [AVISO] (NUEVO Y EDICION) SI CAMBIA LA POSICION DEL MARKER AL HACER CLICK EN EL MAPA
@@ -157,7 +161,7 @@ export class MapComponent implements OnInit {
   }
 
   getCoords(): Promise<MapCenterInit> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
           this.mapCenterInit.lng = position.coords.longitude.toString();
@@ -165,6 +169,7 @@ export class MapComponent implements OnInit {
           resolve(this.mapCenterInit);
         },
           err => {
+            reject(this.mapCenterInit);
             this.geolocationDenied = true;
           })
       }
@@ -172,7 +177,12 @@ export class MapComponent implements OnInit {
   }
 
   async inicializarMapa(mapbox: ElementRef) {
-    let coords = await this.getCoords()
+    let coords = await this.getCoords().catch((coords)=>{
+      this.mapZoom = 10;
+      return coords;
+    })
+
+    
     const lat = Number(coords.lat);
     const lng = Number(coords.lng);
     mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -190,18 +200,18 @@ export class MapComponent implements OnInit {
   }
 
   flyMap(center: string[]) {
-		if (this.markerNewPlace) { this.markerNewPlace.remove(); }
-		// Desde filtros.component envío const coords = [[O, S], [E, N]];
-		// Si se trata de UN SOLO Marker, entonces O=E y S=N por lo tanto no hay que centrar con fitBounds sino
-		// que el mapa tiene que viajar hacia un solo punto con flyTo.
-		if (center[0][0] === center[1][0] && center[0][1] === center[1][1]) {
-			// 	this.map.zoomTo(this.mapZoom, { duration: 4000 });
-			if (this.map) { this.map.flyTo({ center: [String(center[0][0]), String(center[0][1])] , zoom: 15}); }
-		} else {
-			// centro desde el marker mas SO hacia el marker mas NE
-			this.map.fitBounds(center, {
-				padding: { top: 50, bottom: 50, left: 50, right: 50 }
-			});
-		}
-	}
+    if (this.markerNewPlace) { this.markerNewPlace.remove(); }
+    // Desde filtros.component envío const coords = [[O, S], [E, N]];
+    // Si se trata de UN SOLO Marker, entonces O=E y S=N por lo tanto no hay que centrar con fitBounds sino
+    // que el mapa tiene que viajar hacia un solo punto con flyTo.
+    if (center[0][0] === center[1][0] && center[0][1] === center[1][1]) {
+      // 	this.map.zoomTo(this.mapZoom, { duration: 4000 });
+      if (this.map) { this.map.flyTo({ center: [String(center[0][0]), String(center[0][1])], zoom: 15 }); }
+    } else {
+      // centro desde el marker mas SO hacia el marker mas NE
+      this.map.fitBounds(center, {
+        padding: { top: 50, bottom: 50, left: 50, right: 50 }
+      });
+    }
+  }
 }

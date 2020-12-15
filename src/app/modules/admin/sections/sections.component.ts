@@ -17,6 +17,7 @@ export class SectionsComponent implements OnInit {
 
   displayedColumns: string[] = ['tx_section','_id'];
 
+  sectionCreate = false;
   userSubscription: Subscription;
 
   constructor(

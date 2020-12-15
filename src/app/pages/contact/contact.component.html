@@ -2,7 +2,7 @@
 
     <form #f="ngForm" (ngSubmit)="enviar( f )">
 
-        <mat-form-field color="warn" logincss class="w-100">
+        <mat-form-field class="w-100">
             <mat-label>Tipo de contacto</mat-label>
             <mat-select ngModel name="tipo" required>
                 <mat-option value="consulta"> Consulta </mat-option>
@@ -11,7 +11,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field color="warn" logincss class="w-100">
+        <mat-form-field class="w-100">
             <mat-label>Comentario</mat-label>
             <textarea matInput ngModel name="comentarios" rows="5" required minlength="10">
                 Por favor, deje su consulta, comentario o sugerencia aquí.
@@ -24,17 +24,17 @@
                 Datos de contacto (opcional)</div>
             <div *ngIf="showContactData" class="card-body">
 
-                <mat-form-field color="warn" logincss class="w-100">
+                <mat-form-field class="w-100">
                     <mat-label>Nombre</mat-label>
                     <input matInput ngModel name="nombre" minlength="2">
                 </mat-form-field>
 
-                <mat-form-field color="warn" logincss class="w-100">
+                <mat-form-field class="w-100">
                     <mat-label>Email</mat-label>
                     <input matInput ngModel name="email" type="email">
                 </mat-form-field>
 
-                <mat-form-field color="warn" logincss class="w-100">
+                <mat-form-field class="w-100">
                     <mat-label>Teléfono</mat-label>
                     <input matInput ngModel name="telefono" minlength="8">
                 </mat-form-field>

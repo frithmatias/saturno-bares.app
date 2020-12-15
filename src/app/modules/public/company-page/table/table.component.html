@@ -8,45 +8,51 @@
     </h5>
 
     <div *ngIf="!loading">
-      <div class="card pb-2 pt-4 mb-4">
-        <p class="xxl text-primary">
-          {{ publicService.company.tx_company_name }}
-        </p>
-        <p class="lg text-secondary">
-          {{ publicService.company.tx_address_street }}
-          {{ publicService.company.tx_address_number }}
-          {{ publicService.company.cd_city }}
-        </p>
-      </div>
+
+      <mat-card>
+
+        <mat-card-header>
+          <div mat-card-avatar class="tech-angular"></div>
+          <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
+          <mat-card-subtitle>{{ publicService.company.tx_address_street }}
+            {{ publicService.company.tx_address_number }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+
+          <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+
+            <mat-form-field class="w-100">
+              <mat-label>Cantidad de Personas</mat-label>
+              <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons"
+                type="number" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <mat-label>Sector</mat-label>
+              <mat-select formControlName="idSection" name="idSection" required>
+                <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="row mx-0">
+              <button class="col btn btn-danger btn-block rounded-0 mr-1 my-2" (click)="salir()">
+                Salir
+              </button>
+              <button class="col btn btn-success btn-block rounded-0 ml-1 my-2" (click)="createTicket()">
+                Solicitar
+              </button>
+            </div>
+
+          </form>
+        </mat-card-content>
+
+      </mat-card>
     </div>
 
 
-    <!-- CREAR EL FORMULARIO DE BUSQUEDA DE MESA AQUÍ -->
-    <form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
-      <mat-form-field color="warn" logincss class="w-100">
-        <mat-label>Cantidad de Personas</mat-label>
-        <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons" type="number"
-          required>
-      </mat-form-field>
-
-      <mat-form-field color="warn" logincss class="w-100">
-        <mat-label>Sector</mat-label>
-        <mat-select formControlName="idSection" name="idSection" required>
-          <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-
-      <div class="row mx-0">
-        <button class="col btn btn-danger btn-block rounded-0 mr-1 my-2" (click)="salir()">
-          Salir
-        </button>
-        <button class="col btn btn-success btn-block rounded-0 ml-1 my-2" (click)="createTicket()">
-          Solicitar
-        </button>
-      </div>
-    </form>
   </div>
 
 </div>

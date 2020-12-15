@@ -1,13 +1,13 @@
-<div *ngIf="geolocationDenied">
-    <div class="container-fluid">
-        <div class="row m-4">
-            <div class="col-12 col-sm-6 browser-no-access-location">
-                Para mostrarle las opciones en su zona debe darnos acceso a su ubicación haciendo click en el ícono que se encuentra 
-                al lado de la barra de direcciones.
-                <div class="xxl my-2 mdi mdi-information-outline"></div>
-            </div>
-        </div>
+<mat-card *ngIf="geolocationDenied" class="my-3 card-left-border d-flex">
+    <div class="mdi mdi-alert-circle-outline align-self-center icon-home-card px-2">
     </div>
-</div>
+    <div>
+        Para mostrarle las opciones en su zona debe darnos acceso a su ubicación haciendo click en el ícono que se
+        encuentra
+        al lado de la barra de direcciones.
+        <div class="xxl my-2 mdi mdi-information-outline"></div>
+    </div>
+</mat-card>
+
 
 <div id="mapbox" class="no-scroll" #mapbox></div>

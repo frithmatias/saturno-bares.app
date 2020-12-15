@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 
@@ -12,13 +12,13 @@ import { User, UserResponse } from '../../interfaces/user.interface';
 import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
 import { Table, TablesResponse } from '../../interfaces/table.interface';
 import { Section, SectionsResponse } from '../../interfaces/section.interface';
-import { ScoreItem, ScoreItemsResponse } from '../../interfaces/score.interface';
+import { ScoreItem } from '../../interfaces/score.interface';
+
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AdminService {
-
 
 	public companies: Company[] = [];
 	public sections: Section[] = [];
@@ -31,9 +31,8 @@ export class AdminService {
 
 	constructor(
 		private loginService: LoginService,
-		private http: HttpClient,
-
-	) {}
+		private http: HttpClient
+	) { }
 
 	// ========================================================
 	// Company Methods
@@ -176,6 +175,5 @@ export class AdminService {
 		const url = environment.url + '/w/readactivesessions/' + idCompany;
 		return this.http.get(url);
 	}
-
 
 }

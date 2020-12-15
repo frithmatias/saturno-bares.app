@@ -18,6 +18,7 @@ export class PollComponent implements OnInit {
 
   displayedColumns: string[] = ['id_section','tx_item', '_id'];
 
+  scoreItemCreate = false;
   userSubscription: Subscription;
   sectionSelected: Section;
   scoreItems: ScoreItem[] = [];

@@ -10,6 +10,7 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { SectionsComponent } from './sections/sections.component';
 import { WizardComponent } from './wizard/wizard.component';
 import { PollComponent } from './poll/poll.component';
+import { AboutComponent } from './about/about.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,8 @@ const userRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tickets', component: TicketsComponent },
   { path: 'poll', component: PollComponent },
+  { path: 'about', component: AboutComponent },
+
 
 	{ path: '', redirectTo: '/admin/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}

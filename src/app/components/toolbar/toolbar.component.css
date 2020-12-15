@@ -5,7 +5,7 @@
     line-height   : 1em;
     text-transform: uppercase;
     color         : whitesmoke;
-    font-family   : system-ui;
+    font-family   : 'Encode Sans', system-ui;
 }
 
 .saturno-description {
@@ -14,7 +14,7 @@
     line-height   : normal;
     color         : #ffffff;
     letter-spacing: .01em;
-    font-family   : system-ui;
+    font-family   : 'Encode Sans', system-ui;
 
 }
 
@@ -53,38 +53,38 @@
 
 
 .box-deeppurple {
-    width: 2em;
-    height: 2em;
+    width           : 2em;
+    height          : 2em;
     background-color: #fff;
-    border-top: .5em solid #673ab7;
-    margin: .5em;
+    border-top      : .5em solid #673ab7;
+    margin          : .5em;
 }
 
 .box-indigo {
-    width: 2em;
-    height: 2em;
+    width           : 2em;
+    height          : 2em;
     background-color: #fff;
-    border-top: .5em solid #3f51b5;
-    margin: .5em;
+    border-top      : .5em solid #3f51b5;
+    margin          : .5em;
 
 
 }
 
 .box-pink {
-    width: 2em;
-    height: 2em;
+    width           : 2em;
+    height          : 2em;
     background-color: #303030;
-    border-top: .5em solid #c2185b;
-    margin: .5em;
+    border-top      : .5em solid #c2185b;
+    margin          : .5em;
 
 }
 
 .box-purple {
-    width: 2em;
-    height: 2em;
+    width           : 2em;
+    height          : 2em;
     background-color: #303030;
-    border-top: .5em solid #7b1fa2;
-    margin: .5em;
+    border-top      : .5em solid #7b1fa2;
+    margin          : .5em;
 
 
 }

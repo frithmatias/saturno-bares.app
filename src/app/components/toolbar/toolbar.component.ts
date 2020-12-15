@@ -1,7 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user.interface';
-import { Subscription } from 'rxjs';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../../modules/waiter/waiter.service';

@@ -1,5 +1,5 @@
 <div class="text-white h-100">
-    <mat-form-field *ngIf="adminService.companies?.length > 0" color="warn" class="p-2 w-100">
+    <mat-form-field *ngIf="adminService.companies?.length > 0" class="p-2 w-100">
         <mat-label>Seleccione una empresa</mat-label>
         <mat-select formControlName="idCompany" [value]="loginService.user?.id_company?._id" name="idCompany"
             #selectTable matNativeControl required>
@@ -11,23 +11,25 @@
     </mat-form-field>
 
     <!-- MENU -->
+    <mat-accordion multi="false">
     <div *ngFor="let item of loginService.menu">
-        <mat-expansion-panel [expanded]="item.tx_titulo === 'Camarero'">
-
-            <mat-expansion-panel-header>
-                <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">
-                    <span class="text-danger xl {{ item.tx_icon }}"></span>
-                    <span class="mx-2 align-self-center">{{ item.tx_titulo }}</span>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}"
-                class="ml-3 my-2 md pointer">
-                <span class="text-primary lg {{ sub.tx_icon }}"></span>
-                <span class="mx-2 saturno-minicard-text align-self-center">{{ sub.tx_titulo}}</span>
-            </div>
-
-        </mat-expansion-panel>
-    </div>
+            <mat-expansion-panel  [expanded]="item.tx_titulo === 'Camarero'">
+    
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">
+                        <span class="text-danger xl {{ item.tx_icon }}"></span>
+                        <span class="mx-2 align-self-center">{{ item.tx_titulo }}</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+    
+                <div *ngFor="let sub of item.subitems" (click)="toggleNav()" routerLink="/{{sub.tx_url}}"
+                    class="ml-3 my-2 md pointer">
+                    <span class="text-primary lg {{ sub.tx_icon }}"></span>
+                    <span class="mx-2 saturno-minicard-text align-self-center">{{ sub.tx_titulo}}</span>
+                </div>
+    
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
 
 </div>

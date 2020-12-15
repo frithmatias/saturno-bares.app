@@ -6,7 +6,7 @@ body {
 
 body {
     margin      : 0;
-    font-family : 'system-ui';
+    font-family : 'Baloo Bhai 2', 'Monda', 'Encode Sans', 'Averia Libre', 'system-ui';
     font-weight : 300;
     font-style  : normal;
     font-size   : medium;
@@ -57,8 +57,8 @@ span:focus {
 
 table {
     width: 100%;
-  }
-  
+}
+
 td {
     vertical-align: middle !important;
 }
@@ -90,6 +90,9 @@ mat-drawer-container {
 }
 
 
+.card-left-border {
+    border-left: 5px solid var(--warning);
+}
 
 /*
 400px -> 25rem
@@ -136,14 +139,12 @@ mat-drawer-container {
 .saturno-minicard-title {
     font-size  : large;
     font-weight: 400;
-    font-family: system-ui;
     opacity    : .8;
 }
 
 .saturno-minicard-text {
     font-size  : medium;
     font-weight: 300;
-    font-family: system-ui;
     opacity    : .8;
 }
 
@@ -411,7 +412,8 @@ ANGULAR MATERIAL
 */
 
 .mat-card {
-    opacity: .9;
+    font-family: 'Baloo Bhai 2', 'Monda', 'Encode Sans', 'Averia Libre', 'system-ui';
+    /* opacity : .9; */
 }
 
 .mat-horizontal-content-container {
@@ -487,3 +489,41 @@ MAPBOX
 /* .mapboxgl-canvas {
     position: relative !important;
 } */
+
+
+/*
+-------------------------------------------
+TECH ICONS 
+-------------------------------------------
+*/
+
+.tech-div {
+    display    : block;
+    text-indent: -9999px;
+    width      : 1.3em;
+    height     : 1.3em;
+}
+
+.tech-angular {
+    background       : url(./assets/logos/angular.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-js {
+    background       : url(./assets/logos/javascript.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-ts {
+    background       : url(./assets/logos/typescript.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-nodejs {
+    background       : url(./assets/logos/nodejs.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}

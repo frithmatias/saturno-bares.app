@@ -1,0 +1,31 @@
+<div class="saturno-card animated fadeIn">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Historia</mat-card-title>
+            <mat-card-subtitle>Ingrese la historia del lugar</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+            <form [formGroup]="formAbout" #formDirective="ngForm" (ngSubmit)="sendAbout(formDirective)">
+                <mat-form-field class="w-100">
+                    <mat-label>Ingrese la historia del lugar</mat-label>
+                    <textarea rows="5" matInput placeholder="Ingrese la historia aquí" formControlName="txAbout"></textarea>
+                </mat-form-field>
+                <div class="container pt-4 px-0">
+                    <div class="row text-center">
+                        <div class="col">
+                            <button mat-raised-button color="accent" type="submit">
+                                <span class="mdi lg mdi-content-save-outline"></span> Guardar Bar / Resto
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <app-uploader txType="banner" [company]="company" (companyUpdated)="companyUpdated($event)">
+    </app-uploader>
+    </mat-card>
+</div>

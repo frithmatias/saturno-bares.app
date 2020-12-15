@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { RouterModule } from '@angular/router';
 import { SearchComponent } from './toolbar/search/search.component';
 import { MapComponent } from './map/map.component';
+import { UploaderComponent } from './uploader/uploader.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { MapComponent } from './map/map.component';
     SidenavComponent,
     ChatComponent,
     SearchComponent,
-    MapComponent
+    MapComponent,
+    UploaderComponent
+    
   ],
   imports: [
     RouterModule,
@@ -30,7 +33,9 @@ import { MapComponent } from './map/map.component';
     SidenavComponent,
     ChatComponent,
     SearchComponent,
-    MapComponent
+    MapComponent,
+    UploaderComponent
+
 
   ]
 })

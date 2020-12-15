@@ -38,6 +38,7 @@ import { HowWorksComponent } from './pages/how-works/how-works.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
 import { TokenService } from './interceptors/token.service';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { NgDropFilesDirective } from './directives/ng-drop-files.directive';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 		NopagefoundComponent,
 		ContactComponent,
 		HowWorksComponent,
-		PricingComponent
+		PricingComponent,
+		NgDropFilesDirective
 	],
 	imports: [
 		MaterialModule,

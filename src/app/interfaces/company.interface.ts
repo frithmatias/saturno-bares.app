@@ -12,7 +12,12 @@ export interface Company {
     tx_company_lat: string;
     tx_company_lng: string;
     tx_address_street: string;
-    tx_address_number: string;
+	tx_address_number: string;
+    tx_company_history: string;
+    tx_company_logo: string;
+    tx_company_banners: string[];
+    tm_start: Date;
+    tm_end: Date;
 	__v?: number;
 	_id?: string;
 }

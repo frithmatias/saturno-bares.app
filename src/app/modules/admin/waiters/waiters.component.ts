@@ -23,6 +23,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['id_role','tx_name', '_id'];
 
+  waiterCreate = false;
   waiters: User[];
   waiterEdit: User | String;
   idWaiterUpdated: string;
@@ -53,7 +54,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
         }
       })
     }
-    console.log(this)
+
   }
 
 

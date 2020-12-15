@@ -57,6 +57,11 @@ export class TableComponent implements OnInit {
 
   createTicket(): void {
 
+    if(this.ticketForm.invalid){
+      this.sharedService.snack('Ingrese sector y cantidad de personas', 3000);
+      return;
+    }
+
     if (localStorage.getItem('user')) {
       Swal.fire({
         icon: 'error',

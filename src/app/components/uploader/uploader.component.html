@@ -1,0 +1,81 @@
+<div appNgDropFiles [archivos]="archivos" [tipo]="tipo" [id]="id" (mouseSobre)="estaSobreElemento = $event"
+    (sendDropFiles)="queueFilesDrop($event)" [ngClass]="{'file-over':estaSobreElemento}"
+    class="col-md-12 well drop-zone file-over" *ngIf="company">
+
+
+
+
+    <div class="row pb-3">
+        <div class="col-md-12 mt-2">
+            <div>
+                <!-- <label class="btn btn-warning" for="filesUpload">Seleccionar Imagen</label> -->
+                <input (change)="queueFilesInput($event)" id="filesUpload" type="file" name="photo"
+                    style="display: none;" multiple>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="row">
+        <div class="col-lg-7" id="slide">
+            
+            <!-- Imagenes cargadas en el server -->
+            <div *ngFor="let img of company.tx_company_banners" class="gallery img-wrap">
+                <span class="close" (click)="borrarImagen(img)">&times;</span>
+                <img src="{{img | imagenPipe : company?._id }}">
+            </div>
+
+            <!-- Imagenes previsualizadas luego del drag and drop -->
+            <div *ngFor="let archivo of archivos; let i = index;" class="gallery img-wrap">
+                <span class="close" (click)="borrarImagenQueue(archivo.nombreArchivo)">&times;</span>
+                <img class="gallery-queue" [src]="archivo.bufferImage">
+            </div>
+
+            <!-- Maximo de 20 imagenes, si son menos las completo con 'no-image' Agregar -->
+            <div>
+                <div class="gallery img-wrap"
+                    *ngFor="let aasdf of [].constructor(maxupload - aviso?.imgs?.length)">
+                    <label for="filesUpload"><img class="pointer" src="../../../assets/img/no-image1.png"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 animated fadeIn">
+            <table class="table-upload table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tamaño</th>
+                        <th scope="col">Progreso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div *ngIf="company?.tx_company_banners?.length == 0">Arrastre aquí las imagenes</div>
+                    <tr *ngFor="let archivo of archivos">
+                        <th scope="row">1</th>
+                        <td [ngClass]="{'text-green':archivo.progreso>=100}">
+                            {{archivo.nombreArchivo}}
+                        </td>
+                        <td>{{archivo.archivo.size / 1024 / 1024 | number: '.2-2'}} MB</td>
+                        <td>
+                            <div class="progress animated fadeIn">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':archivo.progreso + '%'}">
+                                    {{archivo.progreso}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-md-12 pt-3">
+                <button (click)="subirImagenes()" [disabled]="archivos.length==0" class="btn btn-success">Subir
+                    Imagenes</button> &nbsp;
+                <button (click)="borrarImagenes()" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>

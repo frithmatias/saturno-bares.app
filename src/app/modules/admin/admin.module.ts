@@ -28,6 +28,7 @@ import { SectionCreateComponent } from './sections/section-create/section-create
 import { WizardComponent } from './wizard/wizard.component';
 import { PollComponent } from './poll/poll.component';
 import { PollCreateComponent } from './poll/poll-create/poll-create.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +51,8 @@ import { PollCreateComponent } from './poll/poll-create/poll-create.component';
 		WaiterCreateComponent,
 		WizardComponent,
 		PollComponent,
-		PollCreateComponent
+		PollCreateComponent,
+		AboutComponent
 
 	],
 	imports: [

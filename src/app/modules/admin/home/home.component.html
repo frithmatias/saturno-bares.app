@@ -4,9 +4,10 @@
 
   <div class="row">
 
-    <div class="col-sm-0 col-md-2"></div>
+    <div class="col-sm-0 col-lg-1"></div>
 
-    <div class="col-12 col-sm-6 col-md-4">
+    <div class="col-12 col-sm-6 col-md-6 col-lg-5">
+
       <!-- WIZARD -->
       <mat-card class="m-2">
         <div class="pointer my-3" routerLink="/admin/wizard">
@@ -52,28 +53,27 @@
       </mat-card>
 
       <!-- TOMAR SECTOR -->
-      <mat-card class="m-2">
-        <div class="pointer my-3" *ngIf="
-          adminService.companies.length > 0 && 
-          adminService.sections.length > 0 &&
-          adminService.tables.length > 0" routerLink="/waiter/home">
-          <div class="saturno-minicard-title">
-            <div>
-              <span class="mdi mdi-select-group icon-home-card"></span>
-            </div>
-            <div>
-              Tomar un Sector
-            </div>
+      <mat-card class="pointer m-2" *ngIf="
+      adminService.companies.length > 0 && 
+      adminService.sections.length > 0 &&
+      adminService.tables.length > 0" routerLink="/waiter/home">
+
+        <div class="saturno-minicard-title">
+          <div>
+            <span class="mdi mdi-select-group icon-home-card"></span>
           </div>
-          <hr class="saturno-hr-blue">
-          <div class="saturno-minicard-text">
-            Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
+          <div>
+            Tomar un Sector
           </div>
+        </div>
+        <hr class="saturno-hr-blue">
+        <div class="saturno-minicard-text">
+          Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
         </div>
       </mat-card>
     </div>
 
-    <div class="col-12 col-sm-6 col-md-4">
+    <div class="col-12 col-sm-6 col-md-6 col-lg-5">
 
       <!-- COMPANY TABLE INFO -->
       <mat-card class="m-2">
@@ -180,7 +180,7 @@
       </mat-card>
     </div>
 
-    <div class="col-sm-0 col-md2"></div>
+    <div class="col-sm-0 col-lg-1"></div>
 
   </div>
 

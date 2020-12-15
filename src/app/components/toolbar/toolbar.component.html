@@ -48,10 +48,10 @@
 
     <mat-menu #colorpicker="matMenu">
         <div class="d-flex px-2">
-            <div class="box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
-            <div class="box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
-            <div class="box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
-            <div class="box-purple" (click)="changeTheme('purple-green.css')"></div>
+            <div class="pointer box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
+            <div class="pointer box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
+            <div class="pointer box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
+            <div class="pointer box-purple" (click)="changeTheme('purple-green.css')"></div>
         </div>
     </mat-menu>
 
@@ -60,25 +60,25 @@
         <span class="mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu"></span>
         <mat-menu #menu="matMenu">
 
-            <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" mat-menu-item>
-                <span class="xl text-danger mdi mdi-shield-star-outline mx-2" routerLink="/admin/home"></span>
+            <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'"  routerLink="/admin/home" mat-menu-item>
+                <span class="xl text-danger mdi mdi-shield-star-outline mx-2"></span>
                 <span class="ml-2 align-middle">Home de Administrador</span>
             </div>
 
-            <div mat-menu-item>
-                <span class="xl text-danger mdi mdi-account-tie-outline mx-2" routerLink="/waiter/home"></span>
+            <div  routerLink="/waiter/home" mat-menu-item>
+                <span class="xl text-danger mdi mdi-account-tie-outline mx-2"></span>
                 <span class="ml-2 align-middle">Home de Camarero</span>
             </div>
-            <div mat-menu-item>
-                <span class="xl text-danger mdi mdi-view-dashboard-variant mx-2" routerLink="/waiter/dashboard"></span>
+            <div routerLink="/waiter/dashboard" mat-menu-item>
+                <span class="xl text-danger mdi mdi-view-dashboard-variant mx-2" ></span>
                 <span class="ml-2 align-middle">Mis métricas</span>
             </div>
-            <div mat-menu-item>
-                <span class="xl text-danger mdi mdi-account-circle mx-2" routerLink="/waiter/profile"></span>
+            <div routerLink="/waiter/profile" mat-menu-item>
+                <span class="xl text-danger mdi mdi-account-circle mx-2" ></span>
                 <span class="ml-2 align-middle">{{loginService.user.tx_name}}</span>
             </div>
-            <div mat-menu-item>
-                <span disabled class="xl text-danger mdi mdi-email mx-2" routerLink="/waiter/profile"></span>
+            <div routerLink="/waiter/profile" mat-menu-item>
+                <span disabled class="xl text-danger mdi mdi-email mx-2" ></span>
                 <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
             </div>
             <hr>

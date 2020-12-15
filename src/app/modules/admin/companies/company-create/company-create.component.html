@@ -1,26 +1,26 @@
-<form autocomplete="off" style="color: brown;" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
+<form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
     (ngSubmit)="createCompany(formDirective)">
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Nombre del Bar / Restorant</mat-label>
         <mat-error>Esta Empresa ya se encuentra registrada!</mat-error>
         <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName"
             type="text" required (keyup)="checkCompanyExists()">
     </mat-form-field>
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Slogan (Opcional)</mat-label>
         <input matInput placeholder="Slogan de la empresa" formControlName="txCompanySlogan" name="txCompanySlogan"
             type="text">
     </mat-form-field>
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Nombre público</mat-label>
         <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyString" name="txCompanyString"
             type="text" required>
     </mat-form-field>
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
         <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
             (click)="cleanInput()" />
@@ -36,13 +36,13 @@
         </mat-option>
     </mat-autocomplete>
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Calle</mat-label>
         <input matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text"
             required>
     </mat-form-field>
 
-    <mat-form-field color="warn" logincss class="w-100">
+    <mat-form-field class="w-100">
         <mat-label>Altura</mat-label>
         <input matInput placeholder="1234" formControlName="txAddressNumber" name="txAddressNumber" type="text"
             required>
@@ -78,7 +78,8 @@
         <div *ngIf="!companyEdit" class="row text-center">
             <div class="col">
                 <button mat-raised-button color="accent" type="submit">
-                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Bar / Resto</button>
+                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Bar / Resto
+                </button>
             </div>
         </div>
         <div *ngIf="companyEdit" class="row">
@@ -88,7 +89,7 @@
                 </button>
             </div>
             <div class="col">
-                <button mat-raised-button color="warn" (click)="resetForm(formDirective)">
+                <button mat-raised-button (click)="resetForm(formDirective)">
                     Limpiar
                 </button>
             </div>

@@ -10,7 +10,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  
+
   companies: Company[] = [];
 
   constructor(
@@ -45,13 +45,18 @@ export class SearchComponent implements OnInit {
   }
 
   goToCompany(companySelected: Company): void {
-      localStorage.setItem('company', JSON.stringify(companySelected));
-      this.publicService.company = companySelected;
-      this.router.navigate(['/public/', companySelected.tx_company_string]);
+    localStorage.setItem('company', JSON.stringify(companySelected));
+    this.publicService.company = companySelected;
+    this.router.navigate(['/public/', companySelected.tx_company_string]);
   }
 
   cleanInput(inputCompany) {
     inputCompany.value = null;
+  }
+
+  salir(): void {
+    this.publicService.clearPublicSession();
+    this.router.navigate(['/home'])
   }
 
 }

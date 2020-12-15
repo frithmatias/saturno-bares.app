@@ -39,7 +39,7 @@ export class TokenService implements HttpInterceptor {
   }
 
   manejarRespuesta(resp: HttpResponse<any>) {
-    if (resp.type > 0) {
+    if (resp.type === 4) { //HttpResponse (Not 2 -> HttpHeadersResponse i.e.)
       console.log(resp.body);
     }
   }
