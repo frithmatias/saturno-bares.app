@@ -58,7 +58,7 @@
         </mat-card-actions>
     </mat-card>
 
-    <mat-card *ngIf="tableCreate">
+    <mat-card *ngIf="tableCreate" class="my-2 animated fadeIn">
 
         <app-table-create [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
             (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>

@@ -3,6 +3,7 @@ import { Company, CompanyResponse } from 'src/app/interfaces/company.interface';
 import { FileUpload } from '../../models/fileupload.model';
 import Swal from 'sweetalert2';
 import { UploaderService } from './uploader.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-uploader',
@@ -10,36 +11,46 @@ import { UploaderService } from './uploader.service';
 	styleUrls: ['./uploader.component.css']
 })
 export class UploaderComponent implements OnInit {
+
 	@Input() company: Company;
 	@Input() txType: string;
+	@Input() cardData: { icon: string, title: string, subtitle: string };
 	@Output() companyUpdated = new EventEmitter();
 
-	archivos: FileUpload[] = [];
-	maxupload = 10;
+	filesToUpload: FileUpload[] = [];
+	maxupload = 12;
+	maxSize = 102400;
 	estaSobreElemento = false;
 
 	constructor(
-		private uploaderService: UploaderService
-	) { }
+		private uploaderService: UploaderService,
+		private snack: MatSnackBar
+	) {
+	}
 
 	ngOnInit() { }
 
 	subirImagenes() {
 		let count = 0;
-		this.archivos.forEach(archivo => {
+		let filesUploaded = [];
+		this.filesToUpload.forEach(archivo => {
 			archivo.estaSubiendo = true;
-			this.uploaderService.subirImagen(archivo, this.txType, this.company._id).subscribe((data: CompanyResponse) => {
+			this.uploaderService.subirImagen(archivo, this.txType, this.company._id).subscribe((data: any) => {
+
+				count++;
 				archivo.progreso = 100;
 				archivo.estaSubiendo = false;
-				count++;
-				if (count === this.archivos.length) {
-					this.archivos = [];
-					this.company = data.company;
+				filesUploaded.push(data.filename);
+				this.company.tx_company_banners.push(data.filename);
+
+				if (count === this.filesToUpload.length) {
+					this.filesToUpload = [];
 					this.companyUpdated.emit(this.company);
 				}
-			},()=>{
+
+			}, () => {
 				// si el archivo que intento subir falla, entonces lo quito del array de archivos a subir
-				this.archivos = this.archivos.filter(file => file.nombreArchivo !== archivo.nombreArchivo )
+				this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)
 			});
 		});
 
@@ -58,11 +69,12 @@ export class UploaderComponent implements OnInit {
 		}).then((result) => {
 			if (result.value) {
 
-				this.uploaderService.borrarImagen(this.txType, this.company._id, 'todas');
+				this.uploaderService.borrarImagen(this.txType, this.company._id, 'todas').subscribe((data: CompanyResponse) => {
+					this.filesToUpload = [];
+					this.company.tx_company_banners = data.company.tx_company_banners;
+					this.companyUpdated.emit(this.company);
+				})
 
-				this.archivos = [];
-				this.company.tx_company_banners = [''];
-				this.companyUpdated.emit(this.company);
 				Swal.fire({
 					position: 'center',
 					icon: 'success',
@@ -87,8 +99,9 @@ export class UploaderComponent implements OnInit {
 			confirmButtonText: 'Si, quiero borrarla'
 		}).then((result) => {
 			if (result.value) {
-				this.uploaderService.borrarImagen(this.txType, this.company._id, id).then((data: CompanyResponse) => {
-					this.company.tx_company_banners = this.company.tx_company_banners.filter(banner => banner != id);
+				this.uploaderService.borrarImagen(this.txType, this.company._id, id).subscribe((data: CompanyResponse) => {
+					this.company.tx_company_banners = data.company.tx_company_banners;
+					this.companyUpdated.emit(this.company);
 				});
 				Swal.fire({
 					position: 'center',
@@ -103,10 +116,19 @@ export class UploaderComponent implements OnInit {
 	}
 
 	borrarImagenQueue(nombreArchivo) {
-		this.archivos = this.archivos.filter(archivo => archivo.nombreArchivo !== nombreArchivo);
+		this.filesToUpload = this.filesToUpload.filter(archivo => archivo.nombreArchivo !== nombreArchivo);
 	}
 
 	queueFilesInput(event) {
+		// permitido: this.maxupload
+		// ya cargadas: this.company.tx_company_banners.length
+		// listas para subir: this.filesToUpload.length
+		// intentando subir: event.target.files.length
+
+		if (this.maxupload - this.company.tx_company_banners.length - this.filesToUpload.length - event.target.files.length < 0) {
+			this.snack.open(`Supera el máximo permitido de ${this.maxupload} imágenes`, null, { duration: 3000 })
+			return;
+		}
 		this._extraerArchivos(event.target.files); // le envío un objeto que voy a tener que convertir en array
 		this._prevenirDetener(event);
 	}
@@ -120,7 +142,6 @@ export class UploaderComponent implements OnInit {
 		/*Esto es para extender la compatibilidad porque hay algunos navegadores que lo manejan directo con
 		event.dataTransfer y otros event.originalEvent.dataTrasnfer;*/
 		return event.dataTransfer.files ? event.dataTransfer.files : event.originalEvent.dataTransfer.files;
-
 	}
 
 	/*Esta función es para trabajar con los archivos, vamos a extraerlos de la constante "transferencia"*/
@@ -147,10 +168,10 @@ export class UploaderComponent implements OnInit {
 				reader.onloadend = () => (nuevoArchivo.bufferImage = reader.result);
 
 				// push al objeto con los datos, y con el buffer que contiene la imagen.
-				this.archivos.push(nuevoArchivo);
+				this.filesToUpload.push(nuevoArchivo);
 			}
 		}
-		/*En this.archivos ya tengo un arreglo con todos las imagenes para subir, si yo inento cargar por segunda vez un mismo
+		/*En this.filesToUpload ya tengo un arreglo con todos las imagenes para subir, si yo inento cargar por segunda vez un mismo
 		archivo no me va a dejar. Ahora lo quiero relacionar con los archivos que tengo en el componente.
 
 		En carga.component.html en el elemento donde tenemos la directiva appNgDropFiles ponemos
@@ -162,10 +183,9 @@ export class UploaderComponent implements OnInit {
 
 	// validaciones
 	// cuando hacemos el DROP queremos que el chrome NO tenga el comportamiento por defecto de abrir la imagen
-
 	private _fileCanLoaded(archivo: File): boolean {
 		// si el archivo NO fue ya dropeado... y es una imagen...
-		if (!this._fileWasDropped(archivo.name) && this._isImage(archivo.type)) {
+		if (!this._fileWasDropped(archivo.name) && this._isImage(archivo.type) && this._sizeOk(archivo.size)) {
 			return true;
 		} else {
 			return false;
@@ -179,8 +199,9 @@ export class UploaderComponent implements OnInit {
 
 	// la segunda validación sera que el archivo que estoy dropeando no haya sido ya dropeado.
 	private _fileWasDropped(nombreArchivo: string): boolean {
-		for (const archivo of this.archivos) {
+		for (const archivo of this.filesToUpload) {
 			if (archivo.nombreArchivo === nombreArchivo) {
+				this.snack.open(`El archivo ${nombreArchivo} ya fue cargado.`, null, { duration: 3000 })
 				return true;
 			}
 		}
@@ -191,7 +212,19 @@ export class UploaderComponent implements OnInit {
 	// tipoArchivo.startsWith('image'); devuelve 1 si lo encuentra y -1 si no lo encuentra, 1 es true y -1 es interpretado como false.
 
 	private _isImage(tipoArchivo: string): boolean {
-		return (tipoArchivo === '' || tipoArchivo === undefined) ? false : tipoArchivo.startsWith('image');
+		if (tipoArchivo === '' || tipoArchivo === undefined || !tipoArchivo.startsWith('image')) {
+			this.snack.open('No es un tipo de archivo de imagen permitido.', null, { duration: 3000 })
+			return false;
+		}
+		return true;
+	}
+
+	private _sizeOk(fileSize: number): boolean {
+		if (fileSize > this.maxSize) {
+			this.snack.open(`El archivo supera el tamaño máximo permitido de ${this.maxSize / 1024} kb`, null, { duration: 3000 })
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -54,7 +54,7 @@
         </mat-card-actions>
     </mat-card>
 
-    <mat-card *ngIf="scoreItemCreate">
+    <mat-card *ngIf="scoreItemCreate" class="my-2 animated fadeIn">
 
         <app-poll-create *ngIf="adminService.sections" [sections]="adminService.sections"
             (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)">

@@ -9,7 +9,8 @@
             <form [formGroup]="formAbout" #formDirective="ngForm" (ngSubmit)="sendAbout(formDirective)">
                 <mat-form-field class="w-100">
                     <mat-label>Ingrese la historia del lugar</mat-label>
-                    <textarea rows="5" matInput placeholder="Ingrese la historia aquí" formControlName="txAbout"></textarea>
+                    <textarea rows="5" matInput placeholder="Ingrese la historia aquí"
+                        formControlName="txAbout"></textarea>
                 </mat-form-field>
                 <div class="container pt-4 px-0">
                     <div class="row text-center">
@@ -23,9 +24,14 @@
             </form>
 
         </mat-card-content>
+
     </mat-card>
-    <mat-card>
-        <app-uploader txType="banner" [company]="company" (companyUpdated)="companyUpdated($event)">
+
+    <div class="my-3"></div>
+
+    <app-uploader txType="banner"
+        [cardData]="{'icon':'mdi mdi-image', 'title':'Subir Imagenes', 'subtitle': 'Suba imagenes que se verán en la web page de su bar / resto. Tamaño recomendado 500px x 200px.'}"
+        [company]="company" (companyUpdated)="companyUpdated($event)">
     </app-uploader>
-    </mat-card>
+
 </div>

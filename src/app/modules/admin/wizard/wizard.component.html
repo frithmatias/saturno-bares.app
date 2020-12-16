@@ -4,87 +4,90 @@
         <!-- Welcome Step -->
         <mat-step state="star">
             <mat-card>
-                <div class="saturno-minicard-text">
-                    <h4>Hola {{ loginService?.user.tx_name }}!</h4>
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <h4>Hola {{ loginService?.user.tx_name }}!</h4>
 
-                    <p>
-                        Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a atender las
-                        solicitudes de mesa de tus clientes.
-                    </p>
-                    <p>
-                        No te llevará mas de un minuto y desde acá podés hacer todo.
-                    </p>
-                    <hr>
-                    <div class="w-100 text-center">
-                        <button mat-raised-button matStepperNext color="accent">
-                            Comenzar!</button>
+                        <p>
+                            Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a atender las
+                            solicitudes de mesa de tus clientes.
+                        </p>
+                        <p>
+                            No te llevará mas de un minuto y desde acá podés hacer todo.
+                        </p>
+                        <hr>
+                        <div class="w-100 text-center">
+                            <button mat-raised-button matStepperNext color="accent">
+                                Comenzar!</button>
+                        </div>
                     </div>
-                </div>
+                </mat-card-content>
             </mat-card>
         </mat-step>
 
         <!-- Companies Step -->
         <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <span class="mdi mdi-store-outline mr-2"></span>Crear BAR / Resto
+                    </mat-card-title>
+                </mat-card-header>
 
-            <!-- no companies, no attached company -->
-            <div *ngIf="adminService.companies?.length === 0">
-                <mat-card>
-                    <span class="mdi mdi-storefront-outline mr-2"></span>Crear un Bar / Resto
-                    <div class="saturno-minicard-text">
-                        <p>
-                            Si no tenés ningún bar o restorant registrado desde acá tenés que registrar al menos uno.
-                        </p>
+                <mat-card-content>
+                    <!-- no companies, no attached company -->
+                    <div *ngIf="adminService.companies?.length === 0">
+                        <div class="saturno-minicard-text">
+                            <p>
+                                Si no tenés ningún bar o restorant registrado desde acá tenés que registrar al menos
+                                uno.
+                            </p>
 
-                        <p>
-                            Es importante que ingreses la dirección exacta de tu comercio. Esta dirección será visible
-                            para
-                            tus clientes desde el menú público de turnos y les asegura que están obteniendo un turno en
-                            el bar /
-                            restorant correcto.
-                        </p>
+                            <p>
+                                Es importante que ingreses la dirección exacta de tu comercio. Esta dirección será
+                                visible
+                                para
+                                tus clientes desde el menú público de turnos y les asegura que están obteniendo un turno
+                                en
+                                el bar /
+                                restorant correcto.
+                            </p>
+                        </div>
                     </div>
-                </mat-card>
-            </div>
-
-            <!-- companies and attached company -->
-            <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>
-                            <span class="mdi mdi-storefront-outline mr-2"></span>Empresa creada!
-                            <span class="mdi mdi-check text-success"></span>
-                        </mat-card-title>
-                    </mat-card-header>
-                    <div class="saturno-minicard-text">
-                        <p>
-                            Podés seguir adelante con el asistente.
-                        </p>
-                        <p class="card-text card-text">
-                            Recordá que podés crear mas comercios si disponés de sucursales y luego podés cambiar de
-                            comercio
-                            seleccionandolo
-                            desde el menu principal <span class="mdi mdi-menu"></span>
-                        </p>
+                    <!-- companies and attached company -->
+                    <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
+                        <div class="saturno-minicard-text">
+                            <p>
+                                Podés seguir adelante con el asistente.
+                            </p>
+                            <p class="card-text card-text">
+                                Recordá que podés crear mas comercios si disponés de sucursales y luego podés cambiar de
+                                comercio
+                                seleccionandolo
+                                desde el menu principal <span class="mdi mdi-menu"></span>
+                            </p>
+                        </div>
                     </div>
-                </mat-card>
-            </div>
+                    <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
+                </mat-card-content>
 
-            <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
-
-            <!-- previous / next -->
-            <div class="row my-2" style="text-align: center;">
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
-                        < Atras</button>
-                </div>
-
-                <div class="col">
-                    <button *ngIf="adminService.companies || loginService.user?.id_company?._id" mat-raised-button
-                        color="primary" (click)="stepperGoNext(stepper)">Siguiente ></button>
-                </div>
-            </div>
-
-
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        ATRAS
+                    </button>
+                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id" mat-button
+                        (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                    </button>
+                    <button *ngIf="!adminService.companies || !loginService.user?.id_company" mat-button disabled>
+                        SIGUIENTE
+                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
         </mat-step>
 
         <!-- Sections Step -->
@@ -97,44 +100,42 @@
                     </mat-card-title>
                 </mat-card-header>
 
-                <div class="saturno-minicard-text">
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <p>
+                            Desde acá podes crear los diferentes sectores o áreas que componen tu bar o resto. Tus
+                            clientes podrán elegir uno de estos sectores al momento de solicitar una mesa, y los
+                            camareros podran entrar a ellos para atender las mesas dentro de ese sector.
+                        </p>
+                        <p>
+                            Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
+                        </p>
+                    </div>
+                    <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
+                </mat-card-content>
 
-                    <p>
-                        Desde acá podes crear los diferentes sectores o áreas que componen tu bar o resto. Tus
-                        clientes podrán elegir uno de estos sectores al momento de solicitar una mesa, y los
-                        camareros podran entrar a ellos para atender las mesas dentro de ese sector.
-                    </p>
-                    <p>
-                        Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
-                    </p>
-                </div>
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        ATRAS
+                    </button>
+                    <button *ngIf="adminService.sections?.length > 0" mat-button (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                    </button>
+                    <button *ngIf="adminService.sections?.length === 0" mat-button disabled>
+                        SIGUIENTE
+                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                    </button>
+
+                </mat-card-actions>
+
             </mat-card>
-
-            <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
-
-
-            <!-- previous / next -->
-            <div class="row my-2" style="text-align: center;">
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
-                        < Atras</button>
-                </div>
-
-                <div class="col">
-                    <button *ngIf="adminService.sections?.length > 0" mat-raised-button color="primary"
-                        (click)="stepperGoNext(stepper)">Siguiente ></button>
-                    <button *ngIf="adminService.sections?.length === 0" mat-raised-button disabled
-                        (click)="stepperGoNext(stepper)">Siguiente ></button>
-                </div>
-            </div>
-
-
         </mat-step>
 
         <!-- Tables Step -->
         <mat-step [completed]="adminService.tables?.length > 0" state="important_devices">
-
-
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
@@ -142,64 +143,41 @@
                     </mat-card-title>
                 </mat-card-header>
 
-                <div class="saturno-minicard-text">
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <p>
+                            Acá tenés que dar de alta todas las mesas para cada sector. Sólo tenés que ingresar el
+                            número de
+                            mesa y
+                            la
+                            cantidad máxima de personas que pueden sentarse en ellas.
+                        </p>
+                    </div>
+                </mat-card-content>
 
-                    <p>
-                        Acá tenés que dar de alta todas las mesas para cada sector. Sólo tenés que ingresar el número de
-                        mesa y
-                        la
-                        cantidad máxima de personas que pueden sentarse en ellas.
-                    </p>
+                <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
 
-                </div>
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        ATRAS
+                    </button>
+                    <button *ngIf="adminService.tables?.length > 0" mat-button (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                    </button>
+                    <button *ngIf="adminService.tables?.length === 0" mat-button disabled>
+                        SIGUIENTE
+                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                    </button>
+                </mat-card-actions>
+
             </mat-card>
-
-            <div class="mb-4">
-                <button class="btn btn-sm btn-block btn-secondary"
-                    (click)="activateTableExplanation=!activateTableExplanation">
-                    <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son las Mesas?
-                </button>
-
-                <div *ngIf="activateTableExplanation" class="bg-whatis animated fadeIn">
-                    <p>
-                        Las mesas son lugares donde podés agrupar comensales y tenés que identificarlas con números. Las
-                        mesas son indivisibles,
-                        es decir que si asignás un número de mesa a una mesa compuesta por dos o mas mesas más pequeñas,
-                        el
-                        sistema
-                        podra juntarlas con otras mesas en el caso de que un cliente lo requiera, pero el sistema NO
-                        podra
-                        separarlas.
-                    </p>
-                    <p>
-                        Si tenés asientos en una barra podés definir cada asiento como una mesa con lugar para una sola
-                        persona.
-                    </p>
-                </div>
-            </div>
-
-            <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
-
-            <!-- previous / next -->
-            <div class="row my-2" style="text-align: center;">
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
-                        < Atras</button>
-                </div>
-
-                <div class="col">
-                    <button *ngIf="adminService.tables?.length > 0" mat-raised-button color="primary"
-                        (click)="stepperGoNext(stepper)">Siguiente ></button>
-                    <button *ngIf="adminService.tables?.length === 0" mat-raised-button disabled
-                        (click)="stepperGoNext(stepper)">Siguiente ></button>
-                </div>
-            </div>
-
         </mat-step>
 
         <!-- Poll Step -->
         <mat-step state="important_devices">
-
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
@@ -207,38 +185,37 @@
                     </mat-card-title>
                 </mat-card-header>
 
-                <div class="saturno-minicard-text">
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <p>
+                            Acá podés dar de alta algunas preguntas que tu cliente puede responder para calificar
+                            de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes
+                            crear una encuesta distinta para cada sector.
+                        </p>
+                        <p>
+                            Por ejemplo podría calificar items como "Atención", "Comida", "Limpieza", etc.
+                        </p>
+                    </div>
 
-                    <p>
-                        Acá podés dar de alta algunas preguntas que tu cliente puede responder para calificar
-                        de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes
-                        crear una encuesta distinta para cada sector.
-                    </p>
-                    <p>
-                        Por ejemplo podría calificar items como "Atención", "Comida", "Limpieza", etc.
-                    </p>
-                </div>
+                    <app-poll [nomargin]="true" [nopadding]="true"></app-poll>
+                </mat-card-content>
+
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        ATRAS
+                    </button>
+                    <button mat-button (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                    </button>
+                </mat-card-actions>
             </mat-card>
-
-            <app-poll [nomargin]="true" [nopadding]="true"></app-poll>
-
-            <!-- previous / next -->
-            <div class="row my-2" style="text-align: center;">
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
-                        < Atras</button>
-                </div>
-
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoNext(stepper)">Siguiente ></button>
-                </div>
-            </div>
         </mat-step>
 
         <!-- Waiters Step -->
         <mat-step state="face">
-
-
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
@@ -246,47 +223,29 @@
                     </mat-card-title>
                 </mat-card-header>
 
-                <div class="saturno-minicard-text">
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <p>
+                            Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
+                            omitir este paso y continuar.
+                        </p>
+                    </div>
 
-                    <p>
-                        Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
-                        omitir este paso y continuar.
-                    </p>
+                    <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
+                </mat-card-content>
 
-                </div>
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        ATRAS
+                    </button>
+                    <button mat-button (click)="endWizard()">
+                        FINALIZAR
+                        <span class="mdi mdi-check-box-outline"></span>
+                    </button>
+                </mat-card-actions>
             </mat-card>
-
-            <div class="mb-4">
-                <button class="btn btn-sm btn-block btn-secondary"
-                    (click)="activateWaiterExplanation=!activateWaiterExplanation">
-                    <span class="mdi mdi-help-network-outline mr-2"></span>¿Qué son los Camareros?
-                </button>
-
-                <div *ngIf="activateWaiterExplanation" class="bg-whatis animated fadeIn">
-                    <p>
-                        Con tu usuario administrador ya podés atender mesas porque cumple con el rol de camarero. Sin
-                        embargo podés crear camareros que son usuarios asignados especialmente para estas tareas.
-                    </p>
-                    <p>
-                        Una vez creados los camareros que podés crear acá, deben ingresar a sus cuentas desde el mismo
-                        login de usuario pero con la opción [ENTRAR] con su email y contraseña que vos les asignes acá.
-                    </p>
-                </div>
-            </div>
-
-            <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
-
-            <div class="row my-2" style="text-align: center;">
-                <div class="col">
-                    <button mat-raised-button color="primary" (click)="stepperGoBack(stepper)">
-                        < Atras</button>
-                </div>
-
-                <div class="col">
-                    <button mat-raised-button (click)="endWizard()">Finalizar</button>
-                </div>
-            </div>
-
         </mat-step>
 
     </mat-horizontal-stepper>

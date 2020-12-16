@@ -59,6 +59,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
 
   editWaiter(waiter: User): void {
+    this.waiterCreate = true;
     this.waiterEdit = waiter
   }
 

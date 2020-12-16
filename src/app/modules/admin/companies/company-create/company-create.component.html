@@ -75,26 +75,20 @@
     <app-map [(center)]="centerMap" (newMarker)="setCoords($event)"></app-map>
 
     <div class="container pt-4 px-0">
-        <div *ngIf="!companyEdit" class="row text-center">
-            <div class="col">
-                <button mat-raised-button color="accent" type="submit">
-                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Bar / Resto
-                </button>
-            </div>
+        <div *ngIf="!companyEdit">
+            <button mat-raised-button color="accent" type="submit">
+                <span class="mdi lg mdi-content-save-outline"></span>
+                GUARDAR BAR/RESTO
+            </button>
         </div>
-        <div *ngIf="companyEdit" class="row">
-            <div class="col w-100">
-                <button mat-raised-button color="accent" type="submit">
-                    Guardar
-                </button>
-            </div>
-            <div class="col">
-                <button mat-raised-button (click)="resetForm(formDirective)">
-                    Limpiar
-                </button>
-            </div>
+        <div *ngIf="companyEdit">
+            <button mat-raised-button color="warn" type="submit">
+                GUARDAR CAMBIOS
+            </button>
+            <button mat-button (click)="resetForm(formDirective)">
+                LIMPIAR FORMULARIO
+            </button>
         </div>
     </div>
-
 
 </form>

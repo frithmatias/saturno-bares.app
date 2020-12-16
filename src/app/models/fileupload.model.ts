@@ -5,6 +5,7 @@ export class FileUpload {
 	public url: string;
 	public estaSubiendo: boolean; // flag
 	public progreso: number;
+	
 	// en bufferImage guardo la imagen para previsualizarla haciendo 'const reader = new FileReader();'
 	// y luego un push de reader.result
 	public bufferImage: any;

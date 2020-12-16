@@ -45,8 +45,7 @@
         <div class="card-header">MESAS</div>
         <div class="card-body p-0">
             <mat-selection-list [ngModelOptions]="{standalone: true}" [(ngModel)]="selStrTables">
-                <mat-list-option name="selStrTables" *ngFor="let table of tables"
-                    [value]="table._id">
+                <mat-list-option name="selStrTables" *ngFor="let table of tables" [value]="table._id">
                     <span class="mat-select-option-nowarp">{{table.cd_table}}</span>
                 </mat-list-option>
             </mat-selection-list>
@@ -54,23 +53,19 @@
     </div>
 
     <div class="container pt-4 px-0">
-        <div *ngIf="!waiterEdit" class="row text-center">
-            <div class="col">
-                <button mat-raised-button color="accent" type="submit">
-                    <span class="mdi lg mdi-content-save-outline"></span> Guardar Camarero</button>
-            </div>
+        <div *ngIf="!waiterEdit">
+            <button mat-raised-button color="accent" type="submit">
+                <span class="mdi lg mdi-content-save-outline"></span>
+                GUARDAR CAMARERO
+            </button>
         </div>
-        <div *ngIf="waiterEdit" class="row">
-            <div class="col w-100">
-                <button mat-raised-button color="accent" type="submit">
-                    Guardar
-                </button>
-            </div>
-            <div class="col">
-                <button mat-raised-button (click)="resetForm(formDirective)">
-                    Limpiar
-                </button>
-            </div>
+        <div *ngIf="waiterEdit">
+            <button mat-raised-button color="warn" type="submit">
+                GUARDAR CAMBIOS
+            </button>
+            <button mat-button (click)="resetForm(formDirective)">
+                LIMPIAR FORMULARIO
+            </button>
         </div>
     </div>
 

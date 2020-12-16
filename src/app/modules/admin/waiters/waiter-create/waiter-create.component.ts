@@ -37,6 +37,10 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 
 	ngOnInit(): void {
 		// build reactive form
+		if(!this.forma) this.createForm();
+	}
+
+	createForm(): void {
 		this.forma = new FormGroup({
 			rol: new FormControl(null, Validators.required),
 			idCompany: new FormControl(null, Validators.required),
@@ -48,6 +52,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+		if(this.waiterEdit && !this.forma) this.createForm();
 		this.forma?.enable();
 		// ADMIN_ROLE -> id_company: null
 
@@ -59,8 +64,8 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		}
 
 		if (changes.waiterEdit.currentValue?.id_role === 'ADMIN_ROLE') {
-			this.forma.controls['rol'].disable();
-			this.forma.controls['email'].disable();
+			this.forma?.controls['rol'].disable();
+			this.forma?.controls['email'].disable();
 		}
 
 		if (changes.waiterEdit.currentValue?.id_company._id) {
@@ -75,7 +80,6 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 			password: '******',
 			password2: '******'
 		})
-
 	}
 
 	// validators

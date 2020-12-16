@@ -82,8 +82,10 @@
                 <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
             </div>
             <hr>
-            <div class="px-2 pb-2">
-                <button class="btn btn-sm btn-block btn-danger" (click)="loginService.logout()"> Salir
+            <div class="px-2 pb-2 text-center">
+                <button mat-raised-button color="warn" (click)="loginService.logout()"> 
+                    <span class="xl mdi mdi-power"></span>
+                    Salir
                 </button>
             </div>
         </mat-menu>

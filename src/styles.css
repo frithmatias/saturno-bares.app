@@ -411,6 +411,10 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 
+mat-card-header {
+    text-align: left;
+}
+
 .mat-card {
     font-family: 'Baloo Bhai 2', 'Monda', 'Encode Sans', 'Averia Libre', 'system-ui';
     /* opacity : .9; */

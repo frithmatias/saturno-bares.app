@@ -40,8 +40,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button *ngIf="!waiterCreate" mat-button (click)="waiterCreate=true"><span
-                    class="lg mdi mdi-plus"></span>
+            <button *ngIf="!waiterCreate" mat-button (click)="waiterCreate=true"><span class="lg mdi mdi-plus"></span>
                 CREAR CAMARERO </button>
             <button *ngIf="waiterCreate" mat-button (click)="waiterCreate=false"><span
                     class="lg mdi mdi-chevron-up"></span> CERRAR FORMULARIO </button>
@@ -52,7 +51,7 @@
 
 
 
-    <mat-card *ngIf="waiterCreate">
+    <mat-card *ngIf="waiterCreate" class="my-2 animated fadeIn">
         <mat-card class="card-left-border my-2">
             Tené en cuenta que los mozos / camareros que podés dar de alta acá deben ingresar con email y contraseña
             desde el login normal de usuarios (no desde el login con cuenta de Google).

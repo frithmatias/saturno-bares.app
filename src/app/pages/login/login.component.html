@@ -11,13 +11,13 @@
                 <div class="col-sm">
                     <div class="jumbotron m-0 py-3 h-100 text-dark">
                         <!-- Google Login -->
-                        <div class="my-2 xl text-danger text-uppercase">LOGIN</div>
+                        <div class="my-2 xl text-danger">Google</div>
                         <hr class="my-4 saturno-hr-red">
                         <div class="my-2 md">Entrar con mi cuenta de Google.</div>
-                        <button class="btn btn-danger btn-block" type="button" id="btnGoogle" data-toggle="tooltip">
-                            Google
+                        <button mat-raised-button color="warn" type="button" id="btnGoogle" data-toggle="tooltip">
+                            Login
                         </button>
-                        <div class="sm pointer mt-3" routerLink="/home"><b>Ir al Inicio</b></div>
+                        <button mat-button routerLink="/home">Ir al Inicio</button>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                         <div class="text-center my-3 w-100">
                             <span class="mr-2">
                                 <!-- Normal Login -->
-                                <button class="btn btn-success btn-sm px-4" type="submit">
+                                <button mat-raised-button color="accent" class="px-4" type="submit">
                                     Entrar
                                 </button>
                             </span>

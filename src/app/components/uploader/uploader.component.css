@@ -1,6 +1,5 @@
 .drop-zone {
-    border        : dotted 1px lightgray;
-    //opacity     : 0.8;
+    border        : dotted 1px gray;
     color         : #666;
     text-align    : center;
     vertical-align: top;
@@ -10,8 +9,13 @@
     border: dotted 1px dodgerblue;
 }
 
+.text-upload {
+    font-size: small;
+    font-family: monospace;
+}
+
 .text-green {
-    color: green
+    color: #139913
 }
 
 .slider_imgs {
@@ -19,57 +23,52 @@
     width : 70px;
 }
 
-// X para borrar imagen
-.img-wrap {
+.image {
     position: relative;
+    display : flex;
+    margin  : 5px;
+    width   : 4em;
+    height  : 4em;
 }
 
-.img-wrap .close {
-    cursor: pointer;
-    position: relative;
-    top: 0px;
-    color: white;
+.image:hover {
+    border: 1px solid rgba(100,100,100,0.5);
+}
+.image .delete-icon {
+    cursor     : pointer;
+    position   : absolute;
+    top        : 0px;
+    color      : white;
     font-weight: 200;
-    right: 2px;
+    right      : 3px;
+    text-shadow: -1px 0 rgba(0, 0, 0, 1), 0px 1px rgba(0, 0, 0, 1), 0px -1px rgba(0, 0, 0, 1), 1px 0 rgba(0, 0, 0, 1);
 }
 
-// fin X para borrar imagen
 .table-upload {
-    font-size: 12px;
+    font-size     : 12px;
     text-align    : left;
     vertical-align: top;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
+    margin        : 0px;
+    padding       : 0px;
+    width         : 100%;
 }
 
-.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
-    float : left;
-    width : 100px;
+.progress {
+    display: flex;
+    height: .2rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #5d5d5d;
 }
 
-.gallery-queue {
+.image-queue {
     opacity: 0.3;
 }
 
-.gallery:hover {
-    border: 1px solid #777;
-}
+.image:hover {}
 
-.gallery img {
+.image img {
     width : 100%;
     height: auto;
-    width : 100px;
-    height: 100px;
-
-}
-
-#slide {
-    width      : 200%;
-    //height   : 50px;
-    overflow-x : scroll;
-    overflow-y : hidden;
-    white-space: nowrap;
 }

@@ -1,3 +1,12 @@
 .mat-expansion-panel-header {
     height: 40px;
 }
+
+.sidenav-subitems-icon {
+    opacity: .4;
+}
+
+.sidenav-subitems-text {
+    opacity: 1;
+    font-family: 'Baloo Bhai 2';
+}

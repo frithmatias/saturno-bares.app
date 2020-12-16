@@ -8,7 +8,7 @@ export class NgDropFilesDirective {
 
 	@Input() tipo: string;
 	@Input() id: string;
-	@Input() archivos: FileUpload[] = [];
+	@Input() filesToUpload: FileUpload[] = [];
 	@Output() mouseSobre: EventEmitter<boolean> = new EventEmitter();
 	@Output() sendDropFiles: EventEmitter<any> = new EventEmitter();
 	
