@@ -1,22 +1,36 @@
 <div class="saturno-card-wide h-100">
     <mat-card>
-    <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg">
-    <div class="bar-history">
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam et a quod voluptatibus nemo iusto neque
-            animi vitae doloribus provident, magni, officia eveniet laborum quia, necessitatibus adipisci! Libero,
-            officiis quos. Ullam corporis sint minima dolorum dignissimos, eos dolor praesentium enim voluptatibus
-            impedit dicta suscipit exercitationem libero assumenda nulla! Excepturi pariatur id voluptatum assumenda
-            minima, veniam sed adipisci quis dolorem repudiandae dolor ipsum nobis, nesciunt consectetur inventore et
-            consequatur eaque dolores exercitationem explicabo, eos optio totam voluptates non? Eius praesentium facere
-            porro eligendi. Iusto repellat, provident sint ab commodi vel alias tempore mollitia aspernatur, illo omnis
-            voluptate autem distinctio voluptatibus inventore.
-        </p>
-    </div>
-    <div>
-        <button class="col btn btn-danger btn-block rounded-0 mr-1 my-2" (click)="salir()">
-            Salir
-          </button>
-    </div>
+        <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg">
+        <mat-card-header style="text-align: center; display: block;" class="my-2">
+            <mat-card-title>{{publicService.company.tx_company_name}}</mat-card-title>
+            <mat-card-subtitle>{{publicService.company.tx_company_slogan}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+            <div class="bar-history">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam et a quod voluptatibus nemo iusto
+                    neque
+                    animi vitae doloribus provident, magni, officia eveniet laborum quia, necessitatibus adipisci!
+                    Libero,
+                    officiis quos. Ullam corporis sint minima dolorum dignissimos, eos dolor praesentium enim
+                    voluptatibus
+                    impedit dicta suscipit exercitationem libero assumenda nulla! Excepturi pariatur id voluptatum
+                    assumenda
+                    minima, veniam sed adipisci quis dolorem repudiandae dolor ipsum nobis, nesciunt consectetur
+                    inventore et
+                    consequatur eaque dolores exercitationem explicabo, eos optio totam voluptates non? Eius praesentium
+                    facere
+                    porro eligendi. Iusto repellat, provident sint ab commodi vel alias tempore mollitia aspernatur,
+                    illo omnis
+                    voluptate autem distinctio voluptatibus inventore.
+                </p>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="salir()">
+                SALIR
+            </button>
+        </mat-card-actions>
     </mat-card>
 </div>

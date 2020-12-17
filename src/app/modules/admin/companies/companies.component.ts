@@ -22,7 +22,7 @@ export class CompaniesComponent implements OnInit {
 
   displayedColumns: string[] = ['tx_company_name', 'tx_address_street', 'tx_address_number', '_id'];
 
-  companyCreate = false;
+  openForm = false;
   companyEdit: Company;  // company enviada al child
   companyUpdated: Company; // company recibida del child
 
@@ -36,11 +36,19 @@ export class CompaniesComponent implements OnInit {
 
 
   editCompany(company: Company): void {
+    this.openForm = true;
     this.companyEdit = company
   }
 
+  clearForm(): void {
+    this.openForm = false; // close form
+    this.companyEdit = null;
+  }
+
   newCompany(company: Company): void {
+    this.openForm = false;
     this.companyUpdated = company;
+    this.adminService.companies = [...this.adminService.companies, company];
   }
 
   deleteCompany(idCompany: string): void {

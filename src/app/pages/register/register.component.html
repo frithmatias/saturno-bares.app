@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="col-sm mt-4 mt-md-0">
-                    <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
+                    <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
 
                         <mat-form-field class="w-100">
                             <mat-label>Nombre</mat-label>
@@ -36,8 +36,7 @@
                             <mat-label>Email</mat-label>
                             <mat-error *ngIf="forma.errors?.emailExists">Este Email ya se encuentra registrado!
                             </mat-error>
-                            <input matInput placeholder="diego@perez.com" formControlName="email" name="email"
-                                type="email" (keyup)="checkEmailExists()" required>
+                            <input matInput placeholder="diego@perez.com" formControlName="email" name="email" type="email" (keyup)="checkEmailExists()" required>
                         </mat-form-field>
 
                         <mat-form-field class="w-100">

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AdminService } from '../../../../modules/admin/admin.service';
@@ -10,7 +9,6 @@ import { SharedService } from '../../../../services/shared.service';
 import { GetidstringPipe } from '../../../../pipes/getidstring.pipe';
 import { Company, CompanyResponse } from '../../../../interfaces/company.interface';
 import { Observable } from 'rxjs/internal/Observable';
-import { startWith, map, tap } from 'rxjs/operators';
 import { Location, LocationsResponse } from 'src/app/interfaces/location.interface';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { CapitalizarPipe } from 'src/app/pipes/capitalizar.pipe';
@@ -23,6 +21,8 @@ import { CapitalizarPipe } from 'src/app/pipes/capitalizar.pipe';
 export class CompanyCreateComponent implements OnInit {
 	@Input() companyEdit: Company;
 	@Output() newCompany: EventEmitter<Company> = new EventEmitter();
+	@Output() clearForm: EventEmitter<void> = new EventEmitter();
+
 	forma: FormGroup;
 	txCompanyString: string;
 	centerMap: number[] = []; // for app-map child
@@ -41,36 +41,12 @@ export class CompanyCreateComponent implements OnInit {
 		private loginService: LoginService,
 		private sharedService: SharedService,
 		public publicService: PublicService,
-		private snack: MatSnackBar,
 		private getidstring: GetidstringPipe,
 		private capitalizarPipe: CapitalizarPipe
 	) { }
 
 	ngOnInit() {
-		let defaults = {
-			txCompanyName: '',
-			txCompanyString: '',
-			txCompanySlogan: '',
-			txCompanyLocation: '',
-			cdCompanyLocation: '',
-			txAddressStreet: '',
-			txAddressNumber: '',
-			txCompanyLat: '',
-			txCompanyLng: ''
-		}
-
-		this.forma = new FormGroup({
-			txCompanyName: new FormControl(defaults.txCompanyName, [Validators.required, this.validatorSetId.bind(this)]),
-			txCompanyString: new FormControl({ value: '', disabled: true }),
-			txCompanySlogan: new FormControl(defaults.txCompanySlogan),
-			txCompanyLocation: new FormControl(defaults.txCompanyLocation, Validators.required),
-			cdCompanyLocation: new FormControl(defaults.cdCompanyLocation, Validators.required),
-			txAddressStreet: new FormControl(defaults.txAddressStreet, Validators.required),
-			txAddressNumber: new FormControl(defaults.txAddressNumber, Validators.required),
-			txCompanyLat: new FormControl({ value: defaults.txCompanyLat, disabled: true }, Validators.required),
-			txCompanyLng: new FormControl({ value: defaults.txCompanyLng, disabled: true }, Validators.required),
-		});
-
+		this.createForm({});
 		this.localidadesControl.valueChanges.subscribe(data => {
 
 			if (typeof data !== 'string' || data.length <= 0) {
@@ -90,27 +66,49 @@ export class CompanyCreateComponent implements OnInit {
 		});
 	}
 
+
+	createForm(defaults: any): void {
+		if (this.forma) return;
+		this.forma = new FormGroup({
+			txCompanyName: new FormControl(defaults.txCompanyName || '', [Validators.required, this.validatorSetId.bind(this)]),
+			txCompanyString: new FormControl({ value: defaults.txCompanyString || '', disabled: true }, Validators.required),
+			txCompanySlogan: new FormControl(defaults.txCompanySlogan || '', Validators.required),
+			txCompanyLocation: new FormControl(defaults.txCompanyLocation || '', Validators.required),
+			cdCompanyLocation: new FormControl(defaults.cdCompanyLocation || '', Validators.required),
+			txAddressStreet: new FormControl(defaults.txAddressStreet || '', Validators.required),
+			txAddressNumber: new FormControl(defaults.txAddressNumber || '', Validators.required),
+			txCompanyLat: new FormControl({ value: defaults.txCompanyLat || '', disabled: true }, Validators.required),
+			txCompanyLng: new FormControl({ value: defaults.txCompanyLng || '', disabled: true }, Validators.required),
+		});
+	}
+
 	cleanInput() {
 		this.localidadesControl.reset();
 		this.localidades = [];
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.companyEdit.currentValue === undefined) { return; }
 
-		this.forma?.patchValue({
+		if (!changes.companyEdit?.currentValue) { return; }
+
+		let defaults = {
 			txCompanyName: changes.companyEdit.currentValue.tx_company_name,
+			txCompanyString: changes.companyEdit.currentValue.tx_company_string,
 			txCompanySlogan: changes.companyEdit.currentValue.tx_company_slogan,
+			txCompanyLocation: changes.companyEdit.currentValue.tx_company_location,
+			cdCompanyLocation: changes.companyEdit.currentValue.cd_company_location,
+			txAddressStreet: changes.companyEdit.currentValue.tx_address_street,
+			txAddressNumber: changes.companyEdit.currentValue.tx_address_number,
 			txCompanyLat: changes.companyEdit.currentValue.tx_company_lat,
 			txCompanyLng: changes.companyEdit.currentValue.tx_company_lng,
-			txAddressStreet: changes.companyEdit.currentValue.tx_address_street,
-			txAddressNumber: changes.companyEdit.currentValue.tx_address_number
-		})
+		}
+
+		this.forma ? this.forma.patchValue(defaults) : this.createForm(defaults);
 
 		// localidadesControl espera un objeto que luego va a "parsear" [displayWith] con el metodo setLocalidad
 		let cdLocation = changes.companyEdit.currentValue.cd_company_location;
 		let txLocation = changes.companyEdit.currentValue.tx_company_location.split(',');
-		txLocation = txLocation.map(loc => loc.trim());
+		txLocation = txLocation.map((loc: string) => loc.trim());
 		this.localidadesControl.setValue({
 			properties:
 			{
@@ -126,6 +124,7 @@ export class CompanyCreateComponent implements OnInit {
 		let lat = changes.companyEdit.currentValue.tx_company_lat;
 		let lng = changes.companyEdit.currentValue.tx_company_lng;
 		this.centerMap = [lng, lat]
+
 	}
 
 	validatorSetId(control: FormControl): any {
@@ -159,7 +158,7 @@ export class CompanyCreateComponent implements OnInit {
 	createCompany(formDirective: FormGroupDirective) {
 
 		if (this.forma.invalid) {
-			this.sharedService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
+			this.sharedService.snack('Faltan datos por favor verifique', 2000, 'Aceptar');
 			return;
 		}
 
@@ -167,7 +166,7 @@ export class CompanyCreateComponent implements OnInit {
 			id_user: this.loginService.user._id,
 			tx_company_name: this.forma.value.txCompanyName,
 			tx_company_slogan: this.forma.value.txCompanySlogan,
-			tx_company_string: this.txCompanyString,
+			tx_company_string: this.forma.getRawValue().txCompanyString,
 			cd_company_location: this.forma.value.cdCompanyLocation,
 			tx_company_location: this.forma.value.txCompanyLocation,
 			tx_address_street: this.forma.value.txAddressStreet,
@@ -176,15 +175,14 @@ export class CompanyCreateComponent implements OnInit {
 			tx_company_lng: this.forma.getRawValue().txCompanyLng
 		};
 
-		
 		if (this.companyEdit) {
 			company._id = this.companyEdit._id;
 			this.adminService.updateCompany(company).subscribe((data: CompanyResponse) => {
 				this.newCompany.emit(data.company);
-				this.snack.open(data.msg, null, { duration: 5000 });
+				this.sharedService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 			}, (err: HttpErrorResponse) => {
-				this.snack.open(err.error.msg, null, { duration: 5000 });
+				this.sharedService.snack(err.error.msg, 2000);
 			}
 			)
 
@@ -193,17 +191,19 @@ export class CompanyCreateComponent implements OnInit {
 				this.newCompany.emit(data.company);
 				this.resetForm(formDirective);
 				if (data.ok) {
-					this.snack.open('Empresa creada correctamente', null, { duration: 2000 });
+					this.sharedService.snack('Empresa creada correctamente', 2000);
 				} else {
-					this.snack.open(data.msg, null, { duration: 5000 });
+					this.sharedService.snack(data.msg, 2000);
 				}
 			}, () => {
-				this.snack.open('Error al crear la empresa', null, { duration: 2000 });
+				this.sharedService.snack('Error al crear la empresa', 2000);
 			});
 		}
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
+		this.clearForm.emit();
+		this.localidadesControl.setValue('');
 		this.companyEdit = null;
 		this.forma.enable();
 		this.forma.reset();

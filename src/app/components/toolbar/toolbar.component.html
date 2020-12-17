@@ -1,96 +1,93 @@
-<mat-toolbar color="primary" class="mat-toolbar-off px-2">
+<mat-toolbar color="primary">
 
     <!-- TOGGLE MENU ICON -->
-    <div *ngIf="loginService.user" class="mdi mdi-menu xl pointer" (click)="toggle('sidenav')">
+    <div style="width: 84px;" class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
         <!-- <span class="example-spacer"></span> -->
     </div>
 
-    <!-- SATURNO LOGO -->
-    <div *ngIf="!loginService.user && !publicService.company" routerLink="/home" class="d-none d-sm-block pointer">
-        <span class="ml-3" style="float:left;">
-            <div>
-                <span class="saturno-title">SATURNO
-                    <span class="text-warning">Bar<span class="sm">&</span>Resto</span>
-                </span>
-            </div>
-            <div class="saturno-description">
-                Sistema de Administración de Turnos
-            </div>
-        </span>
-        <!-- <span class="example-spacer"></span> -->
+    <!-- LOGO & SEARCH -->
+    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto;" *ngIf="!loginService.user && !publicService.company">
+
+        <!-- LOGO -->
+        <div style="padding-left: 10px; padding-right: 10px;" class="d-none d-sm-block" routerLink="/home">
+            <span>
+                <div>
+                    <span class="saturno-title">SATURNO
+                        <span class="text-warning">Bar<span class="sm">&</span>Resto</span>
+                    </span>
+                </div>
+                <div class="saturno-description">
+                    Sistema de Administración de Turnos
+                </div>
+            </span>
+            <!-- <span class="example-spacer"></span> -->
+        </div>
+
+        <!-- SEARCH -->
+        <div style="flex-grow: 1;align-self: center;padding-left: 10px; padding-right: 10px;">
+            <app-search></app-search>
+        </div>
     </div>
 
     <!-- COMPANY NAME -->
-    <div class="container text-center mb-1"
-        *ngIf="loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name">
-        <div class="company-title lg">
-            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name}}
-        </div>
-        <div class="company-slogan sm">
-            {{loginService.user?.id_company?.tx_company_slogan || publicService.company?.tx_company_slogan}}
+    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto; justify-content: center;">
+        <div class="company-title md">
+            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name || loginService.user?.tx_name}}
         </div>
     </div>
 
-    <!-- SEARCH -->
-    <div *ngIf="!loginService.user?.id_company?.tx_company_name && !publicService.company"
-        class="col-9 col-sm-5 col-md-6 col-lg-7 col-xl-8 pl-0 pr-5">
-        <app-search></app-search>
-    </div>
-
-    <!-- LOG IN -->
-    <div class="w-100" *ngIf="!loginService.user && !publicService.ticket && !publicService.company"
-        routerLink="/login">
-        <div class="mdi mdi-account-circle xl pointer text-right mr-2"></div>
-    </div>
-
-    <!-- Theme selector -->
-    <button mat-button [matMenuTriggerFor]="colorpicker" class="xl mdi mdi-invert-colors"></button>
-
-    <mat-menu #colorpicker="matMenu">
-        <div class="d-flex px-2">
-            <div class="pointer box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
-            <div class="pointer box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
-            <div class="pointer box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
-            <div class="pointer box-purple" (click)="changeTheme('purple-green.css')"></div>
-        </div>
-    </mat-menu>
-
-    <!-- LOGGED IN -->
-    <div *ngIf="loginService.user">
-        <span class="mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu"></span>
-        <mat-menu #menu="matMenu">
-
-            <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'"  routerLink="/admin/home" mat-menu-item>
-                <span class="xl text-danger mdi mdi-shield-star-outline mx-2"></span>
-                <span class="ml-2 align-middle">Home de Administrador</span>
-            </div>
-
-            <div  routerLink="/waiter/home" mat-menu-item>
-                <span class="xl text-danger mdi mdi-account-tie-outline mx-2"></span>
-                <span class="ml-2 align-middle">Home de Camarero</span>
-            </div>
-            <div routerLink="/waiter/dashboard" mat-menu-item>
-                <span class="xl text-danger mdi mdi-view-dashboard-variant mx-2" ></span>
-                <span class="ml-2 align-middle">Mis métricas</span>
-            </div>
-            <div routerLink="/waiter/profile" mat-menu-item>
-                <span class="xl text-danger mdi mdi-account-circle mx-2" ></span>
-                <span class="ml-2 align-middle">{{loginService.user.tx_name}}</span>
-            </div>
-            <div routerLink="/waiter/profile" mat-menu-item>
-                <span disabled class="xl text-danger mdi mdi-email mx-2" ></span>
-                <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
-            </div>
-            <hr>
-            <div class="px-2 pb-2 text-center">
-                <button mat-raised-button color="warn" (click)="loginService.logout()"> 
-                    <span class="xl mdi mdi-power"></span>
-                    Salir
-                </button>
+    <div style="display: flex;">
+        <!-- THEME -->
+        <button mat-button [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors"></button>
+        <mat-menu #colorpicker="matMenu">
+            <div class="d-flex px-2">
+                <div class="pointer box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
+                <div class="pointer box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
+                <div class="pointer box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
+                <div class="pointer box-purple" (click)="changeTheme('purple-green.css')"></div>
             </div>
         </mat-menu>
 
+        <!-- LOG IN -->
+        <div class="mdi mdi-account-circle pointer"
+            *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
+        </div>
 
+        <!-- LOGGED IN -->
+        <div class="mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu" *ngIf="loginService.user">
+            <mat-menu #menu="matMenu">
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Home de Administrador</span>
+                </div>
+
+                <div routerLink="/waiter/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Home de Camarero</span>
+                </div>
+                <div routerLink="/waiter/dashboard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
+                    <span class="ml-2 align-middle">Mis métricas</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
+                    <span class="ml-2 align-middle">{{loginService.user.tx_name}}</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
+                    <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
+                </div>
+                <hr>
+                <div class="px-2 pb-2 text-center">
+                    <button style="width: 100%;" mat-raised-button color="warn" (click)="loginService.logout()">
+                        <span class="xl mdi mdi-power"></span>
+                        Salir
+                    </button>
+                </div>
+            </mat-menu>
+        </div>
     </div>
+
+
 
 </mat-toolbar>

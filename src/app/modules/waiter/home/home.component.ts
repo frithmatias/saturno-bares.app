@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.loading = true;
+
     if (this.loginService.user.id_company?._id) {
       let idCompany = this.loginService.user.id_company._id;
       this.readSections(idCompany);
@@ -45,7 +46,6 @@ export class HomeComponent implements OnInit {
         this.readSections(data.id_company._id);
       }
     })
- 
   }
 
   takeSection(section: Section): void {

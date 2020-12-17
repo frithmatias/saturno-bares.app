@@ -4,7 +4,7 @@
 
         <mat-card-header>
             <mat-card-title>
-                <span class="mdi mdi-storefront-outline"></span> Mis bares / restorants
+                <span class="mdi mdi-storefront-outline"></span> Mis Comercios
             </mat-card-title>
         </mat-card-header>
 
@@ -20,7 +20,7 @@
                 <table mat-table [dataSource]="adminService.companies">
                     <ng-container matColumnDef="tx_company_name">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
-                        <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_company_name}}</td>
+                        <td mat-cell *matCellDef="let element" class="text-left"><span class="mdi mdi-check text-warning" *ngIf="element.tx_company_string === companyUpdated?.tx_company_string"></span> {{element.tx_company_name}} </td>
                     </ng-container>
                     <ng-container matColumnDef="tx_address_street">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Calle </th>
@@ -47,16 +47,16 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button *ngIf="!companyCreate" mat-button (click)="companyCreate=true"><span class="lg mdi mdi-plus"></span> CREAR BAR </button>
-            <button *ngIf="companyCreate" mat-button (click)="companyCreate=false"><span class="lg mdi mdi-chevron-up"></span> CERRAR FORMULARIO </button>
+            <button *ngIf="!openForm" mat-button (click)="openForm=true"><span class="lg mdi mdi-plus"></span> CREAR COMERCIO </button>
+            <button *ngIf="openForm" mat-button (click)="openForm=false"><span class="lg mdi mdi-chevron-up"></span> CERRAR FORMULARIO </button>
         </mat-card-actions>
 
     </mat-card>
 
 
-    <mat-card *ngIf="companyCreate" class="animated fadeIn">
+    <mat-card *ngIf="openForm" class="animated fadeIn">
 
-        <app-company-create [companyEdit]="companyEdit" (newCompany)="newCompany($event)">
+        <app-company-create [companyEdit]="companyEdit" (newCompany)="newCompany($event)" (clearForm)="clearForm()">
         </app-company-create>
 
     </mat-card>

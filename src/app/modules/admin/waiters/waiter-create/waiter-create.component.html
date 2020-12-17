@@ -41,17 +41,6 @@
             placeholder="Confirma contraseña" autocomplete="new-password">
     </mat-form-field>
 
-    <div class="card mb-4" *ngIf="waiterEdit?.id_role ==='ASSISTANT_ROLE'">
-        <div class="card-header">MESAS</div>
-        <div class="card-body p-0">
-            <mat-selection-list [ngModelOptions]="{standalone: true}" [(ngModel)]="selStrTables">
-                <mat-list-option name="selStrTables" *ngFor="let table of tables" [value]="table._id">
-                    <span class="mat-select-option-nowarp">{{table.cd_table}}</span>
-                </mat-list-option>
-            </mat-selection-list>
-        </div>
-    </div>
-
     <div class="container pt-4 px-0">
         <div *ngIf="!waiterEdit">
             <button mat-raised-button color="accent" type="submit">

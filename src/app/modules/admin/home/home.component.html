@@ -8,7 +8,7 @@
 
     <div class="col-12 col-sm-6 col-md-6 col-lg-5">
 
-      <!-- WIZARD -->
+      <!-- WIZARD LINK -->
       <mat-card class="m-2">
         <div class="pointer my-3" routerLink="/admin/wizard">
           <div class="saturno-minicard-title">
@@ -76,10 +76,19 @@
     <div class="col-12 col-sm-6 col-md-6 col-lg-5">
 
       <!-- COMPANY TABLE INFO -->
-      <mat-card class="m-2">
-        <div class="pointer my-3" routerLink="/waiter/home">
-          <div class="card-header">{{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
-          </div>
+
+      <mat-card class="m-2" routerLink="/waiter/home">
+
+        <mat-card-header>
+          <mat-card-title>
+
+            {{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
+
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
           <div class="table-responsive-sm mt-2">
             <table class="table-sm mb-0 saturno-minicard-text text-center">
 
@@ -123,65 +132,59 @@
             <div *ngIf="
     adminService.companies.length === 0 || 
     adminService.sections.length === 0 ||
-    adminService.tables.length === 0" class="pointer card bg-warning sm p-2 mt-2 rounded text-dark text-center">
+    adminService.tables.length === 0" class="pointer sm p-2 mt-2">
               Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
                 routerLink="/admin/wizard">"Iniciar el Asistente"</span>
               para crear todo lo necesario.
             </div>
 
           </div>
-        </div>
+        </mat-card-content>
+
       </mat-card>
 
       <!-- FOOTER INFO -->
-      <mat-card class="m-2">
-        <div class="my-3" *ngIf="loginService.user.id_company">
-          <div class="saturno-minicard-text" style="text-align: left;">
+      <mat-card class="m-2 saturno-minicard-text" style="text-align: left;" *ngIf="loginService.user.id_company">
 
-
-            <div>
-              <span class="mdi mdi-headset lg mr-2"></span> Administradores y Camareros
-            </div>
-
-            <div class="my-1">
-              Para gestionar mesas y turnos sólo tenés que ir al menú de Camarero y tomar
-              un sector.
-            </div>
-
-
-
-            <hr>
-
-            <div>
-              <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span> Clientes
-            </div>
-
-            <div class="my-1">
-              Para que tus clientes puedan crear turnos de tu comercio tenés que ofrecerles la
-              dirección web principal en saturno.fun y una vez ahí buscar tu empresa en el buscador.
-            </div>
-
-            <a target="_blank" href="https://saturno.fun">
-              https://saturno.fun
-            </a>
-
-            <hr>
-
-            <div class="my-1">
-              También puede usar un link o acceso directo a tu comercio en:
-            </div>
-
-            <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}">
-              https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}
-            </a>
-
-          </div>
+        <div>
+          <span class="mdi mdi-headset lg mr-2"></span> Administradores y Camareros
         </div>
+
+        <div class="my-1">
+          Para gestionar mesas y turnos sólo tenés que ir al menú de Camarero y tomar
+          un sector.
+        </div>
+
+        <hr>
+
+        <div>
+          <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span> Clientes
+        </div>
+
+        <div class="my-1">
+          Para que tus clientes puedan crear turnos de tu comercio tenés que ofrecerles la
+          dirección web principal en saturno.fun y una vez ahí buscar tu empresa en el buscador.
+        </div>
+
+        <a target="_blank" href="https://saturno.fun">
+          https://saturno.fun
+        </a>
+
+        <hr>
+
+        <div class="my-1">
+          También puede usar un link o acceso directo a tu comercio en:
+        </div>
+
+        <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}">
+          https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}
+        </a>
+
+
       </mat-card>
     </div>
 
     <div class="col-sm-0 col-lg-1"></div>
 
   </div>
-
 </div>

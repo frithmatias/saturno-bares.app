@@ -21,17 +21,16 @@ export class WaitersComponent implements OnInit, OnDestroy {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
-  displayedColumns: string[] = ['id_role','tx_name', '_id'];
+  displayedColumns: string[] = ['id_role', 'tx_name', '_id'];
 
   waiterCreate = false;
-  waiters: User[];
   waiterEdit: User | String;
   idWaiterUpdated: string;
   user: User;
   userSubscription: Subscription;
 
   constructor(
-    private adminService: AdminService,
+    public adminService: AdminService,
     public loginService: LoginService,
     private sharedService: SharedService,
     private snack: MatSnackBar
@@ -39,14 +38,14 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.loginService.user) {
-      
+
       this.user = this.loginService.user;
-      
+
       if (this.user.id_company) {
         let idCompany = this.user.id_company._id;
         this.readWaiters(idCompany);
       }
-      
+
       this.userSubscription = this.loginService.user$.subscribe(data => {
         if (data) {
           this.user = data;
@@ -65,19 +64,19 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
   // waiter was created or updated
   waiterUpdated(idWaiter: string): void {
+    this.waiterCreate = false;
     this.idWaiterUpdated = idWaiter;
     this.readWaiters(this.loginService.user.id_company._id);
   }
 
   readWaiters(idCompany: string): void {
     this.adminService.readWaiters(idCompany).subscribe((data: UsersResponse) => {
-      this.waiters = data.users;
-      this.adminService.waiters = data.users;
+      this.adminService.waiters = [...data.users];
     });
   }
 
   deleteWaiter(idWaiter: string): void {
-    if(idWaiter === this.loginService.user._id){
+    if (idWaiter === this.loginService.user._id) {
       this.sharedService.snack('No podés borrar tu propio usuario!', 2000);
       return;
     }
@@ -85,9 +84,8 @@ export class WaitersComponent implements OnInit, OnDestroy {
       if (data.dismissedByAction) {
         this.adminService.deleteWaiter(idWaiter).subscribe((data: UserResponse) => {
           this.waiterEdit = 'clear_form';
-          
           this.snack.open(data.msg, null, { duration: 5000 });
-          this.waiters = this.waiters.filter(waiter => waiter._id != idWaiter);
+          this.adminService.waiters = this.adminService.waiters.filter(waiter => waiter._id != idWaiter);
         },
           (err: UserResponse) => {
             this.snack.open(err.msg, null, { duration: 5000 });

@@ -1,7 +1,7 @@
 <div class="saturno-card  m-3 animated fadeIn">
   <div *ngIf="publicService.company">
 
-    <h5 *ngIf="loading" class="card-title">
+    <h5 *ngIf="loading">
       <span id="lblNuevoTicket">
         Cargando...
       </span>
@@ -25,7 +25,7 @@
             <mat-form-field class="w-100">
               <mat-label>Cantidad de Personas</mat-label>
               <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons"
-                type="number" required>
+                type="number" min="1" required>
             </mat-form-field>
 
             <mat-form-field class="w-100">

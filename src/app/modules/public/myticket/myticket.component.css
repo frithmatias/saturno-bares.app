@@ -11,25 +11,15 @@
 
 /*---------------------------------------------------*/
 /* my ticket rounded */
-.screen-myticket-container {
-  padding         : 2em;
-  width           : 13em;
-  height          : 13em;
-  line-height     : 3em;
-  border-radius   : 50%;
-  color           : darkslategray;
-  background-color: #fcfcfc;
-}
 
 .screen-myticket-text-header {
   font-size: 1.2em;
-  color    : grey;
-
 }
 
 .screen-myticket-text {
-  font-size: 3.5em;
-  color    : red;
+  font-size  : 5em;
+  color      : red;
+  line-height: 1em;
 }
 
 .screen-myticket-text-alert {
@@ -38,14 +28,12 @@
 
 .screen-myticket-text-footer {
   font-size: 1em;
-  color    : grey;
 }
 
 /* ------------------------------------------------------- */
 /* history */
 .screen-history-title {
   font-size: calc(.8em + .8vw);
-  color    : gray;
 }
 
 .screen-history-text {

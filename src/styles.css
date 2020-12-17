@@ -15,15 +15,11 @@ body {
     font-display: swap;
 }
 
-/* 
-Quita el color de background-color que el navegador pone automaticamente en los 
-inputs cuando llena el control con un valor automáticamente con auto-fill. 
-*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: rgb(207, 207, 17) !important;
+    background-image: none !important;
+    color: -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
 }
 
 .btn {
@@ -65,11 +61,6 @@ td {
 
 mat-drawer-container {
     flex: 1 1 auto;
-}
-
-.button-disabled {
-    background-color: #f1f1f1 !important;
-    color           : #c7c7c7 !important;
 }
 
 .noshadow {
@@ -411,8 +402,20 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
 mat-card-header {
     text-align: left;
+}
+
+.mdi {
+    vertical-align: bottom !important;
 }
 
 .mat-card {
@@ -468,6 +471,10 @@ mat-card-header {
     display: none !important;
 }
 
+.mat-card-avatar {
+    border-radius: unset !important;
+    margin: 10px;
+}
 
 /*
 -------------------------------------------
@@ -531,3 +538,5 @@ TECH ICONS
     background-size  : contain;
     background-repeat: no-repeat;
 }
+
+

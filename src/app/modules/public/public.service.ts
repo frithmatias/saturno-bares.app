@@ -45,7 +45,7 @@ export class PublicService {
         this.ticket = JSON.parse(localStorage.getItem('ticket'));
         this.router.navigate(['/public/myticket']);
       } else {
-        this.router.navigate(['/public/tickets']);
+        this.router.navigate(['/public/companypage']);
       }
 
     }

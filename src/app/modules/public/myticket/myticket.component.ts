@@ -52,7 +52,7 @@ export class MyticketComponent implements OnInit {
 
 
 		if (!this.publicService.ticket) {
-			this.router.navigate(['/public/tickets']);
+			this.router.navigate(['/public/companypage']);
 			this.sharedService.snack('Debe obtener un turno primero.', 5000)
 			return;
 		}

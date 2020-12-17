@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PublicService } from '../public.service';
 
 @Component({
 	selector: 'app-company-page',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyPageComponent implements OnInit {
 
-	constructor() { }
+	constructor(public publicService: PublicService) { }
 	ngOnInit(): void { }
 
 }

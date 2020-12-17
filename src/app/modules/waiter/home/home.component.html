@@ -7,16 +7,16 @@
     <div *ngIf="!loading" class="animated fadeIn">
         
         <div class="md">Bienvenido, desde acá podés entrar a un sector y comenzar a atender mesas.</div>
+        
+        <!-- no company selected -->
+        <div *ngIf="!loginService.user.id_company" class="p-3 my-4">
+            No tenés ningúna empresa asignada a tu usuario. Por favor verifica que exista al menos
+            una empresa creada y luego asignala a tu usuario desde el menú principal.
+            <hr>
+            <button mat-raised-button color="accent" routerLink="/admin/wizard">
+                <span class="mdi mdi-wizard-hat"></span> IR AL ASISTENTE
+            </button>
 
-        <!-- no company -->
-        <div *ngIf="!loginService.user.id_company" class="card lead bg-danger text-white p-3 my-4"
-            style="line-height: initial;">
-            No tenés asignada ningúna empresa. Tenés seleccionarla desde el menú prinicipal.
-        </div>
-
-        <!-- no tables -->
-        <div *ngIf="tables?.length === 0" class="card lead bg-danger text-white p-3 my-4" style="line-height: initial;">
-            No hay mesas creadas. Tenés que crearlas desde el Menú de Administrador.
         </div>
 
         <!-- ======================================================== -->

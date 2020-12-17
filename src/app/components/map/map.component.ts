@@ -36,6 +36,8 @@ export class MapComponent implements OnInit {
   markersHome: any[] = []; // Markers del mapa en Home.
   markerInserted = false; // en crear company, es necesario crear solo un marker
 
+  config: any = {};
+
   constructor(
     public sharedService: SharedService,
     private router: Router,
@@ -43,6 +45,36 @@ export class MapComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<any> {
+
+
+    if (localStorage.getItem('config')) {
+      this.config = JSON.parse(localStorage.getItem('config'));
+    }
+
+    if (!this.config.theme) {
+      let hours = new Date().getHours();
+
+      if (hours >= 6 && hours < 20) {
+        // light theme
+        this.config.maptheme = 'streets-v11'
+      } else {
+        // dark theme
+        this.config.maptheme = 'dark-v10';
+      }
+
+    } else {
+      if (['deeppurple-amber.css', 'indigo-pink.css'].includes(this.config.theme)) {
+        // light theme
+        this.config.maptheme = 'streets-v11'
+      } else {
+        // dark theme
+        this.config.maptheme = 'dark-v10';
+      }
+    }
+
+
+
+
     await this.inicializarMapa(this.mapbox);
   }
 
@@ -177,18 +209,18 @@ export class MapComponent implements OnInit {
   }
 
   async inicializarMapa(mapbox: ElementRef) {
-    let coords = await this.getCoords().catch((coords)=>{
+    let coords = await this.getCoords().catch((coords) => {
       this.mapZoom = 10;
       return coords;
     })
 
-    
+
     const lat = Number(coords.lat);
     const lng = Number(coords.lng);
     mapboxgl.accessToken = MAPBOX_TOKEN;
     this.map = new mapboxgl.Map({
       container: mapbox.nativeElement,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: `mapbox://styles/mapbox/${this.config.maptheme}`,
       center: [lng, lat],
       zoom: this.mapZoom
     });

@@ -25,12 +25,12 @@
                 <!-- NORMAL LOGIN -->
                 <!---------------------------------------------------------------------->
                 <div class="col-sm mt-4 mt-md-0">
-                    <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )">
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )" autocomplete="off">
 
                         <div class="my-2">
                             <mat-form-field class="w-100">
-                                <mat-label>Ingrese su Email</mat-label>
-                                <input #inputEmail type="text" matInput placeholder="sumail@dominio.com"
+                                <mat-label>Email</mat-label>
+                                <input #inputEmail type="email" matInput placeholder="mail@dominio.com"
                                     [ngModel]="email" name="email">
                                 <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
                                         class="mdi mdi-close"></i></span>
@@ -42,7 +42,7 @@
                         <!---------------------------------------------------------------------->
                         <div class="my-2">
                             <mat-form-field class="w-100">
-                                <mat-label>Ingrese su Password</mat-label>
+                                <mat-label>Password</mat-label>
                                 <input #inputPassword matInput placeholder="password" ngModel name="password"
                                     [type]="hidepass ? 'password' : 'text'" required>
                                 <span class="input-icon" (click)="hidepass = !hidepass"

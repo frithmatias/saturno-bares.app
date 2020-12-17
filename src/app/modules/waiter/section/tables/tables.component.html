@@ -194,7 +194,6 @@
                     <!-- activate table -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-block p-0" [ngClass]="{
-                          'button-disabled': table.tx_status === 'busy',
                           'btn-success': table.tx_status === 'idle',
                           'btn-secondary': table.tx_status === 'paused'
                         }" [disabled]="table.tx_status === 'busy'">
@@ -217,7 +216,6 @@
                     <!-- priority slide -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-block p-0"
-                            [ngClass]="{ 'button-disabled': !table.id_session || waiterService.sectionSelected === '' }"
                             [disabled]="!table.id_session || waiterService.sectionSelected === ''">
                             <table width="100%" >
                                 <tr>
@@ -237,7 +235,6 @@
                     <!-- reassign ticket -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button [disabled]="!table.id_session || waiterService.sectionSelected === ''"
-                            [ngClass]="{'button-disabled': !table.id_session || waiterService.sectionSelected === ''}"
                             class="btn btn-primary btn-block p-0" (click)="reassignTicket(table.id_session?.id_ticket)">
                             <table width="100%" >
                                 <tr>
@@ -254,8 +251,7 @@
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-primary btn-block p-0"
                             (click)="attendedTicket(table.id_session?.id_ticket)"
-                            [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'"
-                            [ngClass]="{'button-disabled': !table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'}">
+                            [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'">
                             <table width="100%" >
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
@@ -270,8 +266,7 @@
                     <!-- release ticket -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-primary btn-block p-0"
-                            (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'"
-                            [ngClass]="{'button-disabled': table.tx_status !== 'busy'}">
+                            (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
                             <table width="100%" >
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">
@@ -286,8 +281,7 @@
                     <!-- end ticket -->
                     <div class="col-6 col-sm-6 col-md-4 p-1">
                         <button class="btn btn-danger btn-block p-0" (click)="endTicket(table.id_session?.id_ticket)"
-                            [disabled]="table.tx_status !== 'busy'"
-                            [ngClass]="{'button-disabled': table.tx_status !== 'busy'}">
+                            [disabled]="table.tx_status !== 'busy'">
                             <table width="100%" >
                                 <tr>
                                     <td class="rounded-left px-1" style="background-color: rgba(50, 50, 50, 0.3)">

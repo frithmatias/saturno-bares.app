@@ -20,7 +20,7 @@ declare const gapi: any;
 export class RegisterComponent implements OnInit {
 	forma: FormGroup;
 	auth2: any; // info de google con el token
-
+	disabled = false;
 	constructor(
 		private router: Router,
 		private publicService: PublicService,
@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit {
 		}
 		this.forma = new FormGroup({
 			name: new FormControl(defaults.name, Validators.required),
+			zona: new FormControl(defaults.name, Validators.required),
 			email: new FormControl(defaults.email, [Validators.required, Validators.email]),
 			password1: new FormControl(defaults.password1, Validators.required),
 			password2: new FormControl(defaults.password2, Validators.required),
@@ -141,6 +142,5 @@ export class RegisterComponent implements OnInit {
 			);
 		});
 	}
-	
 
 }

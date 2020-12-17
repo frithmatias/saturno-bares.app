@@ -52,6 +52,9 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
+
+		if (!changes.waiterEdit?.currentValue) { return; }
+
 		if(this.waiterEdit && !this.forma) this.createForm();
 		this.forma?.enable();
 		// ADMIN_ROLE -> id_company: null

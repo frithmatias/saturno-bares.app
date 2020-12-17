@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Section, SectionResponse } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../../services/login.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-sections',
@@ -19,6 +20,7 @@ export class SectionsComponent implements OnInit {
 
   sectionCreate = false;
   userSubscription: Subscription;
+  dataSource = new MatTableDataSource<Section>();
 
   constructor(
     public loginService: LoginService,
@@ -26,7 +28,7 @@ export class SectionsComponent implements OnInit {
     private snack: MatSnackBar
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   deleteSection(section: Section): void {
     this.snack.open(`Desea eliminar el sector ${section.tx_section}`, 'ELIMINAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
@@ -45,7 +47,8 @@ export class SectionsComponent implements OnInit {
   }
 
   sectionCreated(section: Section): void {
-    this.adminService.sections.push(section);
+    this.adminService.sectionsMap.set(section._id, section.tx_section);
+    this.adminService.sections = [section, ...this.adminService.sections];
   }
 
 

@@ -12,10 +12,11 @@
     font-size : large;
 
 }
+
 .icon-magnify {
-    position  : relative;
-    top       : 1px;
-    left     : 27px;
+    position  : absolute;
+    top       : 0px;
+    left      : 4px;
     font-size : 14px;
     cursor    : pointer;
     width     : 25px;
@@ -26,10 +27,11 @@
     font-size : large;
 
 }
+
 .input-company {
     border       : none;
     border-radius: 2px;
-    box-shadow   : 0px 1px 3px 0px #4b4b4b;
+    box-shadow   : 0px 1px 3px 0px rgba(100,100,100,.3);
     padding      : .2em;
     padding-left : 2em;
     font-size    : medium;

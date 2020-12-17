@@ -1,0 +1,28 @@
+.footer-content {
+    align-items: center;
+    display    : flex;
+    flex-flow  : row wrap;
+    padding    : 1em;
+    background : #e91e63;
+    color      : #fff;
+
+}
+
+footer {
+    display: block;
+}
+
+.footer-by {
+    flex-grow: 1;
+}
+
+.footer-tech {
+    display  : flex;
+    flex-grow: 1;
+}
+
+@media (max-width: 884px) {
+    .footer-content {
+        flex-direction: column;
+    }
+}

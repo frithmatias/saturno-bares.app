@@ -26,11 +26,11 @@
       </mat-expansion-panel-header>
 
       <div class="container row px-0 mb-4">
-        <div class="card bg-danger text-white mb-3">
-          <div class="card-body p-1">
+        <div class="mb-3 p-1">
+        
             Por favor seleccioná las mesas necesarias para aprovisionar este pedido para
             {{ticket.nm_persons}} personas.
-          </div>
+    
         </div>
         <div *ngFor="let table of tables" class="col-4 px-0 p-1">
           <div class="btn btn-block p-0" [ngClass]="{

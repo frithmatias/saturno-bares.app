@@ -9,13 +9,13 @@
     </mat-drawer>
 
     <!-- chat -->
-    <mat-drawer [(opened)]="opened" #chat id="chat" mode="over" position="end" class="col-md-8 col-lg-6 col-xl-4 mat-drawer-chat">
+    <mat-drawer [(opened)]="opened" #chat id="chat" mode="over" position="end">
         <app-chat (toggleChat)="toggle( chat )" [chatOpenStatus]="opened" (unreadMessages)="unreadMessages=$event">
         </app-chat>
     </mat-drawer>
 
     <!-- container -->
-    <div class="h-100" style="text-align: -webkit-center;">
+    <div class="h-100" style="text-align: -webkit-center; top: 64px; position: absolute; width: 100%;">
         <router-outlet></router-outlet>
     </div>
     

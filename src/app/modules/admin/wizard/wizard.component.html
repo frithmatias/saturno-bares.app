@@ -30,7 +30,7 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
-                        <span class="mdi mdi-store-outline mr-2"></span>Crear BAR / Resto
+                        <span class="mdi mdi-store-outline mr-2"></span>Crear Comercio
                     </mat-card-title>
                 </mat-card-header>
 
@@ -60,11 +60,11 @@
                             <p>
                                 Podés seguir adelante con el asistente.
                             </p>
-                            <p class="card-text card-text">
+                            <p>
                                 Recordá que podés crear mas comercios si disponés de sucursales y luego podés cambiar de
                                 comercio
                                 seleccionandolo
-                                desde el menu principal <span class="mdi mdi-menu"></span>
+                                desde el menu principal <span class="md align-top mdi mdi-menu"></span>
                             </p>
                         </div>
                     </div>
@@ -74,17 +74,17 @@
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
                     <button *ngIf="adminService.companies && loginService.user?.id_company?._id" mat-button
                         (click)="stepperGoNext(stepper)">
                         SIGUIENTE
-                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                     <button *ngIf="!adminService.companies || !loginService.user?.id_company" mat-button disabled>
                         SIGUIENTE
-                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                 </mat-card-actions>
             </mat-card>
@@ -117,16 +117,16 @@
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
                     <button *ngIf="adminService.sections?.length > 0" mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
-                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                     <button *ngIf="adminService.sections?.length === 0" mat-button disabled>
                         SIGUIENTE
-                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
 
                 </mat-card-actions>
@@ -160,16 +160,16 @@
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
                     <button *ngIf="adminService.tables?.length > 0" mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
-                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                     <button *ngIf="adminService.tables?.length === 0" mat-button disabled>
                         SIGUIENTE
-                        <span class="mdi  mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                 </mat-card-actions>
 
@@ -203,12 +203,12 @@
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
                     <button mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
-                        <span class="mdi mdi-chevron-right-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                 </mat-card-actions>
             </mat-card>
@@ -237,12 +237,12 @@
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="mdi mdi-chevron-left-box-outline"></span>
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
                     <button mat-button (click)="endWizard()">
                         FINALIZAR
-                        <span class="mdi mdi-check-box-outline"></span>
+                        <span class="mdi align-top mdi-check text-success"></span>
                     </button>
                 </mat-card-actions>
             </mat-card>
