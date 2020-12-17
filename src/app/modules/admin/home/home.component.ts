@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper/stepper';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { AdminService } from '../admin.service';
 
@@ -10,7 +9,6 @@ import { AdminService } from '../admin.service';
 })
 export class HomeComponent implements OnInit {
 
-	@ViewChild('stepper') stepper: MatStepper;
 	publicURL: string;
 	constructor(
 		public loginService: LoginService,

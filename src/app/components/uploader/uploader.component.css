@@ -23,13 +23,7 @@
     width : 70px;
 }
 
-.image {
-    position: relative;
-    display : flex;
-    margin  : 5px;
-    width   : 4em;
-    height  : 4em;
-}
+
 
 .image:hover {
     border: 1px solid rgba(100,100,100,0.5);
@@ -66,9 +60,34 @@
     opacity: 0.3;
 }
 
-.image:hover {}
-
 .image img {
     width : 100%;
     height: auto;
+}
+
+
+.images-container {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.image-logo {
+    position: relative;
+    display : flex;
+    margin  : 5px;
+    width   : 8em;
+    height  : 8em;
+}
+
+
+.image {
+    position: relative;
+    display : flex;
+    margin  : 5px;
+    width   : 4em;
+    height  : 4em;
 }

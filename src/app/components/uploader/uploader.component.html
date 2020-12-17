@@ -5,70 +5,97 @@
     </mat-card-header>
     <mat-card-content>
 
-        <div appNgDropFiles [filesToUpload]="filesToUpload" [tipo]="tipo" [id]="id"
-            (mouseSobre)="estaSobreElemento = $event" (sendDropFiles)="queueFilesDrop($event)"
-            [ngClass]="{'file-over':estaSobreElemento}" class="container p-2 drop-zone file-over" *ngIf="company">
+        <div app-dropfiles (mouseSobre)="estaSobreElemento = $event" (sendDropFiles)="queueFiles($event)"
+            [ngClass]="{'file-over':estaSobreElemento}" class="container p-2 drop-zone file-over">
 
 
-            <!-- <label class="btn btn-warning" for="filesUpload">Seleccionar Imagen</label> -->
-            <input (change)="queueFilesInput($event)" id="filesUpload" type="file" name="photo" style="display: none;"
-               multiple="false" >
+            <input #filesUpload (change)="queueFiles($event)" [id]="txType" type="file" style="display: none">
+
+            <div *ngIf="company">
 
 
-            <div class="row m-0" *ngIf="company">
-                <div class="col-12 col-sm-7 p-0">
+                <div *ngIf="txType==='logo'" class="images-container">
+
                     <!-- Imagenes cargadas en el server -->
-                    <div class="row m-0 justify-content-center">
-                        <div *ngFor="let img of company.tx_company_banners" class="image">
-                            <img src="{{img | imagenPipe : txType : company?._id }}">
-                            <span class="mdi mdi-close delete-icon" (click)="borrarImagen(img)"></span>
-                        </div>
+                    <div *ngIf="!filesToUpload || filesToUpload.length === 0" class="image pointer">
 
-                        <!-- Imagenes previsualizadas luego del drag and drop -->
-                        <div *ngFor="let archivo of filesToUpload; let i = index;" class="image">
-                            <img class="image-queue" [src]="archivo.bufferImage">
-                            <span class="mdi mdi-close delete-icon"
-                                (click)="borrarImagenQueue(archivo.nombreArchivo)"></span>
-                        </div>
+                        <label *ngIf="company.tx_company_logo==='default-logo.svg'" [for]="txType"
+                            style="cursor: inherit;">
+                            <img src="../../../assets/img/no-image1.png">
+                        </label>
+                        <img *ngIf="company.tx_company_logo!=='default-logo.svg'"
+                            src="{{company.tx_company_logo | imagenPipe : txType : company?._id }}">
+                        <span class="mdi mdi-close delete-icon" (click)="borrarLogo()"></span>
 
-                        <!-- Maximo de 20 imagenes, si son menos las completo con 'no-image' Agregar -->
-                        <div class="image"
-                            *ngFor="let aasdf of [].constructor(maxupload - company.tx_company_banners.length - filesToUpload.length)">
-                            <label for="filesUpload"><img class="pointer"
-                                    src="../../../assets/img/no-image1.png"></label>
-                        </div>
+                    </div>
 
+                    <!-- Imagenes previsualizadas luego del drag and drop -->
+                    <div *ngFor="let archivo of filesToUpload; let i = index;" class="image">
+                        <img class="image-queue" [src]="archivo.bufferImage">
+                        <span class="mdi mdi-close delete-icon"
+                            (click)="borrarImagenQueue(archivo.nombreArchivo)"></span>
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-5 p-0">
-                    <div *ngIf="filesToUpload.length === 0">Arrastre aquí las imagenes</div>
-                    <div *ngFor="let archivo of filesToUpload">
-
-                        <div [ngClass]="{'text-green':archivo.progreso>=100}" class="text-upload text-left">
-                            {{archivo.nombreArchivo | wordMaxLength : 10}} {{archivo.archivo.size / 1024 | number:
-                            '.2-2'}} KB (Subido: {{archivo.progreso}}%)
-                        </div>
-
-
-                        <div class="progress animated fadeIn">
-                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':archivo.progreso + '%'}">
-                            </div>
-                        </div>
+                <!-- Maximo de 20 imagenes, si son menos las completo con 'no-image' Agregar -->
+                <div *ngIf="txType==='banner'" class="images-container">
+                    <!-- Imagenes cargadas en el server -->
+                    <div *ngFor="let img of company.tx_company_banners" class="image">
+                        <img src="{{img | imagenPipe : txType : company?._id }}">
+                        <span class="mdi mdi-close delete-icon" (click)="borrarImagen(img)"></span>
                     </div>
 
+                    <!-- Imagenes previsualizadas luego del drag and drop -->
+                    <div *ngFor="let archivo of filesToUpload; let i = index;" class="image">
+                        <img class="image-queue" [src]="archivo.bufferImage">
+                        <span class="mdi mdi-close delete-icon"
+                            (click)="borrarImagenQueue(archivo.nombreArchivo)"></span>
+                    </div>
+
+                    <div class="image pointer"
+                        *ngFor="let aasdf of [].constructor(maxupload - company.tx_company_banners.length - filesToUpload.length)">
+                        <label [for]="txType" style="cursor: inherit;">
+                            <img src="../../../assets/img/no-image1.png">
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+                <div *ngIf="filesToUpload.length === 0">Arrastre aquí las imagenes</div>
+                <div *ngFor="let archivo of filesToUpload">
+
+                    <div [ngClass]="{'text-green':archivo.progreso>=100}" class="text-upload text-left">
+                        {{archivo.nombreArchivo | wordMaxLength : 10}} {{archivo.archivo.size / 1024 | number:
+                        '.2-2'}} KB (Subido: {{archivo.progreso}}%)
+                    </div>
+
+
+                    <div class="progress animated fadeIn">
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':archivo.progreso + '%'}">
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions *ngIf="txType==='banner'">
+
         <button mat-button (click)="subirImagenes()" [disabled]="filesToUpload.length==0"><i class="mdi mdi-upload"></i>
-            Subir</button>
+            Subir Imagenes</button>
         <button mat-button (click)="borrarImagenes()" [disabled]="company.tx_company_banners.length==0"><i
                 class="mdi mdi-delete"></i> Eliminar Todas</button>
     </mat-card-actions>
 
+    <mat-card-actions *ngIf="txType==='logo'">
+        <button mat-button (click)="subirLogo()" [disabled]="filesToUpload.length==0"><i class="mdi mdi-upload"></i>
+            Subir Logo</button>
+        <button mat-button (click)="borrarLogo()" [disabled]="company.tx_company_banners.length==0"><i
+                class="mdi mdi-delete"></i> Eliminar Logo</button>
+    </mat-card-actions>
 </mat-card>

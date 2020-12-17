@@ -1,4 +1,13 @@
-.bar-history {
+.public-home-title {
+    font-size: xx-large;
+    color: #ff8b00;
+}
+
+.public-home-subtitle {
+    font-size: small;
+}
+
+.public-home-content {
     font-family: 'system-ui';
     font-size: small;
     font-weight: 200;

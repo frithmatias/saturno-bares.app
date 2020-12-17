@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 // libraries
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

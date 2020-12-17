@@ -1,8 +1,16 @@
 <div class="saturno-card animated fadeIn">
     <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear #stepper>
 
+        <ng-template matStepperIcon="phone">
+            <mat-icon>call_end</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="chat">
+            <mat-icon>forum</mat-icon>
+        </ng-template>
+
         <!-- Welcome Step -->
-        <mat-step state="star">
+        <mat-step>
+
             <mat-card>
                 <mat-card-content>
                     <div class="saturno-minicard-text">
@@ -26,14 +34,17 @@
         </mat-step>
 
         <!-- Companies Step -->
-        <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id" state="store">
+        <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
             <mat-card>
                 <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-store-outline"></div>
                     <mat-card-title>
-                        <span class="mdi mdi-store-outline mr-2"></span>Crear Comercio
+                        Comercios
                     </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Al menos uno por cada usuario.
+                    </mat-card-subtitle>
                 </mat-card-header>
-
                 <mat-card-content>
                     <!-- no companies, no attached company -->
                     <div *ngIf="adminService.companies?.length === 0">
@@ -91,15 +102,18 @@
         </mat-step>
 
         <!-- Sections Step -->
-        <mat-step [completed]="adminService.sections?.length > 0" state="important_devices">
+        <mat-step [completed]="adminService.sections?.length > 0">
 
             <mat-card>
                 <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-select-group"></div>
                     <mat-card-title>
-                        <span class="mdi mdi-select-group mr-2"></span>Sectores
+                        Sectores
                     </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Al menos uno por cada comercio.
+                    </mat-card-subtitle>
                 </mat-card-header>
-
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
@@ -135,14 +149,17 @@
         </mat-step>
 
         <!-- Tables Step -->
-        <mat-step [completed]="adminService.tables?.length > 0" state="important_devices">
+        <mat-step [completed]="adminService.tables?.length > 0">
             <mat-card>
                 <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-table-furniture"></div>
                     <mat-card-title>
-                        <span class="mdi mdi-table-furniture mr-2"></span>Mesas
+                        Mesas
                     </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Al menos una por cada sector.
+                    </mat-card-subtitle>
                 </mat-card-header>
-
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
@@ -176,24 +193,68 @@
             </mat-card>
         </mat-step>
 
-        <!-- Poll Step -->
-        <mat-step state="important_devices">
+        <!-- Waiters Step -->
+        <mat-step>
             <mat-card>
                 <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-account-tie"></div>
                     <mat-card-title>
-                        <span class="mdi mdi-poll-box mr-2"></span>Encuesta
+                        Camareros
                     </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Opcional
+                    </mat-card-subtitle>
                 </mat-card-header>
 
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Acá podés dar de alta algunas preguntas que tu cliente puede responder para calificar
+                            Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
+                            omitir este paso y continuar.
+                        </p>
+                    </div>
+
+                    <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
+                </mat-card-content>
+
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
+                        ATRAS
+                    </button>
+                    <button mat-button (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-step>
+
+        <!-- Poll Step -->
+        <mat-step>
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-poll-box"></div>
+                    <mat-card-title>
+                        Encuestas
+                    </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Opcional
+                    </mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="saturno-minicard-text">
+                        <p>
+                            Acá podés dar de alta items que tu cliente puede responder para calificar
                             de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes
                             crear una encuesta distinta para cada sector.
                         </p>
                         <p>
-                            Por ejemplo podría calificar items como "Atención", "Comida", "Limpieza", etc.
+                            Estos Items a califiar tienen que ser palabras, por ejemplo tu cliente podría querer
+                            calificar items
+                            como "Atención", "Comida", "Limpieza", etc.
                         </p>
                     </div>
 
@@ -214,24 +275,33 @@
             </mat-card>
         </mat-step>
 
-        <!-- Waiters Step -->
-        <mat-step state="face">
+        <!-- Webpage Step -->
+        <mat-step>
             <mat-card>
                 <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-web-box"></div>
                     <mat-card-title>
-                        <span class="mdi mdi-account-tie mr-2"></span>Camareros
+                        Web Page
                     </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Historia, logo y al menos 1 foto de tu comercio.
+                    </mat-card-subtitle>
                 </mat-card-header>
-
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
-                            omitir este paso y continuar.
+                            Ingresa una bienvenida a tus usuarios, puede ser la historia de tu comercio
+                            o cualquier texto de presentación a tus clientes.
                         </p>
+                        <p>
+                            Tenés que subir una imagen o logo de tu bar o restorant, preferentemente
+                            cuadrada y fondo transparente. También fotos del lugar como Banners, preferentemente
+                            de 500px x 200px o de relación 5:2 que no supere los 100kb.
+                        </p>
+
                     </div>
 
-                    <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
+                    <app-about [nomargin]="true" [nopadding]="true"></app-about>
                 </mat-card-content>
 
                 <mat-card-actions class="text-right">

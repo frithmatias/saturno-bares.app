@@ -1,25 +1,14 @@
-import { Directive, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { FileUpload } from '../models/fileupload.model';
+import { Directive, Output, EventEmitter, HostListener } from '@angular/core';
 
 @Directive({
-	selector: '[appNgDropFiles]'
+	selector: '[app-dropfiles]'
 })
-export class NgDropFilesDirective {
+export class UploaderDirective {
 
-	@Input() tipo: string;
-	@Input() id: string;
-	@Input() filesToUpload: FileUpload[] = [];
 	@Output() mouseSobre: EventEmitter<boolean> = new EventEmitter();
 	@Output() sendDropFiles: EventEmitter<any> = new EventEmitter();
 	
 	constructor() { }
-
-	/*
-	vamos a especificar un callback cuando suceda el "dragover", va a disparar un evento
-	la función recibe el evento y disparamos una notificacion para que el padre sepa que esta
-	encima. Pero para hablar con el padre o el elemento que lo contiene, hacemos el @Output
-	*/
-
 
 	@HostListener('dragover', ['$event'])
 	public onDragEnter(event: any) {

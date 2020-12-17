@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { SearchComponent } from './toolbar/search/search.component';
 import { MapComponent } from './map/map.component';
 import { UploaderComponent } from './uploader/uploader.component';
-import { NgDropFilesDirective } from '../directives/ng-drop-files.directive';
+import { UploaderDirective } from './uploader/uploader.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { NgDropFilesDirective } from '../directives/ng-drop-files.directive';
     SearchComponent,
     MapComponent,
     UploaderComponent,
-    NgDropFilesDirective
+    UploaderDirective
     
   ],
   imports: [

@@ -89,6 +89,8 @@ mat-drawer-container {
 400px -> 25rem
 */
 
+
+
 .saturno-card {
     min-width: 18rem;
     max-width: 36rem;
@@ -98,7 +100,7 @@ mat-drawer-container {
 
 .saturno-card-wide {
     min-width: 18rem;
-    max-width: 36rem;
+    max-width: 50rem;
     padding  : 1.2em;
     font-size: medium;
 }
@@ -164,26 +166,6 @@ mat-drawer-container {
     width     : 50%;
 }
 
-.footer {
-    position   : fixed;
-    bottom     : 0px;
-    width      : 100%;
-    align-items: center;
-}
-
-.footer-text {
-    text-align : center;
-    color      : rgb(157 157 157);
-    font-weight: lighter;
-    font-family: monospace;
-    margin-left: .2em;
-}
-
-.footer-icon {
-    text-align: center;
-    opacity   : 0.4;
-    font-size : large;
-}
 
 .desktop-panel-buttons {
     font-size : 1.5rem;
@@ -407,7 +389,7 @@ mat-toolbar {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 9999;
 }
 
 mat-card-header {
@@ -423,9 +405,26 @@ mat-card-header {
     /* opacity : .9; */
 }
 
+
+/*
+-------------------------------------------
+STEPPER
+-------------------------------------------
+*/
+
 .mat-horizontal-content-container {
     padding: 0px !important;
 }
+
+.mat-horizontal-stepper-header-container {
+    display: none !important;
+}
+
+/*
+-------------------------------------------
+SIDENAV 
+-------------------------------------------
+*/
 
 .mat-expansion-panel-body {
     padding: .5rem !important;
@@ -435,24 +434,11 @@ mat-card-header {
     border-color: #ffd740;
 }
 
-.icon-home-phone {
-    height         : 75px !important;
-    color          : red;
-    opacity        : .6;
-    font-size      : 4em;
-    display        : flex !important;
-    justify-content: center;
-}
-
-.icon-home-card {
-    opacity  : .4;
-    font-size: 4em;
-}
-
-.mat-icon-center {
-    display        : flex !important;
-    justify-content: center;
-}
+/*
+-------------------------------------------
+HOME 
+-------------------------------------------
+*/
 
 
 .swal2-title {
@@ -466,10 +452,6 @@ mat-card-header {
     font-weight: 300 !important;
 }
 
-
-.mat-horizontal-stepper-header-container {
-    display: none !important;
-}
 
 .mat-card-avatar {
     border-radius: unset !important;
@@ -501,42 +483,5 @@ MAPBOX
     position: relative !important;
 } */
 
-
-/*
--------------------------------------------
-TECH ICONS 
--------------------------------------------
-*/
-
-.tech-div {
-    display    : block;
-    text-indent: -9999px;
-    width      : 1.3em;
-    height     : 1.3em;
-}
-
-.tech-angular {
-    background       : url(./assets/logos/angular.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-js {
-    background       : url(./assets/logos/javascript.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-ts {
-    background       : url(./assets/logos/typescript.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-nodejs {
-    background       : url(./assets/logos/nodejs.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
 
 

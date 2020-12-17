@@ -1,12 +1,6 @@
-<div class="saturno-card animated fadeIn">
+<div class="saturno-card animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
     <mat-card>
-        <mat-card-header>
-            <div mat-card-avatar class="pointer tech-angular"></div>
-            <mat-card-title>Historia</mat-card-title>
-            <mat-card-subtitle>Ingrese la historia del lugar</mat-card-subtitle>
-        </mat-card-header>
         <mat-card-content>
-
             <form [formGroup]="formAbout" #formDirective="ngForm" (ngSubmit)="sendAbout(formDirective)">
                 <mat-form-field class="w-100">
                     <mat-label>Ingrese la historia del lugar</mat-label>
@@ -23,15 +17,20 @@
                     </div>
                 </div>
             </form>
-
         </mat-card-content>
-
     </mat-card>
 
     <div class="my-3"></div>
 
-    <app-uploader txType="banner"
-        [cardData]="{'icon':'mdi mdi-image', 'title':'Subir Imagenes', 'subtitle': 'Suba imagenes que se verán en la web page de su bar / resto. Tamaño recomendado 500px x 200px.'}"
+    <app-uploader [multi]="false" txType="logo"
+        [cardData]="{'icon':'mdi mdi-image-filter-hdr', 'title':'Subir Logotipo', 'subtitle': 'Subí un logotipo de tu comercio.'}"
+        [company]="company" (companyUpdated)="companyUpdated($event)">
+    </app-uploader>
+    
+    <div class="my-3"></div>
+
+    <app-uploader [multi]="true" txType="banner"
+        [cardData]="{'icon':'mdi mdi-image', 'title':'Subir Imagenes', 'subtitle': 'Subí fotos de tu comercio. Estas imagenes se verán en la web page. El tamaño del canvas es de 500px x 200px.'}"
         [company]="company" (companyUpdated)="companyUpdated($event)">
     </app-uploader>
 

@@ -1,28 +1,85 @@
-.footer-content {
-    align-items: center;
-    display    : flex;
-    flex-flow  : row wrap;
-    padding    : 1em;
-    background : #e91e63;
-    color      : #fff;
+.footer {
+    align-items    : center;
+    display        : flex;
+    flex-flow      : row wrap;
+    padding        : 1em;
+    background     : #151515;
+    font-family    : system-ui;
+    font-size      : small;
+    color          : #565656;
+    text-decoration: none;
+    justify-content: space-around;
+    height         : 8em;
+    margin-top     : 3em;
+}
+
+a {
+    color: #565656;
 
 }
 
-footer {
-    display: block;
+a:hover {
+    text-decoration: none;
 }
+
 
 .footer-by {
-    flex-grow: 1;
+    display: flex;
 }
 
 .footer-tech {
-    display  : flex;
-    flex-grow: 1;
+    display: flex;
 }
 
 @media (max-width: 884px) {
     .footer-content {
         flex-direction: column;
     }
+}
+
+
+
+/*
+-------------------------------------------
+TECH ICONS 
+-------------------------------------------
+*/
+
+.tech-div {
+    display    : block;
+    text-indent: -9999px;
+    margin: 10px 0 10px 0;
+    width      : 2.3em;
+    height     : 2.3em;
+    opacity    : .9;
+}
+
+.tech-mongodb {
+    background       : url(../../../../assets/logos/mongodb2.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-angular {
+    background       : url(../../../../assets/logos/angular.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-js {
+    background       : url(../../../../assets/logos/javascript.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-ts {
+    background       : url(../../../../assets/logos/typescript.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}
+
+.tech-nodejs {
+    background       : url(../../../../assets/logos/nodejs.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
 }

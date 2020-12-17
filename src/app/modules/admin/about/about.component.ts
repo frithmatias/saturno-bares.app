@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { SharedService } from 'src/app/services/shared.service';
 import { AdminService } from '../admin.service';
@@ -11,6 +11,9 @@ import { LoginService } from '../../../services/login.service';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
+  
+  @Input() nomargin: boolean;
+  @Input() nopadding: boolean;
 
   formAbout: FormGroup;
   aboutEdit: false;

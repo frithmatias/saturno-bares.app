@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company, CompaniesResponse, CompanyResponse } from '../../../interfaces/company.interface';
+import { Company, CompaniesResponse } from '../../../interfaces/company.interface';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { SharedService } from 'src/app/services/shared.service';
 

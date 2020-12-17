@@ -1,23 +1,63 @@
 .saturno-bg-home {
-    background-image: url('../../../assets/img/bghome.jpg');
+    background-image     : url('../../../assets/img/bghome.jpg');
     background-size      : cover;
     background-repeat    : no-repeat;
     background-position  : center center;
     background-blend-mode: lighten;
     padding              : 1em;
+    text-align: center;
 }
+
+
+.icon-home-phone {
+    height         : 100px !important;
+    opacity        : .8;
+    font-size      : 5em;
+    display        : flex !important;
+    justify-content: center;
+}
+
+.location-input {
+    margin-top: 2em;
+    width     : 30em;
+}
+
+.minicards-content {
+    display        : flex;
+    padding        : 10px;
+    flex-wrap      : wrap;
+    justify-content: center;
+}
+
+.minicard {
+    margin   : 10px;
+    min-width: 15rem;
+    max-width: 18rem;
+    padding  : 1.2em;
+    font-size: medium;
+}
+
+.minicard-icons {
+    opacity  : .4;
+    font-size: 4em;
+}
+
+
+/* footer */
+
 
 a {
     color: inherit;
 }
+
 a:hover {
-    color: inherit;
+    color          : inherit;
     text-decoration: none;
 }
 
 .copyright {
-    font-size: small;
+    font-size  : small;
     font-weight: 200;
     font-family: system-ui;
-    opacity: .7;
+    opacity    : .7;
 }
