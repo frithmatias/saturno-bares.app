@@ -1,6 +1,14 @@
 <div class="saturno-card animated fadeIn">
     <mat-card>
-        <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg">
+
+
+        
+        <ng-image-slider [images]="images" [infinite]="true" [imagePopup]="true" [animationSpeed]="2" [slideImage]="1"
+         [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
+        <!-- <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg"> -->
+        
+        
+        
         <mat-card-header style="text-align: center; display: block;" class="my-2">
             <div class="public-home-title">{{publicService.company.tx_company_name}}</div>
             <div class="public-home-subtitle">{{publicService.company.tx_company_slogan}}</div>
@@ -9,21 +17,7 @@
 
             <div class="public-home-content">
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam et a quod voluptatibus nemo iusto
-                    neque
-                    animi vitae doloribus provident, magni, officia eveniet laborum quia, necessitatibus adipisci!
-                    Libero,
-                    officiis quos. Ullam corporis sint minima dolorum dignissimos, eos dolor praesentium enim
-                    voluptatibus
-                    impedit dicta suscipit exercitationem libero assumenda nulla! Excepturi pariatur id voluptatum
-                    assumenda
-                    minima, veniam sed adipisci quis dolorem repudiandae dolor ipsum nobis, nesciunt consectetur
-                    inventore et
-                    consequatur eaque dolores exercitationem explicabo, eos optio totam voluptates non? Eius praesentium
-                    facere
-                    porro eligendi. Iusto repellat, provident sint ab commodi vel alias tempore mollitia aspernatur,
-                    illo omnis
-                    voluptate autem distinctio voluptatibus inventore.
+                    {{publicService.company.tx_company_welcome}}
                 </p>
             </div>
         </mat-card-content>

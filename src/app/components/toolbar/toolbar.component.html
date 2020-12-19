@@ -4,9 +4,14 @@
     <div style="width: 84px;" class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
         <!-- <span class="example-spacer"></span> -->
     </div>
+    <div class="mdi mdi-help-circle-outline md pointer" *ngIf="publicService.company">
+        <!-- <span class="example-spacer"></span> -->
+    </div>
+
 
     <!-- LOGO & SEARCH -->
-    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto;" *ngIf="!loginService.user && !publicService.company">
+    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto;"
+        *ngIf="!loginService.user && !publicService.company">
 
         <!-- LOGO -->
         <div style="padding-left: 10px; padding-right: 10px;" class="d-none d-sm-block" routerLink="/home">
@@ -32,13 +37,15 @@
     <!-- COMPANY NAME -->
     <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto; justify-content: center;">
         <div class="company-title md">
-            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name || loginService.user?.tx_name}}
+            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
+            loginService.user?.tx_name}}
         </div>
     </div>
 
+    <!-- THEME -->
     <div style="display: flex;">
-        <!-- THEME -->
-        <button mat-button [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors"></button>
+
+        <div [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors md pointer"></div>
         <mat-menu #colorpicker="matMenu">
             <div class="d-flex px-2">
                 <div class="pointer box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
@@ -49,12 +56,12 @@
         </mat-menu>
 
         <!-- LOG IN -->
-        <div class="mdi mdi-account-circle pointer"
+        <div class="ml-3 mdi mdi-account-circle pointer"
             *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
         </div>
 
         <!-- LOGGED IN -->
-        <div class="mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu" *ngIf="loginService.user">
+        <div class="ml-3 mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu" *ngIf="loginService.user">
             <mat-menu #menu="matMenu">
                 <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
@@ -86,6 +93,7 @@
                 </div>
             </mat-menu>
         </div>
+
     </div>
 
 

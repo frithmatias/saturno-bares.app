@@ -83,3 +83,9 @@ TECH ICONS
     background-size  : contain;
     background-repeat: no-repeat;
 }
+
+.tech-heroku {
+    background       : url(../../../../assets/logos/heroku.svg);
+    background-size  : contain;
+    background-repeat: no-repeat;
+}

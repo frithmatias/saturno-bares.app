@@ -13,7 +13,7 @@ export interface Company {
     tx_company_lng: string;
     tx_address_street: string;
 	tx_address_number: string;
-    tx_company_history: string;
+    tx_company_welcome: string;
     tx_company_logo: string;
     tx_company_banners: string[];
     tm_start: Date;

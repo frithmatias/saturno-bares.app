@@ -1,0 +1,28 @@
+.mat-card-avatar {
+    height: 100px;
+    width: 100px;
+}
+
+.mat-card-avatar img {
+    height       : 80px;
+    width        : 80px;
+    margin       : 10px;
+    border-radius: 50%;
+}
+
+
+.mat-card-title {
+    font-size: xx-large;
+    color    : #ff8b00;
+}
+
+@media (max-width: 400px) {
+    .mat-card-title {
+        font-size: x-large;
+    }
+}
+
+.mat-card-subtitle {
+    width: 100%;
+    font-size: large;
+}

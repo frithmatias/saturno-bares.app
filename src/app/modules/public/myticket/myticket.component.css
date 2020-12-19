@@ -1,3 +1,38 @@
+/*---------------------------------------------------*/
+/* my ticket header*/
+
+.mat-card-avatar {
+  height: 100px;
+  width : 100px;
+}
+
+.mat-card-avatar img {
+  height       : 80px;
+  width        : 80px;
+  margin       : 10px;
+  border-radius: 50%;
+}
+
+
+.mat-card-title {
+  font-size: xx-large;
+  color    : #ff8b00;
+}
+
+@media (max-width: 400px) {
+  .mat-card-title {
+    font-size: x-large;
+  }
+}
+
+.mat-card-subtitle {
+  width    : 100%;
+  font-size: large;
+}
+
+/*---------------------------------------------------*/
+/* my ticket score*/
+
 .screen-icon-star {
   cursor   : pointer;
   color    : #5e5e5e;
@@ -10,7 +45,12 @@
 
 
 /*---------------------------------------------------*/
-/* my ticket rounded */
+/* my ticket number*/
+
+.screen-myticket-container {
+  border-radius: 1em;
+  box-shadow   : 0px 1px 4px 0px rgb(17 17 17 / 30%)
+}
 
 .screen-myticket-text-header {
   font-size: 1.2em;
@@ -28,6 +68,12 @@
 
 .screen-myticket-text-footer {
   font-size: 1em;
+}
+
+/* ------------------------------------------------------- */
+/* buttons */
+.screen-myticket-button {
+  min-width: auto;
 }
 
 /* ------------------------------------------------------- */

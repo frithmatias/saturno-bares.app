@@ -16,10 +16,10 @@ body {
 }
 
 input:-internal-autofill-selected {
-    appearance: menulist-button;
+    appearance      : menulist-button;
     background-color: rgb(207, 207, 17) !important;
     background-image: none !important;
-    color: -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
+    color           : -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
 }
 
 .btn {
@@ -92,9 +92,9 @@ mat-drawer-container {
 
 
 .saturno-card {
-    min-width: 18rem;
-    max-width: 36rem;
-    padding  : 1.2em;
+    min-width: 300px;
+    max-width: 600px;
+    padding  : 20px;
     font-size: medium;
 }
 
@@ -386,19 +386,17 @@ ANGULAR MATERIAL
 
 mat-toolbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
+    top     : 0;
+    left    : 0;
+    right   : 0;
+    z-index : 9999;
+    height  : 64px !important;
 }
 
 mat-card-header {
     text-align: left;
 }
 
-.mdi {
-    vertical-align: bottom !important;
-}
 
 .mat-card {
     font-family: 'Baloo Bhai 2', 'Monda', 'Encode Sans', 'Averia Libre', 'system-ui';
@@ -453,11 +451,6 @@ HOME
 }
 
 
-.mat-card-avatar {
-    border-radius: unset !important;
-    margin: 10px;
-}
-
 /*
 -------------------------------------------
 MAPBOX 
@@ -485,3 +478,18 @@ MAPBOX
 
 
 
+
+/*
+-------------------------------------------
+MAPBOX 
+-------------------------------------------
+*/
+
+.lightbox-wrapper .close {
+    top            : 80px !important;
+    background-size: 20px !important;
+    width          : 26px !important;
+    height         : 26px !important;
+    right          : 20px !important;
+    opacity        : .5 !important;
+}

@@ -9,11 +9,20 @@
 }
 
 
+.home-bienvenido {
+    color: darkorange;
+    font-size: xx-large;
+}
+
 .icon-home-phone {
-    height         : 100px !important;
-    opacity        : .8;
-    font-size      : 5em;
-    display        : flex !important;
+    font-size      : 3em;
+    justify-content: center;
+    vertical-align: baseline;
+}
+
+.icon-home-beer {
+    color: darkorange;
+    font-size      : 7em;
     justify-content: center;
 }
 

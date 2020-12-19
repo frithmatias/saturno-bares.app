@@ -2,21 +2,25 @@
 <!-- TICKETS SCREEN -->
 <!-- ======================================================== -->
 
-<div class="saturno-card m-0">
+<div class="saturno-card p-0 m-0">
 
     <mat-card>
         <mat-card-header>
-            <div mat-card-avatar class="tech-angular"></div>
-            <mat-card-title>Turno</mat-card-title>
-            <mat-card-subtitle>Espera tu turno, te avisamos cuando tue mesa esté lista.</mat-card-subtitle>
+            <div mat-card-avatar><img class="img-fluid"
+                    [src]="publicService.company.tx_company_logo | imagenPipe : 'logo' : publicService.company._id">
+            </div>
+            <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
+            <mat-card-subtitle>{{ publicService.company.tx_address_street }}
+                {{ publicService.company.tx_address_number }}</mat-card-subtitle>
         </mat-card-header>
+
         <mat-card-content>
 
             <!------------------------------>
             <!-- SU TURNO -->
             <!------------------------------>
 
-            <div *ngIf="ticketTmEnd===null">
+            <div *ngIf="ticketTmEnd===null" class="screen-myticket-container my-4 py-4">
                 <div class="screen-myticket-text-header">
                     SU TURNO
                 </div>
@@ -28,7 +32,7 @@
                 <div class="screen-myticket-text-footer" style="line-height: normal;">
 
                     <span *ngIf="!ticket?.id_session">
-                        {{ averageToAtt}}
+                        Tiempo estimado: {{ averageToAtt}}
                     </span>
 
                     <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
@@ -101,24 +105,19 @@
             <!-- ======================================================== -->
 
             <div *ngIf="ticketTmEnd===null">
-
-
-                <button mat-raised-button class="m-2" color="primary"
-                    [disabled]="ticket?.tx_call || !ticket?.id_session"
-                    (click)="callWaiter('waiter')">
+                <button mat-raised-button class="screen-myticket-button m-2" color="primary"
+                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('waiter')">
                     <div class="mdi mdi-silverware-fork-knife xl"></div>
                     Llamar al mozo
                 </button>
 
-                <button mat-raised-button class="m-2" color="primary"
-                    [disabled]="ticket?.tx_call || !ticket?.id_session"
-                    (click)="callWaiter('account')">
+                <button mat-raised-button class="screen-myticket-button m-2" color="primary"
+                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('account')">
                     <div class="mdi mdi-file-document-edit-outline xl"></div>
                     Pedir la Cuenta
                 </button>
 
-                <button mat-raised-button class="m-2" color="warn" [disabled]="!ticket"
-                    (click)="endTicket()">
+                <button mat-raised-button class="screen-myticket-button m-2" color="warn" [disabled]="!ticket" (click)="endTicket()">
                     <div class="mdi mdi-power xl"></div>
                     Cancelar Turno
                 </button>

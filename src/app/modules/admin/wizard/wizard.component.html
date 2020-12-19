@@ -8,7 +8,7 @@
             <mat-icon>forum</mat-icon>
         </ng-template>
 
-        <!-- Welcome Step -->
+        <!-- Welcome -->
         <mat-step>
 
             <mat-card>
@@ -21,7 +21,8 @@
                             solicitudes de mesa de tus clientes.
                         </p>
                         <p>
-                            No te llevará mas de un minuto y desde acá podés hacer todo.
+                            Los pasos opcionales podes saltearlos y si queres podes completarlos mas adelantes desde 
+                            el menú de Adminsitrador o iniciando el asistente nuevamente. 
                         </p>
                         <hr>
                         <div class="w-100 text-center">
@@ -33,7 +34,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Companies Step -->
+        <!-- Companies -->
         <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
             <mat-card>
                 <mat-card-header>
@@ -50,18 +51,14 @@
                     <div *ngIf="adminService.companies?.length === 0">
                         <div class="saturno-minicard-text">
                             <p>
-                                Si no tenés ningún bar o restorant registrado desde acá tenés que registrar al menos
-                                uno.
+                                Acá podes regustrar uno o mas bares / restaurantes. Si registras mas de uno, no te olvides 
+                                seleccionarlo desde el menú principal para operar con el.
                             </p>
 
                             <p>
                                 Es importante que ingreses la dirección exacta de tu comercio. Esta dirección será
-                                visible
-                                para
-                                tus clientes desde el menú público de turnos y les asegura que están obteniendo un turno
-                                en
-                                el bar /
-                                restorant correcto.
+                                visible para tus clientes desde la página web de tu bar y les asegura que están solicitando
+                                una mesa en el bar / restaurant correcto.
                             </p>
                         </div>
                     </div>
@@ -101,7 +98,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Sections Step -->
+        <!-- Sections -->
         <mat-step [completed]="adminService.sections?.length > 0">
 
             <mat-card>
@@ -148,7 +145,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Tables Step -->
+        <!-- Tables -->
         <mat-step [completed]="adminService.tables?.length > 0">
             <mat-card>
                 <mat-card-header>
@@ -193,7 +190,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Waiters Step -->
+        <!-- Waiters -->
         <mat-step>
             <mat-card>
                 <mat-card-header>
@@ -231,7 +228,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Poll Step -->
+        <!-- Poll -->
         <mat-step>
             <mat-card>
                 <mat-card-header>
@@ -275,7 +272,7 @@
             </mat-card>
         </mat-step>
 
-        <!-- Webpage Step -->
+        <!-- Webpage -->
         <mat-step>
             <mat-card>
                 <mat-card-header>
@@ -284,23 +281,20 @@
                         Web Page
                     </mat-card-title>
                     <mat-card-subtitle class="step-header">
-                        Historia, logo y al menos 1 foto de tu comercio.
+                        Opcional
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Ingresa una bienvenida a tus usuarios, puede ser la historia de tu comercio
-                            o cualquier texto de presentación a tus clientes.
+                            Acá tenés que subir una serie de datos de tu comercio que se van a mostrar 
+                            en la página web de recepción a tus clientes.
                         </p>
                         <p>
-                            Tenés que subir una imagen o logo de tu bar o restorant, preferentemente
-                            cuadrada y fondo transparente. También fotos del lugar como Banners, preferentemente
-                            de 500px x 200px o de relación 5:2 que no supere los 100kb.
+                            Ingresa una bienvenida, puede ser la historia de tu comercio
+                            o cualquier texto de presentación.
                         </p>
-
                     </div>
-
                     <app-about [nomargin]="true" [nopadding]="true"></app-about>
                 </mat-card-content>
 

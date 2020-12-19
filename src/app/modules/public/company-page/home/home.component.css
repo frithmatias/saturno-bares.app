@@ -1,15 +1,19 @@
 .public-home-title {
-    font-size: xx-large;
+    font-size: xxx-large;
     color: #ff8b00;
 }
-
+@media (max-width: 575px) {
+    .public-home-title {
+        font-size: xx-large;
+    }
+}
 .public-home-subtitle {
-    font-size: small;
+    font-size: medium;
 }
 
 .public-home-content {
-    font-family: 'system-ui';
-    font-size: small;
+    font-family: 'Baloo Bhai 2', 'system-ui';
+    font-size: large;
     font-weight: 200;
     padding: 1em;
 }

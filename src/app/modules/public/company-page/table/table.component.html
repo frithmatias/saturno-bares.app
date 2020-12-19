@@ -12,12 +12,13 @@
       <mat-card>
 
         <mat-card-header>
-          <div mat-card-avatar><img class="img-fluid" [src]="publicService.company.tx_company_logo | imagenPipe : 'logo' : publicService.company._id"></div>
+          <div mat-card-avatar><img class="img-fluid"
+              [src]="publicService.company.tx_company_logo | imagenPipe : 'logo' : publicService.company._id"></div>
           <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
           <mat-card-subtitle>{{ publicService.company.tx_address_street }}
             {{ publicService.company.tx_address_number }}</mat-card-subtitle>
         </mat-card-header>
-        
+
         <mat-card-content>
 
           <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
@@ -41,7 +42,7 @@
                 Salir
               </button>
               <button color="primary" mat-raised-button class="col ml-1 my-2" (click)="createTicket()">
-                Solicitar
+                Reservar
               </button>
             </div>
 
