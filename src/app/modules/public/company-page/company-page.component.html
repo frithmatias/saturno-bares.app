@@ -1,4 +1,9 @@
-<div class="container-fluid h-100">
+<div>
+
+    <ng-image-slider [images]="images" [infinite]="true" [imagePopup]="true" [animationSpeed]="2" [slideImage]="1"
+    [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
+   <!-- <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg"> -->
+
     <mat-tab-group mat-align-tabs="center"  dynamicHeight>
         <mat-tab label="{{publicService.company.tx_company_name}}">
             <app-home></app-home>

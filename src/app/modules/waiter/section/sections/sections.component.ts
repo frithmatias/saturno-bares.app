@@ -15,6 +15,8 @@ export class SectionsComponent implements OnInit {
   @Input() tablesDataBySection: any;
   @Input() ticketsDataBySection: any;
 
+  displayedColumns: string[] = ['sector', 'mesas_ocupadas', 'mesas_disponibles', 'mesas_pausadas', 'turnos_requeridos', 'turnos_encolados'];
+
   section: Section;
 
   constructor(
@@ -22,6 +24,6 @@ export class SectionsComponent implements OnInit {
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
 }

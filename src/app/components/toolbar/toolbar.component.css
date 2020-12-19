@@ -2,6 +2,12 @@
     flex: 1 1 auto;
 }
 
+.login-image {
+    width        : 25px;
+    height       : 25px;
+    border-radius: 50%;
+    cursor       : pointer;
+}
 
 .saturno-title {
     font-size     : 1em;

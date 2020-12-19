@@ -1,0 +1,24 @@
+<div class="saturno-card animated fadeIn">
+
+    <mat-card>
+
+        <mat-card-header>
+            <mat-card-title>
+                <span> Mi Perfil </span>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+
+        <app-uploader 
+            [multi]="false" 
+            [data]="this.loginService.user" 
+            [idDocument]="this.loginService.user._id"
+             idField="tx_img" 
+            [header]="header"
+            (dataUpdated)="dataUpdated($event)">
+        </app-uploader>
+
+        </mat-card-content>
+    </mat-card>
+</div>

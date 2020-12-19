@@ -24,7 +24,7 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-console.log(this)
+
     if (localStorage.getItem('config')) {
       this.config = JSON.parse(localStorage.getItem('config'));
     }

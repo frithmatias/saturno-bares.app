@@ -12,7 +12,7 @@ import { SharedService } from '../services/shared.service';
 export class TokenService implements HttpInterceptor {
 
   constructor(
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private sharedService: SharedService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -50,7 +50,7 @@ export class TokenService implements HttpInterceptor {
 
     if (error.error.code == 1001) { // token expired
       this.loginService.logout();
-		}
+    }
     return throwError(''); // Devuelve un error al suscriptor de mi observable.
   }
 

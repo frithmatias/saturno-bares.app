@@ -11,10 +11,11 @@ import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 	styleUrls: ['./uploader.component.css']
 })
 export class UploaderComponent implements OnInit {
-	@ViewChild('filesUpload', { static: true }) filesUpload: ElementRef;
+	@ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 	@Input() multi: boolean = false;
-	@Input() data: Company;
-	@Input() txType: string;
+	@Input() data: any;  // files in db
+	@Input() idDocument: string;
+	@Input() idField: string;
 	@Input() header: { icon: string, title: string, subtitle: string };
 	@Output() dataUpdated = new EventEmitter();
 
@@ -29,39 +30,39 @@ export class UploaderComponent implements OnInit {
 	) { }
 
 	async ngOnInit() {
-		this.filesUpload.nativeElement.multiple = this.multi;
+		if (!this.data) {
+			this.snack.open('Sin datos en el componente uploader', null, { duration: 3000 });
+			return;
+		}
+		this.fileInput.nativeElement.multiple = this.multi;
 		this.maxupload = this.multi ? this.maxupload : 1;
 	}
 
-	// ngAfterViewInit() {
-	// 	this.inputfiles.changes.subscribe(item => {
-	// 		console.log(item)
-	// 	})
-	// }
-
 	uploadSingle() {
+		this.fileInput.nativeElement.value = "";
 		let archivo = this.filesToUpload[0];
-		this.uploaderService.subirImagen(archivo, this.txType, this.data._id).subscribe((data: any) => {
-			console.log(data.company.tx_company_logo)
+		this.uploaderService.subirImagen(archivo, this.idField, this.idDocument).subscribe((data: any) => {
 			archivo.progreso = 100;
 			archivo.estaSubiendo = false;
-			this.data.tx_company_logo = data.filename;
+			this.data[this.idField] = data.filename;
 			this.filesToUpload = [];
 			this.dataUpdated.emit(this.data);
 		});
 	}
 
-	uploadMultiple() {
+	uploadMulti() {
+		this.fileInput.nativeElement.value = "";
 		let count = 0;
 		let filesUploaded = [];
 		this.filesToUpload.forEach(archivo => {
 			archivo.estaSubiendo = true;
-			this.uploaderService.subirImagen(archivo, this.txType, this.data._id).subscribe((data: any) => {
+			this.uploaderService.subirImagen(archivo, this.idField, this.idDocument).subscribe((data: any) => {
 				count++;
 				archivo.progreso = 100;
 				archivo.estaSubiendo = false;
 				filesUploaded.push(data.filename);
-				this.data.tx_company_banners.push(data.filename);
+				this.data[this.idField].push(data.filename)
+
 				if (count === this.filesToUpload.length) {
 					this.filesToUpload = [];
 					this.dataUpdated.emit(this.data);
@@ -74,12 +75,19 @@ export class UploaderComponent implements OnInit {
 		});
 	}
 
-	deleteImage(id?: string) {
-		if (!id) id = null;
+	deleteImage(id: string) {
 		this.snack.open('Desea borrar esta imagen?', 'Si borrar', { duration: 5000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
 			if (data.dismissedByAction) {
-				this.uploaderService.borrarImagen(this.txType, this.data._id, id).subscribe((data: CompanyResponse) => {
-					this.data = data.company;
+				this.uploaderService.borrarImagen(this.idField, this.idDocument, id).subscribe((data: any) => {
+					if (this.multi) {
+						if(data.filename === 'todas'){
+							this.data[this.idField] = [];
+						} else {
+							this.data[this.idField] = this.data[this.idField].filter(file => file != data.filename);
+						}
+					} else {
+						this.data[this.idField] = null;
+					}
 					this.dataUpdated.emit(this.data);
 				});
 			}
@@ -88,16 +96,17 @@ export class UploaderComponent implements OnInit {
 
 	removeQueue(nombreArchivo) {
 		this.filesToUpload = this.filesToUpload.filter(archivo => archivo.nombreArchivo !== nombreArchivo);
+		this.fileInput.nativeElement.value = "";
 	}
 
 	queueFiles(event: any) {
 		// permitido: this.maxupload
-		// ya cargadas: this.data.tx_company_banners.length
+		// ya cargadas: this.data.length
 		// listas para subir: this.filesToUpload.length
 		// intentando subir: event.target.files.length
 		let files = event.target.files || event.dataTransfer.files;
-		if (this.txType === 'banner') {
-			if (this.maxupload - this.data.tx_company_banners.length - this.filesToUpload.length - files.length < 0) {
+		if (this.multi) {
+			if (this.maxupload - this.data.length - this.filesToUpload.length - files.length < 0) {
 				this.snack.open(`Supera el máximo permitido de ${this.maxupload} imágenes`, null, { duration: 3000 })
 				return;
 			}
@@ -151,8 +160,7 @@ export class UploaderComponent implements OnInit {
 	}
 
 	private _isImage(tipoArchivo: string): boolean {
-		console.log(tipoArchivo)
-		
+
 		var extensionesValidas = ["image/png", "image/jpg", "image/gif", "image/jpeg"];
 
 		if (tipoArchivo === '' || tipoArchivo === undefined || !extensionesValidas.includes(tipoArchivo)) {

@@ -119,7 +119,6 @@ export class MyticketComponent implements OnInit {
 			if (pickMyTicket.tm_end !== null) {
 				this.getScoreItems().then(() => {
 					this.ticketTmEnd = pickMyTicket.tm_end;
-					this.publicService.clearPublicSession();
 				})
 			} else {
 				this.ticket = pickMyTicket;
@@ -313,7 +312,7 @@ export class MyticketComponent implements OnInit {
 				title: '¡Gracias!'
 			}).then(data => {
 				if (data.isDismissed) {
-					this.publicService.clearPublicSessionComplete();
+					this.publicService.clearPublicSession();
 				}
 			})
 		}

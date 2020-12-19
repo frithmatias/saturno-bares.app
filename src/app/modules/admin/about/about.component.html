@@ -8,13 +8,14 @@
             </mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>
+        <mat-card-content *ngIf="this.loginService.user.id_company">
 
             <form [formGroup]="formAbout" #formDirective="ngForm" (ngSubmit)="sendAbout(formDirective)">
                 <mat-form-field class="w-100">
                     <mat-label>Historia, descripción o presentación.</mat-label>
                     <textarea class="textarea" rows="5" matInput placeholder="Ingrese la historia aquí"
-                        formControlName="txWelcome" [value]="company.tx_company_welcome"></textarea>
+                        formControlName="txWelcome"
+                        [value]="this.loginService.user.id_company.tx_company_welcome"></textarea>
                 </mat-form-field>
 
                 <div class="container pt-4 px-0">
@@ -27,14 +28,16 @@
 
             <hr>
 
-            <app-uploader [multi]="false" txType="logo" [data]="company" [header]="header.logo"
-                (dataUpdated)="companyUpdated($event)">
+            <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id" idField="tx_company_logo"
+                [data]="this.loginService.user.id_company" [header]="header.logo" (dataUpdated)="dataUpdated($event)"
+                (dataUpdated)="dataUpdated($event)">
             </app-uploader>
 
             <hr>
 
-            <app-uploader [multi]="true" txType="banner" [data]="company" [header]="header.banners"
-                (dataUpdated)="companyUpdated($event)">
+            <app-uploader [multi]="true" [idDocument]="this.loginService.user.id_company._id"
+                idField="tx_company_banners" [data]="this.loginService.user.id_company" [header]="header.banners"
+                (dataUpdated)="dataUpdated($event)">
             </app-uploader>
         </mat-card-content>
 

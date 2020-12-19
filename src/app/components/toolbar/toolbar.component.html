@@ -8,10 +8,9 @@
         <!-- <span class="example-spacer"></span> -->
     </div>
 
-
     <!-- LOGO & SEARCH -->
-    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto;"
-        *ngIf="!loginService.user && !publicService.company">
+    <div *ngIf="!loginService.user && !publicService.company"
+        style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto;">
 
         <!-- LOGO -->
         <div style="padding-left: 10px; padding-right: 10px;" class="d-none d-sm-block" routerLink="/home">
@@ -35,7 +34,8 @@
     </div>
 
     <!-- COMPANY NAME -->
-    <div style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto; justify-content: center;">
+    <div *ngIf="loginService.user || publicService.company"
+        style="display: flex; flex-grow: 1; flex-shrink: 1; flex-basis: auto; justify-content: center;">
         <div class="company-title md">
             {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
             loginService.user?.tx_name}}
@@ -56,33 +56,55 @@
         </mat-menu>
 
         <!-- LOG IN -->
-        <div class="ml-3 mdi mdi-account-circle pointer"
-            *ngIf="!loginService.user && !publicService.ticket && !publicService.company" routerLink="/login">
+        <div *ngIf="!loginService.user && !publicService.ticket && !publicService.company"
+            class="ml-3 mdi mdi-account-circle pointer" routerLink="/login">
         </div>
 
+
         <!-- LOGGED IN -->
-        <div class="ml-3 mdi mdi-account-circle pointer" [matMenuTriggerFor]="menu" *ngIf="loginService.user">
+        <div *ngIf="loginService.user">
+            
+            
+            <!-- GOOGLE LOGIN IMAGE -->
+            <div *ngIf="loginService.user.bl_google && loginService.user.tx_img">
+                <img class="login-image ml-3" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+            </div>
+
+            <!-- NORMAL LOGIN WITH IMAGE -->
+            <div *ngIf="!loginService.user.bl_google && loginService.user.tx_img" class="ml-3 pointer"
+                [matMenuTriggerFor]="menu">
+                <img class="login-image" [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
+            </div>
+
+            <!-- NORMAL LOGIN WO IMAGE -->
+            <div *ngIf="!loginService.user.bl_google && !loginService.user.tx_img"
+                class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+            </div>
+
             <mat-menu #menu="matMenu">
                 <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
-                    <span class="ml-2 align-middle">Home de Administrador</span>
+                    <span class="ml-2 align-middle">Página de Administrador</span>
                 </div>
-
                 <div routerLink="/waiter/home" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
-                    <span class="ml-2 align-middle">Home de Camarero</span>
+                    <span class="ml-2 align-middle">Página de Camarero</span>
+                </div>
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
+                    <span class="ml-2 align-middle">Iniciar Asistente</span>
                 </div>
                 <div routerLink="/waiter/dashboard" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
-                    <span class="ml-2 align-middle">Mis métricas</span>
+                    <span class="ml-2 align-middle">Métricas</span>
                 </div>
                 <div routerLink="/waiter/profile" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
-                    <span class="ml-2 align-middle">{{loginService.user.tx_name}}</span>
+                    <span class="ml-2 align-middle">Perfil</span>
                 </div>
                 <div routerLink="/waiter/profile" mat-menu-item>
                     <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
-                    <span class="ml-2 align-middle">{{loginService.user.tx_email}}</span>
+                    <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
                 </div>
                 <hr>
                 <div class="px-2 pb-2 text-center">

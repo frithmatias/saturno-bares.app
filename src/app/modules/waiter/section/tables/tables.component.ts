@@ -14,10 +14,12 @@ import { TableResponse } from '../../../../interfaces/table.interface';
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent implements OnInit {
-  
+
   @Input() tables: Table[] = [];
   @Input() tickets: Ticket[] = [];
   @Input() busyTablesTimes: any;
+
+  displayedColumns: string[] = ['estado', 'mesa', 'turno', 'ocupado', 'accion', 'espera'];
 
   listmode = false;
   tableSelected: string = ''; // reassign table
@@ -29,12 +31,13 @@ export class TablesComponent implements OnInit {
     public waiterService: WaiterService,
     public sharedService: SharedService,
     private intervalToHmsPipe: IntervalToHmsPipe
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-        // listmode config
-        let config = JSON.parse(localStorage.getItem('config'));
-        this.listmode = config ? config.listmode : false;
+    // listmode config
+    let config = JSON.parse(localStorage.getItem('config'));
+    this.listmode = config ? config.listmode : false;
+    console.log(this)
   }
 
 
@@ -180,5 +183,5 @@ export class TablesComponent implements OnInit {
     table.tx_status = 'paused';
     table.id_session = null;
   };
-  
+
 }

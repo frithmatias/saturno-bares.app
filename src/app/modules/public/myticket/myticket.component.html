@@ -7,7 +7,7 @@
     <mat-card>
         <mat-card-header>
             <div mat-card-avatar><img class="img-fluid"
-                    [src]="publicService.company.tx_company_logo | imagenPipe : 'logo' : publicService.company._id">
+                    [src]="publicService.company.tx_company_logo | imagenPipe : 'tx_company_logo' : publicService.company._id">
             </div>
             <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
             <mat-card-subtitle>{{ publicService.company.tx_address_street }}

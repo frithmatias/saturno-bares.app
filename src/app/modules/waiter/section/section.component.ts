@@ -64,7 +64,6 @@ export class SectionComponent implements OnInit {
 
   @HostListener('click', ['$event'])
   onClick(btn: MouseEvent) {
-    // console.log('button', btn);
   }
 
   async ngOnInit() {

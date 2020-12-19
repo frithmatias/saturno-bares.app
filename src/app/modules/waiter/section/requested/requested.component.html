@@ -8,9 +8,14 @@
       <span class="sidenav-title-text mx-2">Requeridos ({{requested.length}}) </span>
     </mat-panel-title>
   </mat-expansion-panel-header>
+
+
   <div *ngIf="requested.length == 0">
     No hay requerimientos de mesas especiales
   </div>
+
+
+
   <mat-accordion multi="false" *ngIf="requested.length > 0">
     <mat-expansion-panel class="noshadow" *ngFor="let ticket of requested">
       <mat-expansion-panel-header>
@@ -32,6 +37,8 @@
             {{ticket.nm_persons}} personas.
     
         </div>
+
+
         <div *ngFor="let table of tables" class="col-4 px-0 p-1">
           <div class="btn btn-block p-0" [ngClass]="{
                         'btn-success': ticket.cd_tables.includes(table.nm_table),

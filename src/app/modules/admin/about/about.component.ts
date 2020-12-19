@@ -18,7 +18,6 @@ export class AboutComponent implements OnInit {
 
   formAbout: FormGroup;
   aboutEdit: false;
-  company: Company;
   header = {
     logo:
     {
@@ -35,37 +34,30 @@ export class AboutComponent implements OnInit {
 
   constructor(
     private sharedService: SharedService,
-    private loginService: LoginService,
+    public loginService: LoginService,
     public adminService: AdminService
   ) { }
 
   ngOnInit(): void {
 
-    this.company = this.loginService.user.id_company;
-
     this.formAbout = new FormGroup({
-      txWelcome: new FormControl(this.company.tx_company_welcome, Validators.required)
+      txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, Validators.required)
     })
-    console.log(this)
+
   }
 
 
   sendAbout(formDirective: FormGroupDirective) {
     if (this.formAbout.invalid) return;
 
-    let idCompany = this.company._id;
+    let idCompany = this.loginService.user.id_company._id;
     let data = { txWelcome: this.formAbout.value.txWelcome };
     this.adminService.updateAbout(data, idCompany).subscribe((data: CompanyResponse) => {
       if(data.ok){
-        this.company = data.company;
         this.loginService.user.id_company = data.company;
         this.loginService.pushUser(this.loginService.user);
         this.sharedService.snack('Los datos fueron guradados correctamente', 3000);
-      } else {
-        console.log('asdfasd')
-      }
-    },(err)=>{
-      console.log(err)
+      } 
     })
   }
 
@@ -77,9 +69,8 @@ export class AboutComponent implements OnInit {
     this.sharedService.scrollTop();
   }
 
-  companyUpdated(company: Company): void {
-    this.loginService.user.id_company = company;
-    this.loginService.pushUser(this.loginService.user);
+  dataUpdated(dataUpdated: any): void {
+    this.loginService.pushUser(this.loginService.user)
   }
 
 }

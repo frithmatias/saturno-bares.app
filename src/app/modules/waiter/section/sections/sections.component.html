@@ -1,57 +1,61 @@
-        <!------------------------------>
-        <!-- SECTIONS -->
-        <!------------------------------>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="xl mdi mdi-select-group text-success"></span>
-                <span class="sidenav-title-text mx-2">Sectores ({{waiterService.sections.length}})</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="card bg-secondary mb-3">
-              <div class="card-body table-responsive-sm p-2">
-  
-                <mat-radio-group [(ngModel)]="waiterService.sectionSelected">
-                  <table *ngIf="tablesDataBySection.size > 0 && ticketsDataBySection.size > 0" class="table table-sm text-white text-center">
-                    <tr>
-                      <td style="text-align: left; border: none">Sector</td>
-                      <td colspan="3" style="text-align: center; border: none">Mesas</td>
-                      <td colspan="2" style="text-align: center; border: none">Turnos</td>
-                    </tr>
-                    <tr style="border-top: 3px solid #4fac40; background-color: whitesmoke;">
-                      <td class="xl mdi mdi-select-group text-warning" style="text-align: left; border: none"></td>
-                      <td class="xl mdi mdi-minus-circle-outline text-danger" style="text-align: center; border: none"></td>
-                      <td class="xl mdi mdi-check-circle-outline text-success" style="text-align: center; border: none"></td>
-                      <td class="xl mdi mdi-pause-circle-outline text-secondary" style="text-align: center; border: none"></td>
-                      <td class="xl mdi mdi-alert-box text-danger" style="text-align: center; border: none"></td>
-                      <td class="xl mdi mdi-format-list-numbered text-primary" style="text-align: center; border: none"></td>
-                    </tr>
-  
-                    <tr *ngFor="let section of waiterService.sections">
-                      <td style="text-align: left">
-                        {{ section.tx_section }}
-                        <span *ngIf="tablesDataBySection.get(section.tx_section).sectionselected" class="mdi mdi-check lg text-warning"></span>
-                      </td>
-                      <td style="text-align: center">
-                        {{ tablesDataBySection.get(section.tx_section).busy }}
-                      </td>
-                      <td style="text-align: center">
-                        {{ tablesDataBySection.get(section.tx_section).idle }}
-                      </td>
-                      <td style="text-align: center">
-                        {{ tablesDataBySection.get(section.tx_section).paused }}
-                      </td>
-                      <td style="text-align: center">
-                        {{ ticketsDataBySection.get(section.tx_section).requested }}
-                      </td>
-                      <td style="text-align: center">
-                        {{ ticketsDataBySection.get(section.tx_section).queued }}
-                      </td>
-                    </tr>
-                  </table>
-                </mat-radio-group>
-              </div>
-            </div>
+<!------------------------------>
+<!-- SECTIONS -->
+<!------------------------------>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <span class="xl mdi mdi-select-group text-success"></span>
+      <span class="sidenav-title-text mx-2">Sectores ({{waiterService.sections.length}})</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-          </mat-expansion-panel>
-  
+
+  <mat-radio-group [(ngModel)]="waiterService.sectionSelected">
+  <table mat-table [dataSource]="waiterService.sections">
+
+    <ng-container matColumnDef="sector">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Sector </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2"> {{ element.tx_section }}</span>
+        <span *ngIf="tablesDataBySection.get(element.tx_section).sectionselected"
+                class="mdi mdi-check lg text-warning"></span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="mesas_ocupadas">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Ocupadas </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2">{{ tablesDataBySection.get(element.tx_section).busy }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="mesas_disponibles">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Disponibles </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2">{{ tablesDataBySection.get(element.tx_section).idle }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="mesas_pausadas">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Pausadas </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2">{{ tablesDataBySection.get(element.tx_section).paused }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="turnos_requeridos">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Requeridas </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2">{{ ticketsDataBySection.get(element.tx_section).requested }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="turnos_encolados">
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Encoladas </th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <span class="ml-2">{{ ticketsDataBySection.get(element.tx_section).queued }}</span>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </mat-radio-group>
+
+</mat-expansion-panel>

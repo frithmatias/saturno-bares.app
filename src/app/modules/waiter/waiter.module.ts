@@ -18,6 +18,8 @@ import { RequestedComponent } from './section/requested/requested.component';
 import { QueuedComponent } from './section/queued/queued.component';
 import { TablesComponent } from './section/tables/tables.component';
 import { SectionsComponent } from './section/sections/sections.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
@@ -25,11 +27,12 @@ import { SectionsComponent } from './section/sections/sections.component';
     WaiterComponent, 
     HomeComponent,
     DashboardComponent, 
-    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent
+    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent, ProfileComponent
   ],
   imports: [
     FormsModule,
     CommonModule,
+    ComponentsModule,
     MaterialModule,
     PipesModule,
     WaiterRoutingModule

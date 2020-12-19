@@ -137,9 +137,6 @@ export class PublicService {
     delete this.company;
     if (localStorage.getItem('ticket')) { localStorage.removeItem('ticket'); }
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
-  }
-
-  clearPublicSessionComplete(): void {
     this.router.navigate(['/home']);
   }
 

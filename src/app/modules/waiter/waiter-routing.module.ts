@@ -6,9 +6,11 @@ import { NopagefoundComponent } from '../../pages/nopagefound/nopagefound.compon
 import { SectionComponent } from './section/section.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const waiterRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'section', component: SectionComponent },
   { path: 'dashboard', component: DashboardComponent },
   

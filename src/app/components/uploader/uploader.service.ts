@@ -16,15 +16,15 @@ export class UploaderService {
     private http: HttpClient
   ) { }
 
-  subirImagen(fileItem: FileUpload, txType: string = 'usuarios', idCompany: string) {
-    const url = environment.url + '/uploads/' + idCompany + '/' + txType;
+  subirImagen(fileItem: FileUpload, idField: string, idDocument: string) {
+    const url = environment.url + '/uploads/' + idDocument + '/' + idField;
     const formData: FormData = new FormData();
     formData.append('imagen', fileItem.archivo, fileItem.archivo.name);
     return this.http.put(url, formData, { reportProgress: true });
   }
 
-  borrarImagen(txType: string, idCompany: string, filename: string) {
-    const url = environment.url + '/uploads/' + idCompany + '/' + txType + '/' + filename;
+  borrarImagen(idField: string, idDocument: string, filename: string) {
+    const url = environment.url + '/uploads/' + idDocument + '/' + idField + '/' + filename;
       return this.http.delete(url, { reportProgress: true });
   }
 
