@@ -15,7 +15,7 @@ export class SectionsComponent implements OnInit {
   @Input() tablesDataBySection: any;
   @Input() ticketsDataBySection: any;
 
-  displayedColumns: string[] = ['sector', 'mesas_ocupadas', 'mesas_disponibles', 'mesas_pausadas', 'turnos_requeridos', 'turnos_encolados'];
+  displayedColumns: string[] = ['sector', 'disponibles', 'pausadas', 'ocupadas', 'requeridos', 'encolados'];
 
   section: Section;
 

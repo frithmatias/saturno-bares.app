@@ -111,18 +111,23 @@ export class MyticketComponent implements OnInit {
 	}
 
 	pickMyTicket(): void {
-		const pickMyTicket = this.tickets.filter(ticket => (
+		const myTicket = this.tickets.filter(ticket => (
 			ticket._id === this.ticket._id
 		))[0];
 
-		if (pickMyTicket) {
-			if (pickMyTicket.tm_end !== null) {
-				this.getScoreItems().then(() => {
-					this.ticketTmEnd = pickMyTicket.tm_end;
+		if (myTicket) {
+			if (myTicket.tm_end !== null) {
+				this.ticketTmEnd = myTicket.tm_end;
+				this.getScoreItems().then((data: ScoreItemsResponse) => {
+					this.scoreItems = data.scoreitems;
+				}).catch(() => {
+					setTimeout(() => {
+						this.publicService.clearPublicSession();
+					}, 5000);
 				})
 			} else {
-				this.ticket = pickMyTicket;
-				this.publicService.ticket = pickMyTicket;
+				this.ticket = myTicket;
+				this.publicService.ticket = myTicket;
 				localStorage.setItem('ticket', JSON.stringify(this.ticket));
 			}
 		}
@@ -247,7 +252,7 @@ export class MyticketComponent implements OnInit {
 		});
 	}
 
-	endTicket() {
+	endTicket(): Promise<void> {
 		return new Promise(resolve => {
 			this.sharedService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then((ok) => {
 				if (ok) {
@@ -265,16 +270,16 @@ export class MyticketComponent implements OnInit {
 		})
 	}
 
-
-	// ---------------------
-
-	getScoreItems() {
-		return new Promise(resolve => {
+	getScoreItems(): Promise<ScoreItemsResponse | null> {
+		return new Promise((resolve, reject) => {
 			let idSection = this.ticket.id_section._id;
 			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
-				this.scoreItems = data.scoreitems;
-				resolve();
-			})
+				if (data.ok) {
+					resolve(data);
+				} else {
+					reject(null);
+				}
+			}, () => reject(null))
 		})
 	}
 

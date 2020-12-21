@@ -1,0 +1,58 @@
+.row:hover {
+    background-color: orangered;
+}
+
+
+tr.detail-row {
+    height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+    background: #efefef;
+}
+
+.element-row td {
+    border-bottom-width: 0;
+}
+
+
+
+/* MESAS  */
+
+.ticket-container {
+    overflow : hidden;
+    display  : flex;
+    flex-flow: wrap;
+}
+
+.ticket-status {
+    width      : 100%;
+    padding    : 1.5em;
+}
+
+.ticket-actions {
+    /* justify-content: space-between; */
+    justify-content: center;
+    width      : 100%;
+    display    : flex;
+    flex-flow  : wrap;
+}
+
+.action-button {
+    width: 80px;
+    padding: 0px;
+}
+
+button div.mdi{
+    opacity: 0.3;
+}
+
+
+.tables-row:hover {
+    background-color: rgba(120,20,120,0.2);
+    cursor: pointer;
+}

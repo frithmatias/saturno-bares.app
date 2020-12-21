@@ -4,16 +4,27 @@ import { Table } from 'src/app/interfaces/table.interface';
 import { WaiterService } from '../../waiter.service';
 import { SharedService } from '../../../../services/shared.service';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-requested',
   templateUrl: './requested.component.html',
-  styleUrls: ['./requested.component.css']
+  styleUrls: ['./requested.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class RequestedComponent implements OnInit {
 
   @Input() requested: Ticket[];
   @Input() tables: Table[];
+
+  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'tx_section'];
+
   assignWithPriority: boolean = false;
 
   constructor(
@@ -21,7 +32,7 @@ export class RequestedComponent implements OnInit {
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
 
   setReserve = (table: Table, ticket: Ticket) => {

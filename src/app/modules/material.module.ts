@@ -29,8 +29,8 @@ import { MatTableModule } from '@angular/material/table';
 @NgModule({
 	declarations: [],
 	imports: [
-		MatStepperModule,
 		CommonModule,
+		MatStepperModule,
 		MatToolbarModule,
 		MatSidenavModule,
 		MatIconModule,

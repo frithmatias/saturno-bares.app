@@ -5,13 +5,20 @@ import { WaiterService } from '../../waiter.service';
 import { LoginService } from '../../../../services/login.service';
 import { SharedService } from '../../../../services/shared.service';
 import { TicketResponse, Ticket } from '../../../../interfaces/ticket.interface';
-import { sectionSession } from '../../../../../../../api/models/section.session.model';
 import { TableResponse } from '../../../../interfaces/table.interface';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  styleUrls: ['./tables.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class TablesComponent implements OnInit {
 
@@ -37,7 +44,6 @@ export class TablesComponent implements OnInit {
     // listmode config
     let config = JSON.parse(localStorage.getItem('config'));
     this.listmode = config ? config.listmode : false;
-    console.log(this)
   }
 
 
@@ -183,5 +189,6 @@ export class TablesComponent implements OnInit {
     table.tx_status = 'paused';
     table.id_session = null;
   };
+
 
 }

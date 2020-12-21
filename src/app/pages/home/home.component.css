@@ -5,25 +5,26 @@
     background-position  : center center;
     background-blend-mode: lighten;
     padding              : 1em;
-    text-align: center;
+    text-align           : center;
 }
 
 
 .home-bienvenido {
-    color: darkorange;
+    color    : darkorange;
     font-size: xx-large;
 }
 
 .icon-home-phone {
     font-size      : 3em;
     justify-content: center;
-    vertical-align: baseline;
+    vertical-align : baseline;
 }
 
 .icon-home-beer {
-    color: darkorange;
+    color          : darkorange;
     font-size      : 7em;
     justify-content: center;
+    line-height    : 1em;
 }
 
 .location-input {
