@@ -26,7 +26,7 @@ export class TablesComponent implements OnInit {
   @Input() tickets: Ticket[] = [];
   @Input() busyTablesTimes: any;
 
-  displayedColumns: string[] = ['estado', 'mesa', 'turno', 'ocupado', 'accion', 'espera'];
+  displayedColumns: string[] = ['estado', 'mesa', 'turno', 'ocupado', 'espera'];
 
   listmode = false;
   tableSelected: string = ''; // reassign table

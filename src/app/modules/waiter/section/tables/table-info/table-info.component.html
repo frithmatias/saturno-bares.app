@@ -1,0 +1,12 @@
+<!-- no session -->
+<span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === null" class="lg text-danger mdi mdi-minus-circle-outline"></span>
+<span *ngIf="table.tx_status === 'paused'" class="mdi mdi-pause-circle-outline text-secondary xl"></span>
+<span *ngIf="table.tx_status === 'idle'" class="mdi mdi-check-circle-outline text-success xl"></span>
+<span *ngIf="table.tx_status === 'reserved'" class="mdi mdi-stop-circle-outline text-danger xl"></span>
+
+<!-- active session -->
+<span *ngIf="table.id_session?.id_ticket.tx_call === 'card'" class="mdi mdi-book-open-variant text-warning lg"></span>
+<span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
+    class="mdi mdi-silverware-fork-knife text-warning lg"></span>
+<span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
+    class="mdi mdi-file-document-edit-outline text-warning lg"></span>

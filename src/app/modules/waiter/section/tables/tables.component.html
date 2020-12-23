@@ -25,10 +25,7 @@
                 <ng-container matColumnDef="estado">
                     <th mat-header-cell *matHeaderCellDef class="text-left"> Estado </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
-                        <span *ngIf="element.tx_status === 'busy'" class="lg text-danger mdi mdi-minus-circle-outline"></span>
-                        <span *ngIf="element.tx_status === 'paused'" class="lg text-secondary mdi mdi-pause-circle-outline"></span>
-                        <span *ngIf="element.tx_status === 'idle'" class="lg text-success mdi mdi-check-circle-outline"></span>
-                        <span *ngIf="element.tx_status === 'reserved'" class="lg text-dark mdi mdi-stop-circle-outline"></span>
+                        <app-table-info [table]="element"></app-table-info>
                     </td>
                 </ng-container>
 
@@ -53,21 +50,6 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="accion">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Accion </th>
-                    <td mat-cell *matCellDef="let element" class="text-center">
-                        <span
-                            *ngIf="element.id_session?.id_ticket.tx_call === null && element.id_session?.id_ticket.tm_provided !== null"
-                            class="mdi mdi-thumb-up-outline lg"></span>
-                        <span *ngIf="element.id_session?.id_ticket.tx_call === 'card'"
-                            class="mdi mdi-book-open-variant lg"></span>
-                        <span *ngIf="element.id_session?.id_ticket.tx_call === 'waiter'"
-                            class="mdi mdi-silverware-fork-knife lg"></span>
-                        <span *ngIf="element.id_session?.id_ticket.tx_call === 'account'"
-                            class="mdi mdi-file-document-edit-outline lg"></span>
-                    </td>
-                </ng-container>
-
                 <ng-container matColumnDef="espera">
                     <th mat-header-cell *matHeaderCellDef class="text-right"> Espera </th>
                     <td mat-cell *matCellDef="let element" class="text-right">
@@ -75,135 +57,25 @@
                     </td>
                 </ng-container>
 
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <!-------------------------------------->
+                <!-- EXPANDED ROW: STATUS AND ACTIONS -->
+                <!-------------------------------------->
+
                 <ng-container matColumnDef="expandedDetail">
-                    <td class="td-expanded px-0" mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                    <td class="td-expanded px-0" mat-cell *matCellDef="let element"
+                        [attr.colspan]="displayedColumns.length">
                         <div class="ticket-container"
                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-
-                            <div class="ticket-status">
-
-                                <!------------------------------>
-                                <!-- TICKET STATUS && ACTIONS -->
-                                <!------------------------------>
-
-                                <div class="lg">
-                                    Mesa {{ element.nm_table }}:
-                                    <span *ngIf="element.tx_status === 'busy'"> Ocupada </span>
-                                    <span *ngIf="element.tx_status === 'paused'"> Pausada </span>
-                                    <span *ngIf="element.tx_status === 'idle'"> Disponible </span>
-                                    <span *ngIf="element.tx_status === 'reserved'"> Reservada </span>
-                                </div>
-
-
-                                <div *ngIf="element?.id_session">
-                                    <table>
-                                        <tr>
-                                            <td style="text-align: left; border: none">Turno</td>
-                                            <td style="text-align: right; border: none">
-                                                {{ element?.id_session?.id_ticket.id_position }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left; border: none">Comensales</td>
-                                            <td style="text-align: right; border: none">
-                                                {{ element?.id_session?.id_ticket.nm_persons }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left; border: none">Prioridad</td>
-                                            <td style="text-align: right; border: none">
-                                                {{ element?.id_session?.id_ticket.bl_priority }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left; border: none">Provisión</td>
-                                            <td style="text-align: right; border: none">
-                                                {{ busyTablesTimes.get(element.nm_table)?.tm_provided }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left; border: none">
-                                                Solicitud de asistencia
-                                            </td>
-                                            <td style="text-align: right; border: none">
-                                                {{ busyTablesTimes.get(element.nm_table)?.tm_call }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="ticket-actions">
-
-                                <!------------------------------>
-                                <!-- ACTIONS -->
-                                <!------------------------------>
-
-
-                                    <!-- activate table -->
-                                    <button mat-raised-button color="primary" class="action-button m-1"
-                                        [disabled]="element.tx_status === 'busy'">
-                                        <div class="mdi mdi-power xl"></div>
-                                        <mat-slide-toggle style="color: tomato;" (click)="toggleTableStatus(element)"
-                                            [checked]="element.tx_status !== 'paused'"
-                                            [disabled]="element.tx_status === 'busy'">
-                                        </mat-slide-toggle>
-                                    </button>
-
-                                    <!-- priority slide -->
-                                    <button mat-raised-button color="primary" class="action-button m-1"
-                                        [disabled]="!element.id_session || waiterService.sectionSelected === ''">
-                                        <div class="mdi mdi-priority-high xl"></div>
-                                        <mat-slide-toggle [(ngModel)]="blPriority"
-                                            [disabled]="!element.id_session || waiterService.sectionSelected === ''">
-                                        </mat-slide-toggle>
-                                    </button>
-
-                                    <!-- reassign ticket -->
-                                    <div>
-                                        <button mat-raised-button color="primary" class="action-button m-1"
-                                            [disabled]="!element.id_session || waiterService.sectionSelected === ''"
-                                            (click)="reassignTicket(element.id_session?.id_ticket)">
-                                            <div class="mdi mdi-arrow-right-bold-circle-outline xl"></div>
-                                            <div class="sm">Mover</div>
-                                        </button>
-                                    </div>
-
-                                    <!-- attened ticket -->
-                                    <button mat-raised-button color="primary" class="action-button m-1"
-                                        (click)="attendedTicket(element.id_session?.id_ticket)"
-                                        [disabled]="!element.id_session?.id_ticket.tx_call || element.tx_status !== 'busy'">
-                                        <div class="mdi mdi-bell xl"></div>
-                                        <div class="sm">Atendido</div>
-                                    </button>
-
-                                    <!-- release ticket -->
-                                    <button mat-raised-button color="primary" class="action-button m-1"
-                                        (click)="releaseTicket(element.id_session?.id_ticket)"
-                                        [disabled]="element.tx_status !== 'busy'">
-                                        <div class="mdi mdi-replay xl"></div>
-                                        <div class="sm">Soltar</div>
-                                    </button>
-
-                                    <!-- end ticket -->
-                                    <button mat-raised-button color="primary" class="action-button m-1"
-                                        (click)="endTicket(element.id_session?.id_ticket)"
-                                        [disabled]="element.tx_status !== 'busy'">
-                                        <div class="mdi mdi-close xl"></div>
-                                        <div class="sm">Cerrar</div>
-                                    </button>
-
-                            
-                            </div>
+                            <!-- ng-template to table status, ticket info and action buttons -->
+                            <div *ngIf="table then tableinfo"></div>
                         </div>
                     </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-                    [class.expanded-row]="expandedElement === element"
+                    [class.expanded-row]="expandedElement === element" (click)="selectTable(element)"
                     (click)="expandedElement = expandedElement === element ? null : element" class="tables-row"></tr>
                 <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
@@ -221,29 +93,141 @@
             (click)="selectTable(table)">
 
             <div class="xl">{{ table.nm_table }}</div>
+            <app-table-info [table]="table"></app-table-info>
 
-            <div *ngIf="table.id_session">
-                <span *ngIf="table.id_session?.id_ticket.tx_call">
-                    <span *ngIf="table.id_session?.id_ticket.tx_call === 'card' "
-                        class="mdi mdi-book-open-variant xl"></span>
-                    <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
-                        class="mdi mdi-silverware-fork-knife xl"></span>
-                    <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
-                        class="mdi mdi-file-document-edit-outline xl"></span>
-                </span>
-                <span *ngIf="!table.id_session?.id_ticket.tx_call">
-                    <span *ngIf="table.tx_status === 'busy'" class="xl mdi mdi-minus-circle-outline"></span>
-                </span>
-            </div>
-
-            <div *ngIf="!table.id_session">
-                <span *ngIf="table.tx_status === 'paused'" class="mdi mdi-pause-circle-outline xl"></span>
-                <span *ngIf="table.tx_status === 'idle'" class="mdi mdi-check-circle-outline xl"></span>
-                <span *ngIf="table.tx_status === 'reserved'" class="mdi mdi-stop-circle-outline xl"></span>
-            </div>
 
         </button>
+
+        <!-- ng-template to table status, ticket info and action buttons -->
+        <div *ngIf="table then tableinfo"></div>
+
+
     </div>
 
 
+
+
+
+
 </mat-expansion-panel>
+
+<ng-template #tableinfo>
+    <div *ngIf="table">
+        <!--------------------------------->
+        <!-- TABLE STATUS && TICKET INFO -->
+        <!--------------------------------->
+
+        <div class="ticket-status">
+
+            <!------------------------------>
+            <!-- TABLE STATUS -->
+            <!------------------------------>
+
+            <div class="lg">
+                Mesa {{ table.nm_table }}:
+                <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
+                <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
+                <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
+                <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
+            </div>
+
+            <!------------------------------>
+            <!-- TICKET INFO -->
+            <!------------------------------>
+
+            <div *ngIf="table?.id_session">
+                <table>
+                    <tr>
+                        <td style="text-align: left; border: none">Turno</td>
+                        <td style="text-align: right; border: none">
+                            {{ table?.id_session?.id_ticket.id_position }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; border: none">Comensales</td>
+                        <td style="text-align: right; border: none">
+                            {{ table?.id_session?.id_ticket.nm_persons }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; border: none">Prioridad</td>
+                        <td style="text-align: right; border: none">
+                            {{ table?.id_session?.id_ticket.bl_priority }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; border: none">Provisión</td>
+                        <td style="text-align: right; border: none">
+                            {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; border: none">
+                            Solicitud de asistencia
+                        </td>
+                        <td style="text-align: right; border: none">
+                            {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!------------------------------>
+        <!-- ACTIONS -->
+        <!------------------------------>
+        <div class="ticket-actions">
+
+            <!-- activate table -->
+            <button mat-raised-button color="primary" class="action-button m-1" [disabled]="table.tx_status === 'busy'">
+                <div class="mdi mdi-power xl"></div>
+                <mat-slide-toggle style="color: tomato;" (click)="toggleTableStatus(table)"
+                    [checked]="table.tx_status !== 'paused'" [disabled]="table.tx_status === 'busy'">
+                </mat-slide-toggle>
+            </button>
+
+            <!-- priority slide -->
+            <button mat-raised-button color="primary" class="action-button m-1"
+                [disabled]="!table.id_session || waiterService.sectionSelected === ''">
+                <div class="mdi mdi-priority-high xl"></div>
+                <mat-slide-toggle [(ngModel)]="blPriority"
+                    [disabled]="!table.id_session || waiterService.sectionSelected === ''">
+                </mat-slide-toggle>
+            </button>
+
+            <!-- reassign ticket -->
+            <div>
+                <button mat-raised-button color="primary" class="action-button m-1"
+                    [disabled]="!table.id_session || waiterService.sectionSelected === ''"
+                    (click)="reassignTicket(table.id_session?.id_ticket)">
+                    <div class="mdi mdi-arrow-right-bold-circle-outline xl"></div>
+                    <div class="sm">Mover</div>
+                </button>
+            </div>
+
+            <!-- attened ticket -->
+            <button mat-raised-button color="primary" class="action-button m-1"
+                (click)="attendedTicket(table.id_session?.id_ticket)"
+                [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'">
+                <div class="mdi mdi-bell xl"></div>
+                <div class="sm">Atendido</div>
+            </button>
+
+            <!-- release ticket -->
+            <button mat-raised-button color="primary" class="action-button m-1"
+                (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
+                <div class="mdi mdi-replay xl"></div>
+                <div class="sm">Soltar</div>
+            </button>
+
+            <!-- end ticket -->
+            <button mat-raised-button color="primary" class="action-button m-1"
+                (click)="endTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
+                <div class="mdi mdi-close xl"></div>
+                <div class="sm">Cerrar</div>
+            </button>
+
+
+        </div>
+    </div>
+</ng-template>

@@ -2,7 +2,9 @@
     <mat-card-title><span [class]="header.icon"></span> {{header.title}} </mat-card-title>
     <mat-card-subtitle>{{header.subtitle}}</mat-card-subtitle>
 </mat-card-header>
-<mat-card-content>
+
+
+<mat-card-content class="my-0">
 
     <div app-dropfiles (mouseSobre)="estaSobreElemento = $event" (sendDropFiles)="queueFiles($event)"
         [ngClass]="{'file-over':estaSobreElemento}" class="container p-2 drop-zone file-over">
@@ -21,18 +23,30 @@
                 <!-- Imagenes cargadas en el server -->
                 <div *ngIf="filesToUpload.length === 0 && data[idField]" class="image">
                     <img src="{{data[idField] | imagenPipe : idField : idDocument }}">
-                    <span class="mdi mdi-close delete-icon" (click)="deleteImage(data[idField])"></span>
+                    <span *ngIf="editable" class="mdi mdi-close delete-icon"
+                        (click)="deleteImage(data[idField])"></span>
                 </div>
 
                 <!-- no hay imagen subida ni precargada se muestra imagen por defecto -->
-                <label *ngIf="filesToUpload.length === 0 && !data[idField]" class="image pointer" [for]="idField">
-                    <img src="../../../assets/img/no-image1.png">
-                </label>
+
+                <div *ngIf="filesToUpload.length === 0 && !data[idField]">
+
+                    <label *ngIf="editable else noimage" class="image pointer" [for]="idField">
+                        <img src="../../../assets/img/no-image1.png">
+                    </label>
+
+                    <ng-template #noimage>
+                        <label class="image">
+                            <img src="../../../assets/img/no-image1.png">
+                        </label>
+                    </ng-template>
+                </div>
+
 
                 <!-- Imagenes previsualizadas luego del drag and drop -->
                 <div *ngIf="filesToUpload && filesToUpload.length > 0" class="image">
                     <img class="image-queue" [src]="filesToUpload[0].bufferImage">
-                    <span class="mdi mdi-close delete-icon"
+                    <span *ngIf="editable" class="mdi mdi-close delete-icon"
                         (click)="removeQueue(filesToUpload[0].nombreArchivo)"></span>
                 </div>
 
@@ -104,8 +118,7 @@
 <!-- SINGLE ACTION BUTTONS -->
 <!-- ------------------------------------------------ -->
 
-<mat-card-actions *ngIf="!multi">
+<div *ngIf="!multi && editable">
     <button mat-button (click)="uploadSingle()" [disabled]="filesToUpload.length==0"><i class="mdi mdi-upload"></i>
         Subir</button>
-    <button mat-button (click)="deleteImage()" [disabled]="!data"><i class="mdi mdi-delete"></i> Eliminar</button>
-</mat-card-actions>
+</div>

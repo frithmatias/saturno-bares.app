@@ -4,13 +4,13 @@
 
         <mat-card-header>
             <mat-card-title>
-                <span class="mdi mdi-card-account-details-outline"></span> Acerca de mi comercio
+                <span class="mdi mdi-card-account-details-outline"></span> Página Web de mi Bar / Restaurant
             </mat-card-title>
         </mat-card-header>
 
         <mat-card-content *ngIf="this.loginService.user.id_company">
 
-            <form [formGroup]="formAbout" #formDirective="ngForm" (ngSubmit)="sendAbout(formDirective)">
+            <form [formGroup]="formWebPage" #formDirective="ngForm" (ngSubmit)="sendWebPage(formDirective)">
                 <mat-form-field class="w-100">
                     <mat-label>Historia, descripción o presentación.</mat-label>
                     <textarea class="textarea" rows="5" matInput placeholder="Ingrese la historia aquí"

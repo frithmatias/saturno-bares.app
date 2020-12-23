@@ -4,7 +4,7 @@
 
 <div class="saturno-bg-home container-fluid">
 
-  <mat-card class="minicard">
+  <mat-card class="saturno-minicard">
     <div class="animated fadeIn">
       <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
 
@@ -37,14 +37,14 @@
 <!-- MAPA -->
 <!-- ======================================================== -->
 
-<div>
+<div class="saturno-map">
 
   <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
 
   <mat-form-field class="location-input">
     <mat-label>Busca por ciudad, localidad o barrio</mat-label>
-    <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto" (click)="cleanInput()" />
-    <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
+    <input matInput type="text" [formControl]="localidadesControl" [matAutocomplete]="auto" (click)="cleanInput()" />
+    <span class="input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
   </mat-form-field>
 
   <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
@@ -67,12 +67,12 @@
 
   <!-- como funciona? -->
 
-  <mat-card class="minicard pointer" routerLink="/howworks">
+  <mat-card class="saturno-minicard pointer" routerLink="/howworks">
     <div class="saturno-minicard-title">
       <div>
         <span class="mdi mdi-cogs minicard-icons"></span>
       </div>
-      <div>
+      <div class="xl">
         ¿Cómo funciona?
       </div>
     </div>
@@ -84,13 +84,13 @@
 
   <!-- registrar comercio -->
 
-  <mat-card class="minicard pointer" routerLink="/register">
+  <mat-card class="saturno-minicard pointer" routerLink="/register">
     <div class="saturno-minicard-title">
       <div>
         <span class="mdi mdi-storefront-outline minicard-icons"></span>
       </div>
-      <div>
-        Registrar mi comercio.
+      <div class="xl">
+        Registrarme
       </div>
     </div>
     <hr class="saturno-hr-blue">
@@ -101,12 +101,12 @@
 
   <!-- registrar contacto -->
 
-  <mat-card class="minicard pointer" routerLink="/contact">
+  <mat-card class="saturno-minicard pointer" routerLink="/contact">
     <div class="saturno-minicard-title">
       <div>
         <span class="mdi mdi-file-document-edit-outline minicard-icons"></span>
       </div>
-      <div>
+      <div class="xl">
         Contacto
       </div>
     </div>
@@ -118,13 +118,13 @@
 
   <!-- buscar comercio -->
 
-  <mat-card class="minicard pointer" routerLink="/public/search">
+  <mat-card class="saturno-minicard pointer" routerLink="/public/search">
     <div class="saturno-minicard-title">
       <div>
         <span class="mdi mdi-magnify minicard-icons"></span>
       </div>
-      <div>
-        Buscar una empresa
+      <div class="xl">
+        Buscar empresa
       </div>
     </div>
     <hr class="saturno-hr-red">

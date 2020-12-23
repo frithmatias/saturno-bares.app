@@ -20,6 +20,7 @@ import { TablesComponent } from './section/tables/tables.component';
 import { SectionsComponent } from './section/sections/sections.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../../components/components.module';
+import { TableInfoComponent } from './section/tables/table-info/table-info.component';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { ComponentsModule } from '../../components/components.module';
     WaiterComponent, 
     HomeComponent,
     DashboardComponent, 
-    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent, ProfileComponent
+    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent, ProfileComponent, TableInfoComponent
   ],
   imports: [
     FormsModule,

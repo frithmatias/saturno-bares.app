@@ -23,7 +23,7 @@
     <mat-form-field class="w-100">
         <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
         <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
-            (click)="cleanInput()" />
+            (click)="cleanInput()" required>
         <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
     </mat-form-field>
 
@@ -53,26 +53,37 @@
     <!-- CONTROLES LAT LNG Y MAPA -->
     <!---------------------------------------------------------------------->
 
-    <mat-card>
-
-        Por favor buscá y marcá en el mapa la ubicación exacta de tu Bar / Resto
-
-    </mat-card>
-
     <!---------------------------------------------------------------------->
     <!-- LAT -->
     <!---------------------------------------------------------------------->
-    <input type="text" placeholder="lat" class="coords-input" formControlName="txCompanyLat" />
+    
+    <mat-form-field class="w-100">
+        <input matInput type="text" placeholder="lat" class="coords-input" formControlName="txCompanyLat" />
+    </mat-form-field>
 
     <!---------------------------------------------------------------------->
     <!-- LNG -->
     <!---------------------------------------------------------------------->
-    <input type="text" placeholder="lng" class="coords-input" formControlName="txCompanyLng" />
+    <mat-form-field class="w-100">
+        <input matInput type="text" placeholder="lng" class="coords-input" formControlName="txCompanyLng" />
+    </mat-form-field>
 
     <!---------------------------------------------------------------------->
     <!-- MAPBOX -->
     <!---------------------------------------------------------------------->
+
+    <div>
+        Buscá y marcá en el mapa la ubicación exacta de tu comercio.
+    </div>
+
     <app-map [(center)]="centerMap" (newMarker)="setCoords($event)"></app-map>
+    
+    <div class="p-2 d-flex" *ngIf="forma.errors?.coordsMissing">
+        <div class="p-2 xxl align-self-center text-danger mdi mdi-alert"></div> 
+        <div class="p-2 align-self-center">
+           Por favor, buscá y marcá en el mapa la ubicación exacta de tu comercio.
+        </div>
+    </div>
 
     <div class="container pt-4 px-0">
         <div *ngIf="!companyEdit">

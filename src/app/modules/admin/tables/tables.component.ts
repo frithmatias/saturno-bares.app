@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { AdminService } from '../admin.service';
-import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Table, TableResponse } from '../../../interfaces/table.interface';
-import { User } from 'src/app/interfaces/user.interface';
-import { Section  } from '../../../interfaces/section.interface';
+import { Section } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../../services/login.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-tables',
@@ -15,32 +14,33 @@ import { LoginService } from '../../../services/login.service';
 export class TablesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-  
-  displayedColumns: string[] = ['id_section','nm_table','nm_persons','tx_status','_id'];
+
+  displayedColumns: string[] = ['id_section', 'nm_table', 'nm_persons', 'tx_status', '_id'];
 
   tableCreate = false;
   userSubscription: Subscription;
   sectionSelected: Section;
   tableNew: Table;
-  
+
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
-    private snack: MatSnackBar
+    private sharedService: SharedService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  deleteTable(idTable: string): void {
-    this.snack.open('Desea eliminar la mesa?', 'ELIMINAR', { duration: 5000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
-      if (data.dismissedByAction) {
+  deleteTable(table: Table): void {
+    this.sharedService.snack(`Desea eliminar la mesa ${table.nm_table}?`, 2000, 'Aceptar').then(ok => {
+      if (ok) {
+        let idTable = table._id;
         this.adminService.deleteTable(idTable).subscribe((data: TableResponse) => {
-          this.snack.open(data.msg, null, { duration: 5000 });
+          this.sharedService.snack(data.msg, 1000);
           this.adminService.tables = this.adminService.tables.filter(table => table._id != idTable);
           this.adminService.tablesSection = this.adminService.tablesSection.filter(table => table._id != idTable);
         },
           (err: TableResponse) => {
-            this.snack.open(err.msg, null, { duration: 5000 });
+            this.sharedService.snack(err.msg, 3000);
           }
         )
       }
@@ -54,9 +54,9 @@ export class TablesComponent implements OnInit {
 
   tableCreated(table: Table): void {
     this.tableNew = table;
-    this.adminService.tables.push(table);
+    this.adminService.tables = [...this.adminService.tables, table];
     this.adminService.tables.sort((a, b) => a.nm_table - b.nm_table)
-    this.adminService.tablesSection.push(table);
+    this.adminService.tablesSection = [...this.adminService.tablesSection, table];
     this.adminService.tablesSection.sort((a, b) => a.nm_table - b.nm_table)
   }
 

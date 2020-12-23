@@ -49,9 +49,9 @@ TECH ICONS
     display    : block;
     text-indent: -9999px;
     margin: 10px 0 10px 0;
-    width      : 2.3em;
-    height     : 2.3em;
-    opacity    : .9;
+    width      : 1.5em;
+    height     : 1.5em;
+    opacity    : .5;
 }
 
 .tech-mongodb {

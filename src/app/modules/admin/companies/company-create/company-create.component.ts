@@ -72,7 +72,7 @@ export class CompanyCreateComponent implements OnInit {
 		this.forma = new FormGroup({
 			txCompanyName: new FormControl(defaults.txCompanyName || '', [Validators.required, this.validatorSetId.bind(this)]),
 			txCompanyString: new FormControl({ value: defaults.txCompanyString || '', disabled: true }, Validators.required),
-			txCompanySlogan: new FormControl(defaults.txCompanySlogan || '', Validators.required),
+			txCompanySlogan: new FormControl(defaults.txCompanySlogan || ''),
 			txCompanyLocation: new FormControl(defaults.txCompanyLocation || '', Validators.required),
 			cdCompanyLocation: new FormControl(defaults.cdCompanyLocation || '', Validators.required),
 			txAddressStreet: new FormControl(defaults.txAddressStreet || '', Validators.required),
@@ -88,8 +88,9 @@ export class CompanyCreateComponent implements OnInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-
 		if (!changes.companyEdit?.currentValue) { return; }
+
+
 
 		let defaults = {
 			txCompanyName: changes.companyEdit.currentValue.tx_company_name,
@@ -148,7 +149,7 @@ export class CompanyCreateComponent implements OnInit {
 		if (pattern?.length > 3) {
 			this.adminService.checkCompanyExists(pattern).subscribe((data: any) => {
 				if (!data.ok) {
-					this.forma.controls['company'].setErrors({ 'incorrect': true });
+					this.forma.controls['txCompanyName'].setErrors({ 'incorrect': true });
 					this.forma.setErrors({ 'companyExists': true })
 				}
 			});
@@ -157,11 +158,16 @@ export class CompanyCreateComponent implements OnInit {
 
 	createCompany(formDirective: FormGroupDirective) {
 
+		if (this.forma.getRawValue().txCompanyLat === '' || this.forma.getRawValue().txCompanyLng === ''){
+			this.forma.setErrors({ 'coordsMissing': true });
+		}
+		
 		if (this.forma.invalid) {
 			this.sharedService.snack('Faltan datos por favor verifique', 2000, 'Aceptar');
 			return;
 		}
 
+		
 		const company: any = {
 			id_user: this.loginService.user._id,
 			tx_company_name: this.forma.value.txCompanyName,

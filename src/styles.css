@@ -46,6 +46,10 @@ span:focus {
     outline: none;
 }
 
+div:focus {
+    outline: none;
+}
+
 .mapboxgl-canvas:focus {
     outline: none;
     border : none;
@@ -124,6 +128,22 @@ mat-drawer-container {
     padding: 0 !important;
 }
 
+.minicards-content {
+    display        : flex;
+    padding        : 10px;
+    flex-wrap      : wrap;
+    justify-content: center;
+}
+
+.saturno-minicard {
+    margin   : 10px;
+    width    : 100%;
+    min-width: 15rem;
+    max-width: 18rem;
+    padding  : 1.2em;
+    font-size: medium;
+}
+
 .saturno-minicard-title {
     font-size  : large;
     font-weight: 400;
@@ -137,28 +157,28 @@ mat-drawer-container {
 }
 
 .saturno-hr-red {
-    border-top: 5px solid rgb(255 0 0 / 70%);
-    width     : 50%;
+    border-top: 2px solid rgb(255 0 0 / 90%);
+    width     : 80%;
 }
 
 .saturno-hr-green {
-    border-top: 5px solid rgb(0 180 0 / 70%);
-    width     : 50%;
+    border-top: 2px solid rgb(0 180 0 / 90%);
+    width     : 80%;
 }
 
 .saturno-hr-blue {
-    border-top: 5px solid rgb(0 0 180 / 70%);
-    width     : 50%;
+    border-top: 2px solid rgb(0 0 180 / 90%);
+    width     : 80%;
 }
 
 .saturno-hr-grey {
-    border-top: 5px solid rgb(180 180 180 / 70%);
-    width     : 50%;
+    border-top: 2px solid rgb(180 180 180 / 90%);
+    width     : 80%;
 }
 
 .saturno-hr-pink {
-    border-top: 5px solid rgb(180 0 180 / 70%);
-    width     : 50%;
+    border-top: 2px solid rgb(180 0 180 / 90%);
+    width     : 80%;
 }
 
 
@@ -435,6 +455,10 @@ mat-card-header {
     /* opacity : .9; */
 }
 
+mat-card-title span.mdi {
+    margin   : 0px 5px;
+    font-size: x-large;
+}
 
 /*
 -------------------------------------------

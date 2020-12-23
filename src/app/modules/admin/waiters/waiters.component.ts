@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 // libraries
-import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 // services
@@ -32,8 +31,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
-    private sharedService: SharedService,
-    private snack: MatSnackBar
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +64,8 @@ export class WaitersComponent implements OnInit, OnDestroy {
   waiterUpdated(idWaiter: string): void {
     this.waiterCreate = false;
     this.idWaiterUpdated = idWaiter;
-    this.readWaiters(this.loginService.user.id_company._id);
+    let idCompany = this.loginService.user.id_company._id;
+    this.readWaiters(idCompany);
   }
 
   readWaiters(idCompany: string): void {
@@ -75,20 +74,23 @@ export class WaitersComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteWaiter(idWaiter: string): void {
+  deleteWaiter(waiter: User): void {
+
+    let idWaiter = waiter._id;
     if (idWaiter === this.loginService.user._id) {
-      this.sharedService.snack('No podés borrar tu propio usuario!', 2000);
+      this.sharedService.snack('No podés borrar tu propio usuario!', 3000);
       return;
     }
-    this.snack.open('Desea eliminar el asistente?', 'ELIMINAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
-      if (data.dismissedByAction) {
+
+    this.sharedService.snack(`Desea eliminar el asistente ${waiter.tx_name}?`, 3000, 'Aceptar').then(ok => {
+      if(ok){
         this.adminService.deleteWaiter(idWaiter).subscribe((data: UserResponse) => {
           this.waiterEdit = 'clear_form';
-          this.snack.open(data.msg, null, { duration: 5000 });
+          this.sharedService.snack(data.msg, 1000);
           this.adminService.waiters = this.adminService.waiters.filter(waiter => waiter._id != idWaiter);
         },
           (err: UserResponse) => {
-            this.snack.open(err.msg, null, { duration: 5000 });
+            this.sharedService.snack(err.msg, 3000)
           }
         )
       }

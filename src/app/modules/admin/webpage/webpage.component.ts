@@ -7,17 +7,17 @@ import { LoginService } from '../../../services/login.service';
 import { CompanyResponse } from '../../../interfaces/company.interface';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  selector: 'app-webpage',
+  templateUrl: './webpage.component.html',
+  styleUrls: ['./webpage.component.css']
 })
-export class AboutComponent implements OnInit {
+export class WebPageComponent implements OnInit {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
-  formAbout: FormGroup;
-  aboutEdit: false;
+  formWebPage: FormGroup;
+  webpageEdit: false;
   header = {
     logo:
     {
@@ -40,19 +40,19 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.formAbout = new FormGroup({
+    this.formWebPage = new FormGroup({
       txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, Validators.required)
     })
 
   }
 
 
-  sendAbout(formDirective: FormGroupDirective) {
-    if (this.formAbout.invalid) return;
+  sendWebPage(formDirective: FormGroupDirective) {
+    if (this.formWebPage.invalid) return;
 
     let idCompany = this.loginService.user.id_company._id;
-    let data = { txWelcome: this.formAbout.value.txWelcome };
-    this.adminService.updateAbout(data, idCompany).subscribe((data: CompanyResponse) => {
+    let data = { txWelcome: this.formWebPage.value.txWelcome };
+    this.adminService.updateWebPage(data, idCompany).subscribe((data: CompanyResponse) => {
       if(data.ok){
         this.loginService.user.id_company = data.company;
         this.loginService.pushUser(this.loginService.user);
@@ -62,9 +62,9 @@ export class AboutComponent implements OnInit {
   }
 
   resetForm(formDirective: FormGroupDirective) {
-    this.aboutEdit = null;
-    this.formAbout.enable();
-    this.formAbout.reset();
+    this.webpageEdit = null;
+    this.formWebPage.enable();
+    this.formWebPage.reset();
     formDirective.resetForm();
     this.sharedService.scrollTop();
   }

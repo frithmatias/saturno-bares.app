@@ -8,6 +8,14 @@
     text-align           : center;
 }
 
+.saturno-map {
+    padding: 40px;
+}
+
+.location-input {
+    margin-top: 2em;
+    width     : 80%;
+}
 
 .home-bienvenido {
     color    : darkorange;
@@ -25,26 +33,6 @@
     font-size      : 7em;
     justify-content: center;
     line-height    : 1em;
-}
-
-.location-input {
-    margin-top: 2em;
-    width     : 30em;
-}
-
-.minicards-content {
-    display        : flex;
-    padding        : 10px;
-    flex-wrap      : wrap;
-    justify-content: center;
-}
-
-.minicard {
-    margin   : 10px;
-    min-width: 15rem;
-    max-width: 18rem;
-    padding  : 1.2em;
-    font-size: medium;
 }
 
 .minicard-icons {

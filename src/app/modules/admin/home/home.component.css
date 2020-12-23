@@ -6,3 +6,11 @@ p {
     font-size: .9em;
     opacity: .8;
 }
+
+.minicard {
+    margin   : 10px;
+    min-width: 15rem;
+    max-width: 18rem;
+    padding  : 1.2em;
+    font-size: medium;
+}

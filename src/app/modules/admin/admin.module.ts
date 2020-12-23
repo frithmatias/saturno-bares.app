@@ -28,7 +28,7 @@ import { SectionCreateComponent } from './sections/section-create/section-create
 import { WizardComponent } from './wizard/wizard.component';
 import { PollComponent } from './poll/poll.component';
 import { PollCreateComponent } from './poll/poll-create/poll-create.component';
-import { AboutComponent } from './about/about.component';
+import { WebPageComponent } from './webpage/webpage.component';
 
 @NgModule({
 	declarations: [
@@ -52,7 +52,7 @@ import { AboutComponent } from './about/about.component';
 		WizardComponent,
 		PollComponent,
 		PollCreateComponent,
-		AboutComponent
+		WebPageComponent
 
 	],
 	imports: [

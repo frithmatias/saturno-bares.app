@@ -10,7 +10,7 @@
 }
 
 .text-upload {
-    font-size: small;
+    font-size  : small;
     font-family: monospace;
 }
 
@@ -23,11 +23,10 @@
     width : 70px;
 }
 
-
-
 .image:hover {
-    border: 1px solid rgba(100,100,100,0.5);
+    border: 1px solid rgba(100, 100, 100, 0.5);
 }
+
 .image .delete-icon {
     cursor     : pointer;
     position   : absolute;
@@ -48,11 +47,11 @@
 }
 
 .progress {
-    display: flex;
-    height: .2rem;
-    overflow: hidden;
-    line-height: 0;
-    font-size: .75rem;
+    display         : flex;
+    height          : .2rem;
+    overflow        : hidden;
+    line-height     : 0;
+    font-size       : .75rem;
     background-color: #5d5d5d;
 }
 
@@ -67,11 +66,11 @@
 
 
 .images-container {
-    display: flex;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: auto;
-    flex-wrap: wrap;
+    display        : flex;
+    flex-grow      : 1;
+    flex-shrink    : 1;
+    flex-basis     : auto;
+    flex-wrap      : wrap;
     justify-content: center;
 }
 
@@ -87,7 +86,14 @@
 .image {
     position: relative;
     display : flex;
-    margin  : 5px;
-    width   : 4em;
-    height  : 4em;
+    margin  : 1px;
+    width: 5em;
+    height: 5em;
+}
+
+
+
+
+.image:hover {
+    border         : none;
 }

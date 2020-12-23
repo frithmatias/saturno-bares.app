@@ -1,15 +1,12 @@
-<div class="p-4 animated fadeIn">
+<div class="xl mb-2">Bienvenido {{ loginService?.user.tx_name }}!</div>
+<div class="p-4 animated fadeIn" style="justify-content: center;     display: flex;">
 
-  <div class="xl mb-2">Bienvenido {{ loginService?.user.tx_name }}!</div>
-
-  <div class="row">
-
-    <div class="col-sm-0 col-lg-1"></div>
-
-    <div class="col-12 col-sm-6 col-md-6 col-lg-5">
-
+  <div style="display: flex; flex-wrap: wrap;">
+  <div style="display: block;">
+    
+    <div>
       <!-- WIZARD LINK -->
-      <mat-card class="m-2">
+      <mat-card class="saturno-minicard m-2">
         <div class="pointer my-3" routerLink="/admin/wizard">
           <div class="saturno-minicard-title">
             <div>
@@ -51,12 +48,13 @@
           </div>
         </div>
       </mat-card>
-
+    </div>
+    <div>
       <!-- TOMAR SECTOR -->
-      <mat-card class="pointer m-2" *ngIf="
-      adminService.companies.length > 0 && 
-      adminService.sections.length > 0 &&
-      adminService.tables.length > 0" routerLink="/waiter/home">
+      <mat-card class="saturno-minicard pointer m-2" *ngIf="
+    adminService.companies.length > 0 && 
+    adminService.sections.length > 0 &&
+    adminService.tables.length > 0" routerLink="/waiter/home">
 
         <div class="saturno-minicard-title">
           <div>
@@ -71,13 +69,14 @@
           Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
         </div>
       </mat-card>
+
     </div>
+  </div>
+  <div style="display: block;">
 
-    <div class="col-12 col-sm-6 col-md-6 col-lg-5">
-
-      <!-- COMPANY TABLE INFO -->
-
-      <mat-card class="m-2" routerLink="/waiter/home">
+    <!-- COMPANY TABLE INFO -->
+    <div>
+      <mat-card class="saturno-minicard m-2" routerLink="/waiter/home">
 
         <mat-card-header>
           <mat-card-title>
@@ -130,9 +129,9 @@
             </table>
 
             <div *ngIf="
-    adminService.companies.length === 0 || 
-    adminService.sections.length === 0 ||
-    adminService.tables.length === 0" class="pointer sm p-2 mt-2">
+  adminService.companies.length === 0 || 
+  adminService.sections.length === 0 ||
+  adminService.tables.length === 0" class="pointer sm p-2 mt-2">
               Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
                 routerLink="/admin/wizard">"Iniciar el Asistente"</span>
               para crear todo lo necesario.
@@ -143,8 +142,12 @@
 
       </mat-card>
 
-      <!-- FOOTER INFO -->
-      <mat-card class="m-2 saturno-minicard-text" style="text-align: left;" *ngIf="loginService.user.id_company">
+    </div>
+
+
+    <!-- INFO -->
+    <div>
+      <mat-card class="saturno-minicard m-2" style="text-align: left;" *ngIf="loginService.user.id_company">
 
         <div>
           <span class="mdi mdi-headset lg mr-2"></span> Administradores y Camareros
@@ -182,9 +185,9 @@
 
 
       </mat-card>
-    </div>
 
-    <div class="col-sm-0 col-lg-1"></div>
+    </div>
+  </div>
 
   </div>
 </div>

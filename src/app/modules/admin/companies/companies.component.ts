@@ -1,14 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-
-import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { AdminService } from '../../../modules/admin/admin.service';
 import { LoginService } from '../../../services/login.service';
 
 import { Company } from '../../../interfaces/company.interface';
-import { CompanyResponse, CompaniesResponse } from '../../../interfaces/company.interface';
-import { User } from '../../../interfaces/user.interface';
+import { CompanyResponse } from '../../../interfaces/company.interface';
+import { SharedService } from 'src/app/services/shared.service';
 
 
 @Component({
@@ -28,8 +25,8 @@ export class CompaniesComponent implements OnInit {
 
   constructor(
     public adminService: AdminService,
-    private loginService: LoginService,
-    private snack: MatSnackBar
+    public loginService: LoginService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void { }
@@ -45,24 +42,28 @@ export class CompaniesComponent implements OnInit {
     this.companyEdit = null;
   }
 
-  newCompany(company: Company): void {
+  companyEditedOrCreated(company: Company): void {
     this.openForm = false;
     this.companyUpdated = company;
+    if (this.companyEdit) {
+      this.adminService.companies = this.adminService.companies.filter(comp => comp._id !== company._id)
+    }
     this.adminService.companies = [...this.adminService.companies, company];
   }
 
-  deleteCompany(idCompany: string): void {
-    this.snack.open('Desea eliminar la empresa?', 'ELIMINAR', { duration: 10000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
-      if (data.dismissedByAction) {
+  deleteCompany(company: Company): void {
+    this.sharedService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 3000, 'BORRAR').then(ok => {
+      if (ok) {
+        let idCompany = company._id;
         this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
-          this.snack.open(data.msg, null, { duration: 2000 });
+          this.sharedService.snack(data.msg, 1000);
           this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
           if (idCompany === this.loginService.user.id_company?._id) {
             this.loginService.user.id_company = null;
             localStorage.setItem('user', JSON.stringify(this.loginService.user));
           }
         }, (err: CompanyResponse) => {
-          this.snack.open(err.msg, null, { duration: 2000 });
+          this.sharedService.snack(err.msg, 3000);
         }
         )
       }

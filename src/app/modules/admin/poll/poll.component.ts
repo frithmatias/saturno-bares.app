@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { AdminService } from '../admin.service';
 import { TableResponse } from '../../../interfaces/table.interface';
 import { Section } from 'src/app/interfaces/section.interface';
 import { ScoreItem, ScoreItemResponse, ScoreItemsResponse } from '../../../interfaces/score.interface';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-poll',
@@ -28,8 +28,7 @@ export class PollComponent implements OnInit {
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
-    private snack: MatSnackBar
-
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -46,16 +45,18 @@ export class PollComponent implements OnInit {
   }
 
 
-  deleteScoreItem(idScoreItem: string): void {
-    this.snack.open('Desea eliminar este item?', 'ELIMINAR', { duration: 5000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
-      if (data.dismissedByAction) {
+  deleteScoreItem(item: ScoreItem): void {
+    this.sharedService.snack(`Desea eliminar el item ${item.tx_item} para calificar?`, 3000, 'Aceptar').then(ok => {
+      if(ok){
+
+        let idScoreItem = item._id;
         this.adminService.deleteScoreItem(idScoreItem).subscribe((data: ScoreItemResponse) => {
-          this.snack.open(data.msg, null, { duration: 5000 });
+          this.sharedService.snack(data.msg, 1000);
           this.scoreItems = this.scoreItems.filter(item => item._id != idScoreItem);
           this.scoreItemsSection = this.scoreItemsSection.filter(table => table._id != idScoreItem);
         },
           (err: TableResponse) => {
-            this.snack.open(err.msg, null, { duration: 5000 });
+            this.sharedService.snack(err.msg, 3000);
           }
         )
       }
@@ -69,8 +70,7 @@ export class PollComponent implements OnInit {
 
   scoreItemCreated(scoreItem: ScoreItem): void {
     this.newItem = scoreItem;
-    this.scoreItems.push(scoreItem);
-    this.scoreItemsSection.push(scoreItem);
-
+    this.scoreItems = [...this.scoreItems, scoreItem];
+    this.scoreItemsSection = [...this.scoreItemsSection, scoreItem];
   }
 }

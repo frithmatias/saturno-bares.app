@@ -81,8 +81,8 @@ export class AdminService {
 		return this.http.post(url, data);
 	}
 
-	updateAbout(data: any, idCompany: string){
-		const url = environment.url + '/c/updateabout/' + idCompany;
+	updateWebPage(data: any, idCompany: string){
+		const url = environment.url + '/c/updatewebpage/' + idCompany;
 		return this.http.put(url, data);
 	}
 

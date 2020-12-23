@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 })
 export class UploaderComponent implements OnInit {
 	@ViewChild('fileInput', { static: true }) fileInput: ElementRef;
+	@Input() editable: boolean = true; // only for single uploads (i.e. google profile images are not editable)
 	@Input() multi: boolean = false;
 	@Input() data: any;  // files in db
 	@Input() idDocument: string;

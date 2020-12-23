@@ -1,24 +1,18 @@
 <div class="saturno-card animated fadeIn">
-
     <mat-card>
 
         <mat-card-header>
-            <mat-card-title>
-                <span> Mi Perfil </span>
-            </mat-card-title>
+            <app-uploader [editable]="!this.loginService.user.bl_google" [multi]="false" [data]="this.loginService.user" [idDocument]="this.loginService.user._id"
+                idField="tx_img" (dataUpdated)="dataUpdated($event)">
+            </app-uploader>
+
+            <div class="mx-2">
+                <mat-card-title> Mi Perfil </mat-card-title>
+                <mat-card-subtitle> Edita acá tu perfil</mat-card-subtitle>
+            </div>
         </mat-card-header>
         <mat-card-content>
-
-
-        <app-uploader 
-            [multi]="false" 
-            [data]="this.loginService.user" 
-            [idDocument]="this.loginService.user._id"
-             idField="tx_img" 
-            [header]="header"
-            (dataUpdated)="dataUpdated($event)">
-        </app-uploader>
-
+            
         </mat-card-content>
     </mat-card>
 </div>
