@@ -25,7 +25,7 @@
                 <ng-container matColumnDef="estado">
                     <th mat-header-cell *matHeaderCellDef class="text-left"> Estado </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
-                        <app-table-info [table]="element"></app-table-info>
+                        <app-table-info [listmode]="listmode" [table]="element"></app-table-info>
                     </td>
                 </ng-container>
 
@@ -36,12 +36,28 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="capacidad">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Cap </th>
+                    <td mat-cell *matCellDef="let element" class="text-center">
+                        <span>{{ element.nm_persons }}</span>
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="turno">
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Turno </th>
                     <td mat-cell *matCellDef="let element" class="text-center">
                         <span>{{ element.id_session?.id_ticket.id_position }}</span>
                     </td>
                 </ng-container>
+
+
+                <ng-container matColumnDef="personas">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Pers </th>
+                    <td mat-cell *matCellDef="let element" class="text-center">
+                        <span>{{ element.id_session?.id_ticket.nm_persons }}</span>
+                    </td>
+                </ng-container>
+
 
                 <ng-container matColumnDef="ocupado">
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Ocup </th>
@@ -93,21 +109,13 @@
             (click)="selectTable(table)">
 
             <div class="xl">{{ table.nm_table }}</div>
-            <app-table-info [table]="table"></app-table-info>
-
+            <app-table-info [listmode]="listmode" [table]="table"></app-table-info>
 
         </button>
 
         <!-- ng-template to table status, ticket info and action buttons -->
         <div *ngIf="table then tableinfo"></div>
-
-
     </div>
-
-
-
-
-
 
 </mat-expansion-panel>
 

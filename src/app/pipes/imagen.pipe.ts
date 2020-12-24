@@ -12,7 +12,7 @@ export class ImagenPipe implements PipeTransform {
 		let url = environment.url + '/image';
 
 		if (!idFile) {
-			return url + '/idCompany/idType/idFile'; // ruta que no existe, devuelve una imagen por defecto
+			return url + '/noCompany/noType/noFile'; // ruta que no existe, devuelve una imagen por defecto
 		}
 
 		if (idFile.indexOf('https') >= 0) {

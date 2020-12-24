@@ -8,6 +8,15 @@
     text-align           : center;
 }
 
+
+.saturno-beer-card {
+    background-image: url('../../../assets/img/beer.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height     : 7em;
+
+}
 .saturno-map {
     padding: 40px;
 }
@@ -33,11 +42,6 @@
     font-size      : 7em;
     justify-content: center;
     line-height    : 1em;
-}
-
-.minicard-icons {
-    opacity  : .4;
-    font-size: 4em;
 }
 
 

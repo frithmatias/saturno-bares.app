@@ -26,7 +26,7 @@ export class TablesComponent implements OnInit {
   @Input() tickets: Ticket[] = [];
   @Input() busyTablesTimes: any;
 
-  displayedColumns: string[] = ['estado', 'mesa', 'turno', 'ocupado', 'espera'];
+  displayedColumns: string[] = ['estado', 'mesa', 'capacidad', 'turno', 'personas', 'ocupado', 'espera'];
 
   listmode = false;
   tableSelected: string = ''; // reassign table
@@ -45,7 +45,6 @@ export class TablesComponent implements OnInit {
     let config = JSON.parse(localStorage.getItem('config'));
     this.listmode = config ? config.listmode : false;
   }
-
 
   // ========================================================
   // TABLE METHODS

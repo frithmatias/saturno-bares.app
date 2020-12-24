@@ -3019,3 +3019,11 @@ td.mat-footer-cell {
 .mat-simple-snackbar-action {
     color: inherit
 }
+
+
+/* SATURNO ELEMENTS */
+.saturno-minicard-icons {
+    color: rgb(194, 24, 91);
+    text-shadow: -1px 0 rgba(0,0,0, .15), 0px 1px rgba(0,0,0, .15), 0px -1px rgba(0,0,0, .15), 1px 0 rgba(0,0,0, .15);
+}
+

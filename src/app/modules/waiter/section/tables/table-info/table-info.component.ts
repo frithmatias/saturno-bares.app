@@ -9,6 +9,8 @@ import { Table } from 'src/app/interfaces/table.interface';
 export class TableInfoComponent implements OnInit {
 
   @Input() table: Table;
+  @Input() listmode: boolean;
+
   constructor() { }
 
   ngOnInit(): void {

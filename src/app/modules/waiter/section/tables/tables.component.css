@@ -53,7 +53,7 @@ button div.mdi{
 
 
 .tables-row:hover {
-    background-color: rgba(120,20,120,0.2);
+    background-color: rgba(0,255,0,0.15);
     cursor: pointer;
 }
 

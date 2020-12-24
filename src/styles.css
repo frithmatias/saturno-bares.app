@@ -144,6 +144,10 @@ mat-drawer-container {
     font-size: medium;
 }
 
+.saturno-minicard-icons {
+    font-size: 4em;
+}
+
 .saturno-minicard-title {
     font-size  : large;
     font-weight: 400;
@@ -311,6 +315,22 @@ mat-drawer-container {
 }
 
 
+.b-1sr {
+    border: 1px solid red;
+}
+
+.b-1sg {
+    border: 1px solid green;
+}
+
+.b-1sb {
+    border: 1px solid blue;
+}
+
+.b-1sp {
+    border: 1px solid rgb(255, 0, 212);
+}
+
 .w-10em {
     width: 10em;
 }
@@ -460,6 +480,14 @@ mat-card-title span.mdi {
     font-size: x-large;
 }
 
+td.mat-cell, th.mat-header-cell{
+    padding: 0px 2px !important;
+    white-space: nowrap;
+}
+
+tr.mat-row:not(.detail-row), tr.mat-footer-row {
+    height: 32px !important;
+}
 /*
 -------------------------------------------
 STEPPER
