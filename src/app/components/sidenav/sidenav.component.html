@@ -13,7 +13,7 @@
     <!-- MENU -->
     <mat-accordion multi="false">
     <div *ngFor="let item of loginService.menu">
-            <mat-expansion-panel  [expanded]="item.tx_titulo === 'Camarero'">
+            <mat-expansion-panel  [expanded]="item.tx_titulo === 'Administrador'">
     
                 <mat-expansion-panel-header>
                     <mat-panel-title style="outline: none;" routerLink="/{{item.tx_url}}">

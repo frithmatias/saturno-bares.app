@@ -6,7 +6,7 @@ body {
 
 body {
     margin      : 0;
-    font-family : 'Encode Sans', 'system-ui', 'Averia Libre', 'Baloo Bhai 2', 'Monda';
+    font-family : 'Baloo Bhai 2', 'Encode Sans', 'system-ui', 'Averia Libre', 'Monda';
     font-weight : 300;
     font-style  : normal;
     font-size   : medium;
@@ -71,15 +71,6 @@ mat-drawer-container {
     cursor: pointer;
 }
 
-.saturno-typo {
-    font-family   : monospace;
-    font-weight   : 300;
-    font-size     : x-large;
-    letter-spacing: .1em;
-    color         : coral;
-}
-
-
 .card-left-border {
     border-left: 5px solid var(--warning);
 }
@@ -88,6 +79,12 @@ mat-drawer-container {
 400px -> 25rem
 */
 
+
+/*
+-------------------------------------------
+SATURNO 
+-------------------------------------------
+*/
 
 
 .saturno-card {
@@ -160,73 +157,7 @@ mat-drawer-container {
     opacity    : .8;
 }
 
-.saturno-hr-red {
-    border-top: 2px solid rgb(255 0 0 / 90%);
-    width     : 80%;
-}
 
-.saturno-hr-green {
-    border-top: 2px solid rgb(0 180 0 / 90%);
-    width     : 80%;
-}
-
-.saturno-hr-blue {
-    border-top: 2px solid rgb(0 0 180 / 90%);
-    width     : 80%;
-}
-
-.saturno-hr-grey {
-    border-top: 2px solid rgb(180 180 180 / 90%);
-    width     : 80%;
-}
-
-.saturno-hr-pink {
-    border-top: 2px solid rgb(180 0 180 / 90%);
-    width     : 80%;
-}
-
-
-.desktop-panel-buttons {
-    font-size : 1.5rem;
-    /* margin : 0px; */
-    /* padding: 0px; */
-    position  : relative;
-    top       : -0.30rem;
-    left      : -0.30rem;
-}
-
-.button-content {
-    align-self : center;
-    line-height: 1.5em;
-    padding    : 5px;
-    margin     : 0px;
-}
-
-.saturno-card-mini-body {
-    font-size: xxx-large;
-    padding  : .1em;
-}
-
-.saturno-base {
-    height: 8em;
-}
-
-.saturno-footer {
-    padding-top          : .3em;
-    padding-bottom       : .3em;
-    position             : fixed;
-    right                : 0;
-    bottom               : 0;
-    left                 : 0;
-    z-index              : 1030;
-    /* unselectable */
-    -webkit-touch-callout: none;
-    -webkit-user-select  : none;
-    -khtml-user-select   : none;
-    -moz-user-select     : none;
-    -ms-user-select      : none;
-    user-select          : none;
-}
 
 .no-selection {
     -webkit-touch-callout: none;
@@ -236,48 +167,6 @@ mat-drawer-container {
     -ms-user-select      : none;
     user-select          : none;
 }
-
-.button {
-    border       : none;
-    border-radius: 5px;
-    padding      : 8px;
-    width        : inherit;
-}
-
-.button-inner {
-    font-weight: 300;
-    font-size  : small;
-}
-
-.accessible-icon {
-    font-size: xx-large;
-    position : relative;
-    left     : -3px;
-    top      : 3px;
-    color    : green;
-}
-
-/* list no warp */
-.mat-select-option-nowarp {
-    float: left;
-    width: max-content;
-}
-
-
-
-.card-turnos-danger {
-    background-color: brown;
-}
-
-.card-turnos-primary {
-    background-color: darkslateblue;
-}
-
-.card-turnos-info {
-    background-color: darkslategrey;
-}
-
-
 
 .input-icon {
     position        : absolute;
@@ -295,23 +184,135 @@ mat-drawer-container {
 
 }
 
-.banner-title {
-    font-size  : x-large;
-    font-family: unset;
+/*
+-------------------------------------------
+MF STYLES 
+-------------------------------------------
+*/
+
+.text-blue {
+    color: #007bff;
+}
+.text-indigo {
+    color: #6610f2;
+}
+.text-purple {
+    color: #6f42c1;
+}
+.text-pink {
+    color: #e83e8c;
+}
+.text-red {
+    color: #dc3545;
+}
+.text-orange {
+    color: #fd7e14;
+}
+.text-yellow {
+    color: #ffc107;
+}
+.text-green {
+    color: #28a745;
+}
+.text-teal {
+    color: #20c997;
+}
+.text-cyan {
+    color: #17a2b8;
+}
+.text-white {
+    color: #fff;
+}
+.text-gray {
+    color: #6c757d;
+}
+.text-gray {
+    color: #343a40;
+} 
+.text-primary {
+    color: #007bff;
+}
+.text-secondary {
+    color: #6c757d;
+}
+.text-success {
+    color: #28a745;
+}
+.text-info {
+    color: #17a2b8;
+}
+.text-warning {
+    color: #ffc107;
+}
+.text-danger {
+    color: #dc3545;
+}
+.text-light {
+    color: #f8f9fa;
+}
+.text-dark {
+    color: #343a40;
+}
+
+.hr-red {
+    border-top: 2px solid rgb(255 0 0 / 90%);
+    width     : 80%;
+}
+
+.hr-green {
+    border-top: 2px solid rgb(0 180 0 / 90%);
+    width     : 80%;
+}
+
+.hr-blue {
+    border-top: 2px solid rgb(0 0 180 / 90%);
+    width     : 80%;
+}
+
+.hr-grey {
+    border-top: 2px solid rgb(180 180 180 / 90%);
+    width     : 80%;
+}
+
+.hr-pink {
+    border-top: 2px solid rgb(180 0 180 / 90%);
+    width     : 80%;
+}
+
+.fw100 {
+    font-weight: 100;
+}
+
+.fw200 {
+    font-weight: 200;
+}
+
+.fw300 {
+    font-weight: 300;
+}
+
+.fw400 {
     font-weight: 400;
 }
 
-.banner-content {
-    border-radius  : 0.3rem;
-    text-align     : center;
-    line-height    : normal;
-    justify-content: center;
-    margin         : .3rem;
+.fw500 {
+    font-weight: 500;
 }
 
-.banner-footer {
-    font-size  : large;
-    font-weight: 200;
+.fw600 {
+    font-weight: 600;
+}
+
+.fw700 {
+    font-weight: 700;
+}
+
+.fw800 {
+    font-weight: 800;
+}
+
+.fw900 {
+    font-weight: 900;
 }
 
 
@@ -371,20 +372,40 @@ mat-drawer-container {
     opacity: 1;
 }
 
+.op9 {
+    opacity: .9;
+}
+
 .op8 {
     opacity: .8;
+}
+
+.op7 {
+    opacity: .7;
 }
 
 .op6 {
     opacity: .6;
 }
 
+.op5 {
+    opacity: .5;
+}
+
 .op4 {
     opacity: .4;
 }
 
+.op3 {
+    opacity: .3;
+}
+
 .op2 {
     opacity: .2;
+}
+
+.op1 {
+    opacity: .1;
 }
 
 .op0 {
@@ -480,14 +501,17 @@ mat-card-title span.mdi {
     font-size: x-large;
 }
 
-td.mat-cell, th.mat-header-cell{
-    padding: 0px 2px !important;
+td.mat-cell,
+th.mat-header-cell {
+    padding    : 0px 2px !important;
     white-space: nowrap;
 }
 
-tr.mat-row:not(.detail-row), tr.mat-footer-row {
+tr.mat-row:not(.detail-row),
+tr.mat-footer-row {
     height: 32px !important;
 }
+
 /*
 -------------------------------------------
 STEPPER

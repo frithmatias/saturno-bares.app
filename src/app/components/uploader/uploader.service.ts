@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-
-import { FileUpload } from '../../models/fileupload.model';
-import urlsafeBase64 from 'urlsafe-base64';
-import { catchError, map, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { FileUpload } from './uploader.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +12,23 @@ export class UploaderService {
     private http: HttpClient
   ) { }
 
-  subirImagen(fileItem: FileUpload, idField: string, idDocument: string) {
+  subirImagen(idDocument: string, idField: string, fileItem: FileUpload, filesLength: number) {
     const url = environment.url + '/uploads/' + idDocument + '/' + idField;
     const formData: FormData = new FormData();
-    formData.append('imagen', fileItem.archivo, fileItem.archivo.name);
+    formData.append('imagen', fileItem.archivo, fileItem.archivo.name); // backend -> files: { imagen: { ... } }
+    formData.append('filesLength', filesLength.toString()) // backend -> req.body
     return this.http.put(url, formData, { reportProgress: true });
   }
 
-  borrarImagen(idField: string, idDocument: string, filename: string) {
+  borrarImagen(idDocument: string, idField: string, filename: string) {
     const url = environment.url + '/uploads/' + idDocument + '/' + idField + '/' + filename;
-      return this.http.delete(url, { reportProgress: true });
+    return this.http.delete(url, { reportProgress: true });
+  }
+
+  syncHostinger(idDocument: string, idField: string) {
+    let data = { idDocument, idField }
+    const url = environment.url + '/uploads/synchostinger';
+    return this.http.post(url, data)
   }
 
 }

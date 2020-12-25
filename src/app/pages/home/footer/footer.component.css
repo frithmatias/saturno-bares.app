@@ -3,23 +3,21 @@
     display        : flex;
     flex-flow      : row wrap;
     padding        : 1em;
-    background     : #151515;
     font-family    : system-ui;
     font-size      : small;
-    color          : #565656;
     text-decoration: none;
     justify-content: space-around;
-    height         : 8em;
+    height         : 10em;
     margin-top     : 3em;
 }
 
 a {
-    color: #565656;
-
+    color:unset;
 }
 
 a:hover {
     text-decoration: none;
+    color: unset;
 }
 
 
@@ -48,10 +46,10 @@ TECH ICONS
 .tech-div {
     display    : block;
     text-indent: -9999px;
-    margin: 10px 0 10px 0;
+    margin     : 10px 0 10px 0;
     width      : 1.5em;
     height     : 1.5em;
-    opacity    : .5;
+    opacity    : .8;
 }
 
 .tech-mongodb {

@@ -29,8 +29,7 @@
             <hr>
 
             <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id" idField="tx_company_logo"
-                [data]="this.loginService.user.id_company" [header]="header.logo" (dataUpdated)="dataUpdated($event)"
-                (dataUpdated)="dataUpdated($event)">
+                [data]="this.loginService.user.id_company" [header]="header.logo" (dataUpdated)="dataUpdated($event)">
             </app-uploader>
 
             <hr>

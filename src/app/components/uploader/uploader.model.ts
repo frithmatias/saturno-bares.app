@@ -17,3 +17,11 @@ export class FileUpload {
 		this.progreso = 0;
 	}
 }
+
+export class FileUploadResponse {
+
+	public ok: boolean;
+	public msg: string;
+	public filename: string;
+
+}

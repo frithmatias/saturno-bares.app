@@ -58,44 +58,42 @@
 
                 <div *ngIf="scoreItems.length > 0">
 
-                    <div class="md my-3 text-warning">
-                        ¿Podría dejarnos su opinión?
+                    <div class="md my-3">
+                        ¿Podrías dejarnos tu opinión?
                     </div>
 
-                    <div class="text-white mt-4 table-responsive-sm">
-                        <table class="table table-sm text-white m-0">
-                            <tr *ngFor="let item of scoreItems">
-                                <td class="lg py-2">
-                                    {{ item.tx_item }}
-                                </td>
-                                <td class="p-0 py-2">
-                                    <span class="mdi mdi-star screen-icon-star"
-                                        [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
-                                        (click)="setScore(item._id, 1)"></span>
-                                </td>
-                                <td class="p-0 py-2">
-                                    <span class="mdi mdi-star screen-icon-star"
-                                        [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
-                                        (click)="setScore(item._id, 2)"></span>
-                                </td>
-                                <td class="p-0 py-2">
-                                    <span class="mdi mdi-star screen-icon-star"
-                                        [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
-                                        (click)="setScore(item._id, 3)"></span>
-                                </td>
-                                <td class="p-0 py-2">
-                                    <span class="mdi mdi-star screen-icon-star"
-                                        [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
-                                        (click)="setScore(item._id, 4)"></span>
-                                </td>
-                                <td class="p-0 py-2">
-                                    <span class="mdi mdi-star screen-icon-star"
-                                        [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
-                                        (click)="setScore(item._id, 5)"></span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <table class="table m-0">
+                        <tr *ngFor="let item of scoreItems">
+                            <td class="lg saturno-text-accent py-2">
+                                {{ item.tx_item }}
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
+                                    (click)="setScore(item._id, 1)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
+                                    (click)="setScore(item._id, 2)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
+                                    (click)="setScore(item._id, 3)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
+                                    (click)="setScore(item._id, 4)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
+                                    (click)="setScore(item._id, 5)"></span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <mat-card-actions>
@@ -120,7 +118,8 @@
                     Pedir la Cuenta
                 </button>
 
-                <button mat-raised-button class="screen-myticket-button m-2" color="warn" [disabled]="!ticket" (click)="endTicket()">
+                <button mat-raised-button class="screen-myticket-button m-2" color="warn" [disabled]="!ticket"
+                    (click)="endTicket()">
                     <div class="mdi mdi-power xl"></div>
                     Cancelar Turno
                 </button>

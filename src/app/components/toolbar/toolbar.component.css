@@ -3,31 +3,46 @@
     flex-grow: 1;
 }
 
+
+.logo-img {
+    background-image   : url('../../../assets/img/saturn.svg');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+    background-position: center center;
+    height             : 2em;
+    width              : 2em;
+}
+
 @media (max-width: 575px) {
-    .logo {
+    .logo-text-container {
         display: none;
     }
 }
 
+
+.logo-text-container {
+    align-self: center;
+}
+
 .logo-title {
-    font-size     : 1em;
-    font-weight   : 200;
-    letter-spacing: .1em;
+    font-size     : .6em;
+    font-weight   : 600;
+    letter-spacing: .28em;
     line-height   : 1em;
     text-transform: uppercase;
     color         : whitesmoke;
     font-family   : 'Encode Sans', system-ui;
 }
 
-.logo-description {
-    font-size     : .7em;
-    font-weight   : lighter;
-    line-height   : normal;
-    color         : #ffffff;
-    letter-spacing: .01em;
+.logo-subtitle {
+    font-size     : .6em;
+    font-weight   : 200;
+    line-height   : 1em;
+    text-transform: uppercase;
+    color         : rgb(234, 255, 0);
     font-family   : 'Encode Sans', system-ui;
-
 }
+
 
 .search {
     flex-grow    : 1;

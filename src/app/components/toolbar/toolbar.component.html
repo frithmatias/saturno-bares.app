@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="mat-elevation-z3" color="primary">
 
     <!-- TOGGLE MENU ICON -->
     <div style="width: 84px;" class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
@@ -11,14 +11,18 @@
     <!-- LOGO & SEARCH -->
     <div *ngIf="!loginService.user && !publicService.company" class="logo-search-container">
 
-        <!-- LOGO -->
-        <div class="logo" routerLink="/home">
-            <div class="logo-title">SATURNO
-                <span class="text-warning">Bar<span class="sm">&</span>Resto</span>
-            </div>
+        <!-- LOGO IMG -->
+        <div class="logo-img mr-3" routerLink="/home">
+        </div>
 
-            <div class="logo-description">
-                Sistema de Administración de Turnos
+        <!-- LOGO TITLE -->
+        
+        <div class="logo-text-container mr-3">
+            <div class="logo-title mb-1">
+                SATURNO
+            </div>
+            <div class="logo-subtitle">
+                <span>Bar<span class="sm"> & </span>Resto</span>
             </div>
         </div>
 

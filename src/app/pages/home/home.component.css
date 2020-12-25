@@ -1,3 +1,22 @@
+.saturno-bg-primary .logo-img {
+    background-image   : url('../../../assets/img/saturn.svg');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+    background-position: center center;
+    height: 8em;
+    width: 8em;
+    opacity: .2;
+    position: absolute;
+    right: 119px;
+    top: 26px;
+
+}
+
+
+.welcome-card {
+    background-color: rgba(255, 255, 255, .9);
+}
+
 .saturno-bg-home {
     background-image     : url('../../../assets/img/bghome.jpg');
     background-size      : cover;

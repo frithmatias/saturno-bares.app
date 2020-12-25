@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { Company, CompanyResponse } from 'src/app/interfaces/company.interface';
-import { FileUpload } from '../../models/fileupload.model';
-import Swal from 'sweetalert2';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { FileUpload, FileUploadResponse } from './uploader.model';
 import { UploaderService } from './uploader.service';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 
@@ -42,7 +40,7 @@ export class UploaderComponent implements OnInit {
 	uploadSingle() {
 		this.fileInput.nativeElement.value = "";
 		let archivo = this.filesToUpload[0];
-		this.uploaderService.subirImagen(archivo, this.idField, this.idDocument).subscribe((data: any) => {
+		this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, 1).subscribe((data: FileUploadResponse) => {
 			archivo.progreso = 100;
 			archivo.estaSubiendo = false;
 			this.data[this.idField] = data.filename;
@@ -53,20 +51,25 @@ export class UploaderComponent implements OnInit {
 
 	uploadMulti() {
 		this.fileInput.nativeElement.value = "";
-		let count = 0;
-		let filesUploaded = [];
-		this.filesToUpload.forEach(archivo => {
+		let filesToUploadLength = this.filesToUpload.length;
+
+		this.filesToUpload.forEach((archivo, index, files) => {
 			archivo.estaSubiendo = true;
-			this.uploaderService.subirImagen(archivo, this.idField, this.idDocument).subscribe((data: any) => {
-				count++;
+			this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, files.length).subscribe((data: FileUploadResponse) => {
+
 				archivo.progreso = 100;
 				archivo.estaSubiendo = false;
-				filesUploaded.push(data.filename);
-				this.data[this.idField].push(data.filename)
 
-				if (count === this.filesToUpload.length) {
-					this.filesToUpload = [];
+				this.data[this.idField].push(data.filename);
+				this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)
+
+				if (index === filesToUploadLength - 1) {
 					this.dataUpdated.emit(this.data);
+					this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+						if(data.ok){
+							this.snack.open(data.msg, null, {duration: 2000});
+						}
+					})
 				}
 
 			}, () => {
@@ -76,12 +79,12 @@ export class UploaderComponent implements OnInit {
 		});
 	}
 
-	deleteImage(id: string) {
+	deleteImage(idFile: string) {
 		this.snack.open('Desea borrar esta imagen?', 'Si borrar', { duration: 5000 }).afterDismissed().subscribe((data: MatSnackBarDismiss) => {
 			if (data.dismissedByAction) {
-				this.uploaderService.borrarImagen(this.idField, this.idDocument, id).subscribe((data: any) => {
+				this.uploaderService.borrarImagen(this.idDocument, this.idField, idFile).subscribe((data: FileUploadResponse) => {
 					if (this.multi) {
-						if(data.filename === 'todas'){
+						if (data.filename === 'todas') {
 							this.data[this.idField] = [];
 						} else {
 							this.data[this.idField] = this.data[this.idField].filter(file => file != data.filename);
@@ -89,6 +92,11 @@ export class UploaderComponent implements OnInit {
 					} else {
 						this.data[this.idField] = null;
 					}
+					this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+						if(data.ok){
+							this.snack.open(data.msg, null, {duration: 2000})
+						}
+					})
 					this.dataUpdated.emit(this.data);
 				});
 			}
