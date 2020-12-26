@@ -46,6 +46,11 @@ export class UploaderComponent implements OnInit {
 			this.data[this.idField] = data.filename;
 			this.filesToUpload = [];
 			this.dataUpdated.emit(this.data);
+			this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+				if(data.ok){
+					this.snack.open(data.msg, null, {duration: 2000});
+				}
+			})
 		});
 	}
 

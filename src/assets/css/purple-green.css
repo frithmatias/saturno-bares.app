@@ -796,7 +796,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-    color: #7b1fa2
+    /* color: #7b1fa2 */
 }
 
 .mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {

@@ -4,8 +4,13 @@
 
 .notification-icon {
   position: fixed;
-  left    : 1rem;
-  bottom  : 1rem;
-  z-index : 2;
-  cursor  : pointer;
+  top: 1.4em;
+  right: 5em;
+  z-index: 2;
+  cursor: pointer;
+  width: 20px;
+}
+
+.body {
+  color: yellow;
 }
