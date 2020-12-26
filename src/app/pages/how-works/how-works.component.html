@@ -1,152 +1,84 @@
-<div class="saturno-card mt-4  p-0 animated fadeIn">
+<div class="saturno-page-container mt-4 p-0 animated fadeIn">
 
 
-    <!-- STEPPER ON -->
-    <mat-horizontal-stepper style="text-align: left;" linear #stepper>
+    <mat-card class="saturno-minicard-text text-align-left animated fadeIn">
 
-        <!-- Qué es Step -->
-        <mat-step state="star">
-            <mat-card class="saturno-minicard-text animated fadeIn">
+        <mat-card-content>
 
-                <div class="xl">Qué es Saturno?</div>
-                <div>
-                    Saturno es un sistema de "cola virtual". Te permite administrar los turnos con demanda
-                        espontánea
-                    que generan tus clientes de manera ONLINE. Saturno NO es un sistema de agenda de reseva de turnos
-                        programados.
-                </div>
+            <div class="md">Qué es Saturno Bares y Restaurantes?</div>
 
-                <div class="bg-success text-white p-2 rounded">
-                    Saturno esta pensado para ser usado en comercios que requieran evitar congestión de personas en una
-                    sala de espera.
-                </div>
+            <div class="mdi mdi-human-queue md saturno-text-accent"> Un sistema de cola virtual </div>
+            <div class="sm"> Tu cliente puede solicitar una mesa desde cualquier lugar en forma online y esperar
+                en un lugar de preferencia. Esto le permite evitar salas de espera, lugares cerrados con congestión
+                de personas, o esperar a ser llamado en la puerta de tu comercio. Cuando llega su turno y el sistema
+                encuentra una mesa disponible que se ajuste a su solicitud, le asigna la mesa y lo notifica.
+            </div>
 
-                <div>
-                    Es muy útil para tus clientes debido a que por un lado les permite esperar en cualquier lugar de
-                        preferencia
-                        optimizando y ahorrando tiempo, y por otro lado les da la posibilidad de evitar congestiones
-                    de personas,
-                    una condición necesaria para recepcionar clientes en el marco de Covid-19.
-                </div>
-                <div>
-                    ¡Tus clientes ya no se quejarán por la demora en la atención!
-                </div>
-                <div>
-                    Además, la tecnología del sistema le ofrece a tus clientes dos grandes ventajas respecto de una app
-                    estandar.
-                </div>
-                <div>No necesitas exigirle a tus clientes descargar e instalar una app desde una playstore o appstore,
-                    ya que
-                    la misma web le ofrece instalar la app al momento de ingresar al sitio. La tecnología utilizada nos
-                    permite
-                    ofrecer como resultado una app extremadamente ligera y que ocupa espacio realmente mínimo.
-                    De todas formas, si tu cliente no desea instalar una app puede utilizar el sistema como una web app
-                    o una página web estándar!.
-                </div>
-                <div>
-                    Otra ventaja es que el sistema no le va a requerir nunca el número de telefono a tu cliente
-                    debido que utiliza tecnología
-                    de comunicación por sockets para ser notificados, lo cual evita tener que recurrir redes externas
-                    como whatsapp, por ejemplo.
-                </div>
+            <div class="mdi mdi-silverware-fork-knife md saturno-text-accent"> Un sistema de gestión de mesas </div>
+            <div class="sm">
+                Saturno es también un sistema de administración de mesas. El administrador del bar/restaurante puede
+                crear usuarios con perfil de camareros quienes a través de una intefaz pueden tomar un sector y
+                gestionar los estados de las mesas y las solicitudes de los clientes en tiempo real. Podes analizar
+                y supervisar los tiempos de atención y los feed-backs de tus clientes a través de un sistema de
+                calificaciones.
+            </div>
 
-                <div>
-                    Saturno Bares, ademas de administrar los turnos en la cola de espera le permite a tu personal
-                    administrar las mesas a
-                    través de sus teléfonos.
-                </div>
+            <div class="mdi mdi-star md saturno-text-accent"> Un sistema de calificaciones </div>
+            <div class="sm">
+                Para cada sector creado que conforme tu comercio, podés crear items de calificaciones para que tus
+                clientes puedan calificar de 1 a 5 estrellas lo que necesites que sea calificado. Esta encuesta se
+                le ofrece al cliente al finalizar su sesión de mesa. Esto te permite analizar y supervisar los
+                tiempos de atención y los feed-backs de tus clientes.
+            </div>
 
 
-                <hr>
+            <div class="mdi mdi-web md saturno-text-accent"> Una página Web para tu comercio </div>
+            <div class="sm">
+                Cuando un cliente encuentra tu bar / restaurante, ingresa a la página web de tu comercio, donde podes
+                subir la historia del lugar o cualquier texto de presentación para recibirlo, fotos del lugar y el logo
+                de tu bar. Es ahí, en tu página web, donde tu cliente tendrá disponible el menú del día, los precios, la
+                carta donde podrá ir haciendo su pedido y un formulario para solicitar una mesa.
+            </div>
 
-                <div class="row" style="text-align: center;">
+            <div class="mdi mdi-cellphone-off md saturno-text-accent"> Tu cliente no necesita dejarnos su número de
+                móvil. </div>
+            <div class="sm"> Con el fin de preservar la privacidad y los datos de tus clientes, en este sistema NO les
+                solicitaremos nunca sus números de teléfono. En cambio utilizamos sockets, una nueva tecnología que nos
+                permite utilizar canales propios y privados de comunicación con tu cliente, que viven mientras dura la
+                sesión del ticket y se destruyen en el momento que el cliente o un camarero cierra el ticket y se retira
+                del comercio. Esto nos permite prescindir de redes de comunicación externas o sistemas de mensajería de
+                terceros.
+            </div>
 
-                    <div class="col pointer">
-                        <span routerLink="/home">
-                            <span class="mdi mdi-home xl"></span>
-                            <div>Home</div>
-                        </span>
-                    </div>
-                    <div class="col pointer">
-                        <div (click)="stepperGoNext(stepper)">
-                            <span class="mdi mdi-chevron-right xl"></span>
-                            <div>Siguiente</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="mdi mdi-download-off md saturno-text-accent"> Tu cliente no necesita descargar una app! </div>
+            <div class="sm"> Cuando tu cliente ingresa a nuestro sitio se le ofrece desde aquí mismo la instalación
+                de una PWA, que es una tecnología que nos permite obtener como resultado una app extremadamente
+                ligera. Esto es importante ya que tu cliente no se sentirá obligado a ingresar a un sistema de
+                distribución de aplicaciones como una playstore o appstore para descargar e instalar una app en su
+                dispositivo, lo que hace casi siempre, que tu cliente termine por desistir de utilizarla. Si tu cliente
+                NO desea instalar nuestra app puede omitir la instalación y utilizar el servicio como una página web
+                estándar. </div>
 
-            </mat-card>
-        </mat-step>
+            <div class="mdi mdi-currency-usd-off md saturno-text-accent"> Es totalmente GRATIS </div>
+            <div>
+                El sistema es totalmente gratis, no cobramos ni cobraremos por este servicio ni al comerciante ni a sus
+                clientes. Estamos dispuestos siempre a recibir sugerencias de mejora para lograr que el sistema se
+                adapte cada día lo mejor posible a tu negocio. 
+            </div>
 
-        <!-- Cómo funciona Step -->
-        <mat-step state="star">
-            <mat-card class="saturno-minicard-text animated fadeIn">
-                <h5>Cómo funciona Saturno?</h5>
+        </mat-card-content>
 
-                <div>
-                    Al crear tu cuenta vas a tener disponible un asistente que te va a guiar en el proceso de crear
-                    todo lo necesario
-                    para comenzar a atender los turnos que generan tus clientes.
-                </div>
+        <mat-card-actions>
 
-                <div>
-                    Lo que necesitas crear son tus bares o restaurantes, podes crear varios con una sola cuenta y para
-                    cada comercio es
-                    necesario definir los diferentes sectores y mesas que lo componen, opcionalmente se pueden crear
-                    camareros y encuestas
-                    por sector que se les ofrece responder a tus clientes para obtener la percepción respecto de la
-                    atención
-                    brindada por ejemplo.
-                </div>
+            <button mat-button class="mdi mdi-home" routerLink="/home">
+                Home
+            </button>
 
-                <div>
-                    Desde el lado del cliente es muy simple, debe entrar a https://saturno.fun y desde el buscador
-                    debe buscar tu empresa.
-                    Podés también proveerle la dirección de acceso directo por ejemplo saturno.live/tuempresa.
-                </div>
+            <button mat-button routerLink="/register" class="mdi mdi-account-circle">
+                Registrarme
+            </button>
 
-                <div>
-                    Una vez que tu cliente encuentra tu empresa va a encontrar un pequeño formulario donde
-                    ingresa la cantidad de personas y el sector de preferencia. El sistema busca automáticamente una
-                    mesa
-                    disponible y se le es asignada de forma automática cuando encuentra mesa disponible.
-                </div>
+        </mat-card-actions>
 
-                <div>
-                    El sistema es totalmente GRATIS, no cobramos por este servicio y estamos dispuestos a recibir
-                    sugerencias de mejora
-                    desde los formularios de contacto con el fin de que el sistema se adapte lo mejor posible a tu
-                    negocio.
-                </div>
-
-                <hr>
-
-                <div class="row" style="text-align: center;">
-                    <div class="col pointer">
-                        <div (click)="stepperGoBack(stepper)">
-                            <span class="mdi mdi-chevron-left xl"></span>
-                            <div>Anterior</div>
-                        </div>
-                    </div>
-                    <div class="col pointer">
-                        <span routerLink="/home">
-                            <span class="mdi mdi-home xl"></span>
-                            <div>Home</div>
-                        </span>
-                    </div>
-                    <div class="col pointer">
-                        <span routerLink="/register">
-                            <div class="mdi mdi-account-plus xl"></div>
-
-                            <div>Registrarme</div>
-                        </span>
-                    </div>
-                </div>
-
-            </mat-card>
-
-        </mat-step>
-
-
-    </mat-horizontal-stepper>
+    </mat-card>
 </div>

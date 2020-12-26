@@ -1,110 +1,115 @@
-<div class="saturno-card  mt-sm-4 animated fadeIn">
+<div class="saturno-page-container  mt-sm-4 animated fadeIn">
 
-    <div *ngIf="loading" class="animated fadeIn">
-        <mat-spinner></mat-spinner>
-    </div>
+    <mat-card>
 
-    <div *ngIf="!loading" class="animated fadeIn">
-        
-        <div class="md">Bienvenido, desde acá podés entrar a un sector y comenzar a atender mesas.</div>
-        
-        <!-- no company selected -->
-        <div *ngIf="!loginService.user.id_company" class="p-3 my-4">
-            No tenés ningúna empresa asignada a tu usuario. Por favor verifica que exista al menos
-            una empresa creada y luego asignala a tu usuario desde el menú principal.
-            <hr>
-            <button mat-raised-button color="accent" routerLink="/admin/wizard">
-                <span class="mdi mdi-wizard-hat"></span> IR AL ASISTENTE
-            </button>
-
+        <div *ngIf="loading" class="animated fadeIn">
+            <mat-spinner></mat-spinner>
         </div>
 
-        <!-- ======================================================== -->
-        <!-- TAKE / RELEASE SECTION -->
-        <!-- ======================================================== -->
+        <div *ngIf="!loading" class="animated fadeIn">
 
-        <div class="mb-4" *ngIf="sections && loginService.user.id_company?._id">
+            <div class="md">Bienvenido, desde acá podés entrar a un sector y comenzar a atender mesas.</div>
 
-            <div *ngIf="waiterService.session">
-                <div class="row my-4">
-                    <div class="col">
-                        Tenés tomado el sector {{ waiterService.session.id_section.tx_section }}
+            <!-- no company selected -->
+            <div *ngIf="!loginService.user.id_company" class="p-3 my-4">
+                No tenés ningúna empresa asignada a tu usuario. Por favor verifica que exista al menos
+                una empresa creada y luego asignala a tu usuario desde el menú principal.
+                <hr>
+                <button mat-raised-button color="accent" routerLink="/admin/wizard">
+                    <span class="mdi mdi-wizard-hat"></span> IR AL ASISTENTE
+                </button>
+
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- TAKE / RELEASE SECTION -->
+            <!-- ======================================================== -->
+
+            <div class="mb-4" *ngIf="sections && loginService.user.id_company?._id">
+
+                <div *ngIf="waiterService.session">
+                    <div class="row my-4">
+                        <div class="col">
+                            Tenés tomado el sector {{ waiterService.session.id_section.tx_section }}
+                        </div>
                     </div>
+                    <div class="row my-4">
+                        <div class="col">
+                            <button class="btn btn-success btn-block text-uppercase" role="button"
+                                (click)="takeSection( waiterService.session.id_section )">
+                                Ingresar
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger btn-block text-uppercase" role="button"
+                                (click)="releaseSection( waiterService.session.id_section )">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="row my-4">
-                    <div class="col">
-                        <button class="btn btn-success btn-block text-uppercase" role="button"
-                            (click)="takeSection( waiterService.session.id_section )">
+
+                <div *ngIf="!waiterService.session">
+                    <div class="my-4">
+                        <mat-form-field class="w-100">
+                            <mat-label>Seleccione un sector</mat-label>
+                            <mat-select #selectSection matNativeControl required>
+                                <mat-option *ngFor="let section of sections" [value]="section">
+                                    {{section.tx_section}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button class="btn btn-success btn-block" role="button"
+                            (click)="takeSection( selectSection?.value )">
                             Ingresar
                         </button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-danger btn-block text-uppercase" role="button"
-                            (click)="releaseSection( waiterService.session.id_section )">
-                            Cerrar
-                        </button>
+
                     </div>
                 </div>
 
             </div>
 
-            <div *ngIf="!waiterService.session">
-                <div class="my-4">
-                    <mat-form-field class="w-100">
-                        <mat-label>Seleccione un sector</mat-label>
-                        <mat-select #selectSection matNativeControl required>
-                            <mat-option *ngFor="let section of sections" [value]="section">
+            <!-- ======================================================== -->
+            <!-- SECTIONS TABLE -->
+            <!-- ======================================================== -->
+
+            <div class="card bg-secondary mb-4">
+                <div class="card-content table-responsive-sm  p-2">
+
+                    <table class="table table-sm text-white text-center">
+
+                        <tr style="border-top: 0px; color: yellow;">
+                            <td style="text-align: left; border: none;">
+                                <span class="mdi mdi-select-group mx-1"></span>
+                                Sector
+                            </td>
+                            <td style="text-align: right; border: none;">
+                                <span class="mdi mdi-face mx-1"></span>
+                                Camareros
+                            </td>
+                        </tr>
+
+                        <tr *ngFor="let section of sections">
+                            <td style="text-align: left;">
                                 {{section.tx_section}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <button class="btn btn-success btn-block" role="button"
-                        (click)="takeSection( selectSection?.value )">
-                        Ingresar
-                    </button>
+                            </td>
+                            <td style="text-align: right;">
+                                {{sessions.get(section.tx_section)}}
+                            </td>
+                        </tr>
+                    </table>
 
                 </div>
             </div>
 
         </div>
- 
-        <!-- ======================================================== -->
-        <!-- SECTIONS TABLE -->
-        <!-- ======================================================== -->
 
-        <div class="card bg-secondary mb-4">
-            <div class="card-content table-responsive-sm  p-2">
-
-                <table class="table table-sm text-white text-center">
-
-                    <tr style="border-top: 0px; color: yellow;">
-                        <td style="text-align: left; border: none;">
-                            <span class="mdi mdi-select-group mx-1"></span>
-                            Sector </td>
-                        <td style="text-align: right; border: none;">
-                            <span class="mdi mdi-face mx-1"></span>
-                            Camareros </td>
-                    </tr>
-
-                    <tr *ngFor="let section of sections">
-                        <td style="text-align: left;">
-                            {{section.tx_section}}
-                        </td>
-                        <td style="text-align: right;">
-                            {{sessions.get(section.tx_section)}}
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-        </div>
-
-    </div>
-
-    <button class="btn btn-primary btn-block" routerLink="/waiter/dashboard" role="button">
-        <span class="mdi mdi-finance mx-1"></span>
-        Dashboard
-    </button>
+        <button class="btn btn-primary btn-block" routerLink="/waiter/dashboard" role="button">
+            <span class="mdi mdi-finance mx-1"></span>
+            Dashboard
+        </button>
+    </mat-card>
 
 </div>

@@ -187,9 +187,9 @@
         <div class="ticket-actions">
 
             <!-- activate table -->
-            <button mat-raised-button color="primary" class="action-button m-1" [disabled]="table.tx_status === 'busy'">
+            <button mat-raised-button color="warn" class="action-button m-1" [disabled]="table.tx_status === 'busy'">
                 <div class="mdi mdi-power xl"></div>
-                <mat-slide-toggle style="color: tomato;" (click)="toggleTableStatus(table)"
+                <mat-slide-toggle color="accent" (click)="toggleTableStatus(table)"
                     [checked]="table.tx_status !== 'paused'" [disabled]="table.tx_status === 'busy'">
                 </mat-slide-toggle>
             </button>

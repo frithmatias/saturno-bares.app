@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="!loading && metrics">
-  <div class="saturno-card">
+  <div class="saturno-page-container">
 
     <div class="row">
       <div class="col w-100">
@@ -21,7 +21,7 @@
       <div class="col">
         <div class="card text-white bg-success">
           <div class="card-header">Turnos</div>
-          <div class="card-body saturno-card-mini-body">
+          <div class="card-body saturno-page-container-mini-body">
               {{ metrics.tickets.length }}
           </div>
         </div>
@@ -30,7 +30,7 @@
       <div class="col">
         <div class="card text-white bg-danger">
           <div class="card-header">Evals</div>
-          <div class="card-body saturno-card-mini-body">
+          <div class="card-body saturno-page-container-mini-body">
             {{ metrics.total }}
           </div>
         </div>
@@ -39,7 +39,7 @@
       <div class="col">
         <div class="card text-white bg-primary">
           <div class="card-header">Score</div>
-          <div class="card-body saturno-card-mini-body">
+          <div class="card-body saturno-page-container-mini-body">
             {{ metrics.avg }}
           </div>
         </div>

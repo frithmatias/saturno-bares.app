@@ -1,35 +1,41 @@
-<div class="saturno-card animated fadeIn" *ngIf="waiterService.session">
-  <div *ngIf="loading" class="mt-5 animated fadeIn">
-    <mat-spinner></mat-spinner>
-  </div>
-  <div *ngIf="!loading" class="animated fadeIn">
+<div class="saturno-page-container animated fadeIn" *ngIf="waiterService.session">
+  <mat-card>
 
-    <div class="text-uppercase lg my-2 p-2">
-      - SECTOR {{waiterService.session.id_section.tx_section}} -
-    </div>
-    
-    <div class="my-4 mdi mdi-">
-      <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
-        <table width="100%" >
-          <tr>
-            <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
-              <div class="mdi mdi-power xl"></div>
-            </td> 
-            <td>Salir</td>
-          </tr>
-        </table>
-      </button>
+    <div *ngIf="loading" class="mt-5 animated fadeIn">
+      <mat-spinner></mat-spinner>
     </div>
 
-    <div>
-      <mat-accordion multi="true">
-        <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
-        </app-sections>
-        <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
-        <app-requested [tables]="tables" [requested]="requested"></app-requested>
-        <app-queued [tables]="tables" [queued]="queued"></app-queued>
-      </mat-accordion>
+    <div *ngIf="!loading" class="animated fadeIn">
+
+      <div class="text-uppercase lg my-2 p-2">
+        - SECTOR {{waiterService.session.id_section.tx_section}} -
+      </div>
+
+      <div class="my-4 mdi mdi-">
+        <button class="btn btn-danger p-0 col-4" (click)="releaseSection()">
+          <table width="100%">
+            <tr>
+              <td class="rounded-left" style="background-color: rgba(50, 50, 50, 0.3)">
+                <div class="mdi mdi-power xl"></div>
+              </td>
+              <td>Salir</td>
+            </tr>
+          </table>
+        </button>
+      </div>
+
+      <div>
+        <mat-accordion multi="true">
+          <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
+          </app-sections>
+          <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
+          <app-requested [tables]="tables" [requested]="requested"></app-requested>
+          <app-queued [tables]="tables" [queued]="queued"></app-queued>
+        </mat-accordion>
+      </div>
+
     </div>
 
-  </div>
+  </mat-card>
+
 </div>

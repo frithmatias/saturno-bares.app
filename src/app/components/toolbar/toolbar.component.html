@@ -12,12 +12,12 @@
     <div *ngIf="!loginService.user && !publicService.company" class="logo-search-container">
 
         <!-- LOGO IMG -->
-        <div class="logo-img mr-3" routerLink="/home">
+        <div class="logo-img pointer" routerLink="/home">
         </div>
 
         <!-- LOGO TITLE -->
         
-        <div class="logo-text-container mr-3">
+        <div class="logo-text-container pointer" routerLink="/home">
             <div class="logo-title mb-1">
                 SATURNO
             </div>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- COMPANY NAME -->
-    <div *ngIf="loginService.user || publicService.company" class="company-name md">
+    <div *ngIf="loginService.user || publicService.company" class="company-name sm ml-1">
         {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
         loginService.user?.tx_name}}
     </div>

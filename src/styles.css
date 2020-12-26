@@ -87,14 +87,13 @@ SATURNO
 */
 
 
-.saturno-card {
+.saturno-page-container {
     min-width: 300px;
     max-width: 600px;
-    padding  : 20px;
     font-size: medium;
 }
 
-.saturno-card-wide {
+.saturno-page-container-wide {
     min-width: 18rem;
     max-width: 50rem;
     padding  : 1.2em;
@@ -104,7 +103,7 @@ SATURNO
 
 
 @media (max-width: 575px) {
-    .saturno-card-login {
+    .saturno-page-container-login {
         height: 100vh;
     }
 }
@@ -134,9 +133,8 @@ SATURNO
 
 .saturno-minicard {
     margin   : 10px;
-    width    : 100%;
     min-width: 15rem;
-    max-width: 18rem;
+    max-width: 20rem;
     padding  : 1.2em;
     font-size: medium;
 }
@@ -190,69 +188,101 @@ MF STYLES
 -------------------------------------------
 */
 
+/*
+-------------------------------------------
+COLORS
+-------------------------------------------
+*/
+
 .text-blue {
     color: #007bff;
 }
+
 .text-indigo {
     color: #6610f2;
 }
+
 .text-purple {
     color: #6f42c1;
 }
+
 .text-pink {
     color: #e83e8c;
 }
+
 .text-red {
     color: #dc3545;
 }
+
 .text-orange {
     color: #fd7e14;
 }
+
 .text-yellow {
     color: #ffc107;
 }
+
 .text-green {
     color: #28a745;
 }
+
 .text-teal {
     color: #20c997;
 }
+
 .text-cyan {
     color: #17a2b8;
 }
+
 .text-white {
     color: #fff;
 }
+
 .text-gray {
     color: #6c757d;
 }
+
 .text-gray {
     color: #343a40;
-} 
+}
+
 .text-primary {
     color: #007bff;
 }
+
 .text-secondary {
     color: #6c757d;
 }
+
 .text-success {
     color: #28a745;
 }
+
 .text-info {
     color: #17a2b8;
 }
+
 .text-warning {
     color: #ffc107;
 }
+
 .text-danger {
     color: #dc3545;
 }
+
 .text-light {
     color: #f8f9fa;
 }
+
 .text-dark {
     color: #343a40;
 }
+
+/*
+-------------------------------------------
+DECORATORS
+-------------------------------------------
+*/
 
 .hr-red {
     border-top: 2px solid rgb(255 0 0 / 90%);
@@ -278,6 +308,12 @@ MF STYLES
     border-top: 2px solid rgb(180 0 180 / 90%);
     width     : 80%;
 }
+
+/*
+-------------------------------------------
+FONTS
+-------------------------------------------
+*/
 
 .fw100 {
     font-weight: 100;
@@ -316,6 +352,12 @@ MF STYLES
 }
 
 
+/*
+-------------------------------------------
+BORDERS
+-------------------------------------------
+*/
+
 .b-1sr {
     border: 1px solid red;
 }
@@ -332,41 +374,11 @@ MF STYLES
     border: 1px solid rgb(255, 0, 212);
 }
 
-.w-10em {
-    width: 10em;
-}
-
-.w-9em {
-    width: 9em;
-}
-
-.w-8em {
-    width: 8em;
-}
-
-.w-7em {
-    width: 7em;
-}
-
-.w-6em {
-    width: 6em;
-}
-
-.w-5em {
-    width: 5em;
-}
-
-.w-4em {
-    width: 4em;
-}
-
-.w-3em {
-    width: 3em;
-}
-
-.w-2em {
-    width: 2em;
-}
+/*
+-------------------------------------------
+OPACITY
+-------------------------------------------
+*/
 
 .op10 {
     opacity: 1;
@@ -412,6 +424,12 @@ MF STYLES
     opacity: 0;
 }
 
+/*
+-------------------------------------------
+DIMENSIONES
+-------------------------------------------
+*/
+
 .xxxxl {
     font-size  : 4em;
     font-weight: 500;
@@ -440,6 +458,63 @@ MF STYLES
 .sm {
     font-size: small;
 }
+
+
+.w-10em {
+    width: 10em;
+}
+
+.w-9em {
+    width: 9em;
+}
+
+.w-8em {
+    width: 8em;
+}
+
+.w-7em {
+    width: 7em;
+}
+
+.w-6em {
+    width: 6em;
+}
+
+.w-5em {
+    width: 5em;
+}
+
+.w-4em {
+    width: 4em;
+}
+
+.w-3em {
+    width: 3em;
+}
+
+.w-2em {
+    width: 2em;
+}
+
+/*
+-------------------------------------------
+ALINEACIONES
+-------------------------------------------
+*/
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+
 
 /* animate */
 /* animaciones */

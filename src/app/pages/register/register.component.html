@@ -1,5 +1,5 @@
 <div class="h-100 pt-sm-5">
-    <div class="saturno-card-wide animated fadeIn">
+    <div class="saturno-page-container-wide animated fadeIn">
 
         <mat-card>
 
@@ -12,9 +12,8 @@
                     <div class="jumbotron m-0 py-5 h-100 text-dark">
 
                         <div class="my-2 xl text-danger">Google</div>
-                        <div class="my-2 md">Desde acá podés registrar tu comercio. </div>
-                        <hr class="my-4 hr-red">
                         <div class="my-2 md">Registrarme con mi cuenta de Google.</div>
+                        <hr class="my-4 hr-red">
                         <button mat-raised-button color="warn" type="button" id="btnGoogleRegister"
                             data-toggle="tooltip">
                             Registrarme
@@ -24,6 +23,7 @@
                 </div>
 
                 <div class="col-sm mt-4 mt-md-0">
+                    <div class="my-2 md">Registrarme e-mail y contraseña.</div>
                     <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
 
                         <mat-form-field class="w-100">
