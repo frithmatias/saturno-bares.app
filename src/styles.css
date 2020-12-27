@@ -88,7 +88,7 @@ SATURNO
 
 
 .saturno-page-container {
-    padding: 2em;
+    padding  : 2em;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
@@ -104,7 +104,12 @@ SATURNO
 
 
 @media (max-width: 575px) {
+
     .saturno-page-container {
+        padding: 0em;
+    }
+
+    .saturno-page-container-wide {
         padding: 0em;
     }
 
@@ -140,7 +145,6 @@ SATURNO
     margin   : 10px;
     min-width: 15rem;
     max-width: 20rem;
-    padding  : 1.2em;
     font-size: medium;
 }
 
@@ -583,9 +587,10 @@ mat-card-title span.mdi {
 
 td.mat-cell,
 th.mat-header-cell {
-    padding    : 0px 2px !important;
+    padding: 2px 0px !important;
 }
 
+tr.mat-header-row,
 tr.mat-row:not(.detail-row),
 tr.mat-footer-row {
     height: 32px !important;

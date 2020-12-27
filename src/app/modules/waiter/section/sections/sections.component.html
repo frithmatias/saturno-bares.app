@@ -14,40 +14,40 @@
   <table mat-table [dataSource]="waiterService.sections">
 
     <ng-container matColumnDef="sector">
-      <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
-      <td mat-cell *matCellDef="let element" class="text-left">
-        <span> {{ element.tx_section }}</span>
+      <th mat-header-cell *matHeaderCellDef class="text-left md saturno-text-deco"> Sector </th>
+      <td mat-cell *matCellDef="let element" class="text-left md">
+        <span class="saturno-text-info"> {{ element.tx_section }}</span>
         <span *ngIf="tablesDataBySection.get(element.tx_section).sectionselected"
-                class="mdi mdi-check lg"></span>
+                class="saturno-text-accent mdi mdi-check lg"></span>
       </td>
     </ng-container>
     <ng-container matColumnDef="disponibles">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Disp </th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center md saturno-text-deco"> Disp </th>
+      <td mat-cell *matCellDef="let element" class="text-center md">
         <span>{{ tablesDataBySection.get(element.tx_section).idle }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="pausadas">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Paus </th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center md saturno-text-deco"> Paus </th>
+      <td mat-cell *matCellDef="let element" class="text-center md">
         <span>{{ tablesDataBySection.get(element.tx_section).paused }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="ocupadas">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Ocup </th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center md saturno-text-deco"> Ocup </th>
+      <td mat-cell *matCellDef="let element" class="text-center md">
         <span>{{ tablesDataBySection.get(element.tx_section).busy }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="requeridos">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Req </th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center md saturno-text-deco"> Req </th>
+      <td mat-cell *matCellDef="let element" class="text-center md">
         <span>{{ ticketsDataBySection.get(element.tx_section).requested }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="encolados">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Cola </th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center md saturno-text-deco"> Cola </th>
+      <td mat-cell *matCellDef="let element" class="text-center md">
         <span class="ml-2">{{ ticketsDataBySection.get(element.tx_section).queued }}</span>
       </td>
     </ng-container>

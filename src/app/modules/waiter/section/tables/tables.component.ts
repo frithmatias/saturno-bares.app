@@ -29,7 +29,6 @@ export class TablesComponent implements OnInit {
   displayedColumns: string[] = ['estado', 'mesa', 'capacidad', 'turno', 'personas', 'ocupado', 'espera'];
 
   listmode = false;
-  tableSelected: string = ''; // reassign table
   blPriority = false;
   table: Table;
 

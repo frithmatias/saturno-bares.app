@@ -1,14 +1,37 @@
+@media (max-width: 575px) {
+    .saturno-map {
+        padding  : 0px !important;
+        margin   : 20px;
+        min-width: 15rem;
+        max-width: 20rem;
+    }
+
+    .location-input {
+        min-width: 15rem;
+        max-width: 20rem;
+    }
+
+
+}
+
+@media (min-width: 575px) {
+
+    .saturno-bg-home {
+        text-align: center;
+    }
+}
+
 .saturno-bg-primary .logo-img {
     background-image   : url('../../../assets/img/restaurant.svg');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
-    height: 8em;
-    width: 8em;
-    opacity: .2;
-    position: absolute;
-    right: 119px;
-    top: 26px;
+    height             : 8em;
+    width              : 8em;
+    opacity            : .2;
+    position           : absolute;
+    right              : 119px;
+    top                : 26px;
 
 }
 
@@ -24,18 +47,18 @@
     background-position  : center center;
     background-blend-mode: lighten;
     padding              : 1em;
-    text-align           : center;
 }
 
 
 .saturno-beer-card {
-    background-image: url('../../../assets/img/beer.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-image   : url('../../../assets/img/beer.svg');
+    background-size    : contain;
+    background-repeat  : no-repeat;
     background-position: center center;
-    height     : 7em;
+    height             : 7em;
 
 }
+
 .saturno-map {
     padding: 40px;
 }
@@ -44,6 +67,9 @@
     margin-top: 2em;
     width     : 80%;
 }
+
+
+
 
 .home-bienvenido {
     color    : darkorange;

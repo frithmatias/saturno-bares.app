@@ -18,7 +18,7 @@
 
     <div *ngIf="listmode">
 
-        <mat-radio-group [(ngModel)]="tableSelected">
+
 
             <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
 
@@ -84,7 +84,7 @@
                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
                             <!-- ng-template to table status, ticket info and action buttons -->
-                            <div *ngIf="table then tableinfo"></div>
+                            <div *ngIf="table then expandTable"></div>
                         </div>
                     </td>
                 </ng-container>
@@ -96,7 +96,6 @@
                 <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
 
-        </mat-radio-group>
 
     </div>
 
@@ -105,31 +104,36 @@
     <!------------------------------>
 
     <div *ngIf="!listmode">
-        <button mat-raised-button class="w-8em m-1" color="primary" *ngFor="let table of tables"
+        <button mat-raised-button [color]="table.id_session?'warn':''" class="m-1" *ngFor="let table of tables"
             (click)="selectTable(table)">
 
-            <div class="xl">{{ table.nm_table }}</div>
+            <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ table.nm_table }}</div>
             <app-table-info [listmode]="listmode" [table]="table"></app-table-info>
 
         </button>
 
         <!-- ng-template to table status, ticket info and action buttons -->
-        <div *ngIf="table then tableinfo"></div>
+        <div *ngIf="table then expandTable"></div>
     </div>
 
 </mat-expansion-panel>
 
-<ng-template #tableinfo>
+
+
+
+
+
+
+
+
+<!------------------------------------>
+<!-- TICKET INFO && ACTIONS BUTTONS -->
+<!------------------------------------>
+
+<ng-template #expandTable>
     <div *ngIf="table">
-        <!--------------------------------->
-        <!-- TABLE STATUS && TICKET INFO -->
-        <!--------------------------------->
 
         <div class="ticket-status">
-
-            <!------------------------------>
-            <!-- TABLE STATUS -->
-            <!------------------------------>
 
             <div class="lg">
                 Mesa {{ table.nm_table }}:
@@ -187,54 +191,82 @@
         <div class="ticket-actions">
 
             <!-- activate table -->
-            <button mat-raised-button color="warn" class="action-button m-1" [disabled]="table.tx_status === 'busy'">
-                <div class="mdi mdi-power xl"></div>
-                <mat-slide-toggle color="accent" (click)="toggleTableStatus(table)"
-                    [checked]="table.tx_status !== 'paused'" [disabled]="table.tx_status === 'busy'">
-                </mat-slide-toggle>
+            <button mat-raised-button color="primary" class="action-button m-1" [disabled]="table.tx_status === 'busy'">
+                <table>
+                    <tr>
+                        <td class="mdi mdi-power xl px-1"></td>
+                        <td class="td-text">
+                            <mat-slide-toggle color="accent" (click)="toggleTableStatus(table)"
+                                [checked]="table.tx_status !== 'paused'" [disabled]="table.tx_status === 'busy'">
+                            </mat-slide-toggle>
+                        </td>
+                    </tr>
+                </table>
             </button>
 
             <!-- priority slide -->
             <button mat-raised-button color="primary" class="action-button m-1"
                 [disabled]="!table.id_session || waiterService.sectionSelected === ''">
-                <div class="mdi mdi-priority-high xl"></div>
-                <mat-slide-toggle [(ngModel)]="blPriority"
-                    [disabled]="!table.id_session || waiterService.sectionSelected === ''">
-                </mat-slide-toggle>
+                <table>
+                    <tr>
+                        <td class="mdi mdi-priority-high xl px-1"></td>
+                        <td class="td-text">
+                            <mat-slide-toggle [(ngModel)]="blPriority"
+                                [disabled]="!table.id_session || waiterService.sectionSelected === ''">
+                            </mat-slide-toggle>
+                        </td>
+                    </tr>
+                </table>
             </button>
 
             <!-- reassign ticket -->
-            <div>
-                <button mat-raised-button color="primary" class="action-button m-1"
-                    [disabled]="!table.id_session || waiterService.sectionSelected === ''"
-                    (click)="reassignTicket(table.id_session?.id_ticket)">
-                    <div class="mdi mdi-arrow-right-bold-circle-outline xl"></div>
-                    <div class="sm">Mover</div>
-                </button>
-            </div>
+            <button mat-raised-button color="primary" class="action-button m-1"
+                [disabled]="!table.id_session || waiterService.sectionSelected === ''"
+                (click)="reassignTicket(table.id_session?.id_ticket)">
+                <table>
+                    <tr>
+                        <td class="mdi mdi-arrow-right-bold-circle-outline xl px-1"></td>
+                        <td class="td-text sm px-1">Mover</td>
+                    </tr>
+                </table>
+            </button>
 
             <!-- attened ticket -->
             <button mat-raised-button color="primary" class="action-button m-1"
                 (click)="attendedTicket(table.id_session?.id_ticket)"
                 [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'">
-                <div class="mdi mdi-bell xl"></div>
-                <div class="sm">Atendido</div>
+                <table>
+                    <tr>
+
+                        <td class="mdi mdi-bell xl px-1"></td>
+
+                        <td class="td-text sm px-1">Atendido</td>
+
+                    </tr>
+                </table>
             </button>
 
             <!-- release ticket -->
             <button mat-raised-button color="primary" class="action-button m-1"
                 (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
-                <div class="mdi mdi-replay xl"></div>
-                <div class="sm">Soltar</div>
+                <table>
+                    <tr>
+                        <td class="mdi mdi-replay xl px-1"></td>
+                        <td class="td-text sm px-1">Soltar</td>
+                    </tr>
+                </table>
             </button>
 
             <!-- end ticket -->
-            <button mat-raised-button color="primary" class="action-button m-1"
+            <button mat-raised-button color="warn" class="action-button m-1"
                 (click)="endTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
-                <div class="mdi mdi-close xl"></div>
-                <div class="sm">Cerrar</div>
+                <table>
+                    <tr>
+                        <td class="mdi mdi-close xl px-1"></td>
+                        <td class="td-text sm px-1">Cerrar</td>
+                    </tr>
+                </table>
             </button>
-
 
         </div>
     </div>
