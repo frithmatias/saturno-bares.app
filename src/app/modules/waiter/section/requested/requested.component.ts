@@ -48,15 +48,15 @@ export class RequestedComponent implements OnInit {
       (resp: TicketResponse) => {
         if (resp.ok) {
           this.sharedService.snack(
-            'Las mesas fueron reservadas con exito!',
+            'Las mesas fueron asignadas con exito!',
             2000
           );
         } else {
-          this.sharedService.snack('Error al reservar las mesas!', 2000);
+          this.sharedService.snack('Error al asignar las mesas!', 2000);
         }
       },
       () => {
-        this.sharedService.snack('Error al reservar las mesas!', 2000);
+        this.sharedService.snack('Error al asignar las mesas!', 2000);
       }
     );
   };

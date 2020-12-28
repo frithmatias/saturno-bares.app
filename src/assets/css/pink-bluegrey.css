@@ -1270,7 +1270,9 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-fab,
 .mat-mini-fab {
     color           : #fff;
+    /* background-color: #424242 */
     background-color: #424242
+
 }
 
 .mat-flat-button.mat-primary,

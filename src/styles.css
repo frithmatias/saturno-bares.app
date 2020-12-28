@@ -197,6 +197,31 @@ MF STYLES
 -------------------------------------------
 */
 
+
+/*
+-------------------------------------------
+BUTTONS 
+-------------------------------------------
+*/
+
+.action-button {
+    width  : 92px;
+    padding: 0px !important;
+    margin : 5px !important;
+}
+
+td.mdi {
+    background-color: rgba(0, 0, 0, .3);
+    border-radius   : 3px 0 0 3px;
+    padding         : 0px 5px;
+}
+
+.td-text {
+    width      : 100%;
+    line-height: normal;
+    padding    : 0px 5px;
+}
+
 /*
 -------------------------------------------
 COLORS
@@ -560,6 +585,39 @@ ALINEACIONES
 ANGULAR MATERIAL 
 -------------------------------------------
 */
+
+
+/*
+-------------------------------------------
+ADD BUTTONS COLORS 
+-------------------------------------------
+*/
+
+/* COLOR: ACTIVE*/
+.mat-button.mat-active.mat-button-disabled,
+.mat-icon-button.mat-active.mat-button-disabled,
+.mat-stroked-button.mat-active.mat-button-disabled,
+.mat-button.mat-active .mat-button-focus-overlay,
+.mat-icon-button.mat-active .mat-button-focus-overlay,
+.mat-stroked-button.mat-active .mat-button-focus-overlay {
+    background-color: #108f30
+}
+
+.mat-flat-button.mat-active,
+.mat-raised-button.mat-active,
+.mat-fab.mat-active,
+.mat-mini-fab.mat-active {
+    color: #fff
+}
+
+.mat-flat-button.mat-active,
+.mat-raised-button.mat-active,
+.mat-fab.mat-active,
+.mat-mini-fab.mat-active {
+    background-color: #108f30
+}
+
+
 
 mat-toolbar {
     position: fixed;

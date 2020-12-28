@@ -15,10 +15,6 @@ tr.element-row:not(.expanded-row):active {
     background: #efefef;
 }
 
-td.mdi {
-    background-color: rgba(0, 0, 0, .3);
-    border-radius   : 3px 0 0 3px;
-}
 
 .element-row td {
     border-bottom-width: 0;
@@ -34,9 +30,10 @@ td.mdi {
     flex-flow: wrap;
 }
 
-.ticket-status {
-    width  : 100%;
-    padding: 1.5em;
+.table-buttons-container {
+    width     : 100%;
+    padding   : 1.5em;
+    text-align: center;
 }
 
 .ticket-actions {
@@ -47,21 +44,8 @@ td.mdi {
     flex-flow      : wrap;
 }
 
-.action-button {
-    width  : 92px;
-    padding: 0px;
-}
-
-button div.mdi {
-    opacity: 0.6;
-}
-
 
 .tables-row:hover {
     background-color: rgba(0, 255, 0, 0.15);
     cursor          : pointer;
-}
-
-.td-text {
-    width: 100%;
 }

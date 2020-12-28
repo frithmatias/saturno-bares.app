@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Table } from 'src/app/interfaces/table.interface';
 import { IntervalToHmsPipe } from '../../../../pipes/interval-to-hms.pipe';
 import { WaiterService } from '../../waiter.service';
@@ -45,6 +45,12 @@ export class TablesComponent implements OnInit {
     this.listmode = config ? config.listmode : false;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.tables && this.table){
+     this.table = changes.tables.currentValue.filter((table: Table) => this.table._id === table._id)[0];
+    }
+
+  }
   // ========================================================
   // TABLE METHODS
   // ========================================================
@@ -54,7 +60,7 @@ export class TablesComponent implements OnInit {
   };
 
   toggleTableStatus = (table: Table) => {
-    if (table.tx_status === 'busy') return;
+    if (table.tx_status === 'busy' || table.tx_status === 'reserved') return;
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {

@@ -150,7 +150,7 @@ export class SectionComponent implements OnInit {
 
           // for input queued child  
           this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
-            ticket.tm_end === null && ticket.tx_status === 'queued')
+            ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned'))
 
           // for input sections child
           for (let section of this.waiterService.sections) {

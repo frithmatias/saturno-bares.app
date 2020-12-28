@@ -22,9 +22,9 @@
         
         <!-- active session -->
         <span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === null" class="mdi mdi-minus-circle-outline xl "></span>
-        <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'" class="mdi mdi-book-open-variant saturno-text-accent xl"></span>
+        <span *ngIf="table.id_session?.id_ticket.tx_call === 'card'" class="mdi mdi-book-open-variant text-warning xl"></span>
         <span *ngIf="table.id_session?.id_ticket.tx_call === 'waiter'"
-            class="mdi mdi-silverware-fork-knife saturno-text-accent xl"></span>
+            class="mdi mdi-silverware-fork-knife text-warning xl"></span>
         <span *ngIf="table.id_session?.id_ticket.tx_call === 'account'"
-            class="mdi mdi-file-document-edit-outline saturno-text-accent  xl"></span>
+            class="mdi mdi-file-document-edit-outline text-warning  xl"></span>
 </div>

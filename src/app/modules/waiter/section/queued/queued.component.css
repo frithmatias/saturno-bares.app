@@ -29,9 +29,10 @@ tr.element-row:not(.expanded-row):active {
     flex-flow: wrap;
 }
 
-.ticket-status {
+.table-buttons-container {
     width      : 100%;
     padding    : 1.5em;
+    text-align: center;
 }
 
 .ticket-actions {
@@ -41,16 +42,6 @@ tr.element-row:not(.expanded-row):active {
     display    : flex;
     flex-flow  : wrap;
 }
-
-.action-button {
-    width: 80px;
-    padding: 0px;
-}
-
-button div.mdi{
-    opacity: 0.3;
-}
-
 
 .tables-row:hover {
     background-color: rgba(120,20,120,0.2);

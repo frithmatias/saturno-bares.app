@@ -29,30 +29,22 @@ tr.element-row:not(.expanded-row):active {
     flex-flow: wrap;
 }
 
-.ticket-status {
-    width      : 100%;
-    padding    : 1.5em;
+.table-buttons-container {
+    width     : 100%;
+    padding   : 1.5em;
+    text-align: center;
 }
 
 .ticket-actions {
     /* justify-content: space-between; */
     justify-content: center;
-    width      : 100%;
-    display    : flex;
-    flex-flow  : wrap;
-}
-
-.action-button {
-    width: 80px;
-    padding: 0px;
-}
-
-button div.mdi{
-    opacity: 0.3;
+    width          : 100%;
+    display        : flex;
+    flex-flow      : wrap;
 }
 
 
 .tables-row:hover {
-    background-color: rgba(120,20,120,0.2);
-    cursor: pointer;
+    background-color: rgba(120, 20, 120, 0.2);
+    cursor          : pointer;
 }
