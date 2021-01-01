@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicService } from '../public.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 interface sliderImage {
 	image: string;
@@ -25,8 +25,8 @@ export class CompanyPageComponent implements OnInit {
 	ngOnInit(): void {
 
 		let idCompany = this.publicService.company._id;
-		let url = environment.url + '/image/' + idCompany + '/tx_company_banners/';
-	
+		let url = environment.api + '/image/' + idCompany + '/tx_company_banners/';
+
 		this.publicService.company.tx_company_banners.forEach(img => {
 		  this.images.push({
 			image: url + img,

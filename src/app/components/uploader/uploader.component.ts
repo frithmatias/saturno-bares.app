@@ -20,7 +20,7 @@ export class UploaderComponent implements OnInit {
 
 	filesToUpload: FileUpload[] = [];
 	maxupload = 12;
-	maxSize = 102400;
+	maxSize = 5242880;
 	estaSobreElemento = false;
 
 	constructor(

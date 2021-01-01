@@ -40,13 +40,13 @@ export class LoginService {
 
 	createUser(user: User) {
 		let data = { user };
-		const url = environment.url + '/u/register';
+		const url = environment.api + '/u/register';
 		return this.http.post(url, data);
 	}
 
 	checkEmailExists(pattern: string) {
 		let data = { pattern }
-		const url = environment.url + '/u/checkemailexists';
+		const url = environment.api + '/u/checkemailexists';
 		return this.http.post(url, data);
 	}
 
@@ -60,7 +60,7 @@ export class LoginService {
 
 		const api = gtoken ? '/u/google' : '/u/login'
 		const data = gtoken ? { gtoken } : user;
-		const url = environment.url + api;
+		const url = environment.api + api;
 
 		return this.http.post(url, data).pipe(map((resp: any) => {
 			localStorage.setItem('token', JSON.stringify(resp.token));
@@ -98,7 +98,7 @@ export class LoginService {
 	}
 
 	updateToken() {
-		const url = environment.url + '/u/updatetoken';
+		const url = environment.api + '/u/updatetoken';
 		// url += '?token=' + this.token;
 
 		let data = { user: this.user };

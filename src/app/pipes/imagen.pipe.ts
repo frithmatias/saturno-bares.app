@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Pipe({
 	name: 'imagenPipe'
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class ImagenPipe implements PipeTransform {
 	transform(idFile: string, idType: string, idCompany: string): any {
-		let url = environment.url + '/image';
+		let url = environment.api + '/image';
 
 		if (!idFile) {
 			return url + '/noCompany/noType/noFile'; // ruta que no existe, devuelve una imagen por defecto

@@ -55,25 +55,29 @@
             </div>
           </mat-card>
         </div>
+
+
         <div>
           <!-- TOMAR SECTOR -->
           <mat-card class="saturno-minicard pointer m-2" *ngIf="
     adminService.companies.length > 0 && 
     adminService.sections.length > 0 &&
-    adminService.tables.length > 0" routerLink="/waiter/home">
+    adminService.tables.length > 0">
+            <div routerLink="/waiter/home">
+              <div class="saturno-minicard-title">
+                <div>
+                  <span class="mdi mdi-select-group xxxxl saturno-text-deco"></span>
+                </div>
+                <div class="saturno-text-accent">
+                  Tomar un Sector
+                </div>
+              </div>
+              <hr class="hr-blue">
+              <div class="saturno-minicard-text">
+                Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
+              </div>
+            </div>
 
-            <div class="saturno-minicard-title">
-              <div>
-                <span class="mdi mdi-select-group xxxxl saturno-text-deco"></span>
-              </div>
-              <div class="saturno-text-accent">
-                Tomar un Sector
-              </div>
-            </div>
-            <hr class="hr-blue">
-            <div class="saturno-minicard-text">
-              Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
-            </div>
           </mat-card>
 
         </div>

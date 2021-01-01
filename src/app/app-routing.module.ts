@@ -22,6 +22,7 @@ import { TokenGuard } from './guards/token.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { SuperuserGuard } from './guards/superuser.guard';
 import { PricingComponent } from './pages/pricing/pricing.component';
+import { VideoComponent } from './pages/video/video.component';
 
 
 const appRoutes: Routes = [
@@ -32,6 +33,8 @@ const appRoutes: Routes = [
 	{ path: 'contact', component: ContactComponent },
 	{ path: 'howworks', component: HowWorksComponent },
 	{ path: 'pricing', component: PricingComponent },
+	{ path: 'video', component: VideoComponent },
+
 
 	{ path: 'public',
 	  component: PublicComponent,

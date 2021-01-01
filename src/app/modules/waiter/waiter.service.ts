@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 import { Ticket } from '../../interfaces/ticket.interface';
 import { LoginService } from '../../services/login.service';
@@ -36,70 +36,70 @@ export class WaiterService {
 	) { }
 
 	readSections(idCompany: string) {
-		const url = environment.url + '/section/readsections/' + idCompany;
+		const url = environment.api + '/section/readsections/' + idCompany;
 		return this.http.get(url);
 	}
 
 	readSessions(idCompany: string) {
-		const url = environment.url + '/section/readsessions/' + idCompany;
+		const url = environment.api + '/section/readsessions/' + idCompany;
 		return this.http.get(url);
 	}
 
 	takeSection(idSection: string, idWaiter: string) {
 		let data = { idSection, idWaiter }
-		const url = environment.url + '/section/takesection';
+		const url = environment.api + '/section/takesection';
 		return this.http.post(url, data);
 	}
 
 	readTables(idCompany: string) {
-		const url = environment.url + '/table/readtables/' + idCompany;
+		const url = environment.api + '/table/readtables/' + idCompany;
 		return this.http.get(url);
 	}
 
 	toggleTableStatus(idTable: string) {
-		const url = environment.url + '/table/toggletablestatus/' + idTable;
+		const url = environment.api + '/table/toggletablestatus/' + idTable;
 		return this.http.get(url);
 	}
 
 	assignTables(idTicket: string, cdTables: number[], blPriority: boolean = false) {
 		const data = { idTicket, cdTables, blPriority };
-		const url = environment.url + '/table/assigntables';
+		const url = environment.api + '/table/assigntables';
 		return this.http.post(url, data);
 	}
 
 	readTickets(idCompany: string) {
 		if (!idCompany) { return; }
-		const url = environment.url + '/t/readtickets/' + idCompany;
+		const url = environment.api + '/t/readtickets/' + idCompany;
 		return this.http.get(url);
 	}
 
 	releaseTicket(ticket: Ticket): Observable<object> {
 		const data = { ticket };
-		const url = environment.url + '/t/releaseticket';
+		const url = environment.api + '/t/releaseticket';
 		return this.http.post(url, data);
 	}
 
 	reassignTicket(idTicket: string, idSession: string, blPriority: boolean): Observable<object> {
 		const data = { idTicket, idSession, blPriority };
-		const url = environment.url + '/t/reassignticket';
+		const url = environment.api + '/t/reassignticket';
 		return this.http.post(url, data);
 	}
 
 	attendedTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
-		const url = environment.url + '/t/attendedticket';
+		const url = environment.api + '/t/attendedticket';
 		return this.http.post(url, data);
 	}
 
 	endTicket(idTicket: string): Observable<object> {
 		const data = { idTicket };
-		const url = environment.url + '/t/endticket';
+		const url = environment.api + '/t/endticket';
 		return this.http.post(url, data);
 	}
 
 	releaseSection(idSection: string, idWaiter: string) {
 		let data = { idSection, idWaiter }
-		const url = environment.url + '/section/releasesection';
+		const url = environment.api + '/section/releasesection';
 		return this.http.post(url, data);
 	}
 

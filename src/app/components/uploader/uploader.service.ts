@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { FileUpload } from './uploader.model';
 
@@ -13,7 +13,7 @@ export class UploaderService {
   ) { }
 
   subirImagen(idDocument: string, idField: string, fileItem: FileUpload, filesLength: number) {
-    const url = environment.url + '/uploads/' + idDocument + '/' + idField;
+    const url = environment.api + '/uploads/' + idDocument + '/' + idField;
     const formData: FormData = new FormData();
     formData.append('imagen', fileItem.archivo, fileItem.archivo.name); // backend -> files: { imagen: { ... } }
     formData.append('filesLength', filesLength.toString()) // backend -> req.body
@@ -21,13 +21,13 @@ export class UploaderService {
   }
 
   borrarImagen(idDocument: string, idField: string, filename: string) {
-    const url = environment.url + '/uploads/' + idDocument + '/' + idField + '/' + filename;
+    const url = environment.api + '/uploads/' + idDocument + '/' + idField + '/' + filename;
     return this.http.delete(url, { reportProgress: true });
   }
 
   syncHostinger(idDocument: string, idField: string) {
     let data = { idDocument, idField }
-    const url = environment.url + '/uploads/synchostinger';
+    const url = environment.api + '/uploads/synchostinger';
     return this.http.post(url, data)
   }
 

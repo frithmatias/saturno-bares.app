@@ -12,7 +12,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
 // CONF
-const config: SocketIoConfig = { url: environment.url, options: {} };
+const config: SocketIoConfig = { url: environment.api, options: {} };
 
 
 // COMPONENTS
@@ -39,6 +39,7 @@ import { PricingComponent } from './pages/pricing/pricing.component';
 import { TokenService } from './interceptors/token.service';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
+import { VideoComponent } from './pages/video/video.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +51,8 @@ import { FooterComponent } from './pages/home/footer/footer.component';
 		ContactComponent,
 		HowWorksComponent,
 		PricingComponent,
-		FooterComponent
+		FooterComponent,
+		VideoComponent
 	],
 	imports: [
 		MaterialModule,

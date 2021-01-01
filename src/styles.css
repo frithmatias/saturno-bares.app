@@ -594,6 +594,13 @@ ADD BUTTONS COLORS
 */
 
 /* COLOR: ACTIVE*/
+
+/* BACKGROUND */
+.saturno-bg-active {
+    background-color: #108f30;
+}
+
+/* BUTTON */
 .mat-button.mat-active.mat-button-disabled,
 .mat-icon-button.mat-active.mat-button-disabled,
 .mat-stroked-button.mat-active.mat-button-disabled,
@@ -617,7 +624,7 @@ ADD BUTTONS COLORS
     background-color: #108f30
 }
 
-
+/* END ACTIVE */
 
 mat-toolbar {
     position: fixed;

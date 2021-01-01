@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 // services
 import { LoginService } from '../../services/login.service';
@@ -39,26 +39,26 @@ export class AdminService {
 	// ========================================================
 
 	createCompany(company: Company) {
-		const url = environment.url + '/c/create';
+		const url = environment.api + '/c/create';
 		return this.http.post(url, company).pipe(tap((data: CompanyResponse) => {
 			this.attachCompany(data.company);
 		}))
 	}
 
 	readCompanies(idUser: string) {
-		const url = environment.url + '/c/readcompanies/' + idUser;
+		const url = environment.api + '/c/readcompanies/' + idUser;
 		return this.http.get(url).subscribe((data: CompaniesResponse) => {
 			this.companies = data.companies;
 		});
 	}
 
 	updateCompany(company: Company) {
-		const url = environment.url + '/c/update';
+		const url = environment.api + '/c/update';
 		return this.http.post(url, company);
 	}
 
 	deleteCompany(idCompany: string) {
-		const url = environment.url + '/c/deletecompany/' + idCompany;
+		const url = environment.api + '/c/deletecompany/' + idCompany;
 		return this.http.delete(url);
 	}
 
@@ -66,7 +66,7 @@ export class AdminService {
 		// return new user object with populated company
 		let data = { company };
 		let idUser = this.loginService.user._id;
-		const url = environment.url + '/u/attachcompany/' + idUser;
+		const url = environment.api + '/u/attachcompany/' + idUser;
 		this.http.post(url, data).subscribe((data: UserResponse) => {
 			// obtengo el usuario con el nuevo id_company populado
 			if (data.ok) {
@@ -77,12 +77,12 @@ export class AdminService {
 
 	checkCompanyExists(pattern: string) {
 		let data = { pattern }
-		const url = environment.url + '/c/checkcompanyexists';
+		const url = environment.api + '/c/checkcompanyexists';
 		return this.http.post(url, data);
 	}
 
 	updateWebPage(data: any, idCompany: string){
-		const url = environment.url + '/c/updatewebpage/' + idCompany;
+		const url = environment.api + '/c/updatewebpage/' + idCompany;
 		return this.http.put(url, data);
 	}
 
@@ -91,12 +91,12 @@ export class AdminService {
 	// ========================================================
 
 	createSection(section: Section) {
-		const url = environment.url + '/section/createsection';
+		const url = environment.api + '/section/createsection';
 		return this.http.post(url, section);
 	}
 
 	readSections(idCompany: string) {
-		const url = environment.url + '/section/readsections/' + idCompany;
+		const url = environment.api + '/section/readsections/' + idCompany;
 		return this.http.get(url).subscribe((data: SectionsResponse) => {
 			this.sections = data.sections;
 			for (let section of data.sections) {
@@ -106,7 +106,7 @@ export class AdminService {
 	}
 
 	deleteSection(idSection: string) {
-		const url = environment.url + '/section/deletesection/' + idSection;
+		const url = environment.api + '/section/deletesection/' + idSection;
 		return this.http.delete(url);
 	}
 
@@ -115,12 +115,12 @@ export class AdminService {
 	// ========================================================
 
 	createTable(table: Table) {
-		const url = environment.url + '/table/createtable';
+		const url = environment.api + '/table/createtable';
 		return this.http.post(url, table);
 	}
 
 	readTables(idCompany: string) {
-		const url = environment.url + '/table/readtables/' + idCompany;
+		const url = environment.api + '/table/readtables/' + idCompany;
 		return this.http.get(url).subscribe((data: TablesResponse) => {
 			this.tables = data.tables;
 			this.tablesSection = data.tables;
@@ -128,7 +128,7 @@ export class AdminService {
 	}
 
 	deleteTable(idTable: string) {
-		const url = environment.url + '/table/deletetable/' + idTable;
+		const url = environment.api + '/table/deletetable/' + idTable;
 		return this.http.delete(url);
 	}
 
@@ -137,17 +137,17 @@ export class AdminService {
 	// ========================================================
 
 	createScoreItem(scoreItem: ScoreItem) {
-		const url = environment.url + '/scoreitem/createscoreitem';
+		const url = environment.api + '/scoreitem/createscoreitem';
 		return this.http.post(url, scoreItem);
 	}
 
 	readScoreItems(idCompany: string) {
-		const url = environment.url + '/scoreitem/readscoreitems/' + idCompany;
+		const url = environment.api + '/scoreitem/readscoreitems/' + idCompany;
 		return this.http.get(url);
 	}
 
 	deleteScoreItem(idScoreItem: string) {
-		const url = environment.url + '/scoreitem/deletescoreitem/' + idScoreItem;
+		const url = environment.api + '/scoreitem/deletescoreitem/' + idScoreItem;
 		return this.http.delete(url);
 	}
 
@@ -157,27 +157,27 @@ export class AdminService {
 	// ========================================================
 
 	createWaiter(waiter: User) {
-		const url = environment.url + '/w/createwaiter';
+		const url = environment.api + '/w/createwaiter';
 		return this.http.post(url, waiter);
 	}
 
 	readWaiters(idCompany: string) {
-		const url = environment.url + '/w/readwaiters/' + idCompany;
+		const url = environment.api + '/w/readwaiters/' + idCompany;
 		return this.http.get(url);
 	}
 
 	updateWaiter(waiter: User) {
-		const url = environment.url + '/w/updatewaiter';
+		const url = environment.api + '/w/updatewaiter';
 		return this.http.post(url, waiter);
 	}
 
 	deleteWaiter(idWaiter: string) {
-		const url = environment.url + '/w/deletewaiter/' + idWaiter;
+		const url = environment.api + '/w/deletewaiter/' + idWaiter;
 		return this.http.delete(url);
 	}
 
 	readActiveSessions(idCompany: string) {
-		const url = environment.url + '/w/readactivesessions/' + idCompany;
+		const url = environment.api + '/w/readactivesessions/' + idCompany;
 		return this.http.get(url);
 	}
 

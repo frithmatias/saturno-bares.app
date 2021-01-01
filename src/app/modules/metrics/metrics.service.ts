@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { LoginService } from '../../services/login.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class MetricsService {
 
 	getUserMetrics(fcSel: number, idUser: string): Observable<object> {
 		let data = { fcSel, idUser };
-		const url = environment.url + `/metrics/getusermetrics`;
+		const url = environment.api + `/metrics/getusermetrics`;
 		return this.http.post(url, data);
 	}
 
