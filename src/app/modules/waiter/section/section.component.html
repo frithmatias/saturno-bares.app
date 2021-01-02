@@ -11,16 +11,14 @@
         - SECTOR {{waiterService.session.id_section.tx_section}} -
       </div>
 
-      <div class="my-4 mdi mdi-">
-        <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
-          <table>
-            <tr>
-              <td class="mdi mdi-power xl"></td>
-              <td class="td-text">Salir</td>
-            </tr>
-          </table>
-        </button>
-      </div>
+      <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
+        <table>
+          <tr>
+            <td class="button-icon mdi mdi-power xl"></td>
+            <td class="td-text">Salir</td>
+          </tr>
+        </table>
+      </button>
 
       <div>
         <mat-accordion multi="true">

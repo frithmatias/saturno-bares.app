@@ -1,4 +1,4 @@
-<div class="saturno-page-container m-3 animated fadeIn">
+<div class="saturno-page-container animated fadeIn">
   <div *ngIf="publicService.company">
 
     <h5 *ngIf="loading">
@@ -13,7 +13,8 @@
 
         <mat-card-header>
           <div mat-card-avatar><img class="img-fluid"
-              [src]="publicService.company.tx_company_logo | imagenPipe : 'tx_company_logo' : publicService.company._id"></div>
+              [src]="publicService.company.tx_company_logo | imagenPipe : 'tx_company_logo' : publicService.company._id">
+          </div>
           <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
           <mat-card-subtitle>{{ publicService.company.tx_address_street }}
             {{ publicService.company.tx_address_number }}</mat-card-subtitle>
@@ -37,18 +38,19 @@
               </mat-select>
             </mat-form-field>
 
-            <div class="row mx-0">
-              <button color="warn" mat-raised-button class="col mr-1 my-2" (click)="salir()">
-                Salir
-              </button>
-              <button color="primary" mat-raised-button class="col ml-1 my-2" (click)="createTicket()">
-                Reservar
+            <div class="w-100 text-right">
+              <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()">
+                Reservar mi Mesa!
               </button>
             </div>
 
           </form>
         </mat-card-content>
-
+        <mat-card-actions>
+          <button mat-button (click)="salir()">
+              SALIR
+          </button>
+      </mat-card-actions>
       </mat-card>
     </div>
 

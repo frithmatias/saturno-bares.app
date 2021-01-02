@@ -1,3 +1,11 @@
+:root {
+    --primary: #e91e63;
+    --accent : #f6f02f;
+    --warn   : #f44336;
+    --deco   : #43a047;
+    --info   : #cbcbcb;
+}
+
 .mat-badge-content {
     font-weight: 600;
     font-size  : 12px;
@@ -1269,10 +1277,9 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-raised-button,
 .mat-fab,
 .mat-mini-fab {
-    color           : #fff;
+    color              : #fff;
     /* background-color: #424242 */
-    background-color: #424242
-
+    background-color   : #424242
 }
 
 .mat-flat-button.mat-primary,
@@ -3025,47 +3032,48 @@ td.mat-footer-cell {
 
 /* SATURNO ELEMENTS */
 .saturno-minicard-icons {
-    color: #e91e63;
-    text-shadow: -1px 0 rgba(0,0,0, .15), 0px 1px rgba(0,0,0, .15), 0px -1px rgba(0,0,0, .15), 1px 0 rgba(0,0,0, .15);
+    color      : #e91e63;
+    text-shadow: -1px 0 rgba(0, 0, 0, .15), 0px 1px rgba(0, 0, 0, .15), 0px -1px rgba(0, 0, 0, .15), 1px 0 rgba(0, 0, 0, .15);
 }
+
 
 
 .saturno-text-primary {
-    color: #e91e63;
+    color: var(--primary);
 }
 
 .saturno-text-accent {
-    color: #f6f02f;
+    color: var(--accent);
 }
 
 .saturno-text-warn {
-    color: #f44336;
+    color: var(--warn);
 }
 
 .saturno-text-deco {
-    color: #43a047;
+    color: var(--deco);
 }
 
 .saturno-text-info {
-    color: #cbcbcb;
+    color: var(--info);
 }
 
 .saturno-bg-primary {
-    background-color: #e91e63;
+    background-color: var(--primary);
 }
 
 .saturno-bg-accent {
-    background-color: #f6f02f;
+    background-color: var(--accent);
 }
 
 .saturno-bg-warn {
-    background-color: #f44336;
+    background-color: var(--warn);
 }
 
 .saturno-bg-deco {
-    background-color: #43a047;
+    background-color: var(--deco);
 }
 
 .saturno-bg-info {
-    background-color: #cbcbcb;
+    background-color: var(--info);
 }

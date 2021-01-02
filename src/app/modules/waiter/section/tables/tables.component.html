@@ -104,11 +104,12 @@
     <!------------------------------>
 
     <div *ngIf="!listmode">
-        <button mat-raised-button [color]="table.id_session?'warn':table.tx_status==='idle'?'active':''" class="m-1"
-            *ngFor="let table of tables" (click)="selectTable(table)">
+        <button mat-raised-button [color]="t.id_session?'warn':t.tx_status==='idle'?'active':''"
+            class="m-1 table-button-inactive" *ngFor="let t of tables"
+            [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
-            <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ table.nm_table }}</div>
-            <app-table-info [listmode]="listmode" [table]="table"></app-table-info>
+            <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ t.nm_table }}</div>
+            <app-table-info [listmode]="listmode" [table]="t"></app-table-info>
 
         </button>
 
@@ -123,10 +124,10 @@
 <!------------------------------------>
 
 <ng-template #expandTable>
-    <div *ngIf="table">
+    <div *ngIf="table" class="py-4">
 
 
-        <div class="p-2 lg">
+        <div class="p-2 lg text-center">
             Mesa {{ table.nm_table }}:
             <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
             <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
@@ -185,7 +186,7 @@
                 [disabled]="table.tx_status === 'busy' || table.tx_status === 'reserved'">
                 <table>
                     <tr>
-                        <td class="mdi mdi-power xl"></td>
+                        <td class="button-icon mdi mdi-power xl"></td>
                         <td class="td-text">
                             <mat-slide-toggle (click)="toggleTableStatus(table)"
                                 [checked]="table.tx_status !== 'paused'"
@@ -201,7 +202,7 @@
                 [disabled]="!table.id_session || waiterService.sectionSelected === ''">
                 <table>
                     <tr>
-                        <td class="mdi mdi-priority-high xl"></td>
+                        <td class="button-icon mdi mdi-priority-high xl"></td>
                         <td class="td-text">
                             <mat-slide-toggle [(ngModel)]="blPriority"
                                 [disabled]="!table.id_session || waiterService.sectionSelected === ''">
@@ -217,7 +218,7 @@
                 (click)="reassignTicket(table.id_session?.id_ticket)">
                 <table>
                     <tr>
-                        <td class="mdi mdi-arrow-right-bold-circle-outline xl"></td>
+                        <td class="button-icon mdi mdi-arrow-right-bold-circle-outline xl"></td>
                         <td class="td-text sm">Mover</td>
                     </tr>
                 </table>
@@ -229,7 +230,7 @@
                 [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'">
                 <table>
                     <tr>
-                        <td class="mdi mdi-bell xl"></td>
+                        <td class="button-icon mdi mdi-bell xl"></td>
                         <td class="td-text sm">Atendido</td>
                     </tr>
                 </table>
@@ -240,7 +241,7 @@
                 (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
                 <table>
                     <tr>
-                        <td class="mdi mdi-replay xl"></td>
+                        <td class="button-icon mdi mdi-replay xl"></td>
                         <td class="td-text sm">Soltar</td>
                     </tr>
                 </table>
@@ -251,7 +252,7 @@
                 (click)="endTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
                 <table>
                     <tr>
-                        <td class="mdi mdi-close xl"></td>
+                        <td class="button-icon mdi mdi-close xl"></td>
                         <td class="td-text sm">Cerrar</td>
                     </tr>
                 </table>

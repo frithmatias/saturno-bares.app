@@ -46,11 +46,11 @@ export class UploaderComponent implements OnInit {
 			this.data[this.idField] = data.filename;
 			this.filesToUpload = [];
 			this.dataUpdated.emit(this.data);
-			this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
-				if(data.ok){
-					this.snack.open(data.msg, null, {duration: 2000});
-				}
-			})
+			// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+			// 	if(data.ok){
+			// 		this.snack.open(data.msg, null, {duration: 2000});
+			// 	}
+			// })
 		});
 	}
 
@@ -70,11 +70,11 @@ export class UploaderComponent implements OnInit {
 
 				if (index === filesToUploadLength - 1) {
 					this.dataUpdated.emit(this.data);
-					this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
-						if(data.ok){
-							this.snack.open(data.msg, null, {duration: 2000});
-						}
-					})
+					// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+					// 	if(data.ok){
+					// 		this.snack.open(data.msg, null, {duration: 2000});
+					// 	}
+					// })
 				}
 
 			}, () => {
@@ -97,11 +97,11 @@ export class UploaderComponent implements OnInit {
 					} else {
 						this.data[this.idField] = null;
 					}
-					this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
-						if(data.ok){
-							this.snack.open(data.msg, null, {duration: 2000})
-						}
-					})
+					// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+					// 	if(data.ok){
+					// 		this.snack.open(data.msg, null, {duration: 2000})
+					// 	}
+					// })
 					this.dataUpdated.emit(this.data);
 				});
 			}

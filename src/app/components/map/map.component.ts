@@ -82,44 +82,49 @@ export class MapComponent implements OnInit {
 
 
     // =======================================================================
-    // SI CAMBIAN LOS AVISOS
+    // SI CAMBIAN LOS COMERCIOS
     // =======================================================================
-    if ((changes.companies !== undefined) && (changes.companies.currentValue !== undefined) && changes.companies.currentValue.length > 0) {
-      if (this.router.url === '/home') { // solo si estoy en la page AVISOS voy a crear los puntos en el mapa
+    if (this.router.url === '/home') { // solo si estoy en la page HOME voy a mostrar los markers
+
+      if ((changes.companies !== undefined) && (changes.companies.currentValue !== undefined) && changes.companies.currentValue.length > 0) {
+
 
         // =======================================================================
-        // MUESTRO ICONOS Y POPUPS DE LOS NUEVOS AVISOS
+        // MARKERS
         // =======================================================================
-
         this.companies.forEach((company: any) => {
           if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
             // MARKER POPUP DATA
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
               `
-							
-              <div class="p-2">
-             
-     
-              <h5 class="text-dark">${company.tx_company_name}</h5>
-          	  <h6 class="text-secondary">${company.tx_address_street} ${company.tx_address_number}</h6>
+							<mat-card class="mat-card">
+                 
+              <div class="xl saturno-text-accent">${company.tx_company_name}</div>
+          	  <div class="md saturno-text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
               
               <hr>
+
+              <div class="md company_welcome_text">${company.tx_company_welcome}</div>
+              
+              <hr>
+
               <a href="#/public/${company.tx_company_string}">
 							  	<button class="btn btn-primary btn-block btn-sm">
                     <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
                   </button>
 						  </a>
-							</div>
-						 
-							`
+           
+              </mat-card>
+						`
             );
 
             // CREATE MARKER
             const icon = document.createElement('div');
             icon.className = 'marker';
-            icon.style.backgroundImage = 'url(\'../../../assets/img/map/duff-beer.svg\')';
+            icon.style.backgroundImage = 'url(\'../../../assets/img/beer.svg\')';
             icon.style.width = '30px';
             icon.style.height = '30px';
+            icon.style.cursor = 'pointer';
             icon.style.backgroundSize = 'contain';
             const newmarker = new mapboxgl.Marker(icon)
               .setLngLat([company.tx_company_lng, company.tx_company_lat])
@@ -131,6 +136,7 @@ export class MapComponent implements OnInit {
         });
 
       }
+
     } else {
       if (this.markersHome.length > 0) {
         this.markersHome.forEach(marker => {
@@ -140,43 +146,45 @@ export class MapComponent implements OnInit {
     }
 
     // =======================================================================
-    // [AVISO] (NUEVO Y EDICION) SI CAMBIA LA POSICION DEL MARKER AL HACER CLICK EN EL MAPA
+    // FORMULARIO CREAR COMERCIO, CAMBIA LA POSICION DEL MARKER AL HACER CLICK EN EL MAPA
     // =======================================================================
-    if (changes.center !== undefined && changes.center.currentValue !== undefined) {
 
-      // Si hay coordenadas estoy en editar company, centro el mapa y pongo el marker en las coordenadas del company
-      if (changes.center.currentValue.length > 0) {
-        this.flyMap([changes.center.currentValue, changes.center.currentValue]);
-        this.markerNewPlace = new mapboxgl.Marker({ draggable: true })
-          .setLngLat(changes.center.currentValue)
-          .addTo(this.map);
-        this.markerInserted = true;
-        this.markerNewPlace.on('dragend', e => {
-          // this.newMarker.emit(this.markerNewPlace.getLngLat());
-          this.markerNewPlace.setLngLat(e.target._lngLat);
-          this.newMarker.emit(e.target._lngLat);
-        });
-      }
+    if (this.router.url !== '/home') { // solo si estoy en la page HOME voy a mostrar los markers
+      if (changes.center !== undefined && changes.center.currentValue !== undefined) {
 
-
-      this.map.on('click', e => {
-        if (!this.markerInserted) { // Si no se inserto estoy en un company nuevo, espero a que el usuario ponga el marker.
+        // Si hay coordenadas estoy en editar company, centro el mapa y pongo el marker en las coordenadas del company
+        if (changes.center.currentValue.length > 0) {
+          this.flyMap([changes.center.currentValue, changes.center.currentValue]);
           this.markerNewPlace = new mapboxgl.Marker({ draggable: true })
-            .setLngLat(e.lngLat.wrap())
+            .setLngLat(changes.center.currentValue)
             .addTo(this.map);
           this.markerInserted = true;
+          this.markerNewPlace.on('dragend', e => {
+            // this.newMarker.emit(this.markerNewPlace.getLngLat());
+            this.markerNewPlace.setLngLat(e.target._lngLat);
+            this.newMarker.emit(e.target._lngLat);
+          });
         }
-        this.newMarker.emit(e.lngLat.wrap());
-        this.markerNewPlace.setLngLat(e.lngLat.wrap());
-        this.markerNewPlace.on('dragend', e => {
-          // this.newMarker.emit(this.markerNewPlace.getLngLat());
-          this.markerNewPlace.setLngLat(e.target._lngLat);
-          this.newMarker.emit(e.target._lngLat);
+
+
+        this.map.on('click', e => {
+          if (!this.markerInserted) { // Si no se inserto estoy en un company nuevo, espero a que el usuario ponga el marker.
+            this.markerNewPlace = new mapboxgl.Marker({ draggable: true })
+              .setLngLat(e.lngLat.wrap())
+              .addTo(this.map);
+            this.markerInserted = true;
+          }
+          this.newMarker.emit(e.lngLat.wrap());
+          this.markerNewPlace.setLngLat(e.lngLat.wrap());
+          this.markerNewPlace.on('dragend', e => {
+            // this.newMarker.emit(this.markerNewPlace.getLngLat());
+            this.markerNewPlace.setLngLat(e.target._lngLat);
+            this.newMarker.emit(e.target._lngLat);
+          });
         });
-      });
 
+      }
     }
-
     // =======================================================================
     // [FILTROS] SI CAMBIAN LAS COORDENADAS AL HACER CLICK EN UN CHECK DE LOCALIDAD
     // =======================================================================

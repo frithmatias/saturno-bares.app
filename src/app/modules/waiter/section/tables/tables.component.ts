@@ -56,6 +56,7 @@ export class TablesComponent implements OnInit {
   // ========================================================
 
   selectTable = (table: Table) => {
+    console.log(table)
     this.table = table;
   };
 

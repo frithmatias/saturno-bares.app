@@ -1,3 +1,11 @@
+:root {
+    --primary: #3f51b5;
+    --accent : #ff4081;
+    --warn   : #f44336;
+    --deco   : #3fb551;
+    --info   : #959595;
+}
+
 .mat-badge-content {
     font-weight: 600;
     font-size  : 12px;

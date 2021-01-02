@@ -49,3 +49,13 @@ tr.element-row:not(.expanded-row):active {
     background-color: rgba(0, 255, 0, 0.15);
     cursor          : pointer;
 }
+
+
+.table-button-active {
+    opacity: 1 !important;
+    box-shadow: 0px 0px 4px 2px rgb(125 125 125 / 60%) !important;
+}
+
+.table-button-inactive {
+    opacity: .5;
+}

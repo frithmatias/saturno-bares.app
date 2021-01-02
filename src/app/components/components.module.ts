@@ -12,6 +12,7 @@ import { SearchComponent } from './toolbar/search/search.component';
 import { MapComponent } from './map/map.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { UploaderDirective } from './uploader/uploader.directive';
+import { ButtonComponent } from './button/button.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UploaderDirective } from './uploader/uploader.directive';
     SearchComponent,
     MapComponent,
     UploaderComponent,
-    UploaderDirective
+    UploaderDirective,
+    ButtonComponent
     
   ],
   imports: [
