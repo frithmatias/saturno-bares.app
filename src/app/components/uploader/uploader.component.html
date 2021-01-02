@@ -108,17 +108,18 @@
 <!-- ------------------------------------------------ -->
 
 <mat-card-actions *ngIf="multi">
-    <button mat-button (click)="uploadMulti()" [disabled]="filesToUpload.length===0"><i class="mdi mdi-upload"></i>
-        Subir</button>
-    <button mat-button (click)="deleteImage('todas')" [disabled]="data[idField].length === 0"><i
+    <mat-spinner *ngIf="uploading"></mat-spinner>
+    <button *ngIf="!uploading" mat-button (click)="uploadMulti()" [disabled]="filesToUpload.length===0"><i class="mdi mdi-upload"></i>
+        Subir {{uploading}}</button>
+    <button *ngIf="!uploading" mat-button (click)="deleteImage('todas')" [disabled]="data[idField].length === 0"><i
             class="mdi mdi-delete"></i> Eliminar Todas</button>
 </mat-card-actions>
 
 <!-- ------------------------------------------------ -->
 <!-- SINGLE ACTION BUTTONS -->
 <!-- ------------------------------------------------ -->
-
-<div *ngIf="!multi && editable">
+<!-- (i.e. google profile images are not editable) -->
+<mat-card-actions *ngIf="!multi && editable && !uploading">
     <button mat-button (click)="uploadSingle()" [disabled]="filesToUpload.length==0"><i class="mdi mdi-upload"></i>
         Subir</button>
-</div>
+</mat-card-actions>

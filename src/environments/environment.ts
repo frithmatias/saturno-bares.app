@@ -7,7 +7,7 @@ export const environment = {
 	api: 'https://localhost:5000',
 	gapi_uid: '1096997200162-ltingmttj4f6ig8cij6e9g94ur9fs81m.apps.googleusercontent.com'
 };
-console.log(environment)
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

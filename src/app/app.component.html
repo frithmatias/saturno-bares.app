@@ -1,4 +1,4 @@
-<mat-drawer-container class="h-100">
+<mat-drawer-container class="h-100" style="background-color: var(--bg);">
         
     <app-toolbar (toggleSideNav)="toggle( sidenav )" [unreadMessages]="unreadMessages" (toggleChat)="toggle( chat )">
     </app-toolbar>
@@ -15,7 +15,7 @@
     </mat-drawer>
 
     <!-- container -->
-    <div class="h-100" style="text-align: -webkit-center; top: 64px; position: absolute; width: 100%;">
+    <div style="text-align: -webkit-center; top: 64px; position: absolute; width: 100%;">
         <router-outlet></router-outlet>
     </div>
     

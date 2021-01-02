@@ -1,0 +1,16 @@
+.footer-container {
+    height          : 5em;
+    align-items     : center;
+    background-color: var(--primary);
+    display         : flex;
+    font-weight     : 200;
+    justify-content : space-around;
+}
+
+.footer-social {
+    display: flex;
+}
+
+mat-tab-group {
+    min-height: 441px;
+}

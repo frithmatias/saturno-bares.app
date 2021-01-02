@@ -10,14 +10,47 @@
 
         <mat-card-content *ngIf="this.loginService.user.id_company">
 
-            <form [formGroup]="formWebPage" #formDirective="ngForm" (ngSubmit)="sendWebPage(formDirective)">
-                <mat-form-field class="w-100">
-                    <mat-label>Historia, descripción o presentación.</mat-label>
-                    <textarea class="textarea" rows="5" matInput placeholder="Ingrese la historia aquí"
+            <form ngNativeValidate [formGroup]="formWebPage" #formDirective="ngForm" (ngSubmit)="sendWebPage(formDirective)">
+
+                <!-- EMAIL -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Email del comercio</mat-label>
+                    <input matInput type="email" formControlName="txEmail" placeHolder="usuario@dominio.com">
+                </mat-form-field>
+
+                <!-- WHATSAPP -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Whatsapp</mat-label>
+                    <input matInput type="number" formControlName="txWhatsapp" placeholder="54 11 55551234" (keydown.space)="$event.preventDefault()">
+                </mat-form-field>
+
+                <!-- FACEBOOK -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Facebook</mat-label>
+                    <input matInput type="text" formControlName="txFacebook" placeholder="www.facebook.com/micomercio">
+                </mat-form-field>
+
+                <!-- TWITTER -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Twitter</mat-label>
+                    <input matInput type="text" formControlName="txTwitter" placeholder="www.twitter.com/micomercio">
+                </mat-form-field>
+
+                <!-- INSTAGRAM -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Instagram</mat-label>
+                    <input matInput type="text" formControlName="txInstagram" placeholder="www.instagram.com/micomercio">
+                </mat-form-field>
+
+                <!-- WELCOME TEXT -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Historia de tu comercio, descripción o presentación.</mat-label>
+                    <textarea class="textarea" rows="5" matInput placeholder="Ingresa el texto de bienvenida aquí"
                         formControlName="txWelcome"
                         [value]="this.loginService.user.id_company.tx_company_welcome"></textarea>
                 </mat-form-field>
 
+                <!-- SUBMIT BUTTON -->
                 <div class="container pt-4 px-0">
                     <button mat-raised-button color="accent" type="submit">
                         <span class="mdi lg mdi-content-save-outline"></span>

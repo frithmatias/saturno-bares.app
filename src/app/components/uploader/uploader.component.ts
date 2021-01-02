@@ -22,6 +22,7 @@ export class UploaderComponent implements OnInit {
 	maxupload = 12;
 	maxSize = 5242880;
 	estaSobreElemento = false;
+	uploading = false;
 
 	constructor(
 		private uploaderService: UploaderService,
@@ -40,12 +41,16 @@ export class UploaderComponent implements OnInit {
 	uploadSingle() {
 		this.fileInput.nativeElement.value = "";
 		let archivo = this.filesToUpload[0];
+		this.uploading = true;
 		this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, 1).subscribe((data: FileUploadResponse) => {
-			archivo.progreso = 100;
-			archivo.estaSubiendo = false;
-			this.data[this.idField] = data.filename;
-			this.filesToUpload = [];
-			this.dataUpdated.emit(this.data);
+			if(data.ok){
+				archivo.progreso = 100;
+				archivo.estaSubiendo = false;
+				this.data[this.idField] = data.filename;
+				this.filesToUpload = [];
+				this.dataUpdated.emit(this.data);
+				this.uploading = false;
+			}
 			// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
 			// 	if(data.ok){
 			// 		this.snack.open(data.msg, null, {duration: 2000});
@@ -57,26 +62,25 @@ export class UploaderComponent implements OnInit {
 	uploadMulti() {
 		this.fileInput.nativeElement.value = "";
 		let filesToUploadLength = this.filesToUpload.length;
-
+		this.uploading = true;
 		this.filesToUpload.forEach((archivo, index, files) => {
 			archivo.estaSubiendo = true;
 			this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, files.length).subscribe((data: FileUploadResponse) => {
-
-				archivo.progreso = 100;
-				archivo.estaSubiendo = false;
-
-				this.data[this.idField].push(data.filename);
-				this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)
-
-				if (index === filesToUploadLength - 1) {
-					this.dataUpdated.emit(this.data);
-					// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
-					// 	if(data.ok){
-					// 		this.snack.open(data.msg, null, {duration: 2000});
-					// 	}
-					// })
+				if(data.ok){
+					archivo.progreso = 100;
+					archivo.estaSubiendo = false;
+					this.data[this.idField].push(data.filename);
+					this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)
+					if (index === filesToUploadLength - 1) {
+						this.uploading = false;
+						this.dataUpdated.emit(this.data);
+						// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
+						// 	if(data.ok){
+						// 		this.snack.open(data.msg, null, {duration: 2000});
+						// 	}
+						// })
+					}
 				}
-
 			}, () => {
 				// si el archivo que intento subir falla, entonces lo quito del array de archivos a subir
 				this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)

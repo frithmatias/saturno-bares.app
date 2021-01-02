@@ -1,10 +1,11 @@
 <div>
 
+    <!-- PAGE HEADER IMAGE SLIDER -->
     <ng-image-slider [images]="images" [infinite]="true" [imagePopup]="true" [animationSpeed]="2" [slideImage]="1"
-    [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
-   <!-- <img class="img-fluid rounded" src="./assets/uploads/sandangabar/pageimg.jpg"> -->
+        [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
 
-    <mat-tab-group mat-align-tabs="center"  dynamicHeight>
+    <!-- PAGE TABS -->
+    <mat-tab-group mat-align-tabs="center" dynamicHeight>
         <mat-tab label="{{publicService.company.tx_company_name}}">
             <app-home></app-home>
         </mat-tab>
@@ -15,4 +16,33 @@
             <app-table></app-table>
         </mat-tab>
     </mat-tab-group>
-</div> 
+
+    <!-- PAGE FOOTER -->
+    <div class="footer-container">
+        <div>
+            <div class="md saturno-text-accent">
+                {{publicService.company.tx_company_name}}
+            </div>
+            <div class="sm">
+                {{publicService.company.tx_address_street}}
+                {{publicService.company.tx_address_number}}
+            </div>
+        </div>
+
+        <div *ngIf="publicService.company.tx_whatsapp ||
+        publicService.company.tx_facebook ||
+        publicService.company.tx_twitter ||
+        publicService.company.tx_instagram" class="footer-social">
+            <span *ngIf="publicService.company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp"
+                    target="_blank" href="https://wa.me/{{publicService.company.tx_whatsapp}}"></a></span>
+            <span *ngIf="publicService.company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook"
+                    target="_blank" href="https://{{publicService.company.tx_facebook}}"></a></span>
+            <span *ngIf="publicService.company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
+                    href="https://{{publicService.company.tx_twitter}}"></a></span>
+            <span *ngIf="publicService.company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram"
+                    target="_blank" href="https://{{publicService.company.tx_instagram}}"></a></span>
+        </div>
+
+    </div>
+
+</div>

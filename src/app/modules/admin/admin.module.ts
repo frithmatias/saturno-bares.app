@@ -8,6 +8,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 // modules
 import { ComponentsModule } from '../../components/components.module';
 import { MaterialModule } from '../../modules/material.module';
+import { QRCodeModule } from 'angularx-qrcode';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
@@ -63,6 +64,7 @@ import { WebPageComponent } from './webpage/webpage.component';
 		ComponentsModule,
 		AdminRoutingModule,
 		PipesModule,
+		QRCodeModule
 	]
 })
 export class AdminModule { }

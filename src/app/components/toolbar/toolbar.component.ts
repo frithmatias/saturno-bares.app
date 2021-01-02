@@ -43,7 +43,7 @@ export class ToolbarComponent implements OnInit {
     }
 
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `./assets/css/${this.config.theme}`;
+    cssLink.href = `./assets/css/themes/${this.config.theme}`;
 
   }
 
@@ -66,7 +66,7 @@ export class ToolbarComponent implements OnInit {
 
   changeTheme(theme: string): void {
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `./assets/css/${theme}`;
+    cssLink.href = `./assets/css/themes/${theme}`;
 
     if (localStorage.getItem('config')) {
       this.config = JSON.parse(localStorage.getItem('config'));

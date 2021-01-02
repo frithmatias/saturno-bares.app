@@ -22,12 +22,12 @@ export class WebPageComponent implements OnInit {
     logo:
     {
       icon: 'mdi mdi-image',
-      title: 'Subi el logo',
+      title: 'Subi el logo de tu comercio',
       subtitle: 'Subí el logo de tu comercio. El formato deseable es cuadrado con fondo transparante.'
     },
     banners: {
       icon: 'mdi mdi-image',
-      title: 'Subir Imagenes',
+      title: 'Subir fotos de tu comercio',
       subtitle: 'Subí fotos de tu comercio. Estas imagenes se verán en la web page. La relación deseable es 5:2 y el tamaño del canvas es de 500px x 200px.'
     }
   }
@@ -41,6 +41,11 @@ export class WebPageComponent implements OnInit {
   ngOnInit(): void {
 
     this.formWebPage = new FormGroup({
+      txEmail: new FormControl(this.loginService.user.id_company?.tx_email),
+      txWhatsapp: new FormControl(this.loginService.user.id_company?.tx_whatsapp),
+      txFacebook: new FormControl(this.loginService.user.id_company?.tx_facebook),
+      txTwitter: new FormControl(this.loginService.user.id_company?.tx_twitter),
+      txInstagram: new FormControl(this.loginService.user.id_company?.tx_instagram),
       txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, Validators.required)
     })
 
@@ -51,7 +56,13 @@ export class WebPageComponent implements OnInit {
     if (this.formWebPage.invalid) return;
 
     let idCompany = this.loginService.user.id_company._id;
-    let data = { txWelcome: this.formWebPage.value.txWelcome };
+    let data = { 
+      txEmail: this.formWebPage.value.txEmail, 
+      txWhatsapp: this.formWebPage.value.txWhatsapp, 
+      txFacebook: this.formWebPage.value.txFacebook, 
+      txTwitter: this.formWebPage.value.txTwitter, 
+      txInstagram: this.formWebPage.value.txInstagram, 
+      txWelcome: this.formWebPage.value.txWelcome };
     this.adminService.updateWebPage(data, idCompany).subscribe((data: CompanyResponse) => {
       if(data.ok){
         this.loginService.user.id_company = data.company;

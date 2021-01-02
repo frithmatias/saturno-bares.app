@@ -13,10 +13,9 @@ export class VideoComponent implements OnInit {
   }
 
 
-  myFunction(e){
-    // console.log(e.target.currentTime)
-     console.log(e.target.currentTime * 100 / e.target.duration)
-     this.percent = String(e.target.currentTime * 100 / e.target.duration);
-
+  myFunction(e) {
+    // c.log(e.target.currentTime)
+    // c.log(e.target.currentTime * 100 / e.target.duration)
+    this.percent = String(e.target.currentTime * 100 / e.target.duration);
   }
 }
