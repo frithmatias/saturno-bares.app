@@ -17,6 +17,8 @@ import { Section } from '../../../interfaces/section.interface';
 import { Subject, interval } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { TicketComponent } from './ticket/ticket.component';
 
 export interface Tile {
   color: string;
@@ -48,8 +50,12 @@ export class SectionComponent implements OnInit {
 
   // data for requested
   requested: Ticket[] = [];
+
+  //data for queued
   queued: Ticket[] = [];
 
+  //data for contingent
+  contingent: Ticket[] = [];
 
   private subjectUpdateWaiters$ = new Subject();
 
@@ -59,7 +65,8 @@ export class SectionComponent implements OnInit {
     public sharedService: SharedService,
     private wsService: WebsocketService,
     private router: Router,
-    private intervalToHmsPipe: IntervalToHmsPipe
+    private intervalToHmsPipe: IntervalToHmsPipe,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   @HostListener('click', ['$event'])
@@ -78,7 +85,9 @@ export class SectionComponent implements OnInit {
     // timers observer
     await this.readTables();
     await this.readTickets();
+
     this.wsService.updateWaiters().subscribe(this.subjectUpdateWaiters$);
+
     this.subjectUpdateWaiters$.subscribe(async () => {
       await this.readTables();
       await this.readTickets();
@@ -120,7 +129,7 @@ export class SectionComponent implements OnInit {
             });
 
             localStorage.setItem('tables', JSON.stringify(data.tables));
-            resolve();
+            resolve([]);
           } else {
             reject([]);
           }
@@ -152,6 +161,10 @@ export class SectionComponent implements OnInit {
           this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
             ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned'))
 
+          // for input queued child  
+          this.contingent = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
+            ticket.tm_end === null && ticket.bl_contingent === true)
+
           // for input sections child
           for (let section of this.waiterService.sections) {
             this.ticketsDataBySection.set(section.tx_section, {
@@ -164,7 +177,11 @@ export class SectionComponent implements OnInit {
               requested: data.tickets.filter((ticket) =>
                 ticket.id_section?._id === section._id &&
                 ticket.tm_end === null &&
-                ticket.tx_status === 'requested').length
+                ticket.tx_status === 'requested').length,
+              contingent: data.tickets.filter((ticket) =>
+                ticket.id_section?._id === section._id &&
+                ticket.tm_end === null &&
+                ticket.bl_contingent === true).length
             });
           }
 
@@ -174,7 +191,13 @@ export class SectionComponent implements OnInit {
     });
   };
 
-
+  createTicket = (): Promise<Ticket> => {
+    return new Promise((resolve, reject) => {
+      this.bottomSheet.open(TicketComponent).subscribe(data => {
+        console.log('LA DATA EN EL SHEET ES ', data)
+      })
+    })
+  }
 
   releaseSection = () => {
 
@@ -196,3 +219,4 @@ export class SectionComponent implements OnInit {
   }
 
 }
+

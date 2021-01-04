@@ -30,9 +30,14 @@ export class TokenService implements HttpInterceptor {
       return next.handle(reqClone).pipe(
         tap(this.manejarRespuesta),
         catchError(this.manejarError.bind(this)));
-    } else {
 
-      return next.handle(req);
+    } else {
+      // en peticiones públicas no se inyecta el token 
+
+      return next.handle(req).pipe(
+        tap(this.manejarRespuesta),
+        catchError(this.manejarError.bind(this)));
+
 
     }
 

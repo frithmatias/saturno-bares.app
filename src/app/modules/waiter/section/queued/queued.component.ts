@@ -23,9 +23,10 @@ export class QueuedComponent implements OnInit {
   @Input() queued: Ticket[];
   @Input() tables: Table[];
 
-  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'tx_section'];
+  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'contingencia'];
+  
+  assignWithPriority: boolean = false;
 
-  waiting: Ticket[];
   constructor(
     public sharedService: SharedService,
     public waiterService: WaiterService
@@ -33,12 +34,14 @@ export class QueuedComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  // ADD OR REMOVE TABLES FOR ASSIGNATION
   setReserve = (table: Table, ticket: Ticket) => {
     ticket.cd_tables = ticket.cd_tables.includes(table.nm_table)
       ? ticket.cd_tables.filter((numtable) => numtable !== table.nm_table)
       : [...ticket.cd_tables, table.nm_table];
   };
 
+  // ASSIGN TABLES
   assignTables = (ticket: Ticket, blPriority: boolean) => {
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;

@@ -7,31 +7,44 @@
 
     <div *ngIf="!loading" class="animated fadeIn">
 
-      <div class="text-uppercase lg my-2 p-2">
-        - SECTOR {{waiterService.session.id_section.tx_section}} -
-      </div>
 
-      <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
-        <table>
-          <tr>
-            <td class="button-icon mdi mdi-power xl"></td>
-            <td class="td-text">Salir</td>
-          </tr>
-        </table>
-      </button>
+        <div class="text-center saturno-text-accent xxl">
+          {{waiterService.session.id_section.tx_section}}
+        </div>
 
-      <div>
+
+      <mat-card-content>
         <mat-accordion multi="true">
+
           <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
           </app-sections>
           <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
           <app-requested [tables]="tables" [requested]="requested"></app-requested>
           <app-queued [tables]="tables" [queued]="queued"></app-queued>
+
         </mat-accordion>
-      </div>
+      </mat-card-content>
 
+      <mat-card-actions>
+        <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account xl"></td>
+              <td class="td-text">Ticket</td>
+            </tr>
+          </table>
+        </button>
+        <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-power xl"></td>
+              <td class="td-text">Salir</td>
+            </tr>
+          </table>
+        </button>
+      </mat-card-actions>
+    
     </div>
-
   </mat-card>
 
 </div>

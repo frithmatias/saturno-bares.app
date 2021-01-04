@@ -13,11 +13,11 @@ import { SharedService } from 'src/app/services/shared.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  selector: 'app-ticket',
+  templateUrl: './ticket.component.html',
+  styleUrls: ['./ticket.component.css']
 })
-export class TableComponent implements OnInit {
+export class TicketComponent implements OnInit {
 
   loading: boolean = false;
   sections: Section[] = [];
@@ -32,6 +32,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketForm = new FormGroup({
+      txName: new FormControl('', [Validators.required]),
       nmPersons: new FormControl('', [Validators.required]),
       idSection: new FormControl('', [Validators.required]),
     });
@@ -72,12 +73,16 @@ export class TableComponent implements OnInit {
     }
 
     this.loading = true;
+
+
+    let blContingent = false;
     let idSocket = this.wsService.idSocket;
+    let txName = this.ticketForm.value.txName;
     let nmPersons = this.ticketForm.value.nmPersons;
     let idSection = this.ticketForm.value.idSection;
 
     this.loading = true;
-    this.publicService.createTicket(idSocket, nmPersons, idSection).subscribe(
+    this.publicService.createTicket(blContingent, idSocket, txName, nmPersons, idSection).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
           this.loading = false;

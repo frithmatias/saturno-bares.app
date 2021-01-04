@@ -8,7 +8,6 @@
     </h5>
 
     <div *ngIf="!loading">
-
       <mat-card>
 
         <mat-card-header>
@@ -23,14 +22,20 @@
         <mat-card-content>
 
           <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+            
+            <mat-form-field color="accent" class="w-100">
+              <mat-label>Tu Nombre</mat-label>
+              <input matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
+                type="text" maxlength="20" required>
+            </mat-form-field>
 
-            <mat-form-field class="w-100">
+            <mat-form-field color="accent" class="w-100">
               <mat-label>Cantidad de Personas</mat-label>
               <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons"
                 type="number" min="1" required>
             </mat-form-field>
 
-            <mat-form-field class="w-100">
+            <mat-form-field color="accent" class="w-100">
               <mat-label>Sector</mat-label>
               <mat-select formControlName="idSection" name="idSection" required>
                 <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}

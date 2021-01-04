@@ -35,12 +35,14 @@ export class RequestedComponent implements OnInit {
   ngOnInit(): void { }
 
 
+  // ADD OR REMOVE TABLES FOR ASSIGNATION
   setReserve = (table: Table, ticket: Ticket) => {
     ticket.cd_tables = ticket.cd_tables.includes(table.nm_table)
       ? ticket.cd_tables.filter((numtable) => numtable !== table.nm_table)
       : [...ticket.cd_tables, table.nm_table];
   };
 
+  // ASSIGN TABLES
   assignTables = (ticket: Ticket, blPriority: boolean) => {
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;

@@ -97,6 +97,12 @@ export class WaiterService {
 		return this.http.post(url, data);
 	}
 
+	createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {
+		let data = { blContingent, idSocket, txName, nmPersons, idSection };
+		return this.http.post(environment.api + '/t/createticket/', data);
+	}
+
+
 	releaseSection(idSection: string, idWaiter: string) {
 		let data = { idSection, idWaiter }
 		const url = environment.api + '/section/releasesection';
@@ -104,9 +110,9 @@ export class WaiterService {
 	}
 
 
-  // ========================================================
-  // SESSION METHODS
-  // ========================================================
+	// ========================================================
+	// SESSION METHODS
+	// ========================================================
 
 
 	clearSectionSession = () => {

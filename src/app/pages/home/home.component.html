@@ -30,7 +30,7 @@
 
   <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
 
-  <mat-form-field class="location-input">
+  <mat-form-field color="accent" class="location-input">
     <mat-label>Busca por ciudad, localidad o barrio</mat-label>
     <input matInput type="text" [formControl]="localidadesControl" [matAutocomplete]="auto" (click)="cleanInput()" />
     <span class="input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>

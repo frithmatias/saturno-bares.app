@@ -1,7 +1,7 @@
 <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
     (ngSubmit)="createSection(formDirective)">
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre del Sector</mat-label>
         <input matInput placeholder="Por ejemplo Terraza, Patio, Fumadores, Piso 1, etc." formControlName="txSection" name="txSection" type="text"
             required>

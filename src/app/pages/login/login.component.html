@@ -28,7 +28,7 @@
                     <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )" autocomplete="off">
 
                         <div class="my-2">
-                            <mat-form-field class="w-100">
+                            <mat-form-field color="accent" class="w-100">
                                 <mat-label>Email</mat-label>
                                 <input #inputEmail type="email" matInput placeholder="mail@dominio.com"
                                     [ngModel]="email" name="email">
@@ -41,7 +41,7 @@
                         <!-- PASSWORD -->
                         <!---------------------------------------------------------------------->
                         <div class="my-2">
-                            <mat-form-field class="w-100">
+                            <mat-form-field color="accent" class="w-100">
                                 <mat-label>Password</mat-label>
                                 <input #inputPassword matInput placeholder="password" ngModel name="password"
                                     [type]="hidepass ? 'password' : 'text'" required>

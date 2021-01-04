@@ -13,7 +13,7 @@
             <app-menu></app-menu>
         </mat-tab>
         <mat-tab label="Reservar Mesa">
-            <app-table></app-table>
+            <app-ticket></app-ticket>
         </mat-tab>
     </mat-tab-group>
 
@@ -29,10 +29,8 @@
             </div>
         </div>
 
-        <div *ngIf="publicService.company.tx_whatsapp ||
-        publicService.company.tx_facebook ||
-        publicService.company.tx_twitter ||
-        publicService.company.tx_instagram" class="footer-social">
+        <div *ngIf="publicService.company.tx_whatsapp || publicService.company.tx_facebook || publicService.company.tx_twitter || publicService.company.tx_instagram"
+            class="footer-social">
             <span *ngIf="publicService.company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp"
                     target="_blank" href="https://wa.me/{{publicService.company.tx_whatsapp}}"></a></span>
             <span *ngIf="publicService.company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook"

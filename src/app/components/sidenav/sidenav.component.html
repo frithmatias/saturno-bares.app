@@ -1,5 +1,5 @@
 <div class="text-white h-100">
-    <mat-form-field *ngIf="adminService.companies?.length > 0" class="p-2 w-100">
+    <mat-form-field color="accent" *ngIf="adminService.companies?.length > 0" class="p-2 w-100">
         <mat-label>Seleccione una empresa</mat-label>
         <mat-select formControlName="idCompany" [value]="loginService.user?.id_company?._id" name="idCompany"
             #selectTable matNativeControl required>

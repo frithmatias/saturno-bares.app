@@ -10,7 +10,9 @@ export interface Ticket {
 	id_section: Section; 
 	id_session: Session; 
 	nm_persons: number;
+	bl_contingent: boolean;
 	bl_priority: boolean;
+	tx_name: string;
 	tx_call: string;
 	tm_call: number;
 	tx_status: string; // assigned [privided, assigned, queued, requested]

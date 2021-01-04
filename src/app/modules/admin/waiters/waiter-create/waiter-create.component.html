@@ -1,7 +1,7 @@
 <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
     (ngSubmit)="createWaiter(formDirective)">
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Rol</mat-label>
         <mat-select formControlName="rol" name="rol" required>
             <mat-option value="ADMIN_ROLE"> Administrador y Camarero</mat-option>
@@ -9,7 +9,7 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Seleccione una empresa</mat-label>
         <mat-select formControlName="idCompany" name="idCompany" #selectTable matNativeControl required>
             <mat-option *ngFor="let company of adminService.companies" [value]="company._id">
@@ -18,24 +18,24 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Nombre" formControlName="nombre" name="nombre" type="text" required
             placeholder="Nombre">
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" name="email" type="email" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Clave</mat-label>
         <input matInput placeholder="Clave" formControlName="password" name="password" type="password" required
             placeholder="Contraseña" autocomplete="new-password">
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Clave</mat-label>
         <input matInput placeholder="Clave" formControlName="password2" name="password2" type="password" required
             placeholder="Confirma contraseña" autocomplete="new-password">

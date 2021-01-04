@@ -1,0 +1,45 @@
+<div class="saturno-page-container animated fadeIn">
+
+
+    <mat-card>
+
+        <mat-card-content>
+            <div *ngIf="ticket">
+                El número de ticket de {{ticket.txname}} es el {{ticket.id_position}}
+            </div>
+
+            <form *ngIf="!ticket" autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Nombre del cliente</mat-label>
+                    <input matInput placeholder="Ingresa el nombre del cliente" formControlName="txName" name="txName"
+                        type="text" maxlength="20" required>
+                </mat-form-field>
+
+
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Cantidad de Personas</mat-label>
+                    <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons"
+                        type="number" min="1" required>
+                </mat-form-field>
+
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Sector</mat-label>
+                    <mat-select formControlName="idSection" name="idSection" required>
+                        <mat-option *ngFor="let section of waiterService.sections" [value]="section._id">
+                            {{ section.tx_section }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="w-100 text-right">
+                    <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()">
+                        Crear Ticket
+                    </button>
+                </div>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+</div>

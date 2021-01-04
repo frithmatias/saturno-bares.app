@@ -1,27 +1,27 @@
 <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="menuForm"
     (ngSubmit)="createMenu(formDirective)">
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Código de Rol</mat-label>
         <input matInput placeholder="0" formControlName="cd_role" name="cd_role" type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Código de Pricing</mat-label>
         <input matInput placeholder="0" formControlName="cd_pricing" name="cd_pricing" type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Titulo</mat-label>
         <input matInput placeholder="Titulo" formControlName="tx_titulo" name="tx_titulo" type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Icono</mat-label>
         <input matInput placeholder="mdi mdi-icon" formControlName="tx_icon" name="tx_icon" type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>URL</mat-label>
         <input matInput placeholder="/waiter/home" formControlName="tx_url" name="tx_url" type="text" required>
     </mat-form-field>

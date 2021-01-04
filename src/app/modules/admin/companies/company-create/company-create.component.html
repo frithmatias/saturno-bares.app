@@ -1,26 +1,26 @@
 <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="forma"
     (ngSubmit)="createCompany(formDirective)">
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre del Bar / Restaurant</mat-label>
         <mat-error>Esta Empresa ya se encuentra registrada!</mat-error>
         <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName"
             type="text" required (keyup)="checkCompanyExists()">
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Slogan (Opcional)</mat-label>
         <input matInput placeholder="50 años en tu barrio" formControlName="txCompanySlogan" name="txCompanySlogan"
             type="text">
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre público</mat-label>
         <input matInput placeholder="nombredetuempresa" formControlName="txCompanyString" name="txCompanyString"
             type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
         <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
             (click)="cleanInput()" required>
@@ -36,13 +36,13 @@
         </mat-option>
     </mat-autocomplete>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Calle</mat-label>
         <input matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text"
             required>
     </mat-form-field>
 
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Altura</mat-label>
         <input matInput placeholder="1234" formControlName="txAddressNumber" name="txAddressNumber" type="number"
             min="1" max="20000" required>
@@ -57,14 +57,14 @@
     <!-- LAT -->
     <!---------------------------------------------------------------------->
     
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <input matInput type="text" placeholder="lat" class="coords-input" formControlName="txCompanyLat" />
     </mat-form-field>
 
     <!---------------------------------------------------------------------->
     <!-- LNG -->
     <!---------------------------------------------------------------------->
-    <mat-form-field class="w-100">
+    <mat-form-field color="accent" class="w-100">
         <input matInput type="text" placeholder="lng" class="coords-input" formControlName="txCompanyLng" />
     </mat-form-field>
 

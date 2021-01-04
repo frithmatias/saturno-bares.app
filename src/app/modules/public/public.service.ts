@@ -87,8 +87,8 @@ export class PublicService {
     return this.http.get<SectionsResponse>(environment.api + '/section/readsections/' + idCompany);
   }
 
-  createTicket(idSocket: string, nmPersons: number, idSection: string): Observable<object> {
-    let data = { idSocket, nmPersons, idSection };
+  createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {
+    let data = { blContingent, idSocket, txName, nmPersons, idSection };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 

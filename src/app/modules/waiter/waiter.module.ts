@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // routes
 import { WaiterRoutingModule } from './waiter-routing.module';
@@ -21,16 +21,26 @@ import { SectionsComponent } from './section/sections/sections.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../../components/components.module';
 import { TableInfoComponent } from './section/tables/table-info/table-info.component';
+import { TicketComponent } from './section/ticket/ticket.component';
+
 
 
 @NgModule({
   declarations: [
-    WaiterComponent, 
+    WaiterComponent,
     HomeComponent,
-    DashboardComponent, 
-    SectionComponent, RequestedComponent, QueuedComponent, TablesComponent, SectionsComponent, ProfileComponent, TableInfoComponent
+    DashboardComponent,
+    SectionComponent,
+    RequestedComponent,
+    QueuedComponent,
+    TablesComponent,
+    SectionsComponent,
+    ProfileComponent,
+    TableInfoComponent,
+    TicketComponent
   ],
   imports: [
+    ReactiveFormsModule,
     FormsModule,
     CommonModule,
     ComponentsModule,
@@ -38,6 +48,6 @@ import { TableInfoComponent } from './section/tables/table-info/table-info.compo
     PipesModule,
     WaiterRoutingModule
   ],
-  exports:[]
+  exports: []
 })
 export class WaiterModule { }
