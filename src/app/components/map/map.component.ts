@@ -96,8 +96,8 @@ export class MapComponent implements OnInit {
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
               `
 							<mat-card class="mat-card">
-                <div class="xl saturno-text-accent">${company.tx_company_name}</div>
-          	    <div class="md saturno-text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
+                <div class="xl text-accent">${company.tx_company_name}</div>
+          	    <div class="md text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
                  <hr>
                 <div class="md company_welcome_text">${company.tx_company_welcome}</div>
                 <a href="#/public/${company.tx_company_string}">

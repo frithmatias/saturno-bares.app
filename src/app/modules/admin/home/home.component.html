@@ -1,7 +1,7 @@
 <div class="saturno-page-container-wide animated fadeIn">
 
 
-  <div class="my-2 xl saturno-text-accent mb-2">Hola {{ loginService?.user.tx_name }}</div>
+  <div class="my-2 xl text-accent mb-2">Hola {{ loginService?.user.tx_name }}</div>
 
   <div style="justify-content: center; display: flex;  flex-wrap: wrap;">
 
@@ -13,9 +13,9 @@
           <div class="pointer my-3" routerLink="/admin/wizard">
             <div class="saturno-minicard-title">
               <div>
-                <span class="mdi mdi-wizard-hat xxxxl saturno-text-deco"></span>
+                <span class="mdi mdi-wizard-hat xxxxl text-deco"></span>
               </div>
-              <div class="saturno-text-accent">
+              <div class="text-accent">
                 Iniciar el Asistente
               </div>
             </div>
@@ -66,9 +66,9 @@
           <div routerLink="/waiter/home">
             <div class="saturno-minicard-title">
               <div>
-                <span class="mdi mdi-select-group xxxxl saturno-text-deco"></span>
+                <span class="mdi mdi-select-group xxxxl text-deco"></span>
               </div>
-              <div class="saturno-text-accent">
+              <div class="text-accent">
                 Tomar un Sector
               </div>
             </div>
@@ -89,7 +89,7 @@
         <mat-card class="saturno-minicard m-2" routerLink="/waiter/home">
 
           <mat-card-header>
-            <mat-card-title class="saturno-text-accent">
+            <mat-card-title class="text-accent">
 
               {{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
 
@@ -159,7 +159,7 @@
       <div>
         <mat-card class="saturno-minicard m-2" style="text-align: left;" *ngIf="loginService.user.id_company">
 
-          <div class="saturno-text-accent">
+          <div class="text-accent">
             <span class="mdi mdi-headset lg mr-2"></span> Administradores y Camareros
           </div>
 
@@ -170,7 +170,7 @@
 
           <hr>
 
-          <div class="saturno-text-accent">
+          <div class="text-accent">
             <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span> Clientes
           </div>
 

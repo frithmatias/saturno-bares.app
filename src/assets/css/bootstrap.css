@@ -1,4 +1,3 @@
-
 *,
 ::after,
 ::before {
@@ -5593,6 +5592,10 @@ input[type=submit].btn-block {
 }
 
 .badge {
+    position      : relative;
+    left          : -3px;
+    top           : 0px;
+    height        : min-content;
     display       : inline-block;
     padding       : .25em .4em;
     font-size     : 75%;
@@ -7300,14 +7303,14 @@ a.close.disabled {
     vertical-align: text-top !important
 }
 
-.bg-primary {
+.bg-primary-b {
     background-color: #007bff !important
 }
 
-a.bg-primary:focus,
-a.bg-primary:hover,
-button.bg-primary:focus,
-button.bg-primary:hover {
+a.bg-primary-b:focus,
+a.bg-primary-b:hover,
+button.bg-primary-b:focus,
+button.bg-primary-b:hover {
     background-color: #0062cc !important
 }
 

@@ -5,6 +5,10 @@
     --deco   : #43a047;
     --info   : #cbcbcb;
     --bg     : #424242;
+
+    --active : #43f436;
+    --paused : #a4a4a4;
+    --busy   : #ff4848;
 }
 
 .mat-badge-content {
@@ -3038,43 +3042,78 @@ td.mat-footer-cell {
 }
 
 
+/* 
+--------------------
+TEXT
+--------------------
+*/
 
-.saturno-text-primary {
+.text-primary {
     color: var(--primary);
 }
 
-.saturno-text-accent {
+.text-accent {
     color: var(--accent);
 }
 
-.saturno-text-warn {
+.text-warn {
     color: var(--warn);
 }
 
-.saturno-text-deco {
+.text-deco {
     color: var(--deco);
 }
 
-.saturno-text-info {
+.text-info {
     color: var(--info);
 }
 
-.saturno-bg-primary {
+.text-active {
+    color: var(--active);
+}
+
+.text-paused {
+    color: var(--paused);
+}
+
+.text-busy {
+    color: var(--busy);
+}
+
+/* 
+--------------------
+BACKGROUNDS
+--------------------
+*/
+
+.bg-primary {
     background-color: var(--primary);
 }
 
-.saturno-bg-accent {
+.bg-accent {
     background-color: var(--accent);
 }
 
-.saturno-bg-warn {
+.bg-warn {
     background-color: var(--warn);
 }
 
-.saturno-bg-deco {
+.bg-deco {
     background-color: var(--deco);
 }
 
-.saturno-bg-info {
+.bg-info {
     background-color: var(--info);
+}
+
+.bg-active {
+    background-color: var(--active);
+}
+
+.bg-paused {
+    background-color: var(--paused);
+}
+
+.bg-busy {
+    background-color: var(--busy);
 }

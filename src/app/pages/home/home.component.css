@@ -16,12 +16,12 @@
 
 @media (min-width: 575px) {
 
-    .saturno-bg-home {
+    .bg-home {
         text-align: center;
     }
 }
 
-.saturno-bg-primary .logo-img {
+.bg-primary .logo-img {
     background-image   : url('../../../assets/img/restaurant.svg');
     background-size    : contain;
     background-repeat  : no-repeat;
@@ -40,7 +40,7 @@
     background-color: rgba(255, 255, 255, .9);
 }
 
-.saturno-bg-home {
+.bg-home {
     background-image     : url('../../../assets/img/bghome.jpg');
     background-size      : cover;
     background-repeat    : no-repeat;

@@ -1,11 +1,13 @@
 <!------------------------------>
 <!-- SECTIONS -->
 <!------------------------------>
-<mat-expansion-panel>
+<mat-expansion-panel class="my-3">
+
   <mat-expansion-panel-header>
     <mat-panel-title>
       <span class="xl mdi mdi-select-group text-success"></span>
-      <span class="sidenav-title-text mx-2">Sectores ({{waiterService.sections.length}})</span>
+      <span class="badge text-white bg-primary">{{waiterService.sections.length}}</span>
+      <span class="sidenav-title-text mx-2 align-self-center">Sectores</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
@@ -14,72 +16,48 @@
     <table mat-table [dataSource]="waiterService.sections">
 
       <ng-container matColumnDef="sector">
-        <th mat-header-cell *matHeaderCellDef class="text-left md saturno-text-deco"> Sector </th>
+        <th mat-header-cell *matHeaderCellDef class="text-left md text-deco"> Sector </th>
         <td mat-cell *matCellDef="let element" class="text-left md">
-          <span class="saturno-text-info"> {{ element.tx_section }}</span>
+          <span class="text-info"> {{ element.tx_section }}</span>
           <span *ngIf="tablesDataBySection.get(element.tx_section).sectionselected"
-            class="saturno-text-accent mdi mdi-check lg"></span>
+            class="text-accent mdi mdi-check lg"></span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="disponibles">
-        <th mat-header-cell *matHeaderCellDef class="text-center md">
-          <button mat-raised-button color="active" class="th-button">
-            <div class="th-button-content text-white xl mdi mdi-check-circle-outline"></div>
-          </button>
-        </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
+        <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-check-circle-outline"> </th>
+        <td mat-cell *matCellDef="let element" class="text-center">
           <span>{{ tablesDataBySection.get(element.tx_section).idle }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="pausadas">
-        <th mat-header-cell *matHeaderCellDef class="text-center md">
-          <button mat-raised-button class="th-button">
-            <div class="th-button-content text-white xl mdi mdi-pause-circle-outline"></div>
-          </button>
-        </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
+        <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-pause-circle-outline"> </th>
+        <td mat-cell *matCellDef="let element" class="text-center">
           <span>{{ tablesDataBySection.get(element.tx_section).paused }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="ocupadas">
-        <th mat-header-cell *matHeaderCellDef class="text-center md">
-          <button mat-raised-button color="warn" class="th-button">
-            <div class="th-button-content text-white xl mdi mdi-minus-circle-outline">
-            </div>
-          </button>
-        </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
+        <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-minus-circle-outline"> </th>
+        <td mat-cell *matCellDef="let element" class="text-center">
           <span>{{ tablesDataBySection.get(element.tx_section).busy }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="requeridos">
-        <th mat-header-cell *matHeaderCellDef class="text-center text-danger xl mdi mdi-alert"> 
-
-           </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
+        <th mat-header-cell *matHeaderCellDef class="text-center lg text-warn mdi mdi-alert"></th>
+        <td mat-cell *matCellDef="let element" class="text-center">
           <span>{{ ticketsDataBySection.get(element.tx_section).requested }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="encolados">
-        <th mat-header-cell *matHeaderCellDef class="text-center text-primary xl mdi mdi-human-queue">  </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
-          <span class="ml-2">{{ ticketsDataBySection.get(element.tx_section).queued }}</span>
+        <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-human-queue"></th>
+        <td mat-cell *matCellDef="let element" class="text-center">
+          <span>{{ ticketsDataBySection.get(element.tx_section).queued }}</span>
         </td>
       </ng-container>
-
-      
-      <ng-container matColumnDef="contingentes">
-        <th mat-header-cell *matHeaderCellDef class="text-center text-primary xl mdi mdi-ticket-account">  </th>
-        <td mat-cell *matCellDef="let element" class="text-center md">
-          <span class="ml-2">{{ ticketsDataBySection.get(element.tx_section).contingent }}</span>
-        </td>
-      </ng-container>
-
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

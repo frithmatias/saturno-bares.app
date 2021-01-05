@@ -1,11 +1,13 @@
 <!------------------------------>
 <!-- QUEUED -->
 <!------------------------------>
-<mat-expansion-panel>
+<mat-expansion-panel class="my-3">
+
   <mat-expansion-panel-header>
     <mat-panel-title>
       <span class="xl mdi mdi-human-queue text-primary"></span>
-      <span class="sidenav-title-text mx-2">Tickets ({{queued.length}}) </span>
+      <span class="badge text-white bg-primary">{{queued.length}}</span>
+      <span class="sidenav-title-text mx-2 align-self-center">Tickets</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
@@ -14,7 +16,7 @@
   <table *ngIf="queued.length > 0" mat-table [dataSource]="queued" multiTemplateDataRows>
 
     <ng-container matColumnDef="id_position">
-      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> # </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> # </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.id_position }}</span>
       </td>
@@ -22,7 +24,7 @@
 
 
     <ng-container matColumnDef="tx_persons">
-      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Personas </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Pers. </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.nm_persons}}</span>
       </td>
@@ -30,27 +32,26 @@
 
 
     <ng-container matColumnDef="tx_status">
-      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Estado </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Est. </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.tx_status==='assigned'" class="xl mdi mdi-clock-check text-green align-middle"></span>
-        <span *ngIf="ticket.tx_status==='queued'" class="xl mdi mdi-timer-sand-full text-blue align-middle"></span>
-        <span *ngIf="ticket.tx_status==='requested'" class="xl mdi mdi-alert text-red align-middle"></span>
-
+        <span *ngIf="ticket.tx_status==='assigned'" class="lg mdi mdi-checkbox-marked text-active align-middle"></span>
+        <span *ngIf="ticket.tx_status==='queued'" class="lg mdi mdi-help-circle align-middle"></span>
+        <span *ngIf="ticket.tx_status==='requested'" class="lg mdi mdi-alert text-warn align-middle"></span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Nombre </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Nomb. </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.tx_name}}</span>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="contingencia">
-      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Circuito </th>
+    <ng-container matColumnDef="prioritario">
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prior. </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.bl_contingent" class="xl mdi mdi-account-tie align-middle"></span>
-        <span *ngIf="!ticket.bl_contingent" class="xl mdi mdi-web align-middle"></span>
+        <span *ngIf="!ticket.bl_priority" class="lg mdi mdi-account align-middle"></span>
+        <span *ngIf="ticket.bl_priority" class="lg mdi mdi-police-badge text-accent align-middle"></span>
 
       </td>
     </ng-container>
@@ -59,55 +60,49 @@
     <ng-container matColumnDef="expandedDetail">
       <td class="td-expanded px-0" mat-cell *matCellDef="let ticket" [attr.colspan]="displayedColumns.length">
         <div class="ticket-container" [@detailExpand]="ticket == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="p-2 w-100">
 
-          <!-- <mat-card style="display: flex;" class="card-left-border">
-            <div class="mdi mdi-alert xxxl saturno-text-accent" style="align-self: center;"></div>
-            <div class="sm p-3">
-              Sólo usa esta opción si querés asignar MANUALMENTE una o mas mesas determinadas a un cliente
-              en especial en la cola de espera. Recorda que la asignación de mesas es AUTOMÁTICA, por lo tanto
-              si no querés hacer una asignación MANUAL tenes que ir a la sección "Mesas" y activar mesas pausadas
-              o esperar a que se liberen si estan ocupadas.
+
+            <div class="text-center py-2">
+              <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
+                *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
+                <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ table.nm_table }}</div>
+                <div *ngIf="ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
+                  class="xl mdi mdi-check-circle"></div>
+                <div *ngIf="!ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
+                  class="lg mdi mdi-human-male">{{table.nm_persons }}</div>
+              </button>
             </div>
-          </mat-card> -->
 
-          <div class="table-buttons-container">
-            <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
-              *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
-              <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ table.nm_table }}</div>
-              <div *ngIf="ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                class="xl mdi mdi-check-circle"></div>
-              <div *ngIf="!ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                class="lg mdi mdi-human-male">{{table.nm_persons }}</div>
-            </button>
-          </div>
+            <div class="ticket-actions">
 
-          <div class="ticket-actions">
+              <!------------------------------>
+              <!-- ACTIONS -->
+              <!------------------------------>
 
-            <!------------------------------>
-            <!-- ACTIONS -->
-            <!------------------------------>
+              <button mat-raised-button color="primary" class="action-button">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi mdi-priority-high xl"></td>
+                    <td class="td-text">
+                      <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
+                      </mat-slide-toggle>
+                    </td>
+                  </tr>
+                </table>
+              </button>
 
-            <button mat-raised-button color="primary" class="action-button">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-priority-high xl"></td>
-                  <td class="td-text">
-                    <mat-slide-toggle [(ngModel)]="assignWithPriority">
-                    </mat-slide-toggle>
-                  </td>
-                </tr>
-              </table>
-            </button>
+              <button mat-raised-button color="primary" class="action-button"
+                (click)="assignTables(ticket)">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi  mdi-content-save xl"></td>
+                    <td class="td-text">Guardar</td>
+                  </tr>
+                </table>
+              </button>
 
-            <button mat-raised-button color="primary" class="action-button"
-              (click)="assignTables(ticket, assignWithPriority)">
-              <table>
-                <tr>
-                  <td class="button-icon mdi  mdi-hand-pointing-right xl"></td>
-                  <td class="td-text">Asingar</td>
-                </tr>
-              </table>
-            </button>
+            </div>
 
           </div>
         </div>

@@ -29,12 +29,6 @@ tr.element-row:not(.expanded-row):active {
     flex-flow: wrap;
 }
 
-.table-buttons-container {
-    width      : 100%;
-    padding    : 1.5em;
-    text-align: center;
-}
-
 .ticket-actions {
     /* justify-content: space-between; */
     justify-content: center;

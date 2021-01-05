@@ -23,16 +23,17 @@ export class QueuedComponent implements OnInit {
   @Input() queued: Ticket[];
   @Input() tables: Table[];
 
-  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'contingencia'];
+  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario'];
   
-  assignWithPriority: boolean = false;
-
   constructor(
     public sharedService: SharedService,
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+
+   }
 
   // ADD OR REMOVE TABLES FOR ASSIGNATION
   setReserve = (table: Table, ticket: Ticket) => {
@@ -42,10 +43,16 @@ export class QueuedComponent implements OnInit {
   };
 
   // ASSIGN TABLES
-  assignTables = (ticket: Ticket, blPriority: boolean) => {
+  assignTables = (ticket: Ticket) => {
+    
+    let activeQueue = this.queued.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')
+    
+    let isFirst = activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
-    this.waiterService.assignTables(idTicket, cdTables, blPriority).subscribe(
+    let blPriority = ticket.bl_priority;
+    
+    this.waiterService.assignTables(isFirst, idTicket, cdTables, blPriority).subscribe(
       (resp: TicketResponse) => {
         if (resp.ok) {
           this.sharedService.snack(

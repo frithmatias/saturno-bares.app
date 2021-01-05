@@ -229,7 +229,7 @@ BUTTONS
 */
 
 .action-button {
-    width  : 92px;
+    width  : 94px;
     padding: 0px !important;
     margin : 5px !important;
 }
@@ -610,6 +610,7 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 
+
 /* Bottom Sheet*/
 
 .cdk-overlay-container {
@@ -618,14 +619,14 @@ ANGULAR MATERIAL
 
 /*
 -------------------------------------------
-ADD BUTTONS COLORS 
+MAT-BUTTONS
 -------------------------------------------
 */
 
 /* COLOR: ACTIVE*/
 
 /* BACKGROUND */
-.saturno-bg-active {
+.bg-active {
     background-color: #108f30;
 }
 
@@ -679,11 +680,6 @@ mat-card-title span.mdi {
     font-size: x-large;
 }
 
-td.mat-cell,
-th.mat-header-cell {
-    padding: 2px 0px !important;
-}
-
 tr.mat-header-row,
 tr.mat-row:not(.detail-row),
 tr.mat-footer-row {
@@ -692,7 +688,7 @@ tr.mat-footer-row {
 
 /*
 -------------------------------------------
-STEPPER
+MAT-STEPPER
 -------------------------------------------
 */
 
@@ -706,7 +702,7 @@ STEPPER
 
 /*
 -------------------------------------------
-SIDENAV 
+MAT-SIDENAV 
 -------------------------------------------
 */
 
@@ -717,6 +713,8 @@ SIDENAV
 .mat-radio-outer-circle {
     border-color: #ffd740;
 }
+
+
 
 /*
 -------------------------------------------

@@ -174,10 +174,6 @@ export class SectionComponent implements OnInit {
                 ticket.tm_end === null &&
                 ticket.tx_status === 'requested').length,
 
-              contingent: data.tickets.filter((ticket) =>
-                ticket.id_section?._id === section._id &&
-                ticket.tm_end === null &&
-                ticket.bl_contingent === true).length
             });
           }
 

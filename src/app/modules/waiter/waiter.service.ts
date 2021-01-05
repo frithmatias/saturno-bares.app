@@ -61,8 +61,8 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
-	assignTables(idTicket: string, cdTables: number[], blPriority: boolean = false) {
-		const data = { idTicket, cdTables, blPriority };
+	assignTables(isFirst: boolean, idTicket: string, cdTables: number[], blPriority: boolean = false) {
+		const data = { isFirst, idTicket, cdTables, blPriority };
 		const url = environment.api + '/table/assigntables';
 		return this.http.post(url, data);
 	}
