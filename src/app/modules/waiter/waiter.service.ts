@@ -14,13 +14,13 @@ import { Table } from '../../interfaces/table.interface';
 })
 export class WaiterService {
 
-	// busy tables times
-
-
 	// set on home
 	sections: Section[] = [];
 	session: Session = null;
 	sectionSelected: string = ''; // reassign section
+
+	// set on section (contingent ticket)
+	contingentTicket: Ticket;
 
 	chatMessages: {
 		id_ticket: string,
@@ -114,10 +114,8 @@ export class WaiterService {
 	// SESSION METHODS
 	// ========================================================
 
-
 	clearSectionSession = () => {
 		delete this.session;
-
 		if (localStorage.getItem('session')) {
 			localStorage.removeItem('session');
 		}
@@ -125,11 +123,6 @@ export class WaiterService {
 			localStorage.removeItem('tables');
 		}
 	};
-
-
-
-
-
 
 	getTimeInterval(from: number, to?: number): string {
 		let interval = to - from;

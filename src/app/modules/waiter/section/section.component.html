@@ -8,9 +8,9 @@
     <div *ngIf="!loading" class="animated fadeIn">
 
 
-        <div class="text-center saturno-text-accent xxl">
-          {{waiterService.session.id_section.tx_section}}
-        </div>
+      <div class="text-center saturno-text-accent xxl">
+        {{waiterService.session.id_section.tx_section}}
+      </div>
 
 
       <mat-card-content>
@@ -19,7 +19,7 @@
           <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
           </app-sections>
           <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
-          <app-requested [tables]="tables" [requested]="requested"></app-requested>
+          <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
           <app-queued [tables]="tables" [queued]="queued"></app-queued>
 
         </mat-accordion>
@@ -30,7 +30,7 @@
           <table>
             <tr>
               <td class="button-icon mdi mdi-ticket-account xl"></td>
-              <td class="td-text">Ticket</td>
+              <td class="td-text">+Ticket</td>
             </tr>
           </table>
         </button>
@@ -43,7 +43,7 @@
           </table>
         </button>
       </mat-card-actions>
-    
+
     </div>
   </mat-card>
 

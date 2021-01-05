@@ -14,7 +14,7 @@
   <table *ngIf="queued.length > 0" mat-table [dataSource]="queued" multiTemplateDataRows>
 
     <ng-container matColumnDef="id_position">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> # </th>
+      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> # </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.id_position }}</span>
       </td>
@@ -22,7 +22,7 @@
 
 
     <ng-container matColumnDef="tx_persons">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Pers </th>
+      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Personas </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.nm_persons}}</span>
       </td>
@@ -30,25 +30,27 @@
 
 
     <ng-container matColumnDef="tx_status">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Est </th>
+      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Estado </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.tx_status==='assigned'" class="xl mdi mdi-gesture-double-tap saturno-text-accent"></span>
-        <span *ngIf="ticket.tx_status==='queued'" class="xl mdi mdi-timer-sand"></span>
+        <span *ngIf="ticket.tx_status==='assigned'" class="xl mdi mdi-clock-check text-green align-middle"></span>
+        <span *ngIf="ticket.tx_status==='queued'" class="xl mdi mdi-timer-sand-full text-blue align-middle"></span>
+        <span *ngIf="ticket.tx_status==='requested'" class="xl mdi mdi-alert text-red align-middle"></span>
+
       </td>
     </ng-container>
 
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Nombre </th>
+      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Nombre </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.tx_name}}</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="contingencia">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Circ </th>
+      <th mat-header-cell *matHeaderCellDef class="md text-center saturno-text-accent"> Circuito </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.bl_contingent" class="xl mdi mdi-door"></span>
-        <span *ngIf="!ticket.bl_contingent" class="xl mdi mdi-web saturno-text-accent"></span>
+        <span *ngIf="ticket.bl_contingent" class="xl mdi mdi-account-tie align-middle"></span>
+        <span *ngIf="!ticket.bl_contingent" class="xl mdi mdi-web align-middle"></span>
 
       </td>
     </ng-container>

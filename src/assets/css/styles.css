@@ -112,10 +112,10 @@ SATURNO
 
 
 .saturno-page-container {
-    padding  : 2em;
-    min-width: 300px;
-    max-width: 600px;
-    font-size: medium;
+    padding   : 2em;
+    min-width : 300px;
+    max-width : 600px;
+    font-size : medium;
 }
 
 .saturno-page-container-wide {
@@ -610,6 +610,11 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 
+/* Bottom Sheet*/
+
+.cdk-overlay-container {
+    text-align: -webkit-center;
+}
 
 /*
 -------------------------------------------

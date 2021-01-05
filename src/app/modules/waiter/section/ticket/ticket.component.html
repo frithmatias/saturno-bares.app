@@ -1,14 +1,9 @@
-<div class="saturno-page-container animated fadeIn">
-
-
+<div class="saturno-page-container">
     <mat-card>
 
         <mat-card-content>
-            <div *ngIf="ticket">
-                El número de ticket de {{ticket.txname}} es el {{ticket.id_position}}
-            </div>
 
-            <form *ngIf="!ticket" autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+            <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Nombre del cliente</mat-label>
@@ -40,6 +35,6 @@
 
             </form>
         </mat-card-content>
-    </mat-card>
 
+    </mat-card>
 </div>

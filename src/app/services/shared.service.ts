@@ -11,13 +11,9 @@ export class SharedService {
 		private _snack: MatSnackBar
 	) { }
 
-
-
 	// ========================================================
 	// Login Methods
 	// ========================================================
-
-
 
 	scrollTop() {
 		document.body.scrollTop = 0; // Safari
@@ -50,7 +46,6 @@ export class SharedService {
 			})
 		})
 	}
-
 
 
 }

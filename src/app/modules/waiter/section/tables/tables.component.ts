@@ -60,16 +60,13 @@ export class TablesComponent implements OnInit {
   };
 
   toggleTableStatus = (table: Table) => {
+    
     if (table.tx_status === 'busy' || table.tx_status === 'reserved') return;
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {
         if (data.ok) {
-          let tableToChangeStatus = this.tables.filter(
-            (table) => table._id === data.table._id
-          )[0];
-          tableToChangeStatus.tx_status = data.table.tx_status;
-          table.tx_status = data.table.tx_status;
+          this.sharedService.snack(data.msg, 2000);
         } else {
           this.sharedService.snack(data.msg, 2000);
         }

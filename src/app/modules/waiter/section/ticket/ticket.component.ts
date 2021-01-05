@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SharedService } from '../../../../services/shared.service';
 import { WaiterService } from '../../waiter.service';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
-import { Ticket } from 'src/app/interfaces/ticket.interface';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-ticket',
@@ -12,22 +12,22 @@ import { Ticket } from 'src/app/interfaces/ticket.interface';
 })
 export class TicketComponent implements OnInit {
 
-  ticket: Ticket;
   ticketForm: FormGroup;
 
   constructor(
     public sharedService: SharedService,
-    public waiterService: WaiterService
+    public waiterService: WaiterService,
+    private bottomSheetRef: MatBottomSheetRef<TicketComponent>
   ) { }
 
   ngOnInit(): void {
-    console.log(this)
     this.ticketForm = new FormGroup({
       txName: new FormControl('', [Validators.required]),
       nmPersons: new FormControl('', [Validators.required]),
       idSection: new FormControl('', [Validators.required]),
     });
   }
+
   createTicket(): void {
 
     if (this.ticketForm.invalid) {
@@ -44,8 +44,8 @@ export class TicketComponent implements OnInit {
     this.waiterService.createTicket(blContingent, idSocket, txName, nmPersons, idSection).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
-          this.ticket = data.ticket;
-          console.log(data.ticket)
+          this.waiterService.contingentTicket = data.ticket;
+          this.bottomSheetRef.dismiss();
         }
       }
     );
