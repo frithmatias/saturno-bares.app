@@ -49,6 +49,7 @@
 }
 
 .company-name {
+    overflow      : hidden;
     font-weight   : 300;
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -56,6 +57,48 @@
     font-family   : system-ui;
     flex-grow     : 1;
     text-align    : center;
+
+}
+
+.marquee {
+    width            : fit-content;
+    -moz-animation   : marquee 50s linear infinite;
+    -webkit-animation: marquee 50s linear infinite;
+    animation        : marquee 50s linear infinite;
+}
+
+@-moz-keyframes marquee {
+    0% {
+        transform     : translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marquee {
+    0% {
+        -moz-transform   : translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform        : translateX(100%)
+    }
+
+    100% {
+        -moz-transform   : translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform        : translateX(-100%);
+    }
 }
 
 .company-slogan {

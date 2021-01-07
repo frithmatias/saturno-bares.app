@@ -12,6 +12,7 @@ import { WizardComponent } from './wizard/wizard.component';
 import { PollComponent } from './poll/poll.component';
 import { WebPageComponent } from './webpage/webpage.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,6 +26,8 @@ const userRoutes: Routes = [
   { path: 'webpage', component: WebPageComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tickets', component: TicketsComponent },
+  { path: 'settings', component: SettingsComponent },
+
 
 	{ path: '', redirectTo: '/admin/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}

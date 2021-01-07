@@ -33,9 +33,11 @@
     </div>
 
     <!-- COMPANY NAME -->
-    <div *ngIf="loginService.user || publicService.company" class="company-name sm ml-1">
-        {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
-        loginService.user?.tx_name}}
+    <div *ngIf="loginService.user || publicService.company" class="company-name md ml-1">
+        <div class="marquee">
+            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
+            loginService.user?.tx_name}} a asd asd s 
+        </div>
     </div>
 
     <!-- THEME -->

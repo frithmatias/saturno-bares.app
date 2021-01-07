@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 // interfaces
@@ -24,7 +24,7 @@ const TAIL_LENGTH = 5;
 	templateUrl: './myticket.component.html',
 	styleUrls: ['./myticket.component.css']
 })
-export class MyticketComponent implements OnInit {
+export class MyticketComponent implements OnInit, OnDestroy {
 
 	timer: Subscription;
 	showAlert = false;

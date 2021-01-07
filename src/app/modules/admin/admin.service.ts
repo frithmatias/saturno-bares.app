@@ -13,6 +13,7 @@ import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/co
 import { Table, TablesResponse } from '../../interfaces/table.interface';
 import { Section, SectionsResponse } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
+import { Settings, SettingsResponse } from 'src/app/interfaces/settings.interface';
 
 
 @Injectable({
@@ -21,13 +22,17 @@ import { ScoreItem } from '../../interfaces/score.interface';
 export class AdminService {
 
 	public companies: Company[] = [];
+	public company: Company; // todo: selected company
+	public settings: Settings;
+
 	public sections: Section[] = [];
+	public sectionsMap = new Map();
+
 	public tables: Table[] = [];
+	public tablesSection: Table[] = [];
+
 	public waiters: User[] = [];
 
-	public userSubscription: Subscription;
-	public sectionsMap = new Map();
-	public tablesSection: Table[] = [];
 
 	constructor(
 		private loginService: LoginService,
@@ -81,7 +86,7 @@ export class AdminService {
 		return this.http.post(url, data);
 	}
 
-	updateWebPage(data: any, idCompany: string){
+	updateWebPage(data: any, idCompany: string) {
 		const url = environment.api + '/c/updatewebpage/' + idCompany;
 		return this.http.put(url, data);
 	}
@@ -181,4 +186,19 @@ export class AdminService {
 		return this.http.get(url);
 	}
 
+	// ========================================================
+	// Settings Methods
+	// ========================================================
+
+	readSettings(idCompany: string) {
+		const url = environment.api + '/settings/readsettings/' + idCompany;
+		return this.http.get(url).subscribe((data: SettingsResponse) => {
+			this.settings = data.settings;
+		})
+	}
+
+	updateSettings(settings: Settings) {
+		const url = environment.api + '/settings/updatesettings';
+		return this.http.put(url, settings);
+	}
 }

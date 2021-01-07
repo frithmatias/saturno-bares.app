@@ -24,7 +24,7 @@
 
 
     <ng-container matColumnDef="tx_persons">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Pers. </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Pers </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.nm_persons}}</span>
       </td>
@@ -32,7 +32,7 @@
 
 
     <ng-container matColumnDef="tx_status">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Est. </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Mesa </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span *ngIf="ticket.tx_status==='assigned'" class="lg mdi mdi-checkbox-marked text-active align-middle"></span>
         <span *ngIf="ticket.tx_status==='queued'" class="lg mdi mdi-help-circle align-middle"></span>
@@ -41,17 +41,17 @@
     </ng-container>
 
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Nomb. </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Nomb </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span>{{ ticket.tx_name}}</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="prioritario">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prior. </th>
+      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prio </th>
       <td mat-cell *matCellDef="let ticket" class="text-center">
         <span *ngIf="!ticket.bl_priority" class="lg mdi mdi-account align-middle"></span>
-        <span *ngIf="ticket.bl_priority" class="lg mdi mdi-police-badge text-accent align-middle"></span>
+        <span *ngIf="ticket.bl_priority" class="lg mdi mdi-human-wheelchair text-accent align-middle"></span>
 
       </td>
     </ng-container>
@@ -80,11 +80,11 @@
               <!-- ACTIONS -->
               <!------------------------------>
 
-              <button mat-raised-button color="primary" class="action-button">
+              <button mat-raised-button color="warn" class="action-button">
                 <table>
                   <tr>
-                    <td class="button-icon mdi mdi-priority-high xl"></td>
-                    <td class="td-text">
+                    <td class="button-icon mdi mdi-human-wheelchair xl"></td>
+                    <td class="button-text">
                       <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
                       </mat-slide-toggle>
                     </td>
@@ -97,7 +97,7 @@
                 <table>
                   <tr>
                     <td class="button-icon mdi  mdi-content-save xl"></td>
-                    <td class="td-text">Guardar</td>
+                    <td class="button-text">Guardar</td>
                   </tr>
                 </table>
               </button>

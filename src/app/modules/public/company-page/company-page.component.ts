@@ -18,7 +18,7 @@ interface sliderImage {
 })
 export class CompanyPageComponent implements OnInit {
 	images: sliderImage[] = [];
-	// width 528: saturno-page-container 600px - 2x20px padding - mat-card padding 2x16 
+	// width 528: saturno-container 600px - 2x20px padding - mat-card padding 2x16 
 	// [imageSize]="imageSize"
 	imageSize = {width: 528, height: 200, space: 0};
 	constructor(

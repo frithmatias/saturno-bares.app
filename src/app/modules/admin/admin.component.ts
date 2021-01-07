@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Section } from 'src/app/interfaces/section.interface';
 import { Subscription } from 'rxjs';
 import { AdminService } from './admin.service';
@@ -11,7 +11,7 @@ import { CompaniesResponse } from '../../interfaces/company.interface';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
   userSubscription: Subscription;
 
@@ -27,17 +27,26 @@ export class AdminComponent implements OnInit {
 
     let idCompany = this.loginService.user.id_company?._id;
     if (idCompany) {
-      this.adminService.readTables(idCompany);
-      this.adminService.readSections(idCompany);
+      this.readCompanyData(idCompany);
     }
 
     this.userSubscription = this.loginService.user$.subscribe(user => {
-      if (user) {
-        let idCompany = user.id_company._id;
-        this.adminService.readTables(idCompany)
-        this.adminService.readSections(idCompany)
+      let idCompany = user?.id_company?._id;
+      if (idCompany) {
+        this.readCompanyData(idCompany);
       }
     });
 
+  }
+
+  readCompanyData(idCompany: string) {
+    this.adminService.readTables(idCompany);
+    this.adminService.readSections(idCompany);
+    this.adminService.readSettings(idCompany);
+
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 }

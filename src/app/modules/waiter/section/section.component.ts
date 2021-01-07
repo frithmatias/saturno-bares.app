@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 // services
@@ -29,7 +29,7 @@ export interface Tile {
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.css'],
 })
-export class SectionComponent implements OnInit {
+export class SectionComponent implements OnInit, OnDestroy {
 
   loading = false;
   mytimer: number;
@@ -204,7 +204,7 @@ export class SectionComponent implements OnInit {
       });
   };
 
-  ngOnDestroy = (): void => {
+  ngOnDestroy() {
     this.subjectUpdateWaiters$.complete();
   }
 

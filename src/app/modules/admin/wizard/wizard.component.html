@@ -1,4 +1,4 @@
-<div class="saturno-page-container animated fadeIn">
+<div class="saturno-container animated fadeIn">
     <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear #stepper>
 
         <ng-template matStepperIcon="phone">
@@ -14,20 +14,28 @@
             <mat-card>
                 <mat-card-content>
                     <div class="saturno-minicard-text">
-                        <h4>Hola {{ loginService?.user.tx_name }}!</h4>
+                        <div class="xl text-accent mdi mdi-hand mr-3"> Hola {{ loginService?.user.tx_name }}!</div>
 
                         <p>
-                            Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a atender las
-                            solicitudes de mesa de tus clientes.
+                            Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a gestionar 
+                            tus mesas y ateneder a tus clientes.
                         </p>
                         <p>
-                            Los pasos opcionales podes saltearlos y si queres podes completarlos mas adelantes desde
-                            el menú de Adminsitrador o iniciando el asistente nuevamente.
+                            Los pasos opcionales podes saltearlos y completarlos mas adelante desde
+                            este mismo asistente.
                         </p>
                         <hr>
                         <div class="w-100 text-center">
-                            <button mat-raised-button matStepperNext color="accent">
-                                Comenzar!</button>
+                            <button mat-raised-button matStepperNext color="primary" class="action-button fix-width">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon mdi mdi-send lg"></td>
+                                        <td class="button-text">
+                                            Comenzar!
+                                        </td>
+                                    </tr>
+                                </table>
+                                </button>
                         </div>
                     </div>
                 </mat-card-content>

@@ -6,15 +6,17 @@
     --info   : #cbcbcb;
     --bg     : #424242;
 
-    --active : #43f436;
-    --paused : #a4a4a4;
-    --busy   : #ff4848;
+    --active: #43f436;
+    --paused: #a4a4a4;
+    --busy  : #ff4848;
+
+    --font-fsamily: 'Baloo Bhai 2', 'Encode Sans', 'system-ui', 'Averia Libre', 'Monda';
 }
 
 .mat-badge-content {
     font-weight: 600;
     font-size  : 12px;
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-badge-small .mat-badge-content {
@@ -28,7 +30,7 @@
 .mat-h1,
 .mat-headline,
 .mat-typography h1 {
-    font          : 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 24px/32px var(--font-family);
     letter-spacing: normal;
     margin        : 0 0 16px
 }
@@ -36,7 +38,7 @@
 .mat-h2,
 .mat-title,
 .mat-typography h2 {
-    font          : 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+    font          : 500 20px/32px var(--font-family);
     letter-spacing: normal;
     margin        : 0 0 16px
 }
@@ -44,7 +46,7 @@
 .mat-h3,
 .mat-subheading-2,
 .mat-typography h3 {
-    font          : 400 16px/28px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 16px/28px var(--font-family);
     letter-spacing: normal;
     margin        : 0 0 16px
 }
@@ -52,33 +54,33 @@
 .mat-h4,
 .mat-subheading-1,
 .mat-typography h4 {
-    font          : 400 15px/24px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 15px/24px var(--font-family);
     letter-spacing: normal;
     margin        : 0 0 16px
 }
 
 .mat-h5,
 .mat-typography h5 {
-    font  : 400 calc(14px * 0.83)/20px Roboto, "Helvetica Neue", sans-serif;
+    font  : 400 calc(14px * 0.83)/20px var(--font-family);
     margin: 0 0 12px
 }
 
 .mat-h6,
 .mat-typography h6 {
-    font  : 400 calc(14px * 0.67)/20px Roboto, "Helvetica Neue", sans-serif;
+    font  : 400 calc(14px * 0.67)/20px var(--font-family);
     margin: 0 0 12px
 }
 
 .mat-body-strong,
 .mat-body-2 {
-    font          : 500 14px/24px Roboto, "Helvetica Neue", sans-serif;
+    font          : 500 14px/24px var(--font-family);
     letter-spacing: normal
 }
 
 .mat-body,
 .mat-body-1,
 .mat-typography {
-    font          : 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 14px/20px var(--font-family);
     letter-spacing: normal
 }
 
@@ -90,40 +92,40 @@
 
 .mat-small,
 .mat-caption {
-    font          : 400 12px/20px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 12px/20px var(--font-family);
     letter-spacing: normal
 }
 
 .mat-display-4,
 .mat-typography .mat-display-4 {
-    font          : 300 112px/112px Roboto, "Helvetica Neue", sans-serif;
+    font          : 300 112px/112px var(--font-family);
     letter-spacing: -0.05em;
     margin        : 0 0 56px
 }
 
 .mat-display-3,
 .mat-typography .mat-display-3 {
-    font          : 400 56px/56px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 56px/56px var(--font-family);
     letter-spacing: -0.02em;
     margin        : 0 0 64px
 }
 
 .mat-display-2,
 .mat-typography .mat-display-2 {
-    font          : 400 45px/48px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 45px/48px var(--font-family);
     letter-spacing: -0.005em;
     margin        : 0 0 64px
 }
 
 .mat-display-1,
 .mat-typography .mat-display-1 {
-    font          : 400 34px/40px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 34px/40px var(--font-family);
     letter-spacing: normal;
     margin        : 0 0 64px
 }
 
 .mat-bottom-sheet-container {
-    font          : 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 14px/20px var(--font-family);
     letter-spacing: normal
 }
 
@@ -134,17 +136,17 @@
 .mat-flat-button,
 .mat-fab,
 .mat-mini-fab {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 14px;
     font-weight: 500
 }
 
 .mat-button-toggle {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-card {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-card-title {
@@ -162,7 +164,7 @@
 }
 
 .mat-checkbox {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-checkbox-layout .mat-checkbox-label {
@@ -180,7 +182,7 @@
 }
 
 .mat-table {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-header-cell {
@@ -194,7 +196,7 @@
 }
 
 .mat-calendar {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-calendar-body {
@@ -213,18 +215,18 @@
 }
 
 .mat-dialog-title {
-    font          : 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+    font          : 500 20px/32px var(--font-family);
     letter-spacing: normal
 }
 
 .mat-expansion-panel-header {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 15px;
     font-weight: 400
 }
 
 .mat-expansion-panel-content {
-    font          : 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+    font          : 400 14px/20px var(--font-family);
     letter-spacing: normal
 }
 
@@ -232,7 +234,7 @@
     font-size     : inherit;
     font-weight   : 400;
     line-height   : 1.125;
-    font-family   : Roboto, "Helvetica Neue", sans-serif;
+    font-family   : var(--font-family);
     letter-spacing: normal
 }
 
@@ -413,23 +415,23 @@ input.mat-input-element {
 }
 
 .mat-menu-item {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 14px;
     font-weight: 400
 }
 
 .mat-paginator,
 .mat-paginator-page-size .mat-select-trigger {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 12px
 }
 
 .mat-radio-button {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-select {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-select-trigger {
@@ -437,18 +439,18 @@ input.mat-input-element {
 }
 
 .mat-slide-toggle-content {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-slider-thumb-label-text {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 12px;
     font-weight: 500
 }
 
 .mat-stepper-vertical,
 .mat-stepper-horizontal {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-step-label {
@@ -470,12 +472,12 @@ input.mat-input-element {
 }
 
 .mat-tab-group {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-tab-label,
 .mat-tab-link {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 14px;
     font-weight: 500
 }
@@ -487,13 +489,13 @@ input.mat-input-element {
 .mat-toolbar h4,
 .mat-toolbar h5,
 .mat-toolbar h6 {
-    font          : 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+    font          : 500 20px/32px var(--font-family);
     letter-spacing: normal;
     margin        : 0
 }
 
 .mat-tooltip {
-    font-family   : Roboto, "Helvetica Neue", sans-serif;
+    font-family   : var(--font-family);
     font-size     : 10px;
     padding-top   : 6px;
     padding-bottom: 6px
@@ -506,11 +508,11 @@ input.mat-input-element {
 }
 
 .mat-list-item {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-list-option {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-list-base .mat-list-item {
@@ -546,7 +548,7 @@ input.mat-input-element {
 }
 
 .mat-list-base .mat-subheader {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 14px;
     font-weight: 500
 }
@@ -584,23 +586,23 @@ input.mat-input-element {
 }
 
 .mat-list-base[dense] .mat-subheader {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 12px;
     font-weight: 500
 }
 
 .mat-option {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 16px
 }
 
 .mat-optgroup-label {
-    font          : 500 14px/24px Roboto, "Helvetica Neue", sans-serif;
+    font          : 500 14px/24px var(--font-family);
     letter-spacing: normal
 }
 
 .mat-simple-snackbar {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size  : 14px
 }
 
@@ -612,7 +614,7 @@ input.mat-input-element {
 }
 
 .mat-tree {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    font-family: var(--font-family);
 }
 
 .mat-tree-node,

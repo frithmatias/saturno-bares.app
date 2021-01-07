@@ -111,14 +111,14 @@ SATURNO
 */
 
 
-.saturno-page-container {
-    padding   : 2em;
-    min-width : 300px;
-    max-width : 600px;
-    font-size : medium;
+.saturno-container {
+    padding  : 2em;
+    min-width: 300px;
+    max-width: 600px;
+    font-size: medium;
 }
 
-.saturno-page-container-wide {
+.saturno-container-wide {
     min-width: 18rem;
     max-width: 50rem;
     padding  : 1.2em;
@@ -129,15 +129,15 @@ SATURNO
 
 @media (max-width: 575px) {
 
-    .saturno-page-container {
+    .saturno-container {
         padding: 0em;
     }
 
-    .saturno-page-container-wide {
+    .saturno-container-wide {
         padding: 0em;
     }
 
-    .saturno-page-container-login {
+    .saturno-container-login {
         height: 100vh;
     }
 }
@@ -229,9 +229,13 @@ BUTTONS
 */
 
 .action-button {
-    width  : 94px;
+    width  : 110px;
     padding: 0px !important;
     margin : 5px !important;
+}
+
+.fix-width {
+    width: auto;
 }
 
 td.button-icon {
@@ -240,10 +244,12 @@ td.button-icon {
     padding         : 0px 5px;
 }
 
-.td-text {
+td.button-text {
     width      : 100%;
+    font-size  : medium;
     line-height: normal;
     padding    : 0px 5px;
+
 }
 
 /*

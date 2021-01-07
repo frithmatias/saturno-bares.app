@@ -1,4 +1,4 @@
-<div class="saturno-page-container animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+<div class="saturno-container animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
     <mat-card>
 
@@ -16,11 +16,13 @@
                 <span>Debe crear aquí al menos un bar / resto</span>
             </div>
 
-            <div *ngIf="adminService.companies && adminService.companies?.length > 0 && !loginService.user.id_company" class="p-2 d-flex">
+            <div *ngIf="adminService.companies && adminService.companies?.length > 0 && !loginService.user.id_company"
+                class="p-2 d-flex">
                 <div class="p-2 xxl align-self-center text-danger mdi mdi-alert"></div>
                 <div class="p-2 sm align-self-center">
-                    Tenés comercios creados sin embargo no tenes seleccionado ninguno para continuar. Esto puede deberse 
-                    a que eliminaste algún comercio recientemente o algún error ocurrió. Si queres continuar el asistente 
+                    Tenés comercios creados sin embargo no tenes seleccionado ninguno para continuar. Esto puede deberse
+                    a que eliminaste algún comercio recientemente o algún error ocurrió. Si queres continuar el
+                    asistente
                     con algún comercio ya creado seleccionalo desde el menú principal o crea uno nuevo si no existe.
                 </div>
             </div>
@@ -30,10 +32,11 @@
                 <table mat-table [dataSource]="adminService.companies">
                     <ng-container matColumnDef="tx_company_name">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
-                        <td mat-cell *matCellDef="let element" class="text-left"><span
-                                class="mdi mdi-check text-warning"
+                        <td mat-cell *matCellDef="let element" class="text-left">
+                            {{element.tx_company_name}}
+                            <span class="mdi mdi-check text-warning"
                                 *ngIf="element.tx_company_string === companyUpdated?.tx_company_string"></span>
-                            {{element.tx_company_name}} </td>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="tx_address_street">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Calle </th>

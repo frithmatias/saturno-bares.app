@@ -90,8 +90,6 @@ export class CompanyCreateComponent implements OnInit {
 	ngOnChanges(changes: SimpleChanges): void {
 		if (!changes.companyEdit?.currentValue) { return; }
 
-
-
 		let defaults = {
 			txCompanyName: changes.companyEdit.currentValue.tx_company_name,
 			txCompanyString: changes.companyEdit.currentValue.tx_company_string,

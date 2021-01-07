@@ -1,4 +1,4 @@
-<div class="saturno-page-container-wide animated fadeIn">
+<div class="saturno-container-wide animated fadeIn">
 
 
   <div class="my-2 xl text-accent mb-2">Hola {{ loginService?.user.tx_name }}</div>
@@ -91,7 +91,7 @@
           <mat-card-header>
             <mat-card-title class="text-accent">
 
-              {{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
+              <span class="mdi mdi-storefront"></span> {{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
 
             </mat-card-title>
           </mat-card-header>
@@ -154,14 +154,53 @@
 
       </div>
 
+      <!-- SETTINGS -->
+      <div>
+        <mat-card class="saturno-minicard m-2" routerLink="/waiter/home">
+
+          <mat-card-header>
+            <mat-card-title class="text-accent">
+              <span class="mdi mdi-cog"></span> Ajustes
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+
+            <div class="table-responsive-sm mt-2">
+              <table class="table-sm mb-0 saturno-minicard-text text-center">
+
+                <tr>
+                  <td style="text-align: left;">
+                    <span class="mdi mdi-gesture-double-tap"></span>
+                    Asig. Auto. Mesas
+                    <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
+                    <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+                  </td>
+                  <td style="text-align: right;">
+                    <span *ngIf="adminService.settings?.bl_spm_auto">Activado</span>
+                    <span *ngIf="!adminService.settings?.bl_spm_auto">Desactivado</span>
+
+                  </td>
+                </tr>
+
+
+              </table>
+
+            </div>
+          </mat-card-content>
+
+        </mat-card>
+
+      </div>
 
       <!-- INFO -->
       <div>
         <mat-card class="saturno-minicard m-2" style="text-align: left;" *ngIf="loginService.user.id_company">
-
-          <div class="text-accent">
-            <span class="mdi mdi-headset lg mr-2"></span> Administradores y Camareros
-          </div>
+          <mat-card-header>
+            <mat-card-title class="text-accent">
+              <span class="mdi mdi-headset"></span> Administradores y Camareros
+            </mat-card-title>
+          </mat-card-header>
 
           <div class="my-1">
             Para gestionar mesas y turnos sólo tenés que ir al menú de Camarero y tomar
@@ -196,7 +235,8 @@
           </div>
 
           <div class="my-1 text-center my-4">
-            <qrcode qrdata="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+            <qrcode qrdata="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}"
+              [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
           </div>
 
         </mat-card>

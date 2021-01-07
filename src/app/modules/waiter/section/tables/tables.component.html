@@ -128,48 +128,47 @@
         <div *ngIf="table?.id_session" class="p-3">
             <table>
                 <tr>
-                    <td style="text-align: left; border: none">Turno</td>
-                    <td style="text-align: right; border: none">
+                    <td>Turno</td>
+                    <td class="text-right">
                         {{ table?.id_session?.id_ticket.id_position }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">Cliente</td>
-                    <td style="text-align: right; border: none">
+                    <td>Cliente</td>
+                    <td class="text-right">
                         {{ table?.id_session?.id_ticket.tx_name }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">Circuito</td>
-                    <td style="text-align: right; border: none">
+                    <td>Circuito</td>
+                    <td class="text-right">
                         <span *ngIf="table?.id_session?.id_ticket.bl_continget">Internet</span>
                         <span *ngIf="!table?.id_session?.id_ticket.bl_continget">Camarero</span>
-
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">Comensales</td>
-                    <td style="text-align: right; border: none">
+                    <td>Comensales</td>
+                    <td class="text-right">
                         {{ table?.id_session?.id_ticket.nm_persons }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">Prioridad</td>
-                    <td style="text-align: right; border: none">
+                    <td>Prioridad</td>
+                    <td class="text-right">
                         {{ table?.id_session?.id_ticket.bl_priority }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">Provisión</td>
-                    <td style="text-align: right; border: none">
+                    <td>Provisión</td>
+                    <td class="text-right">
                         {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left; border: none">
+                    <td>
                         Solicitud de asistencia
                     </td>
-                    <td style="text-align: right; border: none">
+                    <td class="text-right">
                         {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
                     </td>
                 </tr>
@@ -187,7 +186,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-power xl"></td>
-                        <td class="td-text">
+                        <td class="button-text">
                             <mat-slide-toggle (click)="toggleTableStatus(table)"
                                 [checked]="table.tx_status !== 'paused'"
                                 [disabled]="table.tx_status === 'busy' || table.tx_status === 'reserved'">
@@ -203,7 +202,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-priority-high xl"></td>
-                        <td class="td-text">
+                        <td class="button-text">
                             <mat-slide-toggle [(ngModel)]="blPriority"
                                 [disabled]="!table.id_session || waiterService.sectionSelected === ''">
                             </mat-slide-toggle>
@@ -219,7 +218,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-arrow-right-bold-circle-outline xl"></td>
-                        <td class="td-text sm">Mover</td>
+                        <td class="button-text">Mover</td>
                     </tr>
                 </table>
             </button>
@@ -231,7 +230,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-bell xl"></td>
-                        <td class="td-text sm">Atendido</td>
+                        <td class="button-text">Atendido</td>
                     </tr>
                 </table>
             </button>
@@ -242,7 +241,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-replay xl"></td>
-                        <td class="td-text sm">Soltar</td>
+                        <td class="button-text">Soltar</td>
                     </tr>
                 </table>
             </button>
@@ -253,7 +252,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-close xl"></td>
-                        <td class="td-text sm">Cerrar</td>
+                        <td class="button-text">Cerrar</td>
                     </tr>
                 </table>
             </button>

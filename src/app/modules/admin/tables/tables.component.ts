@@ -18,7 +18,6 @@ export class TablesComponent implements OnInit {
   displayedColumns: string[] = ['id_section', 'nm_table', 'nm_persons', 'tx_status', '_id'];
 
   tableCreate = false;
-  userSubscription: Subscription;
   sectionSelected: Section;
   tableNew: Table;
 

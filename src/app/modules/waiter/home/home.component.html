@@ -1,4 +1,4 @@
-<div class="saturno-page-container  mt-sm-4 animated fadeIn">
+<div class="saturno-container  mt-sm-4 animated fadeIn">
 
     <mat-card>
 
@@ -21,11 +21,22 @@
 
             </div>
 
+            <div *ngIf="loginService.user.id_company && waiterService.sections.length === 0" class="p-3 my-4">
+                No tenés ningún sector asociado a la empresa <span class="text-accent">{{loginService.user.id_company.tx_company_name}}</span>. 
+                Por favor verifica que tengas comercios, sectores y mesas creadas desde el asistente.
+                <hr>
+                <button mat-raised-button color="accent" routerLink="/admin/wizard">
+                    <span class="mdi mdi-wizard-hat"></span> IR AL ASISTENTE
+                </button>
+
+            </div>
+
+
             <!-- ======================================================== -->
             <!-- TAKE / RELEASE SECTION -->
             <!-- ======================================================== -->
 
-            <div class="mb-4" *ngIf="sections && loginService.user.id_company?._id">
+            <div class="mb-4" *ngIf="sections && loginService.user.id_company?._id && waiterService.sections.length > 0">
 
                 <div *ngIf="waiterService.session">
                     <div class="row my-4">

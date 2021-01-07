@@ -30,6 +30,7 @@ import { WizardComponent } from './wizard/wizard.component';
 import { PollComponent } from './poll/poll.component';
 import { PollCreateComponent } from './poll/poll-create/poll-create.component';
 import { WebPageComponent } from './webpage/webpage.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
 	declarations: [
@@ -53,7 +54,8 @@ import { WebPageComponent } from './webpage/webpage.component';
 		WizardComponent,
 		PollComponent,
 		PollCreateComponent,
-		WebPageComponent
+		WebPageComponent,
+		SettingsComponent
 
 	],
 	imports: [
