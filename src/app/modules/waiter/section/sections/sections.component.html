@@ -5,9 +5,9 @@
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <span class="xl mdi mdi-select-group text-success"></span>
+      <span class="xl mdi mdi-select-group text-deco"></span>
       <span class="badge text-white bg-primary">{{waiterService.sections.length}}</span>
-      <span class="sidenav-title-text mx-2 align-self-center">Sectores</span>
+      <span class="sidenav-title-text mx-2 align-self-center lg">Sectores</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
@@ -16,8 +16,8 @@
     <table mat-table [dataSource]="waiterService.sections">
 
       <ng-container matColumnDef="sector">
-        <th mat-header-cell *matHeaderCellDef class="text-left md text-deco"> Sector </th>
-        <td mat-cell *matCellDef="let element" class="text-left md">
+        <th mat-header-cell *matHeaderCellDef class="text-left lg text-deco"> Sector </th>
+        <td mat-cell *matCellDef="let element" class="text-left lg">
           <span class="text-info"> {{ element.tx_section }}</span>
           <span *ngIf="tablesDataBySection.get(element.tx_section).sectionselected"
             class="text-accent mdi mdi-check lg"></span>
@@ -26,35 +26,35 @@
 
       <ng-container matColumnDef="disponibles">
         <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-check-circle-outline"> </th>
-        <td mat-cell *matCellDef="let element" class="text-center">
+        <td mat-cell *matCellDef="let element" class="text-center lg">
           <span>{{ tablesDataBySection.get(element.tx_section).idle }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="pausadas">
         <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-pause-circle-outline"> </th>
-        <td mat-cell *matCellDef="let element" class="text-center">
+        <td mat-cell *matCellDef="let element" class="text-center lg">
           <span>{{ tablesDataBySection.get(element.tx_section).paused }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="ocupadas">
         <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-minus-circle-outline"> </th>
-        <td mat-cell *matCellDef="let element" class="text-center">
+        <td mat-cell *matCellDef="let element" class="text-center lg">
           <span>{{ tablesDataBySection.get(element.tx_section).busy }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="requeridos">
         <th mat-header-cell *matHeaderCellDef class="text-center lg text-warn mdi mdi-alert"></th>
-        <td mat-cell *matCellDef="let element" class="text-center">
+        <td mat-cell *matCellDef="let element" class="text-center lg">
           <span>{{ ticketsDataBySection.get(element.tx_section).requested }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="encolados">
         <th mat-header-cell *matHeaderCellDef class="text-center lg text-accent mdi mdi-human-queue"></th>
-        <td mat-cell *matCellDef="let element" class="text-center">
+        <td mat-cell *matCellDef="let element" class="text-center lg">
           <span>{{ ticketsDataBySection.get(element.tx_section).queued }}</span>
         </td>
       </ng-container>

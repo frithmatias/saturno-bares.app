@@ -190,10 +190,15 @@ export class AdminService {
 	// Settings Methods
 	// ========================================================
 
-	readSettings(idCompany: string) {
-		const url = environment.api + '/settings/readsettings/' + idCompany;
-		return this.http.get(url).subscribe((data: SettingsResponse) => {
-			this.settings = data.settings;
+	readSettings(idCompany: string): Promise<SettingsResponse> {
+		return new Promise(resolve => {
+			const url = environment.api + '/settings/readsettings/' + idCompany;
+			return this.http.get(url).subscribe((data: SettingsResponse) => {
+				this.settings = Object.assign({}, data.settings);
+				let newdata = Object.assign({}, data);
+				resolve(newdata)
+			})
+
 		})
 	}
 

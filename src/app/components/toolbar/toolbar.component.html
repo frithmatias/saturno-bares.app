@@ -16,7 +16,7 @@
         </div>
 
         <!-- LOGO TITLE -->
-        
+
         <div class="logo-text-container pointer" routerLink="/home">
             <div class="logo-title mb-1">
                 SATURNO
@@ -36,7 +36,7 @@
     <div *ngIf="loginService.user || publicService.company" class="company-name md ml-1">
         <div class="marquee">
             {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
-            loginService.user?.tx_name}} a asd asd s 
+            loginService.user?.tx_name}}
         </div>
     </div>
 
@@ -50,10 +50,14 @@
         <div [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors md pointer"></div>
         <mat-menu #colorpicker="matMenu">
             <div class="d-flex px-2">
-                <div class="pointer box-deeppurple" (click)="changeTheme('deeppurple-amber.css')"></div>
-                <div class="pointer box-indigo" (click)="changeTheme('indigo-pink.css')"></div>
-                <div class="pointer box-pink" (click)="changeTheme('pink-bluegrey.css')"></div>
-                <div class="pointer box-purple" (click)="changeTheme('purple-green.css')"></div>
+                <div class="pointer box-dark-purple" (click)="changeTheme('dark-purple.css')"></div>
+                <div class="pointer box-grey-dark" (click)="changeTheme('grey-dark.css')"></div>
+                <div class="pointer box-light-blue" (click)="changeTheme('light-blue.css')"></div>
+            </div>
+            <div class="d-flex px-2">
+                <div class="pointer box-dark-pink" (click)="changeTheme('dark-pink.css')"></div>
+                <div class="pointer box-grey-orange" (click)="changeTheme('grey-orange.css')"></div>
+                <div class="pointer box-light-green" (click)="changeTheme('light-green.css')"></div>
             </div>
         </mat-menu>
 

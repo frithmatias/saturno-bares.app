@@ -61,8 +61,8 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
-	assignTables(isFirst: boolean, idTicket: string, cdTables: number[], blPriority: boolean = false) {
-		const data = { isFirst, idTicket, cdTables, blPriority };
+	assignTables(idTicket: string, blPriority: boolean = false, blFirst: boolean, cdTables: number[], idSection: string) {
+		const data = { idTicket, blPriority, blFirst, cdTables, idSection };
 		const url = environment.api + '/table/assigntables';
 		return this.http.post(url, data);
 	}
@@ -76,12 +76,6 @@ export class WaiterService {
 	releaseTicket(ticket: Ticket): Observable<object> {
 		const data = { ticket };
 		const url = environment.api + '/t/releaseticket';
-		return this.http.post(url, data);
-	}
-
-	reassignTicket(idTicket: string, idSession: string, blPriority: boolean): Observable<object> {
-		const data = { idTicket, idSession, blPriority };
-		const url = environment.api + '/t/reassignticket';
 		return this.http.post(url, data);
 	}
 

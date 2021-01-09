@@ -26,10 +26,8 @@ export class TablesComponent implements OnInit {
   @Input() tickets: Ticket[] = [];
   @Input() busyTablesTimes: any;
 
-  displayedColumns: string[] = ['mesaTurno', 'estado', 'personasCapacidad', 'tp', 'ta'];
-
+  displayedColumns: string[] = ['estado', 'mesa', 'capacidad', 'ticket', 'ocupacion', 'tp', 'ta'];
   listmode = false;
-  blPriority = false;
   table: Table;
 
   constructor(
@@ -46,8 +44,8 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.tables && this.table){
-     this.table = changes.tables.currentValue.filter((table: Table) => this.table._id === table._id)[0];
+    if (changes.tables && this.table) {
+      this.table = changes.tables.currentValue.filter((table: Table) => this.table._id === table._id)[0];
     }
 
   }
@@ -60,7 +58,7 @@ export class TablesComponent implements OnInit {
   };
 
   toggleTableStatus = (table: Table) => {
-    
+
     if (table.tx_status === 'busy' || table.tx_status === 'reserved') return;
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
@@ -95,33 +93,6 @@ export class TablesComponent implements OnInit {
                 this.clearTicketSession(ticket);
               }
             });
-        }
-      });
-  };
-
-  reassignTicket = (ticket: Ticket) => {
-    if (!ticket) {
-      this.sharedService.snack('Error. No hay clientes en esta mesa.', 5000);
-      return;
-    }
-    let snackMsg = 'Desea enviar el ticket al skill seleccionado?';
-    this.sharedService
-      .snack(snackMsg, 5000, 'ACEPTAR')
-      .then((resp: boolean) => {
-        if (resp) {
-          let idTicket = ticket._id;
-          let idSession = this.waiterService.sectionSelected;
-          let blPriority = this.blPriority;
-          if (idTicket && idSession) {
-            this.waiterService
-              .reassignTicket(idTicket, idSession, blPriority)
-              .subscribe((resp: TicketResponse) => {
-                if (resp.ok) {
-                  this.blPriority = false;
-                  this.clearTicketSession(ticket);
-                }
-              });
-          }
         }
       });
   };

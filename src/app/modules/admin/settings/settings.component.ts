@@ -12,6 +12,10 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class SettingsComponent implements OnInit {
 
+  settings: Settings; // local settings before save (component)
+  updated = false;
+  disabled = true;
+
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
@@ -20,13 +24,28 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     let idCompany = this.loginService.user.id_company._id;
-    this.adminService.readSettings(idCompany);
-  }
-
-  updateSettings(){
-    this.adminService.updateSettings(this.adminService.settings).subscribe((data: SettingsResponse) => {
-      this.sharedService.snack(data.msg, 2000);
+    this.adminService.readSettings(idCompany).then((data: SettingsResponse) => {
+      this.settings = data.settings; // rompo la referencia la objeto original
     })
   }
 
+  updateSettings() {
+    this.updated = false;
+    this.adminService.updateSettings(this.settings).subscribe((data: SettingsResponse) => {
+      if (data.ok) {
+
+        this.settings = Object.assign({}, data.settings);
+        this.adminService.settings = data.settings;
+        this.disabled = true;
+        this.updated = true;
+        this.sharedService.snack(data.msg, 2000);
+
+      }
+    })
+  }
+
+  check() {
+    this.disabled = !this.settings.bl_spm_auto === this.adminService.settings.bl_spm_auto;
+    this.updated = false;
+  }
 }

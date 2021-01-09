@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable, of } from 'rxjs';
+import { Observable, Observer, of } from 'rxjs';
 import { AjaxError } from 'rxjs/ajax';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, take, tap, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from '../modules/public/public.service';
 import { User } from '../interfaces/user.interface';
@@ -38,7 +38,7 @@ export class WebsocketService {
 		});
 	}
 
-	updateTicketsClients(): Observable<string> {
+	updateClients(): Observable<string> {
 		return this.listen('update-clients');
 	}
 

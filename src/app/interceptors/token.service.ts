@@ -51,9 +51,7 @@ export class TokenService implements HttpInterceptor {
 
   manejarError(error: HttpErrorResponse) {
     console.warn(error);
-    
     this.sharedService.snack(error.error?.msg, 5000);
-
     if (error.error.code == 1001) { // token expired
       this.loginService.logout();
     }

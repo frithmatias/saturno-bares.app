@@ -1,250 +1,231 @@
-<div class="saturno-container-wide animated fadeIn">
+<div class="saturno-container-full animated fadeIn">
 
+  <div class="xl text-accent">
+    <span class="mdi mdi-hand mr-2"></span>
+    Hola {{ loginService?.user.tx_name }}
+  </div>
 
-  <div class="my-2 xl text-accent mb-2">Hola {{ loginService?.user.tx_name }}</div>
+  <div class="minicards-content">
 
-  <div style="justify-content: center; display: flex;  flex-wrap: wrap;">
+    <div>
+      <!-- WIZARD LINK -->
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/wizard">
 
-    <div style="display: block;">
+        <div class="text-accent text-left md">
+          <span class="mdi mdi-wizard-hat mr-2"></span> Wizard
+        </div>
 
-      <div>
-        <!-- WIZARD LINK -->
-        <mat-card class="saturno-minicard m-2">
-          <div class="pointer my-3" routerLink="/admin/wizard">
-            <div class="saturno-minicard-title">
-              <div>
-                <span class="mdi mdi-wizard-hat xxxxl text-deco"></span>
-              </div>
-              <div class="text-accent">
-                Iniciar el Asistente
-              </div>
+        <div class="saturno-minicard-text">
+          <div
+            *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
+
+            <div class="mdi mdi-close-circle-outline text-danger text-center xxxxl"></div>
+            <div>
+              La empresa seleccionada no tiene los sectores y mesas necesarias para gestionar clientes.
+              Usá este pequeño asistente que te ayudará paso a paso en el proceso de crear bares o restaurantes,
+              sectores, mesas, camareros y todo lo necesario para atender a tus clientes.
             </div>
-            <hr class="hr-green">
 
-            <div class="saturno-minicard-text">
-              <table
-                *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
-                <tr>
-                  <td class="mdi mdi-close-circle-outline text-danger xxxl pl-3"></td>
-                  <td class="p-3">
-                    La empresa seleccionada no tiene los sectores / mesas creadas para comenzar a recibir clientes.
-                    Usá
-                    este
-                    pequeño
-                    asistente que te ayudará paso a paso en el proceso de crear bares o restaurantes, sectores,
-                    mesas,
-                    camareros y todo lo necesario para atender a tus clientes.
-                  </td>
-                </tr>
-              </table>
-
-              <table
-                *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
-                <tr>
-                  <td class="mdi mdi-check-circle-outline text-success xxxl"></td>
-                  <td class="p-3">
-                    La empresa seleccionada tiene sectores y mesas creadas para comenzar a recibir clientes. Podés
-                    usar
-                    este
-                    pequeño
-                    asistente para modificarlos o crear mas mesas, sectores o camareros.
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </mat-card>
-      </div>
-
-
-      <div>
-        <!-- TOMAR SECTOR -->
-        <mat-card class="saturno-minicard pointer m-2" *ngIf="
-    adminService.companies.length > 0 && 
-    adminService.sections.length > 0 &&
-    adminService.tables.length > 0">
-          <div routerLink="/waiter/home">
-            <div class="saturno-minicard-title">
-              <div>
-                <span class="mdi mdi-select-group xxxxl text-deco"></span>
-              </div>
-              <div class="text-accent">
-                Tomar un Sector
-              </div>
-            </div>
-            <hr class="hr-blue">
-            <div class="saturno-minicard-text">
-              Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
-            </div>
           </div>
 
-        </mat-card>
+          <div
+            *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
 
-      </div>
-    </div>
-    <div style="display: block;">
+            <div class="mdi mdi-check-circle-outline text-success text-center xxxxl"></div>
+            <div>
+              La empresa seleccionada tiene sectores y mesas creadas para comenzar a recibir clientes. Podés
+              usar este pequeño asistente para modificarlos o crear mas mesas, sectores o camareros.
+            </div>
+
+          </div>
+        </div>
+
+      </mat-card>
+
+      <!-- TOMAR SECTOR -->
+
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/waiter/home" *ngIf="
+  adminService.companies.length > 0 && 
+  adminService.sections.length > 0 &&
+  adminService.tables.length > 0">
+
+        <div class="text-accent md">
+          <span class="mdi mdi-select-group mr-2"></span> Ir a un sector
+        </div>
+
+        <div class="saturno-minicard-text">
+          Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
+        </div>
+
+      </mat-card>
 
       <!-- COMPANY TABLE INFO -->
-      <div>
-        <mat-card class="saturno-minicard m-2" routerLink="/waiter/home">
 
-          <mat-card-header>
-            <mat-card-title class="text-accent">
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/wizard">
 
-              <span class="mdi mdi-storefront"></span> {{ this.loginService.user.id_company?.tx_company_name || 'Sin bar / resto todavía' }}
+        <div class="text-accent text-left md">
+          <span class="mdi mdi-storefront mr-2"></span> {{ this.loginService.user.id_company?.tx_company_name || 'No
+          creaste ningún comercio' }}
+        </div>
 
-            </mat-card-title>
-          </mat-card-header>
+        <mat-card-content>
 
-          <mat-card-content>
+          <div class="table-responsive-sm mt-2">
+            <table class="table-sm mb-0 saturno-minicard-text text-center">
 
-            <div class="table-responsive-sm mt-2">
-              <table class="table-sm mb-0 saturno-minicard-text text-center">
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-storefront mr-2"></span>
+                  Bares / Restaurantes
+                  <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  {{ adminService.companies.length }}
+                </td>
+              </tr>
 
-                <tr>
-                  <td style="text-align: left;">
-                    <span class="mdi mdi-storefront"></span>
-                    Bares / Restaurantes
-                    <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
-                    <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
-                  </td>
-                  <td style="text-align: right;">
-                    {{ adminService.companies.length }}
-                  </td>
-                </tr>
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-select-group mr-2"></span>
+                  Sectores
+                  <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  {{ adminService.sections.length }}
+                </td>
+              </tr>
 
-                <tr>
-                  <td style="text-align: left;">
-                    <span class="mdi mdi-select-group"></span>
-                    Sectores
-                    <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
-                    <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
-                  </td>
-                  <td style="text-align: right;">
-                    {{ adminService.sections.length }}
-                  </td>
-                </tr>
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-silverware-fork-knife mr-2"></span>
+                  Mesas
+                  <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  {{ adminService.tables.length }}
+                </td>
+              </tr>
+            </table>
 
-                <tr>
-                  <td style="text-align: left;">
-                    <span class="mdi mdi-table-chair"></span>
-                    Mesas
-                    <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
-                    <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
-                  </td>
-                  <td style="text-align: right;">
-                    {{ adminService.tables.length }}
-                  </td>
-                </tr>
-              </table>
-
-              <div *ngIf="
+            <div *ngIf="
   adminService.companies.length === 0 || 
   adminService.sections.length === 0 ||
   adminService.tables.length === 0" class="pointer sm p-2 mt-2">
-                Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
-                  routerLink="/admin/wizard">"Iniciar el Asistente"</span>
-                para crear todo lo necesario.
-              </div>
-
+              Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
+                routerLink="/admin/wizard">"Iniciar el Asistente"</span>
+              para crear todo lo necesario.
             </div>
-          </mat-card-content>
 
-        </mat-card>
+          </div>
+        </mat-card-content>
 
-      </div>
+      </mat-card>
 
+    </div>
+
+    <div>
       <!-- SETTINGS -->
-      <div>
-        <mat-card class="saturno-minicard m-2" routerLink="/waiter/home">
 
-          <mat-card-header>
-            <mat-card-title class="text-accent">
-              <span class="mdi mdi-cog"></span> Ajustes
-            </mat-card-title>
-          </mat-card-header>
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/settings">
 
-          <mat-card-content>
+        <div class="text-accent md">
+          <span class="mdi mdi-cog mr-2"></span> Ajustes
+        </div>
 
-            <div class="table-responsive-sm mt-2">
-              <table class="table-sm mb-0 saturno-minicard-text text-center">
+        <mat-card-content>
 
-                <tr>
-                  <td style="text-align: left;">
-                    <span class="mdi mdi-gesture-double-tap"></span>
-                    Asig. Auto. Mesas
-                    <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
-                    <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
-                  </td>
-                  <td style="text-align: right;">
-                    <span *ngIf="adminService.settings?.bl_spm_auto">Activado</span>
-                    <span *ngIf="!adminService.settings?.bl_spm_auto">Desactivado</span>
+          <div class="table-responsive-sm mt-2">
+            <table class="table-sm mb-0 saturno-minicard-text text-center">
 
-                  </td>
-                </tr>
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-gesture-double-tap mr-2"></span>
+                  Asig. Auto. Mesas
+                  <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  <span *ngIf="adminService.settings?.bl_spm_auto">Activado</span>
+                  <span *ngIf="!adminService.settings?.bl_spm_auto">Desactivado</span>
+
+                </td>
+              </tr>
 
 
-              </table>
+            </table>
 
-            </div>
-          </mat-card-content>
-
-        </mat-card>
-
-      </div>
-
-      <!-- INFO -->
-      <div>
-        <mat-card class="saturno-minicard m-2" style="text-align: left;" *ngIf="loginService.user.id_company">
-          <mat-card-header>
-            <mat-card-title class="text-accent">
-              <span class="mdi mdi-headset"></span> Administradores y Camareros
-            </mat-card-title>
-          </mat-card-header>
-
-          <div class="my-1">
-            Para gestionar mesas y turnos sólo tenés que ir al menú de Camarero y tomar
-            un sector.
           </div>
+        </mat-card-content>
 
-          <hr>
+      </mat-card>
 
-          <div class="text-accent">
-            <span class="mdi mdi-bookmark-plus-outline lg mr-2"></span> Clientes
-          </div>
+      <!-- ADMIN & WAITERS -->
 
-          <div class="my-1">
-            Para que tus clientes puedan pedir mesas tenés que ofrecerles la
-            dirección web principal en saturno.fun, una vez ahí buscar tu empresa en el buscador.
-          </div>
+      <mat-card class="saturno-minicard text-left mb-2 mx-1" *ngIf="loginService.user.id_company">
 
-          <a target="_blank" href="https://saturno.fun">
-            https://saturno.fun
-          </a>
+        <div class="text-accent md">
+          <span class="mdi mdi-shield-star mr-2"></span> Administradores y Camareros
+        </div>
 
-          <div class="my-1">
-            También puede usar un link o acceso directo a tu comercio en:
-          </div>
+        <div class="my-1">
+          Para gestionar mesas y turnos sólo tenés que ir al menú de Camarero y tomar
+          un sector.
+        </div>
 
-          <a target="_blank" href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}">
-            https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}
-          </a>
+      </mat-card>
 
-          <div class="my-1">
-            O podés imprimir el código QR de acceso a tu web y pegarlo en tu comercio:
-          </div>
+      <!-- CLIENTS -->
 
-          <div class="my-1 text-center my-4">
-            <qrcode qrdata="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}"
-              [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-          </div>
+      <mat-card class="saturno-minicard text-left mb-2 mx-1">
 
-        </mat-card>
+        <div class="text-accent md">
+          <span class="mdi mdi-account mr-2"></span> Clientes
+        </div>
 
-      </div>
+        <div class="m-1">
+          Tus clientes tienen que entrar en la web saturno.fun y buscar tu Bar / Restaruant.
+        </div>
+
+        <a class="m-1 sm" target="_blank" href="https://saturno.fun">
+          https://saturno.fun
+        </a>
+
+        <div class="m-1">
+          También puede usar un link o acceso directo a tu comercio en:
+        </div>
+
+
+        <a class="m-1 sm" target="_blank"
+          href="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}">
+          https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}
+        </a>
+
+      </mat-card>
+
+      <!-- QR CODE -->
+
+      <mat-card class="saturno-minicard text-left mb-2 mx-1">
+
+        <div class="text-accent md">
+          <span class="mdi mdi-qrcode mr-2"></span> QR
+        </div>
+
+        <div class="m-1">
+          Podés imprimir este código QR de acceso a tu web y pegarlo en tu comercio:
+        </div>
+
+        <div class="m-1 text-center my-4">
+          <qrcode qrdata="https://saturno.fun/#/public/{{loginService.user.id_company.tx_company_string}}" [width]="256"
+            [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+      </mat-card>
+
     </div>
 
   </div>
-
 
 </div>

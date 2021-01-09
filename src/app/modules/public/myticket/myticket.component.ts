@@ -62,7 +62,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		body.classList.remove('container');
 
 		// listen for tickets
-		this.wsService.updateTicketsClients().subscribe(this.subjectUpdateTickets$);
+		this.wsService.updateClients().subscribe(this.subjectUpdateTickets$);
 		this.subjectUpdateTickets$.subscribe(() => {
 			this.getTickets();
 		});

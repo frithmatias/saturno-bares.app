@@ -8,7 +8,13 @@
 
         <div *ngIf="!loading" class="animated fadeIn">
 
-            <div class="md">Bienvenido, desde acá podés entrar a un sector y comenzar a atender mesas.</div>
+            <div class="xl text-accent">
+                <span class="mdi mdi-hand mr-2"></span>
+                Hola {{ loginService?.user.tx_name }}
+            </div>
+
+
+            <div class="md">Desde acá podés entrar a un sector y comenzar a atender mesas.</div>
 
             <!-- no company selected -->
             <div *ngIf="!loginService.user.id_company" class="p-3 my-4">
@@ -22,7 +28,8 @@
             </div>
 
             <div *ngIf="loginService.user.id_company && waiterService.sections.length === 0" class="p-3 my-4">
-                No tenés ningún sector asociado a la empresa <span class="text-accent">{{loginService.user.id_company.tx_company_name}}</span>. 
+                No tenés ningún sector asociado a la empresa <span
+                    class="text-accent">{{loginService.user.id_company.tx_company_name}}</span>.
                 Por favor verifica que tengas comercios, sectores y mesas creadas desde el asistente.
                 <hr>
                 <button mat-raised-button color="accent" routerLink="/admin/wizard">
@@ -36,7 +43,8 @@
             <!-- TAKE / RELEASE SECTION -->
             <!-- ======================================================== -->
 
-            <div class="mb-4" *ngIf="sections && loginService.user.id_company?._id && waiterService.sections.length > 0">
+            <div class="mb-4"
+                *ngIf="sections && loginService.user.id_company?._id && waiterService.sections.length > 0">
 
                 <div *ngIf="waiterService.session">
                     <div class="row my-4">

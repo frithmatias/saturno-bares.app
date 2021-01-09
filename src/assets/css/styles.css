@@ -55,6 +55,10 @@ div:focus {
     border : none;
 }
 
+mat-card {
+    outline: none;
+}
+
 table {
     width: 100%;
 }
@@ -125,6 +129,12 @@ SATURNO
     font-size: medium;
 }
 
+.saturno-container-full {
+    width    : 100%;
+    padding  : 1.2em;
+    font-size: medium;
+}
+
 
 
 @media (max-width: 575px) {
@@ -160,16 +170,17 @@ SATURNO
 
 .minicards-content {
     display        : flex;
-    padding        : 10px;
     flex-wrap      : wrap;
     justify-content: center;
+    padding        : 10px;
 }
 
 .saturno-minicard {
-    margin   : 10px;
-    min-width: 15rem;
-    max-width: 20rem;
-    font-size: medium;
+    /* margin      : 10px; */
+    /* min-width   : 15rem;
+    max-width   : 20rem; */
+    width    : 19rem;
+    font-size   : medium;
 }
 
 .saturno-minicard-icons {
@@ -310,20 +321,9 @@ COLORS
     color: #343a40;
 }
 
-.text-primary {
-    color: #007bff;
-}
-
-.text-secondary {
-    color: #6c757d;
-}
 
 .text-success {
     color: #28a745;
-}
-
-.text-info {
-    color: #17a2b8;
 }
 
 .text-warning {
@@ -616,18 +616,33 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 
+/*
+-------------------------------------------
+MAT-TAB
+-------------------------------------------
+*/
 
+
+.mat-tab-label,
+.mat-tab-link {
+    font-family: var(--font-family);
+    font-size  : 16px;
+    font-weight: 500;
+    opacity: 1 !important;
+}
 /* Bottom Sheet*/
 
 .cdk-overlay-container {
     text-align: -webkit-center;
 }
 
+
 /*
 -------------------------------------------
 MAT-BUTTONS
 -------------------------------------------
 */
+
 
 /* COLOR: ACTIVE*/
 

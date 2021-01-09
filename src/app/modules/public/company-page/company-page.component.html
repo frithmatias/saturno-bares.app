@@ -3,16 +3,16 @@
     <!-- PAGE HEADER IMAGE SLIDER -->
     <ng-image-slider [images]="images" [infinite]="true" [imagePopup]="true" [animationSpeed]="2" [slideImage]="1"
         [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
-
+    
     <!-- PAGE TABS -->
     <mat-tab-group mat-align-tabs="center" dynamicHeight>
-        <mat-tab label="{{publicService.company.tx_company_name}}">
+        <mat-tab label="Home">
             <app-home></app-home>
         </mat-tab>
         <mat-tab label="Menú">
             <app-menu></app-menu>
         </mat-tab>
-        <mat-tab label="Reservar Mesa">
+        <mat-tab label="Reserva">
             <app-ticket></app-ticket>
         </mat-tab>
     </mat-tab-group>
@@ -20,10 +20,10 @@
     <!-- PAGE FOOTER -->
     <div class="footer-container">
         <div>
-            <div class="md text-accent">
+            <div class="md text-white">
                 {{publicService.company.tx_company_name}}
             </div>
-            <div class="sm">
+            <div class="sm text-white">
                 {{publicService.company.tx_address_street}}
                 {{publicService.company.tx_address_number}}
             </div>

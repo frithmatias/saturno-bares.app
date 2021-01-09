@@ -34,10 +34,10 @@ export class ToolbarComponent implements OnInit {
 
       if (hours >= 6 && hours < 20) {
         // light theme
-        this.config.theme = 'deeppurple-amber.css'
+        this.config.theme = 'light-blue.css'
       } else {
         // dark theme
-        this.config.theme = 'pink-bluegrey.css';
+        this.config.theme = 'dark-pink.css';
       }
 
     }

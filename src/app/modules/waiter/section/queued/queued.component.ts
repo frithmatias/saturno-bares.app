@@ -24,16 +24,14 @@ export class QueuedComponent implements OnInit {
   @Input() tables: Table[];
 
   displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario'];
+  showTables = true; // deshabilito la posibilidad de asignar mesas si asigno un ticket a otro sector.
   
   constructor(
     public sharedService: SharedService,
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {
-
-
-   }
+  ngOnInit(): void {}
 
   // ADD OR REMOVE TABLES FOR ASSIGNATION
   setReserve = (table: Table, ticket: Ticket) => {
@@ -42,17 +40,29 @@ export class QueuedComponent implements OnInit {
       : [...ticket.cd_tables, table.nm_table];
   };
 
+  clearSelection(ticket: Ticket) {
+    // al cambiar el sector de destino limpio las mesas actuales y deshabilito las mesas 
+    // las mesas son asignables dentro del scope de cada sector
+    ticket.cd_tables = [];
+    if(ticket.id_section._id === this.waiterService.session.id_section._id){
+      this.showTables = true;
+    } else {
+      this.showTables = false;
+    }
+  }
+
   // ASSIGN TABLES
   assignTables = (ticket: Ticket) => {
-    
+
     let activeQueue = this.queued.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')
-    
-    let isFirst = activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
+
+    let blPriority = ticket.bl_priority;
+    let blFirst = activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
-    let blPriority = ticket.bl_priority;
-    
-    this.waiterService.assignTables(isFirst, idTicket, cdTables, blPriority).subscribe(
+    let idSection = ticket.id_section._id;
+
+    this.waiterService.assignTables(idTicket, blPriority, blFirst, cdTables, idSection).subscribe(
       (resp: TicketResponse) => {
         if (resp.ok) {
           this.sharedService.snack(

@@ -7,6 +7,7 @@ import { IntervalToHmsPipe } from './interval-to-hms.pipe';
 import { MessageTimePipe } from './message-time.pipe';
 import { TimeToHmsPipe } from './time-to-hms.pipe';
 import { WordMaxLengthPipe } from './word-max-length.pipe';
+import { GetOccupationPipe } from './get-ocuppation.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { WordMaxLengthPipe } from './word-max-length.pipe';
     TimeToHmsPipe,
     WordMaxLengthPipe,
     CapitalizarPipe,
-    ImagenPipe
+    ImagenPipe,
+    GetOccupationPipe
   ],
   imports: [],
   exports: [
@@ -28,7 +30,9 @@ import { WordMaxLengthPipe } from './word-max-length.pipe';
     TimeToHmsPipe,
     WordMaxLengthPipe,
     CapitalizarPipe,
-    ImagenPipe
+    ImagenPipe,
+    GetOccupationPipe
+
   ]
 })
 export class PipesModule { }
