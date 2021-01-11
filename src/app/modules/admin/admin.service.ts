@@ -206,4 +206,9 @@ export class AdminService {
 		const url = environment.api + '/settings/updatesettings';
 		return this.http.put(url, settings);
 	}
+
+	sendMessage(idCompany: string, txMessage: string) {
+		const url = environment.api + '/settings/sendmessage';
+		return this.http.post(url, {idCompany, txMessage});
+	}
 }

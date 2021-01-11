@@ -38,26 +38,16 @@ export class WebsocketService {
 		});
 	}
 
+	escucharSocketActualizado(): void {
+		this.listen('socket-updated');
+	}
+
 	updateClients(): Observable<string> {
 		return this.listen('update-clients');
 	}
 
 	updateWaiters(): Observable<string> {
 		return this.listen('update-waiters');
-	}
-
-	escucharSocketActualizado(): void {
-		this.listen('socket-updated').subscribe((data: any) => {
-		});
-	}
-
-	escucharEnCamino(): Observable<string> {
-		// con take solo dejo pasar una sola emisión luego se des suscribe.
-		return this.listen('cliente-en-camino').pipe(take(3));
-	}
-
-	escucharTicketCancelled(): Observable<string> {
-		return this.listen('ticket-cancelled');
 	}
 
 	escucharMensajes(): Observable<string> {

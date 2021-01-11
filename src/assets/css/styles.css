@@ -77,6 +77,8 @@ mat-drawer-container {
 
 .card-left-border {
     border-left: 5px solid var(--warning);
+    line-height: 1.3em;
+    font-weight: 200;
 }
 
 /*
@@ -180,7 +182,7 @@ SATURNO
     /* min-width   : 15rem;
     max-width   : 20rem; */
     width    : 19rem;
-    font-size   : medium;
+    font-size: medium;
 }
 
 .saturno-minicard-icons {
@@ -241,6 +243,11 @@ BUTTONS
 
 .action-button {
     width  : 110px;
+    padding: 0px !important;
+    margin : 5px !important;
+}
+
+.action-button-flex {
     padding: 0px !important;
     margin : 5px !important;
 }
@@ -495,32 +502,32 @@ DIMENSIONES
 */
 
 .xxxxl {
-    font-size  : 4em;
+    font-size  : 4em !important;
     font-weight: 500;
 }
 
 .xxxl {
-    font-size: xxx-large;
+    font-size: xxx-large !important;
 }
 
 .xxl {
-    font-size: xx-large;
+    font-size: xx-large !important;
 }
 
 .xl {
-    font-size: x-large;
+    font-size: x-large !important;
 }
 
 .lg {
-    font-size: large;
+    font-size: large !important;
 }
 
 .md {
-    font-size: medium;
+    font-size: medium !important;
 }
 
 .sm {
-    font-size: small;
+    font-size: small !important;
 }
 
 
@@ -628,8 +635,9 @@ MAT-TAB
     font-family: var(--font-family);
     font-size  : 16px;
     font-weight: 500;
-    opacity: 1 !important;
+    opacity    : 1 !important;
 }
+
 /* Bottom Sheet*/
 
 .cdk-overlay-container {

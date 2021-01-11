@@ -2,34 +2,127 @@
 
     <mat-card *ngIf="settings">
 
-        <mat-card-header>
-            <mat-card-title>
-                <span class="mdi mdi-cog"></span> Ajustes
-            </mat-card-title>
-        </mat-card-header>
+        <mat-accordion>
 
-        <mat-card-content class="my-2">
-            <mat-slide-toggle [(ngModel)]="settings.bl_spm_auto" [checked]="settings.bl_spm_auto" (click)="check()">
-                Asignación Automática de Mesas [
-                <apan *ngIf="adminService.settings.bl_spm_auto">Activado</apan>
-                <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
-                
-                ]
-            </mat-slide-toggle>
-        </mat-card-content>
+            <!-- --------------------- -->
+            <!-- AAM -->
+            <!-- --------------------- -->
 
-        <mat-card-actions>
-            <button mat-raised-button color="primary" class="action-button" (click)="updateSettings()" [disabled]="disabled">
-                <table>
-                    <tr>
-                        <td *ngIf="!updated" class="button-icon mdi  mdi-content-save xl"></td>
-                        <td *ngIf="updated" class="button-icon mdi  mdi-check-circle xl"></td>
+            <mat-expansion-panel class="my-3">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span *ngIf="adminService.settings.bl_spm_auto" class="xl mdi mdi-boom-gate-up text-deco"></span>
+                        <span *ngIf="!adminService.settings.bl_spm_auto" class="xl mdi mdi-boom-gate text-deco"></span>
 
-                        <td class="button-text">Guardar</td>
-                    </tr>
-                </table>
-            </button>
-        </mat-card-actions>
+                        <span class="align-self-center md ml-2">Asignación Autom. de Mesas</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
+
+                <div class="card-left-border text-left animated fadeIn" *ngIf="showHelp">
+                    <p>
+                        ACTIVADA: Si esta opción esta activada el sistema asignará automáticamente una mesa compatible y
+                        disponible cuando ocurren los siguientes eventos:
+                    </p>
+
+                    <ol>
+                        - Una mesa es liberada: El sistema buscará un ticket compatible y en estado "esperando" para la
+                        mesa.
+
+                    </ol>
+                    <ol>
+                        - Un ticket es creado: El sistema buscará una mesa compatible y en estado "disponible".
+                    </ol>
+
+                    <p>
+                        Si el sistema no encuentra una mesa que cubra la cantidad de personas en el grupo, el ticket
+                        quedará en estado "requerido" y las mesas deben ser asignadas por un camarero.
+                    </p>
+                    <p>
+                        DESACTIVADA: Si esta opción esta desactivada el sistema sólo proveera mesas a los tickets que
+                        tengan
+                        mesas asignadas por los camareros.
+                    </p>
+                </div>
+
+                <mat-card-content class="p-2 d-flex">
+
+
+                    <div class="w-50 text-left">
+                        <mat-slide-toggle [(ngModel)]="settings.bl_spm_auto" [checked]="settings.bl_spm_auto"
+                            (click)="check()"> AAM
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="w-50 text-right">
+                        [
+                        <apan *ngIf="adminService.settings.bl_spm_auto">Activado</apan>
+                        <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
+                        ]
+                    </div>
+                </mat-card-content>
+
+                <mat-card-actions class="p-2 text-right">
+
+                    <button mat-raised-button color="primary" class="action-button-flex" (click)="showHelp=!showHelp">
+                        <table>
+                            <tr>
+                                <td class="button-icon mdi  mdi-help xl"></td>
+                                <td class="button-text">Que es esto?</td>
+                            </tr>
+                        </table>
+                    </button>
+
+                    <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+                        [disabled]="blDisabled">
+                        <table>
+                            <tr>
+                                <td *ngIf="!blUpdated" class="button-icon mdi  mdi-content-save xl"></td>
+                                <td *ngIf="blUpdated" class="button-icon mdi  mdi-check-circle xl"></td>
+
+                                <td class="button-text">Guardar</td>
+                            </tr>
+                        </table>
+                    </button>
+                </mat-card-actions>
+
+            </mat-expansion-panel>
+
+            <!-- --------------------- -->
+            <!-- MESSAGES -->
+            <!-- --------------------- -->
+
+            <mat-expansion-panel class="my-3">
+
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span class="xl mdi  mdi-send text-deco"></span>
+                        <span class="align-self-center md ml-2">Enviá un mensaje a tus
+                            clientes</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-card-content class="p-2">
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Mensaje</mat-label>
+                        <input matInput maxlength="100" placeholder="Escribí acá el mensaje" [(ngModel)]="txMessage"
+                            name="txCompanySlogan" type="text">
+                    </mat-form-field>
+                </mat-card-content>
+
+                <mat-card-actions class="p-2 text-right">
+                    <button mat-raised-button color="primary" class="action-button" (click)="sendMessage()"
+                        [disabled]="txMessage.length === 0">
+                        <table>
+                            <tr>
+                                <td class="button-icon mdi  mdi-send xl"></td>
+                                <td class="button-text">Enviar</td>
+                            </tr>
+                        </table>
+                    </button>
+                </mat-card-actions>
+
+            </mat-expansion-panel>
+
+        </mat-accordion>
     </mat-card>
 </div>

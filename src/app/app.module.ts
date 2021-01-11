@@ -40,6 +40,7 @@ import { TokenService } from './interceptors/token.service';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
 import { VideoComponent } from './pages/video/video.component';
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
 	declarations: [
@@ -70,6 +71,7 @@ import { VideoComponent } from './pages/video/video.component';
 		AdminGuard,
 		TokenGuard,
 		LoginGuard,
+		{ provide: LocationStrategy, useClass: PathLocationStrategy },
 		{ provide: HTTP_INTERCEPTORS, useClass: TokenService, multi: true }, // para que este a la escucha de TODAS las peticiones
 		{ provide: MAT_DATE_LOCALE, useValue: 'es' }
 	],

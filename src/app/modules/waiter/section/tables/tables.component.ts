@@ -57,6 +57,19 @@ export class TablesComponent implements OnInit {
     this.table = table;
   };
 
+  setListMode = () => {
+
+    if (localStorage.getItem('config')) {
+      let config = JSON.parse(localStorage.getItem('config'));
+      config.listmode = !this.listmode;
+      localStorage.setItem('config', JSON.stringify(config));
+    } else {
+      let config = { listmode: true };
+      localStorage.setItem('config', JSON.stringify(config));
+    }
+
+  };
+
   toggleTableStatus = (table: Table) => {
 
     if (table.tx_status === 'busy' || table.tx_status === 'reserved') return;
@@ -64,12 +77,25 @@ export class TablesComponent implements OnInit {
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {
         if (data.ok) {
-          this.sharedService.snack(data.msg, 2000);
+          this.sharedService.snack(data.msg, 5000);
         } else {
-          this.sharedService.snack(data.msg, 2000);
+          this.sharedService.snack(data.msg, 5000);
         }
       }
     );
+  };
+  
+  attendedTicket = (idTicket: string) => {
+    this.waiterService
+      .attendedTicket(idTicket)
+      .subscribe((resp: TicketResponse) => {
+        if (resp.ok) {
+          let table = this.tables.filter(
+            (table) => table.id_session?.id_ticket._id === resp.ticket._id
+          )[0];
+          table.id_session.id_ticket.tx_call = null;
+        }
+      });
   };
 
   releaseTicket = (ticket: Ticket) => {
@@ -108,9 +134,7 @@ export class TablesComponent implements OnInit {
         .snack(snackMsg, 5000, 'ACEPTAR')
         .then((resp: boolean) => {
           if (resp) {
-            this.waiterService
-              .endTicket(idTicket)
-              .subscribe((resp: TicketResponse) => {
+            this.waiterService.endTicket(idTicket).subscribe((resp: TicketResponse) => {
                 if (resp.ok) {
                   this.clearTicketSession(ticket);
                   this.clearTableSession(ticket);
@@ -121,34 +145,8 @@ export class TablesComponent implements OnInit {
     }
   };
 
-  attendedTicket = (idTicket: string) => {
-    this.waiterService
-      .attendedTicket(idTicket)
-      .subscribe((resp: TicketResponse) => {
-        if (resp.ok) {
-          let table = this.tables.filter(
-            (table) => table.id_session?.id_ticket._id === resp.ticket._id
-          )[0];
-          table.id_session.id_ticket.tx_call = null;
-        }
-      });
-  };
-
-  setListMode = () => {
-
-    if (localStorage.getItem('config')) {
-      let config = JSON.parse(localStorage.getItem('config'));
-      config.listmode = !this.listmode;
-      localStorage.setItem('config', JSON.stringify(config));
-    } else {
-      let config = { listmode: true };
-      localStorage.setItem('config', JSON.stringify(config));
-    }
-
-  };
 
   clearTicketSession = (ticket: Ticket) => {
-    // close ONE client session
     this.tickets = this.tickets.filter(
       (thisTicket) => thisTicket._id !== ticket._id
     );

@@ -1,7 +1,7 @@
 <mat-toolbar class="mat-elevation-z3" color="primary">
 
     <!-- TOGGLE MENU ICON -->
-    <div style="width: 84px;" class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
+    <div class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
         <!-- <span class="example-spacer"></span> -->
     </div>
     <div style="width: 48px;" class="mdi mdi-help-circle-outline md pointer" *ngIf="publicService.company">
@@ -33,11 +33,11 @@
     </div>
 
     <!-- COMPANY NAME -->
-    <div *ngIf="loginService.user || publicService.company" class="company-name md ml-1">
-        <div class="marquee">
+    <div *ngIf="loginService.user || publicService.company" class="company-name md ml-4 text-left">
+        <!-- <div class="marquee"> -->
             {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
             loginService.user?.tx_name}}
-        </div>
+        <!-- </div> -->
     </div>
 
     <!-- THEME -->

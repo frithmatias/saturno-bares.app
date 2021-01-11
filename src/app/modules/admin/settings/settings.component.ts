@@ -13,9 +13,11 @@ import { SharedService } from 'src/app/services/shared.service';
 export class SettingsComponent implements OnInit {
 
   settings: Settings; // local settings before save (component)
-  updated = false;
-  disabled = true;
-
+  blUpdated = false;
+  blDisabled = true;
+  txMessage: string = '';
+  showHelp = false;
+  
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
@@ -30,14 +32,14 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSettings() {
-    this.updated = false;
+    this.blUpdated = false;
     this.adminService.updateSettings(this.settings).subscribe((data: SettingsResponse) => {
       if (data.ok) {
 
         this.settings = Object.assign({}, data.settings);
         this.adminService.settings = data.settings;
-        this.disabled = true;
-        this.updated = true;
+        this.blDisabled = true;
+        this.blUpdated = true;
         this.sharedService.snack(data.msg, 2000);
 
       }
@@ -45,7 +47,22 @@ export class SettingsComponent implements OnInit {
   }
 
   check() {
-    this.disabled = !this.settings.bl_spm_auto === this.adminService.settings.bl_spm_auto;
-    this.updated = false;
+    this.blDisabled = !this.settings.bl_spm_auto === this.adminService.settings.bl_spm_auto;
+    this.blUpdated = false;
+  }
+
+  sendMessage() {
+    let txMessage = this.txMessage;
+
+    if (txMessage.length > 100) {
+      this.sharedService.snack('El mensaje no puede contener mas de 100 caracteres', 5000, 'Aceptar');
+      return;
+    }
+
+    let idCompany = this.loginService.user.id_company._id;
+    this.adminService.sendMessage(idCompany, txMessage).subscribe(data => {
+      this.txMessage = '';
+      this.sharedService.snack('El mensaje fue enviado correctamente', 2000);
+    })
   }
 }

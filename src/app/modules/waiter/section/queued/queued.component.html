@@ -62,26 +62,10 @@
         <div class="ticket-container" [@detailExpand]="ticket == expandedElement ? 'expanded' : 'collapsed'">
           <div class="p-2 w-100">
 
-            <hr>
-
-            <!------------------------------>
-            <!-- SELECT SECTION -->
-            <!------------------------------>
-
-            <mat-form-field color="accent" class="w-100">
-              <mat-label>Seleccione un sector</mat-label>
-              <mat-select [(ngModel)]="ticket.id_section._id" name="idSection" #selectSection matNativeControl required>
-                <mat-option *ngFor="let section of waiterService.sections" [value]="section._id"
-                  (click)="clearSelection(ticket)">
-                  {{section.tx_section}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-
             <!------------------------------>
             <!-- TABLES BUTTONS -->
             <!------------------------------>
+
             <div class="text-center py-2" *ngIf="showTables">
               <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
                 *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
@@ -107,7 +91,7 @@
 
             <div class="ticket-actions">
 
-              <button mat-raised-button color="warn" class="action-button">
+              <button mat-raised-button color="primary" class="action-button">
                 <table>
                   <tr>
                     <td class="button-icon mdi mdi-human-wheelchair xl"></td>
@@ -119,14 +103,33 @@
                 </table>
               </button>
 
-              <button mat-raised-button color="primary" class="action-button" (click)="assignTables(ticket)">
+              <button mat-raised-button color="active" class="action-button" (click)="assignTables(ticket)">
                 <table>
                   <tr>
-                    <td class="button-icon mdi  mdi-content-save xl"></td>
-                    <td class="button-text">Asignar</td>
+                    <td class="button-icon bg-primary mdi  mdi-content-save xl"></td>
+                    <td class="button-text">Guardar</td>
                   </tr>
                 </table>
               </button>
+
+              <button *ngIf="!ticket.bl_contingent" mat-raised-button class="action-button" (click)="sendMessage(ticket)">
+                <table>
+                  <tr>
+                    <td class="button-icon  mdi  mdi-send xl"></td>
+                    <td class="button-text">Mensaje</td>
+                  </tr>
+                </table>
+              </button>
+
+              <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
+                <table>
+                  <tr>
+                    <td class="button-icon  mdi  mdi-delete xl"></td>
+                    <td class="button-text">Eliminar</td>
+                  </tr>
+                </table>
+              </button>
+
 
             </div>
 

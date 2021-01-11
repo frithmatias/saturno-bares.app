@@ -12,7 +12,7 @@ import { Ticket, TicketsResponse } from '../../../interfaces/ticket.interface';
 import { Table, TablesResponse } from '../../../interfaces/table.interface';
 
 // libraries
-import { Subject, interval } from 'rxjs';
+import { Subject, interval, Subscription } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -54,10 +54,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   //data for contingent
   contingent: Ticket[] = [];
-
-
-
-  private subjectUpdateWaiters$ = new Subject();
+  updateSub: Subscription;
 
   constructor(
     public loginService: LoginService,
@@ -81,18 +78,13 @@ export class SectionComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-
-    // timers observer
-    await this.readTables();
-    await this.readTickets();
-
-    this.wsService.updateWaiters().subscribe(this.subjectUpdateWaiters$);
-
-    this.subjectUpdateWaiters$.subscribe(async () => {
+    this.updateSub = this.wsService.updateWaiters().subscribe(async () => {
       await this.readTables();
       await this.readTickets();
     });
-
+    
+    await this.readTables();
+    await this.readTickets();
     this.loading = false;
   }
 
@@ -205,7 +197,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   };
 
   ngOnDestroy() {
-    this.subjectUpdateWaiters$.complete();
+    this.updateSub?.unsubscribe();
   }
 
 }

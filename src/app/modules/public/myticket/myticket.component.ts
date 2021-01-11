@@ -44,12 +44,14 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		private wsService: WebsocketService,
 		public publicService: PublicService,
 		public sharedService: SharedService,
-		private snack: MatSnackBar,
 		private router: Router
 	) { }
 
 	ngOnInit(): void {
 
+		this.wsService.escucharSystem().subscribe(txMessage => {
+			this.sharedService.snack(txMessage, null, 'ACEPTAR');
+		})
 
 		if (!this.publicService.ticket) {
 			this.router.navigate(['/public/companypage']);
@@ -73,7 +75,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 			this.publicService.getTickets(idCompany);
 		} else {
 			this.router.navigate(['/public']);
-			this.snack.open('Por favor ingrese una empresa primero!', null, { duration: 5000 });
+			this.sharedService.snack('Por favor ingrese una empresa primero!', 5000)
 		}
 
 		this.getTickets();
@@ -247,7 +249,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		this.publicService.callWaiter(idTicket, txCall).subscribe((data: TicketResponse) => {
 			if (data.ok) {
 				this.ticket.tx_call = data.ticket.tx_call;
-				this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
+				this.sharedService.snack(data.msg, 3000, 'ACEPTAR')
 			}
 		});
 	}
@@ -260,7 +262,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 					this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
 						if (data.ok) {
 							resolve();
-							this.snack.open(data.msg, 'ACEPTAR', { duration: 2000 });
+							this.sharedService.snack(data.msg, 3000, 'ACEPTAR')
 							this.publicService.clearPublicSession();
 							this.router.navigate(['/home']);
 						}

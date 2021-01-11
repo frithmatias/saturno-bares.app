@@ -1,6 +1,6 @@
-<div class="saturno-container animated fadeIn" [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+<div class="saturno-container animated fadeIn">
 
-    <mat-card>
+    <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
         <mat-card-header>
             <mat-card-title>
@@ -8,7 +8,7 @@
             </mat-card-title>
         </mat-card-header>
 
-        <mat-card-content *ngIf="this.loginService.user.id_company">
+        <mat-card-content class="p-2" *ngIf="this.loginService.user.id_company">
 
             <form ngNativeValidate [formGroup]="formWebPage" #formDirective="ngForm" (ngSubmit)="sendWebPage(formDirective)">
 

@@ -50,40 +50,35 @@ TECH ICONS
     width      : 1.5em;
     height     : 1.5em;
     opacity    : .8;
-}
+} 
 
 .tech-mongodb {
-    background       : url(../../../../assets/logos/mongodb2.svg);
+    background       : url(../../../../assets/img/svg/mongodb2.svg);
     background-size  : contain;
     background-repeat: no-repeat;
 }
 
 .tech-angular {
-    background       : url(../../../../assets/logos/angular.svg);
+    background       : url(../../../../assets/img/svg/angular.svg);
     background-size  : contain;
     background-repeat: no-repeat;
 }
-
+ 
 .tech-js {
-    background       : url(../../../../assets/logos/javascript.svg);
+    background       : url(../../../../assets/img/svg/javascript.svg);
     background-size  : contain;
     background-repeat: no-repeat;
 }
 
 .tech-ts {
-    background       : url(../../../../assets/logos/typescript.svg);
+    background       : url(../../../../assets/img/svg/typescript.svg);
     background-size  : contain;
     background-repeat: no-repeat;
 }
 
 .tech-nodejs {
-    background       : url(../../../../assets/logos/nodejs.svg);
+    background       : url(../../../../assets/img/svg/nodejs.svg);
     background-size  : contain;
     background-repeat: no-repeat;
 }
-
-.tech-heroku {
-    background       : url(../../../../assets/logos/heroku.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
+ 

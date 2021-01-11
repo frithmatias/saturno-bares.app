@@ -22,7 +22,7 @@
 }
 
 .bg-primary .logo-img {
-    background-image   : url('../../../assets/img/restaurant.svg');
+    background-image   : url('../../../assets/img/svg/restaurant.svg');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
@@ -51,7 +51,7 @@
 
 
 .saturno-beer-card {
-    background-image   : url('../../../assets/img/beer.svg');
+    background-image   : url('../../../assets/img/svg/beer.svg');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;

@@ -13,6 +13,7 @@ import { MapComponent } from './map/map.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { UploaderDirective } from './uploader/uploader.directive';
 import { ButtonComponent } from './button/button.component';
+import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ButtonComponent } from './button/button.component';
     MapComponent,
     UploaderComponent,
     UploaderDirective,
-    ButtonComponent
+    ButtonComponent,
+    BottomsheetComponent
     
   ],
   imports: [

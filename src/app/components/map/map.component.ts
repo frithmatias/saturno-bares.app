@@ -112,7 +112,7 @@ export class MapComponent implements OnInit {
             // CREATE MARKER
             const icon = document.createElement('div');
             icon.className = 'marker';
-            icon.style.backgroundImage = 'url(\'../../../assets/img/beer.svg\')';
+            icon.style.backgroundImage = 'url(\'../../../assets/img/svg/beer.svg\')';
             icon.style.width = '30px';
             icon.style.height = '30px';
             icon.style.cursor = 'pointer';

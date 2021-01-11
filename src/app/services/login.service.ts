@@ -15,17 +15,18 @@ export class LoginService {
 	token: string;
 	menu: any[] = [];
 
-	public user: User;
-
+	
 	// user observable
-	public userSource = new Subject<User>();
-	user$ = this.userSource.asObservable();
+	public user: User;
+	private userSource = new Subject<User>();
+	public user$ = this.userSource.asObservable();
 
 
 	constructor(
 		private http: HttpClient,
 		private router: Router
 	) {
+
 		if (localStorage.getItem('token') && localStorage.getItem('user') && localStorage.getItem('menu')) {
 			this.token = JSON.parse(localStorage.getItem('token'));
 			this.menu = JSON.parse(localStorage.getItem('menu'));

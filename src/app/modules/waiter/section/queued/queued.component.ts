@@ -60,15 +60,11 @@ export class QueuedComponent implements OnInit {
     let blFirst = activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
-    let idSection = ticket.id_section._id;
 
-    this.waiterService.assignTables(idTicket, blPriority, blFirst, cdTables, idSection).subscribe(
+    this.waiterService.assignTables(idTicket, blPriority, blFirst, cdTables).subscribe(
       (resp: TicketResponse) => {
         if (resp.ok) {
-          this.sharedService.snack(
-            'Las mesas fueron asignadas con exito!',
-            2000
-          );
+          this.sharedService.snack(resp.msg, 5000);
         } else {
           this.sharedService.snack('Error al asignar las mesas!', 2000);
         }
@@ -78,5 +74,44 @@ export class QueuedComponent implements OnInit {
       }
     );
   };
+
+  sendMessage = (ticket: Ticket) => {
+    
+    if(ticket.bl_contingent){
+      // El ticket es de contingencia, no tiene asignado un socket
+      return;
+    }
+    
+  }
+
+  endTicket = (ticket: Ticket) => {
+    if (!ticket) {
+      this.sharedService.snack('Seleccione una mesa primero', 3000);
+    }
+    let idTicket = ticket._id;
+    if (this.queued) {
+      let snackMsg = 'Desea finalizar el ticket actual?';
+      this.sharedService
+        .snack(snackMsg, 5000, 'ACEPTAR')
+        .then((resp: boolean) => {
+          if (resp) {
+            this.waiterService
+              .endTicket(idTicket)
+              .subscribe((resp: TicketResponse) => {
+                if (resp.ok) {
+                  this.clearTicketSession(ticket);
+                }
+              });
+          }
+        });
+    }
+  };
+
+  clearTicketSession = (ticket: Ticket) => {
+    this.queued = this.queued.filter(
+      (thisTicket) => thisTicket._id !== ticket._id
+    );
+  };
+
 
 }
