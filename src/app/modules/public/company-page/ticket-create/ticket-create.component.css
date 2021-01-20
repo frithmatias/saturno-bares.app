@@ -13,7 +13,7 @@
 
 .mat-card-title {
     font-size: xx-large;
-    color    : #ff8b00;
+    color    : var(--accent);
 }
 
 @media (max-width: 400px) {
@@ -26,3 +26,16 @@
     width: 100%;
     font-size: large;
 }
+
+.mat-card {
+    box-shadow: none;
+}
+
+
+.screen-ticket-button-confirm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  

@@ -29,20 +29,20 @@ export class PublicComponent implements OnInit {
 
 
     this.route.params.subscribe((data: any) => {
-
-      if (data.company) {
-        let txCompanyString = data.company;
+      if (data.txCompanyString) {
+        let txCompanyString = data.txCompanyString;
         this.publicService.readCompany(txCompanyString).subscribe((resp: any) => {
-
           if (resp.ok) {
             localStorage.setItem('company', JSON.stringify(resp.company));
             this.publicService.company = resp.company;
             this.router.navigate(['/public/companypage'])
+          } else {
+            this.snack.open('No existe la empresssa', 'Aceptar', { duration: 5000 });
+            this.router.navigate(['/home'])
           }
-
         },
           (err) => {
-            this.snack.open('No existe la empresa ingresada', 'Aceptar', { duration: 2000 });
+            this.snack.open('Error al buscar la empresa', 'Aceptar', { duration: 2000 });
             this.router.navigate(['/public'])
           }
         );

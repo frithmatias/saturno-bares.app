@@ -22,6 +22,37 @@ input:-internal-autofill-selected {
     color           : -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
 }
 
+
+/*
+-------------------------------------------
+SCROLL BAR 
+-------------------------------------------
+*/
+
+/* width */
+.company-welcome-textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+    box-shadow   : inset 0 0 5px grey;
+    border-radius: 10px;
+} */
+
+/* Handle */
+.company-welcome-textarea::-webkit-scrollbar-thumb {
+    background   : var(--primary);
+    border-radius: 0px;
+}
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+    background: #b30000;
+} */
+
+
+
 .btn {
     border: none;
 }
@@ -86,30 +117,6 @@ mat-drawer-container {
 */
 
 
-/* SCROLL-BAR */
-
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-/* ::-webkit-scrollbar-track {
-    box-shadow   : inset 0 0 5px grey;
-    border-radius: 10px;
-} */
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background   : var(--primary);
-    border-radius: 0px;
-}
-
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-    background: #b30000;
-} */
-
 /*
 -------------------------------------------
 SATURNO 
@@ -118,7 +125,6 @@ SATURNO
 
 
 .saturno-container {
-    padding  : 2em;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
@@ -127,13 +133,11 @@ SATURNO
 .saturno-container-wide {
     min-width: 18rem;
     max-width: 50rem;
-    padding  : 1.2em;
     font-size: medium;
 }
 
 .saturno-container-full {
     width    : 100%;
-    padding  : 1.2em;
     font-size: medium;
 }
 
@@ -161,6 +165,27 @@ SATURNO
     }
 }
 
+
+/*------------------------------------------------*/
+/* CENTER VERTICALLY */
+/*------------------------------------------------*/
+
+.vcenter-container {
+    position: relative;
+}
+
+.vcenter-inner {
+    position : absolute;
+    top      : 50%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+    width    : fit-content;
+}
+
+/*------------------------------------------------*/
+/* END CENTER VERTICALLY */
+/*------------------------------------------------*/
+
 /* using childs */
 .nomargin {
     margin: 0 !important;
@@ -181,8 +206,9 @@ SATURNO
     /* margin      : 10px; */
     /* min-width   : 15rem;
     max-width   : 20rem; */
-    width    : 19rem;
-    font-size: medium;
+    text-align: center;
+    width     : 19rem;
+    font-size : medium;
 }
 
 .saturno-minicard-icons {
@@ -230,9 +256,15 @@ SATURNO
 
 /*
 -------------------------------------------
-MF STYLES 
+EFFECTS 
 -------------------------------------------
 */
+
+.bg-blur {
+    backdrop-filter        : blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
 
 
 /*
@@ -275,6 +307,26 @@ td.button-text {
 COLORS
 -------------------------------------------
 */
+.text-shadow {
+    text-shadow: -1px 0 rgba(0, 0, 0, .4), 0px 1px rgba(0, 0, 0, .4), 0px -1px rgba(0, 0, 0, .4), 1px 0 rgba(0, 0, 0, .4);
+}
+
+.box-dark-gradient-b {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+}
+
+.box-dark-gradient-r {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+}
+
+.box-dark-gradient-l {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+}
+
+.box-dark-gradient-t {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+}
+
 
 .text-blue {
     color: #007bff;
@@ -586,6 +638,11 @@ ALINEACIONES
 }
 
 
+/*
+-------------------------------------------
+ANIMACIONES
+-------------------------------------------
+*/
 
 /* animate */
 /* animaciones */
@@ -644,6 +701,9 @@ MAT-TAB
     text-align: -webkit-center;
 }
 
+.mat-tab-body-wrapper {
+    background-color: var(--mat-card-bg);
+}
 
 /*
 -------------------------------------------
@@ -744,7 +804,6 @@ MAT-SIDENAV
 }
 
 
-
 /*
 -------------------------------------------
 HOME 
@@ -783,23 +842,29 @@ MAPBOX
     visibility: hidden;
 }
 
-/* .mapboxgl-canvas {
-    position: relative !important;
-} */
 
+.company-card {
+    width: 200px;
+    top  : 50px;
+}
 
-
-
-/*
--------------------------------------------
-MAPBOX 
--------------------------------------------
-*/
-
-.company_welcome_text {
+.company-welcome-textarea {
     overflow: auto;
-    height  : 5.5em;
+    height  : 156px;
     margin  : 1em 0em;
+}
+
+
+.marker-text-wrapper {
+    top       : 20px;
+    left      : -60px;
+    width     : 120px;
+    position  : absolute;
+    text-align: center;
+}
+
+.marker-text {
+    color   : var(--accent);
 }
 
 .lightbox-wrapper .close {
@@ -809,4 +874,33 @@ MAPBOX
     height         : 26px !important;
     right          : 20px !important;
     opacity        : .5 !important;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+    display: none;
+}
+
+.mapboxgl-ctrl-bottom-left {
+    display: none;
+}
+
+/*
+-------------------------------------------
+NG IMAGE SLIDER 
+-------------------------------------------
+*/
+
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div img {
+    border-radius: 0px !important;
+}
+
+.ng-image-slider .ng-image-slider-container .main .next,
+.ng-image-slider .ng-image-slider-container .main .prev {
+    color  : var(--primary);
+    opacity: .5;
+}
+
+.ng-image-slider .ng-image-slider-container .main .next:hover,
+.ng-image-slider .ng-image-slider-container .main .prev:hover {
+    background-color: unset !important;
 }

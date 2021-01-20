@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
 		this.publicService.drawerScrollTop();
 
 		// this.publicUrl = document.
-		// this.publicUrl = location.origin + '/#/public/';
+		// this.publicUrl = location.origin + '/public/';
 		let defaults = {
 			name: '',
 			email: '',
@@ -42,13 +42,14 @@ export class RegisterComponent implements OnInit {
 			password2: ''
 		}
 		this.forma = new FormGroup({
-			name: new FormControl(defaults.name, Validators.required),
-			email: new FormControl(defaults.email, [Validators.required, Validators.email]),
-			password1: new FormControl(defaults.password1, Validators.required),
-			password2: new FormControl(defaults.password2, Validators.required),
+			name: new FormControl(defaults.name, [Validators.required, Validators.maxLength(30)]),
+			email: new FormControl(defaults.email, [Validators.required, Validators.email, Validators.maxLength(50)]),
+			password1: new FormControl(defaults.password1, [Validators.required, Validators.maxLength(30)]),
+			password2: new FormControl(defaults.password2, [Validators.required, Validators.maxLength(30)]),
 			// condiciones: new FormControl(false, Validators.required)
-		}, { validators: [
-			this.sonIguales('password1', 'password2')] 
+		}, {
+			validators: [
+				this.sonIguales('password1', 'password2')]
 		});
 	}
 
@@ -70,9 +71,9 @@ export class RegisterComponent implements OnInit {
 		if (this.forma.value.email.length > 6)
 			this.loginService.checkEmailExists(pattern).subscribe((data: any) => {
 				if (!data.ok) {
-					this.forma.controls['email'].setErrors({'incorrect': true});
-					this.forma.setErrors({'emailExists': true})
-				}	
+					this.forma.controls['email'].setErrors({ 'incorrect': true });
+					this.forma.setErrors({ 'emailExists': true })
+				}
 			});
 	}
 
@@ -111,7 +112,7 @@ export class RegisterComponent implements OnInit {
 	// ========================================================
 	// REGISTER GOOGLE 
 	// ========================================================
-	
+
 	googleInit() {
 		gapi.load('auth2', () => {
 			this.auth2 = gapi.auth2.init({
@@ -131,7 +132,7 @@ export class RegisterComponent implements OnInit {
 					if (data.ok) {
 						let idCompany = data.user.id_company._id;
 						if (data.user.id_company) { this.wsService.emit('enterCompany', idCompany); }
-						window.location.href = '#/admin';
+						window.location.href = '/admin';
 						// this.router.navigate(['/admin']);				
 					}
 				},

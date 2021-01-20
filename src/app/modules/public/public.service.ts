@@ -15,8 +15,6 @@ import { SharedService } from '../../services/shared.service';
 })
 export class PublicService {
 
-
-
   company: Company;
   ticket: Ticket;
 
@@ -34,23 +32,7 @@ export class PublicService {
     private sharedService: SharedService,
     private http: HttpClient,
     private router: Router
-  ) {
-
-
-
-    if (localStorage.getItem('company')) {
-      this.company = JSON.parse(localStorage.getItem('company'));
-
-      if (localStorage.getItem('ticket')) {
-        this.ticket = JSON.parse(localStorage.getItem('ticket'));
-        this.router.navigate(['/public/myticket']);
-      } else {
-        this.router.navigate(['/public/companypage']);
-      }
-
-    }
-
-  }
+  ) {}
 
   buscarLocalidades(pattern): Promise<LocationsResponse> {
     return new Promise((resolve, reject) => {
@@ -87,8 +69,29 @@ export class PublicService {
     return this.http.get<SectionsResponse>(environment.api + '/section/readsections/' + idCompany);
   }
 
-  createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {
-    let data = { blContingent, idSocket, txName, nmPersons, idSection };
+  readAvailableDates(nmPersons: number, idSection: string, dtReserve: Date): Observable<object> {
+    let data = { nmPersons, idSection, dtReserve };
+    return this.http.post(environment.api + '/t/readavailability/', data);
+  }
+
+  getUserTickets(txPlatform: string, idUser: string){
+        if (!txPlatform || !idUser) { return; }
+        
+    const url = environment.api + '/t/readusertickets/' + txPlatform + '/' + idUser;
+    return this.http.get(url);
+  }
+
+  createTicket(
+    blContingent: boolean,
+    idSocket: string,
+    txName: string,
+    nmPersons: number,
+    idSection: string,
+    nmPhone: number,
+    txEamil: string,
+    tmReserve: Date,
+    cdTables: number): Observable<object> {
+    let data = { blContingent, idSocket, txName, nmPersons, idSection, nmPhone, txEamil, tmReserve, cdTables };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
@@ -97,6 +100,7 @@ export class PublicService {
     const url = environment.api + '/t/readtickets/' + idCompany;
     return this.http.get(url);
   }
+
 
   actualizarSocket(idTicket: string, newSocket: string, isClient: boolean): Observable<object> {
     const socketsData = { idTicket, newSocket, isClient };
@@ -133,9 +137,9 @@ export class PublicService {
 
   clearPublicSession(): void {
     this.chatMessages = [];
-    delete this.ticket;
+    //delete this.ticket;
     delete this.company;
-    if (localStorage.getItem('ticket')) { localStorage.removeItem('ticket'); }
+    //if (localStorage.getItem('ticket')) { localStorage.removeItem('ticket'); }
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
     this.router.navigate(['/home']);
   }

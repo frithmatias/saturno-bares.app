@@ -14,15 +14,14 @@
 
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Nombre del cliente</mat-label>
-                    <input matInput placeholder="Ingresa el nombre del cliente" formControlName="txName" name="txName"
-                        type="text" maxlength="20" required>
+                    <input maxlength="30" type="text" matInput placeholder="Ingresa el nombre del cliente"
+                        formControlName="txName" name="txName" required>
                 </mat-form-field>
-
 
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Cantidad de Personas</mat-label>
-                    <input matInput placeholder="Cantidad de Personas" formControlName="nmPersons" name="nmPersons"
-                        type="number" min="1" required>
+                    <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                        formControlName="nmPersons" name="nmPersons" required>
                 </mat-form-field>
 
                 <mat-form-field color="accent" class="w-100">
@@ -35,7 +34,7 @@
                 </mat-form-field>
 
                 <div class="w-100 text-right">
-                    <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()">
+                    <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()" [disabled]="ticketForm.invalid">
                         Crear Ticket
                     </button>
                 </div>

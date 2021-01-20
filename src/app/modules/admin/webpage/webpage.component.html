@@ -10,49 +10,74 @@
 
         <mat-card-content class="p-2" *ngIf="this.loginService.user.id_company">
 
-            <form ngNativeValidate [formGroup]="formWebPage" #formDirective="ngForm" (ngSubmit)="sendWebPage(formDirective)">
+            <form ngNativeValidate [formGroup]="formWebPage" #formDirective="ngForm"
+                (ngSubmit)="sendWebPage(formDirective)">
 
                 <!-- EMAIL -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Email del comercio</mat-label>
-                    <input matInput type="email" formControlName="txEmail" placeHolder="usuario@dominio.com">
+                    <span matPrefix class="text-accent mdi mdi-email">&nbsp;</span>
+
+                    <input maxlength="50" matInput type="email" formControlName="txEmail" placeHolder="usuario@dominio.com"
+                        (keydown.space)="$event.preventDefault()" [value]="loginService.user.id_company?.tx_email">
+                </mat-form-field>
+
+                <!-- TELEGRAM -->
+                <mat-form-field color="accent" class="w-100">
+                    <mat-label>Telegram</mat-label>
+                    <span matPrefix class="text-accent mdi mdi-telegram"> https://t.me/ </span>
+
+                    <input matInput maxlength="30" type="text"  formControlName="txTelegram"
+                        placeholder="telegram-username" (keydown.space)="$event.preventDefault()" [value]="loginService.user.id_company?.tx_telegram">
                 </mat-form-field>
 
                 <!-- WHATSAPP -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Whatsapp</mat-label>
-                    <input matInput type="number" formControlName="txWhatsapp" placeholder="54 11 55551234" (keydown.space)="$event.preventDefault()">
+                    <span matPrefix class="text-accent mdi mdi-whatsapp"> https://wa.me/</span>
+
+                    <input matInput maxlength="30" type="number" formControlName="txWhatsapp" placeholder="541155551234"
+                        (keydown.space)="$event.preventDefault()" [value]="loginService.user.id_company?.tx_whatsapp">
                 </mat-form-field>
 
                 <!-- FACEBOOK -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Facebook</mat-label>
-                    <input matInput type="text" formControlName="txFacebook" placeholder="www.facebook.com/micomercio">
+                    <span matPrefix class="text-accent mdi mdi-facebook"> www.facebook.com/</span>
+                    <input matInput maxlength="30" type="text" formControlName="txFacebook" placeholder="mi-facebook-page" [value]="loginService.user.id_company?.tx_facebook">
                 </mat-form-field>
 
                 <!-- TWITTER -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Twitter</mat-label>
-                    <input matInput type="text" formControlName="txTwitter" placeholder="www.twitter.com/micomercio">
+                    <span matPrefix class="text-accent mdi mdi-twitter"> www.twitter.com/</span>
+
+                    <input matInput maxlength="30" type="text" formControlName="txTwitter" placeholder="mi-twitter" [value]="loginService.user.id_company?.tx_twitter">
                 </mat-form-field>
 
                 <!-- INSTAGRAM -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Instagram</mat-label>
-                    <input matInput type="text" formControlName="txInstagram" placeholder="www.instagram.com/micomercio">
+                    <span matPrefix class="text-accent mdi mdi-instagram"> www.instagram.com/</span>
+
+                    <input matInput maxlength="30" type="text" formControlName="txInstagram"
+                        placeholder="mi-instagram" [value]="loginService.user.id_company?.tx_instagram">
                 </mat-form-field>
 
                 <!-- WELCOME TEXT -->
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Historia de tu comercio, descripción o presentación.</mat-label>
-                    <textarea class="textarea" rows="5" matInput placeholder="Ingresa el texto de bienvenida aquí"
+                    <textarea maxlength="1000" class="textarea" rows="5" matInput placeholder="Ingresa el texto de bienvenida aquí"
                         formControlName="txWelcome"
-                        [value]="this.loginService.user.id_company.tx_company_welcome"></textarea>
+                        [value]="this.loginService.user.id_company?.tx_company_welcome"></textarea>
                 </mat-form-field>
 
                 <!-- SUBMIT BUTTON -->
                 <div class="container pt-4 px-0">
-                    <button mat-raised-button color="accent" type="submit">
+                    <div *ngIf="loading">
+                        <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+                    </div>
+                    <button *ngIf="!loading" mat-raised-button color="accent" type="submit" [disabled]="formWebPage.invalid">
                         <span class="mdi lg mdi-content-save-outline"></span>
                         GUARDAR
                     </button>
@@ -62,13 +87,13 @@
             <hr>
 
             <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id" idField="tx_company_logo"
-                [data]="this.loginService.user.id_company" [header]="header.logo" (dataUpdated)="dataUpdated($event)">
+                [documentData]="this.loginService.user.id_company" [header]="header.logo" (dataUpdated)="dataUpdated($event)">
             </app-uploader>
 
             <hr>
 
             <app-uploader [multi]="true" [idDocument]="this.loginService.user.id_company._id"
-                idField="tx_company_banners" [data]="this.loginService.user.id_company" [header]="header.banners"
+                idField="tx_company_banners" [documentData]="this.loginService.user.id_company" [header]="header.banners"
                 (dataUpdated)="dataUpdated($event)">
             </app-uploader>
         </mat-card-content>

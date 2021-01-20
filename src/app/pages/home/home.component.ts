@@ -8,6 +8,7 @@ import { Location } from 'src/app/interfaces/location.interface';
 import { LocationsResponse } from '../../interfaces/location.interface';
 import { CapitalizarPipe } from '../../pipes/capitalizar.pipe';
 import { CompaniesResponse, Company } from 'src/app/interfaces/company.interface';
+import { MatStepper } from '@angular/material/stepper';
 
 moment.locale('es');
 @Component({
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     public publicService: PublicService,
-		private capitalizarPipe: CapitalizarPipe
+    private capitalizarPipe: CapitalizarPipe
 
   ) { }
 
@@ -65,7 +66,7 @@ export class HomeComponent implements OnInit {
 
 
   setLocalidad(localidad: Location) {
-		if (localidad) {
+    if (localidad) {
 
       let idLocation = localidad.properties.id;
       this.publicService.buscarBaresEnLocalidad(idLocation).subscribe((data: CompaniesResponse) => {
@@ -73,24 +74,42 @@ export class HomeComponent implements OnInit {
         this.companies = data.companies;
       })
 
-			if (localidad.geometry?.coordinates) this.centerMap = localidad.geometry.coordinates;
+      if (localidad.geometry?.coordinates) this.centerMap = localidad.geometry.coordinates;
 
-			let provinciaNombre = localidad.properties.provincia.nombre;
-			if (provinciaNombre.toLowerCase() === 'Ciudad Autónoma de Buenos Aires'.toLowerCase()) {
-				provinciaNombre = 'CABA';
-			}
+      let provinciaNombre = localidad.properties.provincia.nombre;
+      if (provinciaNombre.toLowerCase() === 'Ciudad Autónoma de Buenos Aires'.toLowerCase()) {
+        provinciaNombre = 'CABA';
+      }
 
-			const capitalizedLocation =
-				this.capitalizarPipe.transform(localidad.properties.nombre) + ', ' +
-				this.capitalizarPipe.transform(localidad.properties.departamento.nombre) + ', ' +
-				this.capitalizarPipe.transform(provinciaNombre);
+      const capitalizedLocation =
+        this.capitalizarPipe.transform(localidad.properties.nombre) + ', ' +
+        this.capitalizarPipe.transform(localidad.properties.departamento.nombre) + ', ' +
+        this.capitalizarPipe.transform(provinciaNombre);
+      return capitalizedLocation;
+    }
+  }
 
-			return capitalizedLocation;
-		}
+  cleanInput(inputCompany) {
+    inputCompany.value = null;
+  }
+
+  stepperGoNext(stepper: MatStepper) {
+		stepper.next();
+	}
+
+
+	stepperGoBack(stepper: MatStepper) {
+		stepper.previous();
+	}
+
+
+  goBottom(){
+    let drawer = document.querySelector('mat-drawer-content');
+    if(drawer) drawer.scrollTo(0, drawer.scrollHeight);
+  }
+
+  scrollToElement($element): void {
+    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
   
-  cleanInput() {
-    this.localidadesControl.reset();
-    this.localidades = [];
-  }
 }

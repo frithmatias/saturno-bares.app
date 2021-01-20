@@ -1,16 +1,21 @@
-.logo-search-container {
+.logo-container {
     display  : flex;
     flex-grow: 1;
 }
 
-
 .logo-img {
-    background-image   : url('../../../assets/img/svg/cup.svg');
+    background-image   : url('../../../assets/img/svg/beer.svg');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
     height             : 2em;
     width              : 2em;
+}
+
+@media (max-width: 400px) {
+    .logo-container {
+        display: none;
+    }
 }
 
 @media (max-width: 575px) {
@@ -38,14 +43,6 @@
     line-height   : 1em;
     text-transform: uppercase;
     font-family   : system-ui;
-}
-
-
-.search {
-    flex-grow    : 1;
-    align-self   : center;
-    padding-left : 10px;
-    padding-right: 10px;
 }
 
 .company-name {
@@ -132,60 +129,7 @@
 }
 
 
-/* THEME SELECTION */
-.box-dark-purple {
-    width           : 2em;
-    height          : 2em;
-    background-color: #343332;
-    border-top      : .5em solid #7b1fa2;
-    margin          : .5em;
-}
 
-/* .box-dark-purple:before {
-    color  : #00ff4b;
-    content: 'A';
-    font-weight: 400;
-} */
-
-.box-dark-pink {
-    width           : 2em;
-    height          : 2em;
-    background-color: #343332;
-    border-top      : .5em solid #e91e63;
-    margin          : .5em;
-}
-
-.box-grey-dark {
-    width           : 2em;
-    height          : 2em;
-    background-color: #a3a3a3;
-    border-top      : .5em solid #323232;
-    margin          : .5em;
-}
-
-.box-grey-orange {
-    width           : 2em;
-    height          : 2em;
-    background-color: #a3a3a3;
-    border-top      : .5em solid #ff5722;
-    margin          : .5em;
-}
-
-.box-light-blue {
-    width           : 2em;
-    height          : 2em;
-    background-color: #e6e4e0;
-    border-top      : .5em solid #3f51b5;
-    margin          : .5em;
-}
-
-.box-light-green {
-    width           : 2em;
-    height          : 2em;
-    background-color: #e6e4e0;
-    border-top      : .5em solid #2e7d32;
-    margin          : .5em;
-}
 
 /* USER LOGGED-IN MENU */
 

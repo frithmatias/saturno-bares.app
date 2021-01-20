@@ -2,11 +2,11 @@
 
     <mat-card>
 
-        <form #f="ngForm" (ngSubmit)="enviar( f )">
+        <form #f="ngForm" ngNativeValidate [formGroup]="contactForm" (ngSubmit)="enviar()">
 
             <mat-form-field color="accent" class="w-100">
                 <mat-label>Tipo de contacto</mat-label>
-                <mat-select ngModel name="tipo" required>
+                <mat-select formControlName="cdContact" name="cdContact" required>
                     <mat-option value="consulta"> Consulta </mat-option>
                     <mat-option value="reclamo"> Reclamo </mat-option>
                     <mat-option value="sugerencia"> Sugerencia </mat-option>
@@ -15,8 +15,7 @@
 
             <mat-form-field color="accent" class="w-100">
                 <mat-label>Comentario</mat-label>
-                <textarea matInput ngModel name="comentarios" rows="5" required minlength="10">
-                    Por favor, deje su consulta, comentario o sugerencia aquí.
+                <textarea minlength="10" maxlength="500" formControlName="txComment" name="txComment" matInput rows="5" required>
                 </textarea>
             </mat-form-field>
 
@@ -28,22 +27,25 @@
 
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Nombre</mat-label>
-                        <input matInput ngModel name="nombre" minlength="2">
+                        <input maxlength="30" type="text" matInput formControlName="txName" name="txName" name="nombre"
+                            minlength="2">
                     </mat-form-field>
 
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Email</mat-label>
-                        <input matInput ngModel name="email" type="email">
+                        <input maxlength="50" type="email" matInput formControlName="txEmail" name="txEmail"
+                            name="email">
                     </mat-form-field>
 
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Teléfono</mat-label>
-                        <input matInput ngModel name="telefono" minlength="8">
+                        <input min="10000000" max="99999999999999" type="number" matInput formControlName="nmPhone"
+                            name="nmPhone">
                     </mat-form-field>
                 </div>
             </div>
 
-            <button class="btn btn-success btn-block mt-4" [disabled]="!f.valid">Enviar</button>
+            <button class="btn btn-success btn-block mt-4" type="submit">Enviar</button>
 
 
 

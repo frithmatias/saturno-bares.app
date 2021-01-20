@@ -4,8 +4,8 @@
     <mat-form-field color="accent" class="w-100">
         <mat-label>Rol</mat-label>
         <mat-select formControlName="rol" name="rol" required>
-            <mat-option value="ADMIN_ROLE"> Administrador y Camarero</mat-option>
-            <mat-option value="WAITER_ROLE"> Camarero </mat-option>
+            <mat-option value="ADMIN_ROLE"> Administrador y Camarero/a</mat-option>
+            <mat-option value="WAITER_ROLE"> Camarero/a </mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -20,36 +20,40 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre" formControlName="nombre" name="nombre" type="text" required
+        <input maxlength="30" matInput placeholder="Nombre" formControlName="nombre" name="nombre" type="text" required
             placeholder="Nombre">
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" name="email" type="email" required>
+        <mat-error>Verifica este campo<span *ngIf="forma.errors?.emailExists">, parece que este email ya se encuentra registrado</span></mat-error>
+        <input maxlength="50" matInput placeholder="Email" formControlName="email" name="email" type="email" (keyup)="checkEmailExists()" required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Clave</mat-label>
-        <input matInput placeholder="Clave" formControlName="password" name="password" type="password" required
+        <input maxlength="30" matInput placeholder="Clave" formControlName="password" name="password" type="password" required
             placeholder="Contraseña" autocomplete="new-password">
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Clave</mat-label>
-        <input matInput placeholder="Clave" formControlName="password2" name="password2" type="password" required
+        <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2" type="password" required
             placeholder="Confirma contraseña" autocomplete="new-password">
     </mat-form-field>
 
     <div class="container pt-4 px-0">
-        <div *ngIf="!waiterEdit">
-            <button mat-raised-button color="accent" type="submit">
+        <div *ngIf="loading">
+            <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+        </div>
+        <div *ngIf="!waiterEdit && !loading">
+            <button mat-raised-button color="accent" type="submit" [disabled]="forma.invalid">
                 <span class="mdi lg mdi-content-save-outline"></span>
-                GUARDAR CAMARERO
+                GUARDAR CAMARERO/A
             </button>
         </div>
-        <div *ngIf="waiterEdit">
-            <button mat-raised-button color="warn" type="submit">
+        <div *ngIf="waiterEdit && !loading">
+            <button mat-raised-button color="warn" type="submit" [disabled]="forma.invalid">
                 GUARDAR CAMBIOS
             </button>
             <button mat-button (click)="resetForm(formDirective)">

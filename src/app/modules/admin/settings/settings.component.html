@@ -11,7 +11,8 @@
             <mat-expansion-panel class="my-3">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <span *ngIf="adminService.settings.bl_spm_auto" class="xl mdi mdi-boom-gate-up text-deco"></span>
+                        <span *ngIf="adminService.settings.bl_spm_auto"
+                            class="xl mdi mdi-boom-gate-up text-deco"></span>
                         <span *ngIf="!adminService.settings.bl_spm_auto" class="xl mdi mdi-boom-gate text-deco"></span>
 
                         <span class="align-self-center md ml-2">Asignación Autom. de Mesas</span>
@@ -19,31 +20,7 @@
                 </mat-expansion-panel-header>
 
 
-                <div class="card-left-border text-left animated fadeIn" *ngIf="showHelp">
-                    <p>
-                        ACTIVADA: Si esta opción esta activada el sistema asignará automáticamente una mesa compatible y
-                        disponible cuando ocurren los siguientes eventos:
-                    </p>
 
-                    <ol>
-                        - Una mesa es liberada: El sistema buscará un ticket compatible y en estado "esperando" para la
-                        mesa.
-
-                    </ol>
-                    <ol>
-                        - Un ticket es creado: El sistema buscará una mesa compatible y en estado "disponible".
-                    </ol>
-
-                    <p>
-                        Si el sistema no encuentra una mesa que cubra la cantidad de personas en el grupo, el ticket
-                        quedará en estado "requerido" y las mesas deben ser asignadas por un camarero.
-                    </p>
-                    <p>
-                        DESACTIVADA: Si esta opción esta desactivada el sistema sólo proveera mesas a los tickets que
-                        tengan
-                        mesas asignadas por los camareros.
-                    </p>
-                </div>
 
                 <mat-card-content class="p-2 d-flex">
 
@@ -59,6 +36,7 @@
                         <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
                         ]
                     </div>
+
                 </mat-card-content>
 
                 <mat-card-actions class="p-2 text-right">
@@ -67,7 +45,8 @@
                         <table>
                             <tr>
                                 <td class="button-icon mdi  mdi-help xl"></td>
-                                <td class="button-text">Que es esto?</td>
+                                <td *ngIf="showHelp" class="button-text">Cerrar</td>
+                                <td *ngIf="!showHelp" class="button-text">Que es esto?</td>
                             </tr>
                         </table>
                     </button>
@@ -85,6 +64,15 @@
                     </button>
                 </mat-card-actions>
 
+                <mat-card-content>
+                    <div class="card-left-border text-left animated fadeIn p-2 text-accent" *ngIf="showHelp">
+                        <p>
+                            Si esta opción esta activada el sistema buscará una mesa compatible y la aisgnará
+                            automáticamente a un cliente en cola virtual. Si esta opcion NO esta activada el cliente
+                            debe esperar a que un camarero/a decida que mesa le será asignada.
+                        </p>
+                    </div>
+                </mat-card-content>
             </mat-expansion-panel>
 
             <!-- --------------------- -->

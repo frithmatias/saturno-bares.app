@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Section } from 'src/app/interfaces/section.interface';
 import { Subscription } from 'rxjs';
 import { AdminService } from './admin.service';
 import { LoginService } from '../../services/login.service';
-import { TablesResponse } from '../../interfaces/table.interface';
-import { SectionsResponse } from '../../interfaces/section.interface';
-import { CompaniesResponse } from '../../interfaces/company.interface';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -43,7 +40,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.adminService.readTables(idCompany);
     this.adminService.readSections(idCompany);
     this.adminService.readSettings(idCompany);
-
   }
 
   ngOnDestroy(): void {

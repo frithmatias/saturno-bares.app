@@ -12,7 +12,7 @@
 
         <input #fileInput (change)="queueFiles($event)" [id]="idField" type="file" style="display: none">
 
-        <div *ngIf="data">
+        <div *ngIf="documentData">
 
             <!-- ------------------------------------------------ -->
             <!-- UPLOAD SINGLE -->
@@ -21,15 +21,15 @@
             <div *ngIf="!multi" class="images-container">
 
                 <!-- Imagenes cargadas en el server -->
-                <div *ngIf="filesToUpload.length === 0 && data[idField]" class="image">
-                    <img src="{{data[idField] | imagenPipe : idField : idDocument }}">
+                <div *ngIf="filesToUpload.length === 0 && documentData[idField]" class="image">
+                    <img src="{{documentData[idField] | imagenPipe : idField : idDocument }}">
                     <span *ngIf="editable" class="mdi mdi-close delete-icon"
-                        (click)="deleteImage(data[idField])"></span>
+                        (click)="deleteImage(documentData[idField])"></span>
                 </div>
 
                 <!-- no hay imagen subida ni precargada se muestra imagen por defecto -->
 
-                <div *ngIf="filesToUpload.length === 0 && !data[idField]">
+                <div *ngIf="filesToUpload.length === 0 && !documentData[idField]">
 
                     <label *ngIf="editable else noimage" class="image pointer" [for]="idField">
                         <img src="../../../assets/img/no-image1.png">
@@ -60,7 +60,7 @@
             <div *ngIf="multi" class="images-container">
 
                 <!-- Imagenes cargadas en el server -->
-                <div *ngFor="let img of data[idField]" class="image">
+                <div *ngFor="let img of documentData[idField]" class="image">
                     <img src="{{img | imagenPipe : idField : idDocument }}">
                     <span class="mdi mdi-close delete-icon" (click)="deleteImage(img)"></span>
                 </div>
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- para la diferencia muestro imagenes por defecto -->
-                <div *ngFor="let aasdf of [].constructor(maxupload - data[idField].length - filesToUpload.length)"
+                <div *ngFor="let aasdf of [].constructor(maxupload - documentData[idField]?.length - filesToUpload?.length)"
                     class="image pointer">
                     <label [for]="idField" style="cursor: inherit;">
                         <img src="../../../assets/img/no-image1.png">
@@ -108,10 +108,12 @@
 <!-- ------------------------------------------------ -->
 
 <mat-card-actions *ngIf="multi">
-    <mat-spinner *ngIf="uploading"></mat-spinner>
+    <div *ngIf="uploading">
+        <button mat-button color="accent" disabled>Subiendo... </button>
+    </div>
     <button *ngIf="!uploading" mat-button (click)="uploadMulti()" [disabled]="filesToUpload.length===0"><i class="mdi mdi-upload"></i>
-        Subir {{uploading}}</button>
-    <button *ngIf="!uploading" mat-button (click)="deleteImage('todas')" [disabled]="data[idField].length === 0"><i
+        Subir</button>
+    <button *ngIf="!uploading" mat-button (click)="deleteImage('todas')" [disabled]="documentData[idField].length === 0"><i
             class="mdi mdi-delete"></i> Eliminar Todas</button>
 </mat-card-actions>
 

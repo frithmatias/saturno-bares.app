@@ -24,6 +24,7 @@ export class CompanyCreateComponent implements OnInit {
 	@Output() clearForm: EventEmitter<void> = new EventEmitter();
 
 	forma: FormGroup;
+	loading = false;
 	txCompanyString: string;
 	centerMap: number[] = []; // for app-map child
 
@@ -70,15 +71,16 @@ export class CompanyCreateComponent implements OnInit {
 	createForm(defaults: any): void {
 		if (this.forma) return;
 		this.forma = new FormGroup({
-			txCompanyName: new FormControl(defaults.txCompanyName || '', [Validators.required, this.validatorSetId.bind(this)]),
-			txCompanyString: new FormControl({ value: defaults.txCompanyString || '', disabled: true }, Validators.required),
-			txCompanySlogan: new FormControl(defaults.txCompanySlogan || ''),
-			txCompanyLocation: new FormControl(defaults.txCompanyLocation || '', Validators.required),
+			txCompanyType: new FormControl(defaults.txCompanyType || '', Validators.required),
+			txCompanyName: new FormControl(defaults.txCompanyName || '', [Validators.required, Validators.maxLength(30), this.validatorSetId.bind(this)]),
+			txCompanyString: new FormControl({ value: defaults.txCompanyString || '', disabled: true }, [Validators.required, Validators.maxLength(30)]),
+			txCompanySlogan: new FormControl(defaults.txCompanySlogan || '', Validators.maxLength(50)),
+			txCompanyLocation: new FormControl(defaults.txCompanyLocation || '', [Validators.required, Validators.maxLength(100)]),
 			cdCompanyLocation: new FormControl(defaults.cdCompanyLocation || '', Validators.required),
-			txAddressStreet: new FormControl(defaults.txAddressStreet || '', Validators.required),
-			txAddressNumber: new FormControl(defaults.txAddressNumber || '', Validators.required),
-			txCompanyLat: new FormControl({ value: defaults.txCompanyLat || '', disabled: true }, Validators.required),
-			txCompanyLng: new FormControl({ value: defaults.txCompanyLng || '', disabled: true }, Validators.required),
+			txAddressStreet: new FormControl(defaults.txAddressStreet || '', [Validators.required, Validators.maxLength(30)]),
+			txAddressNumber: new FormControl(defaults.txAddressNumber || '', [Validators.required, Validators.max(20000), Validators.min(1)]),
+			txCompanyLat: new FormControl({ value: defaults.txCompanyLat || '', disabled: true }, [Validators.required, Validators.maxLength(30)]),
+			txCompanyLng: new FormControl({ value: defaults.txCompanyLng || '', disabled: true }, [Validators.required, Validators.maxLength(30)]),
 		});
 	}
 
@@ -91,6 +93,7 @@ export class CompanyCreateComponent implements OnInit {
 		if (!changes.companyEdit?.currentValue) { return; }
 
 		let defaults = {
+			txCompanyType: changes.companyEdit.currentValue.tx_company_type,
 			txCompanyName: changes.companyEdit.currentValue.tx_company_name,
 			txCompanyString: changes.companyEdit.currentValue.tx_company_string,
 			txCompanySlogan: changes.companyEdit.currentValue.tx_company_slogan,
@@ -168,6 +171,7 @@ export class CompanyCreateComponent implements OnInit {
 		
 		const company: any = {
 			id_user: this.loginService.user._id,
+			tx_company_type: this.forma.value.txCompanyType,
 			tx_company_name: this.forma.value.txCompanyName,
 			tx_company_slogan: this.forma.value.txCompanySlogan,
 			tx_company_string: this.forma.getRawValue().txCompanyString,
@@ -179,28 +183,33 @@ export class CompanyCreateComponent implements OnInit {
 			tx_company_lng: this.forma.getRawValue().txCompanyLng
 		};
 
+		this.loading = true;
+
 		if (this.companyEdit) {
 			company._id = this.companyEdit._id;
 			this.adminService.updateCompany(company).subscribe((data: CompanyResponse) => {
+				
+				this.loading = false;
 				this.newCompany.emit(data.company);
 				this.sharedService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 			}, (err: HttpErrorResponse) => {
+				this.loading = false;
 				this.sharedService.snack(err.error.msg, 2000);
 			}
 			)
 
 		} else {
 			this.adminService.createCompany(company).subscribe((data: CompanyResponse) => {
-				this.newCompany.emit(data.company);
+				this.loading = false;
+				this.sharedService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 				if (data.ok) {
-					this.sharedService.snack('Empresa creada correctamente', 2000);
-				} else {
-					this.sharedService.snack(data.msg, 2000);
+					this.newCompany.emit(data.company);
 				}
-			}, () => {
-				this.sharedService.snack('Error al crear la empresa', 2000);
+			}, (err: HttpErrorResponse) => {
+				this.loading = false;
+				this.sharedService.snack(err.error.msg, 2000);
 			});
 		}
 	}

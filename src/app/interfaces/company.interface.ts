@@ -7,6 +7,7 @@ export interface Company {
 	id_user: string;
 	
 	// register data
+	tx_company_type: string;
 	tx_company_name: string;
 	tx_company_slogan: string;
 	tx_company_string: string;
@@ -20,6 +21,7 @@ export interface Company {
 	// webpage data
 	tx_company_welcome: string;
 	tx_email: string;
+	tx_telegram: string;
 	tx_whatsapp: string;
 	tx_facebook: string;
 	tx_twitter: string;

@@ -156,8 +156,8 @@
                 <tr>
                     <td>Circuito</td>
                     <td class="text-right">
-                        <span *ngIf="table?.id_session?.id_ticket.bl_continget">Internet</span>
-                        <span *ngIf="!table?.id_session?.id_ticket.bl_continget">Contingencia</span>
+                        <span *ngIf="table?.id_session?.id_ticket.bl_contingent === false">Web</span>
+                        <span *ngIf="table?.id_session?.id_ticket.bl_contingent === true">Contingencia</span>
                     </td>
                 </tr>
                 <tr>
@@ -169,7 +169,8 @@
                 <tr>
                     <td>Prioridad</td>
                     <td class="text-right">
-                        {{ table?.id_session?.id_ticket.bl_priority }}
+                        <span *ngIf="table?.id_session?.id_ticket.bl_priority === false">No</span>
+                        <span *ngIf="table?.id_session?.id_ticket.bl_priority === true">Si</span>
                     </td>
                 </tr>
                 <tr>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { PublicService } from '../../modules/public/public.service';
 import { Router } from '@angular/router';
-import { Company, CompaniesResponse } from '../../../interfaces/company.interface';
-import { PublicService } from 'src/app/modules/public/public.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { CompaniesResponse } from '../../interfaces/company.interface';
+import { Company } from 'src/app/interfaces/company.interface';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-search',
@@ -12,6 +13,7 @@ import { SharedService } from 'src/app/services/shared.service';
 export class SearchComponent implements OnInit {
 
   companies: Company[] = [];
+  companySelected: Company;
 
   constructor(
     private router: Router,
@@ -23,7 +25,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    let refInput = document.getElementById('inputCompany');
+    let refInput = document.getElementById('inputCompanyToolbar');
     refInput.focus();
   }
 
@@ -40,23 +42,17 @@ export class SearchComponent implements OnInit {
       }, () => {
         this.sharedService.snack('Error al obtener las empresas', 2000, null);
       })
-      // this.router.navigate(['/public', e.value]);
     }
   }
 
-  goToCompany(companySelected: Company): void {
-    localStorage.setItem('company', JSON.stringify(companySelected));
-    this.publicService.company = companySelected;
-    this.router.navigate(['/public/', companySelected.tx_company_string]);
+  setCompany(e: any): void {
+    this.companySelected = e;
+    localStorage.setItem('company', JSON.stringify(e));
+    this.publicService.company = e;
+    this.router.navigate(['/public/', e.tx_company_string]);
   }
 
   cleanInput(inputCompany) {
     inputCompany.value = null;
   }
-
-  salir(): void {
-    this.publicService.clearPublicSession();
-    this.router.navigate(['/home'])
-  }
-
 }

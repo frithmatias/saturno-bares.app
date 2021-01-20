@@ -1,6 +1,12 @@
 .mat-drawer-chat {
-    width: 100%;
-    background-color: rgba(0,0,0,.7);
-    box-shadow: none;
+    width           : 100%;
+    background-color: rgba(0, 0, 0, .7);
+    box-shadow      : none;
 }
 
+.main-wrapper {
+    text-align: -webkit-center;
+    top       : 64px;
+    position  : absolute;
+    width     : 100%;
+}

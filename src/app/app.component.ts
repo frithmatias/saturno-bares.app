@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav/drawer';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { MatDrawer } from '@angular/material/sidenav/drawer';
 export class AppComponent {
   opened: boolean;
   unreadMessages: number;
-  constructor() {}
+  constructor(public loginService: LoginService) {}
   toggle(htmlRef: MatDrawer ): void {
     htmlRef.toggle();
   }

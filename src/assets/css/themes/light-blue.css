@@ -1,6 +1,7 @@
 :root {
     --primary            : #3f51b5;
-    --accent             : #0169bc;
+    --accent             : #001b89;
+    --accent-invert      : #708dff;
     --warn               : #f44336;
     --deco               : #07b326;
     --info               : #3f3f3f;
@@ -3026,7 +3027,7 @@ td.mat-footer-cell {
 }
 
 .mat-simple-snackbar-action {
-    color: var(--accent)
+    color: var(--accent-invert)
 }
 
 

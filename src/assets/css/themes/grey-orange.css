@@ -1,6 +1,7 @@
 :root {
     --primary            : #ff5722;
-    --accent             : #e05123;
+    --accent             : #952500;
+    --accent-invert      : #ffb13d;
     --warn               : #f44336;
     --deco               : #277127;
     --info               : #3f3f3f;
@@ -1301,7 +1302,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-raised-button.mat-accent,
 .mat-fab.mat-accent,
 .mat-mini-fab.mat-accent {
-    color: rgba(0, 0, 0, .87)
+    color: #fff
 }
 
 .mat-flat-button.mat-warn,
@@ -3026,7 +3027,7 @@ td.mat-footer-cell {
 }
 
 .mat-simple-snackbar-action {
-    color: var(--accent)
+    color: var(--accent-invert)
 }
 
 

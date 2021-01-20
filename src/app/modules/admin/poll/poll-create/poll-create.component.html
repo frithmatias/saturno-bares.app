@@ -13,11 +13,14 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Item a calificar</mat-label>
-        <input matInput placeholder="Por ejemplo Atención, Limpieza, Comida, Puntualidad, etc" formControlName="txItem" maxlength="15" name="txItem" type="text" required>
+        <input maxlength="20" matInput placeholder="Por ejemplo Atención, Limpieza, Comida, Puntualidad, etc" formControlName="txItem" name="txItem" type="text" required>
     </mat-form-field>
 
     <div class="container pt-4 px-0">
-        <button mat-raised-button color="accent" type="submit">
+        <div *ngIf="loading">
+            <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+        </div>
+        <button *ngIf="!loading" mat-raised-button color="accent" type="submit" [disabled]="forma.invalid">
             <span class="mdi lg mdi-content-save-outline"></span>
             GUARDAR ITEM A CALIFICAR
         </button>

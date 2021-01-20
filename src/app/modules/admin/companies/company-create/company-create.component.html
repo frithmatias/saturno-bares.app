@@ -2,15 +2,23 @@
     (ngSubmit)="createCompany(formDirective)">
 
     <mat-form-field color="accent" class="w-100">
+        <mat-label>Tipo de Comercio</mat-label>
+        <mat-select formControlName="txCompanyType" name="txCompanyType" #selectSection matNativeControl required>
+            <mat-option value="bar">Bar</mat-option>
+            <mat-option value="resto">Restaurante</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre del Bar / Restaurant</mat-label>
         <mat-error>Esta Empresa ya se encuentra registrada!</mat-error>
-        <input matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName"
+        <input maxlength="30" matInput placeholder="Nombre de la empresa" formControlName="txCompanyName" name="txCompanyName"
             type="text" required (keyup)="checkCompanyExists()">
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Slogan (Opcional)</mat-label>
-        <input matInput placeholder="50 años en tu barrio" formControlName="txCompanySlogan" name="txCompanySlogan"
+        <input maxlength="50" matInput placeholder="50 años en tu barrio" formControlName="txCompanySlogan" name="txCompanySlogan"
             type="text">
     </mat-form-field>
 
@@ -22,7 +30,7 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
-        <input type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
+        <input maxlength="30" type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
             (click)="cleanInput()" required>
         <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
     </mat-form-field>
@@ -38,12 +46,13 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Calle</mat-label>
-        <input matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text"
+        <input maxlength="30" matInput placeholder="Calle" formControlName="txAddressStreet" name="txAddressStreet" type="text"
             required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Altura</mat-label>
+        <mat-error>Ingresá un valor entre 1 y 20000</mat-error>
         <input matInput placeholder="1234" formControlName="txAddressNumber" name="txAddressNumber" type="number"
             min="1" max="20000" required>
     </mat-form-field>
@@ -76,7 +85,9 @@
         Buscá y marcá en el mapa la ubicación exacta de tu comercio.
     </div>
 
-    <app-map [(center)]="centerMap" (newMarker)="setCoords($event)"></app-map>
+    <div class="create-company-map">
+        <app-map [(center)]="centerMap" (newMarker)="setCoords($event)"></app-map>
+    </div>
     
     <div class="p-2 d-flex" *ngIf="forma.errors?.coordsMissing">
         <div class="p-2 xxl align-self-center text-danger mdi mdi-alert"></div> 
@@ -86,14 +97,17 @@
     </div>
 
     <div class="container pt-4 px-0">
-        <div *ngIf="!companyEdit">
-            <button mat-raised-button color="accent" type="submit">
+        <div *ngIf="loading">
+            <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+        </div>
+        <div *ngIf="!companyEdit && !loading">
+            <button mat-raised-button color="accent" type="submit" [disabled]="forma.invalid">
                 <span class="mdi lg mdi-content-save-outline"></span>
                 GUARDAR COMERCIO
             </button>
         </div>
-        <div *ngIf="companyEdit">
-            <button mat-raised-button color="warn" type="submit">
+        <div *ngIf="companyEdit && !loading">
+            <button mat-raised-button color="warn" type="submit" [disabled]="forma.invalid">
                 GUARDAR CAMBIOS
             </button>
             <button mat-button (click)="resetForm(formDirective)">

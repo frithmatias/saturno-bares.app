@@ -1,0 +1,211 @@
+<div class="saturno-container animated fadeIn">
+  <!-- <pre class="sm text-left">
+    TICKET {{ticket | json}}
+    PUBLICSERVICE.COMPANY {{publicService.company | json}}
+  </pre> -->
+  <div *ngIf="publicService.company">
+
+    <mat-card>
+
+      <h5 *ngIf="loading">
+        <span id="lblNuevoTicket">
+          Cargando...
+        </span>
+      </h5>
+
+      <div *ngIf="!loading">
+
+        <mat-card-header>
+          <div mat-card-avatar><img class="img-fluid"
+              [src]="publicService.company.tx_company_logo | imagenPipe : 'tx_company_logo' : publicService.company._id">
+          </div>
+          <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
+          <mat-card-subtitle>{{ publicService.company.tx_address_street }}
+            {{ publicService.company.tx_address_number }}</mat-card-subtitle>
+        </mat-card-header>
+
+
+        <!------------------------------>
+        <!-- TICKET TO CONFIRM  -->
+        <!------------------------------>
+        <mat-card-content *ngIf="ticket && ticket.id_company===publicService.company._id">
+          <div *ngIf="ticket.tx_status === 'waiting'">
+
+            Ya tenés una reserva pendiente de validación para este comercio.
+
+            Tenés 10 minutos para validar la reserva utilizando uno de los siguientes metodos:
+
+            <div class="screen-ticket-button-confirm my-2">
+
+              <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
+                <button mat-raised-button class="action-button" color="primary">
+                  <table>
+                    <tr>
+                      <td class="button-icon mdi mdi-telegram xl"></td>
+                      <td class="button-text">Telegram</td>
+                    </tr>
+                  </table>
+                </button>
+              </a>
+
+              <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
+                <button mat-raised-button class="action-button" color="active">
+                  <table>
+                    <tr>
+                      <td class="button-icon mdi mdi-whatsapp xl"></td>
+                      <td class="button-text">Whatsapp</td>
+                    </tr>
+                  </table>
+                </button>
+              </a>
+
+              <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
+                <button mat-raised-button class="action-button" color="warn">
+                  <table>
+                    <tr>
+                      <td class="button-icon mdi mdi-google xl"></td>
+                      <td class="button-text">Google</td>
+                    </tr>
+                  </table>
+                </button>
+              </a>
+            </div>
+          </div>
+
+          <div *ngIf="ticket.tx_status === 'scheduled'">
+            Ya tenés una reserva activa para este comercio.
+
+            <button mat-raised-button color="primary"
+              routerLink="/public/tickets/{{ticket.tx_platform}}/{{ticket.id_user}}">Mis Tickets</button>
+          </div>
+        </mat-card-content>
+
+
+        <!------------------------------>
+        <!-- TICKET FORM  -->
+        <!------------------------------>
+        <mat-card-content *ngIf="!ticket || (ticket.id_company!==publicService.company._id)">
+          <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+
+            <div class="d-flex">
+
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Tu Nombre</mat-label>
+                <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
+                  type="text" maxlength="20" required>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-50 pl-1">
+                <mat-label>Cantidad de Personas</mat-label>
+                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                  formControlName="nmPersons" name="nmPersons" required>
+              </mat-form-field>
+
+            </div>
+
+            <div class="d-flex">
+
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Sector</mat-label>
+                <mat-select formControlName="idSection" name="idSection" required>
+                  <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-50 pl-1">
+                <mat-label>Para cuando?</mat-label>
+                <mat-select formControlName="txWhen" name="txWhen" required>
+                  <mat-option value="ahora"><span class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
+                  <mat-option value="otrodia"><span class="text-accent mdi mdi-calendar-month"></span> Otro día
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+
+            <div class="d-flex">
+
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Confirmar por</mat-label>
+                <mat-select formControlName="txContact" name="txContact" required>
+                  <mat-option value="telegram"><span class="text-accent mdi mdi-telegram"></span> Telegram </mat-option>
+                  <mat-option value="whatsapp"><span class="text-accent mdi mdi-whatsapp"></span> Whatsapp </mat-option>
+                  <mat-option value="email"><span class="text-accent mdi mdi-email"></span> Email </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-50 pl-1" *ngIf="ticketForm.controls.txContact.value!=='email'">
+                <mat-label>Teléfono</mat-label>
+                <input max="99999999999" matInput placeholder="1155551234" formControlName="nmPhone" name="nmPhone"
+                  type="number" required>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-50 pl-1" *ngIf="ticketForm.controls.txContact.value==='email'">
+                <mat-label>Email</mat-label>
+                <input maxlength="30" matInput placeholder="usuario@dominio.com" formControlName="txEmail"
+                  name="txEmail" type="email" required>
+              </mat-form-field>
+
+            </div>
+
+
+
+
+            <div class="d-flex" *ngIf="ticketForm.controls.txWhen.value==='otrodia'">
+
+              <mat-form-field color="accent" class="w-33 pr-1">
+                <mat-label>Fecha</mat-label>
+                <input matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                  (dateChange)="readAvailableDates()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-33 px-1">
+                <mat-label>Hora</mat-label>
+                <mat-select formControlName="tmReserve">
+                  <mat-option *ngFor="let available of availability" [value]="available.value"
+                    [disabled]="available.disabled" (click)="readAvailableTables(available.tables)">
+                    {{available.text}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-33 pl-1">
+                <mat-label>Mesa</mat-label>
+                <mat-select formControlName="cdTables">
+                  <mat-option *ngFor="let table of availableTables" [value]="table">
+                    {{table}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
+            </div>
+
+            <div class="w-100 text-right">
+              <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
+                [disabled]="ticketForm.invalid">
+                Reservar Mesa
+              </button>
+            </div>
+
+          </form>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button (click)="salir()">
+            SALIR
+          </button>
+        </mat-card-actions>
+
+
+      </div>
+
+    </mat-card>
+
+  </div>
+
+</div>

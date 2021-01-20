@@ -22,8 +22,8 @@ export class TicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketForm = new FormGroup({
-      txName: new FormControl('', [Validators.required]),
-      nmPersons: new FormControl('', [Validators.required]),
+      txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      nmPersons: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000)]),
       idSection: new FormControl('', [Validators.required]),
     });
   }

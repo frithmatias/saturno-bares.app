@@ -93,8 +93,11 @@ export class HomeComponent implements OnInit {
         
         // pick my session
         let mySession = data.sessions.filter(session => session.id_waiter === this.loginService.user?._id);
-        this.waiterService.session = mySession[0];
-        localStorage.setItem('session', JSON.stringify(this.waiterService.session));
+        
+        if(mySession.length > 0 ) {
+          this.waiterService.session = mySession[0];
+          localStorage.setItem('session', JSON.stringify(mySession[0]))
+        };
 
 
         for ( let sector of this.sections ) {

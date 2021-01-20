@@ -6,6 +6,7 @@ import { catchError, take, tap, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from '../modules/public/public.service';
 import { User } from '../interfaces/user.interface';
+import { Ticket } from 'src/app/interfaces/ticket.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -50,6 +51,10 @@ export class WebsocketService {
 		return this.listen('update-waiters');
 	}
 
+	updatePrivate(): Observable<Object> {
+		return this.listen('update-private');
+	}
+
 	escucharMensajes(): Observable<string> {
 		return this.listen('message-private');
 	}
@@ -71,13 +76,12 @@ export class WebsocketService {
 			let idCompany = user.id_company?._id;
 			if (idCompany) { this.emit('enterCompany', idCompany); }
 
-			// todo: obtener los tickets de section.component y rular por cada uno para actualizarlos en la bd
-			// todo: hacerlo desde el servicio de waiters para evitar traer los tickets a este servicio público.
 		}
-
+		
 		if (localStorage.getItem('ticket')) { // client
-
+			
 			// update localstorage
+			// TODO: multi-tickets el usuario puede almacenar hasta una cantidad determinada de tickets que no se solapen.
 			let ticket = JSON.parse(localStorage.getItem('ticket'));
 			ticket.id_socket = this.idSocket;
 			localStorage.setItem('ticket', JSON.stringify(ticket));

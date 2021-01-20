@@ -1,11 +1,12 @@
 :root {
     --primary            : #242424;
     --accent             : #202020;
+    --accent-invert      : #c1c1c1;
     --warn               : #f44336;
     --deco               : #8d8d8d;
     --info               : #3f3f3f;
     --bg                 : #a3a3a3;
-    --mat-card-bg        : #b6b6b6;
+    --mat-card-bg        : #dadada;
     --mat-panel-bg       : #d0d0d0;
     --mat-bottom-sheet-bg: #d0d0d0;
     --active             : #37ba2d;
@@ -1301,7 +1302,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-raised-button.mat-accent,
 .mat-fab.mat-accent,
 .mat-mini-fab.mat-accent {
-    color: rgba(0, 0, 0, .87)
+    color: #fff
 }
 
 .mat-flat-button.mat-warn,
@@ -3026,7 +3027,7 @@ td.mat-footer-cell {
 }
 
 .mat-simple-snackbar-action {
-    color: var(--accent)
+    color: var(--accent-invert)
 }
 
 

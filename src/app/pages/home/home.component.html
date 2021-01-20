@@ -2,41 +2,123 @@
 <!-- HOME -->
 <!-- ======================================================== -->
 
-<div class="bg-primary text-light p-4">
-  <div class="xxl mb-0 fw600">Bienvenido</div>
-  <div>Desde acá podes pedir una mesa y esperar donde vos quieras.</div>
-  <!-- <div class="logo-img"></div> -->
-</div>
-
-<div class="bg-home">
-
-  <mat-card class="saturno-minicard welcome-card text-dark animated fadeIn">
-    <!-- <span style="font-size: small;color:gray">{{date}}</span> -->
-    <div class="saturno-beer-card my-3"></div>
-    <p class="my-4">Cuando una mesa esté disponible nosotros te notificamos a través de tu dispositivo.</p>
-    <button mat-raised-button color="primary" class="mb-2" routerLink="/public" role="button">
-      <span class="mdi mdi-glass-mug-variant"></span>
-      BUSCAR UN BAR / RESTO
-    </button>
-  </mat-card>
+<mat-horizontal-stepper linear #stepper>
+  <mat-step>
+    <div class="animated fadeIn home-bg text-white">
+      <div class="header-base">
+        <div class="mdi mdi-magnify pointer" (click)="scrollToElement(map)">Buscá por Zona</div>
+      </div>
   
+      <div class="home-welcome vcenter-container mb-4">
+        <div class="vcenter-inner text-white">
+          <div class="home-welcome-title">
+            Volvé a Salir
+          </div>
+          <div class="home-welcome-subtitle">
+
+              Encontrá tu lugar, sin colas ni congestiones.
+
+          </div>
+        </div>
+      </div>
+
+      <div class="company-input-wrapper">
+        <app-search></app-search>
+      </div>
+
+    </div>
+
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+<!-- ======================================================== -->
+<!-- MINI CARDS -->
+<!-- ======================================================== -->
+
+<div class="animated fadeIn my-4 minicards-content">
+
+  <!-- como funciona? -->
+
+  <mat-card class="saturno-minicard pointer m-2" routerLink="/howworks">
+    <div>
+      <span class="mdi mdi-cogs xxxxl op5 text-accent"></span>
+    </div>
+    <div class="xl">
+      ¿Cómo funciona?
+    </div>
+
+    <div class="saturno-minicard-text">
+      Qué es Saturno y cómo funciona.
+    </div>
+  </mat-card>
+
+  <!-- registrar comercio -->
+
+  <mat-card class="saturno-minicard pointer m-2 no-shadow" routerLink="/register">
+    <div>
+      <span class="mdi mdi-storefront-outline xxxxl op5 text-accent"></span>
+    </div>
+    <div class="xl">
+      Registrar Negocio
+    </div>
+
+
+    <div class="saturno-minicard-text">
+      Desde acá podés registrar tu negocio y comenzar a recibir clientes.
+    </div>
+  </mat-card>
+
+  <!-- registrar contacto -->
+
+  <mat-card class="saturno-minicard pointer m-2" routerLink="/contact">
+
+    <div>
+      <span class="mdi mdi-file-document-edit-outline xxxxl op5 text-accent"></span>
+    </div>
+    <div class="xl">
+      Contacto
+    </div>
+
+    <div class="saturno-minicard-text">
+      Por dudas o sugerencias podes usar este formulario de contacto.
+    </div>
+  </mat-card>
+
+  <!-- buscar comercio -->
+
+  <mat-card class="saturno-minicard pointer m-2" routerLink="/public/search">
+
+    <div>
+      <span class="mdi mdi-magnify xxxxl op5 text-accent"></span>
+    </div>
+    <div class="xl">
+      Buscar Bar / Resto
+    </div>
+
+    <div class="saturno-minicard-text">
+      Buscá un Bar o Restaurante que ya esté registrado.
+    </div>
+  </mat-card>
+
 </div>
+
 
 <!-- ======================================================== -->
 <!-- MAPA -->
 <!-- ======================================================== -->
 
-<div class="saturno-map">
+<!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
+<div #map>
 
-  <app-map [(companies)]="companies" [(center)]="centerMap"></app-map>
+  <div class="location-input-wrapper">
+    <div class="icon-magnify-wrapper" (click)="cleanInput(inputFindLocation)">
+      <i class="mdi mdi-magnify icon-magnify"></i>
+    </div>
+    <input #inputFindLocation maxlength="30" class="input-location" type="text" [formControl]="localidadesControl"
+      [matAutocomplete]="auto" placeholder="Buscar por ciudad o barrio" (click)="cleanInput(inputFindLocation)" />
+  </div>
 
-  <mat-form-field color="accent" class="location-input">
-    <mat-label>Busca por ciudad, localidad o barrio</mat-label>
-    <input matInput type="text" [formControl]="localidadesControl" [matAutocomplete]="auto" (click)="cleanInput()" />
-    <span class="input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
-  </mat-form-field>
-
-  <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
   <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
     <mat-option [value]="option" *ngFor="let option of localidades">
       {{ option.properties.nombre | capitalizarPipe }},
@@ -45,82 +127,10 @@
     </mat-option>
   </mat-autocomplete>
 
+  <div class="home-map">
+    <app-map [(companies)]="companies" [(center)]="centerMap"> </app-map>
+  </div>
 
 </div>
 
-<!-- ======================================================== -->
-<!-- MINI CARDS -->
-<!-- ======================================================== -->
-
-<div class="animated fadeIn minicards-content">
-
-  <!-- como funciona? -->
-
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/howworks">
-    <div class="saturno-minicard-title">
-      <div>
-        <span class="mdi mdi-cogs saturno-minicard-icons"></span>
-      </div>
-      <div class="xl">
-        ¿Cómo funciona?
-      </div>
-    </div>
-    <hr class="hr-green">
-    <div class="saturno-minicard-text">
-      Este pequeño asistente le explica como funciona este sistema.
-    </div>
-  </mat-card>
-
-  <!-- registrar comercio -->
-
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/register">
-    <div class="saturno-minicard-title">
-      <div>
-        <span class="mdi mdi-storefront-outline saturno-minicard-icons"></span>
-      </div>
-      <div class="xl">
-        Registrarme
-      </div>
-    </div>
-    <hr class="hr-blue">
-    <div class="saturno-minicard-text">
-      Desde acá podés registrar tu comercio ó empresa y empezar a atender turnos.
-    </div>
-  </mat-card>
-
-  <!-- registrar contacto -->
-
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/contact">
-    <div class="saturno-minicard-title">
-      <div>
-        <span class="mdi mdi-file-document-edit-outline saturno-minicard-icons"></span>
-      </div>
-      <div class="xl">
-        Contacto
-      </div>
-    </div>
-    <hr class="hr-pink">
-    <div class="saturno-minicard-text">
-      Contactenos. Sus sugerencias son muy importantes para nosotros.
-    </div>
-  </mat-card>
-
-  <!-- buscar comercio -->
-
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/public/search">
-    <div class="saturno-minicard-title">
-      <div>
-        <span class="mdi mdi-magnify saturno-minicard-icons"></span>
-      </div>
-      <div class="xl">
-        Buscar empresa
-      </div>
-    </div>
-    <hr class="hr-red">
-    <div class="saturno-minicard-text">
-      Obtenga un turno de una empresa registrada.
-    </div>
-  </mat-card>
-
-</div>
 <app-footer></app-footer>

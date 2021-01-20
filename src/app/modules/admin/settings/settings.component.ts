@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
     let txMessage = this.txMessage;
 
     if (txMessage.length > 100) {
-      this.sharedService.snack('El mensaje no puede contener mas de 100 caracteres', 5000, 'Aceptar');
+      this.sharedService.snack('El mensaje no puede tener mas de 100 caracteres', 5000, 'Aceptar');
       return;
     }
 

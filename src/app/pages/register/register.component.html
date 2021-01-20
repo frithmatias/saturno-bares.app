@@ -28,26 +28,25 @@
 
                         <mat-form-field color="accent" class="w-100">
                             <mat-label>Nombre</mat-label>
-                            <input matInput placeholder="Diego Perez" formControlName="name" name="name" type="text"
+                            <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name" type="text"
                                 required>
                         </mat-form-field>
 
                         <mat-form-field color="accent" class="w-100">
                             <mat-label>Email</mat-label>
-                            <mat-error *ngIf="forma.errors?.emailExists">Este Email ya se encuentra registrado!
-                            </mat-error>
-                            <input matInput placeholder="diego@perez.com" formControlName="email" name="email" type="email" (keyup)="checkEmailExists()" required>
+                            <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado </mat-error>
+                            <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email" name="email" type="email" (keyup)="checkEmailExists()" required>
                         </mat-form-field>
 
                         <mat-form-field color="accent" class="w-100">
                             <mat-label>Clave</mat-label>
-                            <input matInput placeholder="Clave" formControlName="password1" name="password1"
+                            <input maxlength="30" matInput placeholder="Clave" formControlName="password1" name="password1"
                                 type="password" required>
                         </mat-form-field>
 
                         <mat-form-field color="accent" class="w-100">
                             <mat-label>Clave</mat-label>
-                            <input matInput placeholder="Clave" formControlName="password2" name="password2"
+                            <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2"
                                 type="password" required>
                         </mat-form-field>
 

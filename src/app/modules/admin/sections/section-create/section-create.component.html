@@ -3,30 +3,15 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Nombre del Sector</mat-label>
-        <input matInput placeholder="Por ejemplo Terraza, Patio, Fumadores, Piso 1, etc." formControlName="txSection" name="txSection" type="text"
+        <input maxlength="30" matInput placeholder="Por ejemplo Terraza, Patio, Fumadores, Piso 1, etc." formControlName="txSection" name="txSection" type="text"
             required>
     </mat-form-field>
 
-    <!-- 
-    <table class="w-100">
-        <div formArrayName="scoreItems">
-            <tr *ngFor="let item of forma.get('scoreItems')?.controls; let i=index">
-                <td class="w-100">
-                    <input class="scoreitem-input w-100 my-1" [formControlName]="i" type="text" [value]="item.value">
-                </td>
-                <td>
-                    <i class="mdi mdi-close x-close" (click)="deleteScoreItem(i)"></i>
-                </td>
-            </tr>
-        </div>
-    </table>
-
-    <button type="button" class="btn btn-primary btn-sm m-1" (click)="createScoreItem()">Agregar Item</button> 
-    -->
-
-
     <div class="container pt-4 px-0">
-        <button mat-raised-button color="accent" type="submit">
+        <div *ngIf="loading">
+            <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+        </div>
+        <button *ngIf="!loading" mat-raised-button color="accent" type="submit" [disabled]="forma.invalid">
             <span class="mdi lg mdi-content-save-outline"></span>
             GUARDAR SECTOR
         </button>

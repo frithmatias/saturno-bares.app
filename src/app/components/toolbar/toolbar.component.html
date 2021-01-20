@@ -8,12 +8,11 @@
         <!-- <span class="example-spacer"></span> -->
     </div>
 
-    <!-- LOGO & SEARCH -->
-    <div *ngIf="!loginService.user && !publicService.company" class="logo-search-container">
+    <!-- LOGO -->
+    <div *ngIf="!loginService.user && !publicService.company" class="logo-container">
 
         <!-- LOGO IMG -->
-        <div class="logo-img pointer" routerLink="/home">
-        </div>
+        <div class="logo-img pointer mr-3" routerLink="/home"> </div>
 
         <!-- LOGO TITLE -->
 
@@ -25,45 +24,30 @@
                 <span>Bar<span class="sm"> & </span>Resto</span>
             </div>
         </div>
-
-        <!-- SEARCH -->
-        <div class="search">
-            <app-search></app-search>
-        </div>
     </div>
 
     <!-- COMPANY NAME -->
     <div *ngIf="loginService.user || publicService.company" class="company-name md ml-4 text-left">
         <!-- <div class="marquee"> -->
-            {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
-            loginService.user?.tx_name}}
+        {{loginService.user?.id_company?.tx_company_name || publicService.company?.tx_company_name ||
+        loginService.user?.tx_name}}
         <!-- </div> -->
     </div>
 
     <!-- THEME -->
-    <div style="display: flex;">
+    <div class="d-flex md">
 
         <!-- space for pwa bell notifications subscription -->
         <div class="mx-3"></div>
 
-        <!-- THEME -->
-        <div [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors md pointer"></div>
-        <mat-menu #colorpicker="matMenu">
-            <div class="d-flex px-2">
-                <div class="pointer box-dark-purple" (click)="changeTheme('dark-purple.css')"></div>
-                <div class="pointer box-grey-dark" (click)="changeTheme('grey-dark.css')"></div>
-                <div class="pointer box-light-blue" (click)="changeTheme('light-blue.css')"></div>
-            </div>
-            <div class="d-flex px-2">
-                <div class="pointer box-dark-pink" (click)="changeTheme('dark-pink.css')"></div>
-                <div class="pointer box-grey-orange" (click)="changeTheme('grey-orange.css')"></div>
-                <div class="pointer box-light-green" (click)="changeTheme('light-green.css')"></div>
-            </div>
-        </mat-menu>
+        <app-theme class="mr-3"></app-theme>
+
+        <div *ngIf="!loginService.user && !publicService.ticket && !publicService.company"
+            class="mdi mdi-store pointer mr-3" routerLink="/register"> Registra tu Negocio</div>
 
         <!-- LOG IN -->
         <div *ngIf="!loginService.user && !publicService.ticket && !publicService.company"
-            class="ml-3 mdi mdi-account-circle pointer" routerLink="/login">
+            class="mdi mdi-account-circle pointer" routerLink="/login"> Ingresar
         </div>
 
         <!-- LOGGED IN -->
@@ -93,7 +77,7 @@
                 </div>
                 <div routerLink="/waiter/home" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
-                    <span class="ml-2 align-middle">Página de Camarero</span>
+                    <span class="ml-2 align-middle">Página de Camarero/a</span>
                 </div>
                 <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>

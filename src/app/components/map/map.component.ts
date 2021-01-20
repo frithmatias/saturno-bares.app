@@ -32,6 +32,8 @@ export class MapComponent implements OnInit {
 
   markerNewPlace: any; // Marker para el mapa nuevo Bar / Resto
   markersHome: any[] = []; // Markers del mapa en Home.
+  companiesNameHome: any[] = []; // Nombres de Negocios en el mapa en Home.
+
   markerInserted = false; // en crear company, es necesario crear solo un marker
 
   config: any = {};
@@ -86,33 +88,37 @@ export class MapComponent implements OnInit {
       if (changes.center?.currentValue.length > 0) {
         this.flyMap([changes.center.currentValue, changes.center.currentValue]);
       }
-      
+
       // MARKERS DE COMERCIOS
       if (changes.companies?.currentValue.length > 0) {
-     
-        this.companies.forEach((company: any) => {
+
+        this.companies.forEach((company: Company) => {
           if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
+
+
+
+
             // MARKER POPUP DATA
             const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
               `
-							<mat-card class="mat-card">
-                <div class="xl text-accent">${company.tx_company_name}</div>
+							<div class="mat-card company-card animated fadeIn">
+                <div class="lg text-accent">${company.tx_company_name}</div>
           	    <div class="md text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
                  <hr>
-                <div class="md company_welcome_text">${company.tx_company_welcome}</div>
-                <a href="#/public/${company.tx_company_string}">
-							  	<button class="btn btn-primary btn-block btn-sm">
-                    <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
-                  </button>
-						    </a>
-              </mat-card>
+                <div class="sm company-welcome-textarea">${company.tx_company_welcome}</div>
+                  <a href="/public/${company.tx_company_string}">
+							  	  <button class="btn btn-block btn-sm btn-secondary">
+                      <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
+                    </button>
+                  </a>
+                </div>
 						  `
             );
 
             // CREATE MARKER
             const icon = document.createElement('div');
             icon.className = 'marker';
-            icon.style.backgroundImage = 'url(\'../../../assets/img/svg/beer.svg\')';
+            icon.style.backgroundImage = company.tx_company_type === 'bar' ? 'url(\'../../../assets/img/svg/beer.svg\')' : 'url(\'../../../assets/img/svg/resto.svg\')';
             icon.style.width = '30px';
             icon.style.height = '30px';
             icon.style.cursor = 'pointer';
@@ -122,6 +128,18 @@ export class MapComponent implements OnInit {
               .setPopup(popup) // sets a popup on this marker
               .addTo(this.map);
             this.markersHome.push(newmarker);
+
+            const label = document.createElement('div');
+
+
+            label.innerHTML = `<div class="marker-text-wrapper"><span class="marker-text">${company.tx_company_name}</span></div>`;
+            
+            const companyName = new mapboxgl.Marker(label)
+              .setLngLat([company.tx_company_lng, company.tx_company_lat])
+              .addTo(this.map);
+            this.companiesNameHome.push(companyName);
+
+
           }
         });
       }

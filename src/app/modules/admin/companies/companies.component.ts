@@ -52,11 +52,11 @@ export class CompaniesComponent implements OnInit {
   }
 
   deleteCompany(company: Company): void {
-    this.sharedService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 3000, 'BORRAR').then(ok => {
+    this.sharedService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 5000, 'BORRAR').then(ok => {
       if (ok) {
         let idCompany = company._id;
         this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
-          this.sharedService.snack(data.msg, 1000);
+          this.sharedService.snack(data.msg, 3000);
           this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
           if (idCompany === this.loginService.user.id_company?._id) {
             this.loginService.user.id_company = null;

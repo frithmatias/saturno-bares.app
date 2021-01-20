@@ -13,23 +13,23 @@ import { NgImageSliderModule } from 'ng-image-slider';
 
 // components
 import { PublicComponent } from './public.component';
-import { SearchComponent } from './search/search.component';
-import { MyticketComponent } from './myticket/myticket.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketComponent } from './ticket/ticket.component';
 import { CompanyPageComponent } from './company-page/company-page.component';
 import { HomeComponent } from './company-page/home/home.component';
 import { MenuComponent } from './company-page/menu/menu.component';
-import { TicketComponent } from './company-page/ticket/ticket.component';
+import { TicketCreateComponent } from './company-page/ticket-create/ticket-create.component';
 
 
 @NgModule({
 	declarations: [
 		CompanyPageComponent,
 		PublicComponent,
-		SearchComponent,
-		MyticketComponent,
+		TicketCreateComponent,
 		HomeComponent,
 		MenuComponent,
-		TicketComponent
+		TicketComponent,
+		TicketsComponent
 	],
 	imports: [
 		CommonModule,

@@ -55,7 +55,7 @@ export class TokenService implements HttpInterceptor {
     if (error.error.code == 1001) { // token expired
       this.loginService.logout();
     }
-    return throwError(''); // Devuelve un error al suscriptor de mi observable.
+    return throwError(error); // Devuelve un error al suscriptor de mi observable.
   }
 
 }

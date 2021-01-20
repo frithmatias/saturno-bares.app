@@ -1,11 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, FormArray } from '@angular/forms';
 
 import { AdminService } from '../../admin.service';
 import { Section, SectionResponse } from '../../../../interfaces/section.interface';
 import { LoginService } from '../../../../services/login.service';
 import { SharedService } from '../../../../services/shared.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-section-create',
@@ -13,20 +13,21 @@ import { SharedService } from '../../../../services/shared.service';
 	styleUrls: ['./section-create.component.css']
 })
 export class SectionCreateComponent implements OnInit {
+
 	@Output() sectionCreated: EventEmitter<Section> = new EventEmitter();
 	forma: FormGroup;
+	loading = false;
 
 	constructor(
 		public adminService: AdminService,
 		private loginService: LoginService,
-		private sharedService: SharedService,
-		private snack: MatSnackBar
+		private sharedService: SharedService
 	) { }
 
 	ngOnInit(): void {
 
 		this.forma = new FormGroup({
-			txSection: new FormControl(null, Validators.required),
+			txSection: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
 			scoreItems: new FormArray([])
 		});
 	}
@@ -46,15 +47,18 @@ export class SectionCreateComponent implements OnInit {
 			_id: null
 		};
 
+		this.loading = true;
 		this.adminService.createSection(section).subscribe((data: SectionResponse) => {
-			this.sectionCreated.emit(data.section);
-			this.snack.open(data.msg, null, { duration: 5000 });
+			this.loading = false;
+			this.sharedService.snack(data.msg, 2000);
 			this.resetForm(formDirective);
-		},
-			(err: any) => {
-				this.snack.open(err.error.msg, null, { duration: 5000 });
+			if (data.ok) {
+				this.sectionCreated.emit(data.section);
 			}
-		)
+		}, (err: HttpErrorResponse) => {
+			this.loading = false;
+			this.sharedService.snack(err.error.msg, 2000);
+		});
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
@@ -65,13 +69,13 @@ export class SectionCreateComponent implements OnInit {
 
 
 	createScoreItem() {
-		
+
 		// si existe un valor "vacío" dentro del array de controles, evito crear otro control.
-		for (let control of (<FormArray>this.forma.controls['scoreItems']).controls){
+		for (let control of (<FormArray>this.forma.controls['scoreItems']).controls) {
 			this.sharedService.snack('Complete todos los campos en blanco', 2000);
 			if (control.value === '') return;
 		}
-		
+
 		(<FormArray>this.forma.controls['scoreItems']).push(new FormControl('', Validators.required))
 
 	}

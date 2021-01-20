@@ -5,6 +5,7 @@ import { AdminService } from '../admin.service';
 import { Company } from 'src/app/interfaces/company.interface';
 import { LoginService } from '../../../services/login.service';
 import { CompanyResponse } from '../../../interfaces/company.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-webpage',
@@ -15,7 +16,7 @@ export class WebPageComponent implements OnInit {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-
+  loading = false;
   formWebPage: FormGroup;
   webpageEdit: false;
   header = {
@@ -41,12 +42,13 @@ export class WebPageComponent implements OnInit {
   ngOnInit(): void {
 
     this.formWebPage = new FormGroup({
-      txEmail: new FormControl(this.loginService.user.id_company?.tx_email),
-      txWhatsapp: new FormControl(this.loginService.user.id_company?.tx_whatsapp),
-      txFacebook: new FormControl(this.loginService.user.id_company?.tx_facebook),
-      txTwitter: new FormControl(this.loginService.user.id_company?.tx_twitter),
-      txInstagram: new FormControl(this.loginService.user.id_company?.tx_instagram),
-      txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, Validators.required)
+      txEmail: new FormControl(this.loginService.user.id_company?.tx_email, Validators.maxLength(50)),
+      txTelegram: new FormControl(this.loginService.user.id_company?.tx_telegram, Validators.maxLength(30)),
+      txWhatsapp: new FormControl(this.loginService.user.id_company?.tx_whatsapp, Validators.maxLength(30)),
+      txFacebook: new FormControl(this.loginService.user.id_company?.tx_facebook, Validators.maxLength(30)),
+      txTwitter: new FormControl(this.loginService.user.id_company?.tx_twitter, Validators.maxLength(30)),
+      txInstagram: new FormControl(this.loginService.user.id_company?.tx_instagram, Validators.maxLength(30)),
+      txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, [Validators.required, Validators.maxLength(1000)])
     })
 
   }
@@ -58,17 +60,25 @@ export class WebPageComponent implements OnInit {
     let idCompany = this.loginService.user.id_company._id;
     let data = { 
       txEmail: this.formWebPage.value.txEmail, 
+      txTelegram: this.formWebPage.value.txTelegram, 
       txWhatsapp: this.formWebPage.value.txWhatsapp, 
       txFacebook: this.formWebPage.value.txFacebook, 
       txTwitter: this.formWebPage.value.txTwitter, 
       txInstagram: this.formWebPage.value.txInstagram, 
-      txWelcome: this.formWebPage.value.txWelcome };
+      txWelcome: this.formWebPage.value.txWelcome 
+    };
+
+    this.loading = true;
     this.adminService.updateWebPage(data, idCompany).subscribe((data: CompanyResponse) => {
+      this.loading = false;
       if(data.ok){
         this.loginService.user.id_company = data.company;
         this.loginService.pushUser(this.loginService.user);
-        this.sharedService.snack('Los datos fueron guradados correctamente', 3000);
+        this.sharedService.snack(data.msg, 3000);
       } 
+    }, (err: HttpErrorResponse) => {
+      this.loading = false;
+      this.sharedService.snack(err.error.msg, 3000);
     })
   }
 

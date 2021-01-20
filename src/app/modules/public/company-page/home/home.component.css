@@ -1,6 +1,6 @@
 .public-home-title {
     font-size: xxx-large;
-    color: #ff8b00;
+    color: var(--accent);
 }
 @media (max-width: 575px) {
     .public-home-title {
@@ -16,5 +16,9 @@
     font-size: large;
     font-weight: 200;
     padding: 1em;
+}
+
+.mat-card {
+    box-shadow: none;
 }
 

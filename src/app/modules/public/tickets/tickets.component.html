@@ -1,0 +1,47 @@
+
+<div class="p-2">
+    <table class="sm text-accent">
+        
+        <tr>
+            <th>
+                Negocio
+            </th>
+            <th>
+                Dirección
+            </th>
+            <th>
+                Mesa
+            </th>
+            <th>
+                Personas
+            </th>
+            <th>
+                Reserva
+            </th>
+            <th>
+                Estado
+            </th>
+        </tr>
+        <tr *ngFor="let ticket of tickets">
+            <td>
+                {{ticket.id_company.tx_company_name}}
+            </td>
+            <td>
+                {{ticket.id_company.tx_address_street}} {{ticket.id_company.tx_address_number}}
+            </td>
+            <td>
+                {{ticket.cd_tables[0]}}
+            </td>
+            <td>
+                {{ticket.nm_persons}}
+            </td>
+            <td>
+                {{ticket.tm_reserve}}
+            </td>
+            <td>
+                {{ticket.tx_status}}
+            </td>
+        </tr>
+
+    </table>
+</div>

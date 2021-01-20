@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-	api: 'https://localhost:5000',
+	api: 'https://192.168.1.3:5000',
 	gapi_uid: '1096997200162-ltingmttj4f6ig8cij6e9g94ur9fs81m.apps.googleusercontent.com'
 };
 

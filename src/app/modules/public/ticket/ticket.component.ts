@@ -16,21 +16,23 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import { SharedService } from 'src/app/services/shared.service';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
+import { Company } from '../../../interfaces/company.interface';
 
 const TAIL_LENGTH = 5;
 
 @Component({
-	selector: 'app-myticket',
-	templateUrl: './myticket.component.html',
-	styleUrls: ['./myticket.component.css']
+	selector: 'app-ticket',
+	templateUrl: './ticket.component.html',
+	styleUrls: ['./ticket.component.css']
 })
-export class MyticketComponent implements OnInit, OnDestroy {
+export class TicketComponent implements OnInit, OnDestroy {
 
 	timer: Subscription;
 	showAlert = false;
 	coming: boolean = false;
+	company: Company;
 	ticket: Ticket;
-	ticketTmEnd: number = null;
+	ticketTmEnd: Date = null;
 	tickets: Ticket[] = [];
 	ticketsTail: Ticket[] = [];
 	averageToAtt: string; // millisencods
@@ -53,13 +55,34 @@ export class MyticketComponent implements OnInit, OnDestroy {
 			this.sharedService.snack(txMessage, null, 'ACEPTAR');
 		})
 
-		if (!this.publicService.ticket) {
-			this.router.navigate(['/public/companypage']);
+		if (!this.company) {
+			if (this.publicService.company) {
+				this.company = this.publicService.company;
+			} else {
+				if (localStorage.getItem('company')) {
+					this.company = JSON.parse(localStorage.getItem('company'));
+				}
+			}
+		}
+
+		if (!this.ticket) {
+			if (this.publicService.ticket) {
+				this.ticket = this.publicService.ticket;
+			} else {
+				if (localStorage.getItem('ticket')) {
+					this.ticket = JSON.parse(localStorage.getItem('ticket'));
+				}
+			}
+		}
+
+		if (!this.company || !this.ticket) {
+			this.publicService.clearPublicSession();
+			this.router.navigate(['/home']);
 			this.sharedService.snack('Debe obtener un turno primero.', 5000)
 			return;
 		}
 
-		this.coming = false;
+
 		const body = document.getElementsByTagName('body')[0];
 		body.classList.remove('container');
 
@@ -68,15 +91,6 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		this.subjectUpdateTickets$.subscribe(() => {
 			this.getTickets();
 		});
-
-		if (this.publicService.company && this.publicService.ticket) {
-			this.ticket = this.publicService.ticket;
-			let idCompany = this.publicService.company._id;
-			this.publicService.getTickets(idCompany);
-		} else {
-			this.router.navigate(['/public']);
-			this.sharedService.snack('Por favor ingrese una empresa primero!', 5000)
-		}
 
 		this.getTickets();
 	}
@@ -89,9 +103,10 @@ export class MyticketComponent implements OnInit, OnDestroy {
 				this.tickets = data.tickets;
 				this.ticketsTail = data.tickets
 					.filter(ticket => ticket.tm_provided !== null)
-					.sort((a: Ticket, b: Ticket) => b.tm_provided - a.tm_provided)
+					.sort((a: Ticket, b: Ticket) => b.tm_provided.getTime() - a.tm_provided.getTime())
 					.slice(0, TAIL_LENGTH);
-				this.pickMyTicket();
+
+				this.pickticket();
 
 				if (this.ticket?.id_session && !this.timer) {
 					this.timer = interval(500).subscribe(data => {
@@ -102,7 +117,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 					this.showAlert = false;
 				}
 
-				if (this.ticket && this.ticket.tm_provided === null) { this.calculateTimeToAtt(); }
+				if (this.ticket && this.ticket.tm_provided === null && this.ticket.tm_reserve === null) { this.calculateTimeToAtt(); }
 
 				const audio = new Audio();
 				audio.src = '../../assets/bell.wav';
@@ -112,14 +127,14 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	pickMyTicket(): void {
-		const myTicket = this.tickets.filter(ticket => (
+	pickticket(): void {
+		const ticket = this.tickets.filter(ticket => (
 			ticket._id === this.ticket._id
 		))[0];
 
-		if (myTicket) {
-			if (myTicket.tm_end !== null) {
-				this.ticketTmEnd = myTicket.tm_end;
+		if (ticket) {
+			if (ticket.tm_end !== null) {
+				this.ticketTmEnd = ticket.tm_end;
 				this.getScoreItems().then((data: ScoreItemsResponse) => {
 					this.scoreItems = data.scoreitems;
 				}).catch(() => {
@@ -128,10 +143,12 @@ export class MyticketComponent implements OnInit, OnDestroy {
 					}, 5000);
 				})
 			} else {
-				this.ticket = myTicket;
-				this.publicService.ticket = myTicket;
+				this.ticket = ticket;
+				this.publicService.ticket = ticket;
 				localStorage.setItem('ticket', JSON.stringify(this.ticket));
 			}
+		} else {
+			this.publicService.clearPublicSession();
 		}
 	}
 
@@ -143,7 +160,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		// sólo tickets ordenados del último finalizado al primero
 		// sólo la cantidad en TAIL,
 		let ticketsEndDesc = ticketsEnd
-			.sort((a: Ticket, b: Ticket) => b.tm_end - a.tm_end)
+			.sort((a: Ticket, b: Ticket) => b.tm_end.getTime() - a.tm_end.getTime())
 			.slice(0, TAIL_LENGTH)
 			.filter(ticket => {
 				return (
@@ -166,7 +183,7 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		// Ta, sumatoria de últimos tiempos de atención 
 		let sumTa = 0;
 		for (let ticket of ticketsEndDesc) {
-			sumTa += ticket.tm_end - ticket.tm_att;
+			sumTa += ticket.tm_end.getTime() - ticket.tm_att.getTime();
 		}
 
 		// OCIO
@@ -183,14 +200,14 @@ export class MyticketComponent implements OnInit, OnDestroy {
 		let sumTo = 0;
 		let idSession = null;
 		for (let ticket of ticketsEndDesc) {
-			let tmEnd = 0;
-			let tmAtt = 0;
+			let tmEnd = null;
+			let tmAtt = null;
 			// 		      t2                 t1
 			// orden <----|------------------|---------
 			// [a....5....e]<------To------>[a...2...e] 
 			if (ticket.id_session === idSession) {
 				tmEnd = ticket.tm_end;
-				sumTo += ticket.tm_att - ticket.tm_att;
+				sumTo += ticket.tm_att.getTime() - ticket.tm_att.getTime();
 				tmAtt = 0;
 				tmEnd = 0;
 			} else {
@@ -266,6 +283,9 @@ export class MyticketComponent implements OnInit, OnDestroy {
 							this.publicService.clearPublicSession();
 							this.router.navigate(['/home']);
 						}
+					}, () => {
+						this.publicService.clearPublicSession();
+						this.router.navigate(['/home']);
 					});
 				}
 			})

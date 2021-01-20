@@ -8849,6 +8849,10 @@ button.bg-dark:hover {
     width: 25% !important
 }
 
+.w-33 {
+    width: 33% !important
+}
+
 .w-50 {
     width: 50% !important
 }

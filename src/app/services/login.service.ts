@@ -126,6 +126,7 @@ export class LoginService {
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
 
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
+		if (localStorage.getItem('session')) { localStorage.removeItem('session'); }
 		if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 
 

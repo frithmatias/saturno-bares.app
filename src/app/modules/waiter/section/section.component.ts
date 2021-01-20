@@ -12,7 +12,7 @@ import { Ticket, TicketsResponse } from '../../../interfaces/ticket.interface';
 import { Table, TablesResponse } from '../../../interfaces/table.interface';
 
 // libraries
-import { Subject, interval, Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -113,8 +113,8 @@ export class SectionComponent implements OnInit, OnDestroy {
               for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.tx_status === 'busy')) {
                 if (table.id_session) {
                   this.busyTablesTimes.set(table.nm_table, {
-                    tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided),
-                    tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call),
+                    tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided.getTime()),
+                    tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call.getTime()),
                   });
                 }
               }

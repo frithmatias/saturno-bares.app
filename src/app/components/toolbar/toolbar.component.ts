@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
   hiddenBadge: boolean;
-  config: any = {};
+
 
   constructor(
     public loginService: LoginService,
@@ -24,26 +24,6 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    if (localStorage.getItem('config')) {
-      this.config = JSON.parse(localStorage.getItem('config'));
-    }
-
-    if (!this.config.theme) {
-      let hours = new Date().getHours();
-
-      if (hours >= 6 && hours < 20) {
-        // light theme
-        this.config.theme = 'light-blue.css'
-      } else {
-        // dark theme
-        this.config.theme = 'dark-pink.css';
-      }
-
-    }
-
-    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `./assets/css/themes/${this.config.theme}`;
 
   }
 
@@ -64,15 +44,5 @@ export class ToolbarComponent implements OnInit {
   }
 
 
-  changeTheme(theme: string): void {
-    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `./assets/css/themes/${theme}`;
 
-    if (localStorage.getItem('config')) {
-      this.config = JSON.parse(localStorage.getItem('config'));
-    }
-
-    this.config.theme = theme;
-    localStorage.setItem('config', JSON.stringify(this.config));
-  }
 }

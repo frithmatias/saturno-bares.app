@@ -13,6 +13,7 @@ import { PollComponent } from './poll/poll.component';
 import { WebPageComponent } from './webpage/webpage.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 const userRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,6 +28,8 @@ const userRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tickets', component: TicketsComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'schedule', component: ScheduleComponent },
+
 
 
 	{ path: '', redirectTo: '/admin/home', pathMatch: 'full' },

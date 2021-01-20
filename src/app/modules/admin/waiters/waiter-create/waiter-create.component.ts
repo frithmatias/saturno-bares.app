@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChange
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 
 // libraries
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { AjaxError } from 'rxjs/ajax';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,17 +21,17 @@ import { Table } from '../../../../interfaces/table.interface';
 	styleUrls: ['./waiter-create.component.css']
 })
 export class WaiterCreateComponent implements OnInit, OnChanges {
+	
 	@Input() waiterEdit: User;
 	@Output() idWaiterUpdated: EventEmitter<string> = new EventEmitter();
-
+	loading = false;
 	forma: FormGroup;
 	tables: Table[] = [];
 
 	constructor(
 		public adminService: AdminService,
 		private loginService: LoginService,
-		private sharedService: SharedService,
-		private snack: MatSnackBar
+		private sharedService: SharedService
 	) { }
 
 	ngOnInit(): void {
@@ -44,10 +43,10 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		this.forma = new FormGroup({
 			rol: new FormControl(null, Validators.required),
 			idCompany: new FormControl(null, Validators.required),
-			nombre: new FormControl(null, Validators.required),
-			email: new FormControl(null, [Validators.required, Validators.email]),
-			password: new FormControl(null, Validators.required),
-			password2: new FormControl(null, Validators.required)
+			nombre: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+			email: new FormControl(null, [Validators.required, Validators.maxLength(30), Validators.email]),
+			password: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+			password2: new FormControl(null, [Validators.required, Validators.maxLength(30)])
 		}, { validators: this.sonIguales('password', 'password2') });
 	}
 
@@ -99,12 +98,22 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		};
 	}
 
+	checkEmailExists() {
+		let pattern = this.forma.value.email;
+		if (this.forma.value.email.length > 6)
+			this.loginService.checkEmailExists(pattern).subscribe((data: any) => {
+				if (!data.ok) {
+					this.forma.controls['email'].setErrors({ 'incorrect': true });
+					this.forma.setErrors({ 'emailExists': true })
+				}
+			});
+	}
 
 	createWaiter(formDirective: FormGroupDirective) {
 
 		if (this.forma.invalid) {
 			if (this.forma.errors?.password) {
-				this.snack.open(this.forma.errors.password, 'ACEPTAR', { duration: 5000 });
+				this.sharedService.snack(this.forma.errors.password, 5000, 'Aceptar');
 			}
 			return;
 		}
@@ -119,35 +128,36 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 			id_role: this.forma.controls.rol.value
 		};
 
+		this.loading = true;
 		if (this.waiterEdit) {
 			waiter._id = this.waiterEdit._id;
 			this.adminService.updateWaiter(waiter).subscribe((data: UserResponse) => {
+				this.loading = false;
+				this.sharedService.snack(data.msg, 2000);
+				this.resetForm(formDirective);
 				if (data.ok) {
-					if (data.user._id === this.loginService.user._id) {
-						// push my user edited
-						this.loginService.pushUser(data.user)
-					}
+					this.loginService.pushUser(data.user);
 					this.idWaiterUpdated.emit(data.user._id);
-					this.snack.open(data.msg, null, { duration: 5000 });
-					this.resetForm(formDirective);
 				}
 			}, (err: HttpErrorResponse) => {
-				this.snack.open(err.error, null, { duration: 5000 });
+				this.loading = false;
+				this.sharedService.snack(err.error, 5000);
 			})
-
 		} else {
-
 			this.adminService.createWaiter(waiter).subscribe(
 				(data: UserResponse) => {
-					this.idWaiterUpdated.emit(data.user._id);
-					this.snack.open(data.msg, null, { duration: 5000 });
+					this.loading = false;
+					this.sharedService.snack(data.msg, 2000);
 					this.resetForm(formDirective);
+					if (data.ok) {
+						this.idWaiterUpdated.emit(data.user._id);
+					}
 				}, (err: HttpErrorResponse) => {
-					this.snack.open(err.error, null, { duration: 5000 });
+					this.loading = false;
+					this.sharedService.snack(err.error, 5000);
 				}
 			)
 		}
-
 	}
 
 	manejaError = (err: AjaxError) => {

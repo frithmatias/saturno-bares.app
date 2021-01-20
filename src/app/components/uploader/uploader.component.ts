@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef }
 import { FileUpload, FileUploadResponse } from './uploader.model';
 import { UploaderService } from './uploader.service';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
+import { duration } from 'moment';
 
 @Component({
 	selector: 'app-uploader',
@@ -12,14 +13,14 @@ export class UploaderComponent implements OnInit {
 	@ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 	@Input() editable: boolean = true; // only for single uploads (i.e. google profile images are not editable)
 	@Input() multi: boolean = false;
-	@Input() data: any;  // files in db
+	@Input() documentData: any;  // files in db
 	@Input() idDocument: string;
 	@Input() idField: string;
 	@Input() header: { icon: string, title: string, subtitle: string };
 	@Output() dataUpdated = new EventEmitter();
 
 	filesToUpload: FileUpload[] = [];
-	maxupload = 12;
+	maxupload = 5;
 	maxSize = 5242880;
 	estaSobreElemento = false;
 	uploading = false;
@@ -30,7 +31,7 @@ export class UploaderComponent implements OnInit {
 	) { }
 
 	async ngOnInit() {
-		if (!this.data) {
+		if (!this.documentData) {
 			this.snack.open('Sin datos en el componente uploader', null, { duration: 3000 });
 			return;
 		}
@@ -43,12 +44,12 @@ export class UploaderComponent implements OnInit {
 		let archivo = this.filesToUpload[0];
 		this.uploading = true;
 		this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, 1).subscribe((data: FileUploadResponse) => {
-			if(data.ok){
+			if (data.ok) {
 				archivo.progreso = 100;
 				archivo.estaSubiendo = false;
-				this.data[this.idField] = data.filename;
+				this.documentData[this.idField] = data.filename;
 				this.filesToUpload = [];
-				this.dataUpdated.emit(this.data);
+				this.dataUpdated.emit(this.documentData);
 				this.uploading = false;
 			}
 			// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
@@ -60,20 +61,21 @@ export class UploaderComponent implements OnInit {
 	}
 
 	uploadMulti() {
+
 		this.fileInput.nativeElement.value = "";
 		let filesToUploadLength = this.filesToUpload.length;
 		this.uploading = true;
 		this.filesToUpload.forEach((archivo, index, files) => {
 			archivo.estaSubiendo = true;
 			this.uploaderService.subirImagen(this.idDocument, this.idField, archivo, files.length).subscribe((data: FileUploadResponse) => {
-				if(data.ok){
+				if (data.ok) {
 					archivo.progreso = 100;
 					archivo.estaSubiendo = false;
-					this.data[this.idField].push(data.filename);
+					this.documentData[this.idField].push(data.filename);
 					this.filesToUpload = this.filesToUpload.filter(file => file.nombreArchivo !== archivo.nombreArchivo)
 					if (index === filesToUploadLength - 1) {
 						this.uploading = false;
-						this.dataUpdated.emit(this.data);
+						this.dataUpdated.emit(this.documentData);
 						// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
 						// 	if(data.ok){
 						// 		this.snack.open(data.msg, null, {duration: 2000});
@@ -94,19 +96,19 @@ export class UploaderComponent implements OnInit {
 				this.uploaderService.borrarImagen(this.idDocument, this.idField, idFile).subscribe((data: FileUploadResponse) => {
 					if (this.multi) {
 						if (data.filename === 'todas') {
-							this.data[this.idField] = [];
+							this.documentData[this.idField] = [];
 						} else {
-							this.data[this.idField] = this.data[this.idField].filter(file => file != data.filename);
+							this.documentData[this.idField] = this.documentData[this.idField].filter(file => file != data.filename);
 						}
 					} else {
-						this.data[this.idField] = null;
+						this.documentData[this.idField] = null;
 					}
 					// this.uploaderService.syncHostinger(this.idDocument, this.idField).subscribe((data: FileUploadResponse) => {
 					// 	if(data.ok){
 					// 		this.snack.open(data.msg, null, {duration: 2000})
 					// 	}
 					// })
-					this.dataUpdated.emit(this.data);
+					this.dataUpdated.emit(this.documentData);
 				});
 			}
 		})
@@ -119,20 +121,26 @@ export class UploaderComponent implements OnInit {
 
 	queueFiles(event: any) {
 		// permitido: this.maxupload
-		// ya cargadas: this.data.length
+		// ya cargadas: this.documentData[this.idField].length
 		// listas para subir: this.filesToUpload.length
 		// intentando subir: event.target.files.length
 		let files = event.target.files || event.dataTransfer.files;
+
+		let maxUpload = this.maxupload;
+		let uploadedDB = this.documentData[this.idField]?.length || 0;
+		let inCache = this.filesToUpload.length || 0;
+		let newAppend = event.target.files.length || 0;
+
+
 		if (this.multi) {
-			if (this.maxupload - this.data.length - this.filesToUpload.length - files.length < 0) {
-				this.snack.open(`Supera el máximo permitido de ${this.maxupload} imágenes`, null, { duration: 3000 })
+			if((uploadedDB + inCache + newAppend) > maxUpload) {
+				this.snack.open(`Supera el máximo de ${this.maxupload} archivos permitidos.`, 'Aceptar', {duration: 333000});
 				return;
 			}
 		}
 		this._extractFiles(files); // le envío un objeto que voy a tener que convertir en array
 		this._stopPrevent(event);
 	}
-
 	// helpers
 
 	private _getTransfer(event: any) {

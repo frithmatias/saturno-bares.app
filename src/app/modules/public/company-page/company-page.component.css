@@ -10,7 +10,3 @@
 .footer-social {
     display: flex;
 }
-
-mat-tab-group {
-    min-height: 441px;
-}

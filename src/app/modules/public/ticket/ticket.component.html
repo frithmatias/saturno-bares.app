@@ -1,0 +1,43 @@
+<!-- ======================================================== -->
+<!-- TICKETS SCREEN -->
+<!-- ======================================================== -->
+
+<div class="saturno-container p-0 m-0">
+
+    <mat-card *ngIf="ticket && company">
+
+        <mat-card-header>
+            <div mat-card-avatar><img class="img-fluid"
+                    [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+            </div>
+            <mat-card-title>{{ company.tx_company_name }}</mat-card-title>
+            <mat-card-subtitle>{{ company.tx_address_street }}
+                {{ company.tx_address_number }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <!------------------------------>
+        <!-- ACTION BUTTONS -->
+        <!------------------------------>
+        <mat-card-actions>
+            <div *ngIf="ticketTmEnd===null">
+                <button mat-raised-button class="screen-ticket-button m-2" color="primary"
+                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('waiter')">
+                    <span class="mdi mdi-silverware-fork-knife md"></span>
+                    Llamar al mozo
+                </button>
+
+                <button mat-raised-button class="screen-ticket-button m-2" color="primary"
+                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('account')">
+                    <span class="mdi mdi-file-document-edit-outline md"></span>
+                    Pedir la Cuenta
+                </button>
+
+                <button mat-raised-button class="screen-ticket-button m-2" color="warn" [disabled]="!ticket"
+                    (click)="endTicket()">
+                    <span class="mdi mdi-power md"></span>
+                    Cancelar Turno
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

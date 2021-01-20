@@ -3,27 +3,32 @@
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Código de Rol</mat-label>
-        <input matInput placeholder="0" formControlName="cd_role" name="cd_role" type="text" required>
+        <input min="1" max="100" type="number" matInput placeholder="0" formControlName="cd_role" name="cd_role"
+            required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Código de Pricing</mat-label>
-        <input matInput placeholder="0" formControlName="cd_pricing" name="cd_pricing" type="text" required>
+        <input matInput min="1" max="100" type="number" placeholder="0" formControlName="cd_pricing" name="cd_pricing"
+            required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Titulo</mat-label>
-        <input matInput placeholder="Titulo" formControlName="tx_titulo" name="tx_titulo" type="text" required>
+        <input matInput minlength="30" type="text" placeholder="Titulo" formControlName="tx_titulo" name="tx_titulo"
+            required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Icono</mat-label>
-        <input matInput placeholder="mdi mdi-icon" formControlName="tx_icon" name="tx_icon" type="text" required>
+        <input matInput minlength="30" type="text" placeholder="mdi mdi-icon" formControlName="tx_icon" name="tx_icon"
+            required>
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>URL</mat-label>
-        <input matInput placeholder="/waiter/home" formControlName="tx_url" name="tx_url" type="text" required>
+        <input matInput minlength="30" type="text" placeholder="/waiter/home" formControlName="tx_url" name="tx_url"
+            required>
     </mat-form-field>
 
     <div *ngIf="!itemEdit" class="row text-center">

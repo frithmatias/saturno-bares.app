@@ -31,6 +31,7 @@ import { PollComponent } from './poll/poll.component';
 import { PollCreateComponent } from './poll/poll-create/poll-create.component';
 import { WebPageComponent } from './webpage/webpage.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 @NgModule({
 	declarations: [
@@ -55,7 +56,8 @@ import { SettingsComponent } from './settings/settings.component';
 		PollComponent,
 		PollCreateComponent,
 		WebPageComponent,
-		SettingsComponent
+		SettingsComponent,
+		ScheduleComponent
 
 	],
 	imports: [

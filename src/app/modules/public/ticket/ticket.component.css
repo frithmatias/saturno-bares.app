@@ -47,32 +47,34 @@
 /*---------------------------------------------------*/
 /* my ticket number*/
 
-.screen-myticket-container {
+.screen-ticket-container {
   border-radius: 1em;
   box-shadow   : 0px 1px 4px 0px rgb(17 17 17 / 30%)
 }
 
-.screen-myticket-text-header {
+.screen-ticket-text-header {
   font-size: 1.2em;
 }
 
-.screen-myticket-text {
+.screen-ticket-text {
   font-size  : 5em;
   color      : red;
   line-height: 1em;
 }
 
-.screen-myticket-text-alert {
+.screen-ticket-text-alert {
   opacity: 0.1;
 }
 
-.screen-myticket-text-footer {
+.screen-ticket-text-footer {
   font-size: 1em;
 }
 
 /* ------------------------------------------------------- */
 /* buttons */
-.screen-myticket-button {
+
+
+.screen-ticket-button {
   width: 10em;
 }
 

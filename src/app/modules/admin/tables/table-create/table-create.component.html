@@ -21,7 +21,10 @@
     </mat-form-field>
 
     <div class="container pt-4 px-0">
-        <button mat-raised-button color="accent" type="submit">
+        <div *ngIf="loading">
+            <button mat-raised-button color="accent" disabled>GUARDANDO... </button>
+        </div>
+        <button *ngIf="!loading" mat-raised-button color="accent" type="submit" [disabled]="forma.invalid">
             <span class="mdi lg mdi-content-save-outline"></span>
             GUARDAR MESA
         </button>

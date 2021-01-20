@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { AdminService } from '../../modules/admin/admin.service';
-import { Company, CompaniesResponse } from '../../interfaces/company.interface';
+import { Company } from '../../interfaces/company.interface';
 import { User } from '../../interfaces/user.interface';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../services/login.service';
@@ -11,6 +11,7 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit, OnDestroy {
+  
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
   events: string[] = [];
   opened: boolean;

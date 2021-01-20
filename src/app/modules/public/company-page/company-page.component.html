@@ -1,9 +1,15 @@
-<div>
+<div *ngIf="company">
 
     <!-- PAGE HEADER IMAGE SLIDER -->
-    <ng-image-slider [images]="images" [infinite]="true" [imagePopup]="true" [animationSpeed]="2" [slideImage]="1"
-        [autoSlide]="5" [imageSize]="imageSize" [showArrow]="false" #nav></ng-image-slider>
-    
+    <div *ngIf="images.length > 1" style="max-width: 600px;">
+        <ng-image-slider  [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
+            [animationSpeed]="1" [slideImage]="1" [imageSize]="imageSize" [showArrow]="true" #nav></ng-image-slider>
+    </div>
+
+    <div *ngIf="images.length === 1" style="max-width: 600px;">
+        <img [height]="imageSize.height" width="100%" [src]="images[0].image"> 
+    </div>
+
     <!-- PAGE TABS -->
     <mat-tab-group mat-align-tabs="center" dynamicHeight>
         <mat-tab label="Home">
@@ -12,8 +18,8 @@
         <mat-tab label="Menú">
             <app-menu></app-menu>
         </mat-tab>
-        <mat-tab label="Reserva">
-            <app-ticket></app-ticket>
+        <mat-tab label="Reservar">
+            <app-ticket-create></app-ticket-create>
         </mat-tab>
     </mat-tab-group>
 
@@ -21,24 +27,26 @@
     <div class="footer-container">
         <div>
             <div class="md text-white">
-                {{publicService.company.tx_company_name}}
+                {{company.tx_company_name}}
             </div>
             <div class="sm text-white">
-                {{publicService.company.tx_address_street}}
-                {{publicService.company.tx_address_number}}
+                {{company.tx_address_street}}
+                {{company.tx_address_number}}
             </div>
         </div>
 
-        <div *ngIf="publicService.company.tx_whatsapp || publicService.company.tx_facebook || publicService.company.tx_twitter || publicService.company.tx_instagram"
+        <div *ngIf="company.tx_whatsapp || company.tx_facebook || company.tx_twitter || company.tx_instagram"
             class="footer-social">
-            <span *ngIf="publicService.company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp"
-                    target="_blank" href="https://wa.me/{{publicService.company.tx_whatsapp}}"></a></span>
-            <span *ngIf="publicService.company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook"
-                    target="_blank" href="https://{{publicService.company.tx_facebook}}"></a></span>
-            <span *ngIf="publicService.company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
-                    href="https://{{publicService.company.tx_twitter}}"></a></span>
-            <span *ngIf="publicService.company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram"
-                    target="_blank" href="https://{{publicService.company.tx_instagram}}"></a></span>
+            <span *ngIf="company.tx_telegram"><a class="xl mx-2 text-white mdi mdi-telegram"
+                    target="_blank" href="https://t.me/{{company.tx_telegram}}"></a></span>
+            <span *ngIf="company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp"
+                    target="_blank" href="https://wa.me/{{company.tx_whatsapp}}"></a></span>
+            <span *ngIf="company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook"
+                    target="_blank" href="https://www.facebook.com/{{company.tx_facebook}}"></a></span>
+            <span *ngIf="company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
+                    href="https://www.twitter.com/{{company.tx_twitter}}"></a></span>
+            <span *ngIf="company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram"
+                    target="_blank" href="https://www.instagram.com/{{company.tx_instagram}}"></a></span>
         </div>
 
     </div>

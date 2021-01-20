@@ -13,17 +13,22 @@ export interface Ticket {
 	bl_contingent: boolean;
 	bl_priority: boolean;
 	tx_name: string;
+	tx_platform: string | null;
+	id_user: string | null;
+	nm_phone: number | null;
+	tx_email: string | null;
 	tx_call: string;
-	tm_call: number;
 	tx_status: string; // assigned [privided, assigned, queued, requested]
 	cd_tables?: number[]; // only for requested and assigned tickets
     id_position: number; // assigned
     id_socket_client: string; // primary
     id_socket_waiter?: string | null; // assigned
-    tm_start: number;
-    tm_provided?: number | null;
-    tm_att?: number | null;
-    tm_end?: number | null;
+	tm_reserve: Date;
+	tm_provided?: Date | null;
+	tm_call: Date;
+    tm_start: Date;
+    tm_att?: Date | null;
+    tm_end?: Date | null;
 	_id: string;
 }
 
