@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PublicService } from '../../public.service';
 import { Router } from '@angular/router';
+import { Company } from '../../../../interfaces/company.interface';
 
 
 @Component({
@@ -10,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  @Input() company: Company;
+  
   constructor(
     public publicService: PublicService,
     public router: Router

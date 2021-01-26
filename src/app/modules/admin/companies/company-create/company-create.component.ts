@@ -4,7 +4,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { AdminService } from '../../../../modules/admin/admin.service';
 import { LoginService } from '../../../../services/login.service';
-import { SharedService } from '../../../../services/shared.service';
 
 import { GetidstringPipe } from '../../../../pipes/getidstring.pipe';
 import { Company, CompanyResponse } from '../../../../interfaces/company.interface';
@@ -40,7 +39,6 @@ export class CompanyCreateComponent implements OnInit {
 	constructor(
 		private adminService: AdminService,
 		private loginService: LoginService,
-		private sharedService: SharedService,
 		public publicService: PublicService,
 		private getidstring: GetidstringPipe,
 		private capitalizarPipe: CapitalizarPipe
@@ -164,7 +162,7 @@ export class CompanyCreateComponent implements OnInit {
 		}
 		
 		if (this.forma.invalid) {
-			this.sharedService.snack('Faltan datos por favor verifique', 2000, 'Aceptar');
+			this.publicService.snack('Faltan datos por favor verifique', 2000, 'Aceptar');
 			return;
 		}
 
@@ -191,25 +189,25 @@ export class CompanyCreateComponent implements OnInit {
 				
 				this.loading = false;
 				this.newCompany.emit(data.company);
-				this.sharedService.snack(data.msg, 2000);
+				this.publicService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 			}, (err: HttpErrorResponse) => {
 				this.loading = false;
-				this.sharedService.snack(err.error.msg, 2000);
+				this.publicService.snack(err.error.msg, 2000);
 			}
 			)
 
 		} else {
 			this.adminService.createCompany(company).subscribe((data: CompanyResponse) => {
 				this.loading = false;
-				this.sharedService.snack(data.msg, 2000);
+				this.publicService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 				if (data.ok) {
 					this.newCompany.emit(data.company);
 				}
 			}, (err: HttpErrorResponse) => {
 				this.loading = false;
-				this.sharedService.snack(err.error.msg, 2000);
+				this.publicService.snack(err.error.msg, 2000);
 			});
 		}
 	}
@@ -221,7 +219,7 @@ export class CompanyCreateComponent implements OnInit {
 		this.forma.enable();
 		this.forma.reset();
 		formDirective.resetForm();
-		this.sharedService.scrollTop();
+		this.publicService.scrollTop();
 	}
 
 	setLocalidad(localidad: Location) {

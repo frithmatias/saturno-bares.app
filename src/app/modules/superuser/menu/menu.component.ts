@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SuperuserService } from '../superuser.service';
 import { MenuResponse, MenusResponse, MenuItem } from '../superuser.interface';
-import { SharedService } from 'src/app/services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   idMenuSelected: string; // le paso al hijo el id del menu seleccionado (id_parent) 
   constructor(
     private superuserService: SuperuserService,
-    private sharedService: SharedService
+    private publicService: PublicService
     ) { }
 
   ngOnInit(): void {
@@ -51,14 +51,14 @@ export class MenuComponent implements OnInit {
   }
   
   deleteMenuItem(idMenuItem: string): void {
-    this.sharedService.snack('Desea eliminar el menu?', 5000, 'ELIMINAR').then((ok: boolean) => {
+    this.publicService.snack('Desea eliminar el menu?', 5000, 'ELIMINAR').then((ok: boolean) => {
       if (ok) {
         this.superuserService.deleteMenu(idMenuItem).subscribe((data: MenuResponse) => {
-          this.sharedService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 5000);
           this.submenuItems = this.submenuItems.filter(menu => menu._id != idMenuItem);
         },
           (err: MenuResponse) => {
-            this.sharedService.snack(err.msg, 5000);
+            this.publicService.snack(err.msg, 5000);
           }
         )
       }

@@ -1,47 +1,64 @@
+<!-- <pre class="xs text-left text-accent">
+  {{ tickets | json}}
+</pre> -->
+<div class="tickets-page-container">
 
-<div class="p-2">
-    <table class="sm text-accent">
-        
-        <tr>
-            <th>
-                Negocio
-            </th>
-            <th>
-                Dirección
-            </th>
-            <th>
-                Mesa
-            </th>
-            <th>
-                Personas
-            </th>
-            <th>
-                Reserva
-            </th>
-            <th>
-                Estado
-            </th>
-        </tr>
-        <tr *ngFor="let ticket of tickets">
-            <td>
-                {{ticket.id_company.tx_company_name}}
-            </td>
-            <td>
-                {{ticket.id_company.tx_address_street}} {{ticket.id_company.tx_address_number}}
-            </td>
-            <td>
-                {{ticket.cd_tables[0]}}
-            </td>
-            <td>
-                {{ticket.nm_persons}}
-            </td>
-            <td>
-                {{ticket.tm_reserve}}
-            </td>
-            <td>
-                {{ticket.tx_status}}
-            </td>
-        </tr>
+  <div class="w-100">
 
-    </table>
+    <mat-form-field class="select-status">
+      <mat-label>Estado</mat-label>
+      <mat-select [formControl]="statusControl" multiple>
+        <mat-option *ngFor="let status of statusList" [value]="status.tx_status">{{status.tx_label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div *ngIf="ticketsFiltered.length === 0" class="text-accent">
+    No tenés tickets para los estados seleccionados.
+  </div>
+
+  <div class="tickets-filtered-container" *ngFor="let ticket of ticketsFiltered">
+    <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
+      <img class="user-image img-fluid"
+        [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
+    </div>
+
+    <mat-card class="p-3">
+
+      <mat-card-header class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title class="md"> {{ticket.id_company?.tx_company_name}} </mat-card-title>
+        <mat-card-subtitle class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="text-left sm fw-200">
+        <div>
+          Fecha: <span class="text-accent">{{ticket.tm_reserve | dateToString}}</span>
+        </div>
+        <div>
+          Estado: <span class="text-accent">{{ticket.tx_status | ticketStatus}}</span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+
+        <button mat-raised-button class="action-button-flex" color="warn"
+          [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-delete md"></td>
+              <td class="button-text sm">Cancelar Ticket</td>
+            </tr>
+          </table>
+        </button>
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
 </div>
+<button mat-button class="action-button" routerLink="/home">
+  Volver
+</button>

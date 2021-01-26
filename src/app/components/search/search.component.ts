@@ -3,7 +3,6 @@ import { PublicService } from '../../modules/public/public.service';
 import { Router } from '@angular/router';
 import { CompaniesResponse } from '../../interfaces/company.interface';
 import { Company } from 'src/app/interfaces/company.interface';
-import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +17,6 @@ export class SearchComponent implements OnInit {
   constructor(
     private router: Router,
     private publicService: PublicService,
-    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -37,10 +35,10 @@ export class SearchComponent implements OnInit {
           this.companies = data.companies;
         } else {
           e.value = '';
-          this.sharedService.snack('No existen resultados.', 2000, null);
+          this.publicService.snack('No existen resultados.', 2000, null);
         }
       }, () => {
-        this.sharedService.snack('Error al obtener las empresas', 2000, null);
+        this.publicService.snack('Error al obtener las empresas', 2000, null);
       })
     }
   }
@@ -48,7 +46,6 @@ export class SearchComponent implements OnInit {
   setCompany(e: any): void {
     this.companySelected = e;
     localStorage.setItem('company', JSON.stringify(e));
-    this.publicService.company = e;
     this.router.navigate(['/public/', e.tx_company_string]);
   }
 

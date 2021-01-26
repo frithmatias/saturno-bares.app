@@ -1,10 +1,11 @@
+
 import { Component, OnInit, Input } from '@angular/core';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { Table } from 'src/app/interfaces/table.interface';
 import { WaiterService } from '../../waiter.service';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
-import { SharedService } from '../../../../services/shared.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PublicService } from '../../../public/public.service';
 
 
 @Component({
@@ -23,11 +24,11 @@ export class QueuedComponent implements OnInit {
   @Input() queued: Ticket[];
   @Input() tables: Table[];
 
-  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario'];
+  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario', 'circuito'];
   showTables = true; // deshabilito la posibilidad de asignar mesas si asigno un ticket a otro sector.
   
   constructor(
-    public sharedService: SharedService,
+    public publicService: PublicService,
     public waiterService: WaiterService
   ) { }
 
@@ -64,13 +65,13 @@ export class QueuedComponent implements OnInit {
     this.waiterService.assignTables(idTicket, blPriority, blFirst, cdTables).subscribe(
       (resp: TicketResponse) => {
         if (resp.ok) {
-          this.sharedService.snack(resp.msg, 5000);
+          this.publicService.snack(resp.msg, 5000);
         } else {
-          this.sharedService.snack('Error al asignar las mesas!', 2000);
+          this.publicService.snack('Error al asignar las mesas!', 2000);
         }
       },
       () => {
-        this.sharedService.snack('Error al asignar las mesas!', 2000);
+        this.publicService.snack('Error al asignar las mesas!', 2000);
       }
     );
   };
@@ -86,14 +87,11 @@ export class QueuedComponent implements OnInit {
 
   endTicket = (ticket: Ticket) => {
     if (!ticket) {
-      this.sharedService.snack('Seleccione una mesa primero', 3000);
+      this.publicService.snack('Seleccione una mesa primero', 3000);
     }
     let idTicket = ticket._id;
     if (this.queued) {
-      let snackMsg = 'Desea finalizar el ticket actual?';
-      this.sharedService
-        .snack(snackMsg, 5000, 'ACEPTAR')
-        .then((resp: boolean) => {
+      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((resp: boolean) => {
           if (resp) {
             this.waiterService
               .endTicket(idTicket)

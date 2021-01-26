@@ -4,7 +4,7 @@ import { Section, SectionResponse } from '../../../interfaces/section.interface'
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../../services/login.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { SharedService } from 'src/app/services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-sections',
@@ -24,21 +24,21 @@ export class SectionsComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
-    private sharedService: SharedService
+    private publicService: PublicService
   ) { }
 
   ngOnInit(): void { }
 
   deleteSection(section: Section): void {
-    this.sharedService.snack(`Desea eliminar el sector ${section.tx_section}`, 2000, 'Aceptar').then(ok => {
+    this.publicService.snack(`Desea eliminar el sector ${section.tx_section}`, 2000, 'Aceptar').then(ok => {
       if (ok) {
         let idSection = section._id;
         this.adminService.deleteSection(idSection).subscribe((data: SectionResponse) => {
-          this.sharedService.snack(data.msg, 1000);
+          this.publicService.snack(data.msg, 1000);
           this.adminService.sections = this.adminService.sections.filter(section => section._id != idSection);
         },
           (err: SectionResponse) => {
-            this.sharedService.snack(err.msg, 3000);
+            this.publicService.snack(err.msg, 3000);
           }
         )
       }

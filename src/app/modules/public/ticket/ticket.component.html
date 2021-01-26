@@ -15,29 +15,148 @@
                 {{ company.tx_address_number }}</mat-card-subtitle>
         </mat-card-header>
 
-        <!------------------------------>
-        <!-- ACTION BUTTONS -->
-        <!------------------------------>
-        <mat-card-actions>
-            <div *ngIf="ticketTmEnd===null">
-                <button mat-raised-button class="screen-ticket-button m-2" color="primary"
-                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('waiter')">
-                    <span class="mdi mdi-silverware-fork-knife md"></span>
-                    Llamar al mozo
-                </button>
 
-                <button mat-raised-button class="screen-ticket-button m-2" color="primary"
-                    [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('account')">
-                    <span class="mdi mdi-file-document-edit-outline md"></span>
-                    Pedir la Cuenta
-                </button>
 
-                <button mat-raised-button class="screen-ticket-button m-2" color="warn" [disabled]="!ticket"
-                    (click)="endTicket()">
-                    <span class="mdi mdi-power md"></span>
-                    Cancelar Turno
-                </button>
+        <mat-card-content>
+
+            <!------------------------------>
+            <!-- SU TURNO -->
+            <!------------------------------>
+
+            <div *ngIf="ticketTmEnd===null" class="screen-myticket-container my-4 py-4">
+                <div class="screen-myticket-text-header">
+                    SU TURNO
+                </div>
+
+                <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
+                    {{ ticket?.id_position }}
+                </div>
+
+                <div class="screen-myticket-text-footer" style="line-height: normal;">
+
+                    <span *ngIf="!ticket?.id_session">
+                        Tiempo estimado: {{ averageToAtt}}
+                    </span>
+
+                    <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
+                        Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
+                    </span>
+                    <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
+                        Pase a las mesas
+                        <span *ngFor="let table of ticket?.id_session?.id_tables">
+                            {{ table.nm_table }}
+                        </span>
+                    </span>
+
+                </div>
+
+                <!------------------------------>
+                <!-- ACTION BUTTONS -->
+                <!------------------------------>
+
+                <div *ngIf="ticketTmEnd===null" class="screen-ticket-button-container">
+
+                    <div class="screen-ticket-button my-4">
+                        <button mat-raised-button class="action-button-flex" color="warn"
+                            [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('waiter')">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-silverware-fork-knife xl"></td>
+                                    <td class="button-text">Llamar al mozo</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
+
+                    <div class="screen-ticket-button my-4">
+                        <button mat-raised-button class="action-button-flex" color="primary"
+                            [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('account')">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-file-document-edit-outline xl"></td>
+                                    <td class="button-text">Pedir la Cuenta</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
+
+
+                    <div class="screen-ticket-button my-4">
+                        <button mat-raised-button class="action-button-flex" color="warn" [disabled]="!ticket"
+                            (click)="endTicket()">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-power xl"></td>
+                                    <td class="button-text">Cancelar Ticket</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
+
+                </div>
             </div>
+
+            <!------------------------------>
+            <!-- FINALIZADO -->
+            <!------------------------------>
+
+            <div class="p-3 my-4" *ngIf="ticketTmEnd!==null">
+
+                <div class="xl">¡Gracias por su visita!</div>
+
+                <div *ngIf="scoreItems.length > 0">
+
+                    <div class="md my-3">
+                        ¿Podrías dejarnos tu opinión?
+                    </div>
+
+                    <table class="table m-0">
+                        <tr *ngFor="let item of scoreItems">
+                            <td class="lg saturno-text-accent py-2">
+                                {{ item.tx_item }}
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 1}"
+                                    (click)="setScore(item._id, 1)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 2}"
+                                    (click)="setScore(item._id, 2)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 3}"
+                                    (click)="setScore(item._id, 3)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 4}"
+                                    (click)="setScore(item._id, 4)"></span>
+                            </td>
+                            <td class="p-0 py-2">
+                                <span class="mdi mdi-star screen-icon-star"
+                                    [ngClass]="{'screen-icon-star-on': scores.get(item._id) >= 5}"
+                                    (click)="setScore(item._id, 5)"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </div>
+
+        </mat-card-content>
+
+        <div class="screen-ticket-button my-4">
+            <button mat-button class="action-button-flex" routerLink="/home">
+                Volver al inicio
+            </button>
+        </div>
+
+        <mat-card-actions>
+
         </mat-card-actions>
     </mat-card>
 </div>

@@ -9,11 +9,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 // services
 import { AdminService } from '../../admin.service';
 import { LoginService } from '../../../../services/login.service';
-import { SharedService } from '../../../../services/shared.service';
 
 // interfaces
 import { User, UserResponse } from '../../../../interfaces/user.interface';
 import { Table } from '../../../../interfaces/table.interface';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
 	selector: 'app-waiter-create',
@@ -31,7 +31,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 	constructor(
 		public adminService: AdminService,
 		private loginService: LoginService,
-		private sharedService: SharedService
+		private publicService: PublicService
 	) { }
 
 	ngOnInit(): void {
@@ -113,7 +113,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 
 		if (this.forma.invalid) {
 			if (this.forma.errors?.password) {
-				this.sharedService.snack(this.forma.errors.password, 5000, 'Aceptar');
+				this.publicService.snack(this.forma.errors.password, 5000, 'Aceptar');
 			}
 			return;
 		}
@@ -133,7 +133,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 			waiter._id = this.waiterEdit._id;
 			this.adminService.updateWaiter(waiter).subscribe((data: UserResponse) => {
 				this.loading = false;
-				this.sharedService.snack(data.msg, 2000);
+				this.publicService.snack(data.msg, 2000);
 				this.resetForm(formDirective);
 				if (data.ok) {
 					this.loginService.pushUser(data.user);
@@ -141,20 +141,20 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 				}
 			}, (err: HttpErrorResponse) => {
 				this.loading = false;
-				this.sharedService.snack(err.error, 5000);
+				this.publicService.snack(err.error, 5000);
 			})
 		} else {
 			this.adminService.createWaiter(waiter).subscribe(
 				(data: UserResponse) => {
 					this.loading = false;
-					this.sharedService.snack(data.msg, 2000);
+					this.publicService.snack(data.msg, 2000);
 					this.resetForm(formDirective);
 					if (data.ok) {
 						this.idWaiterUpdated.emit(data.user._id);
 					}
 				}, (err: HttpErrorResponse) => {
 					this.loading = false;
-					this.sharedService.snack(err.error, 5000);
+					this.publicService.snack(err.error, 5000);
 				}
 			)
 		}
@@ -170,6 +170,6 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		this.forma.enable();
 		this.forma.reset();
 		if(formDirective){formDirective.resetForm();}
-		this.sharedService.scrollTop();
+		this.publicService.scrollTop();
 	}
 }

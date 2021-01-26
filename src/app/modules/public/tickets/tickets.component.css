@@ -1,0 +1,37 @@
+.tickets-page-container {
+  display        : flex;
+  flex-direction : row;
+  flex-wrap      : wrap;
+  width          : 100%;
+  padding        : 10px;
+  justify-content: center;
+}
+
+.tickets-filtered-container {
+  width  : 300px;
+  padding: 10px;
+}
+
+.header-image {
+  background-image: url('../../../../assets/img/svg/angular.svg');
+  background-size : cover;
+}
+
+.select-status {
+  width: 60%;
+}
+
+@media (max-width: 575px) {
+  mat-card {
+    width: 100% !important;
+  }
+
+  .tickets-filtered-container {
+    width  : 100%;
+    padding: 10px;
+  }
+
+  .select-status {
+    width: 100%;
+  }
+}

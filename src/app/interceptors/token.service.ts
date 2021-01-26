@@ -4,7 +4,7 @@ import { LoginService } from '../services/login.service';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { SharedService } from '../services/shared.service';
+import { PublicService } from '../modules/public/public.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class TokenService implements HttpInterceptor {
 
   constructor(
     private loginService: LoginService,
-    private sharedService: SharedService) { }
+    private publicService: PublicService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -51,7 +51,7 @@ export class TokenService implements HttpInterceptor {
 
   manejarError(error: HttpErrorResponse) {
     console.warn(error);
-    this.sharedService.snack(error.error?.msg, 5000);
+    this.publicService.snack(error.error?.msg, 5000);
     if (error.error.code == 1001) { // token expired
       this.loginService.logout();
     }

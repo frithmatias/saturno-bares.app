@@ -5,7 +5,7 @@ import { LoginService } from '../../../services/login.service';
 
 import { Company } from '../../../interfaces/company.interface';
 import { CompanyResponse } from '../../../interfaces/company.interface';
-import { SharedService } from 'src/app/services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class CompaniesComponent implements OnInit {
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
-    private sharedService: SharedService
+    private publicService: PublicService
   ) { }
 
   ngOnInit(): void { }
@@ -52,18 +52,18 @@ export class CompaniesComponent implements OnInit {
   }
 
   deleteCompany(company: Company): void {
-    this.sharedService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 5000, 'BORRAR').then(ok => {
+    this.publicService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 5000, 'BORRAR').then(ok => {
       if (ok) {
         let idCompany = company._id;
         this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
-          this.sharedService.snack(data.msg, 3000);
+          this.publicService.snack(data.msg, 3000);
           this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
           if (idCompany === this.loginService.user.id_company?._id) {
             this.loginService.user.id_company = null;
             localStorage.setItem('user', JSON.stringify(this.loginService.user));
           }
         }, (err: CompanyResponse) => {
-          this.sharedService.snack(err.msg, 3000);
+          this.publicService.snack(err.msg, 3000);
         }
         )
       }

@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { MenuResponse, MenuItem } from '../../superuser.interface';
 import { FormGroup, FormControl, Validators, FormGroupDirective, FormArray } from '@angular/forms';
-import { SharedService } from '../../../../services/shared.service';
-import { LoginService } from '../../../../services/login.service';
 import { SuperuserService } from '../../superuser.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AjaxError } from 'rxjs/ajax';
 import { of } from 'rxjs';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
   selector: 'app-menu-create-form',
@@ -20,8 +19,7 @@ export class MenuCreateFormComponent implements OnInit {
 
   menuForm: FormGroup;
   constructor(
-    private loginService: LoginService,
-    private sharedService: SharedService,
+    private publicService: PublicService,
     private superuserService: SuperuserService
   ) { }
 
@@ -70,7 +68,7 @@ export class MenuCreateFormComponent implements OnInit {
     this.menuForm?.patchValue({id_parent: this.idMenuSelected});
 
     if (this.menuForm.invalid) {
-      this.sharedService.snack('Formulario invalido', 2000);
+      this.publicService.snack('Formulario invalido', 2000);
       return;
     }
 
@@ -89,20 +87,20 @@ export class MenuCreateFormComponent implements OnInit {
       this.superuserService.updateMenu(menu).subscribe((data: MenuResponse) => {
         if (data.ok) {
           this.itemUpdated.emit(data.menuitem);
-          this.sharedService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 5000);
           this.resetForm(formDirective);
         }
       }, (err: HttpErrorResponse) => {
-        this.sharedService.snack(err.error.msg, 5000);
+        this.publicService.snack(err.error.msg, 5000);
       })
     } else {
       this.superuserService.createMenu(menu).subscribe((data: MenuResponse) => {
         this.itemUpdated.emit(data.menuitem);
-        this.sharedService.snack(data.msg, 5000);
+        this.publicService.snack(data.msg, 5000);
         this.resetForm(formDirective);
         formDirective.resetForm();
       }, (err: HttpErrorResponse) => {
-        this.sharedService.snack(err.error.msg, 5000);
+        this.publicService.snack(err.error.msg, 5000);
       }
       )
     }
@@ -117,6 +115,6 @@ export class MenuCreateFormComponent implements OnInit {
     this.menuForm.enable();
     this.menuForm.reset();
     formDirective.resetForm();
-    this.sharedService.scrollTop();
+    this.publicService.scrollTop();
   }
 }

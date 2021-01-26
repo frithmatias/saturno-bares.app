@@ -1,41 +1,48 @@
 <div class="saturno-container animated fadeIn">
-  <!-- <pre class="sm text-left">
-    TICKET {{ticket | json}}
-    PUBLICSERVICE.COMPANY {{publicService.company | json}}
+  <!-- <pre *ngIf="tickets.length > 0" class="xs text-left text-accent">
+    {{ticket | json}}
   </pre> -->
-  <div *ngIf="publicService.company">
+  <div *ngIf="company">
 
     <mat-card>
 
-      <h5 *ngIf="loading">
-        <span id="lblNuevoTicket">
-          Cargando...
-        </span>
-      </h5>
+      <div class="text-accent sm" *ngIf="loading">
+        Cargando...
+      </div>
 
       <div *ngIf="!loading">
 
-        <mat-card-header>
+        <!------------------------------>
+        <!-- COMPANY HEADER  -->
+        <!------------------------------>
+
+        <mat-card-header class="mb-4">
           <div mat-card-avatar><img class="img-fluid"
-              [src]="publicService.company.tx_company_logo | imagenPipe : 'tx_company_logo' : publicService.company._id">
+              [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
           </div>
-          <mat-card-title>{{ publicService.company.tx_company_name }}</mat-card-title>
-          <mat-card-subtitle>{{ publicService.company.tx_address_street }}
-            {{ publicService.company.tx_address_number }}</mat-card-subtitle>
+          <mat-card-title>{{ company.tx_company_name }}</mat-card-title>
+          <mat-card-subtitle>{{ company.tx_address_street }}
+            {{ company.tx_address_number }}</mat-card-subtitle>
         </mat-card-header>
 
-
         <!------------------------------>
-        <!-- TICKET TO CONFIRM  -->
+        <!-- TICKET WAITING / SCHEDULED  -->
         <!------------------------------>
-        <mat-card-content *ngIf="ticket && ticket.id_company===publicService.company._id">
-          <div *ngIf="ticket.tx_status === 'waiting'">
 
-            Ya tenés una reserva pendiente de validación para este comercio.
+        <mat-card-content *ngIf="ticket">
 
-            Tenés 10 minutos para validar la reserva utilizando uno de los siguientes metodos:
+          <!-- waiting, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished  -->
 
-            <div class="screen-ticket-button-confirm my-2">
+          <!------------------------------>
+          <!-- WAITING -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
+
+            Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
+            utilizando alguno de los siguientes métodos:
+
+            <div class="screen-ticket-button-confirm my-4">
 
               <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
                 <button mat-raised-button class="action-button" color="primary">
@@ -48,8 +55,8 @@
                 </button>
               </a>
 
-              <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
-                <button mat-raised-button class="action-button" color="active">
+              <div>
+                <button mat-raised-button class="action-button" color="active" disabled>
                   <table>
                     <tr>
                       <td class="button-icon mdi mdi-whatsapp xl"></td>
@@ -57,10 +64,11 @@
                     </tr>
                   </table>
                 </button>
-              </a>
+              </div>
 
-              <a href="https://t.me/saturnofunbot?start={{ticket._id}}">
-                <button mat-raised-button class="action-button" color="warn">
+              <div>
+                <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
+                  id="validateTicketGoogle" data-toggle="tooltip">
                   <table>
                     <tr>
                       <td class="button-icon mdi mdi-google xl"></td>
@@ -68,27 +76,133 @@
                     </tr>
                   </table>
                 </button>
-              </a>
+              </div>
+
+              <div>
+                <button mat-raised-button class="action-button" color="primary" disabled>
+                  <table>
+                    <tr>
+                      <td class="button-icon mdi mdi-email xl"></td>
+                      <td class="button-text">Email</td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
+              <div>
+                <button mat-raised-button class="action-button" color="active">
+                  <table>
+                    <tr>
+                      <td class="button-icon mdi mdi-phone xl"></td>
+                      <td class="button-text">Teléfono</td>
+                    </tr>
+                  </table>
+                </button>
+              </div>
+
             </div>
           </div>
 
-          <div *ngIf="ticket.tx_status === 'scheduled'">
-            Ya tenés una reserva activa para este comercio.
+          <!------------------------------>
+          <!-- PENDING -->
+          <!------------------------------>
 
-            <button mat-raised-button color="primary"
-              routerLink="/public/tickets/{{ticket.tx_platform}}/{{ticket.id_user}}">Mis Tickets</button>
+          <div *ngIf="ticket.tx_status === 'pending'" class="my-4">
+
+            Tu solicitud esta pendiente de aprobación.
+
           </div>
-        </mat-card-content>
+          <!------------------------------>
+          <!-- SCHEDULED -->
+          <!------------------------------>
 
+          <div *ngIf="ticket.tx_status === 'scheduled'" class="my-4">
+            <div *ngIf="validateResponse">
+              {{validateResponse}}
+            </div>
+            <div *ngIf="!validateResponse">
+              <p>
+                Tenés una reserva confirmada para este lugar.
+              </p>
+              <p>
+                Te esperan el {{ ticket.tm_reserve | dateToString}}.
+              </p>
+              <p>
+                Faltan {{ ticket.tm_reserve | dateToRemaining }}.
+              </p>
+            </div>
+          </div>
+
+          <!------------------------------>
+          <!-- QUEUED: VIRTUAL QUEUE -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'queued'">
+            Estas en la cola virutal, tu número es el {{ticket.id_position}}.
+          </div>
+
+          <!------------------------------>
+          <!-- REQUESTED: VIRTUAL QUEUE -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'requested'">
+            Tu requerimiento de mesa esta siendo procesado.
+          </div>
+
+          <!------------------------------>
+          <!-- ASSIGNED: VIRTUAL QUEUE -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'assigned'">
+            <p>
+              !Tu ticket ya tiene mesa asignada!
+            </p>
+            <p>
+              Sólo tenes que esperar a que se libere una mesa.
+            </p>
+            <p>
+              Si tu ticket está agendado tenés que esperar a la hora de reserva.
+            </p>
+          </div>
+
+          <!------------------------------>
+          <!-- PROVIDED: VIRTUAL QUEUE -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'provided'">
+            <p>
+              !{{ticket.tx_name}} tu mesa ya está lista!
+            </p>
+            <p>
+              Por favor pasá a la mesa {{ticket.cd_tables[0]}}. Para comunicarte con una camarero/a por favor
+              hace click en Gestionar mi Ticket.
+            </p>
+
+
+            <div *ngIf="ticket">
+              <button mat-raised-button class="action-button-flex" color="active"
+                routerLink="/public/ticket/{{ticket._id}}">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi mdi-ticket-account xl"></td>
+                    <td class="button-text">Gestionar mi Ticket</td>
+                  </tr>
+                </table>
+              </button>
+            </div>
+
+          </div>
+
+        </mat-card-content>
 
         <!------------------------------>
         <!-- TICKET FORM  -->
         <!------------------------------>
-        <mat-card-content *ngIf="!ticket || (ticket.id_company!==publicService.company._id)">
+
+        <mat-card-content *ngIf="!ticket">
           <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
             <div class="d-flex">
-
               <mat-form-field color="accent" class="w-50 pr-1">
                 <mat-label>Tu Nombre</mat-label>
                 <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
@@ -100,11 +214,9 @@
                 <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
                   formControlName="nmPersons" name="nmPersons" required>
               </mat-form-field>
-
             </div>
 
             <div class="d-flex">
-
               <mat-form-field color="accent" class="w-50 pr-1">
                 <mat-label>Sector</mat-label>
                 <mat-select formControlName="idSection" name="idSection" required>
@@ -121,44 +233,15 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-
             </div>
-
-            <div class="d-flex">
-
-              <mat-form-field color="accent" class="w-50 pr-1">
-                <mat-label>Confirmar por</mat-label>
-                <mat-select formControlName="txContact" name="txContact" required>
-                  <mat-option value="telegram"><span class="text-accent mdi mdi-telegram"></span> Telegram </mat-option>
-                  <mat-option value="whatsapp"><span class="text-accent mdi mdi-whatsapp"></span> Whatsapp </mat-option>
-                  <mat-option value="email"><span class="text-accent mdi mdi-email"></span> Email </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field color="accent" class="w-50 pl-1" *ngIf="ticketForm.controls.txContact.value!=='email'">
-                <mat-label>Teléfono</mat-label>
-                <input max="99999999999" matInput placeholder="1155551234" formControlName="nmPhone" name="nmPhone"
-                  type="number" required>
-              </mat-form-field>
-
-              <mat-form-field color="accent" class="w-50 pl-1" *ngIf="ticketForm.controls.txContact.value==='email'">
-                <mat-label>Email</mat-label>
-                <input maxlength="30" matInput placeholder="usuario@dominio.com" formControlName="txEmail"
-                  name="txEmail" type="email" required>
-              </mat-form-field>
-
-            </div>
-
-
-
 
             <div class="d-flex" *ngIf="ticketForm.controls.txWhen.value==='otrodia'">
-
               <mat-form-field color="accent" class="w-33 pr-1">
                 <mat-label>Fecha</mat-label>
                 <input matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
-                  (dateChange)="readAvailableDates()">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  (dateChange)="readAvailability()">
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                </mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
 
@@ -166,7 +249,7 @@
                 <mat-label>Hora</mat-label>
                 <mat-select formControlName="tmReserve">
                   <mat-option *ngFor="let available of availability" [value]="available.value"
-                    [disabled]="available.disabled" (click)="readAvailableTables(available.tables)">
+                    [disabled]="available.disabled" (click)="availableTables = available.tables">
                     {{available.text}}
                   </mat-option>
                 </mat-select>
@@ -176,36 +259,80 @@
                 <mat-label>Mesa</mat-label>
                 <mat-select formControlName="cdTables">
                   <mat-option *ngFor="let table of availableTables" [value]="table">
-                    {{table}}
+                    <span *ngIf="table===-1">Solicitar Mesa</span>
+                    <span *ngIf="table>0">{{table}}</span>
+
+
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-
-
             </div>
 
-            <div class="w-100 text-right">
+            <div class="w-100">
+
+              <div *ngIf="showRequestTable===true" class="sm text-accent">
+                <p>
+                  No se puede cumplimentar el requerimiento para la cantidad de personas solcitada.
+                  Si querés podes elegir un horario disponible para iniciar una solicitud de armado de mesa especial.
+                  Esta solicitud tiene que ser aprobada por un administrador y te notificamos a la brevedad por el mismo
+                  medio utilizado para confirmar el ticket.
+                </p>
+              </div>
               <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
+                *ngIf="showRequestTable===true && ticketForm.controls.txWhen.value==='otrodia'"
+                [disabled]="ticketForm.invalid">
+                Solicitar Mesa Especial
+              </button>
+
+              <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
+                *ngIf="showRequestTable===false && ticketForm.controls.txWhen.value==='ahora'"
+                [disabled]="ticketForm.invalid">
+                Solicitar Mesa
+              </button>
+
+              <button mat-raised-button color="active" class="my-2" (click)="createTicket()"
+                *ngIf="showRequestTable===false && ticketForm.controls.txWhen.value==='otrodia'"
                 [disabled]="ticketForm.invalid">
                 Reservar Mesa
               </button>
             </div>
-
           </form>
-
         </mat-card-content>
 
-        <mat-card-actions>
-          <button mat-button (click)="salir()">
-            SALIR
-          </button>
-        </mat-card-actions>
+        <!------------------------------>
+        <!-- BUTTONS  -->
+        <!------------------------------>
 
+        <mat-card-actions>
+
+          <div class="screen-ticket-button-container">
+
+
+            <div class="screen-ticket-button-confirm my-4" *ngIf="ticket">
+              <button mat-button routerLink="/public/ticket/{{ticket._id}}"
+                [disabled]="!ticket || ticket.tx_status!=='provided'">
+                Gestionar mi Ticket
+              </button>
+            </div>
+
+            <div class="screen-ticket-button-confirm my-4" *ngIf="ticket">
+              <button mat-button routerLink="/public/tickets/{{ticket.tx_platform}}/{{ticket.id_user}}"
+                [disabled]="!ticket || ticket.tx_platform===null || ticket.id_user===null">
+                Ver mis Tickets
+              </button>
+            </div>
+
+            <div class="screen-ticket-button-confirm my-4">
+              <button mat-button (click)="salir()">
+                Salir
+              </button>
+            </div>
+          </div>
+
+        </mat-card-actions>
 
       </div>
 
     </mat-card>
-
   </div>
-
 </div>

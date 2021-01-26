@@ -3,9 +3,8 @@ import { AdminService } from '../admin.service';
 import { TableResponse } from '../../../interfaces/table.interface';
 import { Section } from 'src/app/interfaces/section.interface';
 import { ScoreItem, ScoreItemResponse, ScoreItemsResponse } from '../../../interfaces/score.interface';
-import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
-import { SharedService } from '../../../services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-poll',
@@ -27,7 +26,7 @@ export class PollComponent implements OnInit {
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
-    private sharedService: SharedService
+    private publicService: PublicService
   ) { }
 
   ngOnInit(): void {
@@ -45,17 +44,17 @@ export class PollComponent implements OnInit {
 
 
   deleteScoreItem(item: ScoreItem): void {
-    this.sharedService.snack(`Desea eliminar el item ${item.tx_item} para calificar?`, 3000, 'Aceptar').then(ok => {
+    this.publicService.snack(`Desea eliminar el item ${item.tx_item} para calificar?`, 3000, 'Aceptar').then(ok => {
       if(ok){
 
         let idScoreItem = item._id;
         this.adminService.deleteScoreItem(idScoreItem).subscribe((data: ScoreItemResponse) => {
-          this.sharedService.snack(data.msg, 1000);
+          this.publicService.snack(data.msg, 1000);
           this.scoreItems = this.scoreItems.filter(item => item._id != idScoreItem);
           this.scoreItemsSection = this.scoreItemsSection.filter(table => table._id != idScoreItem);
         },
           (err: TableResponse) => {
-            this.sharedService.snack(err.msg, 3000);
+            this.publicService.snack(err.msg, 3000);
           }
         )
       }

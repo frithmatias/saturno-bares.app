@@ -3,10 +3,10 @@ import { Table } from 'src/app/interfaces/table.interface';
 import { IntervalToHmsPipe } from '../../../../pipes/interval-to-hms.pipe';
 import { WaiterService } from '../../waiter.service';
 import { LoginService } from '../../../../services/login.service';
-import { SharedService } from '../../../../services/shared.service';
 import { TicketResponse, Ticket } from '../../../../interfaces/ticket.interface';
 import { TableResponse } from '../../../../interfaces/table.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
   selector: 'app-tables',
@@ -33,7 +33,7 @@ export class TablesComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public waiterService: WaiterService,
-    public sharedService: SharedService,
+    public publicService: PublicService,
     private intervalToHmsPipe: IntervalToHmsPipe
   ) { }
 
@@ -77,9 +77,9 @@ export class TablesComponent implements OnInit {
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {
         if (data.ok) {
-          this.sharedService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 5000);
         } else {
-          this.sharedService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 5000);
         }
       }
     );
@@ -100,12 +100,12 @@ export class TablesComponent implements OnInit {
 
   releaseTicket = (ticket: Ticket) => {
     if (!ticket) {
-      this.sharedService.snack('Error. No hay clientes en esta mesa.', 5000);
+      this.publicService.snack('Error. No hay clientes en esta mesa.', 5000);
       return;
     }
 
     let snackMsg = 'Desea soltar el ticket y devolverlo a su estado anterior?';
-    this.sharedService
+    this.publicService
       .snack(snackMsg, 5000, 'ACEPTAR')
       .then((resp: boolean) => {
         if (resp) {
@@ -125,12 +125,12 @@ export class TablesComponent implements OnInit {
 
   endTicket = (ticket: Ticket) => {
     if (!ticket) {
-      this.sharedService.snack('Seleccione una mesa primero', 3000);
+      this.publicService.snack('Seleccione una mesa primero', 3000);
     }
     let idTicket = ticket._id;
     if (this.tickets) {
       let snackMsg = 'Desea finalizar el ticket actual?';
-      this.sharedService
+      this.publicService
         .snack(snackMsg, 5000, 'ACEPTAR')
         .then((resp: boolean) => {
           if (resp) {

@@ -8,6 +8,9 @@ import { MessageTimePipe } from './message-time.pipe';
 import { TimeToHmsPipe } from './time-to-hms.pipe';
 import { WordMaxLengthPipe } from './word-max-length.pipe';
 import { GetOccupationPipe } from './get-ocuppation.pipe';
+import { DateToStringPipe } from './date-to-string.pipe';
+import { DateToRemainingPipe } from './date-to-remaining.pipe';
+import { TicketStatusPipe } from './ticket-status.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { GetOccupationPipe } from './get-ocuppation.pipe';
     WordMaxLengthPipe,
     CapitalizarPipe,
     ImagenPipe,
-    GetOccupationPipe
+    GetOccupationPipe,
+    DateToStringPipe,
+    DateToRemainingPipe,
+    TicketStatusPipe
   ],
   imports: [],
   exports: [
@@ -31,7 +37,10 @@ import { GetOccupationPipe } from './get-ocuppation.pipe';
     WordMaxLengthPipe,
     CapitalizarPipe,
     ImagenPipe,
-    GetOccupationPipe
+    GetOccupationPipe,
+    DateToStringPipe,
+    DateToRemainingPipe,
+    TicketStatusPipe
 
   ]
 })

@@ -4,9 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { WaiterService } from '../../../modules/waiter/waiter.service';
 import { LoginService } from '../../../services/login.service';
-import { SharedService } from 'src/app/services/shared.service';
 import { Section, SectionsResponse } from '../../../interfaces/section.interface';
 import { SessionResponse, Session, SessionsResponse } from '../../../interfaces/session.interface';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     public loginService: LoginService,
     private waiterService: WaiterService,
-    private sharedService: SharedService,
+    private publicService: PublicService,
     private snack: MatSnackBar
   ) { }
 
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
       this.readSections(idCompany);
       this.readSessions(idCompany);
     } else {
-      this.sharedService.snack('No tiene una empresa seleccionada', 5000);
+      this.publicService.snack('No tiene una empresa seleccionada', 5000);
       this.loading = false;
       return;
     }

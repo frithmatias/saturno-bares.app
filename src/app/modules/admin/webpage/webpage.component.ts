@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
-import { SharedService } from 'src/app/services/shared.service';
 import { AdminService } from '../admin.service';
-import { Company } from 'src/app/interfaces/company.interface';
 import { LoginService } from '../../../services/login.service';
 import { CompanyResponse } from '../../../interfaces/company.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-webpage',
@@ -34,7 +33,7 @@ export class WebPageComponent implements OnInit {
   }
 
   constructor(
-    private sharedService: SharedService,
+    private publicService: PublicService,
     public loginService: LoginService,
     public adminService: AdminService
   ) { }
@@ -74,11 +73,11 @@ export class WebPageComponent implements OnInit {
       if(data.ok){
         this.loginService.user.id_company = data.company;
         this.loginService.pushUser(this.loginService.user);
-        this.sharedService.snack(data.msg, 3000);
+        this.publicService.snack(data.msg, 3000);
       } 
     }, (err: HttpErrorResponse) => {
       this.loading = false;
-      this.sharedService.snack(err.error.msg, 3000);
+      this.publicService.snack(err.error.msg, 3000);
     })
   }
 
@@ -87,7 +86,7 @@ export class WebPageComponent implements OnInit {
     this.formWebPage.enable();
     this.formWebPage.reset();
     formDirective.resetForm();
-    this.sharedService.scrollTop();
+    this.publicService.scrollTop();
   }
 
   dataUpdated(dataUpdated: any): void {

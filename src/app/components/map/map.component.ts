@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, SimpleChanges, ElementRef } from '@angular/core';
-import { SharedService } from '../../services/shared.service';
 export const MAPBOX_TOKEN = 'pk.eyJ1IjoiY29kZXI0MDQiLCJhIjoiY2sxMnBkMnl1MDA4cDNvcDFxanV4cThzZSJ9.qHR4JrSJ0aqpIG8VVRUTLw';
 import { Company } from 'src/app/interfaces/company.interface';
 import { Router } from '@angular/router';
+import { PublicService } from '../../modules/public/public.service';
 declare var mapboxgl: any;
 
 
@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
   config: any = {};
 
   constructor(
-    public sharedService: SharedService,
+    public publicService: PublicService,
     private router: Router
   ) { }
 

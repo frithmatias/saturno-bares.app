@@ -4,21 +4,22 @@
 
 <mat-horizontal-stepper linear #stepper>
   <mat-step>
-    <div class="animated fadeIn home-bg text-white">
-      <div class="header-base">
-        <div class="mdi mdi-magnify pointer" (click)="scrollToElement(map)">Buscá por Zona</div>
-      </div>
-  
-      <div class="home-welcome vcenter-container mb-4">
-        <div class="vcenter-inner text-white">
-          <div class="home-welcome-title">
-            Volvé a Salir
-          </div>
-          <div class="home-welcome-subtitle">
+    <div class="animated fadeIn home-bg">
 
-              Encontrá tu lugar, sin colas ni congestiones.
-
+      <div class="home-welcome">
+        <div class="header-base">
+          <div class="pointer" (click)="scrollToElement(map)">
+            <span class="mdi mdi-map-marker"></span>
+            <span>
+              Buscá por Zona
+            </span>
           </div>
+        </div>
+        <div class="xxxl mt-4">
+          Volvé a Salir
+        </div>
+        <div class="xl my-2 pb-4">
+          Encontrá tu lugar sin colas ni congestiones.
         </div>
       </div>
 
@@ -31,75 +32,97 @@
   </mat-step>
 </mat-horizontal-stepper>
 
-
 <!-- ======================================================== -->
-<!-- MINI CARDS -->
+<!-- BANNERS -->
 <!-- ======================================================== -->
 
-<div class="animated fadeIn my-4 minicards-content">
+<div class="animated fadeIn banner-container">
 
-  <!-- como funciona? -->
+  <div class="banner-container-col-left">
 
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/howworks">
-    <div>
-      <span class="mdi mdi-cogs xxxxl op5 text-accent"></span>
-    </div>
-    <div class="xl">
-      ¿Cómo funciona?
-    </div>
-
-    <div class="saturno-minicard-text">
-      Qué es Saturno y cómo funciona.
-    </div>
-  </mat-card>
-
-  <!-- registrar comercio -->
-
-  <mat-card class="saturno-minicard pointer m-2 no-shadow" routerLink="/register">
-    <div>
-      <span class="mdi mdi-storefront-outline xxxxl op5 text-accent"></span>
-    </div>
-    <div class="xl">
-      Registrar Negocio
+    <!-- BANNER LEFT 1: TELEGRAM -->
+    <div class="banner banner-left-1">
+      <div class="m-5">
+        <div class="banner-title m-2 mb-4">
+          INTEGRACION CON TELEGRAM
+        </div>
+        <div class="banner-text">
+          Si usas esta plataforma podés gestionar tus tickets directamente a través de Telegram sin necesidad de entrar
+          en la App.
+        </div>
+      </div>
+      <div class="banner-image banner-telegram my-5">
+      </div>
     </div>
 
 
-    <div class="saturno-minicard-text">
-      Desde acá podés registrar tu negocio y comenzar a recibir clientes.
-    </div>
-  </mat-card>
-
-  <!-- registrar contacto -->
-
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/contact">
-
-    <div>
-      <span class="mdi mdi-file-document-edit-outline xxxxl op5 text-accent"></span>
-    </div>
-    <div class="xl">
-      Contacto
+    <!-- BANNER LEFT 2: MESAS -->
+    <div class="banner banner-left-2">
+      <div class="m-5 text-white">
+        <div class="banner-title text-white m-2 mb-4">
+          GESTION DE MESAS
+        </div>
+        <div class="banner-text">
+          Los camareros/as pueden gestionar mesas pedidos y solicitudes de asistencia directamente desde un celular.
+        </div>
+      </div>
+      <div class="banner-image banner-tables my-5">
+      </div>
     </div>
 
-    <div class="saturno-minicard-text">
-      Por dudas o sugerencias podes usar este formulario de contacto.
-    </div>
-  </mat-card>
 
-  <!-- buscar comercio -->
 
-  <mat-card class="saturno-minicard pointer m-2" routerLink="/public/search">
+  </div>
 
-    <div>
-      <span class="mdi mdi-magnify xxxxl op5 text-accent"></span>
-    </div>
-    <div class="xl">
-      Buscar Bar / Resto
+  <!-- BANNER RIGHT 1: COLA VIRTUAL -->
+  <div class="banner-container-col-right">
+    <!-- registrar contacto -->
+    <div class="banner banner-right-1">
+      <div class="banner-image banner-virtual-queue">
+      </div>
+      <div class="m-5 text-white">
+        <div class="banner-title text-white m-2 mb-4">
+          COLA VIRTUAL
+        </div>
+        <div class="banner-text">
+          Cuando tu bar esta lleno también podes administrar a los clientes que esperan una mesa.
+        </div>
+      </div>
     </div>
 
-    <div class="saturno-minicard-text">
-      Buscá un Bar o Restaurante que ya esté registrado.
+    <!-- BANNER RIGHT 2: AGENDA -->
+    <div class="banner banner-right-2">
+      <div>
+        <span class="mdi mdi-calendar-account xml op2"></span>
+      </div>
+      <div class="m-5">
+        <div class="banner-title m-2 mb-4">
+          AGENDA
+        </div>
+        <div class="banner-text">
+          Tus clientes pueden elegir una mesa y reservarla. El sistema automáticamente administra las
+          mesas y los tickets agendados.
+        </div>
+      </div>
     </div>
-  </mat-card>
+
+    <!-- BANNER RIGHT 3: COMO FUNCIONA? -->
+    <div class="banner banner-right-3 pointer" routerLink="/howworks">
+      <div>
+        <span class="mdi mdi-cogs xml op2"></span>
+      </div>
+      <div class="m-5">
+        <div class="banner-title m-2 mb-4">
+          COMO FUNCIONA?
+        </div>
+        <div class="banner-text">
+          Vistitá esta breve guía para saber que es y cómo funciona el sistema Saturno.
+        </div>
+      </div>
+    </div>
+
+
+  </div>
 
 </div>
 

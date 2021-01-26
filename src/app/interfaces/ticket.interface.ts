@@ -1,12 +1,13 @@
 import { Session } from './session.interface';
 import { Table } from './table.interface';
 import { Section } from './section.interface';
+import { Company } from './company.interface';
 // ========================================================
 // TICKET
 // ========================================================
 
 export interface Ticket {
-	id_company: string;
+	id_company: Company;
 	id_section: Section; 
 	id_session: Session; 
 	nm_persons: number;
@@ -15,18 +16,16 @@ export interface Ticket {
 	tx_name: string;
 	tx_platform: string | null;
 	id_user: string | null;
-	nm_phone: number | null;
-	tx_email: string | null;
 	tx_call: string;
-	tx_status: string; // assigned [privided, assigned, queued, requested]
+	tx_status: string; // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished 
 	cd_tables?: number[]; // only for requested and assigned tickets
     id_position: number; // assigned
     id_socket_client: string; // primary
     id_socket_waiter?: string | null; // assigned
-	tm_reserve: Date;
+	tm_reserve: Date | null;
 	tm_provided?: Date | null;
-	tm_call: Date;
-    tm_start: Date;
+	tm_call: Date | null;
+    tm_start: Date | null;
     tm_att?: Date | null;
     tm_end?: Date | null;
 	_id: string;

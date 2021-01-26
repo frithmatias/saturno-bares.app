@@ -4,8 +4,8 @@ import { FormGroup, FormControl, Validators, FormGroupDirective, FormArray } fro
 import { AdminService } from '../../admin.service';
 import { Section, SectionResponse } from '../../../../interfaces/section.interface';
 import { LoginService } from '../../../../services/login.service';
-import { SharedService } from '../../../../services/shared.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
 	selector: 'app-section-create',
@@ -21,7 +21,7 @@ export class SectionCreateComponent implements OnInit {
 	constructor(
 		public adminService: AdminService,
 		private loginService: LoginService,
-		private sharedService: SharedService
+		private publicService: PublicService
 	) { }
 
 	ngOnInit(): void {
@@ -35,7 +35,7 @@ export class SectionCreateComponent implements OnInit {
 	createSection(formDirective: FormGroupDirective) {
 
 		if (this.forma.invalid) {
-			this.sharedService.snack('Faltan datos, verifica todos los campos', 3000);
+			this.publicService.snack('Faltan datos, verifica todos los campos', 3000);
 			return;
 		}
 
@@ -50,21 +50,21 @@ export class SectionCreateComponent implements OnInit {
 		this.loading = true;
 		this.adminService.createSection(section).subscribe((data: SectionResponse) => {
 			this.loading = false;
-			this.sharedService.snack(data.msg, 2000);
+			this.publicService.snack(data.msg, 2000);
 			this.resetForm(formDirective);
 			if (data.ok) {
 				this.sectionCreated.emit(data.section);
 			}
 		}, (err: HttpErrorResponse) => {
 			this.loading = false;
-			this.sharedService.snack(err.error.msg, 2000);
+			this.publicService.snack(err.error.msg, 2000);
 		});
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
 		this.forma.reset();
-		this.sharedService.scrollTop();
+		this.publicService.scrollTop();
 	}
 
 
@@ -72,7 +72,7 @@ export class SectionCreateComponent implements OnInit {
 
 		// si existe un valor "vacío" dentro del array de controles, evito crear otro control.
 		for (let control of (<FormArray>this.forma.controls['scoreItems']).controls) {
-			this.sharedService.snack('Complete todos los campos en blanco', 2000);
+			this.publicService.snack('Complete todos los campos en blanco', 2000);
 			if (control.value === '') return;
 		}
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroupDirective, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
-import { SharedService } from '../../../../services/shared.service';
 import { ScoreItem, ScoreItemResponse } from '../../../../interfaces/score.interface';
 import { Section } from '../../../../interfaces/section.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
 	selector: 'app-poll-create',
@@ -21,7 +21,7 @@ export class PollCreateComponent implements OnInit {
 
 	constructor(
 		public adminService: AdminService,
-		private sharedService: SharedService
+		private publicService: PublicService
 	) { }
 
 	ngOnInit(): void {
@@ -44,20 +44,20 @@ export class PollCreateComponent implements OnInit {
 		this.loading = true;
 		this.adminService.createScoreItem(scoreItem).subscribe((data: ScoreItemResponse) => {
 			this.loading = false;
-			this.sharedService.snack(data.msg, 2000);
+			this.publicService.snack(data.msg, 2000);
 			this.resetForm(formDirective);
 			if (data.ok) {
 				this.scoreItemCreated.emit(data.scoreitem);
 			}
 		}, (err: HttpErrorResponse) => {
 			this.loading = false;
-			this.sharedService.snack(err.error.msg, 2000);
+			this.publicService.snack(err.error.msg, 2000);
 		})
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
-		this.sharedService.scrollTop();
+		this.publicService.scrollTop();
 	}
 
 	sectionChange(section: Section): void {

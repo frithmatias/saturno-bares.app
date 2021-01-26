@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { WebsocketService } from '../../../services/websocket.service';
 import { WaiterService } from '../waiter.service';
-import { SharedService } from 'src/app/services/shared.service';
 
 // interfaces
 import { Ticket, TicketsResponse } from '../../../interfaces/ticket.interface';
@@ -17,6 +16,7 @@ import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { TicketComponent } from './ticket/ticket.component';
+import { PublicService } from '../../public/public.service';
 
 export interface Tile {
   color: string;
@@ -59,7 +59,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   constructor(
     public loginService: LoginService,
     public waiterService: WaiterService,
-    public sharedService: SharedService,
+    public publicService: PublicService,
     private wsService: WebsocketService,
     private router: Router,
     private intervalToHmsPipe: IntervalToHmsPipe,
@@ -113,8 +113,8 @@ export class SectionComponent implements OnInit, OnDestroy {
               for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.tx_status === 'busy')) {
                 if (table.id_session) {
                   this.busyTablesTimes.set(table.nm_table, {
-                    tm_provided: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_provided.getTime()),
-                    tm_call: this.intervalToHmsPipe.transform(table.id_session.id_ticket.tm_call.getTime()),
+                    tm_provided: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
+                    tm_call: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
                   });
                 }
               }

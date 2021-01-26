@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular
 
 import { AdminService } from '../../admin.service';
 import { Table, TableResponse } from '../../../../interfaces/table.interface';
-import { SharedService } from '../../../../services/shared.service';
 import { Section } from '../../../../interfaces/section.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
 	selector: 'app-table-create',
@@ -23,7 +23,7 @@ export class TableCreateComponent implements OnInit {
 
 	constructor(
 		public adminService: AdminService,
-		private sharedService: SharedService
+		private publicService: PublicService
 	) { }
 
 	ngOnInit(): void {
@@ -43,7 +43,7 @@ export class TableCreateComponent implements OnInit {
 		// verifico que el número de mesa no exista dentro del sector.
 		for (let table of this.tablesSection) {
 			if (this.forma.controls.nmTable.value === table.nm_table) {
-				this.sharedService.snack('Ya existe la mesa ' + table.nm_table + ' en este sector.', 3000);
+				this.publicService.snack('Ya existe la mesa ' + table.nm_table + ' en este sector.', 3000);
 				return;
 			}
 		}
@@ -57,7 +57,7 @@ export class TableCreateComponent implements OnInit {
 		this.loading = true;
 		this.adminService.createTable(table).subscribe((data: TableResponse) => {
 			this.loading = false;
-			this.sharedService.snack(data.msg, 2000);
+			this.publicService.snack(data.msg, 2000);
 			this.forma.patchValue({ idSection: data.table.id_section }); // persist data
 			this.resetForm(formDirective);
 			if (data.ok) {
@@ -65,13 +65,13 @@ export class TableCreateComponent implements OnInit {
 			}
 		}, (err: HttpErrorResponse) => {
 			this.loading = false;
-			this.sharedService.snack(err.error.msg, 2000);
+			this.publicService.snack(err.error.msg, 2000);
 		});
 	}
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
-		this.sharedService.scrollTop();
+		this.publicService.scrollTop();
 	}
 
 	sectionChange(section: Section): void {

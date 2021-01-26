@@ -51,8 +51,8 @@ export class WebsocketService {
 		return this.listen('update-waiters');
 	}
 
-	updatePrivate(): Observable<Object> {
-		return this.listen('update-private');
+	updateTicket(): Observable<Object> {
+		return this.listen('update-ticket');
 	}
 
 	escucharMensajes(): Observable<string> {
@@ -78,23 +78,21 @@ export class WebsocketService {
 
 		}
 		
-		if (localStorage.getItem('ticket')) { // client
+		if (localStorage.getItem('tickets')) { // client
 			
 			// update localstorage
 			// TODO: multi-tickets el usuario puede almacenar hasta una cantidad determinada de tickets que no se solapen.
-			let ticket = JSON.parse(localStorage.getItem('ticket'));
-			ticket.id_socket = this.idSocket;
-			localStorage.setItem('ticket', JSON.stringify(ticket));
-
-			// Enter new socket client to company room
-			let idCompany = ticket.id_company;
-			this.emit('enterCompany', idCompany);
-
-			// oldSocket se envía como bandera para definir si es escritorio o público
+			let tickets = JSON.parse(localStorage.getItem('tickets'));
+			for (let ticket of tickets){
+				ticket.id_socket_client = this.idSocket;
+							// oldSocket se envía como bandera para definir si es escritorio o público
 			let idTicket = ticket._id;
 			let newSocket = this.idSocket;
 			let isClient = true;
 			this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => { })
+			}
+			localStorage.setItem('tickets', JSON.stringify(tickets));
+
 		}
 	}
 

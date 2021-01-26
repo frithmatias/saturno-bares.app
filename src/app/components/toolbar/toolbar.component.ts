@@ -15,7 +15,6 @@ export class ToolbarComponent implements OnInit {
   @Input() unreadMessages: number;
   hiddenBadge: boolean;
 
-
   constructor(
     public loginService: LoginService,
     public waiterService: WaiterService,

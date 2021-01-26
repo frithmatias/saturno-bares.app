@@ -3,7 +3,7 @@ import { Settings } from 'src/app/interfaces/settings.interface';
 import { LoginService } from '../../../services/login.service';
 import { AdminService } from '../admin.service';
 import { SettingsResponse } from '../../../interfaces/settings.interface';
-import { SharedService } from 'src/app/services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
-    public sharedService: SharedService
+    public publicService: PublicService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
         this.adminService.settings = data.settings;
         this.blDisabled = true;
         this.blUpdated = true;
-        this.sharedService.snack(data.msg, 2000);
+        this.publicService.snack(data.msg, 2000);
 
       }
     })
@@ -55,14 +55,14 @@ export class SettingsComponent implements OnInit {
     let txMessage = this.txMessage;
 
     if (txMessage.length > 100) {
-      this.sharedService.snack('El mensaje no puede tener mas de 100 caracteres', 5000, 'Aceptar');
+      this.publicService.snack('El mensaje no puede tener mas de 100 caracteres', 5000, 'Aceptar');
       return;
     }
 
     let idCompany = this.loginService.user.id_company._id;
     this.adminService.sendMessage(idCompany, txMessage).subscribe(data => {
       this.txMessage = '';
-      this.sharedService.snack('El mensaje fue enviado correctamente', 2000);
+      this.publicService.snack('El mensaje fue enviado correctamente', 2000);
     })
   }
 }

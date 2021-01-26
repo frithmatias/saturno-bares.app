@@ -1,6 +1,6 @@
 .mat-card-avatar {
     height: 100px;
-    width: 100px;
+    width : 100px;
 }
 
 .mat-card-avatar img {
@@ -23,7 +23,7 @@
 }
 
 .mat-card-subtitle {
-    width: 100%;
+    width    : 100%;
     font-size: large;
 }
 
@@ -33,9 +33,13 @@
 
 
 .screen-ticket-button-confirm {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display        : flex;
+    flex-direction : row;
+    flex-wrap      : wrap;
     justify-content: center;
-  }
-  
+}
+
+.screen-ticket-button-container {
+    display        : flex;
+    justify-content: space-around;
+}

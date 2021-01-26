@@ -6,10 +6,10 @@ import { Subscription } from 'rxjs';
 // services
 import { AdminService } from '../admin.service';
 import { LoginService } from '../../../services/login.service';
-import { SharedService } from '../../../services/shared.service';
 
 // interfaces
 import { User, UsersResponse, UserResponse } from '../../../interfaces/user.interface';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-waiters',
@@ -31,7 +31,7 @@ export class WaitersComponent implements OnInit, OnDestroy {
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
-    private sharedService: SharedService
+    private publicService: PublicService
   ) { }
 
   ngOnInit(): void {
@@ -78,19 +78,19 @@ export class WaitersComponent implements OnInit, OnDestroy {
 
     let idWaiter = waiter._id;
     if (idWaiter === this.loginService.user._id) {
-      this.sharedService.snack('No podés borrar tu propio usuario!', 3000);
+      this.publicService.snack('No podés borrar tu propio usuario!', 3000);
       return;
     }
 
-    this.sharedService.snack(`Desea eliminar el asistente ${waiter.tx_name}?`, 3000, 'Aceptar').then(ok => {
+    this.publicService.snack(`Desea eliminar el asistente ${waiter.tx_name}?`, 3000, 'Aceptar').then(ok => {
       if(ok){
         this.adminService.deleteWaiter(idWaiter).subscribe((data: UserResponse) => {
           this.waiterEdit = 'clear_form';
-          this.sharedService.snack(data.msg, 1000);
+          this.publicService.snack(data.msg, 1000);
           this.adminService.waiters = this.adminService.waiters.filter(waiter => waiter._id != idWaiter);
         },
           (err: UserResponse) => {
-            this.sharedService.snack(err.msg, 3000)
+            this.publicService.snack(err.msg, 3000)
           }
         )
       }

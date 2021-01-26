@@ -1,71 +1,165 @@
-<div class="h-100 pt-sm-5">
-    <div class="saturno-container-wide animated fadeIn">
+<div class="saturno-container-wide mt-sm-4 animated fadeIn">
 
-        <mat-card>
+    <mat-card>
 
-            <div class="row">
+        <div class="row">
 
-                <!---------------------------------------------------------------------->
-                <!-- GOOGLE REGISTRATION -->
-                <!---------------------------------------------------------------------->
-                <div class="col-sm">
-                    <div class="jumbotron m-0 py-5 h-100 text-dark">
+            <!---------------------------------------------------------------------->
+            <!-- GOOGLE REGISTRATION -->
+            <!---------------------------------------------------------------------->
+            <div class="col-sm">
+                <div class="jumbotron m-0 py-5 h-100 text-dark">
 
-                        <div class="my-2 xl text-danger">Google</div>
-                        <div class="my-2 md">Registrarme con mi cuenta de Google.</div>
-                        <hr class="my-4 hr-red">
-                        <button mat-raised-button color="warn" type="button" id="btnGoogleRegister"
-                            data-toggle="tooltip">
-                            Registrarme
-                        </button>
-                        <button mat-button class="mt-3" routerLink="/home">Ir al Inicio</button>
-                    </div>
-                </div>
-
-                <div class="col-sm mt-4 mt-md-0">
-                    <div class="my-2 md">Registrarme e-mail y contraseña.</div>
-                    <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
-
-                        <mat-form-field color="accent" class="w-100">
-                            <mat-label>Nombre</mat-label>
-                            <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name" type="text"
-                                required>
-                        </mat-form-field>
-
-                        <mat-form-field color="accent" class="w-100">
-                            <mat-label>Email</mat-label>
-                            <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado </mat-error>
-                            <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email" name="email" type="email" (keyup)="checkEmailExists()" required>
-                        </mat-form-field>
-
-                        <mat-form-field color="accent" class="w-100">
-                            <mat-label>Clave</mat-label>
-                            <input maxlength="30" matInput placeholder="Clave" formControlName="password1" name="password1"
-                                type="password" required>
-                        </mat-form-field>
-
-                        <mat-form-field color="accent" class="w-100">
-                            <mat-label>Clave</mat-label>
-                            <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2"
-                                type="password" required>
-                        </mat-form-field>
-
-                        <div class="form-group text-center px-4 py-2">
-                            <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
-                                Registrarme
-                            </button>
-                        </div>
-
-                        <div class="border-top text-center label pt-2 mt-3">
-                            <span class="p-2">Ya tenés cuenta?</span>
-                            <span class="p-2 text-primary pointer" routerLink="/login"><b>Entrar</b></span>
-                        </div>
-                    </form>
-
+                    <div class="my-2 xl text-danger">Google</div>
+                    <div class="my-2 md">Registrarme con mi cuenta de Google.</div>
+                    <hr class="my-4 hr-red">
+                    <button mat-raised-button color="warn" type="button" id="btnGoogleRegister" data-toggle="tooltip">
+                        Registrarme
+                    </button>
+                    <button mat-button class="mt-3" routerLink="/home">Ir al Inicio</button>
                 </div>
             </div>
 
-        </mat-card>
+            <div class="col-sm mt-4 mt-md-0">
+                <div class="my-2 md">Registrarme e-mail y contraseña.</div>
+                <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name"
+                            type="text" required>
+                    </mat-form-field>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado
+                        </mat-error>
+                        <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email"
+                            name="email" type="email" (keyup)="checkEmailExists()" required>
+                    </mat-form-field>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Clave</mat-label>
+                        <input maxlength="30" matInput placeholder="Clave" formControlName="password1" name="password1"
+                            type="password" required>
+                    </mat-form-field>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Clave</mat-label>
+                        <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2"
+                            type="password" required>
+                    </mat-form-field>
+
+                    <div class="form-group text-center px-4 py-2">
+                        <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
+                            Registrarme
+                        </button>
+                    </div>
+
+                    <div class="border-top text-center label pt-2 mt-3">
+                        <span class="p-2">Ya tenés cuenta?</span>
+                        <span class="p-2 text-primary pointer" routerLink="/login"><b>Entrar</b></span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </mat-card>
+
+    <!-- ======================================================== -->
+    <!-- BANNERS -->
+    <!-- ======================================================== -->
+
+    <div class="animated fadeIn banner-container">
+
+        <div class="banner-container-col-left">
+
+            <!-- BANNER LEFT 1: TELEGRAM -->
+            <div class="banner banner-left-1">
+                <div class="m-5">
+                    <div class="banner-title m-2 mb-4">
+                        INTEGRACION CON TELEGRAM
+                    </div>
+                    <div class="banner-text">
+                        Si usas esta plataforma podés gestionar tus tickets directamente a través de Telegram sin
+                        necesidad de entrar
+                        en la App.
+                    </div>
+                </div>
+                <div class="banner-image banner-telegram my-5">
+                </div>
+            </div>
+
+
+            <!-- BANNER LEFT 2: MESAS -->
+            <div class="banner banner-left-2">
+                <div class="m-5 text-white">
+                    <div class="banner-title text-white m-2 mb-4">
+                        GESTION DE MESAS
+                    </div>
+                    <div class="banner-text">
+                        Los camareros/as pueden gestionar mesas pedidos y solicitudes de asistencia directamente desde
+                        un celular.
+                    </div>
+                </div>
+                <div class="banner-image banner-tables my-5">
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="banner-container-col-right">
+            <!-- registrar contacto -->
+            <div class="banner banner-right-1">
+                <div class="banner-image banner-virtual-queue">
+                </div>
+                <div class="m-5">
+                    <div class="banner-title m-2 mb-4">
+                        COLA VIRTUAL
+                    </div>
+                    <div class="banner-text">
+                        Cuando tu bar esta lleno también podes administrar a los clientes que esperan una mesa.
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANNER RIGHT 2: AGENDA -->
+            <div class="banner banner-right-2">
+                <div>
+                    <span class="mdi mdi-calendar-account xml op2"></span>
+                </div>
+                <div class="m-5">
+                    <div class="banner-title m-2 mb-4">
+                        AGENDA
+                    </div>
+                    <div class="banner-text">
+                        Tus clientes pueden elegir una mesa y reservarla. El sistema automáticamente administra las
+                        mesas y los tickets agendados.
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANNER RIGHT 3: COMO FUNCIONA? -->
+            <div class="banner banner-right-3 pointer" routerLink="/howworks">
+                <div>
+                    <span class="mdi mdi-cogs xml op2"></span>
+                </div>
+                <div class="m-5">
+                    <div class="banner-title m-2 mb-4">
+                        COMO FUNCIONA?
+                    </div>
+                    <div class="banner-text">
+                        Vistitá esta breve guía para saber que es y cómo funciona el sistema Saturno.
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
 
     </div>
+
 </div>

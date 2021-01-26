@@ -1,9 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SharedService } from '../../../../services/shared.service';
 import { WaiterService } from '../../waiter.service';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
   selector: 'app-ticket',
@@ -15,7 +16,7 @@ export class TicketComponent implements OnInit {
   ticketForm: FormGroup;
 
   constructor(
-    public sharedService: SharedService,
+    public publicService: PublicService,
     public waiterService: WaiterService,
     private bottomSheetRef: MatBottomSheetRef<TicketComponent>
   ) { }
@@ -31,7 +32,7 @@ export class TicketComponent implements OnInit {
   createTicket(): void {
 
     if (this.ticketForm.invalid) {
-      this.sharedService.snack('Ingrese sector y cantidad de personas', 3000);
+      this.publicService.snack('Ingrese sector y cantidad de personas', 3000);
       return;
     }
 

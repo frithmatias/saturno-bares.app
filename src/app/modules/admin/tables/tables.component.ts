@@ -4,7 +4,7 @@ import { Table, TableResponse } from '../../../interfaces/table.interface';
 import { Section } from '../../../interfaces/section.interface';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../../../services/login.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { PublicService } from '../../public/public.service';
 
 @Component({
   selector: 'app-tables',
@@ -24,22 +24,22 @@ export class TablesComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public adminService: AdminService,
-    private sharedService: SharedService
+    private publicService: PublicService
   ) { }
 
   ngOnInit(): void { }
 
   deleteTable(table: Table): void {
-    this.sharedService.snack(`Desea eliminar la mesa ${table.nm_table}?`, 2000, 'Aceptar').then(ok => {
+    this.publicService.snack(`Desea eliminar la mesa ${table.nm_table}?`, 2000, 'Aceptar').then(ok => {
       if (ok) {
         let idTable = table._id;
         this.adminService.deleteTable(idTable).subscribe((data: TableResponse) => {
-          this.sharedService.snack(data.msg, 1000);
+          this.publicService.snack(data.msg, 1000);
           this.adminService.tables = this.adminService.tables.filter(table => table._id != idTable);
           this.adminService.tablesSection = this.adminService.tablesSection.filter(table => table._id != idTable);
         },
           (err: TableResponse) => {
-            this.sharedService.snack(err.msg, 3000);
+            this.publicService.snack(err.msg, 3000);
           }
         )
       }

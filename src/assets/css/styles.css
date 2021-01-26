@@ -2,6 +2,12 @@ html,
 body {
     height          : 100vh;
     background-color: whitesmoke;
+    -webkit-touch-callout: none;
+    -webkit-user-select  : none;
+    -khtml-user-select   : none;
+    -moz-user-select     : none;
+    -ms-user-select      : none;
+    user-select          : none;
 }
 
 body {
@@ -438,39 +444,39 @@ FONTS
 -------------------------------------------
 */
 
-.fw100 {
+.fw-100 {
     font-weight: 100;
 }
 
-.fw200 {
+.fw-200 {
     font-weight: 200;
 }
 
-.fw300 {
+.fw-300 {
     font-weight: 300;
 }
 
-.fw400 {
+.fw-400 {
     font-weight: 400;
 }
 
-.fw500 {
+.fw-500 {
     font-weight: 500;
 }
 
-.fw600 {
+.fw-600 {
     font-weight: 600;
 }
 
-.fw700 {
+.fw-700 {
     font-weight: 700;
 }
 
-.fw800 {
+.fw-800 {
     font-weight: 800;
 }
 
-.fw900 {
+.fw-900 {
     font-weight: 900;
 }
 
@@ -553,6 +559,17 @@ DIMENSIONES
 -------------------------------------------
 */
 
+.xml {
+    font-size  : 8em !important;
+    font-weight: 500;
+}
+
+.ml {
+    font-size  : 6em !important;
+    font-weight: 500;
+}
+
+
 .xxxxl {
     font-size  : 4em !important;
     font-weight: 500;
@@ -580,6 +597,14 @@ DIMENSIONES
 
 .sm {
     font-size: small !important;
+}
+
+.xs {
+    font-size: x-small !important;
+}
+
+.xxs {
+    font-size: xx-small !important;
 }
 
 
@@ -844,8 +869,10 @@ MAPBOX
 
 
 .company-card {
-    width: 200px;
-    top  : 50px;
+    padding : 10px;
+    position: relative;
+    width   : 200px;
+    top     : 50px;
 }
 
 .company-welcome-textarea {
@@ -864,7 +891,7 @@ MAPBOX
 }
 
 .marker-text {
-    color   : var(--accent);
+    color: var(--accent);
 }
 
 .lightbox-wrapper .close {

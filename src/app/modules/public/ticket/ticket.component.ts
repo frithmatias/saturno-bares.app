@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // interfaces
 import { TicketResponse, TicketsResponse } from '../../../interfaces/ticket.interface';
@@ -10,11 +10,9 @@ import { WebsocketService } from '../../../services/websocket.service';
 import { PublicService } from '../public.service';
 
 // libs
-import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Subject, interval, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import moment from 'moment';
-import { SharedService } from 'src/app/services/shared.service';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 import { Company } from '../../../interfaces/company.interface';
 
@@ -27,7 +25,13 @@ const TAIL_LENGTH = 5;
 })
 export class TicketComponent implements OnInit, OnDestroy {
 
-	timer: Subscription;
+
+	idTicket: string;
+
+	timerSub: Subscription;
+	updateTicketsSub: Subscription;
+	systemMessagesSub: Subscription;
+
 	showAlert = false;
 	coming: boolean = false;
 	company: Company;
@@ -45,75 +49,69 @@ export class TicketComponent implements OnInit, OnDestroy {
 	constructor(
 		private wsService: WebsocketService,
 		public publicService: PublicService,
-		public sharedService: SharedService,
-		private router: Router
+		private router: Router,
+		private route: ActivatedRoute
 	) { }
 
-	ngOnInit(): void {
+	async ngOnInit() {
 
-		this.wsService.escucharSystem().subscribe(txMessage => {
-			this.sharedService.snack(txMessage, null, 'ACEPTAR');
+		this.route.params.subscribe(data => {
+			this.idTicket = data.idTicket;
 		})
 
-		if (!this.company) {
-			if (this.publicService.company) {
-				this.company = this.publicService.company;
-			} else {
-				if (localStorage.getItem('company')) {
-					this.company = JSON.parse(localStorage.getItem('company'));
-				}
-			}
-		}
 
-		if (!this.ticket) {
-			if (this.publicService.ticket) {
-				this.ticket = this.publicService.ticket;
-			} else {
-				if (localStorage.getItem('ticket')) {
-					this.ticket = JSON.parse(localStorage.getItem('ticket'));
-				}
-			}
-		}
-
-		if (!this.company || !this.ticket) {
+		// If ticket doesnt exist the id is invalid then reject 
+		if (!this.idTicket) {
 			this.publicService.clearPublicSession();
 			this.router.navigate(['/home']);
-			this.sharedService.snack('Debe obtener un turno primero.', 5000)
+			this.publicService.snack('No hay ticket para gestionar', 5000)
 			return;
 		}
 
+		// Get Ticket Data
+		this.publicService.getTicket(this.idTicket).subscribe(async (data: any) => {
+			this.ticket = data.ticket;
+			this.company = data.ticket.id_company;
+			await this.getTickets();
+		})
 
-		const body = document.getElementsByTagName('body')[0];
-		body.classList.remove('container');
+		// System Messages
+		this.systemMessagesSub = this.wsService.escucharSystem().subscribe(txMessage => {
+			this.publicService.snack(txMessage, null, 'ACEPTAR');
+		})
 
-		// listen for tickets
-		this.wsService.updateClients().subscribe(this.subjectUpdateTickets$);
-		this.subjectUpdateTickets$.subscribe(() => {
-			this.getTickets();
+		// Update Tickets List
+		this.updateTicketsSub = this.wsService.updateClients().subscribe(async () => {
+			await this.getTickets();
 		});
 
-		this.getTickets();
 	}
 
 	async getTickets() {
-		if (!this.ticket) { return; }
-		let idCompany = this.ticket.id_company;
+
+		if (!this.ticket || !this.company) { return; }
+
+		const idCompany = this.company._id;
+
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
 			if (data.ok) {
 				this.tickets = data.tickets;
+				this.ticket = this.tickets.find(ticket => ticket._id === this.ticket._id)
 				this.ticketsTail = data.tickets
 					.filter(ticket => ticket.tm_provided !== null)
-					.sort((a: Ticket, b: Ticket) => b.tm_provided.getTime() - a.tm_provided.getTime())
+					.sort((a: Ticket, b: Ticket) => + new Date(b.tm_provided) - +new Date(a.tm_provided))
 					.slice(0, TAIL_LENGTH);
 
-				this.pickticket();
+				this.processTicket(this.ticket);
 
-				if (this.ticket?.id_session && !this.timer) {
-					this.timer = interval(500).subscribe(data => {
+				if (this.ticket?.id_session && !this.timerSub) {
+					this.timerSub = interval(500).subscribe(data => {
 						this.showAlert = !this.showAlert;
 					})
-				} else {
-					if (this.timer) { this.timer.unsubscribe(); }
+				}
+
+				if (!this.ticket?.id_session) {
+					if (this.timerSub) { this.timerSub.unsubscribe(); }
 					this.showAlert = false;
 				}
 
@@ -127,10 +125,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	pickticket(): void {
-		const ticket = this.tickets.filter(ticket => (
-			ticket._id === this.ticket._id
-		))[0];
+	processTicket(ticket: Ticket): void {
 
 		if (ticket) {
 			if (ticket.tm_end !== null) {
@@ -145,7 +140,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 			} else {
 				this.ticket = ticket;
 				this.publicService.ticket = ticket;
-				localStorage.setItem('ticket', JSON.stringify(this.ticket));
+				this.publicService.updateStorageTickets(ticket);
 			}
 		} else {
 			this.publicService.clearPublicSession();
@@ -160,7 +155,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 		// sólo tickets ordenados del último finalizado al primero
 		// sólo la cantidad en TAIL,
 		let ticketsEndDesc = ticketsEnd
-			.sort((a: Ticket, b: Ticket) => b.tm_end.getTime() - a.tm_end.getTime())
+			.sort((a: Ticket, b: Ticket) => +new Date(b.tm_end) - +new Date(a.tm_end))
 			.slice(0, TAIL_LENGTH)
 			.filter(ticket => {
 				return (
@@ -266,20 +261,20 @@ export class TicketComponent implements OnInit, OnDestroy {
 		this.publicService.callWaiter(idTicket, txCall).subscribe((data: TicketResponse) => {
 			if (data.ok) {
 				this.ticket.tx_call = data.ticket.tx_call;
-				this.sharedService.snack(data.msg, 3000, 'ACEPTAR')
+				this.publicService.snack(data.msg, 3000, 'ACEPTAR')
 			}
 		});
 	}
 
 	endTicket(): Promise<void> {
 		return new Promise(resolve => {
-			this.sharedService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then((ok) => {
+			this.publicService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then((ok) => {
 				if (ok) {
 					let idTicket = this.ticket._id;
 					this.publicService.endTicket(idTicket).subscribe((data: TicketResponse) => {
 						if (data.ok) {
 							resolve();
-							this.sharedService.snack(data.msg, 3000, 'ACEPTAR')
+							this.publicService.snack(data.msg, 3000, 'ACEPTAR')
 							this.publicService.clearPublicSession();
 							this.router.navigate(['/home']);
 						}
@@ -352,9 +347,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.subjectUpdateTickets$.complete();
-		if (this.timer) { this.timer.unsubscribe(); }
-
+		if (this.updateTicketsSub) { this.updateTicketsSub?.unsubscribe(); }
+		if (this.systemMessagesSub) { this.systemMessagesSub?.unsubscribe(); }
+		if (this.timerSub) { this.timerSub.unsubscribe(); }
 	}
 
 }

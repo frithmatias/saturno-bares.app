@@ -13,13 +13,13 @@
     <!-- PAGE TABS -->
     <mat-tab-group mat-align-tabs="center" dynamicHeight>
         <mat-tab label="Home">
-            <app-home></app-home>
+            <app-home [company]="company"></app-home>
         </mat-tab>
         <mat-tab label="Menú">
-            <app-menu></app-menu>
+            <app-menu [company]="company"></app-menu>
         </mat-tab>
         <mat-tab label="Reservar">
-            <app-ticket-create></app-ticket-create>
+            <app-ticket-create [company]="company"></app-ticket-create>
         </mat-tab>
     </mat-tab-group>
 

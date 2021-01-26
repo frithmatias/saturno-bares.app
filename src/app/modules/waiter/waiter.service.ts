@@ -86,9 +86,8 @@ export class WaiterService {
 	}
 
 	endTicket(idTicket: string): Observable<object> {
-		const data = { idTicket };
 		const url = environment.api + '/t/endticket';
-		return this.http.post(url, data);
+		return this.http.post(url, { idTicket, reqBy: 'waiter' });
 	}
 
 	createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {

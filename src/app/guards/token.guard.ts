@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { CanLoad } from '@angular/router';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
-import { SharedService } from '../services/shared.service';
+import { PublicService } from '../modules/public/public.service';
 
 @Injectable()
 export class TokenGuard implements CanLoad {
 
 	constructor(
 		public loginService: LoginService,
-		private sharedServcie: SharedService,
+		private publicService: PublicService,
 		public router: Router
 	) { }
 
@@ -27,7 +27,7 @@ export class TokenGuard implements CanLoad {
 		// verifica si el token expiro
 		const expira = this.expira(payload.exp); // 1599861832
 		if (expira) {
-			this.sharedServcie.snack('La sesión expiró. Inicie sesión nuevamente.', 5000);
+			this.publicService.snack('La sesión expiró. Inicie sesión nuevamente.', 5000);
 			this.loginService.logout();
 			this.router.navigate(['/home']);
 			return false;

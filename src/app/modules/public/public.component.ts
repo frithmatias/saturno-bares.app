@@ -3,7 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from './public.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { CompanyResponse } from '../../interfaces/company.interface';
 
 @Component({
   selector: 'app-public',
@@ -17,8 +17,7 @@ export class PublicComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snack: MatSnackBar,
-    public publicService: PublicService,
-    public sharedService: SharedService
+    public publicService: PublicService
   ) { }
 
   ngOnInit(): void {
@@ -31,13 +30,12 @@ export class PublicComponent implements OnInit {
     this.route.params.subscribe((data: any) => {
       if (data.txCompanyString) {
         let txCompanyString = data.txCompanyString;
-        this.publicService.readCompany(txCompanyString).subscribe((resp: any) => {
+        this.publicService.readCompany(txCompanyString).subscribe((resp: CompanyResponse) => {
           if (resp.ok) {
             localStorage.setItem('company', JSON.stringify(resp.company));
-            this.publicService.company = resp.company;
             this.router.navigate(['/public/companypage'])
           } else {
-            this.snack.open('No existe la empresssa', 'Aceptar', { duration: 5000 });
+            this.snack.open('No existe la empresa', 'Aceptar', { duration: 5000 });
             this.router.navigate(['/home'])
           }
         },
