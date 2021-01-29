@@ -1,4 +1,4 @@
-<div class="saturno-container animated fadeIn" *ngIf="waiterService.session">
+<div class="page-container animated fadeIn" *ngIf="waiterService.session">
   <mat-card>
 
     <div *ngIf="loading" class="mt-5 animated fadeIn">
@@ -15,7 +15,7 @@
       <hr>
 
       <mat-card-content>
-        <mat-accordion multi="true">
+        <mat-accordion multi="false">
 
           <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
           </app-sections>

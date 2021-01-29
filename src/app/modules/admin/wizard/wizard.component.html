@@ -1,4 +1,4 @@
-<div class="saturno-container animated fadeIn">
+<div class="page-container animated fadeIn">
     <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear #stepper>
 
         <ng-template matStepperIcon="phone">
@@ -108,7 +108,7 @@
         </mat-step>
 
         <!-- Sections -->
-        <mat-step [completed]="adminService.sections?.length > 0">
+        <mat-step [completed]="publicService.sections?.length > 0">
 
             <mat-card>
                 <mat-card-header>
@@ -140,11 +140,11 @@
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
-                    <button *ngIf="adminService.sections?.length > 0" mat-button (click)="stepperGoNext(stepper)">
+                    <button *ngIf="publicService.sections?.length > 0" mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
-                    <button *ngIf="adminService.sections?.length === 0" mat-button disabled>
+                    <button *ngIf="publicService.sections?.length === 0" mat-button disabled>
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>

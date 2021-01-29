@@ -38,26 +38,6 @@
     margin-top: 20px;
 }
 
-.banner-left-1 {
-    background-color: #cfe3f1;
-}
-
-.banner-left-2 {
-    background-color: coral;
-}
-
-.banner-right-1 {
-    background-color: #ffe3d9;
-    padding-top     : 0px;
-}
-
-.banner-right-2 {
-    background-color: #d9f6e5;
-}
-
-.banner-right-3 {
-    background-color: #f4f4f4;
-}
 
 .banner-title {
     font-size     : large;
@@ -71,27 +51,14 @@
     font-weight: 400;
 }
 
-.banner-virtual-queue {
-    display            : block;
-    text-indent        : -9999px;
-    height             : 28em;
-    background-position: center;
-    background-image   : url('../../../assets/img/screenshots/waiter_section_virtual_queue.png');
-    background-size    : contain;
-    background-repeat  : no-repeat;
+
+/* LEFT BANNERS */
+
+.banner-container-tables {
+    background-color: #ff6666;
 }
 
-.banner-telegram {
-    display          : block;
-    text-indent      : -9999px;
-    height           : 10em;
-    background       : center;
-    background-image : url('../../../assets/img/svg/telegram.svg');
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.banner-tables {
+.banner-img-tables {
     display            : block;
     text-indent        : -9999px;
     height             : 28em;
@@ -101,8 +68,37 @@
     background-repeat  : no-repeat;
 }
 
+/* RIGHT BANNERS */
+
+.banner-container-virtual-queue {
+    background-color: var(--primary);
+    overflow        : hidden;
+
+}
+
+.banner-img-virtual-queue {
+    margin-top         : -90px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/waiter_section_virtual_queue.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+}
+
+
+.banner-container-schedule {
+    background-color: #fbfbfb;
+}
+
+.banner-container-howworks {
+    background-color: #fbfbfb;
+}
+
+
 @media (max-width: 575px) {
-    
+
     .banner-container-col-left {
         width        : 100% !important;
         padding-right: 0px;

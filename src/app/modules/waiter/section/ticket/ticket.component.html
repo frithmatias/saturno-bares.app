@@ -1,4 +1,4 @@
-<div class="saturno-container">
+<div class="page-container animated fadeIn">
     <mat-card>
         <mat-card-header class="text-accent">
             <mat-card-title>
@@ -27,7 +27,7 @@
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Sector</mat-label>
                     <mat-select formControlName="idSection" name="idSection" required>
-                        <mat-option *ngFor="let section of waiterService.sections" [value]="section._id">
+                        <mat-option *ngFor="let section of publicService.sections" [value]="section._id">
                             {{ section.tx_section }}
                         </mat-option>
                     </mat-select>

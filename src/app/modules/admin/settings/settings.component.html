@@ -1,116 +1,119 @@
-<div class="saturno-container animated fadeIn" *ngIf="loginService.user.id_company">
-
+<div class="page-container animated fadeIn" *ngIf="loginService.user.id_company">
     <mat-card *ngIf="settings">
+        <mat-card-content>
+            <mat-accordion multi="false">
 
-        <mat-accordion>
+                <!-- --------------------- -->
+                <!-- AAM -->
+                <!-- --------------------- -->
 
-            <!-- --------------------- -->
-            <!-- AAM -->
-            <!-- --------------------- -->
+                <mat-expansion-panel class="my-3">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span *ngIf="adminService.settings.bl_spm_auto"
+                                class="xl mdi mdi-boom-gate-up text-deco"></span>
+                            <span *ngIf="!adminService.settings.bl_spm_auto"
+                                class="xl mdi mdi-boom-gate text-deco"></span>
 
-            <mat-expansion-panel class="my-3">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <span *ngIf="adminService.settings.bl_spm_auto"
-                            class="xl mdi mdi-boom-gate-up text-deco"></span>
-                        <span *ngIf="!adminService.settings.bl_spm_auto" class="xl mdi mdi-boom-gate text-deco"></span>
-
-                        <span class="align-self-center md ml-2">Asignación Autom. de Mesas</span>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-
-
-
-
-                <mat-card-content class="p-2 d-flex">
+                            <span class="align-self-center lg ml-2">Asignación Autom. de Mesas</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
 
 
-                    <div class="w-50 text-left">
-                        <mat-slide-toggle [(ngModel)]="settings.bl_spm_auto" [checked]="settings.bl_spm_auto"
-                            (click)="check()"> AAM
-                        </mat-slide-toggle>
-                    </div>
-                    <div class="w-50 text-right">
-                        [
-                        <apan *ngIf="adminService.settings.bl_spm_auto">Activado</apan>
-                        <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
-                        ]
-                    </div>
 
-                </mat-card-content>
 
-                <mat-card-actions class="p-2 text-right">
+                    <mat-card-content class="p-2 d-flex">
 
-                    <button mat-raised-button color="primary" class="action-button-flex" (click)="showHelp=!showHelp">
-                        <table>
-                            <tr>
-                                <td class="button-icon mdi  mdi-help xl"></td>
-                                <td *ngIf="showHelp" class="button-text">Cerrar</td>
-                                <td *ngIf="!showHelp" class="button-text">Que es esto?</td>
-                            </tr>
-                        </table>
-                    </button>
 
-                    <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
-                        [disabled]="blDisabled">
-                        <table>
-                            <tr>
-                                <td *ngIf="!blUpdated" class="button-icon mdi  mdi-content-save xl"></td>
-                                <td *ngIf="blUpdated" class="button-icon mdi  mdi-check-circle xl"></td>
+                        <div class="w-50 text-left">
+                            <mat-slide-toggle [(ngModel)]="settings.bl_spm_auto" [checked]="settings.bl_spm_auto"
+                                (click)="check()"> AAM
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="w-50 text-right">
+                            [
+                            <apan *ngIf="adminService.settings.bl_spm_auto">Activado</apan>
+                            <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
+                            ]
+                        </div>
 
-                                <td class="button-text">Guardar</td>
-                            </tr>
-                        </table>
-                    </button>
-                </mat-card-actions>
+                    </mat-card-content>
 
-                <mat-card-content>
-                    <div class="card-left-border text-left animated fadeIn p-2 text-accent" *ngIf="showHelp">
-                        <p>
-                            Si esta opción esta activada el sistema buscará una mesa compatible y la aisgnará
-                            automáticamente a un cliente en cola virtual. Si esta opcion NO esta activada el cliente
-                            debe esperar a que un camarero/a decida que mesa le será asignada.
-                        </p>
-                    </div>
-                </mat-card-content>
-            </mat-expansion-panel>
+                    <mat-card-actions class="p-2 text-right">
 
-            <!-- --------------------- -->
-            <!-- MESSAGES -->
-            <!-- --------------------- -->
+                        <button mat-raised-button color="primary" class="action-button-flex"
+                            (click)="showHelp=!showHelp">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi  mdi-help xl"></td>
+                                    <td *ngIf="showHelp" class="button-text">Cerrar</td>
+                                    <td *ngIf="!showHelp" class="button-text">Que es esto?</td>
+                                </tr>
+                            </table>
+                        </button>
 
-            <mat-expansion-panel class="my-3">
+                        <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+                            [disabled]="blDisabled">
+                            <table>
+                                <tr>
+                                    <td *ngIf="!blUpdated" class="button-icon mdi  mdi-content-save xl"></td>
+                                    <td *ngIf="blUpdated" class="button-icon mdi  mdi-check-circle xl"></td>
 
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <span class="xl mdi  mdi-send text-deco"></span>
-                        <span class="align-self-center md ml-2">Enviá un mensaje a tus
-                            clientes</span>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
+                                    <td class="button-text">Guardar</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </mat-card-actions>
 
-                <mat-card-content class="p-2">
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Mensaje</mat-label>
-                        <input matInput maxlength="100" placeholder="Escribí acá el mensaje" [(ngModel)]="txMessage"
-                            name="txCompanySlogan" type="text">
-                    </mat-form-field>
-                </mat-card-content>
+                    <mat-card-content>
+                        <div class="card-left-border text-left animated fadeIn p-2 text-accent" *ngIf="showHelp">
+                            <p>
+                                Si esta opción esta activada el sistema asignará automáticamente las mesas disponibles
+                                a los clientes que esperan en la cola virtual. Si esta opcion NO esta activada el
+                                cliente
+                                debe esperar a que un camarero/a decida que mesa le será asignada.
+                            </p>
+                        </div>
+                    </mat-card-content>
+                </mat-expansion-panel>
 
-                <mat-card-actions class="p-2 text-right">
-                    <button mat-raised-button color="primary" class="action-button" (click)="sendMessage()"
-                        [disabled]="txMessage.length === 0">
-                        <table>
-                            <tr>
-                                <td class="button-icon mdi  mdi-send xl"></td>
-                                <td class="button-text">Enviar</td>
-                            </tr>
-                        </table>
-                    </button>
-                </mat-card-actions>
+                <!-- --------------------- -->
+                <!-- MESSAGES -->
+                <!-- --------------------- -->
 
-            </mat-expansion-panel>
+                <mat-expansion-panel class="my-3">
 
-        </mat-accordion>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-send text-deco"></span>
+                            <span class="align-self-center lg ml-2">Enviá un mensaje a tus
+                                clientes</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-card-content class="p-2">
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Mensaje</mat-label>
+                            <input matInput maxlength="100" placeholder="Escribí acá el mensaje" [(ngModel)]="txMessage"
+                                name="txCompanySlogan" type="text">
+                        </mat-form-field>
+                    </mat-card-content>
+
+                    <mat-card-actions class="p-2 text-right">
+                        <button mat-raised-button color="primary" class="action-button" (click)="sendMessage()"
+                            [disabled]="txMessage.length === 0">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi  mdi-send xl"></td>
+                                    <td class="button-text">Enviar</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </mat-card-actions>
+
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </mat-card-content>
     </mat-card>
 </div>

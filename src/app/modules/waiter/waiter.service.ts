@@ -14,8 +14,6 @@ import { Table } from '../../interfaces/table.interface';
 })
 export class WaiterService {
 
-	// set on home
-	sections: Section[] = [];
 	session: Session = null;
 	sectionSelected: string = ''; // reassign section
 
@@ -35,10 +33,6 @@ export class WaiterService {
 		private loginService: LoginService
 	) { }
 
-	readSections(idCompany: string) {
-		const url = environment.api + '/section/readsections/' + idCompany;
-		return this.http.get(url);
-	}
 
 	readSessions(idCompany: string) {
 		const url = environment.api + '/section/readsessions/' + idCompany;
@@ -61,9 +55,15 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
-	assignTables(idTicket: string, blPriority: boolean = false, blFirst: boolean, cdTables: number[]) {
+	assignTablesPending(idTicket: string, blPriority: boolean = false, blFirst: boolean, cdTables: number[]) {
 		const data = { idTicket, blPriority, blFirst, cdTables };
-		const url = environment.api + '/table/assigntables';
+		const url = environment.api + '/table/assigntablespending';
+		return this.http.post(url, data);
+	}
+
+	assignTablesRequested(idTicket: string, blPriority: boolean = false, blFirst: boolean, cdTables: number[]) {
+		const data = { idTicket, blPriority, blFirst, cdTables };
+		const url = environment.api + '/table/assigntablesrequested';
 		return this.http.post(url, data);
 	}
 

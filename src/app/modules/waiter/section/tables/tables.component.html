@@ -19,8 +19,6 @@
 
     <div *ngIf="listmode">
 
-
-
         <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
 
             <ng-container matColumnDef="estado">
@@ -36,7 +34,7 @@
                     <span class="font-monospace">{{ element.nm_table }}</span>
                 </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="capacidad">
                 <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Capacidad </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
@@ -54,7 +52,8 @@
             <ng-container matColumnDef="ocupacion">
                 <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ocupación </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ element.nm_persons | getOccupation : element.id_session?.id_ticket.nm_persons }}%</span>
+                    <span class="font-monospace">{{ element.nm_persons | getOccupation :
+                        element.id_session?.id_ticket.nm_persons }}%</span>
                 </td>
             </ng-container>
 
@@ -103,7 +102,7 @@
     <!------------------------------>
 
     <div *ngIf="!listmode">
-        <button mat-raised-button [color]="t.id_session?'warn':t.tx_status==='idle'?'active':''"
+        <button mat-raised-button [color]="t.id_session?'warn':t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
             class="m-1 table-button-inactive" *ngFor="let t of tables"
             [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
@@ -157,7 +156,8 @@
                     <td>Circuito</td>
                     <td class="text-right">
                         <span *ngIf="table?.id_session?.id_ticket.tm_reserve !== null">Agenda</span>
-                        <span *ngIf="table?.id_session?.id_ticket.tm_reserve === null && table?.id_session?.id_ticket.bl_contingent === false">Web</span>
+                        <span
+                            *ngIf="table?.id_session?.id_ticket.tm_reserve === null && table?.id_session?.id_ticket.bl_contingent === false">Web</span>
                         <span *ngIf="table?.id_session?.id_ticket.bl_contingent === true">Contingencia</span>
                     </td>
                 </tr>

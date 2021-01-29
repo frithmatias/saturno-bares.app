@@ -1,3 +1,43 @@
+
+@media (max-width: 575px) {
+    .home-title {
+        font-size: 3em !important;
+    }
+
+    .home-welcome {
+        width: 100% !important;
+    }
+
+    .banner-container-col-left {
+        width        : 100% !important;
+        padding-right: 0px !important;
+    }
+
+    .banner-container-col-right {
+        width       : 100% !important;
+        padding-left: 0px !important;
+    }
+
+    .banner-container-col {
+        width: 100% !important;
+    }
+
+    .banner {
+        border: 10px solid white;
+    }
+
+    .banner-title {
+        font-size: large;
+    }
+
+    .banner-text {
+        font-size  : large;
+        font-weight: 300;
+
+    }
+
+}
+
 mat-card {
     box-shadow: unset !important;
 }
@@ -30,6 +70,13 @@ mat-card {
     /* text-shadow        : -1px 0 rgba(0, 0, 0, .3), 0px 1px rgba(0, 0, 0, .3), 0px -1px rgba(0, 0, 0, .3), 1px 0 rgba(0, 0, 0, .3); */
 }
 
+.home-title {
+    font-size  : 4em;
+    font-weight: 200;
+}
+
+
+
 .company-input-wrapper {
     width        : 70%;
     place-content: center;
@@ -38,24 +85,19 @@ mat-card {
     top          : 18%;
 }
 
-@media (max-width: 575px) {
-    .home-welcome {
-        width: 100% !important;
-    }
-}
 
 /*--------------------------------*/
 /* banners */
 /*--------------------------------*/
 
 .banner-container {
-    font-family     : -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: white;
-    color           : #575757;
-    display         : flex;
-    flex-direction  : row;
-    flex-wrap       : wrap;
-    padding-bottom  : 20px;
+    font-family          : -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color     : white;
+    color                : #575757;
+    display              : flex;
+    flex-direction       : row;
+    flex-wrap            : wrap;
+    padding-bottom       : 20px;
     -webkit-touch-callout: none;
     -webkit-user-select  : none;
     -khtml-user-select   : none;
@@ -87,26 +129,6 @@ mat-card {
     padding   : 15px;
 }
 
-.banner-left-1 {
-    background-color: #cfe3f1;
-}
-
-.banner-left-2 {
-    background-color: coral;
-}
-
-.banner-right-1 {
-    background-color: #8457d4;
-    padding-top     : 0px;
-}
-
-.banner-right-2 {
-    background-color: #d9f6e5;
-}
-
-.banner-right-3 {
-    background-color: #f4f4f4;
-}
 
 .banner-title {
     font-size     : large;
@@ -116,23 +138,20 @@ mat-card {
 }
 
 .banner-text {
-    font-size  : medium;
-    font-weight: 400;
+    font-size     : medium;
+    font-weight   : 200;
     letter-spacing: .08em;
 
 }
 
-.banner-virtual-queue {
-    display            : block;
-    text-indent        : -9999px;
-    height             : 28em;
-    background-position: center;
-    background-image   : url('../../../assets/img/screenshots/waiter_section_virtual_queue.png');
-    background-size    : contain;
-    background-repeat  : no-repeat;
+/* LEFT BANNERS */
+
+.banner-container-telegram {
+    background-color: #ecf7ff;
+    border-radius   : 0 10px 10px 0;
 }
 
-.banner-telegram {
+.banner-img-telegram {
     display          : block;
     text-indent      : -9999px;
     height           : 10em;
@@ -142,47 +161,94 @@ mat-card {
     background-repeat: no-repeat;
 }
 
-.banner-tables {
+.banner-container-createticket {
+    background-color: #6b926c;
+    overflow        : hidden;
+    border-radius   : 0 10px 10px 0;
+}
+
+.banner-img-createticket {
+    position           : relative;
+    margin-top         : -100px;
     display            : block;
     text-indent        : -9999px;
     height             : 28em;
     background-position: center;
-    background-image   : url('../../../assets/img/screenshots/waiter_section_tables.png');
+    background-image   : url('../../../assets/img/screenshots/public_createticket.png');
     background-size    : contain;
     background-repeat  : no-repeat;
 }
 
-@media (max-width: 575px) {
+.banner-container-myticket {
+    background-color: #f9f9f9;
+    border-radius   : 0 10px 10px 0;
+}
 
-    .banner-container-col-left {
-        width        : 100% !important;
-        padding-right: 0px;
-    }
+.ticket-icon {
+    font-size: 7em;
+    opacity  : .3;
+    color    : var(--primary)
+}
 
-    .banner-container-col-right {
-        width       : 100% !important;
-        padding-left: 0px;
-    }
+/* RIGHT BANNERS */
 
-    .banner-container-col {
-        width: 100% !important;
-    }
+.banner-container-map {
+    background-color: var(--primary);
+    border-radius   : 10px 0 0 10px;
+}
 
-    .banner {
-        border: 10px solid white;
-    }
+.banner-img-map {
+    position           : relative;
+    margin-top         : -80px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/public_map.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+}
 
-    .banner-title {
-        font-size: x-large;
-    }
+.banner-container-scores {
+    background-color: #f47f56;
+    padding-top     : 0px;
+    overflow        : hidden;
+    border-radius   : 10px 0 0 10px;
+}
 
-    .banner-text {
-        font-size: large;
-        font-weight: 300;
-        
-    }
+.banner-img-scores {
+    position           : relative;
+    margin-bottom      : -150px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/public_scores.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+}
+
+.banner-container-tickets {
+    background-color: #f9f9f9;
+    overflow        : hidden;
+    border-radius   : 10px 0 0 10px;
 
 }
+
+.banner-img-tickets {
+    position           : relative;
+    margin-bottom      : -140px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/public_tickets.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+}
+
+
+
 
 /*--------------------------------*/
 /* map */
@@ -190,7 +256,7 @@ mat-card {
 
 .home-map {
     padding: 0px;
-    height : 400px;
+    height : 500px;
 }
 
 .location-input-wrapper {

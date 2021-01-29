@@ -41,7 +41,6 @@ import { TicketStatusPipe } from './ticket-status.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe
-
   ]
 })
 export class PipesModule { }

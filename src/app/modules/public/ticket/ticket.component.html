@@ -2,7 +2,7 @@
 <!-- TICKETS SCREEN -->
 <!-- ======================================================== -->
 
-<div class="saturno-container p-0 m-0">
+<div class="page-container p-0 m-0">
 
     <mat-card *ngIf="ticket && company">
 
@@ -97,7 +97,7 @@
             </div>
 
             <!------------------------------>
-            <!-- FINALIZADO -->
+            <!-- FINALIZADO / ENCUESTA -->
             <!------------------------------>
 
             <div class="p-3 my-4" *ngIf="ticketTmEnd!==null">
@@ -112,7 +112,7 @@
 
                     <table class="table m-0">
                         <tr *ngFor="let item of scoreItems">
-                            <td class="lg saturno-text-accent py-2">
+                            <td class="lg text-accent py-2">
                                 {{ item.tx_item }}
                             </td>
                             <td class="p-0 py-2">

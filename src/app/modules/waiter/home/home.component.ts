@@ -75,13 +75,13 @@ export class HomeComponent implements OnInit {
   }
 
   readSections(idCompany: string): void {
-    this.waiterService.readSections(idCompany).subscribe((data: SectionsResponse) => {
+    this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
       if (data.ok) {
         this.sections = data.sections;
-        this.waiterService.sections = this.sections;
+        this.publicService.sections = this.sections;
       } else {
         delete this.sections;
-        delete this.waiterService.sections;
+        delete this.publicService.sections;
       }
     },
       () => { this.loading = false; }, () => { this.loading = false; });

@@ -28,7 +28,9 @@ input:-internal-autofill-selected {
     color           : -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
 }
 
-
+table {
+    width: 100%;
+}
 /*
 -------------------------------------------
 SCROLL BAR 
@@ -96,10 +98,6 @@ mat-card {
     outline: none;
 }
 
-table {
-    width: 100%;
-}
-
 td {
     vertical-align: middle !important;
 }
@@ -129,39 +127,46 @@ SATURNO
 -------------------------------------------
 */
 
-
-.saturno-container {
+.page-container {
+    margin: 50px 0px;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
 }
 
-.saturno-container-wide {
+.page-tab-container {
+    margin: 10px 0px;
+    min-width: 300px;
+    max-width: 600px;
+    font-size: medium;
+}
+
+.page-container-wide {
     min-width: 18rem;
     max-width: 50rem;
     font-size: medium;
 }
 
-.saturno-container-full {
+.page-container-full {
     width    : 100%;
     font-size: medium;
 }
 
-
-
 @media (max-width: 575px) {
 
-    .saturno-container {
+    .page-container {
+        margin: 0em;
         padding: 0em;
     }
 
-    .saturno-container-wide {
+    .page-container-wide {
         padding: 0em;
     }
 
-    .saturno-container-login {
+    .page-container-login {
         height: 100vh;
     }
+
 }
 
 @media (min-width: 575px) {
@@ -561,18 +566,15 @@ DIMENSIONES
 
 .xml {
     font-size  : 8em !important;
-    font-weight: 500;
 }
 
 .ml {
     font-size  : 6em !important;
-    font-weight: 500;
 }
 
 
 .xxxxl {
     font-size  : 4em !important;
-    font-weight: 500;
 }
 
 .xxxl {

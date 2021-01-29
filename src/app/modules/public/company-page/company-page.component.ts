@@ -21,7 +21,7 @@ export class CompanyPageComponent implements OnInit {
 	images: sliderImage[] = [];
 	company: Company;
 
-	// width 528: saturno-container 600px - 2x20px padding - mat-card padding 2x16 
+	// width 528: page-container 600px - 2x20px padding - mat-card padding 2x16 
 	// [imageSize]="imageSize"
 	imageSize = { width: '100%', height: 200, space: 0 };
 	constructor(

@@ -3,6 +3,7 @@ import { Section } from '../../../../interfaces/section.interface';
 import { WaiterService } from '../../waiter.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { PublicService } from '../../../public/public.service';
 
 @Component({
   selector: 'app-sections',
@@ -21,8 +22,9 @@ export class SectionsComponent implements OnInit {
 
   constructor(
     public loginService: LoginService,
-    public waiterService: WaiterService
-  ) { }
+    public waiterService: WaiterService,
+    public publicService: PublicService
+    ) { }
 
   ngOnInit(): void { }
 

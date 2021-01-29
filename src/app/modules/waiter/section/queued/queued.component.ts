@@ -25,14 +25,13 @@ export class QueuedComponent implements OnInit {
   @Input() tables: Table[];
 
   displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario', 'circuito'];
-  showTables = true; // deshabilito la posibilidad de asignar mesas si asigno un ticket a otro sector.
-  
+
   constructor(
     public publicService: PublicService,
     public waiterService: WaiterService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // ADD OR REMOVE TABLES FOR ASSIGNATION
   setReserve = (table: Table, ticket: Ticket) => {
@@ -41,19 +40,8 @@ export class QueuedComponent implements OnInit {
       : [...ticket.cd_tables, table.nm_table];
   };
 
-  clearSelection(ticket: Ticket) {
-    // al cambiar el sector de destino limpio las mesas actuales y deshabilito las mesas 
-    // las mesas son asignables dentro del scope de cada sector
-    ticket.cd_tables = [];
-    if(ticket.id_section._id === this.waiterService.session.id_section._id){
-      this.showTables = true;
-    } else {
-      this.showTables = false;
-    }
-  }
-
   // ASSIGN TABLES
-  assignTables = (ticket: Ticket) => {
+  assignTablesRequested = (ticket: Ticket) => {
 
     let activeQueue = this.queued.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')
 
@@ -62,7 +50,7 @@ export class QueuedComponent implements OnInit {
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
 
-    this.waiterService.assignTables(idTicket, blPriority, blFirst, cdTables).subscribe(
+    this.waiterService.assignTablesRequested(idTicket, blPriority, blFirst, cdTables).subscribe(
       (resp: TicketResponse) => {
         if (resp.ok) {
           this.publicService.snack(resp.msg, 5000);
@@ -77,12 +65,12 @@ export class QueuedComponent implements OnInit {
   };
 
   sendMessage = (ticket: Ticket) => {
-    
-    if(ticket.bl_contingent){
+
+    if (ticket.bl_contingent) {
       // El ticket es de contingencia, no tiene asignado un socket
       return;
     }
-    
+
   }
 
   endTicket = (ticket: Ticket) => {
@@ -92,24 +80,17 @@ export class QueuedComponent implements OnInit {
     let idTicket = ticket._id;
     if (this.queued) {
       this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((resp: boolean) => {
-          if (resp) {
-            this.waiterService
-              .endTicket(idTicket)
-              .subscribe((resp: TicketResponse) => {
-                if (resp.ok) {
-                  this.clearTicketSession(ticket);
-                }
-              });
-          }
-        });
+        if (resp) {
+          this.waiterService
+            .endTicket(idTicket)
+            .subscribe((resp: TicketResponse) => {
+              if (resp.ok) {
+                this.queued = this.queued.filter(thisTicket => thisTicket._id !== ticket._id);
+              }
+            });
+        }
+      });
     }
   };
-
-  clearTicketSession = (ticket: Ticket) => {
-    this.queued = this.queued.filter(
-      (thisTicket) => thisTicket._id !== ticket._id
-    );
-  };
-
 
 }

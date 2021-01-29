@@ -39,6 +39,7 @@ export class TicketCreateComponent implements OnInit {
   updateTicketsSub: Subscription;
   auth2: any; // info de google con el token
   validateResponse: String;
+  tellUserNotAvailable = false;
   showRequestTable = false;
 
   constructor(
@@ -117,21 +118,33 @@ export class TicketCreateComponent implements OnInit {
 
     // PERSONS CHANGE 
     this.ticketForm.controls.idSection.valueChanges.subscribe(data => {
-      this.ticketForm.controls.dtReserve.reset();
+
+      const nmPersons = this.ticketForm.controls.nmPersons.value;
+      const idSection = this.ticketForm.controls.idSection.value;
+      const dtReserve = this.ticketForm.controls.dtReserve.value;
+      if (nmPersons && idSection && dtReserve) {
+        this.readAvailability(nmPersons, idSection, dtReserve);
+      }
+
       this.ticketForm.controls.tmReserve.reset();
       this.ticketForm.controls.cdTables.reset();
     })
 
     // SECTION CHANGE 
     this.ticketForm.controls.nmPersons.valueChanges.subscribe(data => {
-      this.ticketForm.controls.dtReserve.reset();
+      const nmPersons = this.ticketForm.controls.nmPersons.value;
+      const idSection = this.ticketForm.controls.idSection.value;
+      const dtReserve = this.ticketForm.controls.dtReserve.value;
+      if (nmPersons && idSection && dtReserve) {
+        this.readAvailability(nmPersons, idSection, dtReserve);
+      }
+
       this.ticketForm.controls.tmReserve.reset();
       this.ticketForm.controls.cdTables.reset();
     })
 
     // WHEN CHANGE
     this.ticketForm.controls.txWhen.valueChanges.subscribe(data => {
-      console.log(this.ticketForm)
       if (data === 'otrodia') {
         this.ticketForm.controls.dtReserve.enable();
       }
@@ -149,7 +162,14 @@ export class TicketCreateComponent implements OnInit {
     // DATE CHANGE
     this.ticketForm.controls.dtReserve.valueChanges.subscribe(data => {
       if (data) {
+        const nmPersons = this.ticketForm.controls.nmPersons.value;
+        const idSection = this.ticketForm.controls.idSection.value;
+        const dtReserve = this.ticketForm.controls.dtReserve.value;
+        if (nmPersons && idSection && dtReserve) {
+          this.readAvailability(nmPersons, idSection, dtReserve);
+        }
         this.ticketForm.controls.tmReserve.enable();
+
       }
     })
 
@@ -159,7 +179,6 @@ export class TicketCreateComponent implements OnInit {
         this.ticketForm.controls.cdTables.enable();
       }
     })
-
 
   }
 
@@ -189,6 +208,54 @@ export class TicketCreateComponent implements OnInit {
     });
   }
 
+  readAvailability(nmPersons: number, idSection: string, dtReserve: Date) {
+
+    this.availability = [];
+    this.ticketForm.controls.tmReserve.reset();
+
+    this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
+      
+      if (data.ok) { 
+        // OK: TRUE -> Encontró mesas compatibles
+        this.tellUserNotAvailable = false;
+        data.availability.forEach(av => {
+
+          av.interval = new Date(av.interval).getHours();
+
+          if (av.tables.length > 0) {
+            this.availability.push({ 
+              disabled: false, 
+              value: av.interval, 
+              text: av.interval + ':00', 
+              tables: av.tables 
+            })
+          } else {
+            this.availability.push({ 
+              disabled: true, 
+              value: av.interval, 
+              text: av.interval + ':00 No disponible', 
+              tables: null
+            })
+          }
+        })
+
+      } else { 
+        // OK: FALSE -> Solicitud de mesa, NO encontró mesas compatibles, el ticket quedará pending luego de confirmar. 
+        this.tellUserNotAvailable = true;
+        this.ticketForm.controls.cdTables.disable();
+        data.availability.forEach(av => {
+          this.availability.push({
+            disabled: this.ticketForm.value.nmPersons > av.capacity,
+            value: new Date(av.interval).getHours(),
+            text: new Date(av.interval).getHours() + ':00 (' + av.capacity + ' Personas)',
+            tables: [0]
+          })
+        })
+      }
+
+    })
+  }
+
   createTicket(): void {
 
     if (this.ticketForm.invalid) {
@@ -214,10 +281,11 @@ export class TicketCreateComponent implements OnInit {
     let tmReserve = this.ticketForm.value.tmReserve || null;
     let dtReserve = this.ticketForm.value.dtReserve || null;
 
-    let cdTables = this.ticketForm.value.cdTables
+    let cdTables = this.ticketForm.value.cdTables; // 0 if not compatible tables
     this.loading = true;
-    
+
     tmReserve = dtReserve ? new Date(dtReserve.getTime() + tmReserve * 60 * 60 * 1000) : null;
+
     this.publicService.createTicket(blContingent, idSocket, txName, nmPersons, idSection, tmReserve, cdTables).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
@@ -237,44 +305,6 @@ export class TicketCreateComponent implements OnInit {
     );
   }
 
-  readAvailability() {
-
-    this.availability = [];
-    this.ticketForm.controls.tmReserve.reset();
-
-    let nmPersons = this.ticketForm.value.nmPersons;
-    let idSection = this.ticketForm.value.idSection;
-    let dtReserve = this.ticketForm.value.dtReserve;
-
-    this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
-      if (data.ok) {
-        this.showRequestTable = false;
-        data.availability.forEach(av => {
-          if (av.tables.length > 0) {
-            this.availability.push({ disabled: false, value: av.interval, text: av.interval + ':00', tables: av.tables })
-          } else {
-            this.availability.push({ disabled: true, value: av.interval, text: av.interval + ':00 No disponible' })
-          }
-        })
-
-      } else {
-        this.showRequestTable = true;
-
-        this.ticketForm.controls.cdTables.disable();
-        data.availability.forEach(av => {
-          const intervalCapacity = av.tables.reduce((a,b) => a + b);
-          const intervalAvailability = this.ticketForm.value.nmPersons > intervalCapacity;
-          this.availability.push({ 
-            disabled: intervalAvailability, 
-            value: av.interval, 
-            text: av.interval + ':00 (' + intervalCapacity + ' Personas)', 
-            tables: [-1] })
-        })
-      }
-
-    })
-  }
-
   salir(): void {
     this.publicService.clearPublicSession();
     this.router.navigate(['/home'])
@@ -290,4 +320,5 @@ interface availabilityResponse {
 interface availability {
   interval: number;
   tables: number[];
+  capacity: number;
 }

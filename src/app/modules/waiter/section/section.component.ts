@@ -98,7 +98,7 @@ export class SectionComponent implements OnInit, OnDestroy {
             this.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
 
             // tables data for sections table
-            for (let section of this.waiterService.sections) {
+            for (let section of this.publicService.sections) {
               this.tablesDataBySection.set(section.tx_section, {
                 id: section._id,
                 sectionselected: this.waiterService.session.id_section._id === section._id,
@@ -150,7 +150,7 @@ export class SectionComponent implements OnInit, OnDestroy {
             ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned' || ticket.tx_status === 'requested'))
 
           // for input sections child
-          for (let section of this.waiterService.sections) {
+          for (let section of this.publicService.sections) {
             this.ticketsDataBySection.set(section.tx_section, {
               id: section._id,
 

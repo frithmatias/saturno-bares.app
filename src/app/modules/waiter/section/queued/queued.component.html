@@ -76,7 +76,7 @@
             <!-- TABLES BUTTONS -->
             <!------------------------------>
 
-            <div class="text-center py-2" *ngIf="showTables">
+            <div class="text-center py-2">
               <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
                 *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
 
@@ -113,7 +113,7 @@
                 </table>
               </button>
 
-              <button mat-raised-button color="active" class="action-button" (click)="assignTables(ticket)">
+              <button mat-raised-button color="active" class="action-button" (click)="assignTablesRequested(ticket)">
                 <table>
                   <tr>
                     <td class="button-icon bg-primary mdi  mdi-content-save xl"></td>

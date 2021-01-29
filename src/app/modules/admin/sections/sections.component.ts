@@ -35,7 +35,7 @@ export class SectionsComponent implements OnInit {
         let idSection = section._id;
         this.adminService.deleteSection(idSection).subscribe((data: SectionResponse) => {
           this.publicService.snack(data.msg, 1000);
-          this.adminService.sections = this.adminService.sections.filter(section => section._id != idSection);
+          this.publicService.sections = this.publicService.sections.filter(section => section._id != idSection);
         },
           (err: SectionResponse) => {
             this.publicService.snack(err.msg, 3000);
@@ -47,7 +47,7 @@ export class SectionsComponent implements OnInit {
 
   sectionCreated(section: Section): void {
     this.adminService.sectionsMap.set(section._id, section.tx_section);
-    this.adminService.sections = [section, ...this.adminService.sections];
+    this.publicService.sections = [section, ...this.publicService.sections];
   }
 
 

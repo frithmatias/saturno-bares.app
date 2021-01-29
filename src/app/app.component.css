@@ -5,8 +5,9 @@
 }
 
 .main-wrapper {
-    text-align: -webkit-center;
-    top       : 64px;
-    position  : absolute;
-    width     : 100%;
+    text-align      : -webkit-center;
+    top             : 64px;
+    position        : absolute;
+    width           : 100%;
+    background-color: var(--bg);
 }

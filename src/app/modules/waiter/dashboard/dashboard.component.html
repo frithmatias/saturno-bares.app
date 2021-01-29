@@ -1,9 +1,10 @@
-<div *ngIf="loading" class="mt-5 animated fadeIn">
+<div class="page-container animated fadeIn">
+
+  <div *ngIf="loading" class="mt-5 animated fadeIn">
   <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!loading && metrics">
-  <div class="saturno-container">
 
     <div class="row">
       <div class="col w-100">
@@ -21,7 +22,7 @@
       <div class="col">
         <div class="card text-white bg-success">
           <div class="card-header">Turnos</div>
-          <div class="card-body saturno-container-mini-body">
+          <div class="card-body">
               {{ metrics.tickets.length }}
           </div>
         </div>
@@ -30,7 +31,7 @@
       <div class="col">
         <div class="card text-white bg-danger">
           <div class="card-header">Evals</div>
-          <div class="card-body saturno-container-mini-body">
+          <div class="card-body">
             {{ metrics.total }}
           </div>
         </div>
@@ -39,7 +40,7 @@
       <div class="col">
         <div class="card text-white bg-primary">
           <div class="card-header">Score</div>
-          <div class="card-body saturno-container-mini-body">
+          <div class="card-body">
             {{ metrics.avg }}
           </div>
         </div>

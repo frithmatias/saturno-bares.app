@@ -44,7 +44,7 @@ export class TicketsComponent implements OnInit {
   ngOnInit(): void {
 
     if (!this.statusControl.value) {
-      this.statusControl.setValue(['scheduled', 'queued', 'assigned', 'requested', 'provided'])
+      this.statusControl.setValue(['pending', 'scheduled', 'queued', 'assigned', 'requested', 'provided'])
     }
 
     this.statusControl.valueChanges.subscribe(data => {
@@ -66,7 +66,8 @@ export class TicketsComponent implements OnInit {
   getUserTickets(txPlatform: string, idUser: string): void {
     this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
       if (data.ok) {
-        this.tickets = data.tickets;
+        this.tickets = data.tickets.sort((b,a) => +new Date(a.tm_start) - +new Date(b.tm_start) );
+        console.log(this.tickets)
         this.ticketsFiltered = this.tickets.filter(ticket => this.statusControl.value.includes(ticket.tx_status));
         console.table(this.tickets, ['tx_status', 'tm_reserve'])
         localStorage.setItem('tickets', JSON.stringify(data.tickets));

@@ -25,13 +25,11 @@ export class AdminService {
 	public company: Company; // todo: selected company
 	public settings: Settings;
 
-	public sections: Section[] = [];
-	public sectionsMap = new Map();
-
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];
 
 	public waiters: User[] = [];
+	sectionsMap = new Map();
 
 
 	constructor(
@@ -100,16 +98,6 @@ export class AdminService {
 		return this.http.post(url, section);
 	}
 
-	readSections(idCompany: string) {
-		const url = environment.api + '/section/readsections/' + idCompany;
-		return this.http.get(url).subscribe((data: SectionsResponse) => {
-			this.sections = data.sections;
-			for (let section of data.sections) {
-				this.sectionsMap.set(section._id, section.tx_section);
-			}
-		})
-	}
-
 	deleteSection(idSection: string) {
 		const url = environment.api + '/section/deletesection/' + idSection;
 		return this.http.delete(url);
@@ -122,14 +110,6 @@ export class AdminService {
 	createTable(table: Table) {
 		const url = environment.api + '/table/createtable';
 		return this.http.post(url, table);
-	}
-
-	readTables(idCompany: string) {
-		const url = environment.api + '/table/readtables/' + idCompany;
-		return this.http.get(url).subscribe((data: TablesResponse) => {
-			this.tables = data.tables;
-			this.tablesSection = data.tables;
-		});
 	}
 
 	deleteTable(idTable: string) {

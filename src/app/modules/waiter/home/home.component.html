@@ -1,4 +1,4 @@
-<div class="saturno-container  mt-sm-4 animated fadeIn">
+<div class="page-container  mt-sm-4 animated fadeIn">
 
     <mat-card>
 
@@ -27,7 +27,7 @@
 
             </div>
 
-            <div *ngIf="loginService.user.id_company && waiterService.sections.length === 0" class="p-3 my-4">
+            <div *ngIf="loginService.user.id_company && publicService.sections.length === 0" class="p-3 my-4">
                 No tenés ningún sector asociado a la empresa <span
                     class="text-accent">{{loginService.user.id_company.tx_company_name}}</span>.
                 Por favor verifica que tengas comercios, sectores y mesas creadas desde el asistente.
@@ -44,33 +44,34 @@
             <!-- ======================================================== -->
 
             <div class="mb-4"
-                *ngIf="sections && loginService.user.id_company?._id && waiterService.sections.length > 0">
+                *ngIf="sections && loginService.user.id_company?._id && publicService.sections.length > 0">
 
                 <div *ngIf="waiterService.session">
-                    <div class="row my-4">
-                        <div class="col">
-                            Tenés tomado el sector {{ waiterService.session.id_section.tx_section }}
-                        </div>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col">
-                            <button class="btn btn-success btn-block text-uppercase" role="button"
-                                (click)="takeSection( waiterService.session.id_section )">
-                                Ingresar
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn btn-danger btn-block text-uppercase" role="button"
-                                (click)="releaseSection( waiterService.session.id_section )">
-                                Cerrar
-                            </button>
-                        </div>
+
+                    <div class="text-accent my-4">
+                        Tenés tomado el sector {{ waiterService.session.id_section.tx_section }}
                     </div>
 
+                    <div class="d-flex justify-content-end">
+
+                        <button mat-raised-button color="warn" class="mx-1" role="button"
+                            (click)="releaseSection( waiterService.session.id_section )">
+                            <span class="mdi mdi-close"></span>
+                            Cerrar
+                        </button>
+
+                        <button mat-raised-button color="active" class="mx-1" role="button"
+                            (click)="takeSection( waiterService.session.id_section )">
+                            <span class="mdi mdi-login-variant"></span>
+                            Ingresar
+                        </button>
+
+                    </div>
                 </div>
 
-                <div *ngIf="!waiterService.session">
-                    <div class="my-4">
+                <div class="my-4" *ngIf="!waiterService.session">
+
+                    <div>
                         <mat-form-field color="accent" class="w-100">
                             <mat-label>Seleccione un sector</mat-label>
                             <mat-select #selectSection matNativeControl required>
@@ -79,13 +80,22 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
+                    </div>
 
-                        <button class="btn btn-success btn-block" role="button"
-                            (click)="takeSection( selectSection?.value )">
-                            Ingresar
+                    <div class="d-flex justify-content-end">
+                        <button mat-raised-button color="primary" routerLink="/waiter/dashboard" class="mx-1"
+                            role="button" disabled>
+                            <span class="mdi mdi-finance"></span>
+                            Dashboard
                         </button>
 
+                        <button mat-raised-button color="active" class="mx-1" role="button"
+                            (click)="takeSection( selectSection?.value )">
+                            <span class="mdi mdi-login-variant"></span>
+                            Ingresar
+                        </button>
                     </div>
+
                 </div>
 
             </div>
@@ -125,10 +135,7 @@
 
         </div>
 
-        <button class="btn btn-primary btn-block" routerLink="/waiter/dashboard" role="button">
-            <span class="mdi mdi-finance mx-1"></span>
-            Dashboard
-        </button>
+
     </mat-card>
 
 </div>

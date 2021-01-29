@@ -4,7 +4,7 @@ import { Ticket } from '../../interfaces/ticket.interface';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { SectionsResponse } from '../../interfaces/section.interface';
+import { SectionsResponse, Section } from '../../interfaces/section.interface';
 import { LocationsResponse, Location } from '../../interfaces/location.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
@@ -16,6 +16,7 @@ export class PublicService {
 
   ticket: Ticket;
   tickets: Ticket[] = [];
+  sections: Section[] = [];
 
   chatMessages: {
     own: boolean,
@@ -28,7 +29,7 @@ export class PublicService {
   constructor(
     private http: HttpClient,
     private router: Router,
-		private _snack: MatSnackBar
+    private _snack: MatSnackBar
 
   ) { }
 
@@ -96,14 +97,21 @@ export class PublicService {
     return this.http.get(environment.api + '/c/readcompany/' + txCompanyString);
   }
 
-  readSections(idCompany: string): Observable<SectionsResponse> {
-    return this.http.get<SectionsResponse>(environment.api + '/section/readsections/' + idCompany);
+  readSections(idCompany: string) {
+    const url = environment.api + '/section/readsections/' + idCompany;
+    return this.http.get(url);
   }
 
-  readAvailability(nmPersons: number, idSection: string, dtReserve: Date): Observable<object> {
+  readAvailability(nmPersons: number | string, idSection: string, dtReserve: Date): Observable<object> {
     let data = { nmPersons, idSection, dtReserve };
     return this.http.post(environment.api + '/t/readavailability/', data);
   }
+
+  readPending(idSection: string, dtReserve: Date): Observable<object> {
+    let data = { idSection, dtReserve };
+    return this.http.post(environment.api + '/t/readpending/', data);
+  }
+
 
   getUserTickets(txPlatform: string, idUser: string) {
     if (!txPlatform || !idUser) { return; }
@@ -115,14 +123,14 @@ export class PublicService {
   updateStorageTickets(ticket: Ticket): Promise<Ticket[]> {
     return new Promise((resolve) => {
       let tickets: Ticket[] = [];
-      
+
       if (localStorage.getItem('tickets')) {
         tickets = JSON.parse(localStorage.getItem('tickets'));
         if (tickets.length > 0) {
           tickets = tickets.filter((tkt: Ticket) => tkt._id !== ticket._id); // quito el viejo 
         }
       }
-      
+
       tickets.push(ticket); // agrego el nuevo
       localStorage.setItem('tickets', JSON.stringify(tickets));
       resolve(tickets);

@@ -1,4 +1,4 @@
-<div class="saturno-container animated fadeIn" *ngIf="loginService.user.id_company">
+<div class="page-container animated fadeIn" *ngIf="loginService.user.id_company">
 
     <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
@@ -59,7 +59,7 @@
 
     <mat-card *ngIf="tableCreate" class="my-2 animated fadeIn">
 
-        <app-table-create [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
+        <app-table-create [sections]="publicService.sections" [tablesSection]="adminService.tablesSection"
             (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
 
     </mat-card>

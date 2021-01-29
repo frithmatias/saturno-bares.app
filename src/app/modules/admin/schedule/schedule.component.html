@@ -1,1 +1,98 @@
-<p>schedule works!</p>
+<div class="page-container animated fadeIn text-left">
+    <mat-card>
+
+
+
+        <div class="d-flex">
+            <form class="w-100" autocomplete="off" ngNativeValidate #formDirective="ngForm"
+                [formGroup]="scheduleForm">
+
+                <mat-form-field color="accent" class="w-50 px-2">
+                    <mat-label>Sector</mat-label>
+                    <mat-select formControlName="idSection" name="idSection" required>
+                        <mat-option *ngFor="let section of publicService.sections" [value]="section._id"> {{
+                            section.tx_section }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field color="accent" class="w-50 px-2">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtReserve"
+                        [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+            </form>
+        </div>
+
+
+        <mat-card-content>
+            <mat-accordion multi="false">
+
+
+                <mat-expansion-panel class="my-3" [disabled]="availability.length === 0">
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi mdi-calendar-account text-deco"></span>
+                            <span class="badge text-white bg-primary">{{availability.length}}</span>
+                            <span class="sidenav-title-text mx-2 align-self-center lg">Agenda</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div style="overflow: auto; height: 200px; font-family: monospace">
+
+                        <table class="sm text-accent" *ngIf="availability.length > 0">
+                            <tr>
+                                <th class="px-1">Int</th>
+                                <th class="px-1">Cap</th>
+                                <th class="px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
+                            </tr>
+    
+                            <tr *ngFor="let av of availability">
+    
+                                <td class="px-1">
+                                    <span *ngIf="av.interval < 10">0{{av.interval}}:00</span>
+                                    <span *ngIf="av.interval >= 10">{{av.interval}}:00</span>
+                                </td>
+    
+                                <td class="px-1">{{av.capacity}}</td>
+    
+                                <td class="px-1" *ngFor="let t of av.tables" (click)="selectTable(t)">
+                                    <span *ngIf="t.blReserved" class="mdi mdi-calendar-account"></span>
+                                    <span *ngIf="!t.blReserved">{{t.nmPersons}}</span>
+                                </td>
+    
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                </mat-expansion-panel>
+
+
+                <mat-expansion-panel class="my-3" [disabled]="pending.length === 0">
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi mdi-account-clock text-deco"></span>
+                            <span class="badge text-white bg-primary">{{pending.length}}</span>
+                            <span class="sidenav-title-text mx-2 align-self-center lg">Solicitudes de Mesa</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+
+                    <app-pending [pending]="pending" [availability]="availability" (pendingUpdated)="pendingUpdated($event)"></app-pending>
+
+                </mat-expansion-panel>
+
+
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+
+</div>

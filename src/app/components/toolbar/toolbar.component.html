@@ -4,9 +4,7 @@
     <div class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
         <!-- <span class="example-spacer"></span> -->
     </div>
-    <div style="width: 48px;" class="mdi mdi-help-circle-outline md pointer" *ngIf="loginService.user">
-        <!-- <span class="example-spacer"></span> -->
-    </div>
+
 
     <!-- LOGO -->
     <div *ngIf="!loginService.user" class="logo-container">

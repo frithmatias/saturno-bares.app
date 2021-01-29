@@ -1,0 +1,10 @@
+.table-button-active {
+    opacity      : 1 !important;
+    border       : 2px solid var(--accent);
+    border-radius: 5px;
+}
+
+.table-button-inactive {
+    /* opacity: .5; */
+}
+

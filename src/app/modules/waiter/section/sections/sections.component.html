@@ -6,14 +6,14 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <span class="xl mdi mdi-select-group text-deco"></span>
-      <span class="badge text-white bg-primary">{{waiterService.sections.length}}</span>
+      <span class="badge text-white bg-primary">{{publicService.sections.length}}</span>
       <span class="sidenav-title-text mx-2 align-self-center lg">Sectores</span>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
 
   <mat-radio-group [(ngModel)]="waiterService.sectionSelected">
-    <table mat-table [dataSource]="waiterService.sections">
+    <table mat-table [dataSource]="publicService.sections">
 
       <ng-container matColumnDef="sector">
         <th mat-header-cell *matHeaderCellDef class="text-left lg text-deco"> Sector </th>
