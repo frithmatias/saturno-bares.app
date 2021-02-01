@@ -1,13 +1,19 @@
 <div *ngIf="company">
 
     <!-- PAGE HEADER IMAGE SLIDER -->
-    <div *ngIf="images.length > 1" style="max-width: 600px;">
-        <ng-image-slider  [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
-            [animationSpeed]="1" [slideImage]="1" [imageSize]="imageSize" [showArrow]="true" #nav></ng-image-slider>
-    </div>
-
-    <div *ngIf="images.length === 1" style="max-width: 600px;">
-        <img [height]="imageSize.height" width="100%" [src]="images[0].image"> 
+    <div class="banner-container">
+        <div *ngIf="images.length > 1" style="max-width: 600px; border-radius: 20px;">
+            <ng-image-slider  [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
+                [animationSpeed]="1" [slideImage]="1" [imageSize]="imageSize" [showArrow]="true" #nav></ng-image-slider>
+        </div>
+    
+        <div *ngIf="images.length === 1" style="max-width: 600px;">
+            <img [height]="imageSize.height" width="100%" [src]="images[0].image"> 
+        </div>
+        <div>
+            <img class="company-logo img-fluid"
+            [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+        </div>
     </div>
 
     <!-- PAGE TABS -->

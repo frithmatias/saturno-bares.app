@@ -1,12 +1,14 @@
+@media (max-width: 575px) {
+    .public-home-title {
+        font-size: xx-large !important;
+    }
+}
+
 .public-home-title {
     font-size: xxx-large;
     color: var(--accent);
 }
-@media (max-width: 575px) {
-    .public-home-title {
-        font-size: xx-large;
-    }
-}
+
 .public-home-subtitle {
     font-size: medium;
 }

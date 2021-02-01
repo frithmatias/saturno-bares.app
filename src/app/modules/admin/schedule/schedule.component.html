@@ -62,7 +62,7 @@
                                 <td class="px-1">{{av.capacity}}</td>
     
                                 <td class="px-1" *ngFor="let t of av.tables" (click)="selectTable(t)">
-                                    <span *ngIf="t.blReserved" class="mdi mdi-calendar-account"></span>
+                                    <span *ngIf="t.blReserved" class="mdi mdi-calendar-account pointer" (click)="showTicket(t)"></span>
                                     <span *ngIf="!t.blReserved">{{t.nmPersons}}</span>
                                 </td>
     
@@ -93,6 +93,20 @@
 
             </mat-accordion>
         </mat-card-content>
+
+
+
+
+        <mat-card-actions>
+            <!-- <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-ticket-account xl"></td>
+                  <td class="button-text">+Ticket</td>
+                </tr>
+              </table>
+            </button> -->
+        </mat-card-actions>
     </mat-card>
 
 </div>

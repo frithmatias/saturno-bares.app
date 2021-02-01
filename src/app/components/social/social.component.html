@@ -1,0 +1,67 @@
+<div class="screen-ticket-button-confirm my-4">
+
+    <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
+
+    <!-- WHATSAPP -->
+    <div *ngIf="isMobile">
+        <button mat-raised-button class="action-button" color="active" disabled>
+            <table>
+                <tr>
+                    <td class="button-icon mdi mdi-whatsapp xl"></td>
+                    <td class="button-text">Whatsapp</td>
+                </tr>
+            </table>
+        </button>
+    </div>
+
+    <!-- TELEGRAM -->
+    <div>
+        <button mat-raised-button class="action-button" color="telegram" (click)="validateTicketTelegram()">
+            <table>
+                <tr>
+                    <td class="button-icon mdi mdi-telegram xl"></td>
+                    <td class="button-text">Telegram</td>
+                </tr>
+            </table>
+        </button>
+    </div>
+
+    <!-- FACEBOOK -->
+    <div>
+        <button mat-raised-button class="action-button" color="facebook" type="button" data-toggle="tooltip"
+            (click)="facebookLogin()">
+            <table>
+                <tr>
+                    <td class="button-icon mdi mdi-facebook xl"></td>
+                    <td class="button-text">Facebook</td>
+                </tr>
+            </table>
+        </button>
+    </div>
+
+    <!-- GOOGLE -->
+    <div>
+        <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
+            id="validateTicketGoogle" data-toggle="tooltip" (click)="googleInit(validateTicketGoogle)">
+            <table>
+                <tr>
+                    <td class="button-icon mdi mdi-google xl"></td>
+                    <td class="button-text">Google</td>
+                </tr>
+            </table>
+        </button>
+    </div>
+
+    <!-- EMAIL -->
+    <div>
+        <button mat-raised-button class="action-button" color="active" (click)="emailValidate()">
+            <table>
+                <tr>
+                    <td class="button-icon mdi mdi-email xl"></td>
+                    <td class="button-text">Email</td>
+                </tr>
+            </table>
+        </button>
+    </div>
+
+</div>

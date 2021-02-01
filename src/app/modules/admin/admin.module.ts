@@ -33,6 +33,7 @@ import { WebPageComponent } from './webpage/webpage.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PendingComponent } from './schedule/pending/pending.component';
+import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.component';
 
 @NgModule({
 	declarations: [
@@ -59,7 +60,8 @@ import { PendingComponent } from './schedule/pending/pending.component';
 		WebPageComponent,
 		SettingsComponent,
 		ScheduleComponent,
-		PendingComponent
+		PendingComponent,
+		BottomsheetComponent
 
 	],
 	imports: [

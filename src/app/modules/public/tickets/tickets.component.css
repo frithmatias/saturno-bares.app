@@ -17,8 +17,19 @@
   background-size : cover;
 }
 
+
 .select-status {
-  width: 60%;
+  width  : 300px;
+  padding: 10px;
+}
+
+.company-logo {
+  border-radius: 50%;
+  position     : relative;
+  margin-bottom: -60px;
+  top          : -60px;
+  width        : 70px;
+  box-shadow   : 0px 0px 2px rgb(0 0 0 / 50%);
 }
 
 @media (max-width: 575px) {
@@ -32,6 +43,7 @@
   }
 
   .select-status {
-    width: 100%;
+    width  : 100%;
+    padding: 10px;
   }
 }

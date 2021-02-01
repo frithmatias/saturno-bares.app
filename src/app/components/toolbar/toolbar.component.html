@@ -39,9 +39,6 @@
 
         <app-theme class="mr-3"></app-theme>
 
-        <div *ngIf="!loginService.user && !publicService.ticket"
-            class="mdi mdi-store pointer mr-3" routerLink="/register"> Registra tu Negocio</div>
-
         <!-- LOG IN -->
         <div *ngIf="!loginService.user && !publicService.ticket"
             class="mdi mdi-account-circle pointer" routerLink="/login"> Ingresar

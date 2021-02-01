@@ -6,21 +6,42 @@
   <mat-step>
     <div class="animated fadeIn home-bg">
 
-      <div class="home-welcome">
-        <div class="header-base">
-          <div class="pointer" (click)="scrollToElement(map)">
-            <span class="mdi mdi-map-marker"></span>
-            <span>
+      <div id="header" #header class="welcome-wrapper">
+
+        <div class="header-menu">
+
+          <div class="header-menu-item pointer mr-4" (click)="scrollToElement(map)" routerLink="/register">
+            <div class="mdi mdi-storefront-outline"></div>
+            <div>
+              Registrar Negocio
+            </div>
+          </div>
+
+          <div class="header-menu-item pointer mr-4" routerLink="/public/tickets">
+            <div class="mdi mdi-ticket-account"></div>
+            <div>
+              Mis Reservas
+            </div>
+          </div>
+
+          <div class="header-menu-item pointer" (click)="scrollToElement(map)">
+            <div class="mdi mdi-map-marker"></div>
+            <div>
               Buscá por Zona
-            </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="welcome-container">
+          <div class="welcome-title">
+            Volvé a Salir
+          </div>
+          <div class="welcome-subtitle">
+            Encontrá tu lugar y volvé a salir sin colas ni congestiones.
           </div>
         </div>
-        <div class="home-title mt-4">
-          Volvé a Salir
-        </div>
-        <div class="xl m-2 pb-4">
-          Reservá tu lugar y volvé a salir sin colas ni congestiones.
-        </div>
+
       </div>
 
       <div class="company-input-wrapper">
@@ -40,6 +61,53 @@
 
   <div class="banner-container-col-left">
 
+    <!-- BANNER RIGHT 1: FIND COMPANY -->
+    <div class="banner banner-container-map">
+      <div class="banner-image banner-img-map">
+      </div>
+      <div class="my-5 m-2 text-white">
+        <div class="banner-title text-white m-2 mb-4">
+          - BUSCÁ -
+        </div>
+        <div class="banner-text">
+          Busca un bar o restaurante por su nombre o por zona usando el mapa.
+        </div>
+      </div>
+    </div>
+
+    <!-- BANNER RIGHT 2: ADMINISTRÁ -->
+    <div class="banner banner-container-tickets">
+      <div class="my-5 m-2">
+        <div class="banner-title m-2 mb-4">
+          - ADMINISTRÁ -
+        </div>
+        <div class="banner-text">
+          Administra todas tus reservas desde un sólo lugar.
+        </div>
+      </div>
+      <div class="banner-image banner-img-tickets">
+      </div>
+    </div>
+
+
+    <!-- BANNER LEFT 3: GETSIONÁ -->
+    <div class="banner banner-container-myticket">
+      <div class="mdi mdi-ticket-account banner-icon-myticket op5">
+      </div>
+      <div class="my-5 mx-2">
+        <div class="banner-title m-2 mb-4">
+          - GESTIONÁ -
+        </div>
+        <div class="banner-text">
+          Podes pedir la carta o la cuenta y llamar a los camareros a través de la app todo en tiempo real.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="banner-container-col-right">
+
     <!-- BANNER LEFT 1: TELEGRAM -->
     <div class="banner banner-container-telegram">
       <div class="banner-img-telegram my-4">
@@ -55,82 +123,41 @@
       </div>
     </div>
 
-    <!-- BANNER LEFT 2: CREATE TICKET -->
+    <!-- BANNER LEFT 2: RESERVÁ -->
     <div class="banner banner-container-createticket">
       <div class="banner-image banner-img-createticket">
       </div>
       <div class="my-5 m-2 text-white">
         <div class="banner-title text-white m-2 mb-4">
-          RESERVA TU LUGAR
+          - RESERVÁ -
         </div>
         <div class="banner-text">
-          Pedí una mesa para el momento y las personas que quieras. El sistema busca mesas disponibles automáticamente y en tiempo real.
+          Pedí una mesa para el momento y las personas que quieras. El sistema te ofrece las mesas disponibles a cada
+          momento.
         </div>
       </div>
     </div>
 
-    <!-- BANNER LEFT 3: MY TICKET -->
-    <div class="banner banner-container-myticket">
-      <div class="mdi mdi-ticket-account ticket-icon op5">
-      </div>
-      <div class="my-5 mx-2">
-        <div class="banner-title m-2 mb-4">
-          GESTIONA TU TICKET
-        </div>
-        <div class="banner-text">
-          Podes pedir la carta o la cuenta y llamar a los camareros a través de la app todo en tiempo real.
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="banner-container-col-right">
-
-    <!-- BANNER RIGHT 1: FIND COMPANY -->
-    <div class="banner banner-container-map">
-      <div class="banner-image banner-img-map">
-      </div>
-      <div class="my-5 m-2 text-white">
-        <div class="banner-title text-white m-2 mb-4">
-          ENCONTRA TU LUGAR
-        </div>
-        <div class="banner-text">
-          Busca un bar o restaurante por su nombre o por zona usando el mapa.
-        </div>
-      </div>
-    </div>
-
-    <!-- BANNER RIGHT 2: TICKETS -->
-    <div class="banner banner-container-tickets">
-      <div class="my-5 m-2">
-        <div class="banner-title m-2 mb-4">
-          ADMINISTRA TUS TICKETS
-        </div>
-        <div class="banner-text">
-          Administra todos tus tickets desde un sólo lugar.
-        </div>
-      </div>
-      <div class="banner-image banner-img-tickets">
-      </div>
-    </div>
-
-    <!-- BANNER RIGHT 3: SCORES -->
+    <!-- BANNER RIGHT 3: CALIFICÁ -->
     <div class="banner banner-container-scores">
       <div class="my-5 m-2 text-white">
         <div class="banner-title text-white m-2 mb-4">
-          CALIFICACIONES
+          - CALIFICÁ -
         </div>
         <div class="banner-text">
           Al finalizar podés recibir una breve encuesta de calidad donde podés
-          dejar tu opinión.
+          calificar la atención y dejar tu opinión.
         </div>
       </div>
       <div class="banner-image banner-img-scores">
       </div>
     </div>
 
+
+
   </div>
+
+
 
 </div>
 

@@ -16,6 +16,7 @@ import { UploaderComponent } from './uploader/uploader.component';
 import { ButtonComponent } from './button/button.component';
 import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 import { ThemeComponent } from './theme/theme.component';
+import { SocialComponent } from './social/social.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ThemeComponent } from './theme/theme.component';
     UploaderDirective,
     ButtonComponent,
     BottomsheetComponent,
-    ThemeComponent
+    ThemeComponent,
+    SocialComponent
     
   ],
   imports: [
@@ -44,10 +46,8 @@ import { ThemeComponent } from './theme/theme.component';
     SearchComponent,
     MapComponent,
     UploaderComponent,
-    ThemeComponent
-
-
-
+    ThemeComponent,
+    SocialComponent
   ]
 })
 export class ComponentsModule { }

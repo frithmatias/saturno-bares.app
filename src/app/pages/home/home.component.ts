@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import moment from 'moment';
 import { timer, interval } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     let timer$ = interval(1000);
 
     timer$.pipe(map(data => new Date().getTime())).subscribe(data => {
@@ -94,22 +93,28 @@ export class HomeComponent implements OnInit {
   }
 
   stepperGoNext(stepper: MatStepper) {
-		stepper.next();
-	}
+    stepper.next();
+  }
 
 
-	stepperGoBack(stepper: MatStepper) {
-		stepper.previous();
-	}
+  stepperGoBack(stepper: MatStepper) {
+    stepper.previous();
+  }
 
 
-  goBottom(){
+  goBottom() {
     let drawer = document.querySelector('mat-drawer-content');
-    if(drawer) drawer.scrollTo(0, drawer.scrollHeight);
+    if (drawer) drawer.scrollTo(0, drawer.scrollHeight);
+  }
+
+  goTop() {
+    console.log('GOTOP')
+    let drawer = document.querySelector('mat-drawer-content');
+    if (drawer) drawer.scrollTo(0, 0);
   }
 
   scrollToElement($element): void {
-    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
-  
+
 }

@@ -1,3 +1,18 @@
+@media (max-width: 575px) {
+    .public-createticket-title {
+        font-size: xx-large !important;
+    }
+}
+
+.public-createticket-title {
+    font-size: xxx-large;
+    color: var(--accent);
+}
+
+.public-createticket-subtitle {
+    font-size: medium;
+}
+
 .mat-card-avatar {
     height: 100px;
     width : 100px;
@@ -16,11 +31,6 @@
     color    : var(--accent);
 }
 
-@media (max-width: 400px) {
-    .mat-card-title {
-        font-size: x-large;
-    }
-}
 
 .mat-card-subtitle {
     width    : 100%;

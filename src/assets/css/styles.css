@@ -1,7 +1,7 @@
 html,
 body {
-    height          : 100vh;
-    background-color: whitesmoke;
+    height               : 100vh;
+    background-color     : whitesmoke;
     -webkit-touch-callout: none;
     -webkit-user-select  : none;
     -khtml-user-select   : none;
@@ -31,6 +31,7 @@ input:-internal-autofill-selected {
 table {
     width: 100%;
 }
+
 /*
 -------------------------------------------
 SCROLL BAR 
@@ -128,14 +129,14 @@ SATURNO
 */
 
 .page-container {
-    margin: 50px 0px;
+    margin   : 50px 0px;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
 }
 
 .page-tab-container {
-    margin: 10px 0px;
+    margin   : 10px 0px;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
@@ -155,7 +156,7 @@ SATURNO
 @media (max-width: 575px) {
 
     .page-container {
-        margin: 0em;
+        margin : 0em;
         padding: 0em;
     }
 
@@ -565,16 +566,16 @@ DIMENSIONES
 */
 
 .xml {
-    font-size  : 8em !important;
+    font-size: 8em !important;
 }
 
 .ml {
-    font-size  : 6em !important;
+    font-size: 6em !important;
 }
 
 
 .xxxxl {
-    font-size  : 4em !important;
+    font-size: 4em !important;
 }
 
 .xxxl {
@@ -722,8 +723,6 @@ MAT-TAB
     opacity    : 1 !important;
 }
 
-/* Bottom Sheet*/
-
 .cdk-overlay-container {
     text-align: -webkit-center;
 }
@@ -771,6 +770,75 @@ MAT-BUTTONS
 }
 
 /* END ACTIVE */
+
+
+/* COLOR: TELEGRAM*/
+
+/* BACKGROUND */
+.bg-active {
+    background-color: #0088CC;
+}
+
+/* BUTTON */
+.mat-button.mat-telegram.mat-button-disabled,
+.mat-icon-button.mat-telegram.mat-button-disabled,
+.mat-stroked-button.mat-telegram.mat-button-disabled,
+.mat-button.mat-telegram .mat-button-focus-overlay,
+.mat-icon-button.mat-telegram .mat-button-focus-overlay,
+.mat-stroked-button.mat-telegram .mat-button-focus-overlay {
+    background-color: #0088CC
+}
+
+.mat-flat-button.mat-telegram,
+.mat-raised-button.mat-telegram,
+.mat-fab.mat-telegram,
+.mat-mini-fab.mat-telegram {
+    color: #fff
+}
+
+.mat-flat-button.mat-telegram,
+.mat-raised-button.mat-telegram,
+.mat-fab.mat-telegram,
+.mat-mini-fab.mat-telegram {
+    background-color: #0088CC
+}
+
+/* END TELEGRAM */
+
+
+/* COLOR: FACEBOOK*/
+
+/* BACKGROUND */
+.bg-facebook {
+    background-color: #3B5998;
+}
+
+/* BUTTON */
+.mat-button.mat-facebook.mat-button-disabled,
+.mat-icon-button.mat-facebook.mat-button-disabled,
+.mat-stroked-button.mat-facebook.mat-button-disabled,
+.mat-button.mat-facebook .mat-button-focus-overlay,
+.mat-icon-button.mat-facebook .mat-button-focus-overlay,
+.mat-stroked-button.mat-facebook .mat-button-focus-overlay {
+    background-color: #3B5998
+}
+
+.mat-flat-button.mat-facebook,
+.mat-raised-button.mat-facebook,
+.mat-fab.mat-facebook,
+.mat-mini-fab.mat-facebook {
+    color: #fff
+}
+
+.mat-flat-button.mat-facebook,
+.mat-raised-button.mat-facebook,
+.mat-fab.mat-facebook,
+.mat-mini-fab.mat-facebook {
+    background-color: #3B5998
+}
+
+/* END ACTIVE */
+
 
 mat-toolbar {
     position: fixed;
@@ -918,10 +986,18 @@ MAPBOX
 NG IMAGE SLIDER 
 -------------------------------------------
 */
+/* .ng-image-slider {
+    height: 147px !important;
+} */
+
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div {
+    box-shadow: none !important;
+}
 
 .ng-image-slider .ng-image-slider-container .main .main-inner .img-div img {
-    border-radius: 0px !important;
+    border-radius: 20px !important;
 }
+
 
 .ng-image-slider .ng-image-slider-container .main .next,
 .ng-image-slider .ng-image-slider-container .main .prev {

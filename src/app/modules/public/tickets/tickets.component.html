@@ -15,19 +15,30 @@
   </div>
 
   <div *ngIf="ticketsFiltered.length === 0" class="text-accent">
-    No tenés tickets para los estados seleccionados.
+    No tenés tickets activos. Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
+    <app-social (socialResponse)="socialResponse($event)"></app-social>
   </div>
 
+
   <div class="tickets-filtered-container" *ngFor="let ticket of ticketsFiltered">
+
+    <!-- first image in banners -->
     <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
       <img class="user-image img-fluid"
         [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
     </div>
 
+    <!-- card with ticket data -->
     <mat-card class="p-3">
 
+      <!-- logo -->
+      <div *ngIf="ticket.id_company?.tx_company_logo">
+        <img class="company-logo img-fluid"
+          [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+      </div>
+
+      <!-- header with company name and address -->
       <mat-card-header class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div mat-card-avatar class="header-image"></div>
         <mat-card-title class="md"> {{ticket.id_company?.tx_company_name}} </mat-card-title>
         <mat-card-subtitle class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}
         </mat-card-subtitle>
@@ -44,15 +55,27 @@
 
       <mat-card-actions>
 
+
+        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}"
+          *ngIf="ticket?.tm_provided && !ticket.tm_end">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account lg"></td>
+              <td class="button-text">¡Comenzar!</td>
+            </tr>
+          </table>
+        </button>
+
         <button mat-raised-button class="action-button-flex" color="warn"
           [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
           <table>
             <tr>
-              <td class="button-icon mdi mdi-delete md"></td>
-              <td class="button-text sm">Cancelar Ticket</td>
+              <td class="button-icon mdi mdi-delete lg"></td>
+              <td class="button-text">Cancelar</td>
             </tr>
           </table>
         </button>
+
       </mat-card-actions>
 
     </mat-card>

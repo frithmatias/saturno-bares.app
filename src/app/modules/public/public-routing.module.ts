@@ -10,7 +10,7 @@ import { TicketComponent } from './ticket/ticket.component';
 const publicRoutes: Routes = [
 
   { path: 'companypage', component: CompanyPageComponent },
-  { path: 'tickets/:txPlatform/:idUser', component: TicketsComponent },
+  { path: 'tickets', component: TicketsComponent },
 	{ path: 'ticket/:idTicket', component: TicketComponent },
   { path: '', component: HomeComponent },
   { path: ':txCompanyString', component: PublicComponent },

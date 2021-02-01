@@ -115,7 +115,6 @@ export class PublicService {
 
   getUserTickets(txPlatform: string, idUser: string) {
     if (!txPlatform || !idUser) { return; }
-
     const url = environment.api + '/t/readusertickets/' + txPlatform + '/' + idUser;
     return this.http.get(url);
   }
@@ -123,16 +122,16 @@ export class PublicService {
   updateStorageTickets(ticket: Ticket): Promise<Ticket[]> {
     return new Promise((resolve) => {
       let tickets: Ticket[] = [];
-
       if (localStorage.getItem('tickets')) {
         tickets = JSON.parse(localStorage.getItem('tickets'));
         if (tickets.length > 0) {
           tickets = tickets.filter((tkt: Ticket) => tkt._id !== ticket._id); // quito el viejo 
         }
       }
-
       tickets.push(ticket); // agrego el nuevo
+      tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
       localStorage.setItem('tickets', JSON.stringify(tickets));
+      console.table(tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       resolve(tickets);
     })
   }
@@ -149,10 +148,18 @@ export class PublicService {
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
-  // google and normal login
+  // google devuelve un token que tengo que enviar al backend para validar y obtener los datos del usuario
   validateTicketGoogle(idTicket: string, gtoken: string) {
     const api = '/t/validateticketgoogle';
     const data = { idTicket, gtoken };
+    const url = environment.api + api;
+    return this.http.post(url, data);
+  }
+
+  // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
+  validateTicketFacebook(idTicket: string, txName: string, idUser: string) {
+    const api = '/t/validateticketfacebook';
+    const data = { idTicket, txName, idUser };
     const url = environment.api + api;
     return this.http.post(url, data);
   }

@@ -5,6 +5,8 @@ import { Table } from '../../../interfaces/table.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { LoginService } from '../../../services/login.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 
 
 
@@ -35,13 +37,15 @@ export class ScheduleComponent implements OnInit {
   constructor(
     public publicService: PublicService,
     public adminService: AdminService,
-    public loginService: LoginService
+    public loginService: LoginService,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
+    // return day !== 0 && day !== 6;
+    return true;
   }
 
   ngOnInit(): void {
@@ -76,16 +80,17 @@ export class ScheduleComponent implements OnInit {
     })
 
     this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
-
-      
       data.availability.map(av => {
-        this.availability.push({interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity});
+        this.availability.push({ interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity });
       });
 
     })
 
   }
 
+  showTicket = (ticket: Ticket): void => {
+    this.bottomSheet.open(BottomsheetComponent);
+  }
 
   pendingUpdated(pending: Ticket[]): void {
     this.pending = pending;
