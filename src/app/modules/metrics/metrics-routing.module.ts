@@ -13,14 +13,14 @@ import { VolumenComponent } from './volumen/volumen.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const metricsRoutes: Routes = [
-   { path: 'atencion', component: AtencionComponent },
-   { path: 'cancelados', component: CanceladosComponent },
-   { path: 'ocio', component: OcioComponent },
-   { path: 'pendientes', component: PendientesComponent },
-   { path: 'puntualidad', component: PuntualidadComponent },
-   { path: 'satisfaccion', component: SatisfaccionComponent },
-   { path: 'volumen', component: VolumenComponent },
-   { path: 'dashboard', component: DashboardComponent },
+   { path: 'atencion', component: AtencionComponent, data: { titulo: 'Atención' } },
+   { path: 'cancelados', component: CanceladosComponent, data: { titulo: 'Cancelados' } },
+   { path: 'ocio', component: OcioComponent, data: { titulo: 'Ocio' } },
+   { path: 'pendientes', component: PendientesComponent, data: { titulo: 'Pendientes' } },
+   { path: 'puntualidad', component: PuntualidadComponent, data: { titulo: 'Puntualidad' } },
+   { path: 'satisfaccion', component: SatisfaccionComponent, data: { titulo: 'Satisfacción' } },
+   { path: 'volumen', component: VolumenComponent, data: { titulo: 'Volúmen' } },
+   { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
 
 	{ path: '', redirectTo: '/metrics/dashboard', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}

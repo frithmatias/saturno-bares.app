@@ -27,38 +27,43 @@ import { VideoComponent } from './pages/video/video.component';
 
 const appRoutes: Routes = [
 
-	{ path: 'home', component: HomeComponent },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'register', component: RegisterComponent },
-	{ path: 'contact', component: ContactComponent },
-	{ path: 'howworks', component: HowWorksComponent },
-	{ path: 'pricing', component: PricingComponent },
-	{ path: 'video', component: VideoComponent },
+	{ path: 'home', component: HomeComponent, data: {titulo: 'Inicio'} },
+	{ path: 'login', component: LoginComponent, data: {titulo: 'Ingresar'} },
+	{ path: 'register', component: RegisterComponent, data: {titulo: 'Registrarme'} },
+	{ path: 'contact', component: ContactComponent, data: {titulo: 'Contacto'} },
+	{ path: 'howworks', component: HowWorksComponent, data: {titulo: 'Como Funciona'} },
+	{ path: 'pricing', component: PricingComponent, data: {titulo: 'Pricing'} },
+	{ path: 'video', component: VideoComponent, data: {titulo: 'Video'} },
 
 
 	{ path: 'public',
 	  component: PublicComponent,
-	  loadChildren: () => import('./modules/public/public.module').then((m) => m.PublicModule)},
+	  loadChildren: () => import('./modules/public/public.module').then((m) => m.PublicModule),
+	  data: {titulo: 'Publico'}},
 	
 	{ path: 'waiter',
 	  canLoad: [LoginGuard, TokenGuard],
 	  component: WaiterComponent,
-	  loadChildren: () => import('./modules/waiter/waiter.module').then((m) => m.WaiterModule)},
+	  loadChildren: () => import('./modules/waiter/waiter.module').then((m) => m.WaiterModule),
+	  data: {titulo: 'Camarero'}},
 	
 	{ path: 'admin',
 	  canLoad: [LoginGuard, TokenGuard, AdminGuard],
 	  component: AdminComponent,
-	  loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)},
+	  loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
+	  data: {titulo: 'Admin'}},
 	
 	{ path: 'superuser',
 	  canLoad: [LoginGuard, TokenGuard, SuperuserGuard],
 	  component: SuperuserComponent,
-	  loadChildren: () => import('./modules/superuser/superuser.module').then((m) => m.SuperuserModule)},
+	  loadChildren: () => import('./modules/superuser/superuser.module').then((m) => m.SuperuserModule),
+	  data: {titulo: 'SuperUser'}},
 	
 	{ path: 'metrics',
 	  canLoad: [LoginGuard, TokenGuard, AdminGuard ], //PlanBasicGuard
 	  component: MetricsComponent,
-	  loadChildren: () => import('./modules/metrics/metrics.module').then((m) => m.MetricsModule)},
+	  loadChildren: () => import('./modules/metrics/metrics.module').then((m) => m.MetricsModule),
+	  data: {titulo: 'Métricas'}},
 	  
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
 	{ path: '**', component: NopagefoundComponent }

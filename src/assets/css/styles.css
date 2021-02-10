@@ -706,8 +706,8 @@ ANGULAR MATERIAL
 @media (max-width: 850px) {
     /* higher specificity */
     body > app-root > mat-drawer-container > mat-drawer-content {
-        top   : 83px !important;
-        height: calc(100vh - 83px) !important;
+        top   : 96px !important;
+        height: calc(100vh - 96px) !important;
     }
 }
 

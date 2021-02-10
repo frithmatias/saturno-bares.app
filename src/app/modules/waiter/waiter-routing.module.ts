@@ -9,10 +9,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const waiterRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'section', component: SectionComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'home', component: HomeComponent, data: { titulo: 'Inicio' } },
+  { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil' } },
+  { path: 'section', component: SectionComponent, data: { titulo: 'Sector' } },
+  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
   
 	{ path: '', redirectTo: '/waiter/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}

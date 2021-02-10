@@ -130,7 +130,15 @@
     </div>
 
 
-    <div class="toolbar-links-base">
+    <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
+        <div class="toolbar-base-item pointer" routerLink="/home">
+            <div>
+               Volver al Inicio
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-links-base" *ngIf="url==='home'">
 
         <div class="toolbar-base-item pointer mr-4" routerLink="/register">
             <div>
@@ -151,4 +159,41 @@
         </div>
 
     </div>
+
+    <div class="toolbar-links-base" *ngIf="url==='public'">
+        <div class="toolbar-base-item pointer" routerLink="/home">
+            <div>
+               Volver al Inicio
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-links-base" *ngIf="url==='admin'">
+        <div class="toolbar-base-item pointer mr-4" routerLink="/admin/home">
+            <div>
+                Inicio
+            </div>
+        </div>
+
+        <div class="toolbar-base-item pointer mr-4" routerLink="/admin/wizard">
+            <div>
+                Wizard
+            </div>
+        </div>
+
+        <div class="toolbar-base-item pointer" routerLink="/waiter/home">
+            <div>
+                Atender
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-links-base" *ngIf="url==='waiter'">
+        <div class="toolbar-base-item pointer" routerLink="/waiter/home">
+            <div>
+                Inicio
+            </div>
+        </div>
+    </div>
+
 </div>

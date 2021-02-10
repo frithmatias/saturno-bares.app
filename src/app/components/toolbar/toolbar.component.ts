@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivationEnd, NavigationEnd } from '@angular/router';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../../modules/waiter/waiter.service';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,6 +15,7 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
 
+  url: string;
   hiddenBadge: boolean;
 
   constructor(
@@ -25,6 +27,10 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getDataRoute().subscribe( (data: NavigationEnd) => {
+    this.url = data.url.split('/')[1]; // admin - waiter - (public path)
+    });
+    
   }
 
   ngOnChanges(changes: any) {
@@ -48,6 +54,14 @@ export class ToolbarComponent implements OnInit {
       const elem = document.getElementById('home-map-container');
       elem.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     })
+  }
+
+  getDataRoute(){
+    return this.router.events.pipe(
+      filter( evento => evento instanceof NavigationEnd),
+      // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
+    // map((evento: NavigationEnd ) => {evento})
+    )
   }
 
 }

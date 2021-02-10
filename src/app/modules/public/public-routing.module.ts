@@ -9,10 +9,10 @@ import { TicketComponent } from './ticket/ticket.component';
 
 const publicRoutes: Routes = [
 
-  { path: 'companypage', component: CompanyPageComponent },
-  { path: 'tickets', component: TicketsComponent },
-	{ path: 'ticket/:idTicket', component: TicketComponent },
-  { path: '', component: HomeComponent },
+  { path: 'companypage', component: CompanyPageComponent, data: { titulo: 'Página Web' } },
+  { path: 'tickets', component: TicketsComponent, data: { titulo: 'Mis Reservas' } },
+	{ path: 'ticket/:idTicket', component: TicketComponent, data: { titulo: 'Mi Reserva' } },
+  { path: '', component: HomeComponent, data: { titulo: 'Inicio' } },
   { path: ':txCompanyString', component: PublicComponent },
   { path: '**', component: NopagefoundComponent}
 ];
