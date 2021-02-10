@@ -11,10 +11,8 @@ import { Router } from '@angular/router';
 })
 export class LoginService {
 
-
 	token: string;
 	menu: any[] = [];
-
 	
 	// user observable
 	public user: User;
@@ -118,6 +116,7 @@ export class LoginService {
 
 	logout() {
 
+
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
@@ -136,6 +135,9 @@ export class LoginService {
 
 		this.userSource.next(null)
 		this.router.navigate(['/home']);
+
+		// this.auth2.disconnect(); 
+
 	}
 
 }

@@ -1,0 +1,31 @@
+.buttons-container {
+    display        : flex;
+    flex-direction : row;
+    flex-wrap      : wrap;
+    justify-content: center;
+}
+
+.action-button {
+    width  : 110px;
+    padding: 0px !important;
+    margin : 5px !important;
+}
+
+.action-button-flex {
+    padding: 0px !important;
+    margin : 5px !important;
+}
+
+
+td.button-icon {
+    background-color: rgba(0, 0, 0, .3);
+    border-radius   : 3px 0 0 3px;
+    padding         : 0px 5px;
+}
+
+td.button-text {
+    width      : 100%;
+    font-size  : medium;
+    line-height: normal;
+    padding    : 0px 5px;
+}

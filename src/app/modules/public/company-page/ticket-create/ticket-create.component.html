@@ -13,15 +13,6 @@
       <div *ngIf="!loading">
 
         <!------------------------------>
-        <!-- COMPANY HEADER  -->
-        <!------------------------------>
-
-        <div class="text-center my-2">
-          <div class="public-createticket-title">{{company.tx_company_name}}</div>
-          <div class="public-createticket-subtitle">{{company.tx_company_slogan}}</div>
-        </div>
-
-        <!------------------------------>
         <!-- TICKET WAITING / SCHEDULED  -->
         <!------------------------------>
 
@@ -34,11 +25,9 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
-
             Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
             utilizando alguno de los siguientes métodos:
             <app-social (socialResponse)="socialResponse($event)"></app-social>
-
           </div>
 
           <!------------------------------>
@@ -46,12 +35,9 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'terminated'" class="my-4">
-            <div *ngIf="validateResponse">
-              {{validateResponse}}
-            </div>
-            <div *ngIf="!validateResponse">
-              Tu solicitud fue rechazada o finalizó el tiempo para validar tu reserva.
-            </div>
+
+            Tu solicitud fue rechazada o finalizó el tiempo para validar tu reserva.
+
           </div>
 
           <!------------------------------>
@@ -59,34 +45,28 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'pending'" class="my-4">
-            <div *ngIf="validateResponse">
-              {{validateResponse}}
-            </div>
-            <div *ngIf="!validateResponse">
-              Tu solicitud esta pendiente de aprobación. Te vamos a avisar si tu pedido queda en agenda
-              lo antes posible y por el mismo medio que usaste para validar el ticket.
-            </div>
+
+            Tu solicitud esta pendiente de aprobación. Te vamos a avisar si tu pedido queda en agenda
+            lo antes posible y por el mismo medio que usaste para validar el ticket.
 
           </div>
+
           <!------------------------------>
           <!-- SCHEDULED -->
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'scheduled'" class="my-4">
-            <div *ngIf="validateResponse">
-              {{validateResponse}}
-            </div>
-            <div *ngIf="!validateResponse">
-              <p>
-                Tu reserva quedó confirmada.
-              </p>
-              <p>
-                Te esperan el {{ ticket.tm_reserve | dateToString}}.
-              </p>
-              <p>
-                Faltan {{ ticket.tm_reserve | dateToRemaining }}.
-              </p>
-            </div>
+
+            <p>
+              Tu reserva quedó confirmada.
+            </p>
+            <p>
+              Te esperan el {{ ticket.tm_reserve | dateToString}}.
+            </p>
+            <p>
+              Faltan {{ ticket.tm_reserve | dateToRemaining }}.
+            </p>
+
           </div>
 
           <!------------------------------>
@@ -106,7 +86,7 @@
           </div>
 
           <!------------------------------>
-          <!-- ASSIGNED: VIRTUAL QUEUE -->
+          <!-- ASSIGNED -->
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'assigned'">
@@ -122,7 +102,7 @@
           </div>
 
           <!------------------------------>
-          <!-- PROVIDED: VIRTUAL QUEUE -->
+          <!-- PROVIDED -->
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'provided'">
@@ -147,6 +127,22 @@
               </button>
             </div>
 
+          </div>
+
+          <!------------------------------>
+          <!-- CANCELLED -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'cancelled'" class="my-4">
+            Hola {{ticket.tx_name}}, tu ticket quedó cancelado, te esperamos pronto.
+          </div>
+
+          <!------------------------------>
+          <!-- FINISHED -->
+          <!------------------------------>
+
+          <div *ngIf="ticket.tx_status === 'finished'" class="my-4">
+            Hola {{ticket.tx_name}}, gracias por tu visita te esperamos pronto.
           </div>
 
         </mat-card-content>
@@ -227,10 +223,8 @@
 
               <div *ngIf="tellUserNotAvailable===true" class="sm text-accent">
                 <p>
-                  No se puede cumplimentar el requerimiento para la cantidad de personas solcitada.
-                  Si querés podes elegir un horario disponible para iniciar una solicitud de armado de mesa especial.
-                  Esta solicitud tiene que ser aprobada por un administrador y te notificamos a la brevedad por el mismo
-                  medio utilizado para confirmar el ticket.
+                  No existe una mesa que pueda cumplimentar la solicitud, dejanos una solcitud de mesa especial y te
+                  contactamos a la brevedad.
                 </p>
               </div>
 

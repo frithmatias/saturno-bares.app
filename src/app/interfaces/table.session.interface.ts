@@ -6,7 +6,7 @@ import { Ticket } from './ticket.interface';
 // ========================================================
 
 export interface tableSession {
-	id_tables: [Table];
+	id_tables: string[];
 	id_ticket: Ticket;
     fc_start: Date;
     fc_end: Date;

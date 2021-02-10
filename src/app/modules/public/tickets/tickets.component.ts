@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PublicService } from '../public.service';
 import { TicketsResponse, TicketResponse } from '../../../interfaces/ticket.interface';
 import { FormControl } from '@angular/forms';
-import { outputResponse } from '../../../components/social/social.component';
+import { Social } from '../../../components/social/social.component';
+
+
 
 @Component({
   selector: 'app-tickets',
@@ -15,8 +17,10 @@ export class TicketsComponent implements OnInit {
 
 
   statusControl = new FormControl();
+  social: Social;
 
   statusList: any[] = [
+    { tx_status: 'waiting', tx_label: 'Esperando Confirmación' },
     { tx_status: 'pending', tx_label: 'Pendientes' },
     { tx_status: 'scheduled', tx_label: 'Agendados' },
     { tx_status: 'queued', tx_label: 'En cola virtual' },
@@ -41,22 +45,26 @@ export class TicketsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
+    // estados del select por defecto
     if (!this.statusControl.value) {
-      this.statusControl.setValue(['pending', 'scheduled', 'queued', 'assigned', 'requested', 'provided'])
+      this.statusControl.setValue(['waiting', 'pending', 'scheduled', 'queued', 'assigned', 'requested', 'provided', 'cancelled', 'finished'])
     }
 
+    // si cambian los valores actualizo el array
     this.statusControl.valueChanges.subscribe(data => {
       this.ticketsFiltered = this.tickets.filter(ticket => data.includes(ticket.tx_status));
     })
 
-    if(this.tickets.length === 0 && localStorage.getItem('tickets')){
-      this.tickets = JSON.parse(localStorage.getItem('tickets'));
+
+    if (this.tickets.length === 0 && localStorage.getItem('social')) {
+      this.social = JSON.parse(localStorage.getItem('social'));
     }
 
-    if(this.tickets.length > 0){
-      const txPlatform = this.tickets[0].tx_platform;
-      const idUser = this.tickets[0].id_user;
+    const txPlatform = this.social.txPlatform;
+    const idUser = this.social.idUser;
+
+    if (txPlatform && idUser) {
       this.getUserTickets(txPlatform, idUser); // update tickets
     }
 
@@ -64,9 +72,21 @@ export class TicketsComponent implements OnInit {
 
   getUserTickets(txPlatform: string, idUser: string): void {
 
+
+    // si en la localstorage había un ticket 'waiting' lo extraigo para salvarlo 
+    let waiting: Ticket[];
+    if (localStorage.getItem('tickets')) {
+      waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
+    }
+
+
     this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
       if (data.ok) {
-        this.tickets = data.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
+        this.tickets = data.tickets;
+        if (waiting.length > 0) { this.tickets.push(...waiting); }
+        this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
+
+
         console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
         this.ticketsFiltered = this.tickets.filter(ticket => this.statusControl.value.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(data.tickets));
@@ -75,10 +95,11 @@ export class TicketsComponent implements OnInit {
   }
 
   endTicket(ticket: Ticket): void {
-    this.publicService.snack('Desea cancelar este ticket? perderá la reserva', 5000, 'SI, CANCELAR').then((cancellResponse) => {
+    this.publicService.snack('Desea cancelar este ticket? perderá la reserva', 5000, 'Si, Cancelar').then((cancellResponse) => {
       if (cancellResponse) {
         const idTicket = ticket._id;
-        this.publicService.endTicket(idTicket).subscribe((resp: TicketResponse) => {
+        const reqBy = 'client';
+        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
           if (resp.ok) {
             // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
             resp.ticket.id_company = ticket.id_company;
@@ -95,9 +116,11 @@ export class TicketsComponent implements OnInit {
   }
 
 
-  socialResponse(response: outputResponse){
+  socialResponse(response: Social) {
     const txPlatform = response.txPlatform;
     const idUser = response.idUser;
-    this.getUserTickets(txPlatform, idUser);
+    if (txPlatform && idUser) {
+      this.getUserTickets(txPlatform, idUser); // update tickets
+    }
   }
 }

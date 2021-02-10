@@ -46,7 +46,9 @@ export class QueuedComponent implements OnInit {
     let activeQueue = this.queued.filter(ticket => ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')
 
     let blPriority = ticket.bl_priority;
-    let blFirst = activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
+    // si el ticket viene de agenda y el waiter re-asigna mesas asignadas por admin, no debe tener en cuenta si es 
+    // el primero, porque la provisión de un assignado de agenda la hace el cron a la hora exacta de la reserva.
+    let blFirst = ticket.tm_reserve ? false: activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
 
@@ -77,13 +79,12 @@ export class QueuedComponent implements OnInit {
     if (!ticket) {
       this.publicService.snack('Seleccione una mesa primero', 3000);
     }
-    let idTicket = ticket._id;
+    const idTicket = ticket._id;
+    const reqBy = 'waiter';
     if (this.queued) {
       this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((resp: boolean) => {
         if (resp) {
-          this.waiterService
-            .endTicket(idTicket)
-            .subscribe((resp: TicketResponse) => {
+          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
               if (resp.ok) {
                 this.queued = this.queued.filter(thisTicket => thisTicket._id !== ticket._id);
               }

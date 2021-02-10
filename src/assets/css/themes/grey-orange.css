@@ -1,11 +1,11 @@
 :root {
     --primary            : #ff5722;
-    --accent             : #952500;
+    --accent             : #f44336;
     --accent-invert      : #ffb13d;
     --warn               : #f44336;
     --deco               : #277127;
     --info               : #3f3f3f;
-    --bg                 : #a3a3a3;
+    --bg                 : #d6d6d6;
     --mat-card-bg        : #e0e0e0;
     --mat-panel-bg       : #f6f6f6;
     --mat-bottom-sheet-bg: #d0d0d0;
@@ -2407,12 +2407,12 @@ td.mat-footer-cell {
 }
 
 .mat-drawer {
-    background-color: #fff;
+    background-color: var(--mat-card-bg);
     color           : rgba(0, 0, 0, .87)
 }
 
 .mat-drawer.mat-drawer-push {
-    background-color: #fff
+    background-color: var(--mat-card-bg);
 }
 
 .mat-drawer:not(.mat-drawer-side) {

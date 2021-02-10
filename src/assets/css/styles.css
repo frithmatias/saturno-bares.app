@@ -103,10 +103,6 @@ td {
     vertical-align: middle !important;
 }
 
-mat-drawer-container {
-    flex: 1 1 auto;
-}
-
 .pointer {
     cursor: pointer;
 }
@@ -707,6 +703,19 @@ ANIMACIONES
 ANGULAR MATERIAL 
 -------------------------------------------
 */
+@media (max-width: 850px) {
+    /* higher specificity */
+    body > app-root > mat-drawer-container > mat-drawer-content {
+        top   : 83px !important;
+        height: calc(100vh - 83px) !important;
+    }
+}
+
+/* lower specificity */
+mat-drawer-content {
+    top   : 57px !important;
+    height: calc(100vh - 57px) !important;
+}
 
 /*
 -------------------------------------------
@@ -714,9 +723,9 @@ MAT-TAB
 -------------------------------------------
 */
 
-
 .mat-tab-label,
 .mat-tab-link {
+    height     : 80px !important;
     font-family: var(--font-family);
     font-size  : 16px;
     font-weight: 500;
@@ -1001,8 +1010,9 @@ NG IMAGE SLIDER
 
 .ng-image-slider .ng-image-slider-container .main .next,
 .ng-image-slider .ng-image-slider-container .main .prev {
-    color  : var(--primary);
-    opacity: .5;
+    color           : var(--primary);
+    text-shadow     : -1px 0 rgb(255 255 255 / 50%), 0px 1px rgb(255 255 255 / 50%), 0px -1px rgb(255 255 255 / 50%), 1px 0 rgb(255 255 255 / 50%);
+    background-color: unset !important;
 }
 
 .ng-image-slider .ng-image-slider-container .main .next:hover,

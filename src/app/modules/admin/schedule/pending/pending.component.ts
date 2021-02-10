@@ -22,7 +22,7 @@ export class PendingComponent implements OnInit {
 
   @Input() availability: intervalAvailability[];
   @Input() pending: Ticket[] = []
-  @Output() pendingUpdated: EventEmitter<Ticket[]> = new EventEmitter();
+  @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
   tablesAvailability: tableAvailability[];
   displayedColumns: string[] = ['nmPersons', 'txName', 'tmReserve'];
@@ -59,11 +59,10 @@ export class PendingComponent implements OnInit {
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
 
-    this.waiterService.assignTablesPending(idTicket, blPriority, blFirst, cdTables).subscribe(
-      (resp: TicketResponse) => {
+    this.waiterService.assignTablesPending(idTicket, blPriority, blFirst, cdTables).subscribe((resp: TicketResponse) => {
         if (resp.ok) {
           this.pending = this.pending.filter(ticket => ticket._id !== resp.ticket._id);
-          this.pendingUpdated.emit(this.pending);
+          this.pendingUpdated.emit(resp.ticket);
         } else {
           this.publicService.snack('Error al asignar las mesas!', 2000);
         }
@@ -78,13 +77,12 @@ export class PendingComponent implements OnInit {
     if (!ticket) {
       this.publicService.snack('Seleccione una mesa primero', 3000);
     }
-    let idTicket = ticket._id;
+    const idTicket = ticket._id;
+    const reqBy = 'client'; // cancelled (not finished)
     if (this.pending) {
       this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((resp: boolean) => {
         if (resp) {
-          this.waiterService
-            .endTicket(idTicket)
-            .subscribe((resp: TicketResponse) => {
+          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
               if (resp.ok) {
                 this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
               }

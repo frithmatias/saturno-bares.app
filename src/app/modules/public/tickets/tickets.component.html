@@ -1,9 +1,12 @@
 <!-- <pre class="xs text-left text-accent">
   {{ tickets | json}}
 </pre> -->
+<div>
+  <app-social (socialResponse)="socialResponse($event)"></app-social>
+</div>
 <div class="tickets-page-container animated fadeIn">
 
-  <div class="w-100">
+  <!-- <div class="w-100">
 
     <mat-form-field class="select-status">
       <mat-label>Estado</mat-label>
@@ -12,11 +15,10 @@
       </mat-select>
     </mat-form-field>
 
-  </div>
+  </div> -->
 
   <div *ngIf="ticketsFiltered.length === 0" class="text-accent">
     No tenés tickets activos. Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
-    <app-social (socialResponse)="socialResponse($event)"></app-social>
   </div>
 
 
@@ -24,7 +26,7 @@
 
     <!-- first image in banners -->
     <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
-      <img class="user-image img-fluid"
+      <img class="company-banner img-fluid"
         [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
     </div>
 
@@ -38,18 +40,17 @@
       </div>
 
       <!-- header with company name and address -->
-      <mat-card-header class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <mat-card-title class="md"> {{ticket.id_company?.tx_company_name}} </mat-card-title>
-        <mat-card-subtitle class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}
-        </mat-card-subtitle>
-      </mat-card-header>
+      <div class="pointer my-2" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+        <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
+        <div class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
+      </div>
 
       <mat-card-content class="text-left sm fw-200">
         <div>
-          Fecha: <span class="text-accent">{{ticket.tm_reserve | dateToString}}</span>
+          Fecha: <span class="text-info">{{ticket.tm_reserve | dateToString}}</span>
         </div>
         <div>
-          Estado: <span class="text-accent">{{ticket.tx_status | ticketStatus}}</span>
+          Estado: <span class="text-info">{{ticket.tx_status | ticketStatus}}</span>
         </div>
       </mat-card-content>
 

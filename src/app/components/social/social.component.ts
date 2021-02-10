@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, AfterViewInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PublicService } from '../../modules/public/public.service';
 
@@ -18,7 +18,7 @@ interface facebookResponse {
   status: string;
 }
 
-export interface outputResponse {
+export interface Social {
   txPlatform: string;
   txToken: string;
   idUser: string;
@@ -31,12 +31,18 @@ export interface outputResponse {
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.css']
 })
-export class SocialComponent implements OnInit {
+export class SocialComponent implements OnInit, AfterViewInit {
   @ViewChild('validateTicketGoogle') gButton: any;
-  @Output() socialResponse: EventEmitter<outputResponse> = new EventEmitter();
+  @Output() socialResponse: EventEmitter<Social> = new EventEmitter();
 
-  auth2: any; // info de google con el token
-
+  auth2: gapi.auth2.GoogleAuth; // info de google con el token
+  social: Social = {
+    txPlatform: null,
+    txToken: null,
+    idUser: null,
+    txName: null,
+    txImage: null,
+  };
   facebookResponse: facebookResponse;
   isMobile = false;
 
@@ -50,6 +56,8 @@ export class SocialComponent implements OnInit {
     } else {
       this.isMobile = false;
     }
+
+    this.googleInit()
     this.facebookInit();
   }
 
@@ -57,25 +65,32 @@ export class SocialComponent implements OnInit {
   // VALIDATE TICKET WITH GOOGLE
   // ==========================================================
 
-  googleInit(button) {
+  ngAfterViewInit(): void {
+    this.googleInit();
+  }
+
+  googleInit() {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
         client_id: environment.gapi_uid,
         cookiepolicy: 'single_host_origin',
         scope: 'profile email'
       });
-      this.attachSignin(button?._elementRef.nativeElement);
+      this.attachSignin(this.gButton?._elementRef.nativeElement);
     });
   }
 
-  attachSignin(element) {
-    this.auth2.attachClickHandler(element, {}, googleUser => {
-      const txPlatform = 'google';
-      const txToken = googleUser.getAuthResponse().id_token;
-      const idUser = googleUser.Fs.lt;
-      const txName = googleUser.Fs.sd;
-      const txImage = googleUser.Fs.wI;
-      this.socialResponse.emit({ txPlatform: txPlatform, txToken: txToken, idUser: idUser, txName: txName, txImage: txImage })
+  attachSignin = (element) => {
+    this.auth2.attachClickHandler(element, {}, (googleUser: any) => {
+      this.social.txPlatform = 'google';
+      this.social.txToken = googleUser.getAuthResponse().id_token;
+      this.social.idUser = googleUser.Fs.lt;
+      this.social.txName = googleUser.Fs.sd;
+      this.social.txImage = googleUser.Fs.wI;
+      localStorage.setItem('social', JSON.stringify(this.social));
+      this.socialResponse.emit(this.social)
+    }, () => {
+      this.publicService.snack('Ocurrio un error de autenticación con auth2', 2000, 'Aceptar');
     });
   }
 
@@ -119,11 +134,15 @@ export class SocialComponent implements OnInit {
   validateTicketFacebook() {
     FB.api('/me?fields=name,email', (response) => {
       // const idUser = response.id;
-      const txPlatform = 'facebook';
-      const txName = response.name;
-      const idUser = response.email;
-      if (!idUser || !txName) {
-        this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'OK');
+
+      this.social.txPlatform = 'facebook';
+      this.social.txToken = null;
+      this.social.idUser = response.email;
+      this.social.txName = response.name;
+      this.social.txImage = null;
+
+      if (!this.social.idUser || !this.social.txName) {
+        this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'Aceptar');
         FB.login((response) => {
           if (response.status !== 'connected') {
             return;
@@ -131,7 +150,9 @@ export class SocialComponent implements OnInit {
         })
         return;
       }
-      this.socialResponse.emit({ txPlatform: txPlatform, txToken: null, idUser: idUser, txName: txName, txImage: null })
+
+      localStorage.setItem('social', JSON.stringify(this.social));
+      this.socialResponse.emit(this.social)
     });
   }
 
@@ -141,15 +162,21 @@ export class SocialComponent implements OnInit {
 
   validateTicketTelegram() {
     window.Telegram.Login.auth({ bot_id: '1545224984', request_access: true }, (response) => {
+
       if (!response) {
-        this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'OK');
+        this.publicService.snack('Error de validación de Telegram.', 5000, 'Aceptar');
+        return;
       }
-      const txPlatform = 'telegram';
-      const txName = response.first_name;
-      const idUser = response.id;
-      const txPhoto = response.photo_url;
-      const txUsername = response.username;
-      this.socialResponse.emit({ txPlatform: txPlatform, txToken: null, idUser: idUser, txName: txName, txImage: null })
+
+      this.social.txPlatform = 'telegram';
+      this.social.txToken = null;
+      this.social.idUser = response.id;
+      this.social.txName = response.first_name;
+      this.social.txImage = response.photo_url;
+
+      localStorage.setItem('social', JSON.stringify(this.social));
+      this.socialResponse.emit(this.social);
+
     })
   }
 
@@ -158,8 +185,10 @@ export class SocialComponent implements OnInit {
   // ==========================================================
 
   emailValidate() {
-    this.publicService.snack('Esta opción va a estar disponible en breve', 5000, 'OK');
+    this.publicService.snack('Esta opción va a estar disponible próximamente.', 5000, 'Aceptar');
   }
+
+
 
 }
 

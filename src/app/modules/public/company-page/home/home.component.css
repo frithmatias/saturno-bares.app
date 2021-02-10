@@ -1,26 +1,12 @@
-@media (max-width: 575px) {
-    .public-home-title {
-        font-size: xx-large !important;
-    }
-}
-
-.public-home-title {
-    font-size: xxx-large;
-    color: var(--accent);
-}
-
-.public-home-subtitle {
-    font-size: medium;
-}
+@media (max-width: 575px) {}
 
 .public-home-content {
     font-family: 'Baloo Bhai 2', 'system-ui';
-    font-size: large;
+    font-size  : medium;
     font-weight: 200;
-    padding: 1em;
+    line-height: 1.4em;
 }
 
 .mat-card {
     box-shadow: none;
 }
-

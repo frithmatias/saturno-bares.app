@@ -1,0 +1,17 @@
+.ticket-info .data table {
+    width      : 100%;
+    line-height: 1.2em;
+    font-size  : small;
+}
+
+.ticket-info .data {
+    flex-grow: 1;
+}
+
+.ticket-info .actions {
+    display      : flex;
+    flex-flow    : row;
+    flex-grow    : 1;
+    flex-wrap    : wrap;
+    place-content: center;
+}

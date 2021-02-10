@@ -102,7 +102,8 @@
     <!------------------------------>
 
     <div *ngIf="!listmode">
-        <button mat-raised-button [color]="t.id_session?'warn':t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
+        <button mat-raised-button
+            [color]="t.id_session ? t.id_session.id_ticket.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
             class="m-1 table-button-inactive" *ngFor="let t of tables"
             [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
@@ -132,6 +133,8 @@
             <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
             <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
             <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
+            <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
+
         </div>
 
         <!------------------------------>
@@ -202,14 +205,14 @@
 
             <!-- activate table -->
             <button mat-raised-button [color]="table.tx_status==='paused'? '' : 'active'" class="action-button"
-                [disabled]="table.tx_status === 'busy' || table.tx_status === 'reserved'">
+                [disabled]="table.tx_status === 'busy' || table.tx_status === 'waiting' || table.tx_status === 'reserved'">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-power xl"></td>
                         <td class="button-text">
                             <mat-slide-toggle (click)="toggleTableStatus(table)"
                                 [checked]="table.tx_status !== 'paused'"
-                                [disabled]="table.tx_status === 'busy' || table.tx_status === 'reserved'">
+                                [disabled]="table.tx_status === 'busy' || table.tx_status === 'waiting' || table.tx_status === 'reserved'">
                             </mat-slide-toggle>
                         </td>
                     </tr>
@@ -228,13 +231,23 @@
                 </table>
             </button>
 
+            <!-- release ticket -->
+            <button mat-raised-button color="active" class="action-button"
+                (click)="initTables(table)" [disabled]="table.tx_status !== 'waiting'">
+                <table>
+                    <tr>
+                        <td class="button-icon mdi mdi-play xl"></td>
+                        <td class="button-text">Iniciar</td>
+                    </tr>
+                </table>
+            </button>
 
             <!-- release ticket -->
             <button mat-raised-button color="primary" class="action-button"
-                (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
+                (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="!table.id_session">
                 <table>
                     <tr>
-                        <td class="button-icon mdi mdi-replay xl"></td>
+                        <td class="button-icon mdi mdi-history xl"></td>
                         <td class="button-text">Liberar</td>
                     </tr>
                 </table>
@@ -242,7 +255,7 @@
 
             <!-- end ticket -->
             <button mat-raised-button color="warn" class="action-button"
-                (click)="endTicket(table.id_session?.id_ticket)" [disabled]="table.tx_status !== 'busy'">
+                (click)="endTicket(table.id_session?.id_ticket)" [disabled]="!table.id_session">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-close xl"></td>

@@ -1,6 +1,6 @@
 :root {
     --primary            : #7b1fa2;
-    --accent             : #00ff4b;
+    --accent             : #66ff00;
     --accent-invert      : #056c00;
     --warn               : #f44336;
     --deco               : #ff6d00;
@@ -2415,12 +2415,12 @@ td.mat-footer-cell {
 }
 
 .mat-drawer {
-    background-color: #424242;
+    background-color: var(--mat-card-bg);
     color           : #fff
 }
 
 .mat-drawer.mat-drawer-push {
-    background-color: #424242
+    background-color: var(--mat-card-bg);
 }
 
 .mat-drawer:not(.mat-drawer-side) {

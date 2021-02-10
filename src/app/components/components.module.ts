@@ -45,6 +45,7 @@ import { SocialComponent } from './social/social.component';
     ChatComponent,
     SearchComponent,
     MapComponent,
+    ButtonComponent,
     UploaderComponent,
     ThemeComponent,
     SocialComponent

@@ -1,9 +1,65 @@
-
 @media (max-width: 575px) {
-    .logo-text-container {
-        display: none;
+
+}
+
+@media (max-width: 850px) {
+    .toolbar-links-header {
+        display: none !important;
+    }
+
+    .toolbar-links-base {
+        display      : flex !important;
+        padding      : 10px;
+        padding-right: 20px;
+        place-content: flex-end;
     }
 }
+
+.toolbar {
+    color    : white;
+    font-size: small;
+
+}
+
+.toolbar-header {
+    display    : flex;
+    flex-wrap  : wrap;
+    align-items: center;
+    padding    : 8px 16px;
+}
+
+.toolbar-links-header {
+    display      : flex;
+    padding      : 10px;
+    padding-right: 20px;
+    place-content: flex-end;
+}
+
+.toolbar-links-base {
+    display        : none;
+    justify-content: space-around;
+    font-size      : small;
+}
+
+.toolbar-base-item {
+    display  : flex;
+    flex-wrap: wrap;
+}
+
+.toolbar-base-item .mdi {
+    margin-right: 6px;
+}
+
+.toolbar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 2;
+    background-color: var(--primary);
+    box-shadow      : 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
+
 
 .logo-container {
     display  : flex;
@@ -15,12 +71,13 @@
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
-    height             : 2em;
-    width              : 2em;
+    height             : 3em;
+    width              : 3em;
 }
 
 .logo-text-container {
     align-self: center;
+    font-size : small;
 }
 
 .logo-title {

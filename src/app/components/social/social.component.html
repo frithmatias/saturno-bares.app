@@ -1,4 +1,4 @@
-<div class="screen-ticket-button-confirm my-4">
+<div class="buttons-container my-4">
 
     <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
 
@@ -16,7 +16,8 @@
 
     <!-- TELEGRAM -->
     <div>
-        <button mat-raised-button class="action-button" color="telegram" (click)="validateTicketTelegram()">
+        <button mat-raised-button class="action-button" color="telegram" (click)="validateTicketTelegram()"
+           >
             <table>
                 <tr>
                     <td class="button-icon mdi mdi-telegram xl"></td>
@@ -42,7 +43,7 @@
     <!-- GOOGLE -->
     <div>
         <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
-            id="validateTicketGoogle" data-toggle="tooltip" (click)="googleInit(validateTicketGoogle)">
+            data-toggle="tooltip">
             <table>
                 <tr>
                     <td class="button-icon mdi mdi-google xl"></td>

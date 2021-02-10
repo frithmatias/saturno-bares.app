@@ -4,8 +4,7 @@
 
 
         <div class="d-flex">
-            <form class="w-100" autocomplete="off" ngNativeValidate #formDirective="ngForm"
-                [formGroup]="scheduleForm">
+            <form class="w-100" autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
 
                 <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Sector</mat-label>
@@ -18,8 +17,8 @@
 
                 <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtReserve"
-                        [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtReserve" [min]="minDate"
+                        [max]="maxDate" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker">
                     </mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -43,34 +42,38 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <div style="overflow: auto; height: 200px; font-family: monospace">
+                    <div class="schedule-container">
+                        <table class="schedule sm" *ngIf="availability.length > 0">
+                            <thead>
+                                <tr>
+                                    <th class="px-1">Int</th>
+                                    <th class="px-1">Cap</th>
+                                    <th class="px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let av of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
 
-                        <table class="sm text-accent" *ngIf="availability.length > 0">
-                            <tr>
-                                <th class="px-1">Int</th>
-                                <th class="px-1">Cap</th>
-                                <th class="px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
-                            </tr>
-    
-                            <tr *ngFor="let av of availability">
-    
-                                <td class="px-1">
-                                    <span *ngIf="av.interval < 10">0{{av.interval}}:00</span>
-                                    <span *ngIf="av.interval >= 10">{{av.interval}}:00</span>
-                                </td>
-    
-                                <td class="px-1">{{av.capacity}}</td>
-    
-                                <td class="px-1" *ngFor="let t of av.tables" (click)="selectTable(t)">
-                                    <span *ngIf="t.blReserved" class="mdi mdi-calendar-account pointer" (click)="showTicket(t)"></span>
-                                    <span *ngIf="!t.blReserved">{{t.nmPersons}}</span>
-                                </td>
-    
-                            </tr>
+                                    <td class="px-1">
+                                        <span *ngIf="av.interval < 10">0{{av.interval}}:00</span>
+                                        <span *ngIf="av.interval >= 10">{{av.interval}}:00</span>
+                                    </td>
+
+                                    <td>
+                                        <span class="text-accent">{{av.capacity}}</span>
+                                    </td>
+
+                                    <td class="px-1" *ngFor="let t of av.tables">
+                                        <span *ngIf="t.blReserved" class="mdi mdi-close-box-outline text-warn pointer"
+                                            (click)="showTable(t)"><span class="persons">{{t.nmPersons}}</span></span>
+                                        <span *ngIf="!t.blReserved" class="mdi mdi-check-box-outline text-active"><span
+                                                class="persons">{{t.nmPersons}}</span></span>
+                                    </td>
+
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-
-
 
                 </mat-expansion-panel>
 
@@ -86,7 +89,8 @@
                     </mat-expansion-panel-header>
 
 
-                    <app-pending [pending]="pending" [availability]="availability" (pendingUpdated)="pendingUpdated($event)"></app-pending>
+                    <app-pending [pending]="pending" [availability]="availability"
+                        (pendingUpdated)="pendingUpdated($event)"></app-pending>
 
                 </mat-expansion-panel>
 

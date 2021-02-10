@@ -1,17 +1,33 @@
-
 @media (max-width: 575px) {
-
-    .banner-container {
-        padding: 10px !important;
+    .company-page-title {
+        font-size : xx-large !important;
+        margin-top: 10px;
     }
-    
 }
 
-.banner-container {
-    padding: 20px;
+.company-page-banner {
+    padding: 20px 20px 0px 20px;
 }
 
-.company-logo {
+.company-page-title {
+    font-size: xxx-large;
+    color    : var(--accent);
+}
+
+.company-page-subtitle {
+    font-size    : medium;
+    margin-bottom: 10px;
+
+}
+
+.company-page-tab-icon {
+    color    : var(--accent);
+    font-size: xx-large;
+    height   : 40px;
+    opacity  : 0.8;
+}
+
+.company-page-logo {
     border-radius: 50%;
     position     : relative;
     margin-bottom: -60px;
@@ -20,8 +36,14 @@
     box-shadow   : 0px 0px 4px rgb(0 0 0 / 50%);
 }
 
-.footer-container {
-    height          : 5em;
+.company-page-tabs {
+    /* vh - header - subtitle-margin-bottom - banner - footer */
+    min-height      : calc(100vh - 64px - 10px - 356px - 80px);
+    background-color: var(--mat-card-bg);
+}
+
+.company-page-footer {
+    height          : 80px;
     align-items     : center;
     background-color: var(--primary);
     display         : flex;

@@ -148,18 +148,10 @@ export class PublicService {
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
-  // google devuelve un token que tengo que enviar al backend para validar y obtener los datos del usuario
-  validateTicketGoogle(idTicket: string, gtoken: string) {
-    const api = '/t/validateticketgoogle';
-    const data = { idTicket, gtoken };
-    const url = environment.api + api;
-    return this.http.post(url, data);
-  }
-
   // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
-  validateTicketFacebook(idTicket: string, txName: string, idUser: string) {
-    const api = '/t/validateticketfacebook';
-    const data = { idTicket, txName, idUser };
+  validateTicket(idTicket: string, txPlatform: string, txToken: string, idUser: string, txName: string, txImage: string) {
+    const api = '/t/validateticket';
+    const data = { idTicket, txPlatform, txToken, idUser, txName, txImage };
     const url = environment.api + api;
     return this.http.post(url, data);
   }
@@ -186,8 +178,8 @@ export class PublicService {
     return this.http.post(environment.api + '/t/callwaiter/', { idTicket, txCall });
   }
 
-  endTicket(idTicket: string) {
-    return this.http.post(environment.api + '/t/endticket/', { idTicket, reqBy: 'client' });
+  endTicket(idTicket: string, reqBy: string) {
+    return this.http.post(environment.api + '/t/endticket/', { idTicket, reqBy });
   }
 
   getScoreItems(idSection: string) {

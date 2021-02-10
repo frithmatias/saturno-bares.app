@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 import { Company } from '../../../../interfaces/company.interface';
 import { Subscription, timer } from 'rxjs';
 import { timeout } from 'rxjs/operators';
-import { outputResponse } from '../../../../components/social/social.component';
+import { Social } from '../../../../components/social/social.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -35,7 +36,6 @@ export class TicketCreateComponent implements OnInit {
   availability: any[] = [];
   availableTables: number[];
   updateTicketsSub: Subscription;
-  validateResponse: String;
   tellUserNotAvailable = false;
   showRequestTable = false;
 
@@ -88,9 +88,10 @@ export class TicketCreateComponent implements OnInit {
       }
 
     }
-
+    
     this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
       // id_company en el metodo provide() del backend NO viene populado
+      console.log(ticket)
       ticket.id_company = this.ticket?.id_company;
       this.ticket = ticket;
       this.publicService.updateStorageTickets(ticket);
@@ -105,7 +106,6 @@ export class TicketCreateComponent implements OnInit {
       tmReserve: new FormControl({ value: '', disabled: true }, [Validators.required]),
       cdTables: new FormControl({ value: '', disabled: true }, [Validators.required]),
     });
-
 
     // PERSONS CHANGE 
     this.ticketForm.controls.idSection.valueChanges.subscribe(data => {
@@ -172,10 +172,6 @@ export class TicketCreateComponent implements OnInit {
     })
 
   }
-
-
-
-
 
   readAvailability(nmPersons: number, idSection: string, dtReserve: Date) {
 
@@ -279,44 +275,25 @@ export class TicketCreateComponent implements OnInit {
     this.router.navigate(['/home'])
   }
 
-  socialResponse(data: outputResponse) {
-    
-    // GOOGLE VALIDATE
-    if (data.txPlatform === 'google') {
-      const idTicket = this.ticket._id;
-      const txToken = data.txToken;
-      this.publicService.validateTicketGoogle(idTicket, txToken).subscribe((data: any) => {
-        if (data.ok) {
-          this.validateResponse = data.response;
-        }
-      });
-    }
+  socialResponse(response: Social) {
 
-    // FACEBOOK VALIDATE 
-    if (data.txPlatform === 'facebook') {
-      const idTicket = this.ticket._id;
-      const txName = data.txName;
-      const idUser = data.idUser;
-      this.publicService.validateTicketFacebook(idTicket, txName, idUser).subscribe((data: any) => {
-        if (data.ok) {
-          this.validateResponse = data.response;
-        }
-      });
-    }
-
-    // TELEGRAM VALIDATE 
-    if (data.txPlatform === 'telegram') {
-      const idTicket = this.ticket._id;
-      const txName = data.txName;
-      const idUser = data.idUser;
-      this.publicService.validateTicketFacebook(idTicket, txName, idUser).subscribe((data: any) => {
-        if (data.ok) {
-          this.validateResponse = data.response;
-        }
-      });
-    }
+    const idTicket = this.ticket._id;
+    const txPlatform = response.txPlatform;
+    const txToken = response.txToken || null;
+    const idUser = response.idUser || null;
+    const txName = response.txName || null;
+    const txImage = response.txImage || null;
 
 
+    this.publicService.validateTicket(idTicket, txPlatform, txToken, idUser, txName, txImage).subscribe((data: TicketResponse) => {
+      if (data.ok) {
+        this.publicService.snack(data.msg, 5000, 'Aceptar');
+      } else {
+        this.publicService.snack(data.msg, 5000, 'Aceptar');
+      }
+    }, (err: HttpErrorResponse) => {
+      this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+    });
   }
 
 }

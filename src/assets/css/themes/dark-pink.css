@@ -2415,12 +2415,12 @@ td.mat-footer-cell {
 }
 
 .mat-drawer {
-    background-color: #424242;
+    background-color: var(--mat-card-bg);
     color           : #fff
 }
 
 .mat-drawer.mat-drawer-push {
-    background-color: #424242
+    background-color: var(--mat-card-bg);
 }
 
 .mat-drawer:not(.mat-drawer-side) {

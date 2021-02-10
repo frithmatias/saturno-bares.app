@@ -22,6 +22,8 @@
     "@angular/platform-browser": "~11.0.0",
     "@angular/platform-browser-dynamic": "~11.0.0",
     "@angular/router": "~11.0.0",
+    "@types/gapi": "0.0.39",
+    "@types/gapi.auth2": "0.0.52",
     "angularx-qrcode": "^10.0.11",
     "moment": "^2.27.0",
     "ng-image-slider": "^2.6.4",

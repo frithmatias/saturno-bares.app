@@ -5,7 +5,7 @@
 .notification-icon {
   position: fixed;
   top     : 1.3em;
-  right   : 19.3em;
+  right   : 8.3em;
   z-index : 2;
   cursor  : pointer;
   width   : 20px;
@@ -13,12 +13,5 @@
 
 @media (max-width: 575px) {
 
-  .notification-icon {
-    left: 1em;
-  }
-
 }
 
-.body {
-  color: yellow;
-}

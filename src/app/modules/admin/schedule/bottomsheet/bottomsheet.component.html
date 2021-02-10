@@ -1,1 +1,101 @@
-<p>bottomsheet works!</p>
+<div class="page-container animated fadeIn">
+    <mat-card>
+
+        <mat-card-header class="text-accent">
+            <mat-card-title>
+                Editar Ticket
+            </mat-card-title>
+            <mat-card-subtitle>
+                Editar ticket de cliente
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="ticket-info">
+                <div class="data">
+                    <table>
+                        <tr>
+                            <td>Mesa:</td>
+                            <td>{{nmTable}}</td>
+                        </tr>
+                        <tr>
+                            <td>Capacidad:</td>
+                            <td>{{nmTablePersons}}</td>
+                        </tr>
+                        <tr>
+                            <td>Personas:</td>
+                            <td>{{nmTicketPersons}}</td>
+                        </tr>
+                        <tr>
+                            <td>Ocupación:</td>
+                            <td>{{nmOccupation}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contingencia:</td>
+                            <td>{{blContingent}}</td>
+                        </tr>
+                        <tr>
+                            <td>Prioridad:</td>
+                            <td>{{blPriority}}</td>
+                        </tr>
+                        <tr>
+                            <td>Reserva:</td>
+                            <td>{{tmReserve}}</td>
+                        </tr>
+                        <tr>
+                            <td>Inicio:</td>
+                            <td>{{tmStart}}</td>
+                        </tr>
+                        <tr>
+                            <td>Plataforma:</td>
+                            <td>{{txPlatform}}</td>
+                        </tr>
+                        <tr>
+                            <td>Usuario:</td>
+                            <td>{{idUser}}</td>
+                        </tr>
+                        <tr>
+                            <td>Cliente:</td>
+                            <td>{{txName}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="actions">
+                    <div>
+                        <button mat-raised-button class="action-button" color="warn" (click)="endTicket()">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-close xl"></td>
+                                    <td class="button-text">Cancelar</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
+                    <div>
+
+                        <button mat-raised-button class="action-button" color="telegram" (click)="sendMessage()">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-telegram xl"></td>
+                                    <td class="button-text">Mensaje</td>
+                                </tr>
+                            </table>
+                        </button>
+                    </div>
+                    <div>
+                        <button mat-raised-button class="action-button" color="primary" (click)="assignTablesPending()">
+                            <table>
+                                <tr>
+                                    <td class="button-icon mdi mdi-history xl"></td>
+                                    <td class="button-text">Liberar</td>
+                                </tr>
+                            </table>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

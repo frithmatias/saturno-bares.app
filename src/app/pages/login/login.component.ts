@@ -5,9 +5,10 @@ import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebsocketService } from '../../services/websocket.service';
 import { LoginService } from '../../services/login.service';
+import { NgZone } from '@angular/core';
 
 declare const gapi: any;
-// 
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
@@ -18,14 +19,15 @@ export class LoginComponent implements OnInit {
 	email: string;
 	hidepass = true;
 	recuerdame = false;
-	auth2: any; // info de google con el token
+	auth2: gapi.auth2.GoogleAuth; // info de google con el token
 
 	constructor(
 		public router: Router,
 		public activatedRoute: ActivatedRoute,
 		private loginService: LoginService,
 		private wsService: WebsocketService,
-		private snack: MatSnackBar
+		private snack: MatSnackBar,
+		private zone: NgZone
 	) { }
 
 	ngOnInit() {
@@ -50,22 +52,26 @@ export class LoginComponent implements OnInit {
 	attachSignin(element) {
 		this.auth2.attachClickHandler(element, {}, googleUser => {
 			const gtoken = googleUser.getAuthResponse().id_token;
-			this.loginService.login(gtoken, null, false).subscribe(
-				data => {
-					if (data.ok) {
-						if (data.user.id_company) { 
-							let idCompany = data.user.id_company._id;
-							this.wsService.emit('enterCompany', idCompany); 
-						}
-						window.location.href = '/admin';
-						// this.router.navigate([data.home]);			
+			this.loginService.login(gtoken, null, false).subscribe(data => {
+				if (data.ok) {
+					if (data.user.id_company) {
+						const idCompany = data.user.id_company._id;
+						this.wsService.emit('enterCompany', idCompany);
 					}
-				},
-				() => {
-					this.snack.open('Error de validación en Google', null, { duration: 2000 });
+					// window.location.href = '/admin';
+					this.zone.run(() => {
+						this.router.navigate([data.home]);
+					})
 				}
+			}, () => {
+				this.snack.open('Error de validación en Google', null, { duration: 2000 });
+			}
 			);
+
+		}, () => {
+			this.snack.open('Error al llamar a oauth2', null, { duration: 2000 });
 		});
+
 	}
 
 	// ==========================================================
@@ -86,18 +92,18 @@ export class LoginComponent implements OnInit {
 		};
 
 		this.loginService.login(null, user, forma.value.recuerdame).subscribe(
-		data => {
-			if (data.ok) {
-				if (data.user.id_company) { 
-					let idCompany = data.user.id_company._id;
-					this.wsService.emit('enterCompany', idCompany); 
+			data => {
+				if (data.ok) {
+					if (data.user.id_company) {
+						let idCompany = data.user.id_company._id;
+						this.wsService.emit('enterCompany', idCompany);
+					}
+					this.router.navigate([data.home]);
 				}
-				this.router.navigate([data.home]);
-			}
-		},
-		err => {
+			},
+			err => {
 				this.snack.open(err.error.msg, null, { duration: 2000 });
-		});
+			});
 	}
 
 	cleanEmail(elementEmail, elementPassword) {

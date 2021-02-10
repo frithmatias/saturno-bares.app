@@ -57,8 +57,8 @@
                 <div *ngIf="ticketTmEnd===null" class="screen-ticket-button-container">
 
                     <div class="screen-ticket-button my-4">
-                        <button mat-raised-button class="action-button-flex" color="warn"
-                            [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('waiter')">
+                        <button mat-raised-button class="action-button-flex" color="active"
+                            [disabled]="ticket?.tx_call || !ticket?.tm_init" (click)="callWaiter('waiter')">
                             <table>
                                 <tr>
                                     <td class="button-icon mdi mdi-silverware-fork-knife xl"></td>
@@ -70,7 +70,7 @@
 
                     <div class="screen-ticket-button my-4">
                         <button mat-raised-button class="action-button-flex" color="primary"
-                            [disabled]="ticket?.tx_call || !ticket?.id_session" (click)="callWaiter('account')">
+                            [disabled]="ticket?.tx_call || !ticket?.tm_init" (click)="callWaiter('account')">
                             <table>
                                 <tr>
                                     <td class="button-icon mdi mdi-file-document-edit-outline xl"></td>

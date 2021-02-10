@@ -1,36 +1,48 @@
 <div *ngIf="company">
 
-    <!-- PAGE HEADER IMAGE SLIDER -->
-    <div class="banner-container">
+    <!-- PAGE IMAGE SLIDER -->
+    <div class="company-page-banner">
         <div *ngIf="images.length > 1" style="max-width: 600px; border-radius: 20px;">
-            <ng-image-slider  [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
+            <ng-image-slider [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
                 [animationSpeed]="1" [slideImage]="1" [imageSize]="imageSize" [showArrow]="true" #nav></ng-image-slider>
         </div>
-    
+
         <div *ngIf="images.length === 1" style="max-width: 600px;">
-            <img [height]="imageSize.height" width="100%" [src]="images[0].image"> 
+            <img [height]="imageSize.height" width="100%" [src]="images[0].image">
         </div>
         <div>
-            <img class="company-logo img-fluid"
-            [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+            <img class="company-page-logo img-fluid"
+                [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+        </div>
+
+        <!-- PAGE TITLE TABS -->
+        <div class="text-center">
+            <div class="company-page-title">{{company.tx_company_name}}</div>
+            <div class="company-page-subtitle">{{company.tx_company_slogan}}</div>
         </div>
     </div>
 
     <!-- PAGE TABS -->
-    <mat-tab-group mat-align-tabs="center" dynamicHeight>
-        <mat-tab label="Home">
-            <app-home [company]="company"></app-home>
-        </mat-tab>
-        <mat-tab label="Menú">
-            <app-menu [company]="company"></app-menu>
-        </mat-tab>
-        <mat-tab label="Reservar">
-            <app-ticket-create [company]="company"></app-ticket-create>
-        </mat-tab>
-    </mat-tab-group>
+    <div class="company-page-tabs">
+        <mat-tab-group mat-align-tabs="center" dynamicHeight>
+            <mat-tab>
+                <ng-template mat-tab-label><div><div class="mdi mdi-home company-page-tab-icon"></div><div>Home</div></div></ng-template>
+                <app-home [company]="company"></app-home>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label><div><div class="mdi mdi-food company-page-tab-icon"></div><div>Menú</div></div></ng-template>
+                <app-menu [company]="company"></app-menu>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label><div><div class="mdi mdi-ticket-account company-page-tab-icon"></div><div>Reservar</div></div>
+                </ng-template>
+                <app-ticket-create [company]="company"></app-ticket-create>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 
     <!-- PAGE FOOTER -->
-    <div class="footer-container">
+    <div class="company-page-footer">
         <div>
             <div class="md text-white">
                 {{company.tx_company_name}}
@@ -43,16 +55,16 @@
 
         <div *ngIf="company.tx_whatsapp || company.tx_facebook || company.tx_twitter || company.tx_instagram"
             class="footer-social">
-            <span *ngIf="company.tx_telegram"><a class="xl mx-2 text-white mdi mdi-telegram"
-                    target="_blank" href="https://t.me/{{company.tx_telegram}}"></a></span>
-            <span *ngIf="company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp"
-                    target="_blank" href="https://wa.me/{{company.tx_whatsapp}}"></a></span>
-            <span *ngIf="company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook"
-                    target="_blank" href="https://www.facebook.com/{{company.tx_facebook}}"></a></span>
+            <span *ngIf="company.tx_telegram"><a class="xl mx-2 text-white mdi mdi-telegram" target="_blank"
+                    href="https://t.me/{{company.tx_telegram}}"></a></span>
+            <span *ngIf="company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp" target="_blank"
+                    href="https://wa.me/{{company.tx_whatsapp}}"></a></span>
+            <span *ngIf="company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook" target="_blank"
+                    href="https://www.facebook.com/{{company.tx_facebook}}"></a></span>
             <span *ngIf="company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
                     href="https://www.twitter.com/{{company.tx_twitter}}"></a></span>
-            <span *ngIf="company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram"
-                    target="_blank" href="https://www.instagram.com/{{company.tx_instagram}}"></a></span>
+            <span *ngIf="company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram" target="_blank"
+                    href="https://www.instagram.com/{{company.tx_instagram}}"></a></span>
         </div>
 
     </div>

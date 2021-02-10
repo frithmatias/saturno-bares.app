@@ -73,6 +73,12 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
+	initTables(idTables: string[]): Observable<object> {
+		const data = { idTables };
+		const url = environment.api + '/table/inittables';
+		return this.http.post(url, data);
+	}
+
 	releaseTicket(ticket: Ticket): Observable<object> {
 		const data = { ticket };
 		const url = environment.api + '/t/releaseticket';
@@ -85,10 +91,6 @@ export class WaiterService {
 		return this.http.post(url, data);
 	}
 
-	endTicket(idTicket: string): Observable<object> {
-		const url = environment.api + '/t/endticket';
-		return this.http.post(url, { idTicket, reqBy: 'waiter' });
-	}
 
 	createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {
 		let data = { blContingent, idSocket, txName, nmPersons, idSection };

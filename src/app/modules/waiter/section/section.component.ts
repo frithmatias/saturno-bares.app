@@ -102,7 +102,7 @@ export class SectionComponent implements OnInit, OnDestroy {
               this.tablesDataBySection.set(section.tx_section, {
                 id: section._id,
                 sectionselected: this.waiterService.session.id_section._id === section._id,
-                busy: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'busy').length,
+                busy: data.tables.filter((table) => table.id_section === section._id && table.id_session !== null).length, // busy && waiting
                 idle: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'idle').length,
                 paused: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'paused').length
               });
@@ -110,7 +110,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
 
             let counter$ = interval(1000).subscribe(() => {
-              for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.tx_status === 'busy')) {
+              for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
                 if (table.id_session) {
                   this.busyTablesTimes.set(table.nm_table, {
                     tm_provided: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),

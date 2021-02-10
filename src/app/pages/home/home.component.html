@@ -8,31 +8,6 @@
 
       <div id="header" #header class="welcome-wrapper">
 
-        <div class="header-menu">
-
-          <div class="header-menu-item pointer mr-4" (click)="scrollToElement(map)" routerLink="/register">
-            <div class="mdi mdi-storefront-outline"></div>
-            <div>
-              Registrar Negocio
-            </div>
-          </div>
-
-          <div class="header-menu-item pointer mr-4" routerLink="/public/tickets">
-            <div class="mdi mdi-ticket-account"></div>
-            <div>
-              Mis Reservas
-            </div>
-          </div>
-
-          <div class="header-menu-item pointer" (click)="scrollToElement(map)">
-            <div class="mdi mdi-map-marker"></div>
-            <div>
-              Buscá por Zona
-            </div>
-          </div>
-
-        </div>
-
         <div class="welcome-container">
           <div class="welcome-title">
             Volvé a Salir
@@ -103,7 +78,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="banner-container-col-right">
@@ -152,22 +126,14 @@
       <div class="banner-image banner-img-scores">
       </div>
     </div>
-
-
-
   </div>
-
-
-
 </div>
-
 
 <!-- ======================================================== -->
 <!-- MAPA -->
 <!-- ======================================================== -->
 
-<!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->
-<div #map>
+<div #map id="home-map-container">
 
   <div class="location-input-wrapper">
     <div class="icon-magnify-wrapper" (click)="cleanInput(inputFindLocation)">

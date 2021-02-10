@@ -1,37 +1,3 @@
-.tickets-page-container {
-  display        : flex;
-  flex-direction : row;
-  flex-wrap      : wrap;
-  width          : 100%;
-  padding        : 10px;
-  justify-content: center;
-}
-
-.tickets-filtered-container {
-  width  : 300px;
-  padding: 10px;
-}
-
-.header-image {
-  background-image: url('../../../../assets/img/svg/angular.svg');
-  background-size : cover;
-}
-
-
-.select-status {
-  width  : 300px;
-  padding: 10px;
-}
-
-.company-logo {
-  border-radius: 50%;
-  position     : relative;
-  margin-bottom: -60px;
-  top          : -60px;
-  width        : 70px;
-  box-shadow   : 0px 0px 2px rgb(0 0 0 / 50%);
-}
-
 @media (max-width: 575px) {
   mat-card {
     width: 100% !important;
@@ -46,4 +12,43 @@
     width  : 100%;
     padding: 10px;
   }
+}
+
+.tickets-page-container {
+  display        : flex;
+  flex-direction : row;
+  flex-wrap      : wrap;
+  width          : 100%;
+  padding        : 10px;
+  justify-content: center;
+}
+
+.tickets-filtered-container {
+  width  : 300px;
+  padding: 10px;
+}
+
+.select-status {
+  width  : 300px;
+  padding: 10px;
+}
+
+mat-card {
+  border-radius: 0px 0px 5px 5px;
+}
+
+.company-banner {
+  height           : 157px;
+  /*aspect ratio 16:9 280x157*/
+  width            : 100%;
+  border-radius    : 5px 5px 0px 0px;
+}
+
+.company-logo {
+  border-radius: 50%;
+  position     : relative;
+  margin-bottom: -60px;
+  top          : -60px;
+  width        : 70px;
+  /* box-shadow   : 0px 0px 2px rgb(0 0 0 / 50%); */
 }

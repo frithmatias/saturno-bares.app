@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
@@ -13,6 +13,7 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
+
   hiddenBadge: boolean;
 
   constructor(
@@ -42,6 +43,11 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-
+  scrollToElement(): void {
+    this.router.navigate(['/home']).then(()=>{
+      const elem = document.getElementById('home-map-container');
+      elem.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    })
+  }
 
 }

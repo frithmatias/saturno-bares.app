@@ -1,103 +1,154 @@
-<mat-toolbar class="mat-elevation-z3" color="primary">
+<div class="toolbar">
 
-    <!-- TOGGLE MENU ICON -->
-    <div class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
-        <!-- <span class="example-spacer"></span> -->
-    </div>
+    <div class="toolbar-header">
 
+        <!-- TOGGLE MENU ICON -->
+        <div class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
+            <!-- <span class="example-spacer"></span> -->
+        </div>
 
-    <!-- LOGO -->
-    <div *ngIf="!loginService.user" class="logo-container">
+        <!-- LOGO -->
+        <div *ngIf="!loginService.user" class="logo-container">
 
-        <!-- LOGO IMG -->
-        <div class="logo-img pointer mr-3" routerLink="/home"> </div>
+            <!-- LOGO IMG -->
+            <div class="logo-img pointer mr-3" routerLink="/home"> </div>
 
-        <!-- LOGO TITLE -->
+            <!-- LOGO TITLE -->
 
-        <div class="logo-text-container pointer" routerLink="/home">
-            <div class="logo-title mb-1">
+            <div class="logo-text-container pointer" routerLink="/home">
                 SATURNO
             </div>
-            <div class="logo-subtitle">
-                <span>Bar<span class="sm"> & </span>Resto</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- COMPANY NAME -->
-    <div *ngIf="loginService.user" class="company-name md ml-4 text-left">
-        <!-- <div class="marquee"> -->
-        {{loginService.user?.id_company?.tx_company_name || loginService.user?.tx_name}}
-        <!-- </div> -->
-    </div>
-
-    <!-- THEME -->
-    <div class="d-flex md">
-
-        <!-- space for pwa bell notifications subscription -->
-        <div class="mx-3"></div>
-
-        <app-theme class="mr-3"></app-theme>
-
-        <!-- LOG IN -->
-        <div *ngIf="!loginService.user && !publicService.ticket"
-            class="mdi mdi-account-circle pointer" routerLink="/login"> Ingresar
         </div>
 
-        <!-- LOGGED IN -->
-        <div *ngIf="loginService.user">
+        <!-- LINKS -->
+        <div *ngIf="!loginService.user" class="toolbar-links-header">
 
-            <!-- GOOGLE LOGIN IMAGE -->
-            <div *ngIf="loginService.user.bl_google && loginService.user.tx_img">
-                <img class="user-image ml-3" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+            <div class="toolbar-base-item pointer mr-4" routerLink="/home">
+                <div class="mdi mdi-home"></div>
+                <div>
+                    Inicio
+                </div>
             </div>
 
-            <!-- NORMAL LOGIN WITH IMAGE -->
-            <div *ngIf="!loginService.user.bl_google && loginService.user.tx_img" class="ml-3 pointer"
-                [matMenuTriggerFor]="menu">
-                <img class="user-image"
-                    [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
+            <div class="toolbar-base-item pointer mr-4" routerLink="/register">
+                <div class="mdi mdi-storefront-outline"></div>
+                <div>
+                    Registrar Negocio
+                </div>
             </div>
 
-            <!-- NORMAL LOGIN WO IMAGE -->
-            <div *ngIf="!loginService.user.bl_google && !loginService.user.tx_img"
-                class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+            <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
+                <div class="mdi mdi-ticket-account"></div>
+                <div>
+                    Mis Reservas
+                </div>
             </div>
 
-            <mat-menu #menu="matMenu">
-                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
-                    <span class="ml-2 align-middle">Página de Administrador</span>
+            <div class="toolbar-base-item pointer" (click)="scrollToElement()">
+                <div class="mdi mdi-map-marker"></div>
+                <div>
+                    Buscá por Zona
                 </div>
-                <div routerLink="/waiter/home" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
-                    <span class="ml-2 align-middle">Página de Camarero/a</span>
+            </div>
+
+        </div>
+
+        <!-- COMPANY NAME -->
+        <div *ngIf="loginService.user" class="company-name md ml-4 text-left">
+            <!-- <div class="marquee"> -->
+            {{loginService.user?.id_company?.tx_company_name || loginService.user?.tx_name}}
+            <!-- </div> -->
+        </div>
+
+        <!-- THEME -->
+        <div class="d-flex md">
+
+            <!-- space for pwa bell notifications subscription -->
+            <div class="mx-3"></div>
+
+            <app-theme class="mr-3"></app-theme>
+
+            <!-- LOG IN -->
+            <div *ngIf="!loginService.user && !publicService.ticket" class="mdi mdi-account-circle pointer"
+                routerLink="/login"> Ingresar
+            </div>
+
+            <!-- LOGGED IN -->
+            <div *ngIf="loginService.user">
+
+                <!-- GOOGLE LOGIN IMAGE -->
+                <div *ngIf="loginService.user.bl_google && loginService.user.tx_img">
+                    <img class="user-image ml-3" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
                 </div>
-                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
-                    <span class="ml-2 align-middle">Iniciar Asistente</span>
+
+                <!-- NORMAL LOGIN WITH IMAGE -->
+                <div *ngIf="!loginService.user.bl_google && loginService.user.tx_img" class="ml-3 pointer"
+                    [matMenuTriggerFor]="menu">
+                    <img class="user-image"
+                        [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
                 </div>
-                <div routerLink="/waiter/dashboard" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
-                    <span class="ml-2 align-middle">Métricas</span>
+
+                <!-- NORMAL LOGIN WO IMAGE -->
+                <div *ngIf="!loginService.user.bl_google && !loginService.user.tx_img"
+                    class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
                 </div>
-                <div routerLink="/waiter/profile" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
-                    <span class="ml-2 align-middle">Perfil</span>
-                </div>
-                <div routerLink="/waiter/profile" mat-menu-item>
-                    <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
-                    <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
-                </div>
-                <hr>
-                <div class="px-2 pb-2 text-center">
-                    <app-button></app-button>
-                </div>
-            </mat-menu>
+
+                <mat-menu #menu="matMenu">
+                    <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
+                        <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
+                        <span class="ml-2 align-middle">Página de Administrador</span>
+                    </div>
+                    <div routerLink="/waiter/home" mat-menu-item>
+                        <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
+                        <span class="ml-2 align-middle">Página de Camarero/a</span>
+                    </div>
+                    <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
+                        <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
+                        <span class="ml-2 align-middle">Iniciar Asistente</span>
+                    </div>
+                    <div routerLink="/waiter/dashboard" mat-menu-item>
+                        <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
+                        <span class="ml-2 align-middle">Métricas</span>
+                    </div>
+                    <div routerLink="/waiter/profile" mat-menu-item>
+                        <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
+                        <span class="ml-2 align-middle">Perfil</span>
+                    </div>
+                    <div routerLink="/waiter/profile" mat-menu-item>
+                        <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
+                        <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
+                    </div>
+                    <hr>
+                    <div class="px-2 pb-2 text-center">
+                        <app-button></app-button>
+                    </div>
+                </mat-menu>
+            </div>
+
         </div>
 
     </div>
 
 
+    <div class="toolbar-links-base">
 
-</mat-toolbar>
+        <div class="toolbar-base-item pointer mr-4" routerLink="/register">
+            <div>
+                Registrar Negocio
+            </div>
+        </div>
+
+        <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
+            <div>
+                Mis Reservas
+            </div>
+        </div>
+
+        <div class="toolbar-base-item pointer" (click)="scrollToElement()">
+            <div>
+                Buscá por Zona
+            </div>
+        </div>
+
+    </div>
+</div>

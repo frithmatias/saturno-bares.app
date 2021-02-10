@@ -108,13 +108,10 @@ export class HomeComponent implements OnInit {
   }
 
   goTop() {
-    console.log('GOTOP')
     let drawer = document.querySelector('mat-drawer-content');
     if (drawer) drawer.scrollTo(0, 0);
   }
 
-  scrollToElement($element): void {
-    $element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-  }
+
 
 }

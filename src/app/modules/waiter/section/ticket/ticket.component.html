@@ -1,5 +1,6 @@
 <div class="page-container animated fadeIn">
     <mat-card>
+        
         <mat-card-header class="text-accent">
             <mat-card-title>
                 Nuevo Ticket
@@ -8,8 +9,8 @@
                 Crear un nuevo ticket de contingencia
             </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
 
+        <mat-card-content>
             <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
                 <mat-form-field color="accent" class="w-100">
@@ -34,7 +35,8 @@
                 </mat-form-field>
 
                 <div class="w-100 text-right">
-                    <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()" [disabled]="ticketForm.invalid">
+                    <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()"
+                        [disabled]="ticketForm.invalid">
                         Crear Ticket
                     </button>
                 </div>

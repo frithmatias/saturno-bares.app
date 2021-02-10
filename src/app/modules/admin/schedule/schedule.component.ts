@@ -7,6 +7,7 @@ import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { LoginService } from '../../../services/login.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
+import { avTable, availabilityResponse, availability } from '../../../interfaces/availability.interface';
 
 
 
@@ -18,13 +19,11 @@ import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 })
 export class ScheduleComponent implements OnInit {
 
-  table: Table;
+  tableSelected: avTable;
   tables: Table[];
 
-  availabilityGrid: availabilityCompatible[] | availability = [];
   idSection = new FormControl();
   dtReserve = new FormControl();
-
 
   scheduleForm: FormGroup;
   minDate: Date;
@@ -64,9 +63,7 @@ export class ScheduleComponent implements OnInit {
     })
   }
 
-  selectTable = (table: Table) => {
-    this.table = table;
-  };
+
 
   readAvailability() {
 
@@ -83,39 +80,35 @@ export class ScheduleComponent implements OnInit {
       data.availability.map(av => {
         this.availability.push({ interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity });
       });
-
     })
 
   }
 
-  showTicket = (ticket: Ticket): void => {
-    this.bottomSheet.open(BottomsheetComponent);
+  showTable = (table: avTable): void => {
+    this.tableSelected = table;
+    this.bottomSheet.open(BottomsheetComponent, { data: table }).afterDismissed().subscribe((data: bottomSheetRelease) => {
+      if (data?.tables){
+        this.publicService.snack(`Las mesas ${data.tables} fueron liberadas correctamente`, 2000, 'Aceptar');
+        this.readAvailability();
+      }
+    })
   }
 
-  pendingUpdated(pending: Ticket[]): void {
-    this.pending = pending;
+  pendingUpdated(pending: Ticket): void {
+    this.publicService.snack(`Las mesas ${pending.cd_tables} fueron asignadas correctamente`, 2000, 'Aceptar');
     this.readAvailability(); // actualizo la disponibilidad
   }
 }
 
 
-interface availabilityCompatible {
+
+
+interface bottomSheetRelease {
+  // update schedule
+  action: string;
+  tables: number[];
   interval: number;
-  capacity: number;
-  tables: number[]
+  // push on pending tickets
+  ticket: Ticket;
 }
-
-interface availability {
-  interval: number;
-  capacity: number;
-  tables: { nmTable: number, nmPersons: number }[];
-}
-
-
-interface availabilityResponse {
-  ok: boolean;
-  msg: string;
-  availability: availability[];
-}
-
 

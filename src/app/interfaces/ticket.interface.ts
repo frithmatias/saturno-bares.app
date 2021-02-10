@@ -25,7 +25,8 @@ export interface Ticket {
 	tm_reserve: Date | null;
 	tm_provided?: Date | null;
 	tm_call: Date | null;
-    tm_start: Date | null;
+	tm_start: Date | null;
+	tm_init: Date | null;
     tm_att?: Date | null;
     tm_end?: Date | null;
 	_id: string;

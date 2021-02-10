@@ -107,6 +107,6 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let pending; columns: displayedColumns;" [class.expanded-row]="expandedElement === pending"
-        (click)="expandedElement = expandedElement === pending ? null : pending" class="tables-row" (click)="getAvailability(pending)"></tr>
+        (click)="expandedElement = expandedElement === pending ? null : pending" class="tables-row pointer" (click)="getAvailability(pending)"></tr>
     <tr mat-row *matRowDef="let pending; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>
