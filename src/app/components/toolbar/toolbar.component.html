@@ -3,7 +3,7 @@
     <div class="toolbar-header">
 
         <!-- TOGGLE MENU ICON -->
-        <div class="mdi mdi-menu xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
+        <div class="mdi mdi-menu mt-1 xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
             <!-- <span class="example-spacer"></span> -->
         </div>
 
@@ -54,7 +54,7 @@
         </div>
 
         <!-- COMPANY NAME -->
-        <div *ngIf="loginService.user" class="company-name md ml-4 text-left">
+        <div *ngIf="loginService.user" class="company-name md ml-2">
             <!-- <div class="marquee"> -->
             {{loginService.user?.id_company?.tx_company_name || loginService.user?.tx_name}}
             <!-- </div> -->
@@ -133,7 +133,7 @@
     <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
         <div class="toolbar-base-item pointer" routerLink="/home">
             <div>
-               Volver al Inicio
+                Volver al Inicio
             </div>
         </div>
     </div>
@@ -163,7 +163,7 @@
     <div class="toolbar-links-base" *ngIf="url==='public'">
         <div class="toolbar-base-item pointer" routerLink="/home">
             <div>
-               Volver al Inicio
+                Volver al Inicio
             </div>
         </div>
     </div>

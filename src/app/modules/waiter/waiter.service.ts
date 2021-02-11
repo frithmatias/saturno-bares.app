@@ -73,6 +73,12 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
+	resetTable(idTable: string): Observable<object> {
+		const data = { idTable };
+		const url = environment.api + '/table/resettable';
+		return this.http.post(url, data);
+	}
+
 	initTables(idTables: string[]): Observable<object> {
 		const data = { idTables };
 		const url = environment.api + '/table/inittables';

@@ -231,9 +231,9 @@
                 </table>
             </button>
 
-            <!-- release ticket -->
-            <button mat-raised-button color="active" class="action-button"
-                (click)="initTables(table)" [disabled]="table.tx_status !== 'waiting'">
+            <!-- Init Table Service -->
+            <button mat-raised-button color="active" class="action-button" (click)="initTables(table)"
+                [disabled]="table.tx_status !== 'waiting'">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-play xl"></td>
@@ -242,13 +242,26 @@
                 </table>
             </button>
 
+            <!-- Force to reset table -->
+
+            <button *ngIf="loginService.user.id_role === 'ADMIN_ROLE'" mat-raised-button color="active"
+                class="action-button" (click)="resetTable(table)" [disabled]="table.tx_status === 'paused'">
+                <table>
+                    <tr>
+                        <td class="button-icon mdi mdi-restart xl"></td>
+                        <td class="button-text">Reset</td>
+                    </tr>
+                </table>
+            </button>
+
+
             <!-- release ticket -->
             <button mat-raised-button color="primary" class="action-button"
                 (click)="releaseTicket(table.id_session?.id_ticket)" [disabled]="!table.id_session">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-history xl"></td>
-                        <td class="button-text">Liberar</td>
+                        <td class="button-text">Soltar</td>
                     </tr>
                 </table>
             </button>

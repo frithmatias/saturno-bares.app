@@ -29,6 +29,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 	idTicket: string;
 
 	timerSub: Subscription;
+	updateTicketSub: Subscription;
 	updateTicketsSub: Subscription;
 	systemMessagesSub: Subscription;
 
@@ -75,14 +76,23 @@ export class TicketComponent implements OnInit, OnDestroy {
 			await this.getTickets();
 		})
 
-		// System Messages
+		// System Messages Subscription
 		this.systemMessagesSub = this.wsService.escucharSystem().subscribe(txMessage => {
 			this.publicService.snack(txMessage, null, 'ACEPTAR');
 		})
 
-		// Update Tickets List
+		// Update Tickets List Subscription (request for all clients)
 		this.updateTicketsSub = this.wsService.updateClients().subscribe(async () => {
 			await this.getTickets();
+		});
+
+		// Update active ticket subscription    
+		this.updateTicketSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
+			// id_company en el metodo provide() del backend NO viene populado
+			ticket.id_company = this.ticket?.id_company;
+			this.ticket = ticket;
+			this.processTicket(this.ticket);
+			this.publicService.updateStorageTickets(ticket);
 		});
 
 	}
@@ -104,12 +114,14 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 				this.processTicket(this.ticket);
 
+				// si existe sesión dispara un timer para titilar el número del ticket
 				if (this.ticket?.id_session && !this.timerSub) {
 					this.timerSub = interval(500).subscribe(data => {
 						this.showAlert = !this.showAlert;
 					})
 				}
 
+				// si ya no hay session finaliza el observable showAlert
 				if (!this.ticket?.id_session) {
 					if (this.timerSub) { this.timerSub.unsubscribe(); }
 					this.showAlert = false;
@@ -125,26 +137,22 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	processTicket(ticket: Ticket): void {
-
-		if (ticket) {
-			if (ticket.tm_end !== null) {
-				this.ticketTmEnd = ticket.tm_end;
-				this.getScoreItems().then((data: ScoreItemsResponse) => {
+	async processTicket(ticket: Ticket) {
+		if (ticket.tm_end !== null) {
+			this.ticketTmEnd = ticket.tm_end;
+			let idSection = this.ticket.id_section;
+			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
+				if (data.ok) {
 					this.scoreItems = data.scoreitems;
-				}).catch(() => {
+				} else {
 					setTimeout(() => {
 						this.publicService.clearPublicSession();
 					}, 5000);
-				})
-			} else {
-				this.ticket = ticket;
-				this.publicService.ticket = ticket;
-				this.publicService.updateStorageTickets(ticket);
-			}
-		} else {
-			this.publicService.clearPublicSession();
+				}
+			})
+
 		}
+
 	}
 
 	calculateTimeToAtt(): void {
@@ -288,18 +296,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	getScoreItems(): Promise<ScoreItemsResponse | null> {
-		return new Promise((resolve, reject) => {
-			let idSection = this.ticket.id_section._id;
-			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
-				if (data.ok) {
-					resolve(data);
-				} else {
-					reject(null);
-				}
-			}, () => reject(null))
-		})
-	}
 
 	setScore(idItem: string, nmScore: number): void {
 		this.scores.set(idItem, nmScore);
@@ -348,6 +344,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
+		if (this.updateTicketSub) { this.updateTicketSub?.unsubscribe(); }
 		if (this.updateTicketsSub) { this.updateTicketsSub?.unsubscribe(); }
 		if (this.systemMessagesSub) { this.systemMessagesSub?.unsubscribe(); }
 		if (this.timerSub) { this.timerSub.unsubscribe(); }

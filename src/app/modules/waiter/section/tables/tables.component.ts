@@ -38,7 +38,6 @@ export class TablesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this)
     // listmode config
     let config = JSON.parse(localStorage.getItem('config'));
     this.listmode = config ? config.listmode : false;
@@ -97,6 +96,27 @@ export class TablesComponent implements OnInit {
           table.id_session.id_ticket.tx_call = null;
         }
       });
+  };
+
+
+  resetTable = (table: Table) => {
+
+    if (!table) {
+      this.publicService.snack('Seleccione una mesa primero', 3000);
+    }
+
+    const idTable = table._id;
+    this.publicService.snack('Desea resetear la mesa? Si tiene un ticket adjunto se perderá.', 5000, 'Aceptar').then((resp: boolean) => {
+      if (resp) {
+        this.waiterService.resetTable(idTable).subscribe((resp: TableResponse) => {
+          if (resp.ok) {
+            this.table.tx_status = 'paused';
+            this.table.id_session = null;
+          }
+        });
+      }
+    });
+
   };
 
   initTables = (table: Table) => {
@@ -163,7 +183,6 @@ export class TablesComponent implements OnInit {
       });
     }
   };
-
 
   clearTicketSession = (ticket: Ticket) => {
     this.tickets = this.tickets.filter(

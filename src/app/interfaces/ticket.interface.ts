@@ -17,7 +17,7 @@ export interface Ticket {
 	tx_platform: string | null;
 	id_user: string | null;
 	tx_call: string;
-	tx_status: string; // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished 
+	tx_status: string; // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished, killed
 	cd_tables?: number[]; // only for requested and assigned tickets
     id_position: number; // assigned
     id_socket_client: string; // primary

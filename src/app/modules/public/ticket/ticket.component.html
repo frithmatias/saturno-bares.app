@@ -2,7 +2,7 @@
 <!-- TICKETS SCREEN -->
 <!-- ======================================================== -->
 
-<div class="page-container p-0 m-0">
+<div class="page-container p-0">
 
     <mat-card *ngIf="ticket && company">
 
@@ -16,37 +16,41 @@
         </mat-card-header>
 
 
-
         <mat-card-content>
+            <div *ngIf="ticketTmEnd===null">
 
-            <!------------------------------>
-            <!-- SU TURNO -->
-            <!------------------------------>
-
-            <div *ngIf="ticketTmEnd===null" class="screen-myticket-container my-4 py-4">
-                <div class="screen-myticket-text-header">
-                    SU TURNO
-                </div>
+                <!------------------------------>
+                <!-- MESSAGES  -->
+                <!------------------------------>
 
                 <div class="screen-myticket-text" [ngClass]="{'screen-myticket-text-alert':showAlert}">
                     {{ ticket?.id_position }}
                 </div>
 
-                <div class="screen-myticket-text-footer" style="line-height: normal;">
+                <!-- no session yet -->
+                <div *ngIf="!ticket?.id_session">
+                    Tiempo estimado: {{ averageToAtt}}
+                </div>
 
-                    <span *ngIf="!ticket?.id_session">
-                        Tiempo estimado: {{ averageToAtt}}
-                    </span>
 
-                    <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length === 1">
-                        Pase a la mesa {{ticket?.id_session?.id_tables[0].nm_table}}
-                    </span>
-                    <span *ngIf="ticket?.id_session && ticket?.id_session?.id_tables?.length > 1">
+
+                <div *ngIf="ticket?.id_session && ticket?.tm_init === null">
+
+                    <div *ngIf="ticket?.cd_tables.length === 1">
+                        Pase a la mesa {{ticket?.cd_tables[0]}}
+                    </div>
+
+                    <div *ngIf="ticket?.cd_tables.length > 1">
                         Pase a las mesas
-                        <span *ngFor="let table of ticket?.id_session?.id_tables">
-                            {{ table.nm_table }}
+                        <span *ngFor="let table of ticket?.cd_tables">
+                            {{ table }}
                         </span>
-                    </span>
+                    </div>
+
+                    <!-- table provided but not initialized yet -->
+                    <div *ngIf="ticket?.tx_status==='provided' && ticket?.tm_init===null">
+                        Por favor, espere que el camarero/a inicialice su mesa...
+                    </div>
 
                 </div>
 

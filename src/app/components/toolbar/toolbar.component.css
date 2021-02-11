@@ -1,6 +1,4 @@
-@media (max-width: 575px) {
-
-}
+@media (max-width: 575px) {}
 
 @media (max-width: 850px) {
     .toolbar-links-header {
@@ -23,9 +21,9 @@
 
 .toolbar-header {
     display    : flex;
-    flex-wrap  : wrap;
     align-items: center;
     padding    : 8px 16px;
+    height     : 55px;
 }
 
 .toolbar-links-header {

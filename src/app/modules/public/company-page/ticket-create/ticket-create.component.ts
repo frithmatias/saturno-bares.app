@@ -91,7 +91,6 @@ export class TicketCreateComponent implements OnInit {
     
     this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
       // id_company en el metodo provide() del backend NO viene populado
-      console.log(ticket)
       ticket.id_company = this.ticket?.id_company;
       this.ticket = ticket;
       this.publicService.updateStorageTickets(ticket);
