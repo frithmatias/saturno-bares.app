@@ -78,11 +78,15 @@ export class WebsocketService {
 			// update localstorage
 			let tickets = JSON.parse(localStorage.getItem('tickets'));
 			for (let ticket of tickets) {
-				ticket.id_socket_client = this.idSocket; 
-				let idTicket = ticket._id;
-				let newSocket = this.idSocket;
-				let isClient = true;
-				this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => { })
+				if(ticket.tm_end === null){
+					ticket.id_socket_client = this.idSocket; 
+					let idTicket = ticket._id;
+					let newSocket = this.idSocket;
+					let isClient = true;
+					this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => { 
+						this.publicService.snack(`Reserva pendiente actualizada.`, 2000);
+					})
+				}
 			}
 			localStorage.setItem('tickets', JSON.stringify(tickets));
 

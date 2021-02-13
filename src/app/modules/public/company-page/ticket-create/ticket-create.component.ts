@@ -73,8 +73,9 @@ export class TicketCreateComponent implements OnInit {
     if (this.tickets.length > 0) {
 
       // obtengo si existe, el ticket activo
-      const inactiveTickets = ['finished', 'cancelled', 'terminated']; // terminated filtered in backend.
-      this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && !inactiveTickets.includes(ticket.tx_status));
+      // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished, killed
+      const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
+      this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && activeTickets.includes(ticket.tx_status));
 
       // si existe ticket activo busco en la bd la última actualización de ESE ticket y lo actualizo en la local storage
       if (this.ticket) {
@@ -169,7 +170,7 @@ export class TicketCreateComponent implements OnInit {
         this.ticketForm.controls.cdTables.enable();
       }
     })
-
+    
   }
 
   readAvailability(nmPersons: number, idSection: string, dtReserve: Date) {

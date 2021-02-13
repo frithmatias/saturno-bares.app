@@ -4,11 +4,11 @@
 
 .notification-icon {
   position: fixed;
-  top     : 1.3em;
+  top     : 1.1em;
   right   : 8.3em;
   z-index : 2;
   cursor  : pointer;
-  width   : 20px;
+  width   : 18px;
 }
 
 @media (max-width: 575px) {

@@ -15,8 +15,8 @@ import { interval, Subscription } from 'rxjs';
 import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TicketComponent } from './ticket/ticket.component';
 import { PublicService } from '../../public/public.service';
+import { ContingencyTicketComponent } from './contingency-ticket/contingency-ticket.component';
 
 export interface Tile {
   color: string;
@@ -111,7 +111,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
             let counter$ = interval(1000).subscribe(() => {
               for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
-                if (table.id_session) {
+                if (table.id_session.id_ticket) {
                   this.busyTablesTimes.set(table.nm_table, {
                     tm_provided: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
                     tm_call: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
@@ -177,7 +177,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   createTicket = (): void => {
 
-    this.bottomSheet.open(TicketComponent);
+    this.bottomSheet.open(ContingencyTicketComponent);
 
   }
 

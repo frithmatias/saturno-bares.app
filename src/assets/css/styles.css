@@ -713,8 +713,8 @@ ANGULAR MATERIAL
 
 /* lower specificity */
 mat-drawer-content {
-    top   : 57px !important;
-    height: calc(100vh - 57px) !important;
+    top   : 55px !important;
+    height: calc(100vh - 55px) !important;
 }
 
 /*

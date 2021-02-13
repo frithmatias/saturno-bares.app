@@ -2,23 +2,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WaiterService } from '../../waiter.service';
-import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { PublicService } from '../../../public/public.service';
 
+
 @Component({
-  selector: 'app-ticket',
-  templateUrl: './ticket.component.html',
-  styleUrls: ['./ticket.component.css']
+  selector: 'app-contingency-ticket',
+  templateUrl: './contingency-ticket.component.html',
+  styleUrls: ['./contingency-ticket.component.css']
 })
-export class TicketComponent implements OnInit {
+export class ContingencyTicketComponent implements OnInit {
 
   ticketForm: FormGroup;
 
   constructor(
     public publicService: PublicService,
     public waiterService: WaiterService,
-    private bottomSheetRef: MatBottomSheetRef<TicketComponent>
+    private bottomSheetRef: MatBottomSheetRef<ContingencyTicketComponent>
   ) { }
 
   ngOnInit(): void {
@@ -36,13 +37,12 @@ export class TicketComponent implements OnInit {
       return;
     }
 
-    let blContingent = true;
-    let idSocket = null;
-    let txName = this.ticketForm.value.txName;
-    let nmPersons = this.ticketForm.value.nmPersons;
-    let idSection = this.ticketForm.value.idSection;
+    const blContingent = true;
+    const txName = this.ticketForm.value.txName;
+    const nmPersons = this.ticketForm.value.nmPersons;
+    const idSection = this.ticketForm.value.idSection;
 
-    this.waiterService.createTicket(blContingent, idSocket, txName, nmPersons, idSection).subscribe(
+    this.waiterService.createTicket(blContingent, txName, nmPersons, idSection).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
           this.waiterService.contingentTicket = data.ticket;

@@ -103,7 +103,7 @@
 
     <div *ngIf="!listmode">
         <button mat-raised-button
-            [color]="t.id_session ? t.id_session.id_ticket.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
+            [color]="t.id_session ? t.id_session?.id_ticket?.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
             class="m-1 table-button-inactive" *ngFor="let t of tables"
             [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
@@ -141,7 +141,7 @@
         <!-- TICKET INFO -->
         <!------------------------------>
 
-        <div *ngIf="table?.id_session" class="p-3">
+        <div *ngIf="table?.id_session?.id_ticket" class="p-3">
             <table class="font-monospace">
                 <tr>
                     <td>Turno</td>
@@ -222,7 +222,7 @@
             <!-- attened ticket -->
             <button mat-raised-button color="primary" class="action-button"
                 (click)="attendedTicket(table.id_session?.id_ticket)"
-                [disabled]="!table.id_session?.id_ticket.tx_call || table.tx_status !== 'busy'">
+                [disabled]="table.id_session?.id_ticket?.tx_call === null || table.tx_status !== 'busy'">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-bell xl"></td>

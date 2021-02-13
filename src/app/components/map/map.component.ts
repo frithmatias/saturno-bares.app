@@ -22,6 +22,8 @@ export class MapComponent implements OnInit {
   @Input() companies: Company[] = []; // center definido en el formulario company-crear
   @Input() center: string[] = []; // center definido en el formulario company-crear
   @Input() mapCoords: string[]; // center definido en el formulario filtros (checks localidades)
+  @Input() init: boolean;
+
   @Output() newMarker: EventEmitter<{}> = new EventEmitter();
 
 
@@ -35,7 +37,6 @@ export class MapComponent implements OnInit {
   companiesNameHome: any[] = []; // Nombres de Negocios en el mapa en Home.
 
   markerInserted = false; // en crear company, es necesario crear solo un marker
-
   config: any = {};
 
   constructor(
@@ -70,10 +71,8 @@ export class MapComponent implements OnInit {
       }
     }
 
-
-
-
     await this.inicializarMapa(this.mapbox);
+
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -207,7 +206,7 @@ export class MapComponent implements OnInit {
 
   getCoords(): Promise<MapCenterInit> {
     return new Promise((resolve, reject) => {
-      if (navigator.geolocation) {
+      if (navigator.geolocation && this.publicService.canAksPositionUser) {
         navigator.geolocation.getCurrentPosition(position => {
           this.mapCenterInit.lng = position.coords.longitude.toString();
           this.mapCenterInit.lat = position.coords.latitude.toString();
@@ -217,19 +216,31 @@ export class MapComponent implements OnInit {
             reject(this.mapCenterInit);
             this.geolocationDenied = true;
           })
+      } else {
+        reject(this.mapCenterInit);
       }
     })
   }
 
+  async askUserLocation(){
+    // browser autorizado para preguntar posición al usuario
+    this.publicService.canAksPositionUser = true;
+    this.inicializarMapa(this.mapbox);
+  }
+
   async inicializarMapa(mapbox: ElementRef) {
-    let coords = await this.getCoords().catch((coords) => {
+
+
+    let coords = await this.getCoords().then((coords)=> {
+      this.mapZoom = 14;
+      return coords;
+    } ).catch((coords) => {
       this.mapZoom = 10;
       return coords;
     })
 
-
-    const lat = Number(coords.lat);
-    const lng = Number(coords.lng);
+    const lat = Number(coords.lat) || this.mapCenterInit.lat;
+    const lng = Number(coords.lng) || this.mapCenterInit.lng;
     mapboxgl.accessToken = MAPBOX_TOKEN;
     this.map = new mapboxgl.Map({
       container: mapbox.nativeElement,

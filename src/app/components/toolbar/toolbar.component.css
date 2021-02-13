@@ -65,12 +65,12 @@
 }
 
 .logo-img {
-    background-image   : url('../../../assets/img/svg/beer.svg');
+    background-image   : url('../../../assets/img/saturno-logo.png');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
-    height             : 3em;
-    width              : 3em;
+    height             : 4em;
+    width              : 4em;
 }
 
 .logo-text-container {

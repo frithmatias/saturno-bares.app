@@ -98,8 +98,13 @@ export class WaiterService {
 	}
 
 
-	createTicket(blContingent: boolean, idSocket: string, txName: string, nmPersons: number, idSection: string): Observable<object> {
-		let data = { blContingent, idSocket, txName, nmPersons, idSection };
+	createTicket(
+		blContingent: boolean,
+		txName: string,
+		nmPersons: number,
+		idSection: string
+	): Observable<object> {
+		let data = { blContingent, txName, nmPersons, idSection };
 		return this.http.post(environment.api + '/t/createticket/', data);
 	}
 

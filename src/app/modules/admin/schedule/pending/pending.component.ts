@@ -92,9 +92,9 @@ export class PendingComponent implements OnInit {
     }
   };
 
-  getAvailability(pending: Ticket): void {
+  getIntervalAvailability(pending: Ticket): void {
     const intervalRequest = new Date(pending.tm_reserve).getHours();
-    const interval = this.availability.find((av: intervalAvailability) => av.interval === intervalRequest);
+    const interval = this.availability.find((av: intervalAvailability) => new Date(av.interval).getHours() === intervalRequest);
     this.tablesAvailability = interval.tables;
   }
 }

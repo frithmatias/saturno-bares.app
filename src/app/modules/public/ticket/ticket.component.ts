@@ -140,7 +140,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 	async processTicket(ticket: Ticket) {
 		if (ticket.tm_end !== null) {
 			this.ticketTmEnd = ticket.tm_end;
-			let idSection = this.ticket.id_section;
+			let idSection = this.ticket.id_section._id;
 			this.publicService.getScoreItems(idSection).subscribe((data: ScoreItemsResponse) => {
 				if (data.ok) {
 					this.scoreItems = data.scoreitems;

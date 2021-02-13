@@ -63,7 +63,7 @@
     text-indent        : -9999px;
     height             : 28em;
     background-position: center;
-    background-image   : url('../../../assets/img/screenshots/waiter_section_tables.png');
+    background-image   : url('../../../assets/img/screenshots/waiter_tables.png');
     background-size    : contain;
     background-repeat  : no-repeat;
 }
@@ -82,7 +82,7 @@
     text-indent        : -9999px;
     height             : 28em;
     background-position: center;
-    background-image   : url('../../../assets/img/screenshots/waiter_section_virtual_queue.png');
+    background-image   : url('../../../assets/img/screenshots/waiter_virtualqueue.png');
     background-size    : contain;
     background-repeat  : no-repeat;
 }
@@ -91,6 +91,18 @@
 .banner-container-schedule {
     background-color: #fbfbfb;
 }
+
+.banner-img-schedule {
+    margin-top         : -90px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/admin_schedule.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+}
+
 
 .banner-container-howworks {
     background-color: #fbfbfb;

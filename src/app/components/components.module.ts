@@ -31,14 +31,13 @@ import { SocialComponent } from './social/social.component';
     BottomsheetComponent,
     ThemeComponent,
     SocialComponent
-    
   ],
   imports: [
     RouterModule,
     CommonModule,
     MaterialModule,
     PipesModule
-   ],
+  ],
   exports: [
     ToolbarComponent,
     SidenavComponent,

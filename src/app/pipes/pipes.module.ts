@@ -11,6 +11,7 @@ import { GetOccupationPipe } from './get-ocuppation.pipe';
 import { DateToStringPipe } from './date-to-string.pipe';
 import { DateToRemainingPipe } from './date-to-remaining.pipe';
 import { TicketStatusPipe } from './ticket-status.pipe';
+import { DateToIntervalPipe } from './date-to-interval.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TicketStatusPipe } from './ticket-status.pipe';
     GetOccupationPipe,
     DateToStringPipe,
     DateToRemainingPipe,
-    TicketStatusPipe
+    TicketStatusPipe,
+    DateToIntervalPipe
   ],
   imports: [],
   exports: [
@@ -40,7 +42,9 @@ import { TicketStatusPipe } from './ticket-status.pipe';
     GetOccupationPipe,
     DateToStringPipe,
     DateToRemainingPipe,
-    TicketStatusPipe
+    TicketStatusPipe,
+    DateToIntervalPipe
+
   ]
 })
 export class PipesModule { }

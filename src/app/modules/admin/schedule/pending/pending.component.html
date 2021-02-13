@@ -2,29 +2,29 @@
 
     <ng-container matColumnDef="nmPersons">
         <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Personas </th>
-        <td mat-cell *matCellDef="let pending" class="text-center">
-            <span>{{ pending.nm_persons }}</span>
+        <td mat-cell *matCellDef="let ticket" class="text-center">
+            <span>{{ ticket.nm_persons }}</span>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="txName">
         <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Nombre </th>
-        <td mat-cell *matCellDef="let pending" class="text-center">
-            <span>{{ pending.tx_name }}</span>
+        <td mat-cell *matCellDef="let ticket" class="text-center">
+            <span>{{ ticket.tx_name }}</span>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="tmReserve">
         <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Fecha </th>
-        <td mat-cell *matCellDef="let pending" class="text-center">
-            <span>{{ pending.tm_reserve}}</span>
+        <td mat-cell *matCellDef="let ticket" class="text-center">
+            <span>{{ ticket.tm_reserve}}</span>
         </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
         <td class="td-expanded px-0" mat-cell *matCellDef="let ticket" [attr.colspan]="displayedColumns.length">
-            <div class="ticket-container" [@detailExpand]="ticket == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="ticket-container" [@detailExpand]="ticket._id == expandedElement ? 'expanded' : 'collapsed'">
                 <div class="p-2 w-100">
 
                     <!------------------------------>
@@ -106,7 +106,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let pending; columns: displayedColumns;" [class.expanded-row]="expandedElement === pending"
-        (click)="expandedElement = expandedElement === pending ? null : pending" class="tables-row pointer" (click)="getAvailability(pending)"></tr>
-    <tr mat-row *matRowDef="let pending; columns: ['expandedDetail']" class="detail-row"></tr>
+    <tr mat-row *matRowDef="let ticket; columns: displayedColumns;" [class.expanded-row]="expandedElement === ticket._id"
+        (click)="expandedElement = expandedElement === ticket._id ? null : ticket._id" class="tables-row pointer" (click)="getIntervalAvailability(ticket)"></tr>
+    <tr mat-row *matRowDef="let ticket; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>

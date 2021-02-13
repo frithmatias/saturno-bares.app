@@ -14,6 +14,7 @@ import { Table, TablesResponse } from '../../interfaces/table.interface';
 import { Section, SectionsResponse } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
 import { Settings, SettingsResponse } from 'src/app/interfaces/settings.interface';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -190,5 +191,23 @@ export class AdminService {
 	sendMessage(idCompany: string, txMessage: string) {
 		const url = environment.api + '/settings/sendmessage';
 		return this.http.post(url, {idCompany, txMessage});
+	}
+
+
+	// ========================================================
+	// Schedule Methods
+	// ========================================================
+	
+	createTicket(
+		blContingent: boolean,
+		txName: string,
+		nmPersons: number,
+		idSection: string,
+		tmReserve: Date,
+		idUser: string,
+		cdTables: number[]
+	): Observable<object> {
+		let data = { blContingent, txName, nmPersons, idSection, tmReserve, idUser, cdTables };
+		return this.http.post(environment.api + '/t/createticket/', data);
 	}
 }

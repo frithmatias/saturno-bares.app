@@ -17,7 +17,7 @@ export class PublicService {
   ticket: Ticket;
   tickets: Ticket[] = [];
   sections: Section[] = [];
-
+  canAksPositionUser = false; // for best practices, ask user when interacts with UI.
   chatMessages: {
     own: boolean,
     time: Date,

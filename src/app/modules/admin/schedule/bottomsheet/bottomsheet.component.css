@@ -8,10 +8,17 @@
     flex-grow: 1;
 }
 
+.ticket-info {
+    display  : flex;
+    flex-flow: row;
+    flex-grow: 1;
+}
+
 .ticket-info .actions {
     display      : flex;
-    flex-flow    : row;
+    flex-flow    : column;
     flex-grow    : 1;
     flex-wrap    : wrap;
-    place-content: center;
+    place-content: flex-end;
+    margin-left  : 10px;
 }

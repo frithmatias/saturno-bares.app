@@ -3,63 +3,68 @@
 
         <mat-card-header class="text-accent">
             <mat-card-title>
-                Editar Ticket
+                {{title}}
             </mat-card-title>
             <mat-card-subtitle>
-                Editar ticket de cliente
+                {{subtitle}}
             </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
-            <div class="ticket-info">
-                <div class="data">
+
+            <!-- edit ticket -->
+
+            <div *ngIf="data.table.blReserved" class="ticket-info px-3">
+
+                <div class="data mb-2">
                     <table>
                         <tr>
-                            <td>Mesa:</td>
-                            <td>{{nmTable}}</td>
+                            <td class="text-accent">Mesa(s):</td>
+                            <td>{{data.table.ticketOwner.cd_tables}}</td>
                         </tr>
                         <tr>
-                            <td>Capacidad:</td>
-                            <td>{{nmTablePersons}}</td>
+                            <td class="text-accent">Capacidad:</td>
+                            <td>{{data.table.nmPersons}} Personas</td>
                         </tr>
                         <tr>
-                            <td>Personas:</td>
-                            <td>{{nmTicketPersons}}</td>
+                            <td class="text-accent">Personas:</td>
+                            <td>{{data.table.ticketOwner.nm_persons}}</td>
                         </tr>
                         <tr>
-                            <td>Ocupación:</td>
-                            <td>{{nmOccupation}}</td>
+                            <td class="text-accent">Ocupación:</td>
+                            <td>{{nmOccupation}}%</td>
                         </tr>
                         <tr>
-                            <td>Contingencia:</td>
-                            <td>{{blContingent}}</td>
+                            <td class="text-accent">Contingencia:</td>
+                            <td>{{data.table.ticketOwner.bl_contingent}}</td>
                         </tr>
                         <tr>
-                            <td>Prioridad:</td>
-                            <td>{{blPriority}}</td>
+                            <td class="text-accent">Prioridad:</td>
+                            <td>{{data.table.ticketOwner.bl_priority}}</td>
                         </tr>
                         <tr>
-                            <td>Reserva:</td>
-                            <td>{{tmReserve}}</td>
+                            <td class="text-accent">Reserva:</td>
+                            <td>{{data.table.ticketOwner.tm_reserve | dateToString}}</td>
                         </tr>
                         <tr>
-                            <td>Inicio:</td>
-                            <td>{{tmStart}}</td>
+                            <td class="text-accent">Inicio:</td>
+                            <td>{{data.table.ticketOwner.tm_start | dateToString}}</td>
                         </tr>
                         <tr>
-                            <td>Plataforma:</td>
-                            <td>{{txPlatform}}</td>
+                            <td class="text-accent">Plataforma:</td>
+                            <td>{{data.table.ticketOwner.tx_platform}}</td>
                         </tr>
                         <tr>
-                            <td>Usuario:</td>
-                            <td>{{idUser}}</td>
+                            <td class="text-accent">Usuario:</td>
+                            <td>{{data.table.ticketOwner.id_user}}</td>
                         </tr>
                         <tr>
-                            <td>Cliente:</td>
-                            <td>{{txName}}</td>
+                            <td class="text-accent">Cliente:</td>
+                            <td>{{data.table.ticketOwner.tx_name}}</td>
                         </tr>
                     </table>
                 </div>
+
                 <div class="actions">
                     <div>
                         <button mat-raised-button class="action-button" color="warn" (click)="endTicket()">
@@ -95,7 +100,84 @@
                     </div>
 
                 </div>
+
             </div>
+
+            <!-- crete contingency ticket for selected table -->
+
+            <div *ngIf="!data.table.blReserved" class="px-3">
+
+                <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
+                    <div class="ticket-info">
+
+                        <div class="pr-3">
+                            <mat-form-field color="accent" class="w-100">
+                                <mat-label>Nombre del cliente</mat-label>
+                                <input maxlength="30" type="text" matInput placeholder="Ingresa el nombre del cliente"
+                                    formControlName="txName" name="txName" required>
+                            </mat-form-field>
+
+                            <mat-form-field color="accent" class="w-100">
+                                <mat-label>Cantidad de Personas</mat-label>
+                                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                                    formControlName="nmPersons" name="nmPersons" required>
+                            </mat-form-field>
+
+                            <mat-form-field color="accent" class="w-100">
+                                <mat-label>Número de Contacto</mat-label>
+                                <input type="number" matInput placeholder="01155551234" formControlName="idUser"
+                                    name="idUser" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="actions">
+                            <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()"
+                                [disabled]="ticketForm.invalid">
+                                Crear Ticket
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="sm text-left text-accent mt-3" *ngIf="personsExceeds">
+
+                    <div>
+                        <div>
+                            Cuidado: el número de comensales supera la capacidad de la mesa.
+                        </div>
+                        <div>
+                            Considere agregar mesas.
+                        </div>
+                    </div>
+
+                    <div class="my-2">
+                        <button type="button" mat-raised-button [color]="cdTables.includes(table.nmTable)?'active':''"
+                            *ngFor="let table of data.availability.tables" class="action-button-flex"
+                            (click)="setReserve(table)" [disabled]="table.blReserved">
+
+
+                            <table>
+                                <tr>
+                                    <td class="button-icon w-25 lg">{{ table.nmTable }}</td>
+
+                                    <td *ngIf="cdTables.includes(table.nmTable)"
+                                        class="button-text mdi mdi-check-circle"></td>
+                                    <td *ngIf="!cdTables.includes(table.nmTable)"
+                                        class="button-text mdi mdi-human-male">{{table.nmPersons }}</td>
+                                </tr>
+                            </table>
+
+                        </button>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
         </mat-card-content>
     </mat-card>
 </div>

@@ -11,12 +11,12 @@
         <div *ngIf="!loginService.user" class="logo-container">
 
             <!-- LOGO IMG -->
-            <div class="logo-img pointer mr-3" routerLink="/home"> </div>
+            <div class="logo-img pointer mr-1" routerLink="/home"> </div>
 
             <!-- LOGO TITLE -->
 
             <div class="logo-text-container pointer" routerLink="/home">
-                SATURNO
+                SATURNO <span class="xs">1.0.0</span>
             </div>
         </div>
 
@@ -129,68 +129,54 @@
 
     </div>
 
+    <div>
 
-    <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
-        <div class="toolbar-base-item pointer" routerLink="/home">
-            <div>
+        <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
+            <div class="toolbar-base-item pointer" routerLink="/home">
                 Volver al Inicio
             </div>
         </div>
-    </div>
 
-    <div class="toolbar-links-base" *ngIf="url==='home'">
+        <div class="toolbar-links-base" *ngIf="!url || url==='home'">
 
-        <div class="toolbar-base-item pointer mr-4" routerLink="/register">
-            <div>
+            <div class="toolbar-base-item pointer mr-4" routerLink="/register">
                 Registrar Negocio
             </div>
-        </div>
 
-        <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
-            <div>
+            <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
                 Mis Reservas
             </div>
-        </div>
 
-        <div class="toolbar-base-item pointer" (click)="scrollToElement()">
-            <div>
+            <div class="toolbar-base-item pointer" (click)="scrollToElement()">
                 Buscá por Zona
             </div>
+
         </div>
 
-    </div>
-
-    <div class="toolbar-links-base" *ngIf="url==='public'">
-        <div class="toolbar-base-item pointer" routerLink="/home">
-            <div>
-                Volver al Inicio
+        <div class="toolbar-links-base" *ngIf="url==='public'">
+            <div class="toolbar-base-item pointer" routerLink="/home">
+                <div>
+                    Volver al Inicio
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="toolbar-links-base" *ngIf="url==='admin'">
-        <div class="toolbar-base-item pointer mr-4" routerLink="/admin/home">
-            <div>
+        <div class="toolbar-links-base" *ngIf="url==='admin'">
+            <div class="toolbar-base-item pointer mr-4" routerLink="/admin/home">
                 Inicio
             </div>
-        </div>
 
-        <div class="toolbar-base-item pointer mr-4" routerLink="/admin/wizard">
-            <div>
+            <div class="toolbar-base-item pointer mr-4" routerLink="/admin/wizard">
                 Wizard
             </div>
-        </div>
 
-        <div class="toolbar-base-item pointer" routerLink="/waiter/home">
-            <div>
+            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
                 Atender
             </div>
         </div>
-    </div>
 
-    <div class="toolbar-links-base" *ngIf="url==='waiter'">
-        <div class="toolbar-base-item pointer" routerLink="/waiter/home">
-            <div>
+        <div class="toolbar-links-base" *ngIf="url==='waiter'">
+            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
                 Inicio
             </div>
         </div>

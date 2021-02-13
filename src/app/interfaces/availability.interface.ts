@@ -8,7 +8,7 @@ export interface availabilityResponse {
 
 export interface availability {
     capacity: number;
-    interval: number;
+    interval: Date;
     tables: avTable[];
 }
 

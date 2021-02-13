@@ -27,10 +27,10 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getDataRoute().subscribe( (data: NavigationEnd) => {
-    this.url = data.url.split('/')[1]; // admin - waiter - (public path)
+    this.getDataRoute().subscribe((data: NavigationEnd) => {
+      this.url = data.url.split('/')[1]; // admin - waiter - (public path)
     });
-    
+
   }
 
   ngOnChanges(changes: any) {
@@ -50,17 +50,19 @@ export class ToolbarComponent implements OnInit {
   }
 
   scrollToElement(): void {
-    this.router.navigate(['/home']).then(()=>{
-      const elem = document.getElementById('home-map-container');
-      elem.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-    })
+    // browser autorizado para preguntar posición al usuario
+    // todo: re-inicializar el componente mapa mediante en home mediante directiva para preguntar posición al usuario. 
+    this.publicService.canAksPositionUser = true;
+    const elem = document.getElementById('home-map-container');
+    elem.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+
   }
 
-  getDataRoute(){
+  getDataRoute() {
     return this.router.events.pipe(
-      filter( evento => evento instanceof NavigationEnd),
+      filter(evento => evento instanceof NavigationEnd),
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
-    // map((evento: NavigationEnd ) => {evento})
+      // map((evento: NavigationEnd ) => {evento})
     )
   }
 

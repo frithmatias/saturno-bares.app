@@ -20,7 +20,7 @@ import { SectionsComponent } from './section/sections/sections.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../../components/components.module';
 import { TableInfoComponent } from './section/tables/table-info/table-info.component';
-import { TicketComponent } from './section/ticket/ticket.component';
+import { ContingencyTicketComponent } from './section/contingency-ticket/contingency-ticket.component';
 
 
 
@@ -35,7 +35,7 @@ import { TicketComponent } from './section/ticket/ticket.component';
     SectionsComponent,
     ProfileComponent,
     TableInfoComponent,
-    TicketComponent
+    ContingencyTicketComponent
   ],
   imports: [
     ReactiveFormsModule,
