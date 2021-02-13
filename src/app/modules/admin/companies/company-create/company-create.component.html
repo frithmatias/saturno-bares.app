@@ -29,10 +29,11 @@
     </mat-form-field>
 
     <mat-form-field color="accent" class="w-100">
-        <mat-label>Busca tu ciudad, localidad o barrio</mat-label>
+        <mat-label>Ciudad, localidad o barrio</mat-label>
         <input maxlength="30" type="text" matInput [formControl]="localidadesControl" [matAutocomplete]="auto"
-            (click)="cleanInput()" required>
+            (click)="cleanInput()">
         <span class=" input-icon" (click)="cleanInput()"><i class="mdi mdi-close"></i></span>
+        <span class="sm text-accent">Por ahora sólo Argentina, dejar en blanco otros paises</span>
     </mat-form-field>
 
     <!-- $event.option.value va a tomar el valor definido en [value], debe ir siempre el objeto seleccionado en este caso "option" -->

@@ -152,7 +152,7 @@
   </mat-autocomplete>
 
   <div class="home-map">
-    <app-map [(companies)]="companies" [(center)]="centerMap"> </app-map>
+    <app-map [(companies)]="companies" [(center)]="centerMap" [initmap]="publicService.canAksPositionUser"> </app-map>
   </div>
 
 </div>

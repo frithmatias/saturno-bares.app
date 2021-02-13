@@ -129,6 +129,7 @@ SATURNO
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
+    height   : 100%;
 }
 
 .page-tab-container {
@@ -704,8 +705,9 @@ ANGULAR MATERIAL
 -------------------------------------------
 */
 @media (max-width: 850px) {
+
     /* higher specificity */
-    body > app-root > mat-drawer-container > mat-drawer-content {
+    body>app-root>mat-drawer-container>mat-drawer-content {
         top   : 96px !important;
         height: calc(100vh - 96px) !important;
     }

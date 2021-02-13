@@ -47,10 +47,10 @@ export class PublicService {
   }
 
   scrollTop() {
+    console.log('up')
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Other
     document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
-
   }
 
   stepperGoBack(stepper: MatStepper) {

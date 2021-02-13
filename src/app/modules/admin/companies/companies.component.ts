@@ -17,7 +17,7 @@ export class CompaniesComponent implements OnInit {
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
-  displayedColumns: string[] = ['tx_company_name', 'tx_address_street', 'tx_address_number', '_id'];
+  displayedColumns: string[] = ['tx_company_name', '_id'];
 
   openForm = false;
   companyEdit: Company;  // company enviada al child

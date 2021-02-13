@@ -14,15 +14,6 @@
   }
 }
 
-.tickets-page-container {
-  display        : flex;
-  flex-direction : row;
-  flex-wrap      : wrap;
-  width          : 100%;
-  padding        : 10px;
-  justify-content: center;
-}
-
 .tickets-filtered-container {
   width  : 300px;
   padding: 10px;

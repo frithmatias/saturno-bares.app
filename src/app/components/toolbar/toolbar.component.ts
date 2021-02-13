@@ -15,7 +15,7 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
 
-  url: string;
+  url: string = '';
   hiddenBadge: boolean;
 
   constructor(

@@ -3,7 +3,8 @@
     <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
         <mat-card-header>
-            <mat-card-title>
+            <mat-card-title class="md">
+                <span class="mdi mdi-account-tie md text-accent"></span>
                 <span> Mis Mesas </span>
                 <span *ngIf="sectionSelected"> del sector {{sectionSelected.tx_section}}</span>
             </mat-card-title>

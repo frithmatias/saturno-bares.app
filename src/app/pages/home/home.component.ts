@@ -16,7 +16,7 @@ moment.locale('es');
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   date: string;
   centerMap: number[] = []; // for app-map child
 
@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
+    
+
     let timer$ = interval(1000);
 
     timer$.pipe(map(data => new Date().getTime())).subscribe(data => {
@@ -63,7 +67,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-
+  ngAfterViewInit(): void {
+    this.publicService.scrollTop();
+  }
+  
   setLocalidad(localidad: Location) {
     if (localidad) {
 
@@ -89,6 +96,7 @@ export class HomeComponent implements OnInit {
   }
 
   cleanInput(inputCompany) {
+    this.publicService.canAksPositionUser = true;
     inputCompany.value = null;
   }
 

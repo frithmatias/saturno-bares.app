@@ -3,8 +3,8 @@
     <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
         <mat-card-header>
-            <mat-card-title>
-                <span class="mdi mdi-card-account-details-outline"></span> Página Web de mi Bar / Restaurant
+            <mat-card-title class="md">
+                <span class="mdi mdi-card-account-details-outline md text-accent"></span> Página Web 
             </mat-card-title>
         </mat-card-header>
 
@@ -17,7 +17,6 @@
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Email del comercio</mat-label>
                     <span matPrefix class="text-accent mdi mdi-email">&nbsp;</span>
-
                     <input maxlength="50" matInput type="email" formControlName="txEmail" placeHolder="usuario@dominio.com"
                         (keydown.space)="$event.preventDefault()" [value]="loginService.user.id_company?.tx_email">
                 </mat-form-field>
@@ -26,7 +25,6 @@
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Telegram</mat-label>
                     <span matPrefix class="text-accent mdi mdi-telegram"> https://t.me/ </span>
-
                     <input matInput maxlength="30" type="text"  formControlName="txTelegram"
                         placeholder="telegram-username" (keydown.space)="$event.preventDefault()" [value]="loginService.user.id_company?.tx_telegram">
                 </mat-form-field>
@@ -51,7 +49,6 @@
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Twitter</mat-label>
                     <span matPrefix class="text-accent mdi mdi-twitter"> www.twitter.com/</span>
-
                     <input matInput maxlength="30" type="text" formControlName="txTwitter" placeholder="mi-twitter" [value]="loginService.user.id_company?.tx_twitter">
                 </mat-form-field>
 
@@ -59,7 +56,6 @@
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Instagram</mat-label>
                     <span matPrefix class="text-accent mdi mdi-instagram"> www.instagram.com/</span>
-
                     <input matInput maxlength="30" type="text" formControlName="txInstagram"
                         placeholder="mi-instagram" [value]="loginService.user.id_company?.tx_instagram">
                 </mat-form-field>

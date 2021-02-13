@@ -1,36 +1,34 @@
 .footer {
+    font-size      : small;
+    font-family    : 'Baloo Bhai 2';
+    line-height    : 1.4em;
+    font-weight    : 200;
     align-items    : center;
     display        : flex;
     flex-flow      : row wrap;
     padding        : 1em;
-    font-family    : system-ui;
-    font-size      : small;
     text-decoration: none;
     justify-content: space-around;
     height         : 8em;
 }
 
 a {
-    color:unset;
+    color: unset;
 }
 
 a:hover {
     text-decoration: none;
-    color: unset;
+    color          : unset;
 }
 
-
-.footer-by {
-    display: flex;
-}
 
 .footer-tech {
     display: flex;
 }
 
-@media (max-width: 884px) {
-    .footer-content {
-        flex-direction: column;
+@media (max-width: 500px) {
+    .footer-tech {
+        display: none;
     }
 }
 
@@ -48,8 +46,8 @@ TECH ICONS
     margin     : 10px 0 10px 0;
     width      : 1.5em;
     height     : 1.5em;
-    opacity    : .8;
-} 
+    opacity    : .98;
+}
 
 .tech-mongodb {
     background       : url(../../../../assets/img/svg/mongodb2.svg);
@@ -62,7 +60,7 @@ TECH ICONS
     background-size  : contain;
     background-repeat: no-repeat;
 }
- 
+
 .tech-js {
     background       : url(../../../../assets/img/svg/javascript.svg);
     background-size  : contain;
@@ -80,4 +78,3 @@ TECH ICONS
     background-size  : contain;
     background-repeat: no-repeat;
 }
- 

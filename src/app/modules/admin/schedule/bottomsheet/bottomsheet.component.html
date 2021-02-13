@@ -14,9 +14,9 @@
 
             <!-- edit ticket -->
 
-            <div *ngIf="data.table.blReserved" class="ticket-info px-3">
+            <div *ngIf="data.table.blReserved">
 
-                <div class="data mb-2">
+                <div class="ticket-data mb-2">
                     <table>
                         <tr>
                             <td class="text-accent">Mesa(s):</td>
@@ -70,18 +70,17 @@
                         <button mat-raised-button class="action-button" color="warn" (click)="endTicket()">
                             <table>
                                 <tr>
-                                    <td class="button-icon mdi mdi-close xl"></td>
+                                    <td class="button-icon mdi mdi-close lg"></td>
                                     <td class="button-text">Cancelar</td>
                                 </tr>
                             </table>
                         </button>
                     </div>
                     <div>
-
                         <button mat-raised-button class="action-button" color="telegram" (click)="sendMessage()">
                             <table>
                                 <tr>
-                                    <td class="button-icon mdi mdi-telegram xl"></td>
+                                    <td class="button-icon mdi mdi-telegram lg"></td>
                                     <td class="button-text">Mensaje</td>
                                 </tr>
                             </table>
@@ -91,12 +90,11 @@
                         <button mat-raised-button class="action-button" color="primary" (click)="assignTablesPending()">
                             <table>
                                 <tr>
-                                    <td class="button-icon mdi mdi-history xl"></td>
+                                    <td class="button-icon mdi mdi-history lg"></td>
                                     <td class="button-text">Liberar</td>
                                 </tr>
                             </table>
                         </button>
-
                     </div>
 
                 </div>
@@ -108,47 +106,42 @@
             <div *ngIf="!data.table.blReserved" class="px-3">
 
                 <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
-                    <div class="ticket-info">
 
-                        <div class="pr-3">
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Nombre del cliente</mat-label>
-                                <input maxlength="30" type="text" matInput placeholder="Ingresa el nombre del cliente"
-                                    formControlName="txName" name="txName" required>
-                            </mat-form-field>
+                    <div class="ticket-form-controls">
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Nombre del cliente</mat-label>
+                            <input maxlength="30" type="text" matInput placeholder="Ingresa el nombre del cliente"
+                                formControlName="txName" name="txName" required>
+                        </mat-form-field>
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Cantidad de Personas</mat-label>
-                                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
-                                    formControlName="nmPersons" name="nmPersons" required>
-                            </mat-form-field>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Cantidad de Personas</mat-label>
+                            <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                                formControlName="nmPersons" name="nmPersons" required>
+                        </mat-form-field>
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Número de Contacto</mat-label>
-                                <input type="number" matInput placeholder="01155551234" formControlName="idUser"
-                                    name="idUser" required>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="actions">
-                            <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()"
-                                [disabled]="ticketForm.invalid">
-                                Crear Ticket
-                            </button>
-                        </div>
-
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Número de Contacto</mat-label>
+                            <input type="number" matInput placeholder="01155551234" formControlName="idUser"
+                                name="idUser" required>
+                        </mat-form-field>
                     </div>
+
+                    <div class="ticket-form-actions">
+                        <button mat-raised-button color="primary" class="ml-1 my-2" (click)="createTicket()"
+                            [disabled]="ticketForm.invalid">
+                            Crear Ticket
+                        </button>
+                    </div>
+
+
                 </form>
 
                 <div class="sm text-left text-accent mt-3" *ngIf="personsExceeds">
 
                     <div>
-                        <div>
-                            Cuidado: el número de comensales supera la capacidad de la mesa.
-                        </div>
-                        <div>
-                            Considere agregar mesas.
-                        </div>
+                        Cuidado: el número de comensales supera la capacidad de la mesa.
+                        Considere agregar mesas.
                     </div>
 
                     <div class="my-2">

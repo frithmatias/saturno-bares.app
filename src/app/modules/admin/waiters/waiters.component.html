@@ -4,8 +4,8 @@
     <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
 
         <mat-card-header>
-            <mat-card-title>
-                <span class="mdi mdi-account-tie"></span> Mis Camareros/as
+            <mat-card-title class="md">
+                <span class="mdi mdi-account-tie md text-accent"></span> Mis Camareros/as
             </mat-card-title>
         </mat-card-header>
 
@@ -15,9 +15,9 @@
                     <th mat-header-cell *matHeaderCellDef class="text-left"> Rol </th>
                     <td mat-cell *matCellDef="let element" class="text-left">
                         <span *ngIf="element.id_role==='ADMIN_ROLE'"
-                            class="mdi mdi-police-badge-outline xl text-accent"></span>
+                            class="mdi mdi-police-badge-outline lg text-accent"></span>
                         <span *ngIf="element.id_role!=='ADMIN_ROLE'"
-                            class="mdi mdi-silverware-fork-knife xl text-accent"></span>
+                            class="mdi mdi-silverware-fork-knife lg text-accent"></span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="tx_name">

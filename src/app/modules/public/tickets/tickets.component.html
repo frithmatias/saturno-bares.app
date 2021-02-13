@@ -1,88 +1,94 @@
-<!-- <pre class="xs text-left text-accent">
-  {{ tickets | json}}
-</pre> -->
-<div>
-  <app-social (socialResponse)="socialResponse($event)"></app-social>
-</div>
-<div class="tickets-page-container animated fadeIn">
+<div class="page-container animated fadeIn">
 
-  <!-- <div class="w-100">
+  <mat-card class="h-100">
+    <mat-card-content>
 
-    <mat-form-field class="select-status">
-      <mat-label>Estado</mat-label>
-      <mat-select [formControl]="statusControl" multiple>
-        <mat-option *ngFor="let status of statusList" [value]="status.tx_status">{{status.tx_label}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-  </div> -->
-
-  <div *ngIf="ticketsFiltered.length === 0" class="text-accent">
-    No tenés tickets activos. Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
-  </div>
-
-
-  <div class="tickets-filtered-container" *ngFor="let ticket of ticketsFiltered">
-
-    <!-- first image in banners -->
-    <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
-      <img class="company-banner img-fluid"
-        [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
-    </div>
-
-    <!-- card with ticket data -->
-    <mat-card class="p-3">
-
-      <!-- logo -->
-      <div *ngIf="ticket.id_company?.tx_company_logo">
-        <img class="company-logo img-fluid"
-          [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+      <div *ngIf="loading">
+        <mat-spinner diameter="20"></mat-spinner>
+        Cargando las reservas de {{social.txName}}...
       </div>
 
-      <!-- header with company name and address -->
-      <div class="pointer my-2" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
-        <div class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
+      <div *ngIf="!loading">
+        <app-social (socialResponse)="socialResponse($event)"></app-social>
+        <div *ngIf="ticketsFiltered.length === 0" class="text-accent">
+          <div *ngIf="!social">
+            Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
+          </div>
+          <div *ngIf="social">
+            No hay reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
+          </div>
+        </div>
+
       </div>
 
-      <mat-card-content class="text-left sm fw-200">
-        <div>
-          Fecha: <span class="text-info">{{ticket.tm_reserve | dateToString}}</span>
+      <!-- CARD TICKETS -->
+      <div class="tickets-filtered-container" *ngFor="let ticket of ticketsFiltered">
+
+        <!-- first image in banners -->
+        <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
+          <img class="company-banner img-fluid"
+            [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
         </div>
-        <div>
-          Estado: <span class="text-info">{{ticket.tx_status | ticketStatus}}</span>
-        </div>
-      </mat-card-content>
 
-      <mat-card-actions>
+        <!-- card with ticket data -->
+        <mat-card class="p-3">
+
+          <!-- logo -->
+          <div *ngIf="ticket.id_company?.tx_company_logo">
+            <img class="company-logo img-fluid"
+              [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+          </div>
+
+          <!-- header with company name and address -->
+          <div class="pointer my-2" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+            <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
+            <div class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
+          </div>
+
+          <mat-card-content class="text-left sm fw-200">
+            <div>
+              Fecha: <span class="text-info">{{ticket.tm_reserve | dateToString}}</span>
+            </div>
+            <div>
+              Estado: <span class="text-info">{{ticket.tx_status | ticketStatus}}</span>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
 
 
-        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}"
-          *ngIf="ticket?.tm_provided && !ticket.tm_end">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-ticket-account lg"></td>
-              <td class="button-text">¡Comenzar!</td>
-            </tr>
-          </table>
-        </button>
+            <button mat-raised-button class="action-button-flex" color="active"
+              routerLink="/public/ticket/{{ticket._id}}" *ngIf="ticket?.tm_provided && !ticket.tm_end">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-ticket-account lg"></td>
+                  <td class="button-text">¡Comenzar!</td>
+                </tr>
+              </table>
+            </button>
 
-        <button mat-raised-button class="action-button-flex" color="warn"
-          [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-delete lg"></td>
-              <td class="button-text">Cancelar</td>
-            </tr>
-          </table>
-        </button>
+            <button mat-raised-button class="action-button-flex" color="warn"
+              [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-delete lg"></td>
+                  <td class="button-text">Cancelar</td>
+                </tr>
+              </table>
+            </button>
 
-      </mat-card-actions>
+          </mat-card-actions>
 
-    </mat-card>
+        </mat-card>
 
-  </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button class="action-button" routerLink="/home">
+        Volver
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
 </div>
-<button mat-button class="action-button" routerLink="/home">
-  Volver
-</button>

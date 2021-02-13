@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
   @Input() companies: Company[] = []; // center definido en el formulario company-crear
   @Input() center: string[] = []; // center definido en el formulario company-crear
   @Input() mapCoords: string[]; // center definido en el formulario filtros (checks localidades)
-  @Input() init: boolean;
+  @Input() initmap: boolean;
 
   @Output() newMarker: EventEmitter<{}> = new EventEmitter();
 
@@ -45,6 +45,8 @@ export class MapComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<any> {
+
+
 
     if (localStorage.getItem('config')) {
       this.config = JSON.parse(localStorage.getItem('config'));
@@ -76,6 +78,10 @@ export class MapComponent implements OnInit {
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+
+    if (changes.initmap?.currentValue){
+      await this.inicializarMapa(this.mapbox);
+    }
 
     if (!this.map) {
       await this.inicializarMapa(this.mapbox);
@@ -206,6 +212,7 @@ export class MapComponent implements OnInit {
 
   getCoords(): Promise<MapCenterInit> {
     return new Promise((resolve, reject) => {
+
       if (navigator.geolocation && this.publicService.canAksPositionUser) {
         navigator.geolocation.getCurrentPosition(position => {
           this.mapCenterInit.lng = position.coords.longitude.toString();
@@ -222,14 +229,8 @@ export class MapComponent implements OnInit {
     })
   }
 
-  async askUserLocation(){
-    // browser autorizado para preguntar posición al usuario
-    this.publicService.canAksPositionUser = true;
-    this.inicializarMapa(this.mapbox);
-  }
 
   async inicializarMapa(mapbox: ElementRef) {
-
 
     let coords = await this.getCoords().then((coords)=> {
       this.mapZoom = 14;

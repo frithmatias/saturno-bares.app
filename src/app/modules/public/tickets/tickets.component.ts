@@ -17,7 +17,7 @@ export class TicketsComponent implements OnInit {
 
 
   statusControl = new FormControl();
-  social: Social;
+  loading = false;
 
   statusList: any[] = [
     { tx_status: 'waiting', tx_label: 'Esperando Confirmación' },
@@ -31,12 +31,10 @@ export class TicketsComponent implements OnInit {
     { tx_status: 'cancelled', tx_label: 'Cancelados' },
   ];
 
-
+  social: Social;
   tickets: Ticket[] = [];
   ticketsFiltered: Ticket[] = [];
   ticket: Ticket;
-  txPlatform: string;
-  idUser: string;
 
   constructor(
     private router: Router,
@@ -57,41 +55,40 @@ export class TicketsComponent implements OnInit {
     })
 
 
+    // Get social data
     if (this.tickets.length === 0 && localStorage.getItem('social')) {
       this.social = JSON.parse(localStorage.getItem('social'));
-    }
-
-    const txPlatform = this.social.txPlatform;
-    const idUser = this.social.idUser;
-
-    if (txPlatform && idUser) {
-      this.getUserTickets(txPlatform, idUser); // update tickets
+      const txPlatform = this.social.txPlatform;
+      const idUser = this.social.idUser;
+      if (txPlatform && idUser) {
+        this.getUserTickets(txPlatform, idUser); // update tickets
+      }
     }
 
   }
 
   getUserTickets(txPlatform: string, idUser: string): void {
 
-
+    this.loading = true;
     // si en la localstorage había un ticket 'waiting' lo extraigo para salvarlo 
-    let waiting: Ticket[];
+    let waiting: Ticket[] = [];
     if (localStorage.getItem('tickets')) {
       waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
     }
 
+    this.loading = true;
 
     this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
+      this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
         if (waiting.length > 0) { this.tickets.push(...waiting); }
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
-
-
         console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
         this.ticketsFiltered = this.tickets.filter(ticket => this.statusControl.value.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(data.tickets));
       }
-    })
+    }, (() => { this.loading = false; }))
   }
 
   endTicket(ticket: Ticket): void {
@@ -117,10 +114,10 @@ export class TicketsComponent implements OnInit {
 
 
   socialResponse(response: Social) {
-    const txPlatform = response.txPlatform;
-    const idUser = response.idUser;
-    if (txPlatform && idUser) {
-      this.getUserTickets(txPlatform, idUser); // update tickets
+    console.log(response)
+    this.social = response;
+    if (this.social.txPlatform && this.social.idUser) {
+      this.getUserTickets(this.social.txPlatform, this.social.idUser); // update tickets
     }
   }
 }

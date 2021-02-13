@@ -89,9 +89,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
       this.social.txImage = googleUser.Fs.wI;
       localStorage.setItem('social', JSON.stringify(this.social));
       this.socialResponse.emit(this.social)
-    }, () => {
-      this.publicService.snack('Ocurrio un error de autenticación con auth2', 2000, 'Aceptar');
-    });
+    }, () => { });
   }
 
   // ==========================================================
