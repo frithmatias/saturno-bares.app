@@ -1,6 +1,6 @@
 .footer {
     font-size      : small;
-    font-family    : 'Baloo Bhai 2';
+    font-family    : 'system-ui';
     line-height    : 1.4em;
     font-weight    : 200;
     align-items    : center;
@@ -10,6 +10,7 @@
     text-decoration: none;
     justify-content: space-around;
     height         : 8em;
+    opacity        : .85;
 }
 
 a {

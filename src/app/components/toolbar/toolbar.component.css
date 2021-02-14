@@ -74,8 +74,11 @@
 }
 
 .logo-text-container {
-    align-self: center;
-    font-size : small;
+    align-self    : center;
+    font-size     : small;
+    font-family   : fantasy;
+    letter-spacing: .1em;
+    font-weight   : 200;
 }
 
 .logo-title {

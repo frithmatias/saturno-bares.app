@@ -29,7 +29,7 @@
               Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
               utilizando alguno de los siguientes métodos:
 
-            <app-social (socialResponse)="socialResponse($event)"></app-social>
+            <app-social (socialResponse)="socialResponse($event)" [logout]="true"></app-social>
 
           </div>
 

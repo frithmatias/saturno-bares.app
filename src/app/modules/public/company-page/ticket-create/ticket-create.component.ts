@@ -100,10 +100,18 @@ export class TicketCreateComponent implements OnInit {
   getUserTickets(txPlatform: string, idUser: string): void {
     const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
     this.loading = true;
+
+    // if exists get waiting ticket
+    let waiting: Ticket[] = [];
+    if (localStorage.getItem('tickets')) {
+      waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
+    }
+
     this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
+        if (waiting.length > 0) { this.tickets.push(...waiting); }
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
         this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && activeTickets.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(this.tickets));

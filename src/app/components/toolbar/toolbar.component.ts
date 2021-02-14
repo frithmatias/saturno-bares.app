@@ -4,6 +4,7 @@ import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../../modules/waiter/waiter.service';
 import { filter, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,6 +18,7 @@ export class ToolbarComponent implements OnInit {
 
   url: string = '';
   hiddenBadge: boolean;
+  version = environment.version;
 
   constructor(
     public loginService: LoginService,

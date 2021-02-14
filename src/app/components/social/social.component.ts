@@ -34,6 +34,7 @@ export interface Social {
 export class SocialComponent implements OnInit, AfterViewInit {
   @ViewChild('validateTicketGoogle') gButton: any;
   @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
+  @Input() logout: boolean = false;
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
   social: Social;
@@ -46,6 +47,10 @@ export class SocialComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+
+    if (this.logout){
+      this.logOut();
+    }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       this.isMobile = true;
@@ -206,7 +211,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
     this.publicService.snack('Esta opción va a estar disponible próximamente.', 5000, 'Aceptar');
   }
 
-  logout(): void {
+  logOut(): void {
 
     if (this.social.txPlatform === 'facebook') {
       FB.logout(function (response) {
