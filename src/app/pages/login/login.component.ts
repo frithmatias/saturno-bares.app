@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	// ==========================================================
-	// LOGIN NORMAL 
+	// LOGIN FORM 
 	// ==========================================================
 	// TODO: Rehacer el formulario con formbuilder.
 

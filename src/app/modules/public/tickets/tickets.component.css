@@ -3,7 +3,7 @@
     width: 100% !important;
   }
 
-  .tickets-filtered-container {
+  .ticket-card {
     width  : 100%;
     padding: 10px;
   }
@@ -14,7 +14,14 @@
   }
 }
 
-.tickets-filtered-container {
+.tickets-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  place-content: center;
+}
+
+.ticket-card {
   width  : 300px;
   padding: 10px;
 }

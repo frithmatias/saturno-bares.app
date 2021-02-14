@@ -260,7 +260,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 	enCamino(): void {
 		this.coming = true;
-		let idSocketDesk = this.publicService.ticket.id_socket_waiter;
+		let idSocketDesk = this.ticket.id_socket_waiter;
 		this.wsService.emit('cliente-en-camino', idSocketDesk);
 	}
 

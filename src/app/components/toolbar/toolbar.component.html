@@ -16,7 +16,7 @@
             <!-- LOGO TITLE -->
 
             <div class="logo-text-container pointer" routerLink="/home">
-                SATURNO <span class="xs">1.1.0</span>
+                SATURNO <span class="xs">1.1.1</span>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
             <app-theme class="mr-3"></app-theme>
 
             <!-- LOG IN -->
-            <div *ngIf="!loginService.user && !publicService.ticket" class="mdi mdi-account-circle pointer"
+            <div *ngIf="!loginService.user" class="mdi mdi-account-circle pointer"
                 routerLink="/login"> Ingresar
             </div>
 

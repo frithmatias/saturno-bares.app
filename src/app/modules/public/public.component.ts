@@ -22,11 +22,6 @@ export class PublicComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.publicService.ticket?.tm_end) { // si el ticket esta finalizado limpio la sesión
-      this.publicService.clearPublicSession();
-    }
-
-
     this.route.params.subscribe((data: any) => {
       if (data.txCompanyString) {
         let txCompanyString = data.txCompanyString;

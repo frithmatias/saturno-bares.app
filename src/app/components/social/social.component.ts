@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, AfterViewInit, Input, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PublicService } from '../../modules/public/public.service';
 
@@ -33,36 +33,40 @@ export interface Social {
 })
 export class SocialComponent implements OnInit, AfterViewInit {
   @ViewChild('validateTicketGoogle') gButton: any;
-  @Output() socialResponse: EventEmitter<Social> = new EventEmitter();
+  @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
-  social: Social = {
-    txPlatform: null,
-    txToken: null,
-    idUser: null,
-    txName: null,
-    txImage: null,
-  };
+  social: Social;
   facebookResponse: facebookResponse;
   isMobile = false;
 
   constructor(
-    private publicService: PublicService
+    private publicService: PublicService,
+    private zone: NgZone
   ) { }
 
   ngOnInit(): void {
+
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       this.isMobile = true;
     } else {
       this.isMobile = false;
     }
 
+    // Get social data
+    if (localStorage.getItem('social')) {
+      this.social = JSON.parse(localStorage.getItem('social'));
+    }
+
     this.googleInit()
     this.facebookInit();
   }
 
+  ngOnChanges(changes): void {
+  }
+
   // ==========================================================
-  // VALIDATE TICKET WITH GOOGLE
+  // VALIDATE GOOGLE USER
   // ==========================================================
 
   ngAfterViewInit(): void {
@@ -76,24 +80,38 @@ export class SocialComponent implements OnInit, AfterViewInit {
         cookiepolicy: 'single_host_origin',
         scope: 'profile email'
       });
-      this.attachSignin(this.gButton?._elementRef.nativeElement);
+      this.attachSignin();
+
     });
   }
 
-  attachSignin = (element) => {
-    this.auth2.attachClickHandler(element, {}, (googleUser: any) => {
-      this.social.txPlatform = 'google';
-      this.social.txToken = googleUser.getAuthResponse().id_token;
-      this.social.idUser = googleUser.Fs.lt;
-      this.social.txName = googleUser.Fs.sd;
-      this.social.txImage = googleUser.Fs.wI;
-      localStorage.setItem('social', JSON.stringify(this.social));
-      this.socialResponse.emit(this.social)
+  googleValidate(e) {
+    this.attachSignin();
+  }
+
+  attachSignin = () => {
+    this.auth2.attachClickHandler(this.gButton?._elementRef.nativeElement, {}, (googleUser: any) => {
+
+      this.zone.run(() => {
+        const social: Social = {
+          txPlatform: 'google',
+          txToken: googleUser.getAuthResponse().id_token,
+          idUser: googleUser.Fs.lt,
+          txName: googleUser.Fs.sd,
+          txImage: googleUser.Fs.wI
+        };
+
+        localStorage.setItem('social', JSON.stringify(social));
+        this.social = social;
+        this.socialResponse.emit(social)
+      });
+
     }, () => { });
+
   }
 
   // ==========================================================
-  // VALIDATE TICKET WITH FACEBOOK
+  // VALIDATE FB USER
   // ==========================================================
 
   facebookInit() {
@@ -118,44 +136,43 @@ export class SocialComponent implements OnInit, AfterViewInit {
   facebookLogin() {
     FB.getLoginStatus((response) => {
       if (response.status === 'connected') {
-        this.validateTicketFacebook();
+        this.facebookGetData();
       } else {
         FB.login((response) => {
           if (response.status === 'connected') {
-            this.validateTicketFacebook();
+            this.facebookGetData();
           }
-        })
+        }, { scope: 'email' })
       }
     }, true); // true para deshabilitar el guarado en cache de esta respuesta 
   }
 
-  validateTicketFacebook() {
-    FB.api('/me?fields=name,email', (response) => {
-      // const idUser = response.id;
+  facebookGetData(): void {
+    FB.api('/me?fields=id,email,first_name,name,gender', (response) => {
+      this.zone.run(() => {
+        const social: Social = {
+          txPlatform: 'facebook',
+          txToken: null,
+          idUser: response.email,
+          txName: response.name,
+          txImage: null
+        };
 
-      this.social.txPlatform = 'facebook';
-      this.social.txToken = null;
-      this.social.idUser = response.email;
-      this.social.txName = response.name;
-      this.social.txImage = null;
+        if (!social.txName) {
+          this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'Aceptar');
+          return;
+        }
 
-      if (!this.social.idUser || !this.social.txName) {
-        this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'Aceptar');
-        FB.login((response) => {
-          if (response.status !== 'connected') {
-            return;
-          }
-        })
-        return;
-      }
-
-      localStorage.setItem('social', JSON.stringify(this.social));
-      this.socialResponse.emit(this.social)
+        localStorage.setItem('social', JSON.stringify(social));
+        this.socialResponse.emit(social)
+        this.social = social;
+      });
     });
+
   }
 
   // ==========================================================
-  // VALIDATE TICKET WITH TELEGRAM
+  // VALIDATE TELEGRAM USER
   // ==========================================================
 
   validateTicketTelegram() {
@@ -166,27 +183,42 @@ export class SocialComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      this.social.txPlatform = 'telegram';
-      this.social.txToken = null;
-      this.social.idUser = response.id;
-      this.social.txName = response.first_name;
-      this.social.txImage = response.photo_url;
+      const social: Social = {
+        txPlatform: 'telegram',
+        txToken: null,
+        idUser: response.id,
+        txName: response.first_name,
+        txImage: response.photo_url
+      };
 
-      localStorage.setItem('social', JSON.stringify(this.social));
-      this.socialResponse.emit(this.social);
+      localStorage.setItem('social', JSON.stringify(social));
+      this.social = social;
+      this.socialResponse.emit(social);
 
     })
   }
 
   // ==========================================================
-  // VALIDATE TICKET WITH EMAIL
+  // VALIDATE EMAIL USER
   // ==========================================================
 
   emailValidate() {
     this.publicService.snack('Esta opción va a estar disponible próximamente.', 5000, 'Aceptar');
   }
 
+  logout(): void {
 
+    if (this.social.txPlatform === 'facebook') {
+      FB.logout(function (response) {
+        // user is now logged out
+      });
+    }
+
+    if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
+    this.social = null;
+    this.socialResponse.emit(null)
+
+  }
 
 }
 

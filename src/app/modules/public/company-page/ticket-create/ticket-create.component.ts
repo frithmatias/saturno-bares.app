@@ -26,9 +26,10 @@ export class TicketCreateComponent implements OnInit {
 
   @Input() company: Company;
 
+  social: Social;
   loading: boolean = false;
   sections: Section[] = [];
-  ticket: Ticket = null;
+  ticket: Ticket = null; // ACTIVE ticket
   tickets: Ticket[] = [];
   ticketForm: FormGroup;
   minDate: Date;
@@ -52,7 +53,24 @@ export class TicketCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getSections();
+    this.createTicketForm();
+    this.checkFormChanges();
+    this.checkSocial();
+    this.checkTicketUpdate();
+  }
 
+  checkTicketUpdate(){
+    this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
+      // id_company en el metodo provide() del backend NO viene populado
+      ticket.id_company = this.ticket?.id_company;
+      this.ticket = ticket;
+      this.publicService.updateStorageTickets(ticket);
+    });
+  }
+
+  getSections() {
+    // get sections
     if (!this.company) {
       this.publicService.snack('Por favor elegí un bar primero.', 2000);
       this.router.navigate(['/public']);
@@ -65,37 +83,37 @@ export class TicketCreateComponent implements OnInit {
         this.sections = data.sections;
       })
     }
+  }
 
-    if (this.tickets.length === 0 && localStorage.getItem('tickets')) {
-      this.tickets = JSON.parse(localStorage.getItem('tickets'));
-    }
-
-    if (this.tickets.length > 0) {
-
-      // obtengo si existe, el ticket activo
-      // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished, killed
-      const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
-      this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && activeTickets.includes(ticket.tx_status));
-
-      // si existe ticket activo busco en la bd la última actualización de ESE ticket y lo actualizo en la local storage
-      if (this.ticket) {
-        this.publicService.getTicket(this.ticket._id).subscribe((data: TicketResponse) => {
-          //IMPORTANTE: actualizo SÓLO el ticket activo, porque si tengo un ticket 'waiting' mi lista mas actualizada la tengo en la local storage
-          this.ticket = data.ticket;
-          this.publicService.updateStorageTickets(this.ticket).then((tickets: Ticket[]) => {
-            this.tickets = tickets;
-          })
-        })
+  checkSocial() {
+    // Get social data
+    if (localStorage.getItem('social')) {
+      this.social = JSON.parse(localStorage.getItem('social'));
+      const txPlatform = this.social.txPlatform;
+      const idUser = this.social.idUser;
+      if (txPlatform && idUser) {
+        this.getUserTickets(txPlatform, idUser); // update tickets
       }
-
     }
-    
-    this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
-      // id_company en el metodo provide() del backend NO viene populado
-      ticket.id_company = this.ticket?.id_company;
-      this.ticket = ticket;
-      this.publicService.updateStorageTickets(ticket);
-    });
+  }
+
+  getUserTickets(txPlatform: string, idUser: string): void {
+    const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
+    this.loading = true;
+    this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
+      this.loading = false;
+      if (data.ok) {
+        this.tickets = data.tickets;
+        this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
+        this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && activeTickets.includes(ticket.tx_status));
+        localStorage.setItem('tickets', JSON.stringify(this.tickets));
+        console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
+      }
+    }, () => { this.loading = false; })
+  }
+
+
+  createTicketForm() {
 
     this.ticketForm = new FormGroup({
       txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
@@ -106,6 +124,9 @@ export class TicketCreateComponent implements OnInit {
       tmReserve: new FormControl({ value: '', disabled: true }, [Validators.required]),
       cdTables: new FormControl({ value: '', disabled: true }, [Validators.required]),
     });
+  }
+
+  checkFormChanges() {
 
     // PERSONS CHANGE 
     this.ticketForm.controls.idSection.valueChanges.subscribe(data => {
@@ -170,7 +191,6 @@ export class TicketCreateComponent implements OnInit {
         this.ticketForm.controls.cdTables.enable();
       }
     })
-    
   }
 
   readAvailability(nmPersons: number, idSection: string, dtReserve: Date) {
@@ -255,7 +275,6 @@ export class TicketCreateComponent implements OnInit {
       (data: TicketResponse) => {
         if (data.ok) {
           this.loading = false;
-          this.publicService.ticket = data.ticket;
           this.ticket = data.ticket;
           data.ticket.id_company = this.company;
           this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {

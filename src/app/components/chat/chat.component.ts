@@ -3,6 +3,7 @@ import { WebsocketService } from '../../services/websocket.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { timer, Subscription } from 'rxjs';
 import { PublicService } from 'src/app/modules/public/public.service';
+import { Ticket } from '../../interfaces/ticket.interface';
 
 @Component({
   selector: 'app-chat',
@@ -11,6 +12,8 @@ import { PublicService } from 'src/app/modules/public/public.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   @Input() chatOpenStatus: boolean;
+  @Input() ticket: Ticket;
+
   @Output() unreadMessages: EventEmitter<number> = new EventEmitter();
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   chatOpen: boolean;
@@ -65,10 +68,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
 
       let to: string;
-      if(this.publicService.ticket.id_socket_client === this.wsService.idSocket){
-        to = this.publicService.ticket.id_socket_waiter;
+      if(this.ticket.id_socket_client === this.wsService.idSocket){
+        to = this.ticket.id_socket_waiter;
       } else {
-        to = this.publicService.ticket.id_socket_client;
+        to = this.ticket.id_socket_client;
       } 
       this.wsService.emit('mensaje-privado', { to, msg: message.value });
       this.scrollTop();

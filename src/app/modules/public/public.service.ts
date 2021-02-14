@@ -14,7 +14,6 @@ import { MatStepper } from '@angular/material/stepper';
 })
 export class PublicService {
 
-  ticket: Ticket;
   tickets: Ticket[] = [];
   sections: Section[] = [];
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
@@ -47,7 +46,6 @@ export class PublicService {
   }
 
   scrollTop() {
-    console.log('up')
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Other
     document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
