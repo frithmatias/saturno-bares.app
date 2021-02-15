@@ -75,10 +75,11 @@
 
 .logo-text-container {
     align-self    : center;
-    font-size     : small;
-    font-family   : fantasy;
+    font-size     : 1.3em;
+    font-family   : system-ui;
     letter-spacing: .1em;
     font-weight   : 200;
+    margin-left   : 5px;
 }
 
 .logo-title {
@@ -90,7 +91,7 @@
 }
 
 .logo-subtitle {
-    font-size     : .5em;
+    font-size     : .45em;
     font-weight   : 200;
     line-height   : 1em;
     text-transform: uppercase;

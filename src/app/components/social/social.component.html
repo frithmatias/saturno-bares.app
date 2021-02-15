@@ -1,12 +1,12 @@
-<div class="buttons-container my-4">
+<div class="social-container p-4">
 
     <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
 
-    <div *ngIf="social">
-        <div>
+    <div *ngIf="social" class="social-status">
+        <div class="sm mr-2">
             {{social.txPlatform | capitalizarPipe}} [{{social.txName}}] 
         </div>
-        <div class="mt-2">
+        <div>
             <button mat-raised-button class="action-button" color="warn" (click)="logOut()">
                 <table>
                     <tr>
@@ -19,7 +19,7 @@
     </div>
 
 
-    <div *ngIf="!social">
+    <div *ngIf="!social" class="social-buttons">
         <!-- WHATSAPP -->
         <div *ngIf="isMobile">
             <button mat-raised-button class="action-button" color="active" disabled>

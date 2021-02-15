@@ -39,7 +39,8 @@ export class TicketCreateComponent implements OnInit {
   updateTicketsSub: Subscription;
   tellUserNotAvailable = false;
   showRequestTable = false;
-
+  activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
+  serverMessage: string;
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
@@ -57,10 +58,11 @@ export class TicketCreateComponent implements OnInit {
     this.createTicketForm();
     this.checkFormChanges();
     this.checkSocial();
+    this.checkWaitingTicket();
     this.checkTicketUpdate();
   }
 
-  checkTicketUpdate(){
+  checkTicketUpdate() {
     this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
       // id_company en el metodo provide() del backend NO viene populado
       ticket.id_company = this.ticket?.id_company;
@@ -96,9 +98,16 @@ export class TicketCreateComponent implements OnInit {
       }
     }
   }
+  checkWaitingTicket(): void {
+    // si se recarga la página cuando hay un ticket 'waiting', el ticket se salva y queda en 'tickets' 
+    // ahora tengo que levantarlo y guardarlo en mi 'ticket' (ticket activo)
+    if (localStorage.getItem('tickets')) {
+      this.tickets = JSON.parse(localStorage.getItem('tickets'));
+      this.ticket = this.tickets.find(ticket => this.activeTickets.includes(ticket.tx_status));
+    }
+  }
 
   getUserTickets(txPlatform: string, idUser: string): void {
-    const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
     this.loading = true;
 
     // if exists get waiting ticket
@@ -113,7 +122,7 @@ export class TicketCreateComponent implements OnInit {
         this.tickets = data.tickets;
         if (waiting.length > 0) { this.tickets.push(...waiting); }
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
-        this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && activeTickets.includes(ticket.tx_status));
+        this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && this.activeTickets.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(this.tickets));
         console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }
@@ -304,6 +313,10 @@ export class TicketCreateComponent implements OnInit {
 
   socialResponse(response: Social) {
 
+    if (response === null) { // logged out
+      return;
+    }
+
     const idTicket = this.ticket._id;
     const txPlatform = response.txPlatform;
     const txToken = response.txToken || null;
@@ -311,11 +324,15 @@ export class TicketCreateComponent implements OnInit {
     const txName = response.txName || null;
     const txImage = response.txImage || null;
 
-
+    this.serverMessage = null;
     this.publicService.validateTicket(idTicket, txPlatform, txToken, idUser, txName, txImage).subscribe((data: TicketResponse) => {
       if (data.ok) {
+        this.ticket = data.ticket;
+        this.tickets = this.tickets.filter(ticket => ticket.tx_status !== 'waiting'); // remove the 'waiting' ticket from ls 
+        localStorage.setItem('tickets', JSON.stringify(this.tickets));
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       } else {
+        this.serverMessage = data.msg;
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       }
     }, (err: HttpErrorResponse) => {

@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class DateToRemainingPipe implements PipeTransform {
 
   transform(time: Date): unknown {
-    return moment.duration(new Date(time).getTime() - new Date().getTime()).humanize();
+    return moment(time).fromNow();
   }
 
 

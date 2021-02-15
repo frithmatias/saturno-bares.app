@@ -18,6 +18,9 @@ export class TicketsComponent implements OnInit {
   loading = false;
   social: Social;
   tickets: Ticket[] = [];
+  ticketsActive: Ticket[] = [];
+  ticketsInactive: Ticket[] = [];
+
 
   constructor(
     private router: Router,
@@ -40,14 +43,26 @@ export class TicketsComponent implements OnInit {
   }
 
   getUserTickets(txPlatform: string, idUser: string): void {
+    const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
     this.loading = true;
+
+    // if exists get waiting ticket
+    let waiting: Ticket[] = [];
+    if (localStorage.getItem('tickets')) {
+      waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
+    }
+
     this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
-        this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
+        if (waiting.length > 0) { this.tickets.push(...waiting); }
+        this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
+        this.ticketsActive = this.tickets.filter(ticket => activeTickets.includes(ticket.tx_status));
+        this.ticketsInactive = this.tickets.filter(ticket => !activeTickets.includes(ticket.tx_status));
+
         localStorage.setItem('tickets', JSON.stringify(this.tickets));
-        console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
+        console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }
     }, () => { this.loading = false; })
   }
@@ -74,11 +89,12 @@ export class TicketsComponent implements OnInit {
 
 
   socialResponse(response: Social) {
-    
     if (response === null) {
       if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
       this.social = null;
       this.tickets = [];
+      this.ticketsActive = [];
+      this.ticketsInactive = [];
       return;
     } else {
       this.social = response;

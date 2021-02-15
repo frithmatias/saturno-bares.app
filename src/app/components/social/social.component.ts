@@ -213,15 +213,14 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   logOut(): void {
 
-    if (this.social.txPlatform === 'facebook') {
+    if (this.social?.txPlatform === 'facebook') {
       FB.logout(function (response) {
         // user is now logged out
       });
     }
-
     if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
     this.social = null;
-    this.socialResponse.emit(null)
+    this.socialResponse.emit(null);  
 
   }
 

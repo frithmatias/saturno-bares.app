@@ -1,8 +1,27 @@
-.buttons-container {
-    display        : flex;
-    flex-direction : row;
-    flex-wrap      : wrap;
-    justify-content: center;
+.social-container {
+    display         : flex;
+    flex-direction  : row;
+    flex-wrap       : wrap;
+    justify-content : center;
+    align-items     : center;
+}
+
+.social-status {
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : wrap;
+    place-content : flex-end;
+    align-items   : center;
+    width         : 100%;
+}
+
+.social-buttons {
+    display       : flex;
+    flex-direction: column;
+    flex-wrap     : wrap;
+    place-content : center;
+    align-items   : center;
+    width         : 100%;
 }
 
 .action-button {
