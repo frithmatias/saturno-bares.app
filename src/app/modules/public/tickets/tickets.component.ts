@@ -60,7 +60,6 @@ export class TicketsComponent implements OnInit {
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
         this.ticketsActive = this.tickets.filter(ticket => activeTickets.includes(ticket.tx_status));
         this.ticketsInactive = this.tickets.filter(ticket => !activeTickets.includes(ticket.tx_status));
-
         localStorage.setItem('tickets', JSON.stringify(this.tickets));
         console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }

@@ -10,6 +10,7 @@ export class TableInfoComponent implements OnInit {
 
   @Input() table: Table;
   @Input() listmode: boolean;
+  @Input() toggling: boolean;
 
   constructor() { }
 

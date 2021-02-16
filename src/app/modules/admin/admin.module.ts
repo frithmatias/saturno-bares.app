@@ -34,6 +34,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PendingComponent } from './schedule/pending/pending.component';
 import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.component';
+import { CalendarComponent } from './schedule/calendar/calendar.component';
 
 @NgModule({
 	declarations: [
@@ -61,7 +62,8 @@ import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.compone
 		SettingsComponent,
 		ScheduleComponent,
 		PendingComponent,
-		BottomsheetComponent
+		BottomsheetComponent,
+		CalendarComponent
 
 	],
 	imports: [

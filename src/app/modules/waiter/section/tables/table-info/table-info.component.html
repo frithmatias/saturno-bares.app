@@ -1,9 +1,10 @@
 <div *ngIf="listmode">
+
     <!-- no session -->
     <span *ngIf="table.tx_status === 'paused'" class="text-paused mdi mdi-pause-circle-outline lg"></span>
     <span *ngIf="table.tx_status === 'idle'" class="text-active mdi mdi-check-circle-outline lg"></span>
     <span *ngIf="table.tx_status === 'reserved'" class="mdi mdi-stop-circle-outline lg"></span>
-    
+
     <!-- active session -->
     <span *ngIf="table.tx_status === 'waiting'" class="mdi mdi-alert-circle-outline lg"></span>
     <span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === null"
@@ -14,14 +15,26 @@
         class="text-warning mdi mdi-silverware-fork-knife lg"></span>
     <span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === 'account'"
         class="text-warning mdi mdi-file-document-edit-outline lg"></span>
+
 </div>
 
-<div *ngIf="!listmode" style="background-color: rgba(0,0,0,.1);">
+<div *ngIf="!listmode" class="table-button-icon">
+
     <!-- no session -->
-    <span *ngIf="table.tx_status === 'paused'" class="mdi mdi-pause-circle-outline xl"></span>
-    <span *ngIf="table.tx_status === 'idle'" class="mdi mdi-check-circle-outline xl"></span>
+    <span *ngIf="table.tx_status === 'paused'" > 
+        <span *ngIf="toggling !== table._id" class="mdi mdi-pause-circle-outline xl"></span>
+        <span *ngIf="toggling === table._id" class="mdi">
+            <mat-spinner class="button-spinner" color="accent" diameter="20"></mat-spinner>
+        </span>
+    </span>
+    <span *ngIf="table.tx_status === 'idle'">
+        <span *ngIf="toggling !== table._id" class="mdi mdi-check-circle-outline xl"></span>
+        <span *ngIf="toggling === table._id" class="mdi">
+            <mat-spinner class="button-spinner" color="accent" diameter="20"></mat-spinner>
+        </span>
+    </span>
     <span *ngIf="table.tx_status === 'reserved'" class="mdi mdi-stop-circle-outline xl"></span>
-    
+
     <!-- active session -->
     <span *ngIf="table.tx_status === 'waiting'" class="mdi mdi-alert-circle-outline xl"></span>
     <span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === null"
@@ -32,4 +45,6 @@
         class="mdi mdi-silverware-fork-knife text-warning xl"></span>
     <span *ngIf="table.tx_status === 'busy' && table.id_session?.id_ticket.tx_call === 'account'"
         class="mdi mdi-file-document-edit-outline text-warning  xl"></span>
+
+
 </div>

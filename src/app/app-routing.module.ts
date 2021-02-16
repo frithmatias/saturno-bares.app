@@ -23,6 +23,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { SuperuserGuard } from './guards/superuser.guard';
 import { PricingComponent } from './pages/pricing/pricing.component';
 import { VideoComponent } from './pages/video/video.component';
+import { ActivateComponent } from './pages/register/activate/activate.component';
 
 
 const appRoutes: Routes = [
@@ -30,6 +31,8 @@ const appRoutes: Routes = [
 	{ path: 'home', component: HomeComponent, data: {titulo: 'Inicio'} },
 	{ path: 'login', component: LoginComponent, data: {titulo: 'Ingresar'} },
 	{ path: 'register', component: RegisterComponent, data: {titulo: 'Registrarme'} },
+	{ path: 'activate', component: ActivateComponent, data: {titulo: 'Activar Cuenta'} },
+	{ path: 'activate/:email/:hash', component: ActivateComponent, data: {titulo: 'Activar Cuenta'} },
 	{ path: 'contact', component: ContactComponent, data: {titulo: 'Contacto'} },
 	{ path: 'howworks', component: HowWorksComponent, data: {titulo: 'Como Funciona'} },
 	{ path: 'pricing', component: PricingComponent, data: {titulo: 'Pricing'} },

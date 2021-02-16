@@ -1,0 +1,26 @@
+<div class="page-container p-2 animated fadeIn">
+    <mat-card class="md">
+        <div *ngIf="!activated">
+
+            <mat-card-header>
+                <div class="mdi mdi-email xxl" mat-card-avatar></div>
+                <mat-card-title class="text-accent">
+                    Confirma tu cuenta
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Te enviamos un email para que confirmes tu cuenta.
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="sm p-2">
+                    Si no lo ves en tu bandeja de entrada verifica si se encuentra dentro de la carpeta SPAM.
+                </div>
+            </mat-card-content>
+        </div>
+
+        <div *ngIf="activated">
+            Usuario activado correctamente!
+        </div>
+    </mat-card>
+</div>

@@ -43,6 +43,14 @@ export class LoginService {
 		return this.http.post(url, data);
 	}
 
+	
+	activateUser(email: string, hash: string) {
+		let data = { email, hash };
+		const url = environment.api + '/u/activate';
+		return this.http.post(url, data);
+	}
+
+
 	checkEmailExists(pattern: string) {
 		let data = { pattern }
 		const url = environment.api + '/u/checkemailexists';

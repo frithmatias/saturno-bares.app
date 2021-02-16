@@ -5,13 +5,7 @@ import { Table } from '../../../interfaces/table.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { LoginService } from '../../../services/login.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
-import { avTable, availabilityResponse, availability } from '../../../interfaces/availability.interface';
-import { ContingencyTicketComponent } from '../../waiter/section/contingency-ticket/contingency-ticket.component';
-
-
-
+import { availabilityResponse, availability } from '../../../interfaces/availability.interface';
 
 @Component({
   selector: 'app-schedule',
@@ -19,26 +13,22 @@ import { ContingencyTicketComponent } from '../../waiter/section/contingency-tic
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-
-  tableSelected: avTable;
-  tables: Table[];
-
-  idSection = new FormControl();
-  dtReserve = new FormControl();
-
+  
+  
   scheduleForm: FormGroup;
   minDate: Date;
   maxDate: Date;
-
+  
   availability: availability[] = [];
+  tables: Table[] = [];
   pending: Ticket[] = [];
-
+  idSection: string;
+  dtSelected: Date;
 
   constructor(
     public publicService: PublicService,
     public adminService: AdminService,
     public loginService: LoginService,
-    private bottomSheet: MatBottomSheet
   ) { }
 
   myFilter = (d: Date | null): boolean => {
@@ -53,12 +43,14 @@ export class ScheduleComponent implements OnInit {
 
     this.scheduleForm = new FormGroup({
       idSection: new FormControl('', [Validators.required]),
-      dtReserve: new FormControl('', [Validators.required])
+      dtSelected: new FormControl('', [Validators.required])
     });
 
     this.scheduleForm.valueChanges.subscribe((data) => {
-      if (data.idSection && data.dtReserve) {
+      if (data.idSection && data.dtSelected) {
         this.tables = this.adminService.tables.filter(table => table.id_section === data.idSection);
+        this.idSection = data.idSection;
+        this.dtSelected = data.dtSelected;
         this.readAvailability(); // trae los tickets 'scheduled' y 'waiting' por intervalo
       }
     })
@@ -69,13 +61,13 @@ export class ScheduleComponent implements OnInit {
     this.availability = [];
     const nmPersons = 5000; // high value for availability response
     const idSection = this.scheduleForm.value.idSection;
-    const dtReserve = this.scheduleForm.value.dtReserve;
+    const dtSelected = this.scheduleForm.value.dtSelected;
 
-    this.publicService.readPending(idSection, dtReserve).subscribe((data: any) => {
+    this.publicService.readPending(idSection, dtSelected).subscribe((data: any) => {
       this.pending = data.pending;
     })
 
-    this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
+    this.publicService.readAvailability(nmPersons, idSection, dtSelected).subscribe((data: availabilityResponse) => {
       this.availability = data.availability;
       // data.availability.map(av => {
       //   this.availability.push({ interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity });
@@ -84,25 +76,7 @@ export class ScheduleComponent implements OnInit {
 
   }
 
-  openBottomSheet = (table: avTable, availability: availability): void => {
-    this.tableSelected = table;
-    const idSection = this.scheduleForm.controls.idSection.value;
 
-    // table.blReserved ? release : create;
-    this.bottomSheet.open(BottomsheetComponent, { data: { table, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
-
-      if (data?.action === 'create') {
-        this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron reservadas correctamente`, 3000, 'Aceptar');
-        this.readAvailability();
-      }
-
-      if (data?.action === 'release') {
-        this.publicService.snack(`Las mesas reservadas a ${data.ticket.tx_name} fueron liberadas correctamente`, 3000, 'Aceptar');
-        this.readAvailability();
-      }
-
-    })
-  }
 
 
 
@@ -117,13 +91,4 @@ export class ScheduleComponent implements OnInit {
 
 
 
-
-interface bottomSheetRelease {
-  // update schedule
-  action: string;
-  tables: number[];
-  interval: number;
-  // push on pending tickets
-  ticket: Ticket;
-}
 

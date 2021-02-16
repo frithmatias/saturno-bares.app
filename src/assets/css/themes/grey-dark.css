@@ -2660,7 +2660,7 @@ td.mat-footer-cell {
 
 .mat-stepper-horizontal,
 .mat-stepper-vertical {
-    background-color: #fff
+    background-color: var(--bg);
 }
 
 .mat-stepper-vertical-line::before {

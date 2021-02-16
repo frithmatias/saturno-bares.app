@@ -30,10 +30,10 @@
                                 (click)="check()"> AAM
                             </mat-slide-toggle>
                         </div>
-                        <div class="w-50 text-right">
+                        <div class="w-50 text-right">Estado Actual: 
                             [
-                            <apan *ngIf="adminService.settings.bl_spm_auto">Activado</apan>
-                            <apan *ngIf="!adminService.settings.bl_spm_auto">Desactivado</apan>
+                            <apan *ngIf="adminService.settings.bl_spm_auto">Autmático</apan>
+                            <apan *ngIf="!adminService.settings.bl_spm_auto">Manual</apan>
                             ]
                         </div>
 

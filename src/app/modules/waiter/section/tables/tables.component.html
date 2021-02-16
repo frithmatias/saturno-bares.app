@@ -108,8 +108,9 @@
             [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
             <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ t.nm_table }}</div>
-
-            <app-table-info [listmode]="listmode" [table]="t"></app-table-info>
+            <div class="table-button-icon">
+                <app-table-info [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-info>
+            </div>
 
         </button>
 
@@ -210,9 +211,9 @@
                     <tr>
                         <td class="button-icon mdi mdi-power xl"></td>
                         <td class="button-text">
-                            <mat-slide-toggle (click)="toggleTableStatus(table)"
+                            <mat-slide-toggle (change)="toggleTableStatus(table)"
                                 [checked]="table.tx_status !== 'paused'"
-                                [disabled]="table.tx_status === 'busy' || table.tx_status === 'waiting' || table.tx_status === 'reserved'">
+                                [disabled]="table.tx_status === 'busy' || table.tx_status === 'waiting' || table.tx_status === 'reserved' || toggling">
                             </mat-slide-toggle>
                         </td>
                     </tr>

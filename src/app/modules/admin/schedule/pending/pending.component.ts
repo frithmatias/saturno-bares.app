@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
-import { Table } from '../../../../interfaces/table.interface';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { WaiterService } from '../../../waiter/waiter.service';
 import { PublicService } from '../../../public/public.service';

@@ -5,10 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { PublicService } from '../../modules/public/public.service';
 import { LoginService } from '../../services/login.service';
-
 import { environment } from 'src/environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import Swal from 'sweetalert2';
 
 declare const gapi: any;
 
@@ -25,8 +22,7 @@ export class RegisterComponent implements OnInit {
 		private router: Router,
 		private publicService: PublicService,
 		private loginService: LoginService,
-		private wsService: WebsocketService,
-		private snack: MatSnackBar
+		private wsService: WebsocketService
 	) { }
 
 	ngOnInit() {
@@ -80,7 +76,7 @@ export class RegisterComponent implements OnInit {
 	registrarUsuario() {
 
 		if (this.forma.invalid) {
-			this.snack.open('Faltan datos por favor verifique', 'Aceptar', { duration: 5000 });
+			this.publicService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
 			return;
 		}
 
@@ -98,12 +94,12 @@ export class RegisterComponent implements OnInit {
 
 		this.loginService.createUser(user).subscribe((data: any) => {
 			if (data.ok) {
-				Swal.fire('Usuario creado', 'Por favor ahora ingrese con su usuario y contraseña', 'success');
-				this.router.navigate(['/login'])
+				this.publicService.snack('Usuario creado. Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
+				this.router.navigate(['/activate'])
 			}
 		},
 			() => {
-				this.snack.open('Error al registrar el usuario', 'Aceptar', { duration: 5000 });
+				this.publicService.snack('Error al registrar el usuario', 5000, 'Aceptar');
 			}
 		)
 	}
@@ -137,7 +133,7 @@ export class RegisterComponent implements OnInit {
 					}
 				},
 				() => {
-					this.snack.open('Error de validación en Google', null, { duration: 2000 });
+					this.publicService.snack('Error de validación en Google', 2000, null);
 				}
 			);
 		});

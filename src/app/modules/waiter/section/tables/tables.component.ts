@@ -29,6 +29,7 @@ export class TablesComponent implements OnInit {
   displayedColumns: string[] = ['estado', 'mesa', 'capacidad', 'ticket', 'ocupacion', 'tp', 'ta'];
   listmode = false;
   table: Table;
+  toggling: string = null;
 
   constructor(
     public loginService: LoginService,
@@ -55,6 +56,7 @@ export class TablesComponent implements OnInit {
 
   selectTable = (table: Table) => {
     this.table = table;
+    console.log(table);
   };
 
   setListMode = () => {
@@ -72,10 +74,11 @@ export class TablesComponent implements OnInit {
 
   toggleTableStatus = (table: Table) => {
 
-    if (table.tx_status === 'busy' || table.tx_status === 'waiting' || table.tx_status === 'reserved') return;
+    this.toggling = table._id;
     let idTable = table._id;
     this.waiterService.toggleTableStatus(idTable).subscribe(
       (data: TableResponse) => {
+        this.toggling = null;
         if (data.ok) {
           this.publicService.snack(data.msg, 5000);
         } else {
@@ -97,7 +100,6 @@ export class TablesComponent implements OnInit {
         }
       });
   };
-
 
   resetTable = (table: Table) => {
 
