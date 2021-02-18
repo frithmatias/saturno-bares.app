@@ -50,9 +50,10 @@ export class WaiterService {
 		return this.http.get(url);
 	}
 
-	toggleTableStatus(idTable: string) {
-		const url = environment.api + '/table/toggletablestatus/' + idTable;
-		return this.http.get(url);
+	toggleTableStatus(idTable: string, actualStatus: string) {
+		const url = environment.api + '/table/toggletablestatus';
+		const data = {idTable, actualStatus};
+		return this.http.post(url, data);
 	}
 
 	assignTablesPending(idTicket: string, blPriority: boolean = false, blFirst: boolean, cdTables: number[]) {

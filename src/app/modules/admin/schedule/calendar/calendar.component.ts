@@ -15,7 +15,8 @@ export class CalendarComponent implements OnInit {
   @Input() availability: availability[] = [];
   @Input() tables: Table[] = [];
   @Input() idSection: string;
-  @Output() readAvailability = new EventEmitter();
+
+  @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
   tableSelected: avTable;
 
@@ -33,15 +34,12 @@ export class CalendarComponent implements OnInit {
     // table.blReserved ? release : create;
 
     this.bottomSheet.open(BottomsheetComponent, { data: { table, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
-
       if (data?.action === 'create') {
-        this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron reservadas correctamente`, 3000, 'Aceptar');
-        this.readAvailability.emit();
+        this.pendingUpdated.emit(data.ticket);
       }
 
       if (data?.action === 'release') {
-        this.publicService.snack(`Las mesas reservadas a ${data.ticket.tx_name} fueron liberadas correctamente`, 3000, 'Aceptar');
-        this.readAvailability.emit();
+        this.pendingUpdated.emit(data.ticket);
 
       }
 

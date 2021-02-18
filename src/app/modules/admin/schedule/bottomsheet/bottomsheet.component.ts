@@ -102,14 +102,13 @@ export class BottomsheetComponent implements OnInit {
   }
 
   assignTablesPending = () => {
-
+    // asigna cero mesas
     let blPriority = this.data.table.ticketOwner.bl_priority;
     let blFirst = false;
     let idTicket = this.data.table.ticketOwner._id;
     let cdTables = [];
 
-    this.waiterService.assignTablesPending(idTicket, blPriority, blFirst, cdTables)
-    .subscribe((resp: TicketResponse) => {
+    this.waiterService.assignTablesPending(idTicket, blPriority, blFirst, cdTables).subscribe((resp: TicketResponse) => {
       if (resp.ok) {
         this.bottomSheetRef.dismiss({
           action: 'release',

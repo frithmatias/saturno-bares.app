@@ -90,7 +90,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   readTables = (): Promise<Table[]> => {
     return new Promise((resolve, reject) => {
-      let idCompany = this.loginService.user.id_company._id;
+      const idCompany = this.loginService.user.id_company._id;
       this.waiterService.readTables(idCompany).subscribe(
         (data: TablesResponse) => {
           if (data.ok) {
@@ -138,7 +138,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   readTickets = (): Promise<Ticket[]> => {
     return new Promise((resolve) => {
-      let idCompany = this.loginService.user.id_company?._id;
+      const idCompany = this.loginService.user.id_company?._id;
       return this.waiterService
         .readTickets(idCompany)
         .subscribe((data: TicketsResponse) => {

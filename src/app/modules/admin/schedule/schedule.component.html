@@ -9,6 +9,16 @@
             <form class="w-100" autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
 
                 <mat-form-field color="accent" class="w-50 px-2">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtSelected" [min]="minDate"
+                        [max]="maxDate" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                </mat-form-field>
+
+
+                <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Sector</mat-label>
                     <mat-select formControlName="idSection" name="idSection" required>
                         <mat-option *ngFor="let section of publicService.sections" [value]="section._id"> {{
@@ -17,14 +27,6 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field color="accent" class="w-50 px-2">
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtSelected" [min]="minDate"
-                        [max]="maxDate" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
 
             </form>
         </div>
@@ -51,7 +53,7 @@
                     </mat-expansion-panel-header>
 
                     <!-- PENDING COMPONENT -->
-                    <app-pending [pending]="pending" [availability]="availability"
+                    <app-pending *ngIf="pending.length > 0" [pending]="pending" [availability]="availability"
                         (pendingUpdated)="pendingUpdated($event)"></app-pending>
 
                 </mat-expansion-panel>
@@ -60,7 +62,7 @@
                 <!-- CALENDAR -->
                 <!------------------------------>
                 <app-calendar [availability]="availability" [tables]="tables" [idSection]="idSection"
-                    (readAvailability)="readAvailability()"></app-calendar>
+                    (pendingUpdated)="pendingUpdated($event)"></app-calendar>
             </div>
 
 

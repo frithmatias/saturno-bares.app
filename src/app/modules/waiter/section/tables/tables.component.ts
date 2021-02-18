@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Table } from 'src/app/interfaces/table.interface';
 import { IntervalToHmsPipe } from '../../../../pipes/interval-to-hms.pipe';
 import { WaiterService } from '../../waiter.service';
@@ -21,7 +21,7 @@ import { PublicService } from '../../../public/public.service';
   ]
 })
 export class TablesComponent implements OnInit {
-
+  @Output() updateTables = new EventEmitter();
   @Input() tables: Table[] = [];
   @Input() tickets: Ticket[] = [];
   @Input() busyTablesTimes: any;
@@ -45,6 +45,7 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    
     if (changes.tables && this.table) {
       this.table = changes.tables.currentValue.filter((table: Table) => this.table._id === table._id)[0];
     }
@@ -56,7 +57,6 @@ export class TablesComponent implements OnInit {
 
   selectTable = (table: Table) => {
     this.table = table;
-    console.log(table);
   };
 
   setListMode = () => {
@@ -75,15 +75,21 @@ export class TablesComponent implements OnInit {
   toggleTableStatus = (table: Table) => {
 
     this.toggling = table._id;
-    let idTable = table._id;
-    this.waiterService.toggleTableStatus(idTable).subscribe(
+    const idTable = table._id;
+    const actualStatus = table.tx_status;
+    this.waiterService.toggleTableStatus(idTable, actualStatus).subscribe(
       (data: TableResponse) => {
         this.toggling = null;
         if (data.ok) {
-          this.publicService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 3000);
         } else {
-          this.publicService.snack(data.msg, 5000);
+          this.publicService.snack(data.msg, 3000);
         }
+      },
+      () => {
+        // on error update all tables (ie other waiter change table status)
+        this.toggling = null;
+        this.updateTables.emit();
       }
     );
   };

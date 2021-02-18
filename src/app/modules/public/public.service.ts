@@ -105,8 +105,8 @@ export class PublicService {
     return this.http.post(environment.api + '/t/readavailability/', data);
   }
 
-  readPending(idSection: string, dtReserve: Date): Observable<object> {
-    let data = { idSection, dtReserve };
+  readPending(idCompany:string, idYear: number, idMonth: number): Observable<object> {
+    let data = { idCompany, idYear, idMonth };
     return this.http.post(environment.api + '/t/readpending/', data);
   }
 

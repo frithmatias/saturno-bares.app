@@ -249,7 +249,7 @@ export class TicketCreateComponent implements OnInit {
           this.availability.push({
             disabled: this.ticketForm.value.nmPersons > av.capacity,
             value: new Date(av.interval).getHours(),
-            text: new Date(av.interval).getHours() + ':00 (' + av.capacity + ' Personas)',
+            text: new Date(av.interval).getHours() + ':00 Max ' + av.capacity + ' Pers',
             tables: [0]
           })
         })

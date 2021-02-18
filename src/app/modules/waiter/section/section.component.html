@@ -19,7 +19,7 @@
 
           <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
           </app-sections>
-          <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes"></app-tables>
+          <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes" (updateTables)="readTables()"></app-tables>
           <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
           <app-queued [tables]="tables" [queued]="queued"></app-queued>
 
