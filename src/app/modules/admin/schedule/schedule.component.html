@@ -1,12 +1,12 @@
-<div class="page-container animated fadeIn text-left">
-    <mat-card class="h-100">
+<div class="page-container animated fadeIn">
+    <mat-card>
 
         <!------------------------------>
-        <!-- FORM -->
+        <!-- DATE SECTION INPUT -->
         <!------------------------------>
-
-        <div class="d-flex">
-            <form class="w-100" autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
+        <mat-card>
+            <!-- Form -->
+            <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
 
                 <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Fecha</mat-label>
@@ -27,22 +27,17 @@
                     </mat-select>
                 </mat-form-field>
 
-
             </form>
-        </div>
 
-
-
-        <mat-card-content>
-
-            <div *ngIf="!idSection || !dtSelected" class="text-center">
-                Seleccioná un sector y un día para administrar tu agenda.
+            <!-- Pendings by section info -->
+            <div *ngIf="!dtSelected" class="sm text-accent text-center">
+                Seleccioná fecha para ver tu agenda.
             </div>
 
-            <div *ngIf="dtSelected && pendingBySectionMap" class="sm mx-2 mt-2">
+            <div *ngIf="dtSelected && pendingBySectionMap" class="sm">
                 <table>
                     <tr class="text-accent">
-                        Solicitudes Penientes de Revisión para el {{ dtSelected | dateToString : 'DD [de] MMMM'}}
+                        Solicitudes Pendientes para el {{ dtSelected | dateToString : 'DD [de] MMMM'}}
                     </tr>
                     <tr *ngFor="let section of publicService.sections">
                         <td>
@@ -54,47 +49,43 @@
                     </tr>
                 </table>
             </div>
+        </mat-card>
 
-            <div *ngIf="idSection && dtSelected">
-                <!------------------------------>
-                <!-- REQUESTS -->
-                <!------------------------------>
+        <!------------------------------>
+        <!-- PENDINGS -->
+        <!------------------------------>
+        <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected && pending.length > 0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span class="xl mdi mdi-account-clock text-deco"></span>
+                    <span class="badge text-white bg-primary">{{pending.length}}</span>
+                    <span class="sidenav-title-text mx-2 align-self-center md">Solicitudes de Mesa</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-                <mat-expansion-panel class="my-3" [disabled]="pending.length === 0">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <span class="xl mdi mdi-account-clock text-deco"></span>
-                            <span class="badge text-white bg-primary">{{pending.length}}</span>
-                            <span class="sidenav-title-text mx-2 align-self-center md">Solicitudes de Mesa</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
+            <!-- PENDING COMPONENT -->
+            <app-pending *ngIf="pending.length > 0" [pending]="pending" [availability]="availability"
+                (pendingUpdated)="pendingUpdated($event)"></app-pending>
 
-                    <!-- PENDING COMPONENT -->
-                    <app-pending *ngIf="pending.length > 0" [pending]="pending" [availability]="availability"
-                        (pendingUpdated)="pendingUpdated($event)"></app-pending>
+        </mat-expansion-panel>
 
-                </mat-expansion-panel>
+        <!------------------------------>
+        <!-- CALENDAR -->
+        <!------------------------------>
+        <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span class="xl mdi mdi-calendar text-deco"></span>
+                    <span class="sidenav-title-text mx-2 align-self-center md">Agenda</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-                <!------------------------------>
-                <!-- CALENDAR -->
-                <!------------------------------>
-                <app-calendar [availability]="availability" [tables]="tables" [idSection]="idSection"
-                    (pendingUpdated)="pendingUpdated($event)"></app-calendar>
-            </div>
+            <!-- CALENDAR COMPONENT -->
+            <app-calendar [availability]="availability" [tables]="tables" [idSection]="idSection"
+                (pendingUpdated)="pendingUpdated($event)"></app-calendar>
 
+        </mat-expansion-panel>
 
-        </mat-card-content>
-
-        <mat-card-actions>
-            <!-- <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-ticket-account xl"></td>
-                  <td class="button-text">+Ticket</td>
-                </tr>
-              </table>
-            </button> -->
-        </mat-card-actions>
     </mat-card>
 
 </div>

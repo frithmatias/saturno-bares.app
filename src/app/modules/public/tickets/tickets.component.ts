@@ -34,15 +34,15 @@ export class TicketsComponent implements OnInit {
     if (localStorage.getItem('social')) {
       this.social = JSON.parse(localStorage.getItem('social'));
       const txPlatform = this.social.txPlatform;
-      const idUser = this.social.idUser;
-      if (txPlatform && idUser) {
-        this.getUserTickets(txPlatform, idUser); // update tickets
+      const txEmail = this.social.txEmail;
+      if (txPlatform && txEmail) {
+        this.getUserTickets(txPlatform, txEmail); // update tickets
       }
     }
 
   }
 
-  getUserTickets(txPlatform: string, idUser: string): void {
+  getUserTickets(txPlatform: string, txEmail: string): void {
     const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
     this.loading = true;
 
@@ -52,7 +52,7 @@ export class TicketsComponent implements OnInit {
       waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
     }
 
-    this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
+    this.publicService.getUserTickets(txPlatform, txEmail).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
@@ -99,8 +99,8 @@ export class TicketsComponent implements OnInit {
       this.social = response;
     }
 
-    if (response.txPlatform && response.idUser) {
-      this.getUserTickets(response.txPlatform, response.idUser); // update tickets
+    if (response.txPlatform && response.txEmail) {
+      this.getUserTickets(response.txPlatform, response.txEmail); // update tickets
     }
   }
 }

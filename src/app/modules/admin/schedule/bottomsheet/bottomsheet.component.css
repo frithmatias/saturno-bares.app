@@ -1,13 +1,12 @@
-.ticket-wrapper .ticket-data table {
+.ticket-data table {
     width      : 100%;
     line-height: 1.2em;
     font-size  : small;
 }
 
-.actions {
-    display       : flex;
-    flex-direction: row;
-    flex-wrap     : wrap;
-    place-content : center;
-    margin-top    : 20px;
+.ticket-actions {
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-flow: wrap;
 }

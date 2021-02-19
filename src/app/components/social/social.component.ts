@@ -21,7 +21,7 @@ interface facebookResponse {
 export interface Social {
   txPlatform: string;
   txToken: string;
-  idUser: string;
+  txEmail: string;
   txName: string;
   txImage: string;
 }
@@ -101,7 +101,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
         const social: Social = {
           txPlatform: 'google',
           txToken: googleUser.getAuthResponse().id_token,
-          idUser: googleUser.Fs.lt,
+          txEmail: googleUser.Fs.lt,
           txName: googleUser.Fs.sd,
           txImage: googleUser.Fs.wI
         };
@@ -158,7 +158,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
         const social: Social = {
           txPlatform: 'facebook',
           txToken: null,
-          idUser: response.email,
+          txEmail: response.email,
           txName: response.name,
           txImage: null
         };
@@ -191,7 +191,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
       const social: Social = {
         txPlatform: 'telegram',
         txToken: null,
-        idUser: response.id,
+        txEmail: response.id,
         txName: response.first_name,
         txImage: response.photo_url
       };

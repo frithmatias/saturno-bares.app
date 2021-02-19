@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -10,8 +9,8 @@ import { LoginService } from '../../services/login.service';
 // Interfaces
 import { User, UserResponse } from '../../interfaces/user.interface';
 import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
-import { Table, TablesResponse } from '../../interfaces/table.interface';
-import { Section, SectionsResponse } from '../../interfaces/section.interface';
+import { Table } from '../../interfaces/table.interface';
+import { Section } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
 import { Settings, SettingsResponse } from 'src/app/interfaces/settings.interface';
 import { Observable } from 'rxjs';
@@ -190,24 +189,25 @@ export class AdminService {
 
 	sendMessage(idCompany: string, txMessage: string) {
 		const url = environment.api + '/settings/sendmessage';
-		return this.http.post(url, {idCompany, txMessage});
+		return this.http.post(url, { idCompany, txMessage });
 	}
 
 
 	// ========================================================
 	// Schedule Methods
 	// ========================================================
-	
+
 	createTicket(
 		blContingent: boolean,
 		txName: string,
 		nmPersons: number,
 		idSection: string,
 		tmReserve: Date,
-		idUser: string,
+		txEmail: string,
+		nmPhone: number,
 		cdTables: number[]
 	): Observable<object> {
-		let data = { blContingent, txName, nmPersons, idSection, tmReserve, idUser, cdTables };
+		let data = { blContingent, txName, nmPersons, idSection, tmReserve, txEmail, nmPhone, cdTables };
 		return this.http.post(environment.api + '/t/createticket/', data);
 	}
 }

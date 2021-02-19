@@ -92,9 +92,9 @@ export class TicketCreateComponent implements OnInit {
     if (localStorage.getItem('social')) {
       this.social = JSON.parse(localStorage.getItem('social'));
       const txPlatform = this.social.txPlatform;
-      const idUser = this.social.idUser;
-      if (txPlatform && idUser) {
-        this.getUserTickets(txPlatform, idUser); // update tickets
+      const txEmail = this.social.txEmail;
+      if (txPlatform && txEmail) {
+        this.getUserTickets(txPlatform, txEmail); // update tickets
       }
     }
   }
@@ -107,7 +107,7 @@ export class TicketCreateComponent implements OnInit {
     }
   }
 
-  getUserTickets(txPlatform: string, idUser: string): void {
+  getUserTickets(txPlatform: string, txEmail: string): void {
     this.loading = true;
 
     // if exists get waiting ticket
@@ -116,7 +116,7 @@ export class TicketCreateComponent implements OnInit {
       waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
     }
 
-    this.publicService.getUserTickets(txPlatform, idUser).subscribe((data: TicketsResponse) => {
+    this.publicService.getUserTickets(txPlatform, txEmail).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
@@ -320,12 +320,12 @@ export class TicketCreateComponent implements OnInit {
     const idTicket = this.ticket._id;
     const txPlatform = response.txPlatform;
     const txToken = response.txToken || null;
-    const idUser = response.idUser || null;
+    const txEmail = response.txEmail || null;
     const txName = response.txName || null;
     const txImage = response.txImage || null;
 
     this.serverMessage = null;
-    this.publicService.validateTicket(idTicket, txPlatform, txToken, idUser, txName, txImage).subscribe((data: TicketResponse) => {
+    this.publicService.validateTicket(idTicket, txPlatform, txToken, txEmail, txName, txImage).subscribe((data: TicketResponse) => {
       if (data.ok) {
         this.ticket = data.ticket;
         this.tickets = this.tickets.filter(ticket => ticket.tx_status !== 'waiting'); // remove the 'waiting' ticket from ls 

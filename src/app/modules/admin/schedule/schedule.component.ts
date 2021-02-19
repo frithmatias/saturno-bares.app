@@ -90,6 +90,7 @@ export class ScheduleComponent implements OnInit {
     const dtSelected = this.scheduleForm.value.dtSelected;
     this.publicService.readAvailability(nmPersons, idSection, dtSelected).subscribe((data: availabilityResponse) => {
       this.availability = data.availability;
+      console.log(data)
       // data.availability.map(av => {
       //   this.availability.push({ interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity });
       // });

@@ -17,6 +17,7 @@ import { ButtonComponent } from './button/button.component';
 import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 import { ThemeComponent } from './theme/theme.component';
 import { SocialComponent } from './social/social.component';
+import { MessengerComponent } from './messenger/messenger.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SocialComponent } from './social/social.component';
     ButtonComponent,
     BottomsheetComponent,
     ThemeComponent,
-    SocialComponent
+    SocialComponent,
+    MessengerComponent
   ],
   imports: [
     RouterModule,
@@ -47,7 +49,8 @@ import { SocialComponent } from './social/social.component';
     ButtonComponent,
     UploaderComponent,
     ThemeComponent,
-    SocialComponent
+    SocialComponent,
+    MessengerComponent
   ]
 })
 export class ComponentsModule { }

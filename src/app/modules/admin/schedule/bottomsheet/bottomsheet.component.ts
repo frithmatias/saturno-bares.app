@@ -7,6 +7,7 @@ import { PublicService } from '../../../public/public.service';
 import { WaiterService } from '../../../waiter/waiter.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
+import { MessageResponse } from '../../../../interfaces/messenger.interface';
 
 
 interface dataSheet {
@@ -27,7 +28,7 @@ export class BottomsheetComponent implements OnInit {
   cdTables: number[] = [];
   title: string;
   subtitle: string;
-
+  showMessageForm = false;
   nmOccupation: number;
 
   constructor(
@@ -40,7 +41,7 @@ export class BottomsheetComponent implements OnInit {
 
     if (this.data.table.blReserved) {
       this.title = 'Editar Reserva';
-      this.subtitle = 'Ver ticket o des-asignar mesa al cliente';
+      this.subtitle = 'Ver ticket o liberar mesas asignadas';
       this.nmOccupation = Math.round(this.data.table.nmPersons / this.data.table.ticketOwner.nm_persons * 100);
       
     } else {
@@ -56,7 +57,8 @@ export class BottomsheetComponent implements OnInit {
     this.ticketForm = new FormGroup({
       txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       nmPersons: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000)]),
-      idUser: new FormControl('', [Validators.required, Validators.min(999999), Validators.max(99999999999)]),
+      txEmail: new FormControl('', [Validators.email, Validators.maxLength(50)]),
+      nmPhone: new FormControl('', [Validators.min(999999), Validators.max(99999999999)])
     });
 
     this.ticketForm.controls.nmPersons.valueChanges.subscribe(persons => {
@@ -87,11 +89,12 @@ export class BottomsheetComponent implements OnInit {
     const txName = this.ticketForm.value.txName;
     const nmPersons = this.ticketForm.value.nmPersons;
     const idSection = this.data.idSection;
-    const idUser = this.ticketForm.value.idUser;
+    const txEmail = this.ticketForm.value.txEmail;
+    const nmPhone = this.ticketForm.value.nmPhone;
     const cdTables = this.cdTables;
     const tmReserve = this.data.availability.interval;
 
-    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmReserve, idUser, cdTables).subscribe((resp: TicketResponse) => {
+    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmReserve, txEmail, nmPhone, cdTables).subscribe((resp: TicketResponse) => {
       if (resp.ok) {
         this.bottomSheetRef.dismiss({
           action: 'create',
@@ -154,11 +157,12 @@ export class BottomsheetComponent implements OnInit {
 
   };
 
-  sendMessage() {
-    this.publicService.snack('Esta opción todavía no esta disponible.', 5000, 'Aceptar');
-  }
-
   closeBottomSheet() {
     this.bottomSheetRef.dismiss();
+  }
+
+  messageResponse(response: MessageResponse){
+    this.publicService.snack(response.msg, 5000, 'Aceptar');
+    this.showMessageForm = false;
   }
 }

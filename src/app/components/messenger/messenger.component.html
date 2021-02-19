@@ -1,0 +1,19 @@
+<div class="animated fadeIn text-center">
+    <div *ngIf="loading">
+        <mat-spinner diameter="20"></mat-spinner>
+        <div class="mt-2">
+            Enviando email...
+        </div>
+    </div>
+    <div *ngIf="!loading">
+        <mat-form-field color="accent" class="mt-4 w-100">
+            <mat-label>Enviar un email a {{ticket.tx_email}}</mat-label>
+            <input type="text" autocomplete="off" #textmsg matInput placeholder="Mensaje"
+                (keydown.enter)="sendMessage( textmsg )">
+        </mat-form-field>
+    
+        <button (click)="sendMessage( textmsg )" mat-button>
+            Enviar
+        </button>
+    </div>
+</div>

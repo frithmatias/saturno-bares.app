@@ -25,15 +25,16 @@
     <ng-container matColumnDef="expandedDetail">
         <td class="td-expanded px-0" mat-cell *matCellDef="let ticket" [attr.colspan]="displayedColumns.length">
             <div class="ticket-container" [@detailExpand]="ticket._id == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="p-2 w-100">
+                <div class="p-4 w-100">
 
                     <!------------------------------>
                     <!-- TABLES BUTTONS -->
                     <!------------------------------>
 
-                    <div class="text-center py-2">
+                    <div class="text-center mt-4">
                         <button mat-raised-button [color]="ticket.cd_tables.includes(table.nmTable)?'active':''"
-                            *ngFor="let table of tablesAvailability" class="m-1" (click)="setReserve(table, ticket)" [disabled]="table.blReserved">
+                            *ngFor="let table of tablesAvailability" class="m-1" (click)="setReserve(table, ticket)"
+                            [disabled]="table.blReserved">
 
                             <!-- TABLE NUMBER -->
                             <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">
@@ -50,6 +51,10 @@
                         </button>
                     </div>
 
+                    <div *ngIf="showMessageForm" class="mt-4">
+                        <app-messenger [ticket]="ticket" (messageResponse)="messageResponse($event)"></app-messenger>
+                    </div>
+
                     <hr>
                     <!------------------------------>
                     <!-- TICKET DATA -->
@@ -57,47 +62,51 @@
 
                     <div class="ticket-actions">
 
-                        <button mat-raised-button color="primary" class="action-button">
-                            <table>
-                                <tr>
-                                    <td class="button-icon mdi mdi-human-wheelchair xl"></td>
-                                    <td class="button-text">
-                                        <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
-                                        </mat-slide-toggle>
-                                    </td>
-                                </tr>
-                            </table>
-                        </button>
-
-                        <button mat-raised-button color="active" class="action-button" (click)="assignTablesPending(ticket)">
-                            <table>
-                                <tr>
-                                    <td class="button-icon bg-primary mdi  mdi-content-save xl"></td>
-                                    <td class="button-text">Guardar</td>
-                                </tr>
-                            </table>
-                        </button>
-
-                        <button *ngIf="!ticket.bl_contingent" mat-raised-button class="action-button"
-                            (click)="sendMessage(ticket)" disabled>
-                            <table>
-                                <tr>
-                                    <td class="button-icon  mdi  mdi-send xl"></td>
-                                    <td class="button-text">Mensaje</td>
-                                </tr>
-                            </table>
-                        </button>
-
-                        <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
-                            <table>
-                                <tr>
-                                    <td class="button-icon  mdi  mdi-delete xl"></td>
-                                    <td class="button-text">Eliminar</td>
-                                </tr>
-                            </table>
-                        </button>
-
-
+                        <div>
+                            <button mat-raised-button color="primary" class="action-button">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon mdi mdi-human-wheelchair xl"></td>
+                                        <td class="button-text">
+                                            <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
+                                            </mat-slide-toggle>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-raised-button color="active" class="action-button"
+                                (click)="assignTablesPending(ticket)">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon bg-primary mdi  mdi-content-save xl"></td>
+                                        <td class="button-text">Guardar</td>
+                                    </tr>
+                                </table>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-raised-button class="action-button" color="telegram"
+                                (click)="showMessageForm=!showMessageForm">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon mdi mdi-telegram lg"></td>
+                                        <td class="button-text">Mensaje</td>
+                                    </tr>
+                                </table>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon  mdi  mdi-lock xl"></td>
+                                        <td class="button-text">Finalizar</td>
+                                    </tr>
+                                </table>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -106,7 +115,9 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let ticket; columns: displayedColumns;" [class.expanded-row]="expandedElement === ticket._id"
-        (click)="expandedElement = expandedElement === ticket._id ? null : ticket._id" class="tables-row pointer" (click)="getIntervalAvailability(ticket)"></tr>
+    <tr mat-row *matRowDef="let ticket; columns: displayedColumns;"
+        [class.expanded-row]="expandedElement === ticket._id"
+        (click)="expandedElement = expandedElement === ticket._id ? null : ticket._id" class="tables-row pointer"
+        (click)="getIntervalAvailability(ticket)"></tr>
     <tr mat-row *matRowDef="let ticket; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>

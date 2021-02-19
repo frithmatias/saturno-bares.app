@@ -111,9 +111,9 @@ export class PublicService {
   }
 
 
-  getUserTickets(txPlatform: string, idUser: string) {
-    if (!txPlatform || !idUser) { return; }
-    const url = environment.api + '/t/readusertickets/' + txPlatform + '/' + idUser;
+  getUserTickets(txPlatform: string, txEmail: string) {
+    if (!txPlatform || !txEmail) { return; }
+    const url = environment.api + '/t/readusertickets/' + txPlatform + '/' + txEmail;
     return this.http.get(url);
   }
 
@@ -147,9 +147,9 @@ export class PublicService {
   }
 
   // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
-  validateTicket(idTicket: string, txPlatform: string, txToken: string, idUser: string, txName: string, txImage: string) {
+  validateTicket(idTicket: string, txPlatform: string, txToken: string, txEmail: string, txName: string, txImage: string) {
     const api = '/t/validateticket';
-    const data = { idTicket, txPlatform, txToken, idUser, txName, txImage };
+    const data = { idTicket, txPlatform, txToken, txEmail, txName, txImage };
     const url = environment.api + api;
     return this.http.post(url, data);
   }

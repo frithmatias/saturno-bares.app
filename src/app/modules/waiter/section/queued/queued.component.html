@@ -116,16 +116,17 @@
               <button mat-raised-button color="active" class="action-button" (click)="assignTablesRequested(ticket)">
                 <table>
                   <tr>
-                    <td class="button-icon bg-primary mdi  mdi-content-save xl"></td>
+                    <td class="button-icon bg-primary mdi mdi-content-save xl"></td>
                     <td class="button-text">Guardar</td>
                   </tr>
                 </table>
               </button>
 
-              <button *ngIf="!ticket.bl_contingent" mat-raised-button class="action-button" (click)="sendMessage(ticket)">
+              <button mat-raised-button color="telegram" class="action-button"
+                (click)="sendMessage(ticket)">
                 <table>
                   <tr>
-                    <td class="button-icon  mdi  mdi-send xl"></td>
+                    <td class="button-icon mdi mdi-send xl"></td>
                     <td class="button-text">Mensaje</td>
                   </tr>
                 </table>
@@ -134,8 +135,8 @@
               <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
                 <table>
                   <tr>
-                    <td class="button-icon  mdi  mdi-delete xl"></td>
-                    <td class="button-text">Eliminar</td>
+                    <td class="button-icon mdi mdi-lock xl"></td>
+                    <td class="button-text">Finalizar</td>
                   </tr>
                 </table>
               </button>

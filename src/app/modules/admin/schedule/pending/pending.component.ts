@@ -4,6 +4,7 @@ import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { WaiterService } from '../../../waiter/waiter.service';
 import { PublicService } from '../../../public/public.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
+import { MessageResponse } from '../../../../interfaces/messenger.interface';
 
 @Component({
   selector: 'app-pending',
@@ -25,6 +26,7 @@ export class PendingComponent implements OnInit {
 
   tablesAvailability: tableAvailability[];
   displayedColumns: string[] = ['nmPersons', 'txName', 'tmReserve'];
+  showMessageForm = false;
 
   constructor(
 
@@ -79,7 +81,7 @@ export class PendingComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'client'; // cancelled (not finished)
     if (this.pending) {
-      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((resp: boolean) => {
+      this.publicService.snack(`Querés finalizar el ticket de ${ticket.tx_name}?`, 5000, 'Si, finalizar').then((resp: boolean) => {
         if (resp) {
           this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
               if (resp.ok) {
@@ -92,9 +94,15 @@ export class PendingComponent implements OnInit {
   };
 
   getIntervalAvailability(pending: Ticket): void {
+    console.log(pending, this.availability)
     const intervalRequest = new Date(pending.tm_reserve).getHours();
     const interval = this.availability.find((av: intervalAvailability) => new Date(av.interval).getHours() === intervalRequest);
     this.tablesAvailability = interval.tables;
+  }
+
+  messageResponse(response: MessageResponse){
+    this.publicService.snack(response.msg, 5000, 'Aceptar');
+    this.showMessageForm = false;
   }
 }
 

@@ -3,11 +3,15 @@
     <table class="schedule sm" *ngIf="availability.length > 0">
 
         <thead>
-            <tr>
-                <th class="px-1">Int</th>
-                <th class="px-1">Cap</th>
-                <th class="px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
-            </tr>
+            <th class="tbl px-1"></th>
+            <th class="tbl px-1">#</th>
+            <th class="tbl px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
+        </thead>
+
+        <thead>
+            <th class="cap px-1">Int</th>
+            <th class="cap px-1">Cap</th>
+            <th class="cap px-1" *ngFor="let t of tables">{{t.nm_persons}}</th>
         </thead>
 
         <tbody>
@@ -27,13 +31,11 @@
                     <!-- reserved -->
                     <span *ngIf="t.blReserved" class="mdi  mdi-account-box-outline text-accent pointer"
                         (click)="openBottomSheet(t, av)">
-                        <span class="persons">{{t.nmPersons}}</span>
                     </span>
 
                     <!-- available -->
                     <span *ngIf="!t.blReserved" class="mdi mdi-checkbox-blank-outline text-info pointer"
                         (click)="openBottomSheet(t, av)">
-                        <span class=" persons">{{t.nmPersons}}</span>
                     </span>
 
                 </td>

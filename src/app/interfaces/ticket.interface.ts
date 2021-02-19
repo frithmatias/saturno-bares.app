@@ -15,7 +15,8 @@ export interface Ticket {
 	bl_priority: boolean;
 	tx_name: string;
 	tx_platform: string | null;
-	id_user: string | null;
+	tx_email: string | null;
+	nm_phone: number | null;
 	tx_call: string;
 	tx_status: string; // waiting, pending, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished, killed
 	cd_tables?: number[]; // only for requested and assigned tickets
