@@ -2,10 +2,9 @@ import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { avTable, availability } from '../../../../interfaces/availability.interface';
-import { Ticket, TicketResponse } from '../../../../interfaces/ticket.interface';
+import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { PublicService } from '../../../public/public.service';
 import { WaiterService } from '../../../waiter/waiter.service';
-import { Table } from 'src/app/interfaces/table.interface';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 
@@ -73,11 +72,16 @@ export class BottomsheetComponent implements OnInit {
 
   createTicket(): void {
 
+
+    if (this.cdTables.length === 0) {
+      this.publicService.snack('Seleccione al menos una mesa.', 3000);
+      return;
+    }
+    
     if (this.ticketForm.invalid) {
       this.publicService.snack('Faltan datos por favor verifique.', 3000);
       return;
     }
-
 
     const blContingent = true;
     const txName = this.ticketForm.value.txName;
@@ -87,8 +91,7 @@ export class BottomsheetComponent implements OnInit {
     const cdTables = this.cdTables;
     const tmReserve = this.data.availability.interval;
 
-    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmReserve, idUser, cdTables)
-    .subscribe((resp: TicketResponse) => {
+    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmReserve, idUser, cdTables).subscribe((resp: TicketResponse) => {
       if (resp.ok) {
         this.bottomSheetRef.dismiss({
           action: 'create',
@@ -134,14 +137,14 @@ export class BottomsheetComponent implements OnInit {
 
     const idTicket = ticket._id;
     const reqBy = 'client';
-    this.publicService.snack('Desea cancelar el ticket actual?', 5000, 'Si, cancelar').then((ok: boolean) => {
+    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Si, finalizar.').then((ok: boolean) => {
       if (ok) {
         // publicService.endTicket() 
         // -> reqBy: 'waiter' -> tx_status: 'finished'
         // -> reqBy: 'client' -> tx_status: 'cancelled'
         this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
           if (resp.ok) {
-            this.bottomSheetRef.dismiss({ action: 'cancel', tables: resp.ticket.cd_tables });
+            this.bottomSheetRef.dismiss({ action: 'cancel', ticket: resp.ticket });
           } else {
             this.publicService.snack('Error al asignar las mesas!', 2000);
           }
@@ -153,5 +156,9 @@ export class BottomsheetComponent implements OnInit {
 
   sendMessage() {
     this.publicService.snack('Esta opción todavía no esta disponible.', 5000, 'Aceptar');
+  }
+
+  closeBottomSheet() {
+    this.bottomSheetRef.dismiss();
   }
 }

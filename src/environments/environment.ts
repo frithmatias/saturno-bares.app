@@ -5,7 +5,7 @@
 export const environment = {
 	production: false,
 	api: 'https://localhost:5000',
-	gapi_uid: '1096997200162-ltingmttj4f6ig8cij6e9g94ur9fs81m.apps.googleusercontent.com'
+	gapi_uid: '1096997200162-nk36n7qo789npugecaccmta5eumcq0gr.apps.googleusercontent.com'
 };
 
 /*

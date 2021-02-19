@@ -21,11 +21,12 @@ body {
     font-display: swap;
 }
 
-input:-internal-autofill-selected {
-    appearance      : menulist-button;
-    background-color: rgb(207, 207, 17) !important;
-    background-image: none !important;
-    color           : -internal-light-dark(rgb(83, 19, 232), rgb(222, 26, 26)) !important;
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--mat-card-bg) inset !important;
+
 }
 
 table {

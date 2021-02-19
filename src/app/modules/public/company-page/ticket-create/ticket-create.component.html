@@ -70,7 +70,7 @@
               Hola {{ ticket.tx_name }}, tu reserva quedó confirmada.
             </p>
             <p>
-              Te esperan el {{ ticket.tm_reserve | dateToString}}. Faltan {{ ticket.tm_reserve | dateToRemaining }}.
+              Te esperan el {{ ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ ticket.tm_reserve | dateToRemaining }} )
             </p>
             <p>
               Reserva confirmada con tu cuenta {{ ticket.id_user }} de {{ ticket.tx_platform }}.

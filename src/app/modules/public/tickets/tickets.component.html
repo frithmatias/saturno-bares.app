@@ -60,7 +60,7 @@
 
       <mat-card-content class="text-info sm fw-200">
         <div>
-          {{ticket.tm_reserve | dateToString}} ( {{ticket.tm_reserve | dateToRemaining}} )
+          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ticket.tm_reserve | dateToRemaining}} )
         </div>
         <div>
           {{ticket.tx_status | ticketStatus}}
@@ -134,7 +134,7 @@
               </div>
             </td>
             <td class="text-left">
-              {{ticket.tm_reserve | dateToString}} <span class="sm text-accent">( {{ticket.tm_reserve | dateToRemaining}} )</span>
+              {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} <span class="sm text-accent">( {{ticket.tm_reserve | dateToRemaining}} )</span>
             </td>
             <td class="text-right text-warn">
               {{ticket.tx_status}}

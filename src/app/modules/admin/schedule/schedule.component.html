@@ -21,8 +21,8 @@
                 <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Sector</mat-label>
                     <mat-select formControlName="idSection" name="idSection" required>
-                        <mat-option *ngFor="let section of publicService.sections" [value]="section._id"> {{
-                            section.tx_section }}
+                        <mat-option *ngFor="let section of publicService.sections" [value]="section._id">
+                            {{ section.tx_section }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -34,8 +34,25 @@
 
 
         <mat-card-content>
+
             <div *ngIf="!idSection || !dtSelected" class="text-center">
                 Seleccioná un sector y un día para administrar tu agenda.
+            </div>
+
+            <div *ngIf="dtSelected && pendingBySectionMap" class="sm mx-2 mt-2">
+                <table>
+                    <tr class="text-accent">
+                        Solicitudes Penientes de Revisión para el {{ dtSelected | dateToString : 'DD [de] MMMM'}}
+                    </tr>
+                    <tr *ngFor="let section of publicService.sections">
+                        <td>
+                            {{ section.tx_section }}
+                        </td>
+                        <td>
+                            {{pendingBySectionMap.get(section.tx_section)}}
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <div *ngIf="idSection && dtSelected">

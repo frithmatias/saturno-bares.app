@@ -25,13 +25,13 @@
                 <td class="px-1" *ngFor="let t of av.tables">
 
                     <!-- reserved -->
-                    <span *ngIf="t.blReserved" class="mdi  mdi-account-box-outline text-warn pointer"
+                    <span *ngIf="t.blReserved" class="mdi  mdi-account-box-outline text-accent pointer"
                         (click)="openBottomSheet(t, av)">
                         <span class="persons">{{t.nmPersons}}</span>
                     </span>
 
                     <!-- available -->
-                    <span *ngIf="!t.blReserved" class="mdi mdi-checkbox-blank-outline text-active pointer"
+                    <span *ngIf="!t.blReserved" class="mdi mdi-checkbox-blank-outline text-info pointer"
                         (click)="openBottomSheet(t, av)">
                         <span class=" persons">{{t.nmPersons}}</span>
                     </span>

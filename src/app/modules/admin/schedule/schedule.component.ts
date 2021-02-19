@@ -25,9 +25,13 @@ export class ScheduleComponent implements OnInit {
   availability: availability[] = [];
   tables: Table[] = [];
   pendingMonth: Ticket[] = [];
+  pendingDate: Ticket[] = [];
+  pendingBySectionMap = new Map(); // sector: pendings
   pending: Ticket[] = [];
   idSection: string;
   dtSelected: Date;
+
+
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
@@ -59,17 +63,23 @@ export class ScheduleComponent implements OnInit {
     });
 
     this.scheduleForm.valueChanges.subscribe((data) => {
-      if (data.idSection && data.dtSelected) {
+      this.idSection = data.idSection;
+      this.dtSelected = data.dtSelected;
+
+      if(this.dtSelected){
+        this.filterPendingsDate();
+      }
+
+      if (this.idSection && this.dtSelected) {
         this.tables = this.adminService.tables.filter(table => table.id_section === data.idSection);
-        this.idSection = data.idSection;
-        this.dtSelected = data.dtSelected;
-        this.getPendingsThisDaySector();
+        this.filterPendingsDateSector();
         this.readAvailability(); // trae los tickets 'scheduled' y 'waiting' por intervalo
       }
     })
 
 
-    this.readPendings();
+    this.readPendingsMonth();
+
 
   }
 
@@ -88,30 +98,39 @@ export class ScheduleComponent implements OnInit {
   }
 
 
-  readPendings() {
+  readPendingsMonth() {
     const idCompany = this.loginService.user.id_company._id;
     const idYear = new Date().getFullYear();
     const idMonth = new Date().getMonth();
     this.publicService.readPending(idCompany, idYear, idMonth).subscribe((data: any) => {
       this.pendingMonth = data.pending;
-      this.getPendingsThisDaySector();
-      })
+      this.filterPendingsDateSector();
+      this.filterPendingsDate();
+    })
   }
 
-  getPendingsThisDaySector(){
+
+  filterPendingsDate(){
+    // mapa de pendinetes por sector
+    this.pending = this.pendingMonth.filter(ticket => {
+      return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate();
+    });
+    this.publicService.sections.forEach(section => {
+      this.pendingBySectionMap.set(section.tx_section, this.pending.filter(pending => pending.id_section.tx_section === section.tx_section).length);
+    })
+  }
+
+  filterPendingsDateSector() {
+    // pendinetes del día
     this.pending = this.pendingMonth.filter(ticket => {
       return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate() && ticket.id_section._id === this.idSection;
     });
-
   }
 
   pendingUpdated(pending: Ticket): void {
-    this.publicService.snack(`Las mesas ${pending.cd_tables} fueron asignadas correctamente`, 2000, 'Aceptar');
     this.readAvailability(); // actualizo la disponibilidad
-    this.readPendings();
+    this.readPendingsMonth();
   }
-
-
 
 }
 

@@ -26,7 +26,7 @@ export class CalendarComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   openBottomSheet = (table: avTable, availability: availability): void => {
     this.tableSelected = table;
@@ -34,15 +34,21 @@ export class CalendarComponent implements OnInit {
     // table.blReserved ? release : create;
 
     this.bottomSheet.open(BottomsheetComponent, { data: { table, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
+      console.log(data)
       if (data?.action === 'create') {
+        this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron asignadas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);
       }
 
       if (data?.action === 'release') {
+        this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron liberadas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);
 
       }
-
+      if (data?.action === 'cancel') {
+        this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron canceladas correctamente`, 2000, 'Aceptar');
+        this.pendingUpdated.emit(data.ticket);
+      }
     })
   }
 
