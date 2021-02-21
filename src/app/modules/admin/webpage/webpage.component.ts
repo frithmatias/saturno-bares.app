@@ -22,13 +22,13 @@ export class WebPageComponent implements OnInit {
     logo:
     {
       icon: 'mdi mdi-image',
-      title: 'Subi el logo de tu comercio',
-      subtitle: 'Subí el logo de tu comercio. El formato deseable es cuadrado con fondo transparante.'
+      title: 'Logo',
+      subtitle: null
     },
     banners: {
       icon: 'mdi mdi-image',
-      title: 'Subir fotos de tu comercio',
-      subtitle: 'Subí fotos de tu comercio. Estas imagenes se verán en la web page. La relación deseable es 5:2 y el tamaño del canvas es de 500px x 200px.'
+      title: 'Fotos',
+      subtitle: null
     }
   }
 

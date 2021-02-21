@@ -2,10 +2,12 @@ import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebsocketService } from '../../services/websocket.service';
 import { LoginService } from '../../services/login.service';
 import { NgZone } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { PublicService } from '../../modules/public/public.service';
+import { LoginResponse } from '../../interfaces/login.interface';
 
 declare const gapi: any;
 
@@ -22,11 +24,11 @@ export class LoginComponent implements OnInit {
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
 
 	constructor(
+		public publicService: PublicService,
 		public router: Router,
 		public activatedRoute: ActivatedRoute,
 		private loginService: LoginService,
 		private wsService: WebsocketService,
-		private snack: MatSnackBar,
 		private zone: NgZone
 	) { }
 
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
 	attachSignin(element) {
 		this.auth2.attachClickHandler(element, {}, googleUser => {
 			const gtoken = googleUser.getAuthResponse().id_token;
-			this.loginService.login(gtoken, null, false).subscribe(data => {
+			this.loginService.login(gtoken, null, false).subscribe((data: LoginResponse) => {
 				if (data.ok) {
 					if (data.user.id_company) {
 						const idCompany = data.user.id_company._id;
@@ -63,13 +65,15 @@ export class LoginComponent implements OnInit {
 						this.router.navigate([data.home]);
 					})
 				}
-			}, () => {
-				this.snack.open('Error de validación en Google', null, { duration: 2000 });
-			}
-			);
-
+			}, (err: HttpErrorResponse) => {
+				if(err.error.msg){
+					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+				} else {
+					this.publicService.snack('Error de validación', 5000, 'Aceptar');
+				}
+			});
 		}, () => {
-			this.snack.open('Error al llamar a oauth2', null, { duration: 2000 });
+			this.publicService.snack('Error de oAuth', 5000, 'Aceptar');
 		});
 
 	}
@@ -91,8 +95,7 @@ export class LoginComponent implements OnInit {
 			id_company: null
 		};
 
-		this.loginService.login(null, user, forma.value.recuerdame).subscribe(
-			data => {
+		this.loginService.login(null, user, forma.value.recuerdame).subscribe((data: LoginResponse) => {
 				if (data.ok) {
 					if (data.user.id_company) {
 						let idCompany = data.user.id_company._id;
@@ -101,8 +104,12 @@ export class LoginComponent implements OnInit {
 					this.router.navigate([data.home]);
 				}
 			},
-			err => {
-				this.snack.open(err.error.msg, null, { duration: 2000 });
+			(err: HttpErrorResponse) => {
+				if(err.error.msg){
+					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+				} else {
+					this.publicService.snack('Error de validación', 5000, 'Aceptar');
+				}			
 			});
 	}
 

@@ -1,14 +1,16 @@
 import { Company } from './company.interface';
 
 export interface User {
-    tx_name: string;
+	tx_name: string;
 	tx_email: string;
-    tx_password?: string;
+	bl_active?: boolean;
+	tx_password?: string;
 	id_company?: Company;
-	bl_google?: boolean;
-	id_socket?: string;
-    tx_img?: string | null;
 	id_role?: string;
+	id_socket?: string; //only frontend
+	tx_img?: string | null;
+	bl_google?: boolean;
+	bl_facebook?: boolean;
 	cd_pricing?: number;
 	fc_createdat?: Date;
 	fc_lastlogin?: Date;

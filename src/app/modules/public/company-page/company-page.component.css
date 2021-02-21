@@ -33,7 +33,7 @@
     margin-bottom: -60px;
     top          : -60px;
     width        : 100px;
-    box-shadow   : 0px 0px 4px rgb(0 0 0 / 50%);
+    /* box-shadow   : 0px 0px 4px rgb(0 0 0 / 50%); */
 }
 
 .company-page-tabs {

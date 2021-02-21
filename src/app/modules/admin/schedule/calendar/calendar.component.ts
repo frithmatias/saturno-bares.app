@@ -34,7 +34,6 @@ export class CalendarComponent implements OnInit {
     // table.blReserved ? release : create;
 
     this.bottomSheet.open(BottomsheetComponent, { data: { table, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
-      console.log(data)
       if (data?.action === 'create') {
         this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron asignadas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);

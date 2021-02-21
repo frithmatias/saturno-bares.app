@@ -1,10 +1,8 @@
 .schedule-container {
     overflow   : auto;
-    height     : calc(100vh - 350px);
+    height     : calc(100vh - 250px);
     font-family: monospace
 }
-
-
 
 .table-button-active {
     opacity      : 1 !important;
@@ -12,11 +10,14 @@
     border-radius: 5px;
 }
 
+thead {
+    position: sticky;
+}
 
 .schedule th {
     position        : sticky;
     height          : 32px;
-    font-size       : 1.3em;
+    font-size       : large;
     text-align      : center;
     font-weight     : 200;
     font-family     : system-ui;
@@ -24,17 +25,14 @@
     background-color: var(--mat-panel-bg);
 }
 
-.schedule th.tbl {
-
-}
-
 .schedule th.cap {
-    color           : var(--accent);
+    color    : var(--accent);
+    font-size: medium;
 }
 
 .schedule tr {
     height     : 32px;
-    font-size  : 1.3em;
+    font-size  : large;
     font-weight: 200;
     font-family: system-ui;
     text-align : center;

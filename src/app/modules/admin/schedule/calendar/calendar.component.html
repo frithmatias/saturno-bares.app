@@ -3,17 +3,15 @@
     <table class="schedule sm" *ngIf="availability.length > 0">
 
         <thead>
-            <th class="tbl px-1"></th>
-            <th class="tbl px-1">#</th>
-            <th class="tbl px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
-        </thead>
-
-        <thead>
-            <th class="cap px-1">Int</th>
+            <th class="cap px-1"></th>
             <th class="cap px-1">Cap</th>
             <th class="cap px-1" *ngFor="let t of tables">{{t.nm_persons}}</th>
         </thead>
-
+        <thead>
+            <th class="tbl px-1">Int</th>
+            <th class="tbl px-1">#</th>
+            <th class="tbl px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
+        </thead>
         <tbody>
             <!-- intervals -->
             <tr *ngFor="let av of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
@@ -22,7 +20,7 @@
                     <span>{{av.interval | dateToInterval}}</span>
                 </td>
                 <td>
-                    <span class="text-accent">{{av.capacity}}</span>
+                    <span class="text-accent md">{{av.capacity}}</span>
                 </td>
 
                 <!-- tables -->

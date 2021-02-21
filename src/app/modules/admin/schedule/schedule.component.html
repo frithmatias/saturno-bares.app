@@ -2,7 +2,7 @@
     <mat-card>
 
         <!------------------------------>
-        <!-- DATE SECTION INPUT -->
+        <!-- DATE && SECTION FORM -->
         <!------------------------------>
         <mat-card>
             <!-- Form -->
@@ -57,7 +57,7 @@
         <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected && pending.length > 0">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <span class="xl mdi mdi-account-clock text-deco"></span>
+                    <span class="lg mdi mdi-account-clock text-deco"></span>
                     <span class="badge text-white bg-primary">{{pending.length}}</span>
                     <span class="sidenav-title-text mx-2 align-self-center md">Solicitudes de Mesa</span>
                 </mat-panel-title>
@@ -75,8 +75,8 @@
         <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <span class="xl mdi mdi-calendar text-deco"></span>
-                    <span class="sidenav-title-text mx-2 align-self-center md">Agenda</span>
+                    <span class="lg mdi mdi-calendar text-deco"></span>
+                    <span class="sidenav-title-text mx-2 align-self-center md">Agenda <span class="text-accent">{{adminService.sectionsMap.get(idSection)}}</span> {{ dtSelected | dateToString : 'DD [de] MMMM'}} </span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 

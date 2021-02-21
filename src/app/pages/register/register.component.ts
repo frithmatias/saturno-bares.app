@@ -6,6 +6,8 @@ import { WebsocketService } from 'src/app/services/websocket.service';
 import { PublicService } from '../../modules/public/public.service';
 import { LoginService } from '../../services/login.service';
 import { environment } from 'src/environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginResponse } from '../../interfaces/login.interface';
 
 declare const gapi: any;
 
@@ -98,8 +100,12 @@ export class RegisterComponent implements OnInit {
 				this.router.navigate(['/activate'])
 			}
 		},
-			() => {
-				this.publicService.snack('Error al registrar el usuario', 5000, 'Aceptar');
+			(err: HttpErrorResponse) => {
+				if(err.error.msg){
+					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+				} else {
+					this.publicService.snack('Error al registrar el usuario', 5000, 'Aceptar');
+				}
 			}
 		)
 	}
@@ -123,19 +129,24 @@ export class RegisterComponent implements OnInit {
 	attachSignin(element) {
 		this.auth2.attachClickHandler(element, {}, googleUser => {
 			const gtoken = googleUser.getAuthResponse().id_token;
-			this.loginService.login(gtoken, null, false).subscribe(
-				data => {
+			this.loginService.login(gtoken, null, false).subscribe((data: LoginResponse) => {
 					if (data.ok) {
-						let idCompany = data.user.id_company._id;
-						if (data.user.id_company) { this.wsService.emit('enterCompany', idCompany); }
+						//let idCompany = data.user.id_company._id;
+						// if (data.user.id_company) { this.wsService.emit('enterCompany', idCompany); }
 						window.location.href = '/admin';
 						// this.router.navigate(['/admin']);				
 					}
 				},
-				() => {
-					this.publicService.snack('Error de validación en Google', 2000, null);
+				(err: HttpErrorResponse) => {
+					if(err.error.msg){
+						this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+					} else {
+						this.publicService.snack('Error de validación', 5000, 'Aceptar');
+					}
 				}
 			);
+		}, () => {
+			this.publicService.snack('Error de oAuth', 5000, 'Aceptar');
 		});
 	}
 

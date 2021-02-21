@@ -45,7 +45,11 @@ export class ScheduleComponent implements OnInit {
     public publicService: PublicService,
     public adminService: AdminService,
     public loginService: LoginService,
-  ) { }
+  ) { 
+    const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
+    this.minDate = today;
+    this.maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); //30 days
+  }
 
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
@@ -90,7 +94,6 @@ export class ScheduleComponent implements OnInit {
     const dtSelected = this.scheduleForm.value.dtSelected;
     this.publicService.readAvailability(nmPersons, idSection, dtSelected).subscribe((data: availabilityResponse) => {
       this.availability = data.availability;
-      console.log(data)
       // data.availability.map(av => {
       //   this.availability.push({ interval: new Date(av.interval).getHours(), tables: av.tables, capacity: av.capacity });
       // });

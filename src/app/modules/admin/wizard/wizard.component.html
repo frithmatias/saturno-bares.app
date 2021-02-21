@@ -20,8 +20,7 @@
                             tus mesas y ateneder a tus clientes.
                         </p>
                         <p>
-                            Los pasos opcionales podes saltearlos y completarlos mas adelante desde
-                            este mismo asistente.
+                            Los pasos opcionales podes saltearlos y completarlos mas adelante.
                         </p>
                         <hr>
                         <div class="w-100 text-center">
@@ -58,14 +57,12 @@
                     <div *ngIf="adminService.companies?.length === 0">
                         <div class="saturno-minicard-text">
                             <p>
-                                Acá podes registrar uno o mas bares / restaurantes.
+                                Acá podes registrar uno o mas comercios.
                             </p>
 
                             <p>
-                                Es importante que ingreses la dirección exacta de tu comercio. Esta dirección será
-                                visible para tus clientes desde la página web de tu bar y les asegura que están
-                                solicitando
-                                una mesa en el bar / restaurant correcto.
+                                Es importante que ingreses la dirección exacta de tu comercio ya que será
+                                visible para tus clientes.
                             </p>
                         </div>
                     </div>
@@ -73,13 +70,11 @@
                     <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
                         <div class="saturno-minicard-text">
                             <p>
-                                Podés seguir adelante con el asistente.
+                                Podés seguir adelante con el asistente ó crear mas comercios.
                             </p>
                             <p>
-                                Recordá que podés crear mas comercios si disponés de sucursales y luego podés cambiar de
-                                comercio
-                                seleccionandolo
-                                desde el menu principal <span class="md align-top mdi mdi-menu"></span>
+                                Para administrar un comercio, si tenés más de uno, tenés que seleccionarlo primero desde
+                                el menu principal <span class="md align-top mdi mdi-menu"></span>
                             </p>
                         </div>
                     </div>
@@ -121,9 +116,7 @@
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Desde acá podes crear los diferentes sectores o áreas que componen tu bar o resto. Tus
-                            clientes podrán elegir uno de estos sectores al momento de solicitar una mesa, y los
-                            camareros/as podran entrar a ellos para atender las mesas dentro de ese sector.
+                            Desde acá tenés que crear los diferentes sectores o áreas que componen tu comercio.
                         </p>
                         <p>
                             Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
@@ -167,11 +160,8 @@
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Acá tenés que dar de alta todas las mesas para cada sector. Sólo tenés que ingresar el
-                            número de
-                            mesa y
-                            la
-                            cantidad máxima de personas que pueden sentarse en ellas.
+                            Acá tenés que registrar las mesas de cada sector. Sólo tenés que ingresar el
+                            número de mesa y la capacidad máxima de personas que pueden ocuparla.
                         </p>
                     </div>
                 </mat-card-content>
@@ -213,8 +203,9 @@
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Si no necesitas mas usuarios que tu propio usuario para atender turnos podés
-                            omitir este paso y continuar.
+                            Acá podés registrar a tus camareros/as. Para entrar a sus cuentas, los mismos, tienen que
+                            ingresar
+                            desde la pestaña de 'Soy Camarero/a' en la página de Login de usuario.
                         </p>
                     </div>
 
@@ -251,14 +242,12 @@
                 <mat-card-content>
                     <div class="saturno-minicard-text">
                         <p>
-                            Acá podés dar de alta items que tu cliente puede responder para calificar
-                            de 1 a 5 estrellas. Esta encuesta le aparece al finalizar la sesión de su mesa. Podes
-                            crear una encuesta distinta para cada sector.
+                            Acá podés dar de alta items que tus clientes pueden calificar
+                            de 1 a 5 estrellas.
                         </p>
                         <p>
-                            Estos Items a califiar tienen que ser palabras, por ejemplo tu cliente podría querer
-                            calificar items
-                            como "Atención", "Comida", "Limpieza", etc.
+                            Estos Items tienen que ser palabras o frases cortas. 
+                            Por ejemplo "Atención", "Comida", "Limpieza", etc.
                         </p>
                     </div>
 

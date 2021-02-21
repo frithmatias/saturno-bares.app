@@ -40,15 +40,9 @@ export class BottomsheetComponent implements OnInit {
   ) {
 
     if (this.data.table.blReserved) {
-      this.title = 'Editar Reserva';
-      this.subtitle = 'Ver ticket o liberar mesas asignadas';
       this.nmOccupation = Math.round(this.data.table.nmPersons / this.data.table.ticketOwner.nm_persons * 100);
-      
     } else {
-
       this.cdTables.push(this.data.table.nmTable);
-      this.title = 'Crear Reserva';
-      this.subtitle = 'Crear un ticket de contingencia y asignarle la mesa ' + data.table.nmTable;
     }
 
   }
@@ -73,7 +67,6 @@ export class BottomsheetComponent implements OnInit {
   };
 
   createTicket(): void {
-
 
     if (this.cdTables.length === 0) {
       this.publicService.snack('Seleccione al menos una mesa.', 3000);

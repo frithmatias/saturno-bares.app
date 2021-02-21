@@ -2,11 +2,17 @@
     <mat-card>
 
         <mat-card-header class="text-accent">
+
             <mat-card-title>
-                {{title}}
+                <span *ngIf="data.table.blReserved">Editar Reserva</span>
+                <span *ngIf="!data.table.blReserved">Crear Reserva</span>
             </mat-card-title>
             <mat-card-subtitle>
-                {{subtitle}}
+                <span *ngIf="data.table.blReserved">Ticket asignado a la mesa {{data.table.nmTable}} para el
+                    {{data.availability.interval | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</span>
+                <span *ngIf="!data.table.blReserved">Crear un ticket de contingencia para el
+                    {{data.availability.interval | dateToString : 'DD [de] MMMM [a las] HH:mm'}} y asignarle la mesa
+                    {{data.table.nmTable}}</span>
             </mat-card-subtitle>
         </mat-card-header>
 
@@ -89,8 +95,8 @@
                         <button mat-raised-button class="action-button" color="primary" (click)="closeBottomSheet()">
                             <table>
                                 <tr>
-                                    <td class="button-icon mdi mdi-arrow-left lg"></td>
-                                    <td class="button-text">Salir</td>
+                                    <td class="button-icon mdi mdi-close lg"></td>
+                                    <td class="button-text">Cancelar</td>
                                 </tr>
                             </table>
                         </button>
@@ -166,26 +172,60 @@
                     </mat-form-field>
 
                     <hr>
+                    <!-- PERSONS EXCEEDS: TABLES BUTTONS SELECTION -->
 
-                    <div class="ticket-actions mt-2">
-                        <div>
-                            <button mat-raised-button class="action-button" color="active" (click)="createTicket()"
-                                [disabled]="ticketForm.invalid || cdTables.length === 0">
+                    <div class="sm text-left text-accent mt-3" *ngIf="personsExceeds">
+
+                        <div *ngIf="cdTables.length === 1">
+                            El número de comensales supera la capacidad de la mesa.
+                            Considere agregar mesas.
+                        </div>
+                        <div *ngIf="cdTables.length === 0">
+                            Debe seleccionar al menos una mesa.
+                        </div>
+                        <div class="my-2">
+                            <button type="button" mat-raised-button
+                                [color]="cdTables.includes(table.nmTable)?'active':''"
+                                *ngFor="let table of data.availability.tables" class="action-button-flex"
+                                (click)="setReserve(table)" [disabled]="table.blReserved">
+
                                 <table>
                                     <tr>
-                                        <td class="button-icon mdi mdi-ticket lg"></td>
-                                        <td class="button-text">+Ticket</td>
+                                        <td class="button-icon w-25 lg">{{ table.nmTable }}</td>
+
+                                        <td *ngIf="cdTables.includes(table.nmTable)"
+                                            class="button-text mdi mdi-check-circle"></td>
+                                        <td *ngIf="!cdTables.includes(table.nmTable)"
+                                            class="button-text mdi mdi-human-male">{{table.nmPersons }}</td>
                                     </tr>
                                 </table>
+
                             </button>
                         </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="ticket-actions mt-2">
                         <div>
                             <button mat-raised-button class="action-button" color="primary" type="button"
                                 (click)="closeBottomSheet()">
                                 <table>
                                     <tr>
-                                        <td class="button-icon mdi mdi-exit-to-app lg"></td>
-                                        <td class="button-text">Salir</td>
+                                        <td class="button-icon mdi mdi-close lg"></td>
+                                        <td class="button-text">Cancelar</td>
+                                    </tr>
+                                </table>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-raised-button class="action-button" color="active" (click)="createTicket()"
+                                [disabled]="ticketForm.invalid || cdTables.length === 0">
+                                <table>
+                                    <tr>
+                                        <td class="button-icon mdi mdi-content-save-outline lg"></td>
+                                        <td class="button-text">Guardar</td>
                                     </tr>
                                 </table>
                             </button>
@@ -194,37 +234,6 @@
 
                 </form>
 
-                <!-- PERSONS EXCEEDS: TABLES BUTTONS SELECTION -->
-
-                <div class="sm text-left text-accent mt-3" *ngIf="personsExceeds">
-
-                    <div *ngIf="cdTables.length === 1">
-                        El número de comensales supera la capacidad de la mesa.
-                        Considere agregar mesas.
-                    </div>
-                    <div *ngIf="cdTables.length === 0">
-                        Debe seleccionar al menos una mesa.
-                    </div>
-                    <div class="my-2">
-                        <button type="button" mat-raised-button [color]="cdTables.includes(table.nmTable)?'active':''"
-                            *ngFor="let table of data.availability.tables" class="action-button-flex"
-                            (click)="setReserve(table)" [disabled]="table.blReserved">
-
-                            <table>
-                                <tr>
-                                    <td class="button-icon w-25 lg">{{ table.nmTable }}</td>
-
-                                    <td *ngIf="cdTables.includes(table.nmTable)"
-                                        class="button-text mdi mdi-check-circle"></td>
-                                    <td *ngIf="!cdTables.includes(table.nmTable)"
-                                        class="button-text mdi mdi-human-male">{{table.nmPersons }}</td>
-                                </tr>
-                            </table>
-
-                        </button>
-                    </div>
-
-                </div>
 
             </div>
 

@@ -35,8 +35,6 @@ export class MessengerComponent implements OnInit {
       }, (() => this.loading = false))
       // const to: string = this.ticket.id_socket_waiter;
       // this.websocketService.emit('mensaje-privado', { to, msg: message.value });
-      console.log(this.ticket)
-      console.log(message.value);
       message.value = '';
       message.focus();
 
