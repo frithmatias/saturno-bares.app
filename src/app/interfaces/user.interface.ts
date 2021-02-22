@@ -9,8 +9,8 @@ export interface User {
 	id_role?: string;
 	id_socket?: string; //only frontend
 	tx_img?: string | null;
-	bl_google?: boolean;
-	bl_facebook?: boolean;
+	bl_social?: boolean;
+	tx_platform?: string;
 	cd_pricing?: number;
 	fc_createdat?: Date;
 	fc_lastlogin?: Date;

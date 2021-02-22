@@ -1,13 +1,13 @@
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { WebsocketService } from '../../services/websocket.service';
 import { LoginService } from '../../services/login.service';
 import { NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PublicService } from '../../modules/public/public.service';
 import { LoginResponse } from '../../interfaces/login.interface';
+import { Social } from '../../components/social/social.component';
 
 declare const gapi: any;
 
@@ -32,58 +32,14 @@ export class LoginComponent implements OnInit {
 		private zone: NgZone
 	) { }
 
-	ngOnInit() {
-		this.googleInit();
-	}
-
-	// ==========================================================
-	// LOGIN GOOGLE
-	// ==========================================================
-
-	googleInit() {
-		gapi.load('auth2', () => {
-			this.auth2 = gapi.auth2.init({
-				client_id: environment.gapi_uid,
-				cookiepolicy: 'single_host_origin',
-				scope: 'profile email'
-			});
-			this.attachSignin(document.getElementById('btnGoogle'));
-		});
-	}
-
-	attachSignin(element) {
-		this.auth2.attachClickHandler(element, {}, googleUser => {
-			const gtoken = googleUser.getAuthResponse().id_token;
-			this.loginService.login(gtoken, null, false).subscribe((data: LoginResponse) => {
-				if (data.ok) {
-					if (data.user.id_company) {
-						const idCompany = data.user.id_company._id;
-						this.wsService.emit('enterCompany', idCompany);
-					}
-					// window.location.href = '/admin';
-					this.zone.run(() => {
-						this.router.navigate([data.home]);
-					})
-				}
-			}, (err: HttpErrorResponse) => {
-				if(err.error.msg){
-					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
-				} else {
-					this.publicService.snack('Error de validación', 5000, 'Aceptar');
-				}
-			});
-		}, () => {
-			this.publicService.snack('Error de oAuth', 5000, 'Aceptar');
-		});
-
-	}
+	ngOnInit() { }
 
 	// ==========================================================
 	// LOGIN FORM 
 	// ==========================================================
-	// TODO: Rehacer el formulario con formbuilder.
 
-	login(forma: NgForm) {
+	loginEmail(forma: NgForm) {
+
 		if (forma.invalid) {
 			return;
 		}
@@ -95,22 +51,45 @@ export class LoginComponent implements OnInit {
 			id_company: null
 		};
 
-		this.loginService.login(null, user, forma.value.recuerdame).subscribe((data: LoginResponse) => {
-				if (data.ok) {
-					if (data.user.id_company) {
-						let idCompany = data.user.id_company._id;
-						this.wsService.emit('enterCompany', idCompany);
-					}
-					this.router.navigate([data.home]);
+		const recordar = forma.value.recuerdame;
+		const platform = 'email';
+		this.login(platform, null, user, recordar);
+
+	}
+
+	loginSocial(social: Social) {
+
+		if (!social) return;
+		if (!social.txToken) {
+			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
+			return;
+		}
+
+		const gtoken = social.txToken;
+		const platform = social.txPlatform;
+		this.login(platform, gtoken, social, false);
+	}
+
+
+	login(platform: string, token: string, user: any, remember: boolean) {
+		
+		this.loginService.login(platform, token, user, remember).subscribe((data: LoginResponse) => {
+			if (data.ok) {
+				if (data.user.id_company) { 
+					const idCompany = data.user.id_company._id;
+					this.wsService.emit('enterCompany', idCompany);
 				}
-			},
-			(err: HttpErrorResponse) => {
-				if(err.error.msg){
-					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
-				} else {
-					this.publicService.snack('Error de validación', 5000, 'Aceptar');
-				}			
-			});
+				// window.location.href = '/admin';
+				this.router.navigate([data.home]);
+			}
+		}, (err: HttpErrorResponse) => {
+			if (err.error.msg) {
+				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+			} else {
+				this.publicService.snack('Error de validación', 5000, 'Aceptar');
+			}
+		});
+
 	}
 
 	cleanEmail(elementEmail, elementPassword) {

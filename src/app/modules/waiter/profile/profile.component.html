@@ -2,7 +2,7 @@
     <mat-card>
 
         <mat-card-header>
-            <app-uploader [editable]="!this.loginService.user.bl_google" [multi]="false" [documentData]="this.loginService.user" [idDocument]="this.loginService.user._id"
+            <app-uploader [editable]="!this.loginService.user.bl_social" [multi]="false" [documentData]="this.loginService.user" [idDocument]="this.loginService.user._id"
                 idField="tx_img" (dataUpdated)="dataUpdated($event)">
             </app-uploader>
 

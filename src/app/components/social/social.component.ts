@@ -6,26 +6,6 @@ declare const gapi: any;
 declare const FB: any;
 declare const window: any;
 
-interface facebookResponse {
-  authResponse: {
-    accessToken: string;
-    data_access_expiration_time: number;
-    expiresIn: number;
-    graphDomain: string;
-    signedRequest: string;
-    userID: string;
-  }
-  status: string;
-}
-
-export interface Social {
-  txPlatform: string;
-  txToken: string;
-  txEmail: string;
-  txName: string;
-  txImage: string;
-}
-
 @Component({
   selector: 'app-social',
   templateUrl: './social.component.html',
@@ -35,10 +15,11 @@ export class SocialComponent implements OnInit, AfterViewInit {
   @ViewChild('validateTicketGoogle') gButton: any;
   @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
   @Input() logout: boolean = false;
+  @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
   social: Social;
-  facebookResponse: facebookResponse;
+  facebookFrontendResponse: facebookFrontendResponse;
   isMobile = false;
 
   constructor(
@@ -48,7 +29,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    if (this.logout){
+    if (this.logout) {
       this.logOut();
     }
 
@@ -63,8 +44,11 @@ export class SocialComponent implements OnInit, AfterViewInit {
       this.social = JSON.parse(localStorage.getItem('social'));
     }
 
-    this.googleInit()
-    this.facebookInit();
+    if(this.platforms){
+      if (this.platforms.includes('google')) { this.googleInit(); }
+      if (this.platforms.includes('facebook')) { this.facebookInit(); }
+    }
+
   }
 
   ngOnChanges(changes): void {
@@ -138,26 +122,28 @@ export class SocialComponent implements OnInit, AfterViewInit {
     }(document, 'script', 'facebook-jssdk'));
   }
 
+
+
   facebookLogin() {
-    FB.getLoginStatus((response) => {
-      if (response.status === 'connected') {
-        this.facebookGetData();
+    FB.getLoginStatus((loginResponse) => {
+      if (loginResponse.status === 'connected') {
+        this.facebookGetData(loginResponse);
       } else {
-        FB.login((response) => {
-          if (response.status === 'connected') {
-            this.facebookGetData();
+        FB.login((loginResponse) => {
+          if (loginResponse.status === 'connected') {
+            this.facebookGetData(loginResponse);
           }
         }, { scope: 'email' })
       }
     }, true); // true para deshabilitar el guarado en cache de esta respuesta 
   }
 
-  facebookGetData(): void {
+  facebookGetData(loginResponse: facebookFrontendResponse): void {
     FB.api('/me?fields=id,email,first_name,name,gender', (response) => {
       this.zone.run(() => {
         const social: Social = {
           txPlatform: 'facebook',
-          txToken: null,
+          txToken: loginResponse.authResponse.accessToken,
           txEmail: response.email,
           txName: response.name,
           txImage: null
@@ -220,11 +206,29 @@ export class SocialComponent implements OnInit, AfterViewInit {
     }
     if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
     this.social = null;
-    this.socialResponse.emit(null);  
+    this.socialResponse.emit(null);
 
   }
 
 }
 
+interface facebookFrontendResponse {
+  authResponse: {
+    accessToken: string;
+    data_access_expiration_time: number;
+    expiresIn: number;
+    graphDomain: string;
+    signedRequest: string;
+    userID: string;
+  }
+  status: string;
+}
 
+export interface Social {
+  txPlatform: string;
+  txToken: string;
+  txEmail: string;
+  txName: string;
+  txImage: string;
+}
 

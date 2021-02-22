@@ -71,27 +71,30 @@
             <app-theme class="mr-3"></app-theme>
 
             <!-- LOG IN -->
-            <div *ngIf="!loginService.user" class="mdi mdi-account-circle pointer"
-                routerLink="/login"> Ingresar
+            <div *ngIf="!loginService.user" class="mdi mdi-account-circle pointer" routerLink="/login"> Ingresar
             </div>
 
             <!-- LOGGED IN -->
             <div *ngIf="loginService.user">
 
                 <!-- GOOGLE LOGIN IMAGE -->
-                <div *ngIf="loginService.user.bl_google && loginService.user.tx_img">
+                <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
                     <img class="user-image ml-3" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
                 </div>
 
+                <!-- FACEBOOK HAS NO LOGIN IMAGE -->
+                <div *ngIf="loginService.user.bl_social && !loginService.user.tx_img" class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+                </div>
+
                 <!-- NORMAL LOGIN WITH IMAGE -->
-                <div *ngIf="!loginService.user.bl_google && loginService.user.tx_img" class="ml-3 pointer"
+                <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="ml-3 pointer"
                     [matMenuTriggerFor]="menu">
                     <img class="user-image"
                         [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
                 </div>
 
                 <!-- NORMAL LOGIN WO IMAGE -->
-                <div *ngIf="!loginService.user.bl_google && !loginService.user.tx_img"
+                <div *ngIf="!loginService.user.bl_social && !loginService.user.tx_img"
                     class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
                 </div>
 
@@ -102,7 +105,7 @@
                     </div>
                     <div routerLink="/waiter/home" mat-menu-item>
                         <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
-                        <span class="ml-2 align-middle">Página de Camarero/a</span>
+                        <span class="ml-2 align-middle">Atender mis Mesas</span>
                     </div>
                     <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
                         <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>

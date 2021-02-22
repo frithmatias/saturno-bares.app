@@ -8,11 +8,19 @@
                 <span *ngIf="!data.table.blReserved">Crear Reserva</span>
             </mat-card-title>
             <mat-card-subtitle>
-                <span *ngIf="data.table.blReserved">Ticket asignado a la mesa {{data.table.nmTable}} para el
-                    {{data.availability.interval | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</span>
-                <span *ngIf="!data.table.blReserved">Crear un ticket de contingencia para el
-                    {{data.availability.interval | dateToString : 'DD [de] MMMM [a las] HH:mm'}} y asignarle la mesa
-                    {{data.table.nmTable}}</span>
+
+                <span *ngIf="data.table.blReserved">Ticket asignado a la mesa <span
+                        class="text-accent">{{data.table.nmTable}}</span> para
+                    el {{data.availability.interval | dateToString : 'DD [de] MMMM'}}
+                    a las <span class="text-accent">{{data.availability.interval | dateToString : 'HH:mm'}}</span>
+                </span>
+
+                <span *ngIf="!data.table.blReserved">Crear un ticket de contingencia para
+                    el {{data.availability.interval | dateToString : 'DD [de] MMMM'}}
+                    a las <span class="text-accent">{{data.availability.interval | dateToString : 'HH:mm'}}</span> y
+                    asignarle la mesa
+                    <span class="text-accent">{{data.table.nmTable}}</span>
+                </span>
             </mat-card-subtitle>
         </mat-card-header>
 

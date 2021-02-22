@@ -1,85 +1,82 @@
-<div class="h-100 pt-sm-5">
-    <div class="page-container-wide animated fadeIn">
+<div class="page-container-wide mt-sm-4 animated fadeIn">
+    <mat-card>
+        <div class="login-wrapper">
 
-        <mat-card>
+            <!---------------------------------------------------------------------->
+            <!-- SOCIAL LOGIN -->
+            <!---------------------------------------------------------------------->
 
-            <div class="row">
-
-                <!---------------------------------------------------------------------->
-                <!-- GOOGLE LOGIN -->
-                <!---------------------------------------------------------------------->
-                <div class="col-sm">
-                    <div class="jumbotron m-0 py-3 h-100 text-dark">
-                        <!-- Google Login -->
-                        <div class="my-2 xl text-danger">Google</div>
-                        <hr class="my-4 hr-red">
-                        <div class="my-2 md">Entrar con mi cuenta de Google.</div>
-                        <button mat-raised-button color="warn" type="button" id="btnGoogle" data-toggle="tooltip">
-                            Login
-                        </button>
-                    </div>
-                </div>
-
-                <!---------------------------------------------------------------------->
-                <!-- NORMAL LOGIN -->
-                <!---------------------------------------------------------------------->
-                <div class="col-sm mt-4 mt-md-0">
-                    <form ngNativeValidate #f="ngForm" (ngSubmit)="login( f )" autocomplete="off">
-
-                        <div class="my-2">
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Email</mat-label>
-                                <input maxlength="50" #inputEmail type="email" matInput placeholder="mail@dominio.com"
-                                    [ngModel]="email" name="email">
-                                <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
-                                        class="mdi mdi-close"></i></span>
-                            </mat-form-field>
-                        </div>
-
-                        <!---------------------------------------------------------------------->
-                        <!-- PASSWORD -->
-                        <!---------------------------------------------------------------------->
-                        <div class="my-2">
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Password</mat-label>
-                                <input maxlength="30" #inputPassword matInput placeholder="password" ngModel name="password"
-                                    [type]="hidepass ? 'password' : 'text'" required>
-                                <span class="input-icon" (click)="hidepass = !hidepass"
-                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass"><i
-                                        class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
-                            </mat-form-field>
-                        </div>
-
-
-                        <!---------------------------------------------------------------------->
-                        <!-- ENTER BUTTON -->
-                        <!---------------------------------------------------------------------->
-                        <div class="text-center my-3 w-100">
-                            <span class="mr-2">
-                                <!-- Normal Login -->
-                                <button mat-raised-button color="accent" class="px-4" type="submit">
-                                    Entrar
-                                </button>
-                            </span>
-                            <span class="ml-2">
-                                <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox">
-                                <label for="checkbox-signup" class="label"> &nbsp; Recordar cuenta</label>
-                            </span>
-                        </div>
-
-                        <!---------------------------------------------------------------------->
-                        <!-- CREAR CUENTA LINK -->
-                        <!---------------------------------------------------------------------->
-
-                        <div class="border-top text-center pt-2">
-                            <span class="p-2">No tenés cuenta?</span>
-                            <span class="p-2 text-accent pointer" routerLink="/register"><b>Registrarme</b></span>
-                        </div>
-                    </form>
+            <div class="login-social">
+                <div class="jumbotron m-0 py-3 h-100 text-dark">
+                    <!-- Google Login -->
+                    <div class="my-2 xl text-danger">Ingresar</div>
+                    <hr class="my-4 hr-red">
+                    <div class="my-2 md">Entrar con una cuenta externa</div>
+                    <app-social [platforms]="['facebook', 'google']" (socialResponse)="loginSocial($event)"></app-social>
                 </div>
             </div>
-        </mat-card>
+
+            <!---------------------------------------------------------------------->
+            <!-- EMAIL LOGIN -->
+            <!---------------------------------------------------------------------->
+
+            <div class="login-email">
+
+                <div class="my-2 md">Ingresar con usuario y contraseña.</div>
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="loginEmail( f )" autocomplete="off">
+
+                    <div class="my-2">
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Email</mat-label>
+                            <input maxlength="50" #inputEmail type="email" matInput placeholder="mail@dominio.com"
+                                [ngModel]="email" name="email">
+                            <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
+                                    class="mdi mdi-close"></i></span>
+                        </mat-form-field>
+                    </div>
+
+                    <!---------------------------------------------------------------------->
+                    <!-- PASSWORD -->
+                    <!---------------------------------------------------------------------->
+                    <div class="my-2">
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Password</mat-label>
+                            <input maxlength="30" #inputPassword matInput placeholder="password" ngModel name="password"
+                                [type]="hidepass ? 'password' : 'text'" required>
+                            <span class="input-icon" (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hidepass"><i
+                                    class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
+                        </mat-form-field>
+                    </div>
 
 
-    </div>
+                    <!---------------------------------------------------------------------->
+                    <!-- ENTER BUTTON -->
+                    <!---------------------------------------------------------------------->
+                    <div class="text-center my-3 w-100">
+                        <span class="mr-2">
+                            <!-- Normal Login -->
+                            <button mat-raised-button color="accent" class="px-4" type="submit">
+                                Entrar
+                            </button>
+                        </span>
+                        <span class="ml-2">
+                            <input [(ngModel)]="recuerdame" name="recuerdame" id="checkbox-signup" type="checkbox">
+                            <label for="checkbox-signup" class="label"> &nbsp; Recordar cuenta</label>
+                        </span>
+                    </div>
+
+                    <!---------------------------------------------------------------------->
+                    <!-- CREAR CUENTA LINK -->
+                    <!---------------------------------------------------------------------->
+
+                    <div class="border-top text-center pt-2">
+                        <span class="p-2">No tenés cuenta?</span>
+                        <span class="p-2 text-accent pointer" routerLink="/register"><b>Registrar Comercio</b></span>
+                    </div>
+                </form>
+            </div>
+      
+        </div>
+    </mat-card>
 </div>

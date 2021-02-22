@@ -1,26 +1,26 @@
 <div class="page-container-wide mt-sm-4 animated fadeIn">
-
     <mat-card>
-
-        <div class="row">
+        <div class="register-wrapper">
 
             <!---------------------------------------------------------------------->
-            <!-- GOOGLE REGISTRATION -->
+            <!-- SOCIAL REGISTRATION -->
             <!---------------------------------------------------------------------->
-            <div class="col-sm">
-                <div class="jumbotron m-0 py-5 h-100 text-dark">
 
-                    <div class="my-2 xl text-danger">Google</div>
-                    <div class="my-2 md">Registrarme con mi cuenta de Google.</div>
+            <div class="register-social">
+                <div class="bg-light text-dark rounded h-100 p-4">
+                    <div class="my-2 xl text-danger">Registrar Comercio</div>
+                    <div class="my-2 md">Registrar comercio con una cuenta externa</div>
                     <hr class="my-4 hr-red">
-                    <button mat-raised-button color="warn" type="button" id="btnGoogleRegister" data-toggle="tooltip">
-                        Registrarme
-                    </button>
+                    <app-social [platforms]="['facebook', 'google']" (socialResponse)="socialResponse($event)"></app-social>
                 </div>
             </div>
 
-            <div class="col-sm mt-4 mt-md-0">
-                <div class="my-2 md">Registrarme con mi email y contraseña.</div>
+            <!---------------------------------------------------------------------->
+            <!-- EMAIL REGISTRATION -->
+            <!---------------------------------------------------------------------->
+
+            <div class="register-email">
+                <div class="my-2 md">Registrar comercio con mi cuenta de email.</div>
                 <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
 
                     <mat-form-field color="accent" class="w-100">
@@ -62,6 +62,7 @@
                 </form>
 
             </div>
+
         </div>
 
     </mat-card>

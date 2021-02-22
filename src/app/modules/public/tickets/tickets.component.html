@@ -11,7 +11,8 @@
 
     <!-- social component -->
 
-    <app-social (socialResponse)="socialResponse($event)"></app-social>
+    <app-social [platforms]="['google', 'facebook', 'email', 'whatsapp' ,'telegram']"
+      (socialResponse)="socialResponse($event)"></app-social>
 
     <div class="m-4">
       <div *ngIf="tickets.length === 0" class="text-accent">
@@ -22,7 +23,7 @@
           No hay reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
         </div>
       </div>
-  
+
       <div *ngIf="tickets.length > 0" class="text-accent">
         <div *ngIf="social">
           Reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
@@ -60,7 +61,8 @@
 
       <mat-card-content class="text-info sm fw-200">
         <div>
-          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ticket.tm_reserve | dateToRemaining}} )
+          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ticket.tm_reserve | dateToRemaining}}
+          )
         </div>
         <div>
           {{ticket.tx_status | ticketStatus}}
@@ -134,7 +136,8 @@
               </div>
             </td>
             <td class="text-left">
-              {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} <span class="sm text-accent">( {{ticket.tm_reserve | dateToRemaining}} )</span>
+              {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} <span class="sm text-accent">(
+                {{ticket.tm_reserve | dateToRemaining}} )</span>
             </td>
             <td class="text-right text-warn">
               {{ticket.tx_status}}

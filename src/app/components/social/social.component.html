@@ -19,9 +19,10 @@
     </div>
 
 
-    <div *ngIf="!social" class="social-buttons">
+    <div *ngIf="!social && platforms" class="social-buttons">
+
         <!-- WHATSAPP -->
-        <div *ngIf="isMobile">
+        <div *ngIf="isMobile && platforms.includes('whatsapp')">
             <button mat-raised-button class="action-button" color="active" disabled>
                 <table>
                     <tr>
@@ -33,7 +34,7 @@
         </div>
 
         <!-- TELEGRAM -->
-        <div>
+        <div *ngIf="platforms.includes('telegram')">
             <button mat-raised-button class="action-button" color="telegram" (click)="validateTicketTelegram()">
                 <table>
                     <tr>
@@ -45,7 +46,7 @@
         </div>
 
         <!-- FACEBOOK -->
-        <div>
+        <div *ngIf="platforms.includes('facebook')">
             <button mat-raised-button class="action-button" color="facebook" type="button" data-toggle="tooltip"
                 (click)="facebookLogin()">
                 <table>
@@ -58,7 +59,7 @@
         </div>
 
         <!-- GOOGLE -->
-        <div>
+        <div *ngIf="platforms.includes('google')">
             <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
                 data-toggle="tooltip" (click)="googleValidate(validateTicketGoogle)">
                 <table>
@@ -71,7 +72,7 @@
         </div>
 
         <!-- EMAIL -->
-        <div>
+        <div *ngIf="platforms.includes('email')">
             <button mat-raised-button class="action-button" color="active" (click)="emailValidate()">
                 <table>
                     <tr>

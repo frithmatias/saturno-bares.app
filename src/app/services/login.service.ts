@@ -13,7 +13,7 @@ export class LoginService {
 
 	token: string;
 	menu: any[] = [];
-	
+
 	// user observable
 	public user: User;
 	private userSource = new Subject<User>();
@@ -43,7 +43,7 @@ export class LoginService {
 		return this.http.post(url, data);
 	}
 
-	
+
 	activateUser(email: string, hash: string) {
 		let data = { email, hash };
 		const url = environment.api + '/u/activate';
@@ -62,11 +62,31 @@ export class LoginService {
 	// ========================================================
 
 	// google and normal login
-	login(gtoken: string, user: User, recordar: boolean = false) {
+	login(platform: string, token: string, user: any, recordar: boolean = false) {
+		// user:any para email, user:Social para social
 		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
 
-		const api = gtoken ? '/u/google' : '/u/login'
-		const data = gtoken ? { gtoken } : user;
+		let api: string;
+		let data: any;
+		switch (platform) {
+			case 'google':
+			case 'facebook':
+				api = '/u/loginsocial';
+				data = {token, user};
+				// para google el token es suficiente, con oauth en el backend puedo obtener la data del user, 
+				// pero para facebook no puedo obtener la data del user a partir del token, por lo tanto envío 
+				// el token y la data del user también para buscar con el txEmail el usuario en la bd, y con 
+				// ese usuario generar el token del usuario.
+				break;
+			case 'email':
+				api = '/u/login';
+				data = user;
+				break;
+			default:
+				api = '/u/login';
+				break;
+		}
+
 		const url = environment.api + api;
 
 		return this.http.post(url, data).pipe(map((resp: any) => {
@@ -87,7 +107,7 @@ export class LoginService {
 	logged() {
 		if (!this.token) {
 			return false;
-		} 
+		}
 		const payload = JSON.parse(atob(this.token.split('.')[1]));
 		const ahora = new Date().getTime() / 1000;
 		if (payload.exp < ahora) {
@@ -128,6 +148,7 @@ export class LoginService {
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
+		if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
 
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { WebsocketService } from 'src/app/services/websocket.service';
 import { PublicService } from '../../modules/public/public.service';
 import { LoginService } from '../../services/login.service';
-import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginResponse } from '../../interfaces/login.interface';
+import { Social } from '../../components/social/social.component';
+import { WebsocketService } from '../../services/websocket.service';
 
 declare const gapi: any;
 
@@ -17,9 +17,11 @@ declare const gapi: any;
 	styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
 	forma: FormGroup;
 	auth2: any; // info de google con el token
 	disabled = false;
+
 	constructor(
 		private router: Router,
 		private publicService: PublicService,
@@ -28,7 +30,7 @@ export class RegisterComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.googleInit();
+
 		this.publicService.drawerScrollTop();
 
 		// this.publicUrl = document.
@@ -101,7 +103,7 @@ export class RegisterComponent implements OnInit {
 			}
 		},
 			(err: HttpErrorResponse) => {
-				if(err.error.msg){
+				if (err.error.msg) {
 					this.publicService.snack(err.error.msg, 5000, 'Aceptar');
 				} else {
 					this.publicService.snack('Error al registrar el usuario', 5000, 'Aceptar');
@@ -110,43 +112,32 @@ export class RegisterComponent implements OnInit {
 		)
 	}
 
+	socialResponse(social: Social) {
 
-	// ========================================================
-	// REGISTER GOOGLE 
-	// ========================================================
+		if (!social) return;
+		if (!social.txToken) {
+			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
+			return;
+		}
 
-	googleInit() {
-		gapi.load('auth2', () => {
-			this.auth2 = gapi.auth2.init({
-				client_id: environment.gapi_uid,
-				cookiepolicy: 'single_host_origin',
-				scope: 'profile email'
-			});
-			this.attachSignin(document.getElementById('btnGoogleRegister'));
-		});
-	}
+		const platform = social.txPlatform;
+		const gtoken = social.txToken;
 
-	attachSignin(element) {
-		this.auth2.attachClickHandler(element, {}, googleUser => {
-			const gtoken = googleUser.getAuthResponse().id_token;
-			this.loginService.login(gtoken, null, false).subscribe((data: LoginResponse) => {
-					if (data.ok) {
-						//let idCompany = data.user.id_company._id;
-						// if (data.user.id_company) { this.wsService.emit('enterCompany', idCompany); }
-						window.location.href = '/admin';
-						// this.router.navigate(['/admin']);				
-					}
-				},
-				(err: HttpErrorResponse) => {
-					if(err.error.msg){
-						this.publicService.snack(err.error.msg, 5000, 'Aceptar');
-					} else {
-						this.publicService.snack('Error de validación', 5000, 'Aceptar');
-					}
+		this.loginService.login(platform, gtoken, social, false).subscribe((data: LoginResponse) => {
+			if (data.ok) {
+				if (data.user.id_company) {
+					const idCompany = data.user.id_company._id;
+					this.wsService.emit('enterCompany', idCompany);
 				}
-			);
-		}, () => {
-			this.publicService.snack('Error de oAuth', 5000, 'Aceptar');
+				// window.location.href = '/admin';
+				this.router.navigate([data.home]);
+			}
+		}, (err: HttpErrorResponse) => {
+			if (err.error.msg) {
+				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+			} else {
+				this.publicService.snack('Error de validación', 5000, 'Aceptar');
+			}
 		});
 	}
 

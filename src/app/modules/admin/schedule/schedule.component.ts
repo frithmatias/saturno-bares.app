@@ -103,6 +103,10 @@ export class ScheduleComponent implements OnInit {
 
 
   readPendingsMonth() {
+
+    if(!this.loginService.user){
+      return;
+    }
     const idCompany = this.loginService.user.id_company._id;
     const idYear = new Date().getFullYear();
     const idMonth = new Date().getMonth();
