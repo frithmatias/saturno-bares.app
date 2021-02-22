@@ -12,16 +12,24 @@
         
         <mat-card-content>
 
-            <div *ngIf="!scoreItemsSection || scoreItemsSection?.length === 0"
+            <mat-form-field color="accent" class="w-100 px-2">
+                <mat-label>Seleccione un sector</mat-label>
+                <mat-select name="idSection" #selectSection matNativeControl required>
+                    <mat-option *ngFor="let section of adminService.sections" [value]="section._id" (click)="sectionChanged(section)">
+                        {{section.tx_section}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!adminService.scoreItemsSection || adminService.scoreItemsSection?.length === 0"
                 class="row align-items-center justify-content-center">
                 <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
                 <span>No hay items en este sector</span>
             </div>
 
+            <div *ngIf="adminService.scoreItemsSection && adminService.scoreItemsSection?.length > 0">
 
-            <div *ngIf="scoreItemsSection && scoreItemsSection?.length > 0">
-
-                <table mat-table [dataSource]="scoreItemsSection">
+                <table mat-table [dataSource]="adminService.scoreItemsSection">
                     <ng-container matColumnDef="id_section">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
                         <td mat-cell *matCellDef="let element" class="text-left">
@@ -56,8 +64,8 @@
 
     <mat-card *ngIf="scoreItemCreate" class="my-2 animated fadeIn">
 
-        <app-poll-create *ngIf="publicService.sections" [sections]="publicService.sections"
-            (sectionChanged)="sectionChanged($event)" (scoreItemCreated)="scoreItemCreated($event)">
+        <app-poll-create *ngIf="adminService.sections" [idSection]="sectionSelected?._id" [sections]="adminService.sections"
+            (scoreItemCreated)="scoreItemCreated($event)">
         </app-poll-create>
 
     </mat-card>

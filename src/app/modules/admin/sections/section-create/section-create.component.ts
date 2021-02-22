@@ -68,20 +68,4 @@ export class SectionCreateComponent implements OnInit {
 	}
 
 
-	createScoreItem() {
-
-		// si existe un valor "vacío" dentro del array de controles, evito crear otro control.
-		for (let control of (<FormArray>this.forma.controls['scoreItems']).controls) {
-			this.publicService.snack('Complete todos los campos en blanco', 2000);
-			if (control.value === '') return;
-		}
-
-		(<FormArray>this.forma.controls['scoreItems']).push(new FormControl('', Validators.required))
-
-	}
-
-	deleteScoreItem(item: number) {
-		(<FormArray>this.forma.controls['scoreItems']).removeAt(item);
-	}
-
 }

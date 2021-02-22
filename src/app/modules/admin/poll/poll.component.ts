@@ -19,10 +19,8 @@ export class PollComponent implements OnInit {
 
   scoreItemCreate = false;
   sectionSelected: Section;
-  scoreItems: ScoreItem[] = [];
-  scoreItemsSection: ScoreItem[] = [];
-
   newItem: ScoreItem;
+
   constructor(
     public adminService: AdminService,
     public loginService: LoginService,
@@ -37,8 +35,8 @@ export class PollComponent implements OnInit {
 
   readScoreItems = (idCompany: string): void => {
     this.adminService.readScoreItems(idCompany).subscribe((data: ScoreItemsResponse) => {
-      this.scoreItems = data.scoreitems;
-      this.scoreItemsSection = data.scoreitems;
+      this.adminService.scoreItems = data.scoreitems;
+      this.adminService.scoreItemsSection = data.scoreitems;
     })
   }
 
@@ -50,8 +48,8 @@ export class PollComponent implements OnInit {
         let idScoreItem = item._id;
         this.adminService.deleteScoreItem(idScoreItem).subscribe((data: ScoreItemResponse) => {
           this.publicService.snack(data.msg, 1000);
-          this.scoreItems = this.scoreItems.filter(item => item._id != idScoreItem);
-          this.scoreItemsSection = this.scoreItemsSection.filter(table => table._id != idScoreItem);
+          this.adminService.scoreItems = this.adminService.scoreItems.filter(item => item._id != idScoreItem);
+          this.adminService.scoreItemsSection = this.adminService.scoreItemsSection.filter(table => table._id != idScoreItem);
         },
           (err: TableResponse) => {
             this.publicService.snack(err.msg, 3000);
@@ -63,12 +61,12 @@ export class PollComponent implements OnInit {
 
   sectionChanged(section: Section): void {
     this.sectionSelected = section;
-    this.scoreItemsSection = this.scoreItems.filter(table => table.id_section === section._id)
+    this.adminService.scoreItemsSection = this.adminService.scoreItems.filter(table => table.id_section === section._id)
   }
 
   scoreItemCreated(scoreItem: ScoreItem): void {
     this.newItem = scoreItem;
-    this.scoreItems = [...this.scoreItems, scoreItem];
-    this.scoreItemsSection = [...this.scoreItemsSection, scoreItem];
+    this.adminService.scoreItems = [...this.adminService.scoreItems, scoreItem];
+    this.adminService.scoreItemsSection = [...this.adminService.scoreItemsSection, scoreItem];
   }
 }

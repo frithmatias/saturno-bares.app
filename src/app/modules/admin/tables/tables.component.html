@@ -11,13 +11,25 @@
         </mat-card-header>
         <mat-card-content>
 
+            <mat-form-field color="accent" class="w-100 px-2">
+                <mat-label>Seleccione un sector</mat-label>
+                <mat-select name="idSection" #selectSection matNativeControl required>
+                    <mat-option *ngFor="let section of adminService.sections" [value]="section._id"
+                        (click)="sectionChanged(section)">
+                        {{section.tx_section}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <div *ngIf="!adminService.tablesSection || 
                     adminService.tablesSection?.length === 0" class="row align-items-center justify-content-center">
                 <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
                 <span>No hay mesas en este sector</span>
             </div>
 
+
             <div *ngIf="adminService.tablesSection && adminService.tablesSection?.length > 0">
+
                 <table mat-table [dataSource]="adminService.tablesSection">
                     <ng-container matColumnDef="id_section">
                         <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
@@ -60,8 +72,8 @@
 
     <mat-card *ngIf="tableCreate" class="my-2 animated fadeIn">
 
-        <app-table-create [sections]="publicService.sections" [tablesSection]="adminService.tablesSection"
-            (sectionChanged)="sectionChanged($event)" (tableCreated)="tableCreated($event)"></app-table-create>
+        <app-table-create [idSection]="sectionSelected?._id" [sections]="adminService.sections" [tablesSection]="adminService.tablesSection"
+            (tableCreated)="tableCreated($event)"></app-table-create>
 
     </mat-card>
 

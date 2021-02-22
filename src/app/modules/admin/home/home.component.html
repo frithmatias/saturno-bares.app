@@ -17,7 +17,7 @@
 
         <div class="saturno-minicard-text">
           <div
-            *ngIf="adminService.companies.length === 0 || publicService.sections.length === 0 || adminService.tables.length === 0">
+            *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
 
             <div class="mdi mdi-close-circle-outline text-danger text-center xxxxl"></div>
             <div>
@@ -29,7 +29,7 @@
           </div>
 
           <div
-            *ngIf="adminService.companies.length > 0 && publicService.sections.length > 0 && adminService.tables.length > 0">
+            *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
 
             <div class="mdi mdi-check-circle-outline text-success text-center xxxxl"></div>
             <div>
@@ -46,7 +46,7 @@
 
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/waiter/home" *ngIf="
   adminService.companies.length > 0 && 
-  publicService.sections.length > 0 &&
+  adminService.sections.length > 0 &&
   adminService.tables.length > 0">
 
         <div class="text-accent md">
@@ -89,11 +89,11 @@
                 <td style="text-align: left;">
                   <span class="mdi mdi-select-group mr-2"></span>
                   Sectores
-                  <span *ngIf="publicService.sections.length > 0" class="mdi mdi-check text-success"></span>
-                  <span *ngIf="publicService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
+                  <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
                 <td style="text-align: right;">
-                  {{ publicService.sections.length }}
+                  {{ adminService.sections.length }}
                 </td>
               </tr>
 
@@ -112,7 +112,7 @@
 
             <div *ngIf="
   adminService.companies.length === 0 || 
-  publicService.sections.length === 0 ||
+  adminService.sections.length === 0 ||
   adminService.tables.length === 0" class="pointer sm p-2 mt-2">
               Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
                 routerLink="/admin/wizard">"Iniciar el Asistente"</span>

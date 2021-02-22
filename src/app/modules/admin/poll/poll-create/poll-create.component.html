@@ -2,16 +2,6 @@
     (ngSubmit)="createTable(formDirective)">
 
     <mat-form-field color="accent" class="w-100">
-        <mat-label>Seleccione un sector</mat-label>
-        <mat-select formControlName="idSection" name="idSection" #selectSection matNativeControl required>
-            <mat-option *ngFor="let section of sections" [value]="section._id" (click)="sectionChange(section)">
-                {{section.tx_section}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-
-    <mat-form-field color="accent" class="w-100">
         <mat-label>Item a calificar</mat-label>
         <input maxlength="20" matInput placeholder="Por ejemplo Atención, Limpieza, Comida, Puntualidad, etc" formControlName="txItem" name="txItem" type="text" required>
     </mat-form-field>

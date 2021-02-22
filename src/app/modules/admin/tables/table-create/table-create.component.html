@@ -1,14 +1,5 @@
 <form ngNativeValidate #formDirective="ngForm" [formGroup]="forma" (ngSubmit)="createTable(formDirective)">
 
-    <mat-form-field color="accent" class="w-100">
-        <mat-label>Seleccione un sector</mat-label>
-        <mat-select formControlName="idSection" name="idSection" #selectSection matNativeControl required>
-            <mat-option *ngFor="let section of sections" [value]="section._id" (click)="sectionChange(section)">
-                {{section.tx_section}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
 
     <mat-form-field color="accent" class="w-100">
         <mat-label>Número de la mesa</mat-label>

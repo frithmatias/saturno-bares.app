@@ -15,7 +15,7 @@ export class PollCreateComponent implements OnInit {
 
 	@Output() scoreItemCreated: EventEmitter<ScoreItem> = new EventEmitter();
 	@Output() sectionChanged: EventEmitter<Section> = new EventEmitter();
-	@Input() sections: Section[] = [];
+	@Input() idSection: string;
 	loading = false;
 	forma: FormGroup;
 
@@ -26,7 +26,6 @@ export class PollCreateComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.forma = new FormGroup({
-			idSection: new FormControl(null, Validators.required),
 			txItem: new FormControl(null, [Validators.required, Validators.maxLength(20)])
 		});
 	}
@@ -37,7 +36,7 @@ export class PollCreateComponent implements OnInit {
 		}
 
 		const scoreItem: ScoreItem = {
-			id_section: this.forma.value.idSection,
+			id_section: this.idSection,
 			tx_item: this.forma.value.txItem
 		};
 

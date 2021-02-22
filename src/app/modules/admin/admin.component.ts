@@ -7,6 +7,7 @@ import { Table } from 'src/app/interfaces/table.interface';
 import { TablesResponse } from '../../interfaces/table.interface';
 import { PublicService } from '../public/public.service';
 import { SectionsResponse } from '../../interfaces/section.interface';
+import { ScoreItemsResponse } from '../../interfaces/score.interface';
 
 @Component({
   selector: 'app-admin',
@@ -51,10 +52,17 @@ export class AdminComponent implements OnInit, OnDestroy {
     })
 
     this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-      for (let section of data.sections) {
-        this.adminService.sectionsMap.set(section._id, section.tx_section);
-        this.publicService.sections = data.sections;
+      if(data.ok){
+        this.adminService.sections = data.sections;
+        for (let section of data.sections) {
+          this.adminService.sectionsMap.set(section._id, section.tx_section);
+        }
       }
+    })
+
+    this.adminService.readScoreItems(idCompany).subscribe((data: ScoreItemsResponse) => {
+      this.adminService.scoreItems = data.scoreitems;
+			this.adminService.scoreItemsSection = data.scoreitems;
     })
 
     this.adminService.readSettings(idCompany);

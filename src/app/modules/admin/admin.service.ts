@@ -28,6 +28,10 @@ export class AdminService {
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];
 
+	public scoreItems: ScoreItem[] = [];
+	public scoreItemsSection: ScoreItem[] = [];
+
+	public sections: Section[] = [];
 	public waiters: User[] = [];
 	sectionsMap = new Map();
 
