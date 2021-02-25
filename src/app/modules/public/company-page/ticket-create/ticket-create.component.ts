@@ -311,8 +311,7 @@ export class TicketCreateComponent implements OnInit {
     this.router.navigate(['/home'])
   }
 
-  socialResponse(response: Social) {
-
+  validateTicket(response: Social) {
     if (response === null) { // logged out
       return;
     }

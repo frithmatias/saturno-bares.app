@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, AfterViewInit, Input, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PublicService } from '../../modules/public/public.service';
+import { FormControl, Validators, NgForm, FormGroup } from '@angular/forms';
 
 declare const gapi: any;
 declare const FB: any;
@@ -12,9 +13,11 @@ declare const window: any;
   styleUrls: ['./social.component.css']
 })
 export class SocialComponent implements OnInit, AfterViewInit {
+  
   @ViewChild('validateTicketGoogle') gButton: any;
   @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
   @Input() logout: boolean = false;
+  @Input() showlogged: boolean = true;
   @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
@@ -122,8 +125,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
     }(document, 'script', 'facebook-jssdk'));
   }
 
-
-
   facebookLogin() {
     FB.getLoginStatus((loginResponse) => {
       if (loginResponse.status === 'connected') {
@@ -192,6 +193,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
   // ==========================================================
   // VALIDATE EMAIL USER
   // ==========================================================
+
 
   emailValidate() {
     this.publicService.snack('Esta opción va a estar disponible próximamente.', 5000, 'Aceptar');

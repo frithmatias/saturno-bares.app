@@ -2,24 +2,19 @@
 
     <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
 
-    <div *ngIf="social" class="social-status">
+    <div *ngIf="social && showlogged" class="social-status">
         <div class="sm mr-2">
             {{social.txPlatform | capitalizarPipe}} [{{social.txName}}] 
         </div>
         <div>
-            <button mat-raised-button class="action-button" color="warn" (click)="logOut()">
-                <table>
-                    <tr>
-                        <td class="button-icon mdi mdi-power xl"></td>
-                        <td class="button-text">Salir</td>
-                    </tr>
-                </table>
+            <button mat-button color="warn" (click)="logOut()">
+                    Salir
             </button>
         </div>
     </div>
 
 
-    <div *ngIf="!social && platforms" class="social-buttons">
+    <div *ngIf="(!social || !showlogged) && platforms" class="social-buttons">
 
         <!-- WHATSAPP -->
         <div *ngIf="isMobile && platforms.includes('whatsapp')">
@@ -77,7 +72,7 @@
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-email xl"></td>
-                        <td class="button-text">Email</td>
+                        <td class="button-text">Mi Email</td>
                     </tr>
                 </table>
             </button>

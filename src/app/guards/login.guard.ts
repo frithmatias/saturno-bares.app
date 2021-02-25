@@ -7,7 +7,8 @@ export class LoginGuard implements CanLoad {
 
 	constructor(
 		public LoginService: LoginService,
-	) { }
+	) { 
+	}
 
 	canLoad() {
 		if (this.LoginService.user) {

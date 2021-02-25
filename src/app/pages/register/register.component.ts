@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit {
 			});
 	}
 
-	registrarUsuario() {
+	registerUser() {
 
 		if (this.forma.invalid) {
 			this.publicService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
 
 		this.loginService.createUser(user).subscribe((data: any) => {
 			if (data.ok) {
-				this.publicService.snack('Usuario creado. Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
+				this.publicService.snack('Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
 				this.router.navigate(['/activate'])
 			}
 		},
@@ -112,7 +112,7 @@ export class RegisterComponent implements OnInit {
 		)
 	}
 
-	socialResponse(social: Social) {
+	registerSocial(social: Social) {
 
 		if (!social) return;
 		if (!social.txToken) {
@@ -123,7 +123,7 @@ export class RegisterComponent implements OnInit {
 		const platform = social.txPlatform;
 		const gtoken = social.txToken;
 
-		this.loginService.login(platform, gtoken, social, false).subscribe((data: LoginResponse) => {
+		this.loginService.loginUser(platform, gtoken, social, false).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;

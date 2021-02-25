@@ -10,7 +10,6 @@
     text-decoration: none;
     justify-content: space-around;
     height         : 8em;
-    opacity        : .85;
 }
 
 a {
@@ -25,6 +24,7 @@ a:hover {
 
 .footer-tech {
     display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 500px) {
@@ -44,7 +44,6 @@ TECH ICONS
 .tech-div {
     display    : block;
     text-indent: -9999px;
-    margin     : 10px 0 10px 0;
     width      : 1.5em;
     height     : 1.5em;
     opacity    : .98;

@@ -61,9 +61,8 @@ export class LoginService {
 	// Login Methods
 	// ========================================================
 
-	// google and normal login
-	login(platform: string, token: string, user: any, recordar: boolean = false) {
-		// user:any para email, user:Social para social
+	loginUser(platform: string, token: string, user: any, recordar: boolean = false) {
+		
 		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
 
 		let api: string;
@@ -73,10 +72,6 @@ export class LoginService {
 			case 'facebook':
 				api = '/u/loginsocial';
 				data = {token, user};
-				// para google el token es suficiente, con oauth en el backend puedo obtener la data del user, 
-				// pero para facebook no puedo obtener la data del user a partir del token, por lo tanto envío 
-				// el token y la data del user también para buscar con el txEmail el usuario en la bd, y con 
-				// ese usuario generar el token del usuario.
 				break;
 			case 'email':
 				api = '/u/login';
@@ -102,20 +97,6 @@ export class LoginService {
 				return throwError(err);
 			})
 		);
-	}
-
-	logged() {
-		if (!this.token) {
-			return false;
-		}
-		const payload = JSON.parse(atob(this.token.split('.')[1]));
-		const ahora = new Date().getTime() / 1000;
-		if (payload.exp < ahora) {
-			this.logout();
-			return false; // token expirado
-		} else {
-			return true; // token valido
-		}
 	}
 
 	pushUser(user: User) {

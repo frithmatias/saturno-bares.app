@@ -35,7 +35,7 @@
                 <ng-template mat-tab-label><div><div class="mdi mdi-food company-page-tab-icon"></div><div>Menú</div></div></ng-template>
                 <app-menu [company]="company"></app-menu>
             </mat-tab>
-            <mat-tab>
+            <mat-tab *ngIf="publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
                 <ng-template mat-tab-label><div><div class="mdi mdi-ticket-account company-page-tab-icon"></div><div>Reservar</div></div>
                 </ng-template>
                 <app-ticket-create [company]="company"></app-ticket-create>

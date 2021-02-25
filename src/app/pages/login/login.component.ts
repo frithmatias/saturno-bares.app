@@ -65,15 +65,13 @@ export class LoginComponent implements OnInit {
 			return;
 		}
 
-		const gtoken = social.txToken;
+		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.login(platform, gtoken, social, false);
+		this.login(platform, token, social, false);
 	}
 
-
 	login(platform: string, token: string, user: any, remember: boolean) {
-		
-		this.loginService.login(platform, token, user, remember).subscribe((data: LoginResponse) => {
+		this.loginService.loginUser(platform, token, user, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				if (data.user.id_company) { 
 					const idCompany = data.user.id_company._id;

@@ -3,16 +3,15 @@
 
 
   <div *ngIf="loading">
-    <mat-spinner diameter="20"></mat-spinner>
-    Cargando las reservas de {{social.txName}}...
+    <app-spinner text="Loading tickets..."></app-spinner>
   </div>
 
   <div *ngIf="!loading">
 
     <!-- social component -->
 
-    <app-social [platforms]="['google', 'facebook', 'email', 'whatsapp' ,'telegram']"
-      (socialResponse)="socialResponse($event)"></app-social>
+    <app-social [platforms]="['google', 'facebook', 'whatsapp' ,'telegram', 'email']"
+      (socialResponse)="getTickets($event)"></app-social>
 
     <div class="m-4">
       <div *ngIf="tickets.length === 0" class="text-accent">
@@ -136,7 +135,7 @@
               </div>
             </td>
             <td class="text-left">
-              {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} <span class="sm text-accent">(
+              {{ticket.tm_reserve | dateToString : 'DD/MM HH:mm'}} <span class="sm text-accent">(
                 {{ticket.tm_reserve | dateToRemaining}} )</span>
             </td>
             <td class="text-right text-warn">

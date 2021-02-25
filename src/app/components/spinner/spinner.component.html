@@ -1,0 +1,13 @@
+<div class="m-5 animated fadeIn">
+    <div>
+        <mat-spinner diameter="20"></mat-spinner>
+    </div>
+    <div class="xs mt-2">
+        <span *ngIf="text">
+            {{text}}
+        </span>
+        <span *ngIf="!text">
+            LOADING...
+        </span>
+    </div>
+</div>

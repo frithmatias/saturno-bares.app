@@ -8,6 +8,7 @@ import { TablesResponse } from '../../interfaces/table.interface';
 import { PublicService } from '../public/public.service';
 import { SectionsResponse } from '../../interfaces/section.interface';
 import { ScoreItemsResponse } from '../../interfaces/score.interface';
+import { SettingsResponse } from 'src/app/interfaces/settings.interface';
 
 @Component({
   selector: 'app-admin',
@@ -65,7 +66,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 			this.adminService.scoreItemsSection = data.scoreitems;
     })
 
-    this.adminService.readSettings(idCompany);
+    this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
+      this.publicService.settings = data.settings;
+    });
   }
 
   ngOnDestroy(): void {

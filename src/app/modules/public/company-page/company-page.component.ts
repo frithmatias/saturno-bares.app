@@ -3,6 +3,7 @@ import { PublicService } from '../public.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/interfaces/company.interface';
+import { SettingsResponse } from '../../../interfaces/settings.interface';
 
 interface sliderImage {
 	image: string;
@@ -20,7 +21,6 @@ interface sliderImage {
 export class CompanyPageComponent implements OnInit {
 	images: sliderImage[] = [];
 	company: Company;
-
 	// width 528: page-container 600px - 2x20px padding - mat-card padding 2x16 
 	// [imageSize]="imageSize"
 	imageSize = { width: '100%', height: 200, space: 0 };
@@ -43,8 +43,13 @@ export class CompanyPageComponent implements OnInit {
 		}
 
 
-		let idCompany = this.company._id;
-		let url = environment.api + '/image/' + idCompany + '/tx_company_banners/';
+
+		const idCompany = this.company._id;
+		this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
+			this.publicService.settings = data.settings; // rompo la referencia la objeto original
+		})
+
+		const url = environment.api + '/image/' + idCompany + '/tx_company_banners/';
 
 		this.company.tx_company_banners.forEach(img => {
 			this.images.push({

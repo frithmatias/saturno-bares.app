@@ -8,6 +8,8 @@ import { SectionsResponse, Section } from '../../interfaces/section.interface';
 import { LocationsResponse, Location } from '../../interfaces/location.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
+import { SettingsResponse } from '../../interfaces/settings.interface';
+import { Settings } from 'src/app/interfaces/settings.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,8 @@ export class PublicService {
   tickets: Ticket[] = [];
   sections: Section[] = [];
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
+  settings: Settings;
+
   chatMessages: {
     own: boolean,
     time: Date,
@@ -95,6 +99,11 @@ export class PublicService {
     return this.http.get(environment.api + '/c/readcompany/' + txCompanyString);
   }
 
+  readSettings(idCompany: string): Observable<object> {
+    const url = environment.api + '/settings/readsettings/' + idCompany;
+    return this.http.get(url);
+  }
+
   readSections(idCompany: string) {
     const url = environment.api + '/section/readsections/' + idCompany;
     return this.http.get(url);
@@ -104,12 +113,6 @@ export class PublicService {
     let data = { nmPersons, idSection, dtReserve };
     return this.http.post(environment.api + '/t/readavailability/', data);
   }
-
-  readPending(idCompany:string, idYear: number, idMonth: number): Observable<object> {
-    let data = { idCompany, idYear, idMonth };
-    return this.http.post(environment.api + '/t/readpending/', data);
-  }
-
 
   getUserTickets(txPlatform: string, txEmail: string) {
     if (!txPlatform || !txEmail) { return; }

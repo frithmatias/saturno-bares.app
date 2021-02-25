@@ -13,10 +13,11 @@ import { PublicService } from '../../public/public.service';
 export class SettingsComponent implements OnInit {
 
   settings: Settings; // local settings before save (component)
-  blUpdated = false;
-  blDisabled = true;
+  saveDisabled = true;
   txMessage: string = '';
-  showHelp = false;
+  showQueueHelp = false;
+  showSpmHelp = false;
+  showScheduleHelp = false;
   
   constructor(
     public loginService: LoginService,
@@ -26,29 +27,33 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     let idCompany = this.loginService.user.id_company._id;
-    this.adminService.readSettings(idCompany).then((data: SettingsResponse) => {
-      this.settings = data.settings; // rompo la referencia la objeto original
+    this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
+      this.publicService.settings = data.settings; // rompo la referencia la objeto original
+      this.settings = data.settings;
     })
   }
 
   updateSettings() {
-    this.blUpdated = false;
     this.adminService.updateSettings(this.settings).subscribe((data: SettingsResponse) => {
       if (data.ok) {
-
         this.settings = Object.assign({}, data.settings);
-        this.adminService.settings = data.settings;
-        this.blDisabled = true;
-        this.blUpdated = true;
+        this.publicService.settings = data.settings;
+        this.saveDisabled = true;
         this.publicService.snack(data.msg, 2000);
-
       }
     })
   }
 
-  check() {
-    this.blDisabled = !this.settings.bl_spm_auto === this.adminService.settings.bl_spm_auto;
-    this.blUpdated = false;
+  check(item: string) {
+    if (this.settings.bl_queue === false && item === 'queue') this.settings.bl_spm = false;
+    if (this.settings.bl_spm === true && item === 'spm') this.settings.bl_queue = true;
+    this.saveDisabled = false;
+  }
+
+  showHelp(item: string ){
+    this.showQueueHelp = item === 'queue' ? !this.showQueueHelp : false;
+    this.showSpmHelp = item === 'spm' ? !this.showSpmHelp : false;
+    this.showScheduleHelp = item === 'schedule' ? !this.showScheduleHelp : false;
   }
 
   sendMessage() {

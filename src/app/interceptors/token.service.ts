@@ -17,7 +17,7 @@ export class TokenService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.loginService.logged()) {
+    if (this.loginService.token) {
 
       const headers = new HttpHeaders({
         'turnos-token': this.loginService.token

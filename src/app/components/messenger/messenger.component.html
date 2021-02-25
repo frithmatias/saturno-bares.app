@@ -1,9 +1,6 @@
 <div class="animated fadeIn text-center">
     <div *ngIf="loading">
-        <mat-spinner diameter="20"></mat-spinner>
-        <div class="mt-2">
-            Enviando email...
-        </div>
+        <app-spinner text="Sending email..."></app-spinner>
     </div>
     <div *ngIf="!loading">
         <mat-form-field color="accent" class="mt-4 w-100">

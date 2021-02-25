@@ -26,8 +26,7 @@ export class ActivateComponent implements OnInit {
       const hash = data.hash;
 
       if (email && hash) {
-        this.loginService.activateUser(email, hash)
-          .subscribe((data: UserResponse) => {
+        this.loginService.activateUser(email, hash).subscribe((data: UserResponse) => {
             if (data.ok) {
               this.activated = true;
               this.publicService.snack('Usuario activado correctamente!', 5000);

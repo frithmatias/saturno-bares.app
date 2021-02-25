@@ -26,10 +26,23 @@
 
           <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
 
-            Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
-            utilizando alguno de los siguientes métodos:
+            <!-- solo muestra social si esta logueado en social para mostrar la cuenta con la que este logueado y darle la oportunidad de desloguearse -->
+            <app-social *ngIf="social" [platforms]="['facebook', 'google', 'telegram', 'email']"></app-social>
 
-            <app-social (socialResponse)="socialResponse($event)" [logout]="true"></app-social>
+            <div>
+              Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
+            </div>
+
+            <div *ngIf="social" class="mt-4">
+              <button *ngIf="social" mat-raised-button color="active"
+                (click)="validateTicket(social)">Confirmar</button>
+            </div>
+
+            <div *ngIf="!social" class="mt-4">
+              utilizando alguna de las siguientes cuentas:
+              <app-social [platforms]="['facebook', 'google', 'telegram', 'email']"
+                (socialResponse)="validateTicket($event)"></app-social>
+            </div>
 
           </div>
 
@@ -70,7 +83,8 @@
               Hola {{ ticket.tx_name }}, tu reserva quedó confirmada.
             </p>
             <p>
-              Te esperan el {{ ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ ticket.tm_reserve | dateToRemaining }} )
+              Te esperan el {{ ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ ticket.tm_reserve
+              | dateToRemaining }} )
             </p>
             <p>
               Reserva confirmada con tu cuenta {{ ticket.id_user }} de {{ ticket.tx_platform }}.
@@ -189,8 +203,10 @@
               <mat-form-field color="accent" class="w-50 pl-1">
                 <mat-label>Para cuando?</mat-label>
                 <mat-select formControlName="txWhen" name="txWhen" required>
-                  <mat-option value="ahora"><span class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
-                  <mat-option value="otrodia"><span class="text-accent mdi mdi-calendar-month"></span> Otro día
+                  <mat-option [disabled]="!publicService.settings.bl_queue" value="ahora"><span
+                      class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
+                  <mat-option [disabled]="!publicService.settings.bl_schedule" value="otrodia"><span
+                      class="text-accent mdi mdi-calendar-month"></span> Otro día
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -259,7 +275,7 @@
         </mat-card-content>
 
         <!------------------------------>
-        <!-- BUTTONS  -->
+        <!-- ACTIONS  -->
         <!------------------------------>
 
         <mat-card-actions>

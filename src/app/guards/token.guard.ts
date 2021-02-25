@@ -15,6 +15,7 @@ export class TokenGuard implements CanLoad {
 
 	canLoad(): Promise<boolean> | boolean {
 		const token = this.loginService.token;
+
 		if (!token) {
 			this.loginService.logout();
 			this.router.navigate(['/home']);
@@ -22,8 +23,7 @@ export class TokenGuard implements CanLoad {
 		}
 
 		// payload: {usuario: {…}, iat: 1597269832, exp: 1599861832}
-		const payload = JSON.parse(atob(token.split('.')[1]));
-
+		const payload = JSON.parse(window.atob(token.split('.')[1]));
 		// verifica si el token expiro
 		const expira = this.expira(payload.exp); // 1599861832
 		if (expira) {

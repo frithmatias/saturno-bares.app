@@ -110,7 +110,7 @@ export class ScheduleComponent implements OnInit {
     const idCompany = this.loginService.user.id_company._id;
     const idYear = new Date().getFullYear();
     const idMonth = new Date().getMonth();
-    this.publicService.readPending(idCompany, idYear, idMonth).subscribe((data: any) => {
+    this.adminService.readPending(idCompany, idYear, idMonth).subscribe((data: any) => {
       this.pendingMonth = data.pending;
       this.filterPendingsDateSector();
       this.filterPendingsDate();

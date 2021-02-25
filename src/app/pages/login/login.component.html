@@ -9,10 +9,9 @@
             <div class="login-social">
                 <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
-                    <div class="my-2 xl text-danger">Ingresar</div>
-                    <hr class="my-4 hr-red">
-                    <div class="my-2 md">Entrar con una cuenta externa</div>
-                    <app-social [platforms]="['facebook', 'google']" (socialResponse)="loginSocial($event)"></app-social>
+                    <div class="mt-3 xl text-danger">Ingresar</div>
+                    <hr class="mt-3 hr-red">
+                    <app-social [showlogged]="false" [logout]="true" [platforms]="['facebook', 'google']" (socialResponse)="loginSocial($event)"></app-social>
                 </div>
             </div>
 

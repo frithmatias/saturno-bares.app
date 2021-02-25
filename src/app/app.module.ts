@@ -35,11 +35,9 @@ import { LoginGuard } from './guards/login.guard';
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HowWorksComponent } from './pages/how-works/how-works.component';
-import { PricingComponent } from './pages/pricing/pricing.component';
 import { TokenService } from './interceptors/token.service';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
-import { VideoComponent } from './pages/video/video.component';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivateComponent } from './pages/register/activate/activate.component';
 
@@ -52,9 +50,7 @@ import { ActivateComponent } from './pages/register/activate/activate.component'
 		NopagefoundComponent,
 		ContactComponent,
 		HowWorksComponent,
-		PricingComponent,
 		FooterComponent,
-		VideoComponent,
 		ActivateComponent,
 	],
 	imports: [

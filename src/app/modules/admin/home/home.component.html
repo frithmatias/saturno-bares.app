@@ -143,17 +143,35 @@
               <tr>
                 <td style="text-align: left;">
                   <span class="mdi mdi-gesture-double-tap mr-2"></span>
-                  Asig. Auto. Mesas
-                  <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
-                  <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
+                  SPM
                 </td>
                 <td style="text-align: right;">
-                  <span *ngIf="adminService.settings?.bl_spm_auto">Activado</span>
-                  <span *ngIf="!adminService.settings?.bl_spm_auto">Desactivado</span>
-
+                  <span *ngIf="publicService.settings?.bl_spm">Activado</span>
+                  <span *ngIf="!publicService.settings?.bl_spm">Desactivado</span>
                 </td>
               </tr>
 
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-human-queue mr-2"></span>
+                  Cola Virtual
+                </td>
+                <td style="text-align: right;">
+                  <span *ngIf="publicService.settings?.bl_queue">Activado</span>
+                  <span *ngIf="!publicService.settings?.bl_queue">Desactivado</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-calendar-account mr-2"></span>
+                  Agenda
+                </td>
+                <td style="text-align: right;">
+                  <span *ngIf="publicService.settings?.bl_schedule">Activado</span>
+                  <span *ngIf="!publicService.settings?.bl_schedule">Desactivado</span>
+                </td>
+              </tr>
 
             </table>
 
@@ -218,8 +236,9 @@
         </div>
 
         <div class="m-1 text-center my-4">
-          <qrcode qrdata="https://saturno.fun/public/{{loginService.user.id_company?.tx_company_string || 'nombredetucomercio'}}" [width]="256"
-            [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode
+            qrdata="https://saturno.fun/public/{{loginService.user.id_company?.tx_company_string || 'nombredetucomercio'}}"
+            [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
 
       </mat-card>

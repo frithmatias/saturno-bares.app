@@ -18,6 +18,7 @@ import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 import { ThemeComponent } from './theme/theme.component';
 import { SocialComponent } from './social/social.component';
 import { MessengerComponent } from './messenger/messenger.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MessengerComponent } from './messenger/messenger.component';
     BottomsheetComponent,
     ThemeComponent,
     SocialComponent,
-    MessengerComponent
+    MessengerComponent,
+    SpinnerComponent
   ],
   imports: [
     RouterModule,
@@ -50,7 +52,8 @@ import { MessengerComponent } from './messenger/messenger.component';
     UploaderComponent,
     ThemeComponent,
     SocialComponent,
-    MessengerComponent
+    MessengerComponent,
+    SpinnerComponent
   ]
 })
 export class ComponentsModule { }

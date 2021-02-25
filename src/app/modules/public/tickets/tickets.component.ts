@@ -87,7 +87,7 @@ export class TicketsComponent implements OnInit {
   }
 
 
-  socialResponse(response: Social) {
+  getTickets(response: Social) {
     if (response === null) {
       if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
       this.social = null;

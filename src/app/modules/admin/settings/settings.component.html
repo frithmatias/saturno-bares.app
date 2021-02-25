@@ -10,71 +10,104 @@
                 <mat-expansion-panel class="my-3">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <span *ngIf="adminService.settings.bl_spm_auto"
-                                class="xl mdi mdi-boom-gate-up text-deco"></span>
-                            <span *ngIf="!adminService.settings.bl_spm_auto"
-                                class="xl mdi mdi-boom-gate text-deco"></span>
+                            <span *ngIf="settings.bl_spm" class="xl mdi mdi-boom-gate-up text-deco"></span>
+                            <span *ngIf="!settings.bl_spm" class="xl mdi mdi-boom-gate text-deco"></span>
 
-                            <span class="align-self-center md ml-2">Asignación Autom. de Mesas</span>
+                            <span class="align-self-center md ml-2">Configuraciones Generales</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
+                    <mat-card-content class="p-2">
 
-
-
-                    <mat-card-content class="p-2 d-flex">
-
-
-                        <div class="w-50 text-left">
-                            <mat-slide-toggle [(ngModel)]="settings.bl_spm_auto" [checked]="settings.bl_spm_auto"
-                                (click)="check()"> AAM
-                            </mat-slide-toggle>
+                        <div class="text-left animated fadeIn pt-4 text-accent" *ngIf="showQueueHelp">
+                            <p>
+                                COLA VIRTUAL: Si esta opción esta activada, los clientes pueden solicitar una mesa desde
+                                la app antes de ingresar a tu negocio. El sistema administrará la asignación de mesas en
+                                tiempo real, incluso administrará con un sistema de "turnos" la asignación de mesas a
+                                los clientes que esperan una mesa cuando tu negocio ya está completo.
+                            </p>
                         </div>
-                        <div class="w-50 text-right">Estado Actual: 
-                            [
-                            <apan *ngIf="adminService.settings.bl_spm_auto">Autmático</apan>
-                            <apan *ngIf="!adminService.settings.bl_spm_auto">Manual</apan>
-                            ]
+                        <div class="text-left animated fadeIn pt-4 text-accent" *ngIf="showSpmHelp">
+                            <p>
+                                SPM (Sistema de Provisión de Mesas): Si esta opción esta activada el sistema asignará
+                                automáticamente las mesas disponibles a los clientes que esperan en la cola virtual. Si
+                                esta opcion NO esta activada el cliente debe esperar a que un camarero o administrador
+                                decida que mesa le será asignada.
+                            </p>
                         </div>
+                        <div class="text-left animated fadeIn pt-4 text-accent" *ngIf="showScheduleHelp">
+                            <p>
+                                AGENDA: Si ésta opción está activada, el administrador dispondrá de una agenda para
+                                reservar o administrar mesas a sus clientes. Además, los clientes puedrán reservar ellos
+                                mismos una mesa para un día y un horario determinado.
+                                Si el cliente solicita una mesa para un grupo grande de personas tendrá la opción de
+                                solicitar una mesa especial. Cuando la hora se encuentre próxima a la hora de la
+                                reserva, el sistema automáticamente reservará las mesas asignadas y llegado el horario
+                                exacto proveera la mesa y notificará al cliente.
+                            </p>
+                        </div>
+                        <!-- virtual queue on/off -->
+                        <div class="d-flex mt-2">
+                            <div class="w-50 text-left">
+                                <mat-slide-toggle [(ngModel)]="settings.bl_queue" [checked]="settings.bl_queue"
+                                    (change)="check('queue')"> Cola Virtual
+                                </mat-slide-toggle>
+                            </div>
+                            <div class="w-50 text-right">
+                                <apan *ngIf="settings.bl_queue">Activado</apan>
+                                <apan *ngIf="!settings.bl_queue">Desactivado</apan>
+                                <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                                    (click)="showHelp('queue')"></span>
+                            </div>
+                        </div>
+                        <!-- spm on/off -->
+                        <div class="d-flex mt-2">
+                            <div class="w-50 text-left">
+                                <mat-slide-toggle [(ngModel)]="settings.bl_spm" [checked]="settings.bl_spm"
+                                    (change)="check('spm')"> SPM
+                                </mat-slide-toggle>
+                            </div>
+                            <div class="w-50 text-right">
+                                <apan *ngIf="settings.bl_spm">Activado</apan>
+                                <apan *ngIf="!settings.bl_spm">Desactivado</apan>
+                                <span class="mdi mdi-help-circle-outline ml-2 pointer" (click)="showHelp('spm')"></span>
+                            </div>
+                        </div>
+
+
+                        <!-- schedule on/off -->
+                        <div class="d-flex mt-2">
+                            <div class="w-50 text-left">
+                                <mat-slide-toggle [(ngModel)]="settings.bl_schedule" [checked]="settings.bl_schedule"
+                                    (change)="check('schedule')"> Agenda
+                                </mat-slide-toggle>
+                            </div>
+                            <div class="w-50 text-right">
+                                <apan *ngIf="settings.bl_schedule">Activado</apan>
+                                <apan *ngIf="!settings.bl_schedule">Desactivado</apan>
+                                <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                                    (click)="showHelp('schedule')"></span>
+
+                            </div>
+                        </div>
+
+
 
                     </mat-card-content>
 
                     <mat-card-actions class="p-2 text-right">
 
-                        <button mat-raised-button color="primary" class="action-button-flex"
-                            (click)="showHelp=!showHelp">
-                            <table>
-                                <tr>
-                                    <td class="button-icon mdi  mdi-help xl"></td>
-                                    <td *ngIf="showHelp" class="button-text">Cerrar</td>
-                                    <td *ngIf="!showHelp" class="button-text">Que es esto?</td>
-                                </tr>
-                            </table>
-                        </button>
-
                         <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
-                            [disabled]="blDisabled">
+                            [disabled]="saveDisabled">
                             <table>
                                 <tr>
-                                    <td *ngIf="!blUpdated" class="button-icon mdi  mdi-content-save xl"></td>
-                                    <td *ngIf="blUpdated" class="button-icon mdi  mdi-check-circle xl"></td>
-
+                                    <td class="button-icon mdi  mdi-content-save xl"></td>
                                     <td class="button-text">Guardar</td>
                                 </tr>
                             </table>
                         </button>
                     </mat-card-actions>
 
-                    <mat-card-content>
-                        <div class="card-left-border text-left animated fadeIn p-2 text-accent" *ngIf="showHelp">
-                            <p>
-                                Si esta opción esta activada el sistema asignará automáticamente las mesas disponibles
-                                a los clientes que esperan en la cola virtual. Si esta opcion NO esta activada el
-                                cliente
-                                debe esperar a que un camarero/a decida que mesa le será asignada.
-                            </p>
-                        </div>
-                    </mat-card-content>
                 </mat-expansion-panel>
 
                 <!-- --------------------- -->

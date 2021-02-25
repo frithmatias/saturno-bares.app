@@ -1,8 +1,8 @@
 <div class="page-container animated fadeIn" *ngIf="waiterService.session">
   <mat-card>
 
-    <div *ngIf="loading" class="mt-5 animated fadeIn">
-      <mat-spinner></mat-spinner>
+    <div *ngIf="loading" class="m-5 animated fadeIn">
+      <app-spinner text="LOADING..."></app-spinner>
     </div>
 
     <div *ngIf="!loading" class="animated fadeIn">

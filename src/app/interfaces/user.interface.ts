@@ -1,5 +1,6 @@
 import { Company } from './company.interface';
 
+
 export interface User {
 	tx_name: string;
 	tx_email: string;

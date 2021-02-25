@@ -23,7 +23,6 @@ export class AdminService {
 
 	public companies: Company[] = [];
 	public company: Company; // todo: selected company
-	public settings: Settings;
 
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];
@@ -174,18 +173,6 @@ export class AdminService {
 	// Settings Methods
 	// ========================================================
 
-	readSettings(idCompany: string): Promise<SettingsResponse> {
-		return new Promise(resolve => {
-			const url = environment.api + '/settings/readsettings/' + idCompany;
-			return this.http.get(url).subscribe((data: SettingsResponse) => {
-				this.settings = Object.assign({}, data.settings);
-				let newdata = Object.assign({}, data);
-				resolve(newdata)
-			})
-
-		})
-	}
-
 	updateSettings(settings: Settings) {
 		const url = environment.api + '/settings/updatesettings';
 		return this.http.put(url, settings);
@@ -214,4 +201,11 @@ export class AdminService {
 		let data = { blContingent, txName, nmPersons, idSection, tmReserve, txEmail, nmPhone, cdTables };
 		return this.http.post(environment.api + '/t/createticket/', data);
 	}
+
+
+	readPending(idCompany:string, idYear: number, idMonth: number): Observable<object> {
+		let data = { idCompany, idYear, idMonth };
+		return this.http.post(environment.api + '/t/readpending/', data);
+	  }
+	
 }

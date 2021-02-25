@@ -8,10 +8,9 @@
 
             <div class="register-social">
                 <div class="bg-light text-dark rounded h-100 p-4">
-                    <div class="my-2 xl text-danger">Registrar Comercio</div>
-                    <div class="my-2 md">Registrar comercio con una cuenta externa</div>
-                    <hr class="my-4 hr-red">
-                    <app-social [platforms]="['facebook', 'google']" (socialResponse)="socialResponse($event)"></app-social>
+                    <div class="mt-3 xl text-danger">Registrar Comercio</div>
+                    <hr class="mt-3 hr-red">
+                    <app-social [showlogged]="false" [platforms]="['facebook', 'google']" (socialResponse)="registerSocial($event)"></app-social>
                 </div>
             </div>
 
@@ -21,7 +20,7 @@
 
             <div class="register-email">
                 <div class="my-2 md">Registrar comercio con mi cuenta de email.</div>
-                <form [formGroup]="forma" (ngSubmit)="registrarUsuario()" id="loginform">
+                <form [formGroup]="forma" (ngSubmit)="registerUser()" id="loginform">
 
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Nombre</mat-label>
