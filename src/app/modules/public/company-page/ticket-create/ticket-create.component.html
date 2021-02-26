@@ -13,7 +13,7 @@
       <div *ngIf="!loading">
 
         <!------------------------------>
-        <!-- TICKET WAITING / SCHEDULED  -->
+        <!-- Has active ticket -->
         <!------------------------------>
 
         <mat-card-content *ngIf="ticket">
@@ -25,17 +25,16 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
-
             <div>
               Tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
             </div>
 
-           
-              <button *ngIf="social || customer" class="mt-4" mat-raised-button color="active"
-                (click)="validateTicket(ticket)">Confirmar</button>
-            
-                <button *ngIf="!social && !customer" class="mt-4" mat-raised-button color="active"
-                routerLink="/public/login">Login</button>
+            <button *ngIf="social || customer" class="mt-2" mat-raised-button color="active"
+              (click)="validateTicket(ticket)">Confirmar</button>
+
+            <button *ngIf="!social && !customer" class="mt-2" mat-raised-button color="warn"
+              routerLink="/public/login">Ingresar</button>
+
           </div>
 
           <!------------------------------>
@@ -149,7 +148,7 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'cancelled'" class="my-4">
-            Hola {{ticket.tx_name}}, tu ticket quedó cancelado, te esperamos pronto.
+            Hola {{ticket.tx_name}} tu ticket quedó cancelado ¡te esperamos pronto!.
           </div>
 
           <!------------------------------>
@@ -157,13 +156,13 @@
           <!------------------------------>
 
           <div *ngIf="ticket.tx_status === 'finished'" class="my-4">
-            Hola {{ticket.tx_name}}, gracias por tu visita te esperamos pronto.
+            Hola {{ticket.tx_name}} gracias por tu visita, ¡te esperamos pronto!.
           </div>
 
         </mat-card-content>
 
         <!------------------------------>
-        <!-- TICKET CREATE FORM  -->
+        <!-- Ticket Create Form  -->
         <!------------------------------>
 
         <mat-card-content *ngIf="!ticket">
@@ -171,22 +170,28 @@
 
             <div class="d-flex">
 
-              <mat-form-field color="accent" class="w-100">
-                <mat-label>Sector</mat-label>
-                <mat-select formControlName="idSection" name="idSection" required>
-                  <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
-                  </mat-option>
-                </mat-select>
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Tu Nombre</mat-label>
+                <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
+                  type="text" maxlength="20" required>
+              </mat-form-field>
+
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Cantidad de Personas</mat-label>
+                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                  formControlName="nmPersons" name="nmPersons" required>
               </mat-form-field>
 
             </div>
 
             <div class="d-flex">
 
-              <mat-form-field color="accent" class="w-50 pr-1">
-                <mat-label>Cantidad de Personas</mat-label>
-                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
-                  formControlName="nmPersons" name="nmPersons" required>
+              <mat-form-field color="accent" class="w-50">
+                <mat-label>Sector</mat-label>
+                <mat-select formControlName="idSection" name="idSection" required>
+                  <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
 
               <mat-form-field color="accent" class="w-50 pl-1">
@@ -264,7 +269,7 @@
         </mat-card-content>
 
         <!------------------------------>
-        <!-- ACTIONS  -->
+        <!-- Actions  -->
         <!------------------------------>
 
         <mat-card-actions>

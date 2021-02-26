@@ -6,30 +6,29 @@
     <app-spinner text="Loading tickets..."></app-spinner>
   </div>
 
-  <div *ngIf="!loading">
+  <div *ngIf="!loading" class="sm d-flex justify-content-end p-2 text-accent">
 
-    <!-- social component -->
-
-    <!-- <app-social [platforms]="['google', 'facebook', 'whatsapp' ,'telegram']"
-      (socialResponse)="getTickets($event)"></app-social> -->
-
-
-    <div class="m-4">
-      <div *ngIf="tickets.length === 0" class="text-accent">
-        <div *ngIf="!social && !customer">
-          Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
-        </div>
-        <div *ngIf="social || customer">
-          No hay reservas confirmadas con esta cuenta.
-        </div>
+    <div class="mdi mdi-account-circle mx-1"></div>
+    <div *ngIf="tickets.length === 0">
+      <div *ngIf="social">
+        {{social.txEmail}}
       </div>
-
-      <div *ngIf="tickets.length > 0" class="text-accent">
-        <div *ngIf="social">
-          Reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
-        </div>
+      <div *ngIf="!social && customer">
+        {{customer.tx_email}}
       </div>
+    </div>
 
+    <div *ngIf="tickets.length > 0">
+      <div *ngIf="social">
+        {{social.txEmail}}
+      </div>
+      <div *ngIf="!social && customer">
+        {{customer.tx_email}}
+      </div>
+    </div>
+
+    <div class="pointer text-warn ml-2" (click)="publicService.clearPublicSession()">
+      [Salir]
     </div>
 
   </div>
@@ -56,8 +55,8 @@
 
       <!-- header with company name and address -->
       <div class="pointer my-2" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
-        <div class="sm"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
+        <div class="xl text-accent"> {{ticket.id_company?.tx_company_name}} </div>
+        <div class="md"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
       </div>
 
       <mat-card-content class="text-info sm fw-200">
@@ -93,15 +92,15 @@
           </table>
         </button>
 
-        <button mat-raised-button class="action-button-flex" color="active"
-        *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
-        <table>
-          <tr>
-            <td class="button-icon mdi mdi-check lg"></td>
-            <td class="button-text">Confirmar</td>
-          </tr>
-        </table>
-      </button>
+        <button mat-raised-button class="action-button-flex" color="active" *ngIf="ticket.tx_status==='waiting'"
+          (click)="validateTicket(ticket)">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-check lg"></td>
+              <td class="button-text">Confirmar</td>
+            </tr>
+          </table>
+        </button>
 
       </mat-card-actions>
 

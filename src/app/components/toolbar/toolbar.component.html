@@ -71,7 +71,11 @@
             <app-theme class="mr-3"></app-theme>
 
             <!-- LOG IN -->
-            <div *ngIf="!loginService.user" class="mdi mdi-account-circle pointer" routerLink="/login"> Ingresar
+            <div *ngIf="!loginService.user" class="pointer" routerLink="/login"> 
+                <span class="mdi mdi-account-circle mr-1"></span>
+                <span>
+                    Ingreso a Comercios
+                </span>
             </div>
 
             <!-- LOGGED IN -->

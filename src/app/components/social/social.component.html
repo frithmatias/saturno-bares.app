@@ -2,19 +2,7 @@
 
     <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
 
-    <div *ngIf="social && showlogged" class="social-status">
-        <div class="sm mr-2">
-            {{social.txPlatform | capitalizarPipe}} [{{social.txName}}] 
-        </div>
-        <div>
-            <button mat-button color="warn" (click)="logOut()">
-                    Salir
-            </button>
-        </div>
-    </div>
-
-
-    <div *ngIf="(!social || !showlogged) && platforms" class="social-buttons">
+    <div *ngIf="(!social) && platforms" class="social-buttons">
 
         <!-- WHATSAPP -->
         <div *ngIf="isMobile && platforms.includes('whatsapp')">

@@ -14,7 +14,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { HowWorksComponent } from './pages/how-works/how-works.component';
-import { ActivateComponent } from './pages/register/activate/activate.component';
+import { ActivateComponent } from './pages/activate/activate.component';
 
 // guards
 import { LoginGuard } from './guards/login.guard';

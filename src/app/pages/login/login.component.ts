@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
 
 		const recordar = forma.value.recuerdame;
 		const platform = 'email';
-		this.login(platform, null, user, recordar);
+		this.loginUser(platform, null, user, recordar);
 
 	}
 
@@ -67,10 +67,10 @@ export class LoginComponent implements OnInit {
 
 		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.login(platform, token, social, false);
+		this.loginUser(platform, token, social, false);
 	}
 
-	login(platform: string, token: string, user: any, remember: boolean) {
+	loginUser(platform: string, token: string, user: any, remember: boolean) {
 		this.loginService.loginUser(platform, token, user, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				if (data.user.id_company) { 

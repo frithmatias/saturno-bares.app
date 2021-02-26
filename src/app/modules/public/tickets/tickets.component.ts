@@ -7,6 +7,8 @@ import { FormControl } from '@angular/forms';
 import { Social } from '../../../components/social/social.component';
 import { User } from 'src/app/interfaces/user.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { WebsocketService } from '../../../services/websocket.service';
 
 
 
@@ -25,55 +27,63 @@ export class TicketsComponent implements OnInit {
   ticketsActive: Ticket[] = [];
   ticketsInactive: Ticket[] = [];
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
+  updateTicketsSub: Subscription;
 
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public publicService: PublicService
+    public publicService: PublicService,
+    private websocketService: WebsocketService
   ) { }
 
   ngOnInit(): void {
 
-    // Get social data
-    if (localStorage.getItem('social')) {
-      this.social = JSON.parse(localStorage.getItem('social'));
-      const txPlatform = this.social.txPlatform;
-      const txEmail = this.social.txEmail;
-      if (txPlatform && txEmail) {
-        this.getUserTickets(txPlatform, txEmail); // update tickets
-      }
-    }
+    this.checkSession();
 
-    if (localStorage.getItem('customer')) {
-      this.customer = JSON.parse(localStorage.getItem('customer'));
-      const txPlatform = this.customer.tx_platform;
-      const txEmail = this.customer.tx_email;
-      if (txPlatform && txEmail) {
-        this.getUserTickets(txPlatform, txEmail); // update tickets
-      }
-    }
+  }
 
-    if (!this.social && !this.customer) {
-      this.router.navigate(['/public/login']);
-    }
-
+  checkSession(){
+        // Get social data
+        if (localStorage.getItem('social')) {
+          this.social = JSON.parse(localStorage.getItem('social'));
+          const txPlatform = this.social.txPlatform;
+          const txEmail = this.social.txEmail;
+          if (txPlatform && txEmail) {
+            this.getUserTickets(txPlatform, txEmail); // update tickets
+          }
+        }
+    
+        if (localStorage.getItem('customer')) {
+          this.customer = JSON.parse(localStorage.getItem('customer'));
+          const txPlatform = this.customer.tx_platform;
+          const txEmail = this.customer.tx_email;
+          if (txPlatform && txEmail) {
+            this.getUserTickets(txPlatform, txEmail); // update tickets
+          }
+        }
+    
+        if (!this.social && !this.customer) {
+          this.router.navigate(['/public/login']);
+        }
   }
 
   getUserTickets(txPlatform: string, txEmail: string): void {
     this.loading = true;
 
-    // if exists get waiting ticket
-    let waiting: Ticket[] = [];
-    if (localStorage.getItem('tickets')) {
-      waiting = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
-    }
-
     this.publicService.getUserTickets(txPlatform, txEmail).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.tickets = data.tickets;
-        if (waiting.length > 0) { this.tickets.push(...waiting); }
+
+        // ------------------------
+        // backup de tickes waiting en la localstorage
+        if (localStorage.getItem('tickets')) {
+          const waiting: Ticket[] = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
+          if (waiting.length > 0) { this.tickets.push(...waiting); }
+        }
+        // ------------------------
+
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
         this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
         this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
@@ -127,28 +137,24 @@ export class TicketsComponent implements OnInit {
           this.publicService.snack(data.msg, 5000, 'Aceptar');
         })
       } else {
+        // elimino de mis tickets el ticket waiting que expiró
+        this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
+          this.tickets = tickets;
+          this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
+          this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+
+        })
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       }
     }, (err: HttpErrorResponse) => {
+      // elimino de mis tickets el ticket waiting que expiró
+      this.publicService.updateStorageTickets(err.error.ticket).then((tickets: Ticket[]) => {
+        this.tickets = tickets;
+        this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
+        this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+      })
       this.publicService.snack(err.error.msg, 5000, 'Aceptar');
     });
   }
 
-
-  getTickets(response: Social) {
-    if (response === null) {
-      if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-      this.social = null;
-      this.tickets = [];
-      this.ticketsActive = [];
-      this.ticketsInactive = [];
-      return;
-    } else {
-      this.social = response;
-    }
-
-    if (response.txPlatform && response.txEmail) {
-      this.getUserTickets(response.txPlatform, response.txEmail); // update tickets
-    }
-  }
 }

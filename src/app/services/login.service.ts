@@ -67,7 +67,7 @@ export class LoginService {
 			case 'google':
 			case 'facebook':
 				api = '/u/loginsocial';
-				data = { token, user };
+				data = { token, user, isAdmin: true }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
 				break;
 			case 'email':
 				api = '/u/loginuser';
@@ -125,7 +125,6 @@ export class LoginService {
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
-		if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
 
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }

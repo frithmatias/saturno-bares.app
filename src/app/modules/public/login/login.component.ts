@@ -45,25 +45,38 @@ export class LoginComponent implements OnInit {
 			id_company: null
 		};
 
+		const recordar = forma.value.recuerdame;
+		const platform = 'email';
+		this.loginCustomer(platform, null, user, recordar);
+	}
 
-		this.publicService.loginCustomer(user).subscribe((data: LoginResponse) => {
+	loginSocial(social: Social) {
+
+		if (!social) return;
+		if (!social.txToken) {
+			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
+			return;
+		}
+
+		const token = social.txToken;
+		const platform = social.txPlatform;
+		this.loginCustomer(platform, token, social, false);
+	}
+
+
+	loginCustomer(platform: string, token: string, user: any, remember: boolean){
+		
+		this.publicService.loginCustomer(platform, token, user, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				this.router.navigate([data.home]);
 			}
 		}, (err: HttpErrorResponse) => {
 			if (err.error.msg) {
-				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+				this.publicService.snack(err.error.msg, 5000);
 			} else {
-				this.publicService.snack('Error de validación', 5000, 'Aceptar');
+				this.publicService.snack('Error de validación', 5000);
 			}
 		});
-
-	}
-
-	loginSocial(social: Social) {
-		if (localStorage.getItem('customer') || localStorage.getItem('social')) {
-			this.router.navigate(['/public/tickets'])
-		}
 	}
 
 	cleanEmail(elementEmail, elementPassword) {

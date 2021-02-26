@@ -17,7 +17,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
   @ViewChild('validateTicketGoogle') gButton: any;
   @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
   @Input() logout: boolean = false;
-  @Input() showlogged: boolean = true;
   @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token

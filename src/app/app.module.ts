@@ -39,7 +39,7 @@ import { TokenService } from './interceptors/token.service';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ActivateComponent } from './pages/register/activate/activate.component';
+import { ActivateComponent } from './pages/activate/activate.component';
 
 @NgModule({
 	declarations: [

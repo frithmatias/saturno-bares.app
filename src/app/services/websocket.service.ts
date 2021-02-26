@@ -84,7 +84,7 @@ export class WebsocketService {
 					let newSocket = this.idSocket;
 					let isClient = true;
 					this.publicService.actualizarSocket(idTicket, newSocket, isClient).subscribe(data => { 
-						this.publicService.snack(`Reserva pendiente actualizada.`, 2000);
+						// this.publicService.snack(`Socket actualizado`, 1000);
 					})
 				}
 			}

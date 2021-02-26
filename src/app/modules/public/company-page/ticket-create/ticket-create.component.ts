@@ -144,6 +144,7 @@ export class TicketCreateComponent implements OnInit {
   createTicketForm() {
 
     this.ticketForm = new FormGroup({
+      txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       nmPersons: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000)]),
       idSection: new FormControl('', [Validators.required]),
       txWhen: new FormControl(''),
@@ -286,9 +287,9 @@ export class TicketCreateComponent implements OnInit {
 
     let blContingent = false;
     let idSocket = this.wsService.idSocket;
+    let txName = this.ticketForm.value.txName;
     let nmPersons = this.ticketForm.value.nmPersons;
     let idSection = this.ticketForm.value.idSection;
-
     let tmReserve = this.ticketForm.value.tmReserve || null;
     let dtReserve = this.ticketForm.value.dtReserve || null;
 
@@ -297,7 +298,7 @@ export class TicketCreateComponent implements OnInit {
 
     tmReserve = dtReserve ? new Date(dtReserve.getTime() + tmReserve * 60 * 60 * 1000) : null;
 
-    this.publicService.createTicket(blContingent, idSocket, nmPersons, idSection, tmReserve, cdTables).subscribe(
+    this.publicService.createTicket(txName, nmPersons, idSection, tmReserve, cdTables, blContingent, idSocket).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
           this.loading = false;

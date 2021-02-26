@@ -9,9 +9,9 @@
             <div class="login-social">
                 <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
-                    <div class="mt-3 xl text-danger">Ingresar Comercios</div>
+                    <div class="mt-3 xl text-danger">Ingreso a Comercios</div>
                     <hr class="mt-3 hr-red">
-                    <app-social [showlogged]="false" [logout]="true" [platforms]="['facebook', 'google']"
+                    <app-social [logout]="true" [platforms]="['facebook', 'google']"
                         (socialResponse)="loginSocial($event)"></app-social>
                 </div>
             </div>

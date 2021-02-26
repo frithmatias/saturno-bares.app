@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Ticket } from '../../interfaces/ticket.interface';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { SectionsResponse, Section } from '../../interfaces/section.interface';
 import { LocationsResponse, Location } from '../../interfaces/location.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
 import { SettingsResponse } from '../../interfaces/settings.interface';
 import { Settings } from 'src/app/interfaces/settings.interface';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -92,14 +92,39 @@ export class PublicService {
 		return this.http.post(url, data);
 	}
 
-	loginCustomer(user: any) {
-		const api = '/u/loginuser';
+	loginCustomer(platform: string, token: string, user: any, recordar: boolean = false) {
+
+		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
+
+    
+		let api: string;
+		let data: any;
+		switch (platform) {
+			case 'google':
+			case 'facebook':
+				api = '/u/loginsocial';
+				data = { token, user, isAdmin: false }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
+				break;
+			case 'email':
+				api = '/u/loginuser';
+				data = user;
+				break;
+			default:
+				api = '/u/loginuser';
+				break;
+		}
+
 		const url = environment.api + api;
-		return this.http.post(url, user).pipe(map((resp: any) => {
+
+		return this.http.post(url, data).pipe(map((resp: any) => {
 			localStorage.setItem('customer', JSON.stringify(resp.user));
 			this.customer = resp.customer;
 			return resp;
-		}));
+		}),
+			catchError(err => {
+				return throwError(err);
+			})
+		);
 	}
 
 
@@ -173,13 +198,15 @@ export class PublicService {
   }
 
   createTicket(
-    blContingent: boolean,
-    idSocket: string,
+    txName: string,
     nmPersons: number,
     idSection: string,
     tmReserve: Date,
-    cdTables: number): Observable<object> {
-    let data = { blContingent, idSocket, nmPersons, idSection, tmReserve, cdTables };
+    cdTables: number[],
+    blContingent: boolean,
+    idSocket: string,
+    ): Observable<object> {
+    let data = { txName, nmPersons, idSection, tmReserve, cdTables, blContingent, idSocket };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
@@ -242,7 +269,10 @@ export class PublicService {
     delete this.tickets;
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
-    this.router.navigate(['/home']);
+    if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
+    if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
+
+    this.router.navigate(['/public/login']);
   }
 
 
