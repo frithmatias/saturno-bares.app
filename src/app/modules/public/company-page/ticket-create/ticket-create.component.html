@@ -26,24 +26,16 @@
 
           <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
 
-            <!-- solo muestra social si esta logueado en social para mostrar la cuenta con la que este logueado y darle la oportunidad de desloguearse -->
-            <app-social *ngIf="social" [platforms]="['facebook', 'google', 'telegram', 'email']"></app-social>
-
             <div>
-              Hola {{ticket.tx_name}}, tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
+              Tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
             </div>
 
-            <div *ngIf="social" class="mt-4">
-              <button *ngIf="social" mat-raised-button color="active"
-                (click)="validateTicket(social)">Confirmar</button>
-            </div>
-
-            <div *ngIf="!social" class="mt-4">
-              utilizando alguna de las siguientes cuentas:
-              <app-social [platforms]="['facebook', 'google', 'telegram', 'email']"
-                (socialResponse)="validateTicket($event)"></app-social>
-            </div>
-
+           
+              <button *ngIf="social || customer" class="mt-4" mat-raised-button color="active"
+                (click)="validateTicket(ticket)">Confirmar</button>
+            
+                <button *ngIf="!social && !customer" class="mt-4" mat-raised-button color="active"
+                routerLink="/public/login">Login</button>
           </div>
 
           <!------------------------------>
@@ -178,26 +170,23 @@
           <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
             <div class="d-flex">
-              <mat-form-field color="accent" class="w-50 pr-1">
-                <mat-label>Tu Nombre</mat-label>
-                <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
-                  type="text" maxlength="20" required>
-              </mat-form-field>
 
-              <mat-form-field color="accent" class="w-50 pl-1">
-                <mat-label>Cantidad de Personas</mat-label>
-                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
-                  formControlName="nmPersons" name="nmPersons" required>
-              </mat-form-field>
-            </div>
-
-            <div class="d-flex">
-              <mat-form-field color="accent" class="w-50 pr-1">
+              <mat-form-field color="accent" class="w-100">
                 <mat-label>Sector</mat-label>
                 <mat-select formControlName="idSection" name="idSection" required>
                   <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
                   </mat-option>
                 </mat-select>
+              </mat-form-field>
+
+            </div>
+
+            <div class="d-flex">
+
+              <mat-form-field color="accent" class="w-50 pr-1">
+                <mat-label>Cantidad de Personas</mat-label>
+                <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+                  formControlName="nmPersons" name="nmPersons" required>
               </mat-form-field>
 
               <mat-form-field color="accent" class="w-50 pl-1">

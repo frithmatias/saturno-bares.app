@@ -5,6 +5,8 @@ import { PublicService } from '../public.service';
 import { TicketsResponse, TicketResponse } from '../../../interfaces/ticket.interface';
 import { FormControl } from '@angular/forms';
 import { Social } from '../../../components/social/social.component';
+import { User } from 'src/app/interfaces/user.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -16,10 +18,13 @@ import { Social } from '../../../components/social/social.component';
 export class TicketsComponent implements OnInit {
 
   loading = false;
-  social: Social;
+  social: Social; // customer logged with social
+  customer: User; // customer logged with email
+
   tickets: Ticket[] = [];
   ticketsActive: Ticket[] = [];
   ticketsInactive: Ticket[] = [];
+  activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
 
 
   constructor(
@@ -40,10 +45,22 @@ export class TicketsComponent implements OnInit {
       }
     }
 
+    if (localStorage.getItem('customer')) {
+      this.customer = JSON.parse(localStorage.getItem('customer'));
+      const txPlatform = this.customer.tx_platform;
+      const txEmail = this.customer.tx_email;
+      if (txPlatform && txEmail) {
+        this.getUserTickets(txPlatform, txEmail); // update tickets
+      }
+    }
+
+    if (!this.social && !this.customer) {
+      this.router.navigate(['/public/login']);
+    }
+
   }
 
   getUserTickets(txPlatform: string, txEmail: string): void {
-    const activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
     this.loading = true;
 
     // if exists get waiting ticket
@@ -58,8 +75,8 @@ export class TicketsComponent implements OnInit {
         this.tickets = data.tickets;
         if (waiting.length > 0) { this.tickets.push(...waiting); }
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
-        this.ticketsActive = this.tickets.filter(ticket => activeTickets.includes(ticket.tx_status));
-        this.ticketsInactive = this.tickets.filter(ticket => !activeTickets.includes(ticket.tx_status));
+        this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
+        this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(this.tickets));
         console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }
@@ -84,6 +101,37 @@ export class TicketsComponent implements OnInit {
         })
       }
     })
+  }
+
+  validateTicket(ticket: Ticket) {
+
+    if (!this.social && !this.customer) {
+      return;
+    }
+
+    const idTicket = ticket._id;
+
+    // user logged with social
+    const txPlatform = this.social?.txPlatform || this.customer.tx_platform;
+    const txToken = this.social?.txToken || null;
+    const txEmail = this.social?.txEmail || this.customer.tx_email
+    const txName = this.social?.txName || this.customer.tx_name
+
+    this.publicService.validateTicket(idTicket, txPlatform, txToken, txEmail, txName).subscribe((data: TicketResponse) => {
+      if (data.ok) {
+        this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
+          this.tickets = tickets;
+          this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
+          this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
+          this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+          this.publicService.snack(data.msg, 5000, 'Aceptar');
+        })
+      } else {
+        this.publicService.snack(data.msg, 5000, 'Aceptar');
+      }
+    }, (err: HttpErrorResponse) => {
+      this.publicService.snack(err.error.msg, 5000, 'Aceptar');
+    });
   }
 
 

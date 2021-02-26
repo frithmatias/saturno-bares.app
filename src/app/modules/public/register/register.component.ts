@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { PublicService } from '../../modules/public/public.service';
-import { LoginService } from '../../services/login.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginResponse } from '../../interfaces/login.interface';
-import { Social } from '../../components/social/social.component';
-import { WebsocketService } from '../../services/websocket.service';
+import { PublicService } from '../public.service';
+
 
 declare const gapi: any;
 
@@ -25,8 +21,6 @@ export class RegisterComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private publicService: PublicService,
-		private loginService: LoginService,
-		private wsService: WebsocketService
 	) { }
 
 	ngOnInit() {
@@ -77,7 +71,7 @@ export class RegisterComponent implements OnInit {
 			});
 	}
 
-	registerUser() {
+	registerCustomer() {
 
 		if (this.forma.invalid) {
 			this.publicService.snack('Faltan datos por favor verifique', 5000, 'Aceptar');
@@ -93,10 +87,10 @@ export class RegisterComponent implements OnInit {
 			tx_name: this.forma.value.name,
 			tx_email: this.forma.value.email,
 			tx_password: this.forma.value.password1,
-			bl_admin: true //admin || customer 
+			bl_admin: false 
 		};
 
-		this.loginService.createUser(user).subscribe((data: any) => {
+		this.publicService.registerUser(user).subscribe((data: any) => {
 			if (data.ok) {
 				this.publicService.snack('Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
 				this.router.navigate(['/activate'])
@@ -110,35 +104,6 @@ export class RegisterComponent implements OnInit {
 				}
 			}
 		)
-	}
-
-	registerSocial(social: Social) {
-
-		if (!social) return;
-		if (!social.txToken) {
-			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
-			return;
-		}
-
-		const platform = social.txPlatform;
-		const gtoken = social.txToken;
-
-		this.loginService.loginUser(platform, gtoken, social, false).subscribe((data: LoginResponse) => {
-			if (data.ok) {
-				if (data.user.id_company) {
-					const idCompany = data.user.id_company._id;
-					this.wsService.emit('enterCompany', idCompany);
-				}
-				// window.location.href = '/admin';
-				this.router.navigate([data.home]);
-			}
-		}, (err: HttpErrorResponse) => {
-			if (err.error.msg) {
-				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
-			} else {
-				this.publicService.snack('Error de validación', 5000, 'Aceptar');
-			}
-		});
 	}
 
 }

@@ -15,6 +15,7 @@ import { Subscription, timer } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/app/interfaces/user.interface';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class TicketCreateComponent implements OnInit {
 
   @Input() company: Company;
 
-  social: Social;
+  social: Social; // customer logged with social
+  customer: User; // customer logged with email
   loading: boolean = false;
   sections: Section[] = [];
   ticket: Ticket = null; // ACTIVE ticket
@@ -57,7 +59,7 @@ export class TicketCreateComponent implements OnInit {
     this.getSections();
     this.createTicketForm();
     this.checkFormChanges();
-    this.checkSocial();
+    this.checkCustomer();
     this.checkWaitingTicket();
     this.checkTicketUpdate();
   }
@@ -87,7 +89,7 @@ export class TicketCreateComponent implements OnInit {
     }
   }
 
-  checkSocial() {
+  checkCustomer() {
     // Get social data
     if (localStorage.getItem('social')) {
       this.social = JSON.parse(localStorage.getItem('social'));
@@ -97,6 +99,16 @@ export class TicketCreateComponent implements OnInit {
         this.getUserTickets(txPlatform, txEmail); // update tickets
       }
     }
+
+    if (localStorage.getItem('customer')) {
+      this.customer = JSON.parse(localStorage.getItem('customer'));
+      const txPlatform = this.customer.tx_platform;
+      const txEmail = this.customer.tx_email;
+      if (txPlatform && txEmail) {
+        this.getUserTickets(txPlatform, txEmail); // update tickets
+      }
+    }
+
   }
   checkWaitingTicket(): void {
     // si se recarga la página cuando hay un ticket 'waiting', el ticket se salva y queda en 'tickets' 
@@ -129,11 +141,9 @@ export class TicketCreateComponent implements OnInit {
     }, () => { this.loading = false; })
   }
 
-
   createTicketForm() {
 
     this.ticketForm = new FormGroup({
-      txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       nmPersons: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000)]),
       idSection: new FormControl('', [Validators.required]),
       txWhen: new FormControl(''),
@@ -276,7 +286,6 @@ export class TicketCreateComponent implements OnInit {
 
     let blContingent = false;
     let idSocket = this.wsService.idSocket;
-    let txName = this.ticketForm.value.txName;
     let nmPersons = this.ticketForm.value.nmPersons;
     let idSection = this.ticketForm.value.idSection;
 
@@ -288,7 +297,7 @@ export class TicketCreateComponent implements OnInit {
 
     tmReserve = dtReserve ? new Date(dtReserve.getTime() + tmReserve * 60 * 60 * 1000) : null;
 
-    this.publicService.createTicket(blContingent, idSocket, txName, nmPersons, idSection, tmReserve, cdTables).subscribe(
+    this.publicService.createTicket(blContingent, idSocket, nmPersons, idSection, tmReserve, cdTables).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
           this.loading = false;
@@ -306,38 +315,41 @@ export class TicketCreateComponent implements OnInit {
     );
   }
 
-  salir(): void {
-    this.publicService.clearPublicSession();
-    this.router.navigate(['/home'])
-  }
+  validateTicket(ticket: Ticket) {
 
-  validateTicket(response: Social) {
-    if (response === null) { // logged out
+    if (!this.social && !this.customer) {
       return;
     }
 
-    const idTicket = this.ticket._id;
-    const txPlatform = response.txPlatform;
-    const txToken = response.txToken || null;
-    const txEmail = response.txEmail || null;
-    const txName = response.txName || null;
-    const txImage = response.txImage || null;
+    const idTicket = ticket._id;
 
-    this.serverMessage = null;
-    this.publicService.validateTicket(idTicket, txPlatform, txToken, txEmail, txName, txImage).subscribe((data: TicketResponse) => {
+    // user logged with social
+    const txPlatform = this.social?.txPlatform || this.customer.tx_platform;
+    const txToken = this.social?.txToken || null;
+    const txEmail = this.social?.txEmail || this.customer.tx_email
+    const txName = this.social?.txName || this.customer.tx_name
+
+    this.publicService.validateTicket(idTicket, txPlatform, txToken, txEmail, txName).subscribe((data: TicketResponse) => {
       if (data.ok) {
-        this.ticket = data.ticket;
-        this.tickets = this.tickets.filter(ticket => ticket.tx_status !== 'waiting'); // remove the 'waiting' ticket from ls 
-        localStorage.setItem('tickets', JSON.stringify(this.tickets));
-        this.publicService.snack(data.msg, 5000, 'Aceptar');
+        this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
+          this.tickets = tickets;
+          this.ticket = tickets.find(ticket => ticket._id === this.ticket._id);
+          this.publicService.snack(data.msg, 5000, 'Aceptar');
+        })
       } else {
-        this.serverMessage = data.msg;
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       }
     }, (err: HttpErrorResponse) => {
       this.publicService.snack(err.error.msg, 5000, 'Aceptar');
     });
   }
+
+
+  salir(): void {
+    this.publicService.clearPublicSession();
+    this.router.navigate(['/home'])
+  }
+
 
 }
 

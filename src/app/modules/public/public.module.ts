@@ -19,6 +19,8 @@ import { MenuComponent } from './company-page/menu/menu.component';
 import { TicketCreateComponent } from './company-page/ticket-create/ticket-create.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketComponent } from './ticket/ticket.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { TicketComponent } from './ticket/ticket.component';
 		HomeComponent,
 		MenuComponent,
 		TicketComponent,
-		TicketsComponent
+		TicketsComponent,
+		LoginComponent,
+		RegisterComponent
 	],
 	imports: [
 		CommonModule,

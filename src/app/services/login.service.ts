@@ -25,13 +25,15 @@ export class LoginService {
 		private router: Router
 	) {
 
-		if (localStorage.getItem('token') && localStorage.getItem('user') && localStorage.getItem('menu')) {
-			this.token = JSON.parse(localStorage.getItem('token'));
-			this.menu = JSON.parse(localStorage.getItem('menu'));
+		if (localStorage.getItem('token')) { this.token = JSON.parse(localStorage.getItem('token')); }
+		if (localStorage.getItem('user')) { this.menu = JSON.parse(localStorage.getItem('menu')); }
+		if (localStorage.getItem('menu')) {
 			let user = JSON.parse(localStorage.getItem('user'));
 			this.pushUser(user);
 		}
+
 	}
+
 
 	// ========================================================
 	// Register Methods
@@ -51,18 +53,12 @@ export class LoginService {
 	}
 
 
-	checkEmailExists(pattern: string) {
-		let data = { pattern }
-		const url = environment.api + '/u/checkemailexists';
-		return this.http.post(url, data);
-	}
-
 	// ========================================================
 	// Login Methods
 	// ========================================================
 
 	loginUser(platform: string, token: string, user: any, recordar: boolean = false) {
-		
+
 		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
 
 		let api: string;
@@ -71,14 +67,14 @@ export class LoginService {
 			case 'google':
 			case 'facebook':
 				api = '/u/loginsocial';
-				data = {token, user};
+				data = { token, user };
 				break;
 			case 'email':
-				api = '/u/login';
+				api = '/u/loginuser';
 				data = user;
 				break;
 			default:
-				api = '/u/login';
+				api = '/u/loginuser';
 				break;
 		}
 

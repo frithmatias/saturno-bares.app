@@ -195,10 +195,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
   // ==========================================================
 
 
-  emailValidate() {
-    this.publicService.snack('Esta opción va a estar disponible próximamente.', 5000, 'Aceptar');
-  }
-
   logOut(): void {
 
     if (this.social?.txPlatform === 'facebook') {

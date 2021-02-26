@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
 import { SettingsResponse } from '../../interfaces/settings.interface';
 import { Settings } from 'src/app/interfaces/settings.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class PublicService {
   sections: Section[] = [];
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
   settings: Settings;
+  customer: any;
 
   chatMessages: {
     own: boolean,
@@ -67,6 +69,39 @@ export class PublicService {
   stepperReset(stepper: MatStepper) {
     stepper.reset();
   }
+
+	// ========================================================
+	// Register Methods
+	// ========================================================
+
+	registerUser(user: any) {
+		let data = { user };
+		const url = environment.api + '/u/registeruser';
+		return this.http.post(url, data);
+	}
+
+	activateUser(email: string, hash: string) {
+		let data = { email, hash };
+		const url = environment.api + '/u/activate';
+		return this.http.post(url, data);
+	}
+
+	checkEmailExists(pattern: string) {
+		let data = { pattern }
+		const url = environment.api + '/u/checkemailexists';
+		return this.http.post(url, data);
+	}
+
+	loginCustomer(user: any) {
+		const api = '/u/loginuser';
+		const url = environment.api + api;
+		return this.http.post(url, user).pipe(map((resp: any) => {
+			localStorage.setItem('customer', JSON.stringify(resp.user));
+			this.customer = resp.customer;
+			return resp;
+		}));
+	}
+
 
   buscarLocalidades(pattern): Promise<LocationsResponse> {
     return new Promise((resolve, reject) => {
@@ -140,19 +175,18 @@ export class PublicService {
   createTicket(
     blContingent: boolean,
     idSocket: string,
-    txName: string,
     nmPersons: number,
     idSection: string,
     tmReserve: Date,
     cdTables: number): Observable<object> {
-    let data = { blContingent, idSocket, txName, nmPersons, idSection, tmReserve, cdTables };
+    let data = { blContingent, idSocket, nmPersons, idSection, tmReserve, cdTables };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
   // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
-  validateTicket(idTicket: string, txPlatform: string, txToken: string, txEmail: string, txName: string, txImage: string) {
+  validateTicket(idTicket: string, txPlatform: string, txToken: string, txEmail: string, txName: string) {
     const api = '/t/validateticket';
-    const data = { idTicket, txPlatform, txToken, txEmail, txName, txImage };
+    const data = { idTicket, txPlatform, txToken, txEmail, txName};
     const url = environment.api + api;
     return this.http.post(url, data);
   }

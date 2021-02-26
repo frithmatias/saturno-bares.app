@@ -10,16 +10,17 @@
 
     <!-- social component -->
 
-    <app-social [platforms]="['google', 'facebook', 'whatsapp' ,'telegram', 'email']"
-      (socialResponse)="getTickets($event)"></app-social>
+    <!-- <app-social [platforms]="['google', 'facebook', 'whatsapp' ,'telegram']"
+      (socialResponse)="getTickets($event)"></app-social> -->
+
 
     <div class="m-4">
       <div *ngIf="tickets.length === 0" class="text-accent">
-        <div *ngIf="!social">
+        <div *ngIf="!social && !customer">
           Si ya tenías una reserva ingresá con la cuenta con la que confirmaste tu reserva.
         </div>
-        <div *ngIf="social">
-          No hay reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
+        <div *ngIf="social || customer">
+          No hay reservas confirmadas con esta cuenta.
         </div>
       </div>
 
@@ -28,6 +29,7 @@
           Reservas confirmadas con la cuenta de {{social.txPlatform}} de {{social.txName}}.
         </div>
       </div>
+
     </div>
 
   </div>
@@ -91,6 +93,16 @@
           </table>
         </button>
 
+        <button mat-raised-button class="action-button-flex" color="active"
+        *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
+        <table>
+          <tr>
+            <td class="button-icon mdi mdi-check lg"></td>
+            <td class="button-text">Confirmar</td>
+          </tr>
+        </table>
+      </button>
+
       </mat-card-actions>
 
     </mat-card>
@@ -98,7 +110,7 @@
   </div>
 </div>
 
-<div *ngIf="ticketsInactive.length > 0 && social" class="page-container">
+<div *ngIf="ticketsInactive.length > 0 && (social || customer)" class="page-container">
   <mat-card>
 
     <mat-card-header>
@@ -108,7 +120,7 @@
         Historial de reservas
       </mat-card-title>
       <mat-card-subtitle>
-        Historial de reservas para la cuenta en {{social.txPlatform}} de {{social.txName}}
+        Historial de reservas
       </mat-card-subtitle>
     </mat-card-header>
 
