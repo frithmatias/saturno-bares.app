@@ -10,10 +10,9 @@
 
         <!-- Welcome -->
         <mat-step>
-
             <mat-card>
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <div class="xl text-accent mdi mdi-wizard-hat mr-3"> Asistente </div>
                         <p>
                             Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a gestionar
@@ -23,6 +22,7 @@
                             Los pasos opcionales podes saltearlos y completarlos mas adelante.
                         </p>
                         <hr>
+
                         <div class="w-100 text-center">
                             <button mat-raised-button matStepperNext color="primary" class="action-button fix-width">
                                 <table>
@@ -55,30 +55,69 @@
                 <mat-card-content>
                     <!-- no companies, no attached company -->
                     <div *ngIf="adminService.companies?.length === 0">
-                        <div class="saturno-minicard-text">
-                            <p>
-                                Acá podes registrar uno o mas comercios.
-                            </p>
+                        <p>
+                            Acá podes registrar uno o mas comercios.
+                        </p>
 
-                            <p>
-                                Es importante que ingreses la dirección exacta de tu comercio ya que será
-                                visible para tus clientes.
-                            </p>
-                        </div>
+                        <p>
+                            Es importante que ingreses la dirección exacta de tu comercio ya que será
+                            visible para tus clientes.
+                        </p>
                     </div>
                     <!-- companies and attached company -->
                     <div *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
-                        <div class="saturno-minicard-text">
-                            <p>
-                                Podés seguir adelante con el asistente ó crear mas comercios.
-                            </p>
-                            <p>
-                                Para administrar un comercio, si tenés más de uno, tenés que seleccionarlo primero desde
-                                el menu principal <span class="md align-top mdi mdi-menu"></span>
-                            </p>
-                        </div>
+                        <p>
+                            Podés seguir adelante con el asistente ó crear mas comercios.
+                        </p>
+                        <p>
+                            Para administrar un comercio, si tenés más de uno, tenés que seleccionarlo primero desde
+                            el menu principal <span class="md align-top mdi mdi-menu"></span>
+                        </p>
                     </div>
                     <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
+                </mat-card-content>
+
+                <mat-card-actions class="text-right">
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
+                        ATRAS
+                    </button>
+                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id" mat-button
+                        (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+                    </button>
+                    <button *ngIf="!adminService.companies || !loginService.user?.id_company" mat-button disabled>
+                        SIGUIENTE
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-step>
+
+        <!-- Modules -->
+        <mat-step>
+            <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
+                <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
+                    <mat-card-title>
+                        Configuración
+                    </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Como querés usar el sistema
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+
+                    <div>
+                        <p>
+                            Acá podes establecer que módulos del sistema querés activar para definir
+                            como funcionará tu comercio. Hacé un click en el ícono (?) para obtener mas detalles.
+                        </p>
+                    </div>
+                    <app-modules [nomargin]="true" [nopadding]="true"></app-modules>
+
                 </mat-card-content>
 
                 <mat-card-actions class="text-right">
@@ -114,7 +153,7 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <p>
                             Desde acá tenés que crear los diferentes sectores o áreas que componen tu comercio.
                         </p>
@@ -158,7 +197,7 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <p>
                             Acá tenés que registrar las mesas de cada sector. Sólo tenés que ingresar el
                             número de mesa y la capacidad máxima de personas que pueden ocuparla.
@@ -201,7 +240,7 @@
                 </mat-card-header>
 
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <p>
                             Acá podés registrar a tus camareros/as. Para entrar a sus cuentas, los mismos, tienen que
                             ingresar
@@ -240,13 +279,13 @@
                 </mat-card-header>
 
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <p>
                             Acá podés dar de alta items que tus clientes pueden calificar
                             de 1 a 5 estrellas.
                         </p>
                         <p>
-                            Estos Items tienen que ser palabras o frases cortas. 
+                            Estos Items tienen que ser palabras o frases cortas.
                             Por ejemplo "Atención", "Comida", "Limpieza", etc.
                         </p>
                     </div>
@@ -281,7 +320,7 @@
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <div class="saturno-minicard-text">
+                    <div>
                         <p>
                             Acá tenés que subir una serie de datos de tu comercio que se van a mostrar
                             en la página web de recepción a tus clientes.

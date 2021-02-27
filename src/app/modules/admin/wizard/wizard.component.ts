@@ -6,7 +6,6 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { LoginService } from '../../../services/login.service';
 import { PublicService } from '../../public/public.service';
 
-
 @Component({
 	selector: 'app-wizard',
 	templateUrl: './wizard.component.html',
@@ -17,6 +16,7 @@ import { PublicService } from '../../public/public.service';
 })
 export class WizardComponent implements OnInit {
 
+
 	activateSectorExplanation = false;
 	activateTableExplanation = false;
 	activateWaiterExplanation = false;
@@ -25,15 +25,15 @@ export class WizardComponent implements OnInit {
 		private router: Router,
 		public loginService: LoginService,
 		public adminService: AdminService,
-		public publicService: PublicService
+		public publicService: PublicService,
 	) { }
 
-	ngOnInit(): void { }
+	ngOnInit(): void {
+	}
 
 	endWizard() {
 		this.router.navigate(['/admin/home']);
 	}
-
 
 	stepperGoBack(stepper: MatStepper) {
 		stepper.previous();
@@ -54,4 +54,5 @@ export class WizardComponent implements OnInit {
 		this.publicService.scrollTop();
 		stepper.next();
 	}
+
 }

@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
 		
 		this.publicService.loginCustomer(platform, token, user, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
-				this.router.navigate([data.home]);
+				this.router.navigate(['/public/tickets']);
 			}
 		}, (err: HttpErrorResponse) => {
 			if (err.error.msg) {

@@ -8,7 +8,7 @@
     .toolbar-links-base {
         display      : flex !important;
         padding      : 10px;
-        padding-right: 20px;
+        padding-right: 15px;
         place-content: flex-end;
     }
 }
@@ -31,17 +31,26 @@
     padding      : 10px;
     padding-right: 20px;
     place-content: flex-end;
+    position     : relative;
+    top          : 2px;
+}
+
+.app-theme {
+    position: relative;
+    top     : -2px;
 }
 
 .toolbar-links-base {
     display        : none;
-    justify-content: space-around;
+    justify-content: flex-end;
     font-size      : small;
 }
 
 .toolbar-base-item {
-    display  : flex;
-    flex-wrap: wrap;
+    display     : flex;
+    flex-wrap   : wrap;
+    margin-right: 20px;
+
 }
 
 .toolbar-base-item .mdi {

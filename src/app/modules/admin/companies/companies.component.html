@@ -13,7 +13,7 @@
             <div *ngIf="!adminService.companies || adminService.companies?.length === 0"
                 class="row align-items-center justify-content-center">
                 <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>Debe crear aquí al menos un bar / resto</span>
+                <span>Acá tenés que crear al menos un comercio</span>
             </div>
 
             <div *ngIf="adminService.companies && adminService.companies?.length > 0 && !loginService.user.id_company"

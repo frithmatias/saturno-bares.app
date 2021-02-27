@@ -33,7 +33,7 @@ import { RegisterComponent } from './register/register.component';
 		TicketComponent,
 		TicketsComponent,
 		LoginComponent,
-		RegisterComponent
+		RegisterComponent,
 	],
 	imports: [
 		CommonModule,

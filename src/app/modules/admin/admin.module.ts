@@ -35,6 +35,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { PendingComponent } from './schedule/pending/pending.component';
 import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.component';
 import { CalendarComponent } from './schedule/calendar/calendar.component';
+import { ModulesComponent } from './settings/modules/modules.component';
+import { MessageComponent } from './settings/message/message.component';
 
 @NgModule({
 	declarations: [
@@ -63,8 +65,9 @@ import { CalendarComponent } from './schedule/calendar/calendar.component';
 		ScheduleComponent,
 		PendingComponent,
 		BottomsheetComponent,
-		CalendarComponent
-
+		CalendarComponent,
+		ModulesComponent,
+		MessageComponent,
 	],
 	imports: [
 		CommonModule,

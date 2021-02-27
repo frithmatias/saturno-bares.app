@@ -271,6 +271,7 @@ export class PublicService {
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
     if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
+    if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 
     this.router.navigate(['/public/login']);
   }

@@ -4,14 +4,15 @@
 
 .notification-icon {
   position: fixed;
-  top     : 1.1em;
-  right   : 8.3em;
+  top     : 4.1em;
+  right   : 1em;
   z-index : 2;
   cursor  : pointer;
   width   : 18px;
 }
 
-@media (max-width: 575px) {
-
+.opacity {
+  opacity: .2;
 }
 
+@media (max-width: 575px) {}
