@@ -1,5 +1,7 @@
 <div class="page-container animated fadeIn">
-    <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear #stepper>
+
+    <mat-horizontal-stepper *ngIf="publicService.settings" style="text-align: left;" labelPosition="bottom" linear
+        #stepper>
 
         <ng-template matStepperIcon="phone">
             <mat-icon>call_end</mat-icon>
@@ -116,31 +118,39 @@
                             como funcionará tu comercio. Hacé un click en el ícono (?) para obtener mas detalles.
                         </p>
                     </div>
-                    <app-modules [nomargin]="true" [nopadding]="true"></app-modules>
 
+                    <app-modules [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-modules>
+
+                    
                 </mat-card-content>
-
+                
                 <mat-card-actions class="text-right">
+                    <div *ngIf="!canContinueValue" class="sm text-right text-accent">
+                        Tenés que guardar los cambios para continuar
+                    </div>
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
-                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id" mat-button
-                        (click)="stepperGoNext(stepper)">
+                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id && canContinueValue"
+                        mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
-                    <button *ngIf="!adminService.companies || !loginService.user?.id_company" mat-button disabled>
+                    <button *ngIf="!adminService.companies || !loginService.user?.id_company || !canContinueValue"
+                        mat-button disabled>
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                 </mat-card-actions>
+
             </mat-card>
         </mat-step>
 
         <!-- Sections -->
-        <mat-step [completed]="adminService.sections?.length > 0">
+        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue"
+            [completed]="adminService.sections?.length > 0">
 
             <mat-card>
                 <mat-card-header>
@@ -185,7 +195,8 @@
         </mat-step>
 
         <!-- Tables -->
-        <mat-step [completed]="adminService.tables?.length > 0">
+        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue"
+            [completed]="adminService.tables?.length > 0">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-table-furniture"></div>
@@ -227,7 +238,7 @@
         </mat-step>
 
         <!-- Waiters -->
-        <mat-step>
+        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-account-tie"></div>
@@ -266,7 +277,7 @@
         </mat-step>
 
         <!-- Poll -->
-        <mat-step>
+        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-poll-box"></div>

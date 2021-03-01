@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { PublicService } from '../../../public/public.service';
@@ -17,6 +17,7 @@ export class ModulesComponent implements OnInit {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
+  @Output() canContinue: EventEmitter<boolean> = new EventEmitter();
 
   settings: Settings; // local settings before save (component)
   userSubscription: Subscription;
@@ -44,7 +45,7 @@ export class ModulesComponent implements OnInit {
   readSettings(idCompany) {
     this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
       this.publicService.settings = data.settings;
-      this.settings = data.settings;
+      this.settings = Object.assign({}, data.settings);
     });
   }
 
@@ -54,6 +55,7 @@ export class ModulesComponent implements OnInit {
         this.settings = Object.assign({}, data.settings);
         this.publicService.settings = data.settings;
         this.saveDisabled = true;
+        this.canContinue.emit(true);
         this.publicService.snack(data.msg, 2000);
       }
     })
@@ -63,15 +65,15 @@ export class ModulesComponent implements OnInit {
     if (this.settings.bl_queue === false && item === 'queue') this.settings.bl_spm = false;
     if (this.settings.bl_spm === true && item === 'spm') this.settings.bl_queue = true;
     this.saveDisabled = false;
-
+    this.canContinue.emit(false);
   }
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
   }
 
-	openBottomSheet = (idHelp: string): void => {
-		this.bottomSheet.open(HelpComponent, { data: { idHelp } });
-	}
+  openBottomSheet = (idHelp: string): void => {
+    this.bottomSheet.open(HelpComponent, { data: { idHelp } });
+  }
 
 }

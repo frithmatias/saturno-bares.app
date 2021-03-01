@@ -6,8 +6,9 @@
     <app-spinner text="Loading tickets..."></app-spinner>
   </div>
 
-  <div *ngIf="!loading" class="sm d-flex justify-content-end p-2 text-accent">
+  <div *ngIf="!loading" class="sm d-flex justify-content-end py-3 px-2 text-accent">
 
+    <!-- social header -->
     <div class="mdi mdi-account-circle mx-1"></div>
     <div *ngIf="tickets.length === 0">
       <div *ngIf="social">
@@ -140,11 +141,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let ticket of ticketsInactive">
-            <td class="text-left">
+            
+            <td class="text-left" *ngIf="ticket.id_company">
               <div class="pointer text-info" routerLink="/public/{{ticket.id_company.tx_company_string}}">
                 {{ticket.id_company.tx_company_name}}
               </div>
             </td>
+            <td class="text-left" *ngIf="!ticket.id_company">
+              <div class="pointer text-info">
+               Comercio eliminado
+              </div>
+            </td>
+
             <td class="text-left">
               {{ticket.tm_reserve | dateToString : 'DD/MM HH:mm'}} <span class="sm text-accent">(
                 {{ticket.tm_reserve | dateToRemaining}} )</span>

@@ -69,6 +69,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
       this.publicService.settings = data.settings;
     });
+
   }
 
   ngOnDestroy(): void {

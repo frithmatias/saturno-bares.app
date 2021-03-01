@@ -20,6 +20,7 @@ export class WizardComponent implements OnInit {
 	activateSectorExplanation = false;
 	activateTableExplanation = false;
 	activateWaiterExplanation = false;
+	canContinueValue = true;
 
 	constructor(
 		private router: Router,
@@ -55,4 +56,7 @@ export class WizardComponent implements OnInit {
 		stepper.next();
 	}
 
+	canContinue(canContinue: boolean){
+		this.canContinueValue = canContinue;
+	}
 }
