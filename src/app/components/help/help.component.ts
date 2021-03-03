@@ -26,12 +26,14 @@ export class HelpComponent implements OnInit {
         this.helpTitle = `COLA VIRTUAL`;
         this.helpText = `
         Es un sistema de generación de "tickets" virtuales que se asigna a un
-        cliente cuando solicita una mesa en tiempo real desde la App antes de ingresar a tu negocio.
-        Esto te permite tener una trazabilidad punta a punta sobre tus clientes para fines de
-        métricas e indicadores, abrir un canal de comunicación con un cliente que espera en una
-        COLA VIRTUAL para notificarlo cuando se le aprovisiona una mesa, te permite ofrecerle la
-        posibilidad llamar a un camarero en tiempo real, de responder encuestas, etc. El sistema 
-        está fuertemente basado en este módulo, recomendamos activar esta opción.`;
+        cliente cuando solicita una mesa en tiempo real desde la App y antes de ingresar a tu negocio.
+        Esto te permite lograr una trazabilidad punta a punta sobre el circuito de tus clientes y te 
+        permite obtener datos para analizar métricas e indicadores. Te permite también abrir un canal 
+        de comunicación con un cliente que espera una mesa y notificarlo cuando es asignada. 
+        Los camareros podrán atender las solicitudes de asistencia de los clientes, los clientes podrán 
+        responder encuestas que generen datos que permitan retroalimentar y mejorar el servicio a tus 
+        clientes. El sistema está fuertemente basado en este módulo, recomendamos mantener activado 
+        este módulo.`;
       break;
       case 'adminSettingsSPM':
         this.helpTitle = `SPM`;

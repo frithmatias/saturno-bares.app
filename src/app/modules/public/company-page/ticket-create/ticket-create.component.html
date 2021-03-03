@@ -29,10 +29,10 @@
               Tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
             </div>
 
-            <button *ngIf="social || customer" class="mt-2" mat-raised-button color="active"
+            <button *ngIf="customer && publicService.token" class="mt-2" mat-raised-button color="active"
               (click)="validateTicket(ticket)">Confirmar</button>
 
-            <button *ngIf="!social && !customer" class="mt-2" mat-raised-button color="warn"
+            <button *ngIf="!customer || !publicService.token" class="mt-2" mat-raised-button color="warn"
               routerLink="/public/login">Ingresar</button>
 
           </div>

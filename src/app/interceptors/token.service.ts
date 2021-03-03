@@ -17,10 +17,10 @@ export class TokenService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.loginService.token) {
+    if (this.loginService.token || this.publicService.token) {
 
       const headers = new HttpHeaders({
-        'turnos-token': this.loginService.token
+        'turnos-token': this.loginService.token || this.publicService.token
       });
 
       const reqClone = req.clone({
@@ -32,11 +32,13 @@ export class TokenService implements HttpInterceptor {
         catchError(this.manejarError.bind(this)));
 
     } else {
-      // en peticiones públicas no se inyecta el token 
+
       return next.handle(req).pipe(
         tap(this.manejarRespuesta),
         catchError(this.manejarError.bind(this)));
+
     }
+
 
   }
 

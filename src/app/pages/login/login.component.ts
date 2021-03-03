@@ -39,41 +39,34 @@ export class LoginComponent implements OnInit {
 	// ==========================================================
 
 	loginEmail(forma: NgForm) {
-
 		if (forma.invalid) {
 			return;
 		}
-
-		const user: any = {
+		const emailForm: any = {
 			tx_name: null,
 			tx_email: forma.value.email,
-			tx_password: forma.value.password,
-			id_company: null
+			tx_password: forma.value.password
 		};
-
 		const recordar = forma.value.recuerdame;
 		const platform = 'email';
-		this.loginUser(platform, null, user, recordar);
-
+		this.loginUser(platform, null, emailForm, recordar);
 	}
 
 	loginSocial(social: Social) {
-
 		if (!social) return;
 		if (!social.txToken) {
 			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
 			return;
 		}
-
 		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.loginUser(platform, token, social, false);
+		this.loginUser(platform, token, null, false);
 	}
 
-	loginUser(platform: string, token: string, user: any, remember: boolean) {
-		this.loginService.loginUser(platform, token, user, remember).subscribe((data: LoginResponse) => {
+	loginUser(platform: string, token: string, emailForm: any, remember: boolean) {
+		this.loginService.loginUser(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
-				if (data.user.id_company) { 
+				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;
 					this.wsService.emit('enterCompany', idCompany);
 				}

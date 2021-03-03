@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, AfterViewInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, AfterViewInit, Input, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PublicService } from '../../modules/public/public.service';
-import { FormControl, Validators, NgForm, FormGroup } from '@angular/forms';
 
 declare const gapi: any;
 declare const FB: any;
@@ -20,7 +19,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
   @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
-  social: Social;
   facebookFrontendResponse: facebookFrontendResponse;
   isMobile = false;
 
@@ -41,10 +39,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
       this.isMobile = false;
     }
 
-    // Get social data
-    if (localStorage.getItem('social')) {
-      this.social = JSON.parse(localStorage.getItem('social'));
-    }
 
     if(this.platforms){
       if (this.platforms.includes('google')) { this.googleInit(); }
@@ -53,8 +47,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnChanges(changes): void {
-  }
+  ngOnChanges(): void { }
 
   // ==========================================================
   // VALIDATE GOOGLE USER
@@ -82,23 +75,14 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   attachSignin = () => {
     this.auth2.attachClickHandler(this.gButton?._elementRef.nativeElement, {}, (googleUser: any) => {
-
       this.zone.run(() => {
         const social: Social = {
           txPlatform: 'google',
-          txToken: googleUser.getAuthResponse().id_token,
-          txEmail: googleUser.Fs.lt,
-          txName: googleUser.Fs.sd,
-          txImage: googleUser.Fs.wI
+          txToken: googleUser.getAuthResponse().id_token
         };
-
-        localStorage.setItem('social', JSON.stringify(social));
-        this.social = social;
         this.socialResponse.emit(social)
       });
-
     }, () => { });
-
   }
 
   // ==========================================================
@@ -143,20 +127,9 @@ export class SocialComponent implements OnInit, AfterViewInit {
       this.zone.run(() => {
         const social: Social = {
           txPlatform: 'facebook',
-          txToken: loginResponse.authResponse.accessToken,
-          txEmail: response.email,
-          txName: response.name,
-          txImage: null
+          txToken: loginResponse.authResponse.accessToken
         };
-
-        if (!social.txName) {
-          this.publicService.snack('No obtuvimos permiso para validar tu reserva', 5000, 'Aceptar');
-          return;
-        }
-
-        localStorage.setItem('social', JSON.stringify(social));
         this.socialResponse.emit(social)
-        this.social = social;
       });
     });
 
@@ -176,14 +149,9 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
       const social: Social = {
         txPlatform: 'telegram',
-        txToken: null,
-        txEmail: response.id,
-        txName: response.first_name,
-        txImage: response.photo_url
+        txToken: null
       };
 
-      localStorage.setItem('social', JSON.stringify(social));
-      this.social = social;
       this.socialResponse.emit(social);
 
     })
@@ -195,16 +163,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
 
   logOut(): void {
-
-    if (this.social?.txPlatform === 'facebook') {
-      FB.logout(function (response) {
-        // user is now logged out
-      });
-    }
-    if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
-    this.social = null;
     this.socialResponse.emit(null);
-
   }
 
 }
@@ -224,8 +183,5 @@ interface facebookFrontendResponse {
 export interface Social {
   txPlatform: string;
   txToken: string;
-  txEmail: string;
-  txName: string;
-  txImage: string;
 }
 

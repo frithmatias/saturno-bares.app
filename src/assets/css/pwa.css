@@ -4,8 +4,8 @@
 
 .notification-icon {
   position: fixed;
-  top     : 4.1em;
-  right   : 1em;
+  top     : 1.05em;
+  right   : 11.8em;
   z-index : 2;
   cursor  : pointer;
   width   : 18px;

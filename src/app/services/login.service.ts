@@ -54,9 +54,9 @@ export class LoginService {
 	// Login Methods
 	// ========================================================
 
-	loginUser(platform: string, token: string, user: any, recordar: boolean = false) {
+	loginUser(platform: string, token: string, emailForm: any, recordar: boolean = false) {
 
-		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
+		recordar ? localStorage.setItem('email', emailForm.tx_email) : localStorage.removeItem('email');
 
 		let api: string;
 		let data: any;
@@ -64,14 +64,11 @@ export class LoginService {
 			case 'google':
 			case 'facebook':
 				api = '/u/loginsocial';
-				data = { token, user, isAdmin: true }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
+				data = { platform, token, isAdmin: true }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
 				break;
 			case 'email':
 				api = '/u/loginuser';
-				data = user;
-				break;
-			default:
-				api = '/u/loginuser';
+				data = emailForm;
 				break;
 		}
 

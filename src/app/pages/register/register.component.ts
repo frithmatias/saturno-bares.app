@@ -121,9 +121,9 @@ export class RegisterComponent implements OnInit {
 		}
 
 		const platform = social.txPlatform;
-		const gtoken = social.txToken;
+		const token = social.txToken;
 
-		this.loginService.loginUser(platform, gtoken, social, false).subscribe((data: LoginResponse) => {
+		this.loginService.loginUser(platform, token, null, false).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;

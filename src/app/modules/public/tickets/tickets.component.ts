@@ -45,14 +45,6 @@ export class TicketsComponent implements OnInit {
 
   checkSession(){
         // Get social data
-        if (localStorage.getItem('social')) {
-          this.social = JSON.parse(localStorage.getItem('social'));
-          const txPlatform = this.social.txPlatform;
-          const txEmail = this.social.txEmail;
-          if (txPlatform && txEmail) {
-            this.getUserTickets(txPlatform, txEmail); // update tickets
-          }
-        }
     
         if (localStorage.getItem('customer')) {
           this.customer = JSON.parse(localStorage.getItem('customer'));
@@ -63,7 +55,7 @@ export class TicketsComponent implements OnInit {
           }
         }
     
-        if (!this.social && !this.customer) {
+        if (!this.customer) {
           this.router.navigate(['/public/login']);
         }
   }
@@ -114,20 +106,12 @@ export class TicketsComponent implements OnInit {
   }
 
   validateTicket(ticket: Ticket) {
-
-    if (!this.social && !this.customer) {
+    if (!this.customer) {
       return;
     }
-
     const idTicket = ticket._id;
 
-    // user logged with social
-    const txPlatform = this.social?.txPlatform || this.customer.tx_platform;
-    const txToken = this.social?.txToken || null;
-    const txEmail = this.social?.txEmail || this.customer.tx_email
-    const txName = this.social?.txName || this.customer.tx_name
-
-    this.publicService.validateTicket(idTicket, txPlatform, txToken, txEmail, txName).subscribe((data: TicketResponse) => {
+    this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
       if (data.ok) {
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
           this.tickets = tickets;

@@ -38,16 +38,15 @@ export class LoginComponent implements OnInit {
 			return;
 		}
 
-		const user: any = {
+		const emailForm: any = {
 			tx_name: null,
 			tx_email: forma.value.email,
-			tx_password: forma.value.password,
-			id_company: null
+			tx_password: forma.value.password
 		};
 
 		const recordar = forma.value.recuerdame;
 		const platform = 'email';
-		this.loginCustomer(platform, null, user, recordar);
+		this.loginCustomer(platform, null, emailForm, recordar);
 	}
 
 	loginSocial(social: Social) {
@@ -60,13 +59,12 @@ export class LoginComponent implements OnInit {
 
 		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.loginCustomer(platform, token, social, false);
+		this.loginCustomer(platform, token, null, false);
 	}
 
 
-	loginCustomer(platform: string, token: string, user: any, remember: boolean){
-		
-		this.publicService.loginCustomer(platform, token, user, remember).subscribe((data: LoginResponse) => {
+	loginCustomer(platform: string, token: string, emailForm: any, remember: boolean){
+		this.publicService.loginCustomer(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				this.router.navigate(['/public/tickets']);
 			}

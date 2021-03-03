@@ -1,6 +1,6 @@
 <div class="page-container animated fadeIn">
 
-    <mat-horizontal-stepper *ngIf="publicService.settings" style="text-align: left;" labelPosition="bottom" linear
+    <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear
         #stepper>
 
         <ng-template matStepperIcon="phone">
@@ -149,7 +149,7 @@
         </mat-step>
 
         <!-- Sections -->
-        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue"
+        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue"
             [completed]="adminService.sections?.length > 0">
 
             <mat-card>
@@ -195,7 +195,7 @@
         </mat-step>
 
         <!-- Tables -->
-        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue"
+        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue"
             [completed]="adminService.tables?.length > 0">
             <mat-card>
                 <mat-card-header>
@@ -238,7 +238,7 @@
         </mat-step>
 
         <!-- Waiters -->
-        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue">
+        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-account-tie"></div>
@@ -277,7 +277,7 @@
         </mat-step>
 
         <!-- Poll -->
-        <mat-step *ngIf="publicService.settings.bl_schedule || publicService.settings.bl_queue">
+        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-poll-box"></div>

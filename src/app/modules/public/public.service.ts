@@ -22,6 +22,7 @@ export class PublicService {
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
   settings: Settings;
   customer: any;
+	token: string;
 
   chatMessages: {
     own: boolean,
@@ -70,62 +71,61 @@ export class PublicService {
     stepper.reset();
   }
 
-	// ========================================================
-	// Register Methods
-	// ========================================================
+  // ========================================================
+  // Register Methods
+  // ========================================================
 
-	registerUser(user: any) {
-		let data = { user };
-		const url = environment.api + '/u/registeruser';
-		return this.http.post(url, data);
-	}
+  registerUser(user: any) {
+    let data = { user };
+    const url = environment.api + '/u/registeruser';
+    return this.http.post(url, data);
+  }
 
-	activateUser(email: string, hash: string) {
-		let data = { email, hash };
-		const url = environment.api + '/u/activate';
-		return this.http.post(url, data);
-	}
+  activateUser(email: string, hash: string) {
+    let data = { email, hash };
+    const url = environment.api + '/u/activate';
+    return this.http.post(url, data);
+  }
 
-	checkEmailExists(pattern: string) {
-		let data = { pattern }
-		const url = environment.api + '/u/checkemailexists';
-		return this.http.post(url, data);
-	}
+  checkEmailExists(pattern: string) {
+    let data = { pattern }
+    const url = environment.api + '/u/checkemailexists';
+    return this.http.post(url, data);
+  }
 
-	loginCustomer(platform: string, token: string, user: any, recordar: boolean = false) {
+  loginCustomer(platform: string, token: string, emailForm: any, recordar: boolean = false) {
+    recordar ? localStorage.setItem('email', emailForm.tx_email) : localStorage.removeItem('email');
+    let api: string;
+    let data: any;
+    switch (platform) {
+      case 'google':
+      case 'facebook':
+        api = '/u/loginsocial';
+        data = { platform, token, isAdmin: false }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
+        break;
+      case 'email':
+        api = '/u/loginuser';
+        data = emailForm;
+        break;
+      default:
+        api = '/u/loginuser';
+        break;
+    }
 
-		recordar ? localStorage.setItem('email', user.tx_email) : localStorage.removeItem('email');
+    const url = environment.api + api;
 
-    
-		let api: string;
-		let data: any;
-		switch (platform) {
-			case 'google':
-			case 'facebook':
-				api = '/u/loginsocial';
-				data = { token, user, isAdmin: false }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
-				break;
-			case 'email':
-				api = '/u/loginuser';
-				data = user;
-				break;
-			default:
-				api = '/u/loginuser';
-				break;
-		}
-
-		const url = environment.api + api;
-
-		return this.http.post(url, data).pipe(map((resp: any) => {
-			localStorage.setItem('customer', JSON.stringify(resp.user));
-			this.customer = resp.customer;
-			return resp;
-		}),
-			catchError(err => {
-				return throwError(err);
-			})
-		);
-	}
+    return this.http.post(url, data).pipe(map((resp: any) => {
+			localStorage.setItem('token', JSON.stringify(resp.token));
+      localStorage.setItem('customer', JSON.stringify(resp.user));
+			this.token = resp.token;
+      this.customer = resp.customer;
+      return resp;
+    }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
 
 
   buscarLocalidades(pattern): Promise<LocationsResponse> {
@@ -205,15 +205,15 @@ export class PublicService {
     cdTables: number[],
     blContingent: boolean,
     idSocket: string,
-    ): Observable<object> {
+  ): Observable<object> {
     let data = { txName, nmPersons, idSection, tmReserve, cdTables, blContingent, idSocket };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
   // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
-  validateTicket(idTicket: string, txPlatform: string, txToken: string, txEmail: string, txName: string) {
+  validateTicket(idTicket: string) {
     const api = '/t/validateticket';
-    const data = { idTicket, txPlatform, txToken, txEmail, txName};
+    const data = { idTicket };
     const url = environment.api + api;
     return this.http.post(url, data);
   }
@@ -267,9 +267,10 @@ export class PublicService {
   clearPublicSession(): void {
     this.chatMessages = [];
     delete this.tickets;
+    delete this.token;
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
-    if (localStorage.getItem('social')) { localStorage.removeItem('social'); }
+    if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
 

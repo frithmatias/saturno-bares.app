@@ -29,8 +29,7 @@ export class WizardComponent implements OnInit {
 		public publicService: PublicService,
 	) { }
 
-	ngOnInit(): void {
-	}
+	ngOnInit(): void {}
 
 	endWizard() {
 		this.router.navigate(['/admin/home']);
