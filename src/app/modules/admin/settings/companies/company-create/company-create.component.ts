@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AdminService } from '../../../../modules/admin/admin.service';
-import { LoginService } from '../../../../services/login.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { LoginService } from 'src/app/services/login.service';
 
-import { GetidstringPipe } from '../../../../pipes/getidstring.pipe';
-import { Company, CompanyResponse } from '../../../../interfaces/company.interface';
+import { GetidstringPipe } from 'src/app/pipes/getidstring.pipe';
+import { Company, CompanyResponse } from 'src/app/interfaces/company.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { Location, LocationsResponse } from 'src/app/interfaces/location.interface';
 import { PublicService } from 'src/app/modules/public/public.service';

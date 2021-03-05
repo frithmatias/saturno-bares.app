@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdminService } from '../admin.service';
-import { Section, SectionResponse } from '../../../interfaces/section.interface';
-import { Subscription } from 'rxjs';
-import { LoginService } from '../../../services/login.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { Section, SectionResponse } from 'src/app/interfaces/section.interface';
+import { LoginService } from 'src/app/services/login.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { PublicService } from '../../public/public.service';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
   selector: 'app-sections',

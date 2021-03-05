@@ -1,15 +1,10 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-// libraries
 import { Subscription } from 'rxjs';
-
-// services
-import { AdminService } from '../admin.service';
-import { LoginService } from '../../../services/login.service';
-
-// interfaces
-import { User, UsersResponse, UserResponse } from '../../../interfaces/user.interface';
-import { PublicService } from '../../public/public.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { LoginService } from 'src/app/services/login.service';
+import { User, UsersResponse, UserResponse } from 'src/app/interfaces/user.interface';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
   selector: 'app-waiters',

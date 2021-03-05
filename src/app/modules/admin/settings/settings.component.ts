@@ -17,9 +17,9 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  }
 
-
+    console.log(this)
+    }
 
 
 }

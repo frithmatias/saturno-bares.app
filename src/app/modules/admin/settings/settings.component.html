@@ -1,18 +1,34 @@
 <div class="page-container animated fadeIn">
 
-    <mat-card class="h-100">
+    <mat-card>
         <mat-card-content>
-            <mat-accordion multi="false">
+<mat-accordion>
+                <!-- --------------------- -->
+                <!-- MESSAGES -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-send text-deco"></span>
+                            <span class="align-self-center sm ml-2">Mensajería</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-message></app-message>
+
+                </mat-expansion-panel>
 
                 <!-- --------------------- -->
-                <!-- AAM -->
+                <!-- MODULES -->
                 <!-- --------------------- -->
 
-                <mat-expansion-panel class="my-3">
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <span class="xl mdi  mdi-cog text-deco"></span>
-                            <span class="align-self-center md ml-2">Configuraciones Generales</span>
+                            <span class="align-self-center sm ml-2">Módulos</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
@@ -21,23 +37,106 @@
                 </mat-expansion-panel>
 
                 <!-- --------------------- -->
-                <!-- MESSAGES -->
+                <!-- HORARIOS -->
                 <!-- --------------------- -->
 
-                <mat-expansion-panel class="my-3">
+                <mat-expansion-panel>
 
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <span class="xl mdi  mdi-send text-deco"></span>
-                            <span class="align-self-center md ml-2">Enviá un mensaje a tus
-                                clientes</span>
+                            <span class="xl mdi  mdi-clock text-deco"></span>
+                            <span class="align-self-center sm ml-2">Días y Horarios Hábiles</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <app-message></app-message>
+                    <app-working></app-working>
 
                 </mat-expansion-panel>
 
+                <!-- --------------------- -->
+                <!-- COMPANIES -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-storefront-outline text-deco"></span>
+                            <span class="align-self-center sm ml-2">Comercios</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-companies></app-companies>
+
+                </mat-expansion-panel>
+
+                <!-- --------------------- -->
+                <!-- SECTIONS -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-select-group text-deco"></span>
+                            <span class="align-self-center sm ml-2">Sectores</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-sections></app-sections>
+
+                </mat-expansion-panel>
+
+                <!-- --------------------- -->
+                <!-- TABLES -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-silverware-fork-knife text-deco"></span>
+                            <span class="align-self-center sm ml-2">Mesas</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-companies></app-companies>
+
+                </mat-expansion-panel>
+
+                <!-- --------------------- -->
+                <!-- POLL -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-star text-deco"></span>
+                            <span class="align-self-center sm ml-2">Encuestas</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-poll></app-poll>
+
+                </mat-expansion-panel>
+
+                <!-- --------------------- -->
+                <!-- WAITERS -->
+                <!-- --------------------- -->
+
+                <mat-expansion-panel>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span class="xl mdi  mdi-account-tie text-deco"></span>
+                            <span class="align-self-center sm ml-2">Camareros/as</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-waiters></app-waiters>
+
+                </mat-expansion-panel>
             </mat-accordion>
         </mat-card-content>
     </mat-card>

@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroupDirective, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AdminService } from '../../admin.service';
-import { ScoreItem, ScoreItemResponse } from '../../../../interfaces/score.interface';
-import { Section } from '../../../../interfaces/section.interface';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { ScoreItem, ScoreItemResponse } from 'src/app/interfaces/score.interface';
+import { Section } from 'src/app/interfaces/section.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PublicService } from '../../../public/public.service';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
 	selector: 'app-poll-create',

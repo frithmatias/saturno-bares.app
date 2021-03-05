@@ -139,12 +139,24 @@
     <!-- SECOND ROW : LINKS -->
     <div>
 
+        <div class="toolbar-links-base" *ngIf="url==='howworks'">
+            <div class="toolbar-base-item pointer" routerLink="/home">
+                Volver al Inicio
+            </div>
+            <div class="toolbar-base-item pointer" routerLink="/register">
+                Registrar Comercio
+            </div>
+            <div class="toolbar-base-item pointer" routerLink="/login">
+                Ingresar
+            </div>
+            <app-theme></app-theme>
+        </div>
+
         <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
             <div class="toolbar-base-item pointer" routerLink="/home">
                 Volver al Inicio
             </div>
             <app-theme></app-theme>
-
         </div>
 
         <div class="toolbar-links-base" *ngIf="!url || url === '' || url==='home'">

@@ -8,53 +8,43 @@
   <div class="minicards-content">
 
     <div>
+
       <!-- WIZARD LINK -->
+
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/wizard">
 
         <div class="text-accent text-left md">
           <span class="mdi mdi-wizard-hat mr-2"></span> Wizard
         </div>
 
-        <div class="saturno-minicard-text">
-          <div
-            *ngIf="adminService.companies.length === 0 || adminService.sections.length === 0 || adminService.tables.length === 0">
-
+        <div class="text-center">
+          <div *ngIf="adminService.companies.length === 0 || 
+                   adminService.sections.length === 0 || 
+                   adminService.tables.length === 0">
             <div class="mdi mdi-close-circle-outline text-danger text-center xxxxl"></div>
-            <div>
-              La empresa seleccionada no tiene los sectores y mesas necesarias para gestionar clientes.
-              Usá este pequeño asistente que te ayudará paso a paso en el proceso de crear bares o restaurantes,
-              sectores, mesas, camareros/as y todo lo necesario para atender a tus clientes.
+            <div *ngIf="adminService.companies.length === 0" class="sm text-accent">
+              Todavía no hay comercios creados.
             </div>
-
+            <div *ngIf="adminService.sections.length === 0" class="sm text-accent">
+              Todavía no hay sectores creados.
+            </div>
+            <div *ngIf="adminService.tables.length === 0" class="sm text-accent">
+              Todavía no hay mesas creadas.
+            </div>
+            <hr>
+            <button mat-raised-button color="accent" routerLink="/admin/wizard">Iniciar Asistente</button>
           </div>
 
-          <div
-            *ngIf="adminService.companies.length > 0 && adminService.sections.length > 0 && adminService.tables.length > 0">
-
-            <div class="mdi mdi-check-circle-outline text-success text-center xxxxl"></div>
+          <div *ngIf="adminService.companies.length > 0 && 
+            adminService.sections.length > 0 && 
+            adminService.tables.length > 0">
+            <div class="mdi mdi-check-circle-outline text-active text-center xxxxl"></div>
             <div>
-              La empresa seleccionada tiene sectores y mesas creadas para comenzar a recibir clientes. Podés
-              usar este pequeño asistente para modificarlos o crear mas mesas, sectores o camareros.
+              Todo esta en orden.
             </div>
-
+            <hr>
+            <button mat-raised-button color="active" routerLink="/waiter/home">Entrar a un Sector</button>
           </div>
-        </div>
-
-      </mat-card>
-
-      <!-- TOMAR SECTOR -->
-
-      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/waiter/home" *ngIf="
-  adminService.companies.length > 0 && 
-  adminService.sections.length > 0 &&
-  adminService.tables.length > 0">
-
-        <div class="text-accent md">
-          <span class="mdi mdi-select-group mr-2"></span> Ir a un sector
-        </div>
-
-        <div class="saturno-minicard-text">
-          Desde acá podés tomar un sector, gestionar tus mesas y ateneder a tus clientes.
         </div>
 
       </mat-card>
@@ -71,7 +61,7 @@
         <mat-card-content>
 
           <div class="table-responsive-sm mt-2">
-            <table class="table-sm mb-0 saturno-minicard-text text-center">
+            <table class="table-sm mb-0 sm text-center">
 
               <tr>
                 <td style="text-align: left;">
@@ -108,16 +98,32 @@
                   {{ adminService.tables.length }}
                 </td>
               </tr>
-            </table>
 
-            <div *ngIf="
-  adminService.companies.length === 0 || 
-  adminService.sections.length === 0 ||
-  adminService.tables.length === 0" class="pointer sm p-2 mt-2">
-              Faltan crear elementos para la empresa seleccionada por favor hacé click en <span
-                routerLink="/admin/wizard">"Iniciar el Asistente"</span>
-              para crear todo lo necesario.
-            </div>
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-account-tie mr-2"></span>
+                  Camareros
+                  <span *ngIf="adminService.waiters.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.waiters.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  {{ adminService.waiters.length }}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: left;">
+                  <span class="mdi mdi-star mr-2"></span>
+                  Encuestas
+                  <span *ngIf="adminService.scoreItems.length > 0" class="mdi mdi-check text-success"></span>
+                  <span *ngIf="adminService.scoreItems.length === 0" class="mdi mdi-alert text-danger"></span>
+                </td>
+                <td style="text-align: right;">
+                  {{ adminService.scoreItems.length }}
+                </td>
+              </tr>
+
+            </table>
 
           </div>
         </mat-card-content>
@@ -138,7 +144,7 @@
         <mat-card-content>
 
           <div class="table-responsive-sm mt-2">
-            <table class="table-sm mb-0 saturno-minicard-text text-center">
+            <table class="table-sm mb-0 sm text-center">
 
               <tr>
                 <td style="text-align: left;">

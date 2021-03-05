@@ -21,6 +21,7 @@ export class WizardComponent implements OnInit {
 	activateTableExplanation = false;
 	activateWaiterExplanation = false;
 	canContinueValue = true;
+	workingHoursIsSet = false;
 
 	constructor(
 		private router: Router,
@@ -38,23 +39,13 @@ export class WizardComponent implements OnInit {
 	stepperGoBack(stepper: MatStepper) {
 		stepper.previous();
 	}
-
+	
 	stepperGoNext(stepper: MatStepper) {
-
-		if (this.adminService.companies?.length === 0) {
-			this.publicService.snack('Para continuar tenés que crear un comercio primero', 5000);
-			return;
-		}
-
-		if (!this.loginService.user?.id_company?._id) {
-			this.publicService.snack('Seleccioná una empresa desde el menú para continuar.', 5000);
-			return;
-		}
-
 		this.publicService.scrollTop();
 		stepper.next();
 	}
 
+	// for settings > modules
 	canContinue(canContinue: boolean){
 		this.canContinueValue = canContinue;
 	}

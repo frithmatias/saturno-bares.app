@@ -6,8 +6,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminRoutingModule } from './admin-routing.module';
 
 // modules
-import { ComponentsModule } from '../../components/components.module';
-import { MaterialModule } from '../../modules/material.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { MaterialModule } from 'src/app/modules/material.module';
 import { QRCodeModule } from 'angularx-qrcode';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
@@ -18,17 +18,17 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TicketsComponent } from './tickets/tickets.component';
 
-import { CompaniesComponent } from './companies/companies.component';
-import { CompanyCreateComponent } from './companies/company-create/company-create.component';
-import { TablesComponent } from './tables/tables.component';
-import { TableCreateComponent } from './tables/table-create/table-create.component';
-import { WaitersComponent } from './waiters/waiters.component';
-import { WaiterCreateComponent } from './waiters/waiter-create/waiter-create.component';
-import { SectionsComponent } from './sections/sections.component';
-import { SectionCreateComponent } from './sections/section-create/section-create.component';
+import { CompaniesComponent } from './settings/companies/companies.component';
+import { CompanyCreateComponent } from './settings/companies/company-create/company-create.component';
+import { TablesComponent } from './settings/tables/tables.component';
+import { TableCreateComponent } from './settings/tables/table-create/table-create.component';
+import { WaitersComponent } from './settings/waiters/waiters.component';
+import { WaiterCreateComponent } from './settings/waiters/waiter-create/waiter-create.component';
+import { SectionsComponent } from './settings/sections/sections.component';
+import { SectionCreateComponent } from './settings/sections/section-create/section-create.component';
 import { WizardComponent } from './wizard/wizard.component';
-import { PollComponent } from './poll/poll.component';
-import { PollCreateComponent } from './poll/poll-create/poll-create.component';
+import { PollComponent } from './settings/poll/poll.component';
+import { PollCreateComponent } from './settings/poll/poll-create/poll-create.component';
 import { WebPageComponent } from './webpage/webpage.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ScheduleComponent } from './schedule/schedule.component';
@@ -37,6 +37,7 @@ import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.compone
 import { CalendarComponent } from './schedule/calendar/calendar.component';
 import { ModulesComponent } from './settings/modules/modules.component';
 import { MessageComponent } from './settings/message/message.component';
+import { WorkingComponent } from './settings/working/working.component';
 
 @NgModule({
 	declarations: [
@@ -68,6 +69,7 @@ import { MessageComponent } from './settings/message/message.component';
 		CalendarComponent,
 		ModulesComponent,
 		MessageComponent,
+		WorkingComponent,
 	],
 	imports: [
 		CommonModule,

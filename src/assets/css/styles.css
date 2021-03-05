@@ -22,23 +22,21 @@ body {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus
-input:-webkit-autofill, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus input:-webkit-autofill,
 textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--accent);
-  -webkit-box-shadow: 0 0 0 30px var(--mat-card-bg) inset !important;
-  transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--accent);
+    -webkit-box-shadow     : 0 0 0 30px var(--mat-card-bg) inset !important;
+    transition             : background-color 5000s ease-in-out 0s;
 }
+
 table {
     width: 100%;
 }
@@ -136,7 +134,7 @@ SATURNO
 */
 
 .page-container {
-    margin   : 50px 0px;
+    margin   : 20px 0px;
     min-width: 300px;
     max-width: 600px;
     font-size: medium;
@@ -163,9 +161,14 @@ SATURNO
 
 @media (max-width: 575px) {
 
+
     .page-container {
         margin : 0em;
         padding: 0em;
+    }
+
+    .page-container .mat-card {
+        padding-top: 30px;
     }
 
     .page-container-wide {
@@ -911,6 +914,10 @@ MAT-STEPPER
 MAT-SIDENAV 
 -------------------------------------------
 */
+
+mat-expansion-panel-header {
+    height: 36px !important;
+}
 
 .mat-expansion-panel-body {
     padding: .5rem !important;

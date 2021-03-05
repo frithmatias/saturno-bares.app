@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, FormArray } from '@angular/forms';
 
-import { AdminService } from '../../admin.service';
-import { Section, SectionResponse } from '../../../../interfaces/section.interface';
-import { LoginService } from '../../../../services/login.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { Section, SectionResponse } from 'src/app/interfaces/section.interface';
+import { LoginService } from 'src/app/services/login.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PublicService } from '../../../public/public.service';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
 	selector: 'app-section-create',

@@ -4,31 +4,31 @@
 
         <mat-card-header>
             <mat-card-title class="md">
-                <span class="mdi mdi-cogs md text-accent"></span> Mis Configuraciones
+                <span class="mdi mdi-cogs md text-accent"></span> Módulos
             </mat-card-title>
         </mat-card-header>
 
-        <div *ngIf="!settings">
+        <div *ngIf="!publicService.settings">
             <mat-card-content>
                 <div class="p-2">
-                    Verificá que tengas al menos una empresa creada y seleccionada.
+                    Tenés que tener al menos una empresa creada y seleccionada.
                 </div>
             </mat-card-content>
         </div>
 
-        <div *ngIf="settings">
+        <div *ngIf="publicService.settings">
 
             <mat-card-content class="p-2">
                 <!-- virtual queue on/off -->
                 <div class="d-flex mt-2">
                     <div class="w-50 text-left">
-                        <mat-slide-toggle [(ngModel)]="settings.bl_queue" [checked]="settings.bl_queue"
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_queue" [checked]="publicService.settings.bl_queue"
                             (change)="check('queue')"> Cola Virtual
                         </mat-slide-toggle>
                     </div>
                     <div class="w-50 text-right">
-                        <apan *ngIf="settings.bl_queue">Activado</apan>
-                        <apan *ngIf="!settings.bl_queue">Desactivado</apan>
+                        <apan *ngIf="publicService.settings.bl_queue">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_queue">Desactivado</apan>
                         <span class="mdi mdi-help-circle-outline ml-2 pointer" (click)="openBottomSheet('adminSettingsVirtualQueue')"></span>
                     </div>
                 </div>
@@ -36,13 +36,13 @@
                 <!-- spm on/off -->
                 <div class="d-flex mt-2">
                     <div class="w-50 text-left">
-                        <mat-slide-toggle [(ngModel)]="settings.bl_spm" [checked]="settings.bl_spm"
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_spm" [checked]="publicService.settings.bl_spm"
                             (change)="check('spm')"> SPM
                         </mat-slide-toggle>
                     </div>
                     <div class="w-50 text-right">
-                        <apan *ngIf="settings.bl_spm">Activado</apan>
-                        <apan *ngIf="!settings.bl_spm">Desactivado</apan>
+                        <apan *ngIf="publicService.settings.bl_spm">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_spm">Desactivado</apan>
                         <span class="mdi mdi-help-circle-outline ml-2 pointer" (click)="openBottomSheet('adminSettingsSPM')"></span>
                     </div>
                 </div>
@@ -50,13 +50,13 @@
                 <!-- schedule on/off -->
                 <div class="d-flex mt-2">
                     <div class="w-50 text-left">
-                        <mat-slide-toggle [(ngModel)]="settings.bl_schedule" [checked]="settings.bl_schedule"
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_schedule" [checked]="publicService.settings.bl_schedule"
                             (change)="check('schedule')"> Agenda
                         </mat-slide-toggle>
                     </div>
                     <div class="w-50 text-right">
-                        <apan *ngIf="settings.bl_schedule">Activado</apan>
-                        <apan *ngIf="!settings.bl_schedule">Desactivado</apan>
+                        <apan *ngIf="publicService.settings.bl_schedule">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_schedule">Desactivado</apan>
                         <span class="mdi mdi-help-circle-outline ml-2 pointer" (click)="openBottomSheet('adminSettingsSchedule')"></span>
 
                     </div>

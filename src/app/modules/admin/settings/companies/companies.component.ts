@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AdminService } from '../../../modules/admin/admin.service';
-import { LoginService } from '../../../services/login.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { LoginService } from 'src/app/services/login.service';
 
-import { Company } from '../../../interfaces/company.interface';
-import { CompanyResponse } from '../../../interfaces/company.interface';
-import { PublicService } from '../../public/public.service';
+import { Company } from 'src/app/interfaces/company.interface';
+import { CompanyResponse } from 'src/app/interfaces/company.interface';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 
 @Component({

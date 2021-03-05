@@ -17,8 +17,8 @@
                     <div>
                         <div class="xl text-accent mdi mdi-wizard-hat mr-3"> Asistente </div>
                         <p>
-                            Este pequeño asistente te ayuda a crear todo lo necesario para comenzar a gestionar
-                            tus mesas y ateneder a tus clientes.
+                            Este asistente te ayuda a crear todo lo necesario para comenzar a gestionar
+                            tus mesas y atender a tus clientes.
                         </p>
                         <p>
                             Los pasos opcionales podes saltearlos y completarlos mas adelante.
@@ -99,7 +99,7 @@
         </mat-step>
 
         <!-- Modules -->
-        <mat-step>
+        <mat-step [completed]="publicService.settings">
             <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
@@ -107,15 +107,15 @@
                         Configuración
                     </mat-card-title>
                     <mat-card-subtitle class="step-header">
-                        Como querés usar el sistema
+                        ¿Cómo preferís usar el sistema?
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
 
                     <div>
                         <p>
-                            Acá podes establecer que módulos del sistema querés activar para definir
-                            como funcionará tu comercio. Hacé un click en el ícono (?) para obtener mas detalles.
+                            Acá podes activar algunas funciones para definir como va a funcionar tu comercio. 
+                            Hacé un click en el ícono (?) para obtener mas detalles.
                         </p>
                     </div>
 
@@ -133,12 +133,61 @@
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
-                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id && canContinueValue"
+                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id && canContinueValue && publicService.settings"
                         mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
-                    <button *ngIf="!adminService.companies || !loginService.user?.id_company || !canContinueValue"
+                    <button *ngIf="!adminService.companies || !loginService.user?.id_company || !canContinueValue || !publicService.settings"
+                        mat-button disabled>
+                        SIGUIENTE
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+                    </button>
+                </mat-card-actions>
+
+            </mat-card>
+        </mat-step>
+
+        <!-- Working Hours -->
+        <mat-step [completed]="publicService.settings?.tm_working.length > 0">
+            <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
+                <mat-card-header>
+                    <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
+                    <mat-card-title>
+                        Horas Hábiles
+                    </mat-card-title>
+                    <mat-card-subtitle class="step-header">
+                        Establecé los horarios hábiles de la semana
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+
+                    <div> 
+                        <p>
+                            Definí en que horarios abre y cierra tu negocio para cada día de la semana. 
+                        </p>
+                    </div>
+
+                    <app-working [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-working>
+
+                    
+                </mat-card-content>
+                
+                <mat-card-actions class="text-right">
+                    <div *ngIf="!canContinueValue" class="sm text-right text-accent">
+                        Tenés que guardar los cambios para continuar
+                    </div>
+                    <!-- previous / next -->
+                    <button mat-button (click)="stepperGoBack(stepper)">
+                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
+                        ATRAS
+                    </button>
+                    <button *ngIf="canContinueValue && publicService.settings && publicService.settings?.tm_working.length > 0"
+                        mat-button (click)="stepperGoNext(stepper)">
+                        SIGUIENTE
+                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+                    </button>
+                    <button *ngIf="!canContinueValue || !publicService.settings || publicService.settings?.tm_working.length === 0"
                         mat-button disabled>
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
@@ -211,7 +260,7 @@
                     <div>
                         <p>
                             Acá tenés que registrar las mesas de cada sector. Sólo tenés que ingresar el
-                            número de mesa y la capacidad máxima de personas que pueden ocuparla.
+                            número de mesa y la capacidad máxima de personas que pueden sentarse en ella.
                         </p>
                     </div>
                 </mat-card-content>
@@ -254,8 +303,7 @@
                     <div>
                         <p>
                             Acá podés registrar a tus camareros/as. Para entrar a sus cuentas, los mismos, tienen que
-                            ingresar
-                            desde la pestaña de 'Soy Camarero/a' en la página de Login de usuario.
+                            ingresar desde la pestaña de 'Soy Camarero/a' en la página de Login de usuario.
                         </p>
                     </div>
 

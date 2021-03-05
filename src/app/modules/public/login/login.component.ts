@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
 		const emailForm: any = {
 			tx_name: null,
 			tx_email: forma.value.email,
-			tx_password: forma.value.password
+			tx_password: forma.value.password,
+			bl_admin: false //admin || customer 
+
 		};
 
 		const recordar = forma.value.recuerdame;

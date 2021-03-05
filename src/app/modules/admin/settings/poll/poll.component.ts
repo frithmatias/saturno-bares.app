@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdminService } from '../admin.service';
-import { TableResponse } from '../../../interfaces/table.interface';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { TableResponse } from 'src/app/interfaces/table.interface';
 import { Section } from 'src/app/interfaces/section.interface';
-import { ScoreItem, ScoreItemResponse, ScoreItemsResponse } from '../../../interfaces/score.interface';
+import { ScoreItem, ScoreItemResponse, ScoreItemsResponse } from 'src/app/interfaces/score.interface';
 import { LoginService } from 'src/app/services/login.service';
-import { PublicService } from '../../public/public.service';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
   selector: 'app-poll',

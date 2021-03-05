@@ -23,11 +23,15 @@ export class TokenGuard implements CanLoad {
 		}
 
 		// payload: {usuario: {…}, iat: 1597269832, exp: 1599861832}
-		const payload = JSON.parse(window.atob(token.split('.')[1]));
+		const payload = JSON.parse(window.atob(token.split('.')[1].replace('_','/').replace('-','+'))); 
+		// el token que devuelve jwt a veces contiene caracteres "_" o "-" y atob devuelve error, por esto los reemplazo 
+		// por cualquier otro caracter, ya que sólo necesito última parte del token que tiene "iat" y "exp" para obtener 
+		// el tiempo de expiración del token.
+		
 		// verifica si el token expiro
 		const expira = this.expira(payload.exp); // 1599861832
 		if (expira) {
-			this.publicService.snack('La sesión expiró. Inicie sesión nuevamente.', 5000);
+			this.publicService.snack('La sesión expiró, iniciá sesión nuevamente.', 5000);
 			this.loginService.logout();
 			this.router.navigate(['/home']);
 			return false;

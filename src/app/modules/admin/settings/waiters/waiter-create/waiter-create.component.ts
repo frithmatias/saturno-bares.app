@@ -7,13 +7,13 @@ import { AjaxError } from 'rxjs/ajax';
 import { HttpErrorResponse } from '@angular/common/http';
 
 // services
-import { AdminService } from '../../admin.service';
-import { LoginService } from '../../../../services/login.service';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { LoginService } from 'src/app/services/login.service';
 
 // interfaces
-import { User, UserResponse } from '../../../../interfaces/user.interface';
-import { Table } from '../../../../interfaces/table.interface';
-import { PublicService } from '../../../public/public.service';
+import { User, UserResponse } from 'src/app/interfaces/user.interface';
+import { Table } from 'src/app/interfaces/table.interface';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
 	selector: 'app-waiter-create',

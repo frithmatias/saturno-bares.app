@@ -183,7 +183,6 @@ export class AdminService {
 		return this.http.post(url, { idCompany, txMessage });
 	}
 
-
 	// ========================================================
 	// Schedule Methods
 	// ========================================================

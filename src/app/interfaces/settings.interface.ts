@@ -7,6 +7,7 @@ export interface Settings {
 	bl_spm: boolean, // terraza, patio, etc
 	bl_schedule: boolean,
 	bl_queue: boolean,
+	tm_working: number[][];
 	__v?: number;
 	_id?: string;
 }

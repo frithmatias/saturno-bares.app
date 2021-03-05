@@ -8,7 +8,7 @@ export class WordMaxLengthPipe implements PipeTransform {
 
     let newString;
     if(word.length > length){
-      newString = word.substr(0, length) + '...';
+      newString = word.substr(0, length);
     } else {
       newString = word
     }

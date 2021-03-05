@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Settings } from 'src/app/interfaces/settings.interface';
 import { PublicService } from '../../../public/public.service';
 import { LoginService } from '../../../../services/login.service';
 import { SettingsResponse } from '../../../../interfaces/settings.interface';
@@ -17,10 +15,8 @@ export class ModulesComponent implements OnInit {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
-  @Output() canContinue: EventEmitter<boolean> = new EventEmitter();
 
-  settings: Settings; // local settings before save (component)
-  userSubscription: Subscription;
+  @Output() canContinue: EventEmitter<boolean> = new EventEmitter(); // wizard
   saveDisabled = true;
 
   constructor(
@@ -30,29 +26,12 @@ export class ModulesComponent implements OnInit {
     private bottomSheet: MatBottomSheet
   ) { }
 
-  ngOnInit(): void {
-
-    let idCompany = this.loginService.user.id_company?._id;
-    if (idCompany) this.readSettings(idCompany);
-    this.userSubscription = this.loginService.user$.subscribe(user => {
-      let idCompany = user?.id_company?._id;
-      if (idCompany) {
-        this.readSettings(idCompany);
-      }
-    });
-  }
-
-  readSettings(idCompany) {
-    this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
-      this.publicService.settings = data.settings;
-      this.settings = Object.assign({}, data.settings);
-    });
-  }
+  ngOnInit(): void { }
 
   updateSettings() {
-    this.adminService.updateSettings(this.settings).subscribe((data: SettingsResponse) => {
+    this.adminService.updateSettings(this.publicService.settings).subscribe((data: SettingsResponse) => {
       if (data.ok) {
-        this.settings = Object.assign({}, data.settings);
+        this.publicService.settings = Object.assign({}, data.settings);
         this.publicService.settings = data.settings;
         this.saveDisabled = true;
         this.canContinue.emit(true);
@@ -62,15 +41,12 @@ export class ModulesComponent implements OnInit {
   }
 
   check(item: string) {
-    if (this.settings.bl_queue === false && item === 'queue') this.settings.bl_spm = false;
-    if (this.settings.bl_spm === true && item === 'spm') this.settings.bl_queue = true;
+    if (this.publicService.settings.bl_queue === false && item === 'queue') this.publicService.settings.bl_spm = false;
+    if (this.publicService.settings.bl_spm === true && item === 'spm') this.publicService.settings.bl_queue = true;
     this.saveDisabled = false;
     this.canContinue.emit(false);
   }
 
-  ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
-  }
 
   openBottomSheet = (idHelp: string): void => {
     this.bottomSheet.open(HelpComponent, { data: { idHelp } });

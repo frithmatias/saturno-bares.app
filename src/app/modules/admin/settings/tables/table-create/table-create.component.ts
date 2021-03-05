@@ -1,11 +1,10 @@
-import { Component, OnInit, EventEmitter, Output, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, SimpleChange, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 
-import { AdminService } from '../../admin.service';
-import { Table, TableResponse } from '../../../../interfaces/table.interface';
-import { Section } from '../../../../interfaces/section.interface';
+import { AdminService } from 'src/app/modules/admin/admin.service';
+import { Table, TableResponse } from 'src/app/interfaces/table.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PublicService } from '../../../public/public.service';
+import { PublicService } from 'src/app/modules/public/public.service';
 
 @Component({
 	selector: 'app-table-create',
@@ -13,7 +12,7 @@ import { PublicService } from '../../../public/public.service';
 	styleUrls: ['./table-create.component.css']
 })
 export class TableCreateComponent implements OnInit {
-
+	@ViewChild('nmPersons') nmPersonsRef: ElementRef; 
 	@Output() tableCreated: EventEmitter<Table> = new EventEmitter();
 	@Input() idSection: string;
 	@Input() tablesSection: Table[] = [];
@@ -40,6 +39,7 @@ export class TableCreateComponent implements OnInit {
 		if(changes.tablesSection){
 			let numTables = changes.tablesSection.currentValue.length;
 			this.forma?.patchValue({ nmTable: numTables + 1 }); // set num table on init
+			this.nmPersonsRef?.nativeElement.focus();
 		}
 	}
 

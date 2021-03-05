@@ -1,0 +1,57 @@
+.working-container {
+    overflow   : auto;
+    height     : calc(100vh - 250px);
+    font-family: monospace
+}
+
+.table-button-active {
+    opacity      : 1 !important;
+    border       : 2px solid var(--accent);
+    border-radius: 5px;
+}
+
+thead {
+    position: sticky;
+}
+
+.working th {
+    position        : sticky;
+    height          : 32px;
+    font-size       : large;
+    text-align      : center;
+    font-weight     : 200;
+    font-family     : system-ui;
+    top             : 0px;
+    background-color: var(--mat-panel-bg);
+}
+
+.working th.cap {
+    color    : var(--accent);
+    font-size: medium;
+}
+
+.working tr {
+    height     : 32px;
+    font-size  : large;
+    font-weight: 200;
+    font-family: system-ui;
+    text-align : center;
+}
+
+.working td {
+    padding      : 10px 0px;
+    border-bottom: 1px solid grey;
+}
+
+.odd-row {
+    background-color: var(--bg);
+}
+
+.working td .persons {
+    vertical-align: text-top;
+    font-size     : small;
+}
+
+.table-button-inactive {
+    /* opacity: .5; */
+}

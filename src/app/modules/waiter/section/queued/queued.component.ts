@@ -20,6 +20,7 @@ import { PublicService } from '../../../public/public.service';
     ]),
   ]
 })
+
 export class QueuedComponent implements OnInit {
   @Input() queued: Ticket[];
   @Input() tables: Table[];

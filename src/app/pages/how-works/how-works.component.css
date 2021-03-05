@@ -1,3 +1,19 @@
+@media (max-width: 575px) {
+    .title {
+        font-size: large;
+        color: var(--accent);
+    }
+    
+    .subtitle {
+        font-size: medium;
+    }
+    
+    .paragraph {
+        font-size: medium !important;
+    }
+}
+
+
 p {
     font-size: .9em;
     opacity: .8;
@@ -5,4 +21,19 @@ p {
 
 div {
     margin-bottom: .8rem;
+}
+
+
+.title {
+    font-size: large;
+    color: var(--accent);
+}
+
+.subtitle {
+    font-size: medium;
+}
+
+.paragraph {
+    font-size: small;
+    color: var(--info);
 }

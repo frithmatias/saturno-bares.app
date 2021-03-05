@@ -68,6 +68,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
       this.publicService.settings = data.settings;
+      if(this.publicService.settings.tm_working.length === 0){
+        this.publicService.settings.tm_working = [[],[],[],[],[],[],[]]; //7 days of week
+      }
     });
 
   }
