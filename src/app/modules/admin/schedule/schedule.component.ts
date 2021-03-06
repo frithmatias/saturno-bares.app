@@ -84,7 +84,6 @@ export class ScheduleComponent implements OnInit {
 
     this.readPendingsMonth();
 
-
   }
 
   readAvailability() {
@@ -123,7 +122,7 @@ export class ScheduleComponent implements OnInit {
     this.pending = this.pendingMonth.filter(ticket => {
       return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate();
     });
-    this.publicService.sections.forEach(section => {
+    this.adminService.sections.forEach(section => {
       this.pendingBySectionMap.set(section.tx_section, this.pending.filter(pending => pending.id_section.tx_section === section.tx_section).length);
     })
   }

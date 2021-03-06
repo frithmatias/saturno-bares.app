@@ -127,7 +127,6 @@ export class PublicService {
     );
   }
 
-
   buscarLocalidades(pattern): Promise<LocationsResponse> {
     return new Promise((resolve, reject) => {
       const regex = new RegExp(/^[a-z ñ0-9]+$/i);
@@ -230,7 +229,6 @@ export class PublicService {
     return this.http.get(url);
   }
 
-
   actualizarSocket(idTicket: string, newSocket: string, isClient: boolean): Observable<object> {
     const socketsData = { idTicket, newSocket, isClient };
     return this.http.put(environment.api + '/t/actualizarsocket', socketsData);
@@ -276,6 +274,5 @@ export class PublicService {
 
     this.router.navigate(['/public/login']);
   }
-
 
 }

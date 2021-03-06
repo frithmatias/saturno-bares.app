@@ -6,6 +6,13 @@ import { AdminService } from '../../admin.service';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { SettingsResponse } from '../../../../interfaces/settings.interface';
 
+
+interface interval {
+  str: string;
+  int: number;
+  utc: number;
+}
+
 @Component({
   selector: 'app-working',
   templateUrl: './working.component.html',
@@ -19,7 +26,7 @@ export class WorkingComponent implements OnInit {
   @Output() canContinue: EventEmitter<boolean> = new EventEmitter();
   saveDisabled = true;
 
-  allIntervals: any[] = [];
+  allIntervals: interval[] = [];
   allWeekDays: any[] = [];
   allSelected = false;
 
@@ -35,8 +42,10 @@ export class WorkingComponent implements OnInit {
   ngOnInit(): void {
     // set all intervals 
     const intervals = [...Array(24).keys()]; // 0-23 
+    const now = new Date();
     intervals.forEach(interval => {
-      this.allIntervals.push({ str: interval.toString() + ':00', int: interval });
+      let utcHours = new Date(now.getFullYear(), now.getMonth(), now.getDate(), interval).getUTCHours();
+      this.allIntervals.push({ str: interval.toString() + ':00', int: interval, utc: utcHours });
     })
 
     // set all days
@@ -44,15 +53,15 @@ export class WorkingComponent implements OnInit {
     days.forEach(day => {
       this.allWeekDays.push({ str: moment().day(day).format("dddd").toString(), int: day });
     })
-        
+    
   }
 
-  selectAllWeekDays(interval: any) {
+  selectAllWeekDays(interval: interval) {
     this.saveDisabled = false;
     this.canContinue.emit(false);
 
     if (interval.int !== this.lastIntervalSelected) {
-      if (this.publicService.settings.tm_working[0].includes(interval.int)) {
+      if (this.publicService.settings.tm_working[0].includes(interval.utc)) {
         this.allSelected = true;
       } else {
         this.allSelected = false;
@@ -61,10 +70,10 @@ export class WorkingComponent implements OnInit {
 
     if (this.allSelected === false) {
       this.lastIntervalSelected = interval.int;
-      this.allWeekDays.forEach(d => this.publicService.settings.tm_working[d.int].push(interval.int));
+      this.allWeekDays.forEach(d => this.publicService.settings.tm_working[d.int].push(interval.utc));
       this.allSelected = true;
     } else {
-      this.allWeekDays.forEach(d => this.publicService.settings.tm_working[d.int] = this.publicService.settings.tm_working[d.int].filter(i => i !== interval.int));
+      this.allWeekDays.forEach(d => this.publicService.settings.tm_working[d.int] = this.publicService.settings.tm_working[d.int].filter(i => i !== interval.utc));
       this.allSelected = false;
     }
 
@@ -75,7 +84,7 @@ export class WorkingComponent implements OnInit {
     this.canContinue.emit(false);
 
     if (day.int !== this.lastDaySelected) {
-      if (this.publicService.settings.tm_working[day.int].length === 48) {
+      if (this.publicService.settings.tm_working[day.int].length === 24) {
         this.allSelected = true;
       } else {
         this.allSelected = false
@@ -85,7 +94,7 @@ export class WorkingComponent implements OnInit {
     if (this.allSelected === false) {
       this.lastDaySelected = day.int;
       this.publicService.settings.tm_working[day.int] = [];
-      this.allIntervals.forEach(i => this.publicService.settings.tm_working[day.int] = [...this.publicService.settings.tm_working[day.int], i.int]);
+      this.allIntervals.forEach(i => this.publicService.settings.tm_working[day.int] = [...this.publicService.settings.tm_working[day.int], i.utc]);
       this.allSelected = true;
     } else {
       this.publicService.settings.tm_working[day.int] = [];
@@ -93,10 +102,10 @@ export class WorkingComponent implements OnInit {
     }
   }
 
-  selectCell(interval: any, day: any) {
+  selectCell(interval: interval, day: any) {
     this.saveDisabled = false;
     this.canContinue.emit(false);
-    this.publicService.settings.tm_working[day.int] = this.publicService.settings.tm_working[day.int]?.includes(interval.int) ? this.publicService.settings.tm_working[day.int].filter(i => i !== interval.int) : [...this.publicService.settings.tm_working[day.int], interval.int];
+    this.publicService.settings.tm_working[day.int] = this.publicService.settings.tm_working[day.int]?.includes(interval.utc) ? this.publicService.settings.tm_working[day.int].filter(i => i !== interval.utc) : [...this.publicService.settings.tm_working[day.int], interval.utc];
   }
 
   updateSettings() {

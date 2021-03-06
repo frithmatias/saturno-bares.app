@@ -150,27 +150,14 @@ export class TicketCreateComponent implements OnInit {
 
     // PERSONS CHANGE 
     this.ticketForm.controls.idSection.valueChanges.subscribe(data => {
-
-      const nmPersons = this.ticketForm.controls.nmPersons.value;
-      const idSection = this.ticketForm.controls.idSection.value;
-      const dtReserve = this.ticketForm.controls.dtReserve.value;
-      if (nmPersons && idSection && dtReserve) {
-        this.readAvailability(nmPersons, idSection, dtReserve);
-      }
-
+      this.readAvailability();
       this.ticketForm.controls.tmReserve.reset();
       this.ticketForm.controls.cdTables.reset();
     })
 
     // SECTION CHANGE 
     this.ticketForm.controls.nmPersons.valueChanges.subscribe(data => {
-      const nmPersons = this.ticketForm.controls.nmPersons.value;
-      const idSection = this.ticketForm.controls.idSection.value;
-      const dtReserve = this.ticketForm.controls.dtReserve.value;
-      if (nmPersons && idSection && dtReserve) {
-        this.readAvailability(nmPersons, idSection, dtReserve);
-      }
-
+      this.readAvailability();
       this.ticketForm.controls.tmReserve.reset();
       this.ticketForm.controls.cdTables.reset();
     })
@@ -194,14 +181,8 @@ export class TicketCreateComponent implements OnInit {
     // DATE CHANGE
     this.ticketForm.controls.dtReserve.valueChanges.subscribe(data => {
       if (data) {
-        const nmPersons = this.ticketForm.controls.nmPersons.value;
-        const idSection = this.ticketForm.controls.idSection.value;
-        const dtReserve = this.ticketForm.controls.dtReserve.value;
-        if (nmPersons && idSection && dtReserve) {
-          this.readAvailability(nmPersons, idSection, dtReserve);
-        }
+        this.readAvailability();
         this.ticketForm.controls.tmReserve.enable();
-
       }
     })
 
@@ -213,32 +194,37 @@ export class TicketCreateComponent implements OnInit {
     })
   }
 
-  readAvailability(nmPersons: number, idSection: string, dtReserve: Date) {
+  readAvailability() {
+
+    const nmPersons = this.ticketForm.controls.nmPersons.value;
+    const idSection = this.ticketForm.controls.idSection.value;
+    const dtReserve = this.ticketForm.controls.dtReserve.value;
+
+    if (!nmPersons || !idSection || !dtReserve) {
+      return;
+    }
 
     this.availability = [];
     this.ticketForm.controls.tmReserve.reset();
 
     this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
-
       if (data.ok) {
         // OK: TRUE -> Encontró mesas compatibles
         this.tellUserNotAvailable = false;
         data.availability.forEach(av => {
 
-          av.interval = new Date(av.interval).getHours();
-
           if (av.tables.length > 0) {
             this.availability.push({
               disabled: false,
-              value: av.interval,
-              text: av.interval + ':00',
+              value: new Date(av.interval).getHours(),
+              text: new Date(av.interval).getHours() + ':00',
               tables: av.tables
             })
           } else {
             this.availability.push({
               disabled: true,
-              value: av.interval,
-              text: av.interval + ':00 No disponible',
+              value: new Date(av.interval).getHours(),
+              text: new Date(av.interval).getHours() + ':00 No disponible',
               tables: null
             })
           }

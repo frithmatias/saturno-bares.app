@@ -16,10 +16,7 @@ export class SettingsComponent implements OnInit {
     public publicService: PublicService
   ) { }
 
-  ngOnInit(): void {
-
-    console.log(this)
-    }
+  ngOnInit(): void {}
 
 
 }

@@ -16,7 +16,6 @@ export class PollComponent implements OnInit {
   @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['id_section','tx_item', '_id'];
-
   scoreItemCreate = false;
   sectionSelected: Section;
   newItem: ScoreItem;
@@ -27,19 +26,7 @@ export class PollComponent implements OnInit {
     private publicService: PublicService
   ) { }
 
-  ngOnInit(): void {
-    let idCompany = this.loginService.user.id_company?._id;
-    if (idCompany) { this.readScoreItems(idCompany); }
-  }
-
-
-  readScoreItems = (idCompany: string): void => {
-    this.adminService.readScoreItems(idCompany).subscribe((data: ScoreItemsResponse) => {
-      this.adminService.scoreItems = data.scoreitems;
-      this.adminService.scoreItemsSection = data.scoreitems;
-    })
-  }
-
+  ngOnInit(): void {  }
 
   deleteScoreItem(item: ScoreItem): void {
     this.publicService.snack(`Desea eliminar el item ${item.tx_item} para calificar?`, 3000, 'Aceptar').then(ok => {

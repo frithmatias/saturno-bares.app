@@ -21,7 +21,7 @@
                 <mat-form-field color="accent" class="w-50 px-2">
                     <mat-label>Sector</mat-label>
                     <mat-select formControlName="idSection" name="idSection" required>
-                        <mat-option *ngFor="let section of publicService.sections" [value]="section._id">
+                        <mat-option *ngFor="let section of adminService.sections" [value]="section._id">
                             {{ section.tx_section }}
                         </mat-option>
                     </mat-select>
@@ -39,7 +39,7 @@
                     <tr class="text-accent">
                         Solicitudes Pendientes para el {{ dtSelected | dateToString : 'DD [de] MMMM'}}
                     </tr>
-                    <tr *ngFor="let section of publicService.sections">
+                    <tr *ngFor="let section of adminService.sections">
                         <td>
                             {{ section.tx_section }}
                         </td>

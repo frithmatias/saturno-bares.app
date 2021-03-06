@@ -1,74 +1,57 @@
-<div class="page-container animated fadeIn">
+<mat-card-content>
 
-    <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+    <div *ngIf="!adminService.companies || adminService.companies?.length === 0"
+        class="row align-items-center justify-content-center">
+        <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
+        <span>Acá tenés que crear al menos un comercio</span>
+    </div>
 
-        <mat-card-header>
-            <mat-card-title class="md">
-                <span class="mdi mdi-storefront-outline md text-accent"></span> Mis Comercios
-            </mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-
-            <div *ngIf="!adminService.companies || adminService.companies?.length === 0"
-                class="row align-items-center justify-content-center">
-                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-                <span>Acá tenés que crear al menos un comercio</span>
-            </div>
-
-            <div *ngIf="adminService.companies && adminService.companies?.length > 0 && !loginService.user.id_company"
-                class="p-2 d-flex">
-                <div class="p-2 xxl align-self-center text-danger mdi mdi-alert"></div>
-                <div class="p-2 sm align-self-center text-left">
-                    Tenés comercios creados sin embargo no tenes seleccionado ninguno para continuar. Esto puede deberse
-                    a que eliminaste algún comercio recientemente o algún error ocurrió. Por favor, para continuar con el
-                    asistente selecciona uno de tus comercios desde el menú principal o crea uno nuevo si no existe.
-                </div>
-            </div>
+    <div *ngIf="adminService.companies && adminService.companies?.length > 0 && !loginService.user.id_company"
+        class="p-2 d-flex">
+        <div class="p-2 xxl align-self-center text-danger mdi mdi-alert"></div>
+        <div class="p-2 sm align-self-center text-left">
+            Tenés comercios creados sin embargo no tenes seleccionado ninguno para continuar. Esto puede deberse
+            a que eliminaste algún comercio recientemente o algún error ocurrió. Por favor, para continuar con el
+            asistente selecciona uno de tus comercios desde el menú principal o crea uno nuevo si no existe.
+        </div>
+    </div>
 
 
-            <div *ngIf="adminService.companies && adminService.companies?.length > 0">
-                <table mat-table [dataSource]="adminService.companies">
-                    <ng-container matColumnDef="tx_company_name">
-                        <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
-                        <td mat-cell *matCellDef="let element" class="text-left">
-                            {{element.tx_company_name}}
-                            <span class="mdi mdi-check text-warning"
-                                *ngIf="element.tx_company_string === companyUpdated?.tx_company_string"></span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="_id">
-                        <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
-                        <td mat-cell *matCellDef="let element" class="text-right">
-                            <span class="mdi mdi-pencil ml-2 xl text-success pointer"
-                                (click)="editCompany(element)"></span>
-                            <span class="mdi mdi-delete ml-2 xl text-danger pointer"
-                                (click)="deleteCompany(element)"></span>
-                        </td>
-                    </ng-container>
+    <div *ngIf="adminService.companies && adminService.companies?.length > 0">
+        <table mat-table [dataSource]="adminService.companies">
+            <ng-container matColumnDef="tx_company_name">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
+                <td mat-cell *matCellDef="let element" class="text-left">
+                    {{element.tx_company_name}}
+                    <span class="mdi mdi-check text-warning"
+                        *ngIf="element.tx_company_string === companyUpdated?.tx_company_string"></span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="_id">
+                <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
+                <td mat-cell *matCellDef="let element" class="text-right">
+                    <span class="mdi mdi-pencil ml-2 xl text-success pointer" (click)="editCompany(element)"></span>
+                    <span class="mdi mdi-delete ml-2 xl text-danger pointer" (click)="deleteCompany(element)"></span>
+                </td>
+            </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </div>
-        </mat-card-content>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</mat-card-content>
 
-        <mat-card-actions>
-            <button *ngIf="!openForm" mat-button (click)="openForm=true"><span class="lg mdi mdi-plus"></span> CREAR
-                COMERCIO </button>
-            <button *ngIf="openForm" mat-button (click)="openForm=false"><span class="lg mdi mdi-chevron-up"></span>
-                CERRAR FORMULARIO </button>
-        </mat-card-actions>
+<mat-card-actions>
+    <button *ngIf="!openForm" mat-button (click)="openForm=true"><span class="lg mdi mdi-plus"></span> CREAR
+        COMERCIO </button>
+    <button *ngIf="openForm" mat-button (click)="openForm=false"><span class="lg mdi mdi-chevron-up"></span>
+        CERRAR FORMULARIO </button>
+</mat-card-actions>
 
-    </mat-card>
+<div *ngIf="openForm" class="animated fadeIn">
 
-
-    <mat-card *ngIf="openForm" class="animated fadeIn">
-
-        <app-company-create [companyEdit]="companyEdit" (newCompany)="companyEditedOrCreated($event)"
-            (clearForm)="clearForm()">
-        </app-company-create>
-
-    </mat-card>
+    <app-company-create [companyEdit]="companyEdit" (newCompany)="companyEditedOrCreated($event)"
+        (clearForm)="clearForm()">
+    </app-company-create>
 
 </div>

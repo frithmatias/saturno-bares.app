@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
     this.userSuscription = this.loginService.user$.subscribe(data => {
       if (data) {
         this.readSections(data.id_company._id);
+        this.readSessions(data.id_company._id);
       }
     })
   }

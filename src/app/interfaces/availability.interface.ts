@@ -9,7 +9,7 @@ export interface availabilityResponse {
 export interface availability {
     capacity: number;
     interval: Date;
-    tables: avTable[];
+    tables: avTable[] | number[];
 }
 
 export interface avTable {

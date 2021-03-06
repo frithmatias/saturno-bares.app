@@ -16,7 +16,6 @@ export class SectionsComponent implements OnInit {
   @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['tx_section', '_id'];
-
   sectionCreate = false;
   dataSource = new MatTableDataSource<Section>();
 

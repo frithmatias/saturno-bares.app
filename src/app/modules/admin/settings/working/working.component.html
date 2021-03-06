@@ -1,56 +1,43 @@
-<div class="page-container animated fadeIn">
+<mat-card-content>
+    <div class="working-container">
 
-    <mat-card [ngClass]="{nomargin:nomargin, nopadding:nopadding}">
+        <table class="working sm" *ngIf="publicService.settings?.tm_working">
+            <thead>
+                <th class="tbl px-1">Int</th>
+                <th class="tbl px-1">#</th>
+                <th class="tbl px-1 pointer text-info mdi mdi-select-all" *ngFor="let weekDay of allWeekDays"
+                    (click)="selectAllIntervals(weekDay)"></th>
+            </thead>
+            <thead>
+                <th class="cap px-1"></th>
+                <th class="cap px-1"></th>
+                <th class="cap px-1" *ngFor="let weekDay of allWeekDays">{{weekDay.str | capitalizarPipe |
+                    wordMaxLength : '2'}}</th>
+            </thead>
+            <tr *ngFor="let interval of allIntervals ; let i = index" [ngClass]="{'odd-row': i%2==0}">
+                <td>{{interval.str}}</td>
+                <td class="pointer text-info mdi mdi-select-all" (click)="selectAllWeekDays(interval)"></td>
+                <td *ngFor="let weekDay of allWeekDays" (click)="selectCell(interval, weekDay)">
 
-        <mat-card-header>
-            <mat-card-title class="md">
-                <span class="mdi mdi-clock md text-accent"></span> Días y Horarios Hábiles
-            </mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-            <div class="working-container">
-
-                <table class="working sm" *ngIf="publicService.settings?.tm_working">
-                    <thead>
-                        <th class="tbl px-1">Int</th>
-                        <th class="tbl px-1">#</th>
-                        <th class="tbl px-1 pointer text-info mdi mdi-select-all" *ngFor="let weekDay of allWeekDays"
-                            (click)="selectAllIntervals(weekDay)"></th>
-                    </thead>
-                    <thead>
-                        <th class="cap px-1"></th>
-                        <th class="cap px-1"></th>
-                        <th class="cap px-1" *ngFor="let weekDay of allWeekDays">{{weekDay.str | capitalizarPipe |
-                            wordMaxLength : '2'}}</th>
-                    </thead>
-                    <tr *ngFor="let interval of allIntervals ; let i = index" [ngClass]="{'odd-row': i%2==0}">
-                        <td>{{interval.str}}</td>
-                        <td class="pointer text-info mdi mdi-select-all" (click)="selectAllWeekDays(interval)"></td>
-                        <td *ngFor="let weekDay of allWeekDays" (click)="selectCell(interval, weekDay)">
-
-                            <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.int)"
-                                class="pointer text-accent mdi mdi-check-box-outline"></span>
-                            <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.int)"
-                                class="pointer mdi mdi-checkbox-blank-outline"></span>
+                    <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.utc)"
+                        class="pointer text-accent mdi mdi-check-box-outline"></span>
+                    <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.utc)"
+                        class="pointer mdi mdi-checkbox-blank-outline"></span>
 
 
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </mat-card-content>
-        <mat-card-actions class="p-2 text-right">
-            <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
-                [disabled]="saveDisabled">
-                <table>
-                    <tr>
-                        <td class="button-icon mdi  mdi-content-save xl"></td>
-                        <td class="button-text">Guardar</td>
-                    </tr>
-                </table>
-            </button>
-        </mat-card-actions>
-
-    </mat-card>
-</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</mat-card-content>
+<mat-card-actions class="p-2 text-right">
+    <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+        [disabled]="saveDisabled">
+        <table>
+            <tr>
+                <td class="button-icon mdi  mdi-content-save xl"></td>
+                <td class="button-text">Guardar</td>
+            </tr>
+        </table>
+    </button>
+</mat-card-actions>
