@@ -4,13 +4,13 @@
 
         <thead>
             <th class="cap px-1"></th>
-            <th class="cap px-1">Cap</th>
-            <th class="cap px-1" *ngFor="let t of tables">{{t.nm_persons}}</th>
+            <th class="cap px-1"></th>
+            <th class="cap px-1 mdi mdi-human-male" *ngFor="let t of tables"> {{t.nm_persons}} </th>
         </thead>
         <thead>
-            <th class="tbl px-1">Int</th>
-            <th class="tbl px-1">#</th>
-            <th class="tbl px-1" *ngFor="let t of tables">{{t.nm_table}}</th>
+            <th class="tbl px-1">Intervalo</th>
+            <th class="tbl px-1"></th>
+            <th class="tbl px-1" *ngFor="let t of tables"> #{{t.nm_table}} </th>
         </thead>
         <tbody>
             <!-- intervals -->
@@ -20,7 +20,7 @@
                     <span>{{av.interval | dateToInterval}}</span>
                 </td>
                 <td>
-                    <span class="text-accent md">{{av.capacity}}</span>
+                    <span class="text-accent mdi mdi-human-male md">{{av.capacity}}</span>
                 </td>
 
                 <!-- tables -->

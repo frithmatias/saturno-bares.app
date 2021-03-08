@@ -106,7 +106,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
 			if (data.ok) {
 				this.tickets = data.tickets;
-				this.ticket = this.tickets.find(ticket => ticket._id === this.ticket._id)
+				// pick my ticket
+				this.ticket = this.tickets.find(ticket => ticket._id === this.ticket._id);
+				
 				this.ticketsTail = data.tickets
 					.filter(ticket => ticket.tm_provided !== null)
 					.sort((a: Ticket, b: Ticket) => + new Date(b.tm_provided) - +new Date(a.tm_provided))

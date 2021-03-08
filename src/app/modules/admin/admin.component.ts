@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { AdminService } from './admin.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../waiter/waiter.service';
-import { Table } from 'src/app/interfaces/table.interface';
 import { TablesResponse } from '../../interfaces/table.interface';
 import { PublicService } from '../public/public.service';
 import { SectionsResponse } from '../../interfaces/section.interface';
 import { ScoreItemsResponse } from '../../interfaces/score.interface';
 import { SettingsResponse } from 'src/app/interfaces/settings.interface';
+import { CompaniesResponse } from '../../interfaces/company.interface';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -28,8 +29,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    let idUser = this.loginService.user._id;
-    this.adminService.readCompanies(idUser);
+    this.adminService.loading = true;
 
     let idCompany = this.loginService.user.id_company?._id;
     if (idCompany) {
@@ -46,32 +46,42 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   readCompanyData(idCompany: string) {
-    
-    this.waiterService.readTables(idCompany).subscribe((data: TablesResponse) => {
-      this.adminService.tables = data.tables;
-			this.adminService.tablesSection = data.tables;
-    })
 
-    this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-      if(data.ok){
-        this.adminService.sections = data.sections;
-        for (let section of data.sections) {
-          this.adminService.sectionsMap.set(section._id, section.tx_section);
-        }
+    let idUser = this.loginService.user._id;
+    const companies$ = this.adminService.readCompanies(idUser)
+    const sections$ = this.publicService.readSections(idCompany)
+    const tables$ = this.waiterService.readTables(idCompany)
+    const scoreItems$ = this.adminService.readScoreItems(idCompany)
+    const settings$ = this.publicService.readSettings(idCompany)
+    this.adminService.loading = true;
+
+    forkJoin({ companiesResponse: companies$, sectionsResponse: sections$, tablesResponse: tables$, scoreitemsResponse: scoreItems$, settingsResponse: settings$ }).subscribe((data: any) => {
+
+      // set companies
+      this.adminService.companies = data.companiesResponse.companies;
+
+      // set sections and sectionsMap
+      this.adminService.sections = data.sectionsResponse.sections;
+      for (let section of data.sectionsResponse.sections) {
+        this.adminService.sectionsMap.set(section._id, section.tx_section);
       }
-    })
 
-    this.adminService.readScoreItems(idCompany).subscribe((data: ScoreItemsResponse) => {
-      this.adminService.scoreItems = data.scoreitems;
-			this.adminService.scoreItemsSection = data.scoreitems;
-    })
+      // set tables
+      this.adminService.tables = data.tablesResponse.tables;
+      this.adminService.tablesSection = data.tablesResponse.tables;
 
-    this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
-      this.publicService.settings = data.settings;
-      if(this.publicService.settings.tm_working.length === 0){
-        this.publicService.settings.tm_working = [[],[],[],[],[],[],[]]; //7 days of week
+      // set score items
+      this.adminService.scoreItems = data.scoreitemsResponse.scoreitems;
+      this.adminService.scoreItemsSection = data.scoreitemsResponse.scoreitems;
+
+      //set settings and working hours
+      this.publicService.settings = data.settingsResponse.settings;
+      if (this.publicService.settings.tm_working.length === 0) {
+        this.publicService.settings.tm_working = [[], [], [], [], [], [], []]; //7 days of week
       }
-    });
+
+      this.adminService.loading = false;
+    })
 
   }
 

@@ -89,6 +89,17 @@
 
           <div *ngIf="ticket.tx_status === 'queued'">
             Estas en la cola virutal, tu número es el {{ticket.id_position}}.
+            <div *ngIf="ticket">
+              <button mat-raised-button class="action-button-flex" color="active"
+                routerLink="/public/ticket/{{ticket._id}}">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi mdi-ticket-account xl"></td>
+                    <td class="button-text">¡Comenzar!</td>
+                  </tr>
+                </table>
+              </button>
+            </div>
           </div>
 
           <!------------------------------>
@@ -97,6 +108,17 @@
 
           <div *ngIf="ticket.tx_status === 'requested'">
             Tu requerimiento de mesa esta siendo procesado.
+            <div *ngIf="ticket">
+              <button mat-raised-button class="action-button-flex" color="active"
+                routerLink="/public/ticket/{{ticket._id}}">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi mdi-ticket-account xl"></td>
+                    <td class="button-text">¡Comenzar!</td>
+                  </tr>
+                </table>
+              </button>
+            </div>
           </div>
 
           <!------------------------------>
@@ -105,14 +127,22 @@
 
           <div *ngIf="ticket.tx_status === 'assigned'">
             <p>
-              !Tu ticket ya tiene mesa asignada!
+              ¡Tu ticket ya tiene mesa asignada!
             </p>
             <p>
               Sólo tenes que esperar a que se libere una mesa.
             </p>
-            <p>
-              Si tu ticket está agendado tenés que esperar a la hora de reserva.
-            </p>
+            <div *ngIf="ticket">
+              <button mat-raised-button class="action-button-flex" color="active"
+                routerLink="/public/ticket/{{ticket._id}}">
+                <table>
+                  <tr>
+                    <td class="button-icon mdi mdi-ticket-account xl"></td>
+                    <td class="button-text">¡Comenzar!</td>
+                  </tr>
+                </table>
+              </button>
+            </div>
           </div>
 
           <!------------------------------>

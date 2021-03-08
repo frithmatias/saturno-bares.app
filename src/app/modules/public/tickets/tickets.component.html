@@ -45,7 +45,7 @@
         <div class="md"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
       </div>
 
-      <mat-card-content class="text-info sm fw-200">
+      <mat-card-content class="text-info sm fw2">
         <div>
           {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ticket.tm_reserve | dateToRemaining}}
           )

@@ -36,6 +36,7 @@
 
     .banner {
         border: 10px solid white;
+        color : cornflowerblue;
     }
 
     .banner-title {
@@ -162,7 +163,7 @@ mat-card {
 }
 
 .banner-container-tickets {
-    background-color: #f9f9f9;
+    background-color: #009688;
     overflow        : hidden;
     border-radius   : 0 10px 10px 0;
 }
@@ -180,21 +181,16 @@ mat-card {
 }
 
 .banner-container-myticket {
-    background-color: #f9f9f9;
+    background-color: cornflowerblue;
     border-radius   : 0 10px 10px 0;
-}
-
-.banner-icon-myticket {
-    font-size: 7em;
-    opacity  : .3;
-    color    : var(--primary)
 }
 
 /* RIGHT BANNERS */
 
 .banner-container-telegram {
-    background-color: #ecf7ff;
-    border-radius   : 10px 0 0 10px;
+    background-color: #f4f4f4;
+
+    border-radius: 10px 0 0 10px;
 }
 
 .banner-img-telegram {

@@ -21,6 +21,9 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
 
+
+	public loading = false;
+
 	public companies: Company[] = [];
 	public company: Company; // todo: selected company
 
@@ -53,9 +56,7 @@ export class AdminService {
 
 	readCompanies(idUser: string) {
 		const url = environment.api + '/c/readcompanies/' + idUser;
-		return this.http.get(url).subscribe((data: CompaniesResponse) => {
-			this.companies = data.companies;
-		});
+		return this.http.get(url);
 	}
 
 	updateCompany(company: Company) {

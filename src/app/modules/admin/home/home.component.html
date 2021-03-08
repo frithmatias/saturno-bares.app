@@ -9,49 +9,57 @@
 
     <div>
 
-      <!-- WIZARD LINK -->
-
-      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/wizard">
+      <!-- STATUS  -->
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
         <div class="text-accent text-left md">
-          <span class="mdi mdi-wizard-hat mr-2"></span> Wizard
+          <span class="mdi mdi-cogs mr-2"></span> Estado
         </div>
 
+
         <div class="text-center">
-          <div *ngIf="adminService.companies.length === 0 || 
-                   adminService.sections.length === 0 || 
-                   adminService.tables.length === 0">
-            <div class="mdi mdi-close-circle-outline text-danger text-center xxxxl"></div>
-            <div *ngIf="adminService.companies.length === 0" class="sm text-accent">
-              Todavía no hay comercios creados.
-            </div>
-            <div *ngIf="adminService.sections.length === 0" class="sm text-accent">
-              Todavía no hay sectores creados.
-            </div>
-            <div *ngIf="adminService.tables.length === 0" class="sm text-accent">
-              Todavía no hay mesas creadas.
-            </div>
-            <hr>
-            <button mat-raised-button color="accent" routerLink="/admin/wizard">Iniciar Asistente</button>
+
+          <!-- loading -->
+          <div *ngIf="adminService.loading">
+            <app-spinner text="LOADING DATA..."></app-spinner>
           </div>
 
-          <div *ngIf="adminService.companies.length > 0 && 
+          <!-- loaded -->
+          <div *ngIf="!adminService.loading" class="animated fadeIn">
+            <div *ngIf="adminService.companies.length === 0 || 
+                   adminService.sections.length === 0 || 
+                   adminService.tables.length === 0">
+              <div class="mdi mdi-close-circle-outline text-danger text-center xxxxl"></div>
+              <div *ngIf="adminService.companies.length === 0" class="sm text-accent">
+                Todavía no hay comercios creados.
+              </div>
+              <div *ngIf="adminService.sections.length === 0" class="sm text-accent">
+                Todavía no hay sectores creados.
+              </div>
+              <div *ngIf="adminService.tables.length === 0" class="sm text-accent">
+                Todavía no hay mesas creadas.
+              </div>
+              <hr>
+              <button mat-raised-button color="accent" routerLink="/admin/wizard">Iniciar Asistente</button>
+            </div>
+            <div *ngIf="adminService.companies.length > 0 && 
             adminService.sections.length > 0 && 
             adminService.tables.length > 0">
-            <div class="mdi mdi-check-circle-outline text-active text-center xxxxl"></div>
-            <div>
-              Todo esta en orden.
+              <div class="mdi mdi-check-circle-outline text-active text-center xxxxl"></div>
+              <div>
+                Todo esta en orden.
+              </div>
+              <hr>
+              <button mat-raised-button color="active" routerLink="/waiter/home">Entrar a un Sector</button>
             </div>
-            <hr>
-            <button mat-raised-button color="active" routerLink="/waiter/home">Entrar a un Sector</button>
           </div>
+
         </div>
 
       </mat-card>
 
       <!-- COMPANY TABLE INFO -->
-
-      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/wizard">
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
         <div class="text-accent text-left md">
           <span class="mdi mdi-storefront mr-2"></span> {{ this.loginService.user.id_company?.tx_company_name || 'No
@@ -64,7 +72,7 @@
             <table class="table-sm mb-0 sm text-center">
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-storefront mr-2"></span>
                   Bares / Restaurantes
                   <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
@@ -76,7 +84,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-select-group mr-2"></span>
                   Sectores
                   <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
@@ -88,7 +96,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-silverware-fork-knife mr-2"></span>
                   Mesas
                   <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
@@ -100,7 +108,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-account-tie mr-2"></span>
                   Camareros
                   <span *ngIf="adminService.waiters.length > 0" class="mdi mdi-check text-success"></span>
@@ -112,7 +120,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-star mr-2"></span>
                   Encuestas
                   <span *ngIf="adminService.scoreItems.length > 0" class="mdi mdi-check text-success"></span>
@@ -134,20 +142,19 @@
 
     <div>
       <!-- SETTINGS -->
-
-      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer" routerLink="/admin/settings">
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
         <div class="text-accent md">
-          <span class="mdi mdi-cog mr-2"></span> Ajustes
+          <span class="mdi mdi-view-module mr-2"></span> Módulos
         </div>
 
         <mat-card-content>
 
-          <div class="table-responsive-sm mt-2">
+          <div class="table-responsive-sm text-center mt-2">
             <table class="table-sm mb-0 sm text-center">
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-gesture-double-tap mr-2"></span>
                   SPM
                 </td>
@@ -158,7 +165,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-human-queue mr-2"></span>
                   Cola Virtual
                 </td>
@@ -169,7 +176,7 @@
               </tr>
 
               <tr>
-                <td style="text-align: left;">
+                <td class="text-left">
                   <span class="mdi mdi-calendar-account mr-2"></span>
                   Agenda
                 </td>
@@ -180,14 +187,14 @@
               </tr>
 
             </table>
-
+            <hr>
+            <button mat-raised-button color="primary" routerLink="/admin/settings">Ir a Ajustes</button>
           </div>
         </mat-card-content>
 
       </mat-card>
 
       <!-- ADMIN & WAITERS -->
-
       <mat-card class="saturno-minicard text-left mb-2 mx-1" *ngIf="loginService.user.id_company">
 
         <div class="text-accent md">
