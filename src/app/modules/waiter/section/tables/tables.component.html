@@ -1,15 +1,7 @@
 <!------------------------------>
 <!-- TABLES -->
 <!------------------------------>
-<mat-expansion-panel class="my-3">
 
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            <span class="xl mdi mdi-silverware-fork-knife text-deco"></span>
-            <span class="badge text-white bg-primary">{{tables.length}}</span>
-            <span class="sidenav-title-text mx-2 align-self-center lg">Mesas</span>
-        </mat-panel-title>
-    </mat-expansion-panel-header>
 
     <mat-checkbox [(ngModel)]="listmode" color="accent" (click)="setListMode()">Modo Lista</mat-checkbox>
 
@@ -118,7 +110,7 @@
         <div *ngIf="table then expandTable"></div>
     </div>
 
-</mat-expansion-panel>
+
 
 <!------------------------------------>
 <!-- TICKET INFO && ACTIONS BUTTONS -->

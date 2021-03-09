@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { PublicService } from '../../public/public.service';
 import { Table } from '../../../interfaces/table.interface';
@@ -8,6 +8,8 @@ import { LoginService } from '../../../services/login.service';
 import { availabilityResponse, availability } from '../../../interfaces/availability.interface';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { ViewEncapsulation } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { WebsocketService } from '../../../services/websocket.service';
 
 @Component({
   selector: 'app-schedule',
@@ -15,7 +17,7 @@ import { ViewEncapsulation } from '@angular/core';
   styleUrls: ['./schedule.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit, OnDestroy {
 
 
   scheduleForm: FormGroup;
@@ -30,6 +32,7 @@ export class ScheduleComponent implements OnInit {
   pending: Ticket[] = [];
   idSection: string;
   dtSelected: Date;
+  updateSub: Subscription;
 
 
 
@@ -45,6 +48,7 @@ export class ScheduleComponent implements OnInit {
     public publicService: PublicService,
     public adminService: AdminService,
     public loginService: LoginService,
+    public websocketService: WebsocketService
   ) { 
     const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.minDate = today;
@@ -59,6 +63,10 @@ export class ScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.updateSub = this.websocketService.updateAdmin().subscribe(async () => {
+      await this.readAvailability();
+    });
 
 
     this.scheduleForm = new FormGroup({
@@ -100,7 +108,6 @@ export class ScheduleComponent implements OnInit {
 
   }
 
-
   readPendingsMonth() {
 
     if(!this.loginService.user){
@@ -115,7 +122,6 @@ export class ScheduleComponent implements OnInit {
       this.filterPendingsDate();
     })
   }
-
 
   filterPendingsDate(){
     // mapa de pendinetes por sector
@@ -137,6 +143,10 @@ export class ScheduleComponent implements OnInit {
   pendingUpdated(pending: Ticket): void {
     this.readAvailability(); // actualizo la disponibilidad
     this.readPendingsMonth();
+  }
+
+  ngOnDestroy() {
+    this.updateSub?.unsubscribe();
   }
 
 }

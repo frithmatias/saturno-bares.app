@@ -17,11 +17,40 @@
       <mat-card-content>
         <mat-accordion multi="false">
 
-          <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
-          </app-sections>
-          <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes" (updateTables)="readTables()"></app-tables>
-          <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
-          <app-queued [tables]="tables" [queued]="queued"></app-queued>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="xl mdi mdi-select-group text-deco"></span>
+                <span class="badge text-white bg-primary">{{publicService.sections.length}}</span>
+                <span class="sidenav-title-text mx-2 align-self-center md">Sectores</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
+            </app-sections>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="xl mdi mdi-silverware-fork-knife text-deco"></span>
+                <span class="badge text-white bg-primary">{{tables.length}}</span>
+                <span class="sidenav-title-text mx-2 align-self-center md">Mesas</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes" (updateTables)="readTables()"></app-tables>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="xl mdi mdi-human-queue text-deco"></span>
+                <span class="badge text-white bg-primary">{{queued.length}}</span>
+                <span class="sidenav-title-text mx-2 align-self-center md">Cola Virtual</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
+            <app-queued [tables]="tables" [queued]="queued"></app-queued>
+          </mat-expansion-panel>
 
         </mat-accordion>
       </mat-card-content>

@@ -97,7 +97,7 @@ export class TicketsComponent implements OnInit {
             this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
               this.tickets = tickets;
               this.router.navigate(['/home']);
-              this.publicService.snack(`Gracias por avisarnos ${ticket.tx_name}, el ticket fué cancelado. Te esperamos pronto!.`, 5000);
+              this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
             })
           }
         })

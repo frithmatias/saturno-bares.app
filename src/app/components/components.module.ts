@@ -36,7 +36,7 @@ import { HelpComponent } from './help/help.component';
     SocialComponent,
     MessengerComponent,
     SpinnerComponent,
-    HelpComponent
+    HelpComponent,
   ],
   imports: [
     RouterModule,
@@ -56,7 +56,7 @@ import { HelpComponent } from './help/help.component';
     SocialComponent,
     MessengerComponent,
     SpinnerComponent,
-    HelpComponent
+    HelpComponent,
   ]
 })
 export class ComponentsModule { }

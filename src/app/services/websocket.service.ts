@@ -46,6 +46,11 @@ export class WebsocketService {
 		return this.listen('update-waiters');
 	}
 
+	updateAdmin(): Observable<string> {
+		return this.listen('update-admin');
+	}
+
+
 	updateTicket(): Observable<Object> {
 		return this.listen('update-ticket');
 	}

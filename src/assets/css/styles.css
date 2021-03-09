@@ -70,7 +70,7 @@ SCROLL BAR
 } */
 
 
-
+  
 .btn {
     border: none;
 }
@@ -915,9 +915,9 @@ MAT-SIDENAV
 -------------------------------------------
 */
 
-mat-expansion-panel-header {
+/* mat-expansion-panel-header {
     height: 36px !important;
-}
+} */
 
 .mat-expansion-panel-body {
     padding: .5rem !important;

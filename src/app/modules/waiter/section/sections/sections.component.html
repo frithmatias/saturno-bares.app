@@ -1,18 +1,8 @@
 <!------------------------------>
 <!-- SECTIONS -->
 <!------------------------------>
-<mat-expansion-panel class="my-3">
-
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <span class="xl mdi mdi-select-group text-deco"></span>
-      <span class="badge text-white bg-primary">{{publicService.sections.length}}</span>
-      <span class="sidenav-title-text mx-2 align-self-center lg">Sectores</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
 
 
-  <mat-radio-group [(ngModel)]="waiterService.sectionSelected">
     <table mat-table [dataSource]="publicService.sections">
 
       <ng-container matColumnDef="sector">
@@ -62,6 +52,3 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  </mat-radio-group>
-
-</mat-expansion-panel>

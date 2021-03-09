@@ -209,7 +209,6 @@ export class PublicService {
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 
-  // google devuelve un token, pero puedo usar una api para obtener directamente los datos del usuario
   validateTicket(idTicket: string) {
     const api = '/t/validateticket';
     const data = { idTicket };

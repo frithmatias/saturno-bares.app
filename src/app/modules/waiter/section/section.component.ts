@@ -82,7 +82,7 @@ export class SectionComponent implements OnInit, OnDestroy {
       await this.readTables();
       await this.readTickets();
     });
-    
+
     await this.readTables();
     await this.readTickets();
     this.loading = false;
@@ -139,39 +139,37 @@ export class SectionComponent implements OnInit, OnDestroy {
   readTickets = (): Promise<Ticket[]> => {
     return new Promise((resolve) => {
       const idCompany = this.loginService.user.id_company?._id;
-      return this.waiterService
-        .readTickets(idCompany)
-        .subscribe((data: TicketsResponse) => {
+      return this.waiterService.readTickets(idCompany).subscribe((data: TicketsResponse) => {
 
-          this.tickets = data.tickets;
+        this.tickets = data.tickets;
 
-          // for input queued child  
-          this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
-            ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned' || ticket.tx_status === 'requested'))
+        // for input queued child  
+        this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
+          ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned' || ticket.tx_status === 'requested'))
 
-          // for input sections child
-          for (let section of this.publicService.sections) {
-            this.ticketsDataBySection.set(section.tx_section, {
-              id: section._id,
+        // for input sections child
+        for (let section of this.publicService.sections) {
+          this.ticketsDataBySection.set(section.tx_section, {
+            id: section._id,
 
-              sectionselected: this.waiterService.session.id_section._id === section._id,
+            sectionselected: this.waiterService.session.id_section._id === section._id,
 
-              queued: data.tickets.filter((ticket) =>
-                ticket.id_section?._id === section._id &&
-                ticket.tm_end === null &&
-                (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')).length,
+            queued: data.tickets.filter((ticket) =>
+              ticket.id_section?._id === section._id &&
+              ticket.tm_end === null &&
+              (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')).length,
 
-              requested: data.tickets.filter((ticket) =>
-                ticket.id_section?._id === section._id &&
-                ticket.tm_end === null &&
-                ticket.tx_status === 'requested').length,
+            requested: data.tickets.filter((ticket) =>
+              ticket.id_section?._id === section._id &&
+              ticket.tm_end === null &&
+              ticket.tx_status === 'requested').length,
 
-            });
-          }
+          });
+        }
 
-          resolve(data.tickets);
-          this.loading = false;
-        });
+        resolve(data.tickets);
+        this.loading = false;
+      });
     });
   };
 

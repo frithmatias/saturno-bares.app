@@ -251,7 +251,8 @@
         <div class="m-1 text-center my-4">
           <qrcode
             qrdata="https://saturno.fun/public/{{loginService.user.id_company?.tx_company_string || 'nombredetucomercio'}}"
-            [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+            [width]="256" [errorCorrectionLevel]="'M'">
+          </qrcode>
         </div>
 
       </mat-card>

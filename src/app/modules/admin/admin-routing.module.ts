@@ -30,8 +30,6 @@ const userRoutes: Routes = [
   { path: 'settings', component: SettingsComponent, data: { titulo: 'Ajustes' } },
   { path: 'schedule', component: ScheduleComponent, data: { titulo: 'Agenda' } },
 
-
-
   { path: '', redirectTo: '/admin/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent }
 
