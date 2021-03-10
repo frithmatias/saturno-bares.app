@@ -75,8 +75,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (localidad) {
 
       let idLocation = localidad.properties.id;
-      this.publicService.buscarBaresEnLocalidad(idLocation).subscribe((data: CompaniesResponse) => {
-
+      this.publicService.getCompaniesByLocation(idLocation).subscribe((data: CompaniesResponse) => {
         this.companies = data.companies;
       })
 

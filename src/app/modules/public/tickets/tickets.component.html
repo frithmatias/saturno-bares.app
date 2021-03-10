@@ -1,13 +1,10 @@
 <div class="page-container-full animated fadeIn">
 
-
-
   <div *ngIf="loading">
     <app-spinner text="Loading tickets..."></app-spinner>
   </div>
 
   <div *ngIf="!loading && customer" class="sm d-flex justify-content-end py-3 px-2 text-accent">
-
     <!-- social header -->
     <div class="mdi mdi-account-circle mx-1"></div>
     <div>
@@ -16,8 +13,8 @@
     <div class="pointer text-warn ml-2" (click)="publicService.clearPublicSession()">
       [Salir]
     </div>
-
   </div>
+
 </div>
 
 <!-- CARD TICKETS -->
@@ -25,70 +22,64 @@
   <div class="ticket-card" *ngFor="let ticket of ticketsActive">
 
     <!-- first image in banners -->
-    <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
+    <!-- <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
       <img class="company-banner img-fluid"
         [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
-    </div>
+    </div> -->
+
+    <!-- no images in banners shows default image -->
+    <!-- <div *ngIf="ticket.id_company?.tx_company_banners.length === 0">
+      <img class="company-banner img-fluid" [src]="null | imagenPipe : 'tx_company_banners' : null">
+    </div> -->
 
     <!-- card with ticket data -->
-    <mat-card class="p-3">
+    <mat-card class="p-2">
 
       <!-- logo -->
-      <div *ngIf="ticket.id_company?.tx_company_logo">
-        <img class="company-logo img-fluid"
-          [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
-      </div>
+      <img class="company-logo img-fluid"
+        [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
 
       <!-- header with company name and address -->
-      <div class="pointer my-2" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div class="xl text-accent"> {{ticket.id_company?.tx_company_name}} </div>
-        <div class="md"> {{ticket.id_company?.tx_address_street}} {{ticket.id_company?.tx_address_number}}</div>
+      <div class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+        <div class="ticket-card-company-name"> {{ticket.id_company?.tx_company_name}} </div>
+        <div class="ticket-card-company-address"> {{ticket.id_company?.tx_address_street}}
+          {{ticket.id_company?.tx_address_number}}</div>
       </div>
 
-      <mat-card-content class="text-info sm fw2">
+      <div class="ticket-card-tm-reserve mt-2">
         <div>
-          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ticket.tm_reserve | dateToRemaining}}
-          )
+          A nombre de {{ticket.tx_name}}
+        </div>
+      </div>
+
+      <div class="ticket-card-tm-reserve mt-2">
+        <div>
+          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}}
         </div>
         <div>
-          {{ticket.tx_status | ticketStatus}}
+          ( {{ticket.tm_reserve | dateToRemaining}} )
         </div>
-      </mat-card-content>
+      </div>
 
-      <mat-card-actions>
+      <div class="ticket-card-status mt-2 text-accent">
+        {{ticket.tx_status | ticketStatus}}
+      </div>
 
+      <hr class="my-1 mt-3">
+      <button mat-button color="active" routerLink="/public/ticket/{{ticket._id}}"
+        *ngIf="ticket?.tm_provided && !ticket.tm_end">
+        ¡Comenzar!
+      </button>
 
-        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}"
-          *ngIf="ticket?.tm_provided && !ticket.tm_end">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-ticket-account lg"></td>
-              <td class="button-text">¡Comenzar!</td>
-            </tr>
-          </table>
-        </button>
+      <button mat-button color="warn" [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
+        (click)="endTicket(ticket)">
+        Cancelar
+      </button>
 
-        <button mat-raised-button class="action-button-flex" color="warn"
-          [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-delete lg"></td>
-              <td class="button-text">Cancelar</td>
-            </tr>
-          </table>
-        </button>
+      <button mat-button color="active" *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
+        Confirmar
+      </button>
 
-        <button mat-raised-button class="action-button-flex" color="active" *ngIf="ticket.tx_status==='waiting'"
-          (click)="validateTicket(ticket)">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-check lg"></td>
-              <td class="button-text">Confirmar</td>
-            </tr>
-          </table>
-        </button>
-
-      </mat-card-actions>
 
     </mat-card>
 

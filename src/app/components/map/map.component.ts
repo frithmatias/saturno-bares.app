@@ -3,10 +3,11 @@ export const MAPBOX_TOKEN = 'pk.eyJ1IjoiY29kZXI0MDQiLCJhIjoiY2sxMnBkMnl1MDA4cDNv
 import { Company } from 'src/app/interfaces/company.interface';
 import { Router } from '@angular/router';
 import { PublicService } from '../../modules/public/public.service';
+import { CompaniesResponse } from '../../interfaces/company.interface';
 declare var mapboxgl: any;
 
 
-interface MapCenterInit {
+export interface Coords {
   lng: String;
   lat: string;
 }
@@ -28,7 +29,7 @@ export class MapComponent implements OnInit {
 
 
   map: any;
-  mapCenterInit: MapCenterInit = { lng: '-58.43680066430767', lat: '-34.608870104837614' };
+  mapCenterInit: Coords = { lng: '-58.43680066430767', lat: '-34.608870104837614' };
   mapZoom = 14;
   geolocationDenied = false; // browser permission
 
@@ -53,6 +54,7 @@ export class MapComponent implements OnInit {
     }
 
     if (!this.config.theme) {
+
       let hours = new Date().getHours();
 
       if (hours >= 6 && hours < 20) {
@@ -64,6 +66,7 @@ export class MapComponent implements OnInit {
       }
 
     } else {
+
       if (['deeppurple-amber.css', 'indigo-pink.css'].includes(this.config.theme)) {
         // light theme
         this.config.maptheme = 'streets-v11'
@@ -71,6 +74,7 @@ export class MapComponent implements OnInit {
         // dark theme
         this.config.maptheme = 'dark-v10';
       }
+
     }
 
     await this.inicializarMapa(this.mapbox);
@@ -96,72 +100,7 @@ export class MapComponent implements OnInit {
 
       // MARKERS DE COMERCIOS
       if (changes.companies?.currentValue.length > 0) {
-
-        this.companies.forEach((company: Company) => {
-          if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
-
-
-
-
-            // MARKER POPUP DATA
-            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-              `
-							<div class="mat-card company-card animated fadeIn">
-                <div class="lg text-accent">${company.tx_company_name}</div>
-          	    <div class="md text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
-                 <hr>
-                <div class="sm company-welcome-textarea">${company.tx_company_welcome}</div>
-                  <a href="/public/${company.tx_company_string}">
-							  	  <button class="btn btn-block btn-sm btn-secondary">
-                      <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
-                    </button>
-                  </a>
-                </div>
-						  `
-            );
-
-            // CREATE MARKER
-            const icon = document.createElement('div');
-            icon.className = 'marker';
-            
-            switch(company.tx_company_type){
-              case 'bar':
-              icon.style.backgroundImage = 'url(\'../../../assets/img/svg/beer.svg\')';
-              break;
-              case 'coffee':
-              icon.style.backgroundImage = 'url(\'../../../assets/img/svg/coffee.svg\')';
-              break;
-              case 'resto':
-              icon.style.backgroundImage = 'url(\'../../../assets/img/svg/resto.svg\')';
-              break;
-              default:
-              icon.style.backgroundImage = 'url(\'../../../assets/img/svg/resto.svg\')';
-              break;
-            }
-            
-            icon.style.width = '30px';
-            icon.style.height = '30px';
-            icon.style.cursor = 'pointer';
-            icon.style.backgroundSize = 'contain';
-            const newmarker = new mapboxgl.Marker(icon)
-              .setLngLat([company.tx_company_lng, company.tx_company_lat])
-              .setPopup(popup) // sets a popup on this marker
-              .addTo(this.map);
-            this.markersHome.push(newmarker);
-
-            const label = document.createElement('div');
-
-
-            label.innerHTML = `<div class="marker-text-wrapper"><span class="marker-text">${company.tx_company_name}</span></div>`;
-            
-            const companyName = new mapboxgl.Marker(label)
-              .setLngLat([company.tx_company_lng, company.tx_company_lat])
-              .addTo(this.map);
-            this.companiesNameHome.push(companyName);
-
-
-          }
-        });
+        this.printCompanies(changes.companies.currentValue);
       }
     } else {
       if (this.markersHome.length > 0) {
@@ -225,7 +164,71 @@ export class MapComponent implements OnInit {
     }
   }
 
-  getCoords(): Promise<MapCenterInit> {
+
+printCompanies(companies: Company[]){
+  companies.forEach((company: Company) => {
+    if (company.tx_company_lat && company.tx_company_lng && this.map) { // solo si tiene coordenadas y el mapa existe
+
+
+      // MARKER POPUP DATA
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `
+        <div class="mat-card company-card animated fadeIn">
+          <div class="lg text-accent">${company.tx_company_name}</div>
+          <div class="md text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
+           <hr>
+          <div class="sm company-welcome-textarea">${company.tx_company_welcome}</div>
+            <a href="/public/${company.tx_company_string}">
+              <button class="btn btn-block btn-sm btn-secondary">
+                <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
+              </button>
+            </a>
+          </div>
+        `
+      );
+
+      // PUSH ICON MARKER
+      const icon = document.createElement('div');
+      icon.className = 'marker';
+      
+      switch(company.tx_company_type){
+        case 'bar':
+        icon.style.backgroundImage = 'url(\'../../../assets/img/svg/beer.svg\')';
+        break;
+        case 'coffee':
+        icon.style.backgroundImage = 'url(\'../../../assets/img/svg/coffee.svg\')';
+        break;
+        case 'resto':
+        icon.style.backgroundImage = 'url(\'../../../assets/img/svg/resto.svg\')';
+        break;
+        default:
+        icon.style.backgroundImage = 'url(\'../../../assets/img/svg/resto.svg\')';
+        break;
+      }
+      
+      icon.style.width = '30px';
+      icon.style.height = '30px';
+      icon.style.cursor = 'pointer';
+      icon.style.backgroundSize = 'contain';
+      const newmarker = new mapboxgl.Marker(icon)
+        .setLngLat([company.tx_company_lng, company.tx_company_lat])
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(this.map);
+      this.markersHome.push(newmarker);
+
+      // PUSH LABEL COMPANY NAME
+      const label = document.createElement('div');
+      label.innerHTML = `<div class="marker-text-wrapper"><span class="marker-text">${company.tx_company_name}</span></div>`;
+      const companyName = new mapboxgl.Marker(label)
+        .setLngLat([company.tx_company_lng, company.tx_company_lat])
+        .addTo(this.map);
+      this.companiesNameHome.push(companyName);
+
+    }
+  });
+}
+
+  getCoords(): Promise<Coords> {
     return new Promise((resolve, reject) => {
 
       if (navigator.geolocation && this.publicService.canAksPositionUser) {
@@ -248,16 +251,32 @@ export class MapComponent implements OnInit {
   async inicializarMapa(mapbox: ElementRef) {
 
     let coords = await this.getCoords().then((coords)=> {
+      // si obtiene permismo del usuario para obtener la posición del browser, 
+      // centra el mapa en la posición del usuario
+      
+      // a partir de la posición del usuario tengo que lograr además una de dos cosas:
+      // ó obtener el idLocation
+      // luego llamar getCompaniesByLocation()
+      // ó buscar en un radio con centro en la posicón del usuario.
+      // luego llamar getCompaniesByCoords()
+
+      this.publicService.getCompaniesByCoords(coords).subscribe((data: CompaniesResponse) => {
+        this.printCompanies(data.companies);
+      })
+      
       this.mapZoom = 14;
       return coords;
-    } ).catch((coords) => {
+    }).catch((coords) => {
+      // si no obtiene permismo centra el mapa en Buenos Aires
       this.mapZoom = 10;
       return coords;
     })
 
     const lat = Number(coords.lat) || this.mapCenterInit.lat;
     const lng = Number(coords.lng) || this.mapCenterInit.lng;
+
     mapboxgl.accessToken = MAPBOX_TOKEN;
+
     this.map = new mapboxgl.Map({
       container: mapbox.nativeElement,
       style: `mapbox://styles/mapbox/${this.config.maptheme}`,

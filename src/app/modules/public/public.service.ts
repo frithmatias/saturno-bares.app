@@ -11,6 +11,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { SettingsResponse } from '../../interfaces/settings.interface';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { map, catchError } from 'rxjs/operators';
+import { Coords } from '../../components/map/map.component';
 
 @Injectable({
   providedIn: 'root'
@@ -146,8 +147,12 @@ export class PublicService {
     });
   }
 
-  buscarBaresEnLocalidad(idLocation: string) {
-    return this.http.get(environment.api + '/p/findinlocation/' + idLocation);
+  getCompaniesByLocation(idLocation: string) {
+    return this.http.get(environment.api + '/p/getcompaniesbylocation/' + idLocation);
+  }
+
+  getCompaniesByCoords(coords: Coords) {
+    return this.http.post(environment.api + '/p/getcompaniesbycoords/', coords);
   }
 
   findCompany(pattern: string): Observable<object> {

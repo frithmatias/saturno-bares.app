@@ -42,7 +42,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 	ticketsTail: Ticket[] = [];
 	averageToAtt: string; // millisencods
 	ticketsAhead: number;
-	scoreItems: ScoreItem[] = []
+	scoreItems: ScoreItem[] = [];
 	scores = new Map();
 
 	private subjectUpdateTickets$ = new Subject();
@@ -61,7 +61,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 
 
-		// If ticket doesnt exist the id is invalid then reject 
 		if (!this.idTicket) {
 			this.publicService.clearPublicSession();
 			this.router.navigate(['/home']);
@@ -91,7 +90,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 			// id_company en el metodo provide() del backend NO viene populado
 			ticket.id_company = this.ticket?.id_company;
 			this.ticket = ticket;
-			this.processTicket(this.ticket);
+			this.checkEnd(this.ticket);
 			this.publicService.updateStorageTickets(ticket);
 		});
 
@@ -104,17 +103,18 @@ export class TicketComponent implements OnInit, OnDestroy {
 		const idCompany = this.company._id;
 
 		this.publicService.getTickets(idCompany).subscribe((data: TicketsResponse) => {
+
 			if (data.ok) {
 				this.tickets = data.tickets;
 				// pick my ticket
 				this.ticket = this.tickets.find(ticket => ticket._id === this.ticket._id);
-				
+
 				this.ticketsTail = data.tickets
 					.filter(ticket => ticket.tm_provided !== null)
 					.sort((a: Ticket, b: Ticket) => + new Date(b.tm_provided) - +new Date(a.tm_provided))
 					.slice(0, TAIL_LENGTH);
 
-				this.processTicket(this.ticket);
+				this.checkEnd(this.ticket);
 
 				// si existe sesión dispara un timer para titilar el número del ticket
 				if (this.ticket?.id_session && !this.timerSub) {
@@ -139,7 +139,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 	}
 
-	async processTicket(ticket: Ticket) {
+	async checkEnd(ticket: Ticket) {
 		if (ticket.tm_end !== null) {
 			this.ticketTmEnd = ticket.tm_end;
 			let idSection = this.ticket.id_section._id;

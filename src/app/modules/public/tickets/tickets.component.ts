@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PublicService } from '../public.service';
 import { TicketsResponse, TicketResponse } from '../../../interfaces/ticket.interface';
-import { FormControl } from '@angular/forms';
 import { Social } from '../../../components/social/social.component';
 import { User } from 'src/app/interfaces/user.interface';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -24,6 +23,7 @@ export class TicketsComponent implements OnInit {
   customer: User; // customer logged with email
 
   tickets: Ticket[] = [];
+  ticketsRunning: Ticket[] = [];
   ticketsActive: Ticket[] = [];
   ticketsInactive: Ticket[] = [];
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
@@ -32,7 +32,6 @@ export class TicketsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     public publicService: PublicService,
     private websocketService: WebsocketService
   ) { }
@@ -43,21 +42,37 @@ export class TicketsComponent implements OnInit {
 
   }
 
-  checkSession(){
-        // Get social data
-    
-        if (localStorage.getItem('customer')) {
-          this.customer = JSON.parse(localStorage.getItem('customer'));
-          const txPlatform = this.customer.tx_platform;
-          const txEmail = this.customer.tx_email;
-          if (txPlatform && txEmail) {
-            this.getUserTickets(txPlatform, txEmail); // update tickets
-          }
-        }
-    
-        if (!this.customer) {
-          this.router.navigate(['/public/login']);
-        }
+  checkSession() {
+    // Get social data
+
+    if (localStorage.getItem('customer')) {
+      this.customer = JSON.parse(localStorage.getItem('customer'));
+      const txPlatform = this.customer.tx_platform;
+      const txEmail = this.customer.tx_email;
+      if (txPlatform && txEmail) {
+        this.getUserTickets(txPlatform, txEmail); // update tickets
+      }
+    }
+
+    if (!this.customer) {
+      this.router.navigate(['/public/login']);
+    }
+  }
+
+  updateTickets(tickets: Ticket[]) {
+
+    this.tickets = tickets;
+    this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
+    this.ticketsRunning = this.tickets.filter(ticket => ticket.tx_status === 'provided');
+    this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
+    this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+
+    // Entro a las empresas con tickets ACTIVOS (estudiar si es conveniente entrar sólo a empresas con tickets RUNNING)
+    this.ticketsActive.forEach(ticket => {
+					this.websocketService.emit('enterCompany', ticket.id_company._id);
+    })
+
+    localStorage.setItem('tickets', JSON.stringify(this.tickets));
   }
 
   getUserTickets(txPlatform: string, txEmail: string): void {
@@ -66,8 +81,7 @@ export class TicketsComponent implements OnInit {
     this.publicService.getUserTickets(txPlatform, txEmail).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
-        this.tickets = data.tickets;
-
+        this.updateTickets(data.tickets);
         // ------------------------
         // backup de tickes waiting en la localstorage
         if (localStorage.getItem('tickets')) {
@@ -75,11 +89,6 @@ export class TicketsComponent implements OnInit {
           if (waiting.length > 0) { this.tickets.push(...waiting); }
         }
         // ------------------------
-
-        this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
-        this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
-        this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
-        localStorage.setItem('tickets', JSON.stringify(this.tickets));
         console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }
     }, () => { this.loading = false; })
@@ -95,7 +104,7 @@ export class TicketsComponent implements OnInit {
             // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
             resp.ticket.id_company = ticket.id_company;
             this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
-              this.tickets = tickets;
+              this.updateTickets(tickets);
               this.router.navigate(['/home']);
               this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
             })
@@ -114,28 +123,21 @@ export class TicketsComponent implements OnInit {
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
       if (data.ok) {
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
-          this.tickets = tickets;
-          this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
-          this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
-          this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+          this.updateTickets(tickets);
           this.publicService.snack(data.msg, 5000, 'Aceptar');
         })
       } else {
         // elimino de mis tickets el ticket waiting que expiró
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
-          this.tickets = tickets;
-          this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
-          this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
-
+          this.updateTickets(tickets);
         })
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       }
     }, (err: HttpErrorResponse) => {
       // elimino de mis tickets el ticket waiting que expiró
       this.publicService.updateStorageTickets(err.error.ticket).then((tickets: Ticket[]) => {
-        this.tickets = tickets;
-        this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
-        this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
+        this.updateTickets(tickets);
+
       })
       this.publicService.snack(err.error.msg, 5000, 'Aceptar');
     });

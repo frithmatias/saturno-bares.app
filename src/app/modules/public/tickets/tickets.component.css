@@ -4,8 +4,12 @@
   }
 
   .ticket-card {
-    width  : 100%;
-    padding: 10px;
+    width  : 170px !important;
+    padding: 5px !important;
+  }
+
+  .company-banner {
+    height: 84px !important;
   }
 
   .select-status {
@@ -15,24 +19,41 @@
 }
 
 .tickets-container {
-  display: flex;
+  display       : flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  place-content: center;
+  flex-wrap     : wrap;
+  place-content : center;
 }
 
 .ticket-card {
-  width  : 300px;
-  padding: 10px;
+  width     : 300px;
+  padding   : 10px;
+  margin-top: 42px;
+}
+
+
+.ticket-card-company-name {
+  font-size: medium;
+  color    : var(--accent);
+}
+
+.ticket-card-company-address {
+  font-size: small;
+}
+
+.ticket-card-tm-reserve {
+  color      : var(--info);
+  font-size  : small;
+  line-height: 1em;
+}
+
+.ticket-card-status {
+  font-size: small;
 }
 
 .select-status {
   width  : 300px;
   padding: 10px;
-}
-
-mat-card {
-  border-radius: 0px 0px 5px 5px;
 }
 
 .company-banner {
@@ -43,10 +64,10 @@ mat-card {
 }
 
 .company-logo {
-  border-radius: 50%;
-  position     : relative;
-  margin-bottom: -60px;
-  top          : -60px;
-  width        : 70px;
+  border-radius   : 50%;
+  position        : relative;
+  margin-bottom   : -39px;
+  top             : -45px;
+  width           : 70px;
   /* box-shadow   : 0px 0px 2px rgb(0 0 0 / 50%); */
 }

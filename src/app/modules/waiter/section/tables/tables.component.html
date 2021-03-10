@@ -127,7 +127,6 @@
             <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
             <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
             <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
-
         </div>
 
         <!------------------------------>
@@ -146,6 +145,12 @@
                     <td>Cliente</td>
                     <td class="text-right">
                         {{ table?.id_session?.id_ticket.tx_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contacto</td>
+                    <td class="text-right">
+                        {{ table?.id_session?.id_ticket.tx_email }}
                     </td>
                 </tr>
                 <tr>
