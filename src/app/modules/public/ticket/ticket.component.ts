@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 // interfaces
@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 import { Company } from '../../../interfaces/company.interface';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BsheetComponent } from './bsheet/bsheet.component';
 
 const TAIL_LENGTH = 5;
 
@@ -51,7 +53,8 @@ export class TicketComponent implements OnInit, OnDestroy {
 		private wsService: WebsocketService,
 		public publicService: PublicService,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private bottomSheet: MatBottomSheet
 	) { }
 
 	async ngOnInit() {
@@ -337,12 +340,10 @@ export class TicketComponent implements OnInit, OnDestroy {
 				}
 			})
 		}
+	}
 
-
-
-
-
-
+	openBottomSheet = (): void => {
+		this.bottomSheet.open(BsheetComponent, { data: this.ticket });
 	}
 
 	ngOnDestroy() {

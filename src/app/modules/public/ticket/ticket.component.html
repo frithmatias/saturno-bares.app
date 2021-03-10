@@ -7,31 +7,43 @@
     <mat-card *ngIf="ticket && company">
 
         <mat-card-content>
+
+            <mat-card-header>
+                <img mat-card-avatar
+                    [src]="ticket.id_company.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company._id">
+                <mat-card-title>{{ticket.id_company.tx_company_name}}</mat-card-title>
+                <mat-card-subtitle>{{ticket.id_company.tx_address_street}} {{ticket.id_company.tx_address_number}}
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <hr>
+
+            <!------------------------------>
+            <!-- MESSAGE TO CUSTOMER  -->
+            <!------------------------------>
+
             <div *ngIf="ticketTmEnd===null">
 
                 <!------------------------------>
-                <!-- WAITING  -->
+                <!-- NOT PROVIDED  -->
                 <!------------------------------>
-
-                <div class="lg text-accent" [ngClass]="{'screen-myticket-text-alert':showAlert}">
-                    Turno {{ ticket?.id_position }}
+                <div *ngIf="!ticket.tm_provided">
+                    <div class="lg text-accent" [ngClass]="{'screen-myticket-text-alert':showAlert}">
+                        Turno {{ ticket?.id_position }}
+                    </div>
+                    <!-- no session yet -->
+                    <div *ngIf="!ticket?.id_session">
+                        Tiempo estimado: {{ averageToAtt}}
+                    </div>
                 </div>
 
-                <!-- no session yet -->
-                <div *ngIf="!ticket?.id_session">
-                    Tiempo estimado: {{ averageToAtt}}
-                </div>
-
                 <!------------------------------>
-                <!-- TABLE PROVIDED  -->
+                <!-- PROVIDED  -->
                 <!------------------------------>
-
                 <div *ngIf="ticket?.id_session && ticket?.tm_init === null">
-
                     <span *ngIf="ticket?.cd_tables.length === 1">
                         Pase a la mesa {{ticket?.cd_tables[0]}}
                     </span>
-
                     <span *ngIf="ticket?.cd_tables.length > 1">
                         Pase a las mesas
                         <span *ngFor="let table of ticket?.cd_tables; index as i">
@@ -46,15 +58,13 @@
                     <span *ngIf="ticket?.tx_status==='provided' && ticket?.tm_init===null">
                         y espere que el camarero/a inicialice su mesa...
                     </span>
-
-
                 </div>
 
                 <!------------------------------>
                 <!-- ACTION BUTTONS -->
                 <!------------------------------>
 
-                <div *ngIf="ticketTmEnd===null" class="screen-ticket-button-container">
+                <div *ngIf="ticketTmEnd===null" class="screen-ticket-button-container my-4">
 
                     <div class="screen-ticket-button my-2">
                         <button mat-raised-button class="action-button" color="active"
@@ -149,14 +159,15 @@
 
         </mat-card-content>
 
-        <div class="screen-ticket-button my-4">
-            <button mat-button class="action-button-flex" routerLink="/home">
+        <mat-card-actions>
+            <button mat-button routerLink="/home">
+                <span class="mdi mdi-home mr-1"></span>
                 Volver al inicio
             </button>
-        </div>
-
-        <mat-card-actions>
-
+            <button mat-button (click)="openBottomSheet()">
+                <span class="mdi mdi-ticket mr-1"></span>
+                Info del ticket
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

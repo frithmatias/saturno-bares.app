@@ -1,0 +1,9 @@
+.row-item {
+    font-size: small;
+}
+
+.row-data {
+    font-size: small;
+    color    : var(--accent);
+}
+
