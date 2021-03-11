@@ -9,7 +9,7 @@
         <mat-card-content>
 
             <mat-card-header>
-                <img mat-card-avatar
+                <img mat-card-avatar class="header-avatar"
                     [src]="ticket.id_company.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company._id">
                 <mat-card-title>{{ticket.id_company.tx_company_name}}</mat-card-title>
                 <mat-card-subtitle>{{ticket.id_company.tx_address_street}} {{ticket.id_company.tx_address_number}}

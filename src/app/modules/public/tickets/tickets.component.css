@@ -4,8 +4,7 @@
   }
 
   .ticket-card {
-    width  : 170px !important;
-    padding: 5px !important;
+    width  : 50% !important;
   }
 
   .company-banner {
@@ -27,47 +26,15 @@
 
 .ticket-card {
   width     : 300px;
-  padding   : 10px;
   margin-top: 42px;
 }
 
-
-.ticket-card-company-name {
-  font-size: medium;
-  color    : var(--accent);
-}
-
-.ticket-card-company-address {
-  font-size: small;
-}
-
-.ticket-card-tm-reserve {
-  color      : var(--info);
-  font-size  : small;
-  line-height: 1em;
-}
-
-.ticket-card-status {
-  font-size: small;
-}
-
-.select-status {
-  width  : 300px;
-  padding: 10px;
-}
-
-.company-banner {
-  height           : 157px;
-  /*aspect ratio 16:9 280x157*/
-  width            : 100%;
-  border-radius    : 5px 5px 0px 0px;
-}
-
 .company-logo {
-  border-radius   : 50%;
-  position        : relative;
-  margin-bottom   : -39px;
-  top             : -45px;
-  width           : 70px;
-  /* box-shadow   : 0px 0px 2px rgb(0 0 0 / 50%); */
+  border-radius: 10%;
+  position: relative;
+  margin-bottom: -39px;
+  top: -45px;
+  width: 70px;
+  height: 70px;
+  box-shadow   : 0px 0px 2px rgb(100 100 100 / 20%);
 }

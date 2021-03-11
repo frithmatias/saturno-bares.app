@@ -60,8 +60,14 @@ export class TicketsComponent implements OnInit {
   }
 
   updateTickets(tickets: Ticket[]) {
-
     this.tickets = tickets;
+    // ------------------------
+    // backup de tickes waiting en la localstorage
+    if (localStorage.getItem('tickets')) {
+      const waiting: Ticket[] = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
+      if (waiting.length > 0) { this.tickets.push(...waiting); }
+    }
+    // ------------------------
     this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
     this.ticketsRunning = this.tickets.filter(ticket => ticket.tx_status === 'provided');
     this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
@@ -69,7 +75,7 @@ export class TicketsComponent implements OnInit {
 
     // Entro a las empresas con tickets ACTIVOS (estudiar si es conveniente entrar sólo a empresas con tickets RUNNING)
     this.ticketsActive.forEach(ticket => {
-					this.websocketService.emit('enterCompany', ticket.id_company._id);
+      this.websocketService.emit('enterCompany', ticket.id_company._id);
     })
 
     localStorage.setItem('tickets', JSON.stringify(this.tickets));
@@ -77,18 +83,10 @@ export class TicketsComponent implements OnInit {
 
   getUserTickets(txPlatform: string, txEmail: string): void {
     this.loading = true;
-
     this.publicService.getUserTickets(txPlatform, txEmail).subscribe((data: TicketsResponse) => {
       this.loading = false;
       if (data.ok) {
         this.updateTickets(data.tickets);
-        // ------------------------
-        // backup de tickes waiting en la localstorage
-        if (localStorage.getItem('tickets')) {
-          const waiting: Ticket[] = JSON.parse(localStorage.getItem('tickets')).filter((ticket: Ticket) => ticket.tx_status === 'waiting');
-          if (waiting.length > 0) { this.tickets.push(...waiting); }
-        }
-        // ------------------------
         console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
       }
     }, () => { this.loading = false; })
@@ -105,7 +103,6 @@ export class TicketsComponent implements OnInit {
             resp.ticket.id_company = ticket.id_company;
             this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
               this.updateTickets(tickets);
-              this.router.navigate(['/home']);
               this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
             })
           }

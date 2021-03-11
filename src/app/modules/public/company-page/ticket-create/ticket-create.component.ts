@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { WebsocketService } from '../../../../services/websocket.service';
@@ -9,14 +9,23 @@ import { Section } from 'src/app/interfaces/section.interface';
 import { TicketResponse, Ticket, TicketsResponse } from '../../../../interfaces/ticket.interface';
 import { SectionsResponse } from '../../../../interfaces/section.interface';
 
-import Swal from 'sweetalert2';
 import { Company } from '../../../../interfaces/company.interface';
-import { Subscription, timer } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
 
+interface availabilityResponse {
+  ok: boolean;
+  msg: string;
+  availability: availability[];
+}
+
+interface availability {
+  interval: number;
+  tables: number[];
+  capacity: number;
+}
 
 @Component({
   selector: 'app-ticket-create',
@@ -255,11 +264,7 @@ export class TicketCreateComponent implements OnInit {
     }
 
     if (localStorage.getItem('user')) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Estás haciendo pruebas?',
-        text: 'Estás en una página de acceso al público pero tenés una sesión de usuario activa. Para obtener un turno tenés cerrar la sesión de usuario o abrir una pestaña en modo incógnito.',
-      })
+      this.publicService.snack('Cerrá primero la sesión de comercio o abrí una pestaña en modo incógnito.', 5000)
       return;
     }
 
@@ -316,25 +321,12 @@ export class TicketCreateComponent implements OnInit {
     });
   }
 
-
   salir(): void {
     this.publicService.clearPublicSession();
     this.router.navigate(['/home'])
   }
-
-
 }
 
-interface availabilityResponse {
-  ok: boolean;
-  msg: string;
-  availability: availability[];
-}
 
-interface availability {
-  interval: number;
-  tables: number[];
-  capacity: number;
-}
 
 

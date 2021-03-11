@@ -19,19 +19,7 @@
 
 <!-- CARD TICKETS -->
 <div class="tickets-container">
-  <div class="ticket-card" *ngFor="let ticket of ticketsActive">
-
-    <!-- first image in banners -->
-    <!-- <div *ngIf="ticket.id_company?.tx_company_banners.length > 0">
-      <img class="company-banner img-fluid"
-        [src]="ticket.id_company?.tx_company_banners[0] | imagenPipe : 'tx_company_banners' : ticket.id_company?._id">
-    </div> -->
-
-    <!-- no images in banners shows default image -->
-    <!-- <div *ngIf="ticket.id_company?.tx_company_banners.length === 0">
-      <img class="company-banner img-fluid" [src]="null | imagenPipe : 'tx_company_banners' : null">
-    </div> -->
-
+  <div class="ticket-card p-1" *ngFor="let ticket of ticketsActive">
     <!-- card with ticket data -->
     <mat-card class="p-2">
 
@@ -41,52 +29,52 @@
 
       <!-- header with company name and address -->
       <div class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div class="ticket-card-company-name"> {{ticket.id_company?.tx_company_name}} </div>
-        <div class="ticket-card-company-address"> {{ticket.id_company?.tx_address_street}}
+        <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
+        <div class="sm text-info"> {{ticket.id_company?.tx_address_street}}
           {{ticket.id_company?.tx_address_number}}</div>
       </div>
 
-      <div class="ticket-card-tm-reserve mt-2">
-        <div>
-          A nombre de {{ticket.tx_name}}
-        </div>
-      </div>
-
-      <div class="ticket-card-tm-reserve mt-2">
-        <div>
-          {{ticket.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}}
-        </div>
-        <div>
-          ( {{ticket.tm_reserve | dateToRemaining}} )
-        </div>
-      </div>
-
-      <div class="ticket-card-status mt-2 text-accent">
-        {{ticket.tx_status | ticketStatus}}
-      </div>
+      <table class="sm my-2">
+        <tr>
+          <td>Estado</td>
+          <td class="text-accent text-right">{{ticket.tx_status | ticketStatus}}</td>
+        </tr>
+        <tr>
+          <td>Fecha</td>
+          <td class="text-accent text-right">{{ticket.tm_reserve | dateToString : 'DD[/]MM HH:mm[hs]'}}</td>
+        </tr>
+        <tr>
+          <td>Faltan</td>
+          <td class="text-accent text-right">{{ticket.tm_reserve | dateToRemaining}}</td>
+        </tr>
+        <tr>
+          <td>Nombre</td>
+          <td class="text-accent text-right"> {{ticket.tx_name}}</td>
+        </tr>
+      </table>
 
       <hr class="my-1 mt-3">
-      <button mat-button color="active" routerLink="/public/ticket/{{ticket._id}}"
+
+      <button class="px-1" mat-button routerLink="/public/ticket/{{ticket._id}}"
         *ngIf="ticket?.tm_provided && !ticket.tm_end">
         ¡Comenzar!
       </button>
 
-      <button mat-button color="warn" [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
+      <button class="px-1" mat-button color="warn" [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
         (click)="endTicket(ticket)">
         Cancelar
       </button>
 
-      <button mat-button color="active" *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
+      <button class="px-1" mat-button *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
         Confirmar
       </button>
 
 
     </mat-card>
-
   </div>
 </div>
 
-<div *ngIf="ticketsInactive.length > 0 && (social || customer)" class="page-container">
+<div *ngIf="ticketsInactive.length > 0 && (social || customer)" class="page-container p-1">
   <mat-card>
 
     <mat-card-header>
@@ -142,5 +130,4 @@
     </mat-card-content>
 
   </mat-card>
-
 </div>

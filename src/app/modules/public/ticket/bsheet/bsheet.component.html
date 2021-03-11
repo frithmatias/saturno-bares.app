@@ -2,7 +2,7 @@
 
     <table>
         <tr>
-            <td class="row-item">Estado del ticket:</td>
+            <td class="row-item">Estado:</td>
             <td class="row-data">{{ticket.tx_status}}</td>
         </tr>
         <tr>
@@ -10,7 +10,7 @@
             <td class="row-data">{{ticket.tx_name}}</td>
         </tr>
         <tr>
-            <td class="row-item">Cantidad de Personas:</td>
+            <td class="row-item">Personas:</td>
             <td class="row-data">{{ticket.nm_persons}}</td>
         </tr>
         <tr>
@@ -22,21 +22,21 @@
             <td class="row-data">{{ticket.id_position}}</td>
         </tr>
         <tr *ngIf="ticket.tm_provided">
-            <td class="row-item">Fecha y Hora de Reserva:</td>
+            <td class="row-item">Reserva:</td>
             <td class="row-data">{{ticket.tm_provided | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
         </tr>
         <tr *ngIf="ticket.tm_provided">
-            <td class="row-item">Fecha y Hora de Aprovisionamiento:</td>
+            <td class="row-item">Provisión:</td>
             <td class="row-data">{{ticket.tm_provided | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
         </tr>
         <tr *ngIf="ticket.tm_provided">
-            <td class="row-item">Canal de confirmación:</td>
+            <td class="row-item">Canal:</td>
             <td class="row-data">{{ticket.tx_platform}}</td>
         </tr>
         <tr *ngIf="ticket.tm_provided">
-            <td class="row-item">Cuenta de confirmación:</td>
+            <td class="row-item">Cuenta:</td>
             <td class="row-data">{{ticket.tx_email}}</td>
         </tr>
     </table>
-
+<span class="mdi mdi-close lg x-position" (click)="closeBottomSheet()"></span>
 </mat-card>
