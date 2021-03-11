@@ -28,7 +28,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   tables: Table[] = [];
   pendingMonth: Ticket[] = [];
   pendingDate: Ticket[] = [];
-  pendingBySectionMap = new Map(); // sector: pendings
+  pendingBySectionMap = new Map(); // pendings by sector
   pending: Ticket[] = [];
   idSection: string;
   dtSelected: Date;
@@ -124,7 +124,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   }
 
   filterPendingsDate(){
-    // mapa de pendinetes por sector
+    // pendinetes del día seleccionado
     this.pending = this.pendingMonth.filter(ticket => {
       return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate();
     });
@@ -134,7 +134,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   }
 
   filterPendingsDateSector() {
-    // pendinetes del día
+    // pendinetes del día seleccionado y el sector seleccionado
     this.pending = this.pendingMonth.filter(ticket => {
       return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate() && ticket.id_section._id === this.idSection;
     });

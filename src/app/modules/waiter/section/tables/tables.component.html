@@ -14,7 +14,7 @@
         <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
 
             <ng-container matColumnDef="estado">
-                <th mat-header-cell *matHeaderCellDef class="sm text-left text-accent">Estado</th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-left text-accent">Est</th>
                 <td mat-cell *matCellDef="let element" class="text-left">
                     <app-table-info [listmode]="listmode" [table]="element"></app-table-info>
                 </td>
@@ -28,21 +28,21 @@
             </ng-container>
 
             <ng-container matColumnDef="capacidad">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Capacidad </th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Cap </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
                     <span class="font-monospace">{{ element.nm_persons }}</span>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="ticket">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ticket </th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Tkt </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
                     <span class="font-monospace">{{ element.id_session?.id_ticket.id_position }}</span>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="ocupacion">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ocupación </th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ocup </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
                     <span class="font-monospace">{{ element.nm_persons | getOccupation :
                         element.id_session?.id_ticket.nm_persons }}%</span>
@@ -50,14 +50,14 @@
             </ng-container>
 
             <ng-container matColumnDef="tp">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Provisión </th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prov </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
                     <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_provided }}</span>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="ta">
-                <th mat-header-cell *matHeaderCellDef class="sm text-right text-accent"> Asistencia </th>
+                <th mat-header-cell *matHeaderCellDef class="sm text-right text-accent"> Asis </th>
                 <td mat-cell *matCellDef="let element" class="text-right">
                     <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_call }}</span>
                 </td>

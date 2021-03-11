@@ -1,5 +1,4 @@
-<div class="page-container animated fadeIn" *ngIf="waiterService.session">
-  <mat-card>
+<div class="page-container p-2 pt-3 animated fadeIn" *ngIf="waiterService.session">
 
     <div *ngIf="loading" class="m-5 animated fadeIn">
       <app-spinner text="LOADING..."></app-spinner>
@@ -11,8 +10,6 @@
       <div class="text-center text-accent xxl">
         {{waiterService.session.id_section.tx_section}}
       </div>
-
-      <hr>
 
       <mat-card-content>
         <mat-accordion multi="false">
@@ -55,8 +52,6 @@
         </mat-accordion>
       </mat-card-content>
 
-      <hr>
-
       <mat-card-actions>
         <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
           <table>
@@ -77,6 +72,5 @@
       </mat-card-actions>
 
     </div>
-  </mat-card>
 
 </div>
