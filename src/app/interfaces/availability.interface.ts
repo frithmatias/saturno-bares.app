@@ -7,14 +7,24 @@ export interface availabilityResponse {
 }
 
 export interface availability {
-    capacity: number;
     interval: Date;
-    tables: avTable[] | number[];
+    compatible: number[];
+    available: avData[] | null;
+    capacity: number | null;
+
 }
 
-export interface avTable {
+export interface avData {
     nmTable: number,
     nmPersons: number,
     blReserved: boolean,
     ticketOwner?: Ticket
+}
+
+// list of intervals to show in intervals select in create ticket page
+export interface avInterval {
+    disabled: boolean,
+    date: Date,
+    text: string,
+    compatible: number[]
 }

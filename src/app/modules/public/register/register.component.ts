@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
 		}
 
 		// if (!this.forma.value.condiciones) {
-		// 	this.snack.open('Debe aceptar las condiciones.', 'Aceptar', { duration: 5000 });
+		// this.publicService.snack('Debe aceptar las condiciones.', 5000, 'Aceptar');
 		// 	return;
 		// }
 
@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
 			tx_name: this.forma.value.name,
 			tx_email: this.forma.value.email,
 			tx_password: this.forma.value.password1,
-			bl_admin: false 
+			bl_admin: false
 		};
 
 		this.publicService.registerUser(user).subscribe((data: any) => {

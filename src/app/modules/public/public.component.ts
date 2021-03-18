@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from './public.service';
 import { CompanyResponse } from '../../interfaces/company.interface';
 
@@ -16,7 +15,6 @@ export class PublicComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private snack: MatSnackBar,
     public publicService: PublicService
   ) { }
 
@@ -30,12 +28,12 @@ export class PublicComponent implements OnInit {
             localStorage.setItem('company', JSON.stringify(resp.company));
             this.router.navigate(['/public/companypage'])
           } else {
-            this.snack.open('No existe la empresa', 'Aceptar', { duration: 5000 });
+            this.publicService.snack('No existe la empresa', 3000, 'Aceptar');
             this.router.navigate(['/home'])
           }
         },
           (err) => {
-            this.snack.open('Error al buscar la empresa', 'Aceptar', { duration: 2000 });
+            this.publicService.snack('Error al buscar la empresa', 3000, 'Aceptar');
             this.router.navigate(['/public'])
           }
         );

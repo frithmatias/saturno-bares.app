@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
 		}
 
 		// if (!this.forma.value.condiciones) {
-		// 	this.snack.open('Debe aceptar las condiciones.', 'Aceptar', { duration: 5000 });
+		//  this.publicService.snack('Debe aceptar las condiciones.', 5000, 'Aceptar');
 		// 	return;
 		// }
 

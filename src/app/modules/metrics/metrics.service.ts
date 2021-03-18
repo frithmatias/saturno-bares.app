@@ -18,5 +18,10 @@ export class MetricsService {
 		const url = environment.api + `/metrics/getusermetrics`;
 		return this.http.post(url, data);
 	}
-
+	
+	readTickets(idCompany: string): Observable<object> {
+		if (!idCompany) { return; }
+		const url = environment.api + '/metrics/readtickets/' + idCompany;
+		return this.http.get(url);
+	}
 }

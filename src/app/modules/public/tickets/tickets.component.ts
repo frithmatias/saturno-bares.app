@@ -68,7 +68,7 @@ export class TicketsComponent implements OnInit {
       if (waiting.length > 0) { this.tickets.push(...waiting); }
     }
     // ------------------------
-    this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_reserve) - +new Date(b.tm_reserve));
+    this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_intervals[0]) - +new Date(b.tm_intervals[0]));
     this.ticketsRunning = this.tickets.filter(ticket => ticket.tx_status === 'provided');
     this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
     this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
@@ -87,13 +87,13 @@ export class TicketsComponent implements OnInit {
       this.loading = false;
       if (data.ok) {
         this.updateTickets(data.tickets);
-        console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
+        console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_intervals', '_id'])
       }
     }, () => { this.loading = false; })
   }
 
   endTicket(ticket: Ticket): void {
-    this.publicService.snack('Desea cancelar este ticket? perderá la reserva', 5000, 'Si, Cancelar').then((cancellResponse) => {
+    this.publicService.snack('Querés cancelar este turno?', 5000, 'CANCELAR').then((cancellResponse) => {
       if (cancellResponse) {
         const idTicket = ticket._id;
         const reqBy = 'client';
@@ -112,9 +112,11 @@ export class TicketsComponent implements OnInit {
   }
 
   validateTicket(ticket: Ticket) {
+
     if (!this.customer) {
       return;
     }
+    
     const idTicket = ticket._id;
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
@@ -134,7 +136,6 @@ export class TicketsComponent implements OnInit {
       // elimino de mis tickets el ticket waiting que expiró
       this.publicService.updateStorageTickets(err.error.ticket).then((tickets: Ticket[]) => {
         this.updateTickets(tickets);
-
       })
       this.publicService.snack(err.error.msg, 5000, 'Aceptar');
     });

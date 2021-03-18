@@ -12,6 +12,7 @@ import { DateToStringPipe } from './date-to-string.pipe';
 import { DateToRemainingPipe } from './date-to-remaining.pipe';
 import { TicketStatusPipe } from './ticket-status.pipe';
 import { DateToIntervalPipe } from './date-to-interval.pipe';
+import { IntervalToHmPipe } from './interval-to-hm.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DateToIntervalPipe } from './date-to-interval.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    DateToIntervalPipe
+    DateToIntervalPipe,
+    IntervalToHmPipe
   ],
   imports: [],
   exports: [
@@ -43,7 +45,8 @@ import { DateToIntervalPipe } from './date-to-interval.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    DateToIntervalPipe
+    DateToIntervalPipe,
+    IntervalToHmPipe
 
   ]
 })

@@ -12,7 +12,7 @@
       <!-- STATUS  -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
-        <div class="text-accent text-left md">
+        <div class="text-info text-left md">
           <span class="mdi mdi-cogs mr-2"></span> Estado
         </div>
 
@@ -61,7 +61,7 @@
       <!-- COMPANY TABLE INFO -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
-        <div class="text-accent text-left md">
+        <div class="text-info text-left md">
           <span class="mdi mdi-storefront mr-2"></span> {{ this.loginService.user.id_company?.tx_company_name || 'No
           creaste ningún comercio' }}
         </div>
@@ -78,7 +78,7 @@
                   <span *ngIf="adminService.companies.length > 0" class="mdi mdi-check text-success"></span>
                   <span *ngIf="adminService.companies.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   {{ adminService.companies.length }}
                 </td>
               </tr>
@@ -90,7 +90,7 @@
                   <span *ngIf="adminService.sections.length > 0" class="mdi mdi-check text-success"></span>
                   <span *ngIf="adminService.sections.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   {{ adminService.sections.length }}
                 </td>
               </tr>
@@ -102,7 +102,7 @@
                   <span *ngIf="adminService.tables.length > 0" class="mdi mdi-check text-success"></span>
                   <span *ngIf="adminService.tables.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   {{ adminService.tables.length }}
                 </td>
               </tr>
@@ -114,7 +114,7 @@
                   <span *ngIf="adminService.waiters.length > 0" class="mdi mdi-check text-success"></span>
                   <span *ngIf="adminService.waiters.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   {{ adminService.waiters.length }}
                 </td>
               </tr>
@@ -126,7 +126,7 @@
                   <span *ngIf="adminService.scoreItems.length > 0" class="mdi mdi-check text-success"></span>
                   <span *ngIf="adminService.scoreItems.length === 0" class="mdi mdi-alert text-danger"></span>
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   {{ adminService.scoreItems.length }}
                 </td>
               </tr>
@@ -144,7 +144,7 @@
       <!-- SETTINGS -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
-        <div class="text-accent md">
+        <div class="text-info md">
           <span class="mdi mdi-view-module mr-2"></span> Módulos
         </div>
 
@@ -158,7 +158,7 @@
                   <span class="mdi mdi-gesture-double-tap mr-2"></span>
                   SPM
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   <span *ngIf="publicService.settings?.bl_spm">Activado</span>
                   <span *ngIf="!publicService.settings?.bl_spm">Desactivado</span>
                 </td>
@@ -169,7 +169,7 @@
                   <span class="mdi mdi-human-queue mr-2"></span>
                   Cola Virtual
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   <span *ngIf="publicService.settings?.bl_queue">Activado</span>
                   <span *ngIf="!publicService.settings?.bl_queue">Desactivado</span>
                 </td>
@@ -180,7 +180,7 @@
                   <span class="mdi mdi-calendar-account mr-2"></span>
                   Agenda
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right text-accent">
                   <span *ngIf="publicService.settings?.bl_schedule">Activado</span>
                   <span *ngIf="!publicService.settings?.bl_schedule">Desactivado</span>
                 </td>
@@ -197,7 +197,7 @@
       <!-- ADMIN & WAITERS -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1" *ngIf="loginService.user.id_company">
 
-        <div class="text-accent md">
+        <div class="text-info md">
           <span class="mdi mdi-shield-star mr-2"></span> Administradores y Camareros/as
         </div>
 
@@ -212,7 +212,7 @@
 
       <mat-card class="saturno-minicard text-left mb-2 mx-1">
 
-        <div class="text-accent md">
+        <div class="text-info md">
           <span class="mdi mdi-account mr-2"></span> Clientes
         </div>
 
@@ -240,7 +240,7 @@
 
       <mat-card class="saturno-minicard text-left mb-2 mx-1" *ngIf="loginService.user.id_company?.tx_company_string">
 
-        <div class="text-accent md">
+        <div class="text-info md">
           <span class="mdi mdi-qrcode mr-2"></span> QR
         </div>
 

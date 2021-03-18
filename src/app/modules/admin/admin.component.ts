@@ -88,8 +88,6 @@ export class AdminComponent implements OnInit, OnDestroy {
         }
 
         this.adminService.loading = false;
-      },(err)=> {
-        console.log(err)
       })
 
   }

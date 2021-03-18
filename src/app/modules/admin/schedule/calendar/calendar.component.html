@@ -24,11 +24,14 @@
                 </td>
 
                 <!-- tables -->
-                <td class="px-1" *ngFor="let t of av.tables">
+                <td class="px-1" *ngFor="let t of av.available">
 
-                    <!-- reserved -->
-                    <span *ngIf="t.blReserved" class="mdi  mdi-account-box-outline text-accent pointer"
+                    <!-- reserved to client-->
+                    <span *ngIf="t.ticketOwner" class="mdi  mdi-account-box-outline text-accent pointer"
                         (click)="openBottomSheet(t, av)">
+                    </span>
+                    <!-- reserved to system (has not ticketOwner)-->
+                    <span *ngIf="t.blReserved && !t.ticketOwner" class="mdi  mdi-flag-triangle text-warn">
                     </span>
 
                     <!-- available -->

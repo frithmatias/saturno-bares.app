@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { WebsocketService } from '../../../../services/websocket.service';
@@ -14,18 +14,9 @@ import { Subscription } from 'rxjs';
 import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
-
-interface availabilityResponse {
-  ok: boolean;
-  msg: string;
-  availability: availability[];
-}
-
-interface availability {
-  interval: number;
-  tables: number[];
-  capacity: number;
-}
+import { DateToIntervalPipe } from '../../../../pipes/date-to-interval.pipe';
+import { availabilityResponse } from 'src/app/interfaces/availability.interface';
+import { availability, avInterval } from '../../../../interfaces/availability.interface';
 
 @Component({
   selector: 'app-ticket-create',
@@ -42,20 +33,25 @@ export class TicketCreateComponent implements OnInit {
   sections: Section[] = [];
   ticket: Ticket = null; // ACTIVE ticket
   tickets: Ticket[] = [];
+
   ticketForm: FormGroup;
+  tmIntervals: Date[] = [];
+
   minDate: Date;
   maxDate: Date;
-  availability: any[] = [];
+  avIntervals: avInterval[] = [];
   availableTables: number[];
   updateTicketsSub: Subscription;
   tellUserNotAvailable = false;
   showRequestTable = false;
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
   serverMessage: string;
+
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
-    private router: Router
+    private router: Router,
+    private dateToInterval: DateToIntervalPipe
   ) {
 
     const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
@@ -137,7 +133,7 @@ export class TicketCreateComponent implements OnInit {
         this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
         this.ticket = this.tickets.find(ticket => ticket.id_company._id === this.company._id && this.activeTickets.includes(ticket.tx_status));
         localStorage.setItem('tickets', JSON.stringify(this.tickets));
-        console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
+        console.table(this.tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_intervals', '_id'])
       }
     }, () => { this.loading = false; })
   }
@@ -150,7 +146,7 @@ export class TicketCreateComponent implements OnInit {
       idSection: new FormControl('', [Validators.required]),
       txWhen: new FormControl(''),
       dtReserve: new FormControl({ value: '', disabled: true }, [Validators.required]),
-      tmReserve: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      tmIntervals: new FormControl({ value: '', disabled: true }, [Validators.required]),
       cdTables: new FormControl({ value: '', disabled: true }, [Validators.required]),
     });
   }
@@ -160,14 +156,14 @@ export class TicketCreateComponent implements OnInit {
     // PERSONS CHANGE 
     this.ticketForm.controls.idSection.valueChanges.subscribe(data => {
       this.readAvailability();
-      this.ticketForm.controls.tmReserve.reset();
+      this.ticketForm.controls.tmIntervals.reset();
       this.ticketForm.controls.cdTables.reset();
     })
 
     // SECTION CHANGE 
     this.ticketForm.controls.nmPersons.valueChanges.subscribe(data => {
       this.readAvailability();
-      this.ticketForm.controls.tmReserve.reset();
+      this.ticketForm.controls.tmIntervals.reset();
       this.ticketForm.controls.cdTables.reset();
     })
 
@@ -178,10 +174,10 @@ export class TicketCreateComponent implements OnInit {
       }
       if (data === 'ahora') {
         this.ticketForm.controls.dtReserve.reset();
-        this.ticketForm.controls.tmReserve.reset();
+        this.ticketForm.controls.tmIntervals.reset();
         this.ticketForm.controls.cdTables.reset();
         this.ticketForm.controls.dtReserve.disable();
-        this.ticketForm.controls.tmReserve.disable();
+        this.ticketForm.controls.tmIntervals.disable();
         this.ticketForm.controls.cdTables.disable();
 
       }
@@ -189,17 +185,40 @@ export class TicketCreateComponent implements OnInit {
 
     // DATE CHANGE
     this.ticketForm.controls.dtReserve.valueChanges.subscribe(data => {
+
       if (data) {
         this.readAvailability();
-        this.ticketForm.controls.tmReserve.enable();
+        this.ticketForm.controls.tmIntervals.enable();
       }
     })
 
-    // TIME CHANGE
-    this.ticketForm.controls.tmReserve.valueChanges.subscribe(data => {
-      if (data) {
-        this.ticketForm.controls.cdTables.enable();
+    // INTERVALS CHANGE
+    this.ticketForm.controls.tmIntervals.valueChanges.subscribe(data => {
+      
+      if(!data){
+        return;
       }
+
+      if (data.length === 0) {
+        return;
+      }
+      // recibo un array de dates 
+      // cruzo con availability para esos intervalos y traigo las tables que estén en todos los intervalos 
+      let avIntervals: avInterval[] = this.avIntervals.filter(av => data.includes(av.date));
+      let avTablesFirstInterval = avIntervals[0].compatible;
+
+      // intervalo 0: [1,3,4,5] -> avTablesFirstInterval
+      // intervalo 1: [1,4] -> filtro las mesas 3 y 5
+      // intervalo 2: [4] -> filtro la mesa 1
+      // ...
+      // resultado [4] solo disponible la mesa 4
+
+      avIntervals.forEach((av: avInterval) => {
+        this.availableTables = avTablesFirstInterval.filter(n => av.compatible.includes(n))
+      })
+
+      this.ticketForm.controls.cdTables.enable();
+
     })
   }
 
@@ -213,8 +232,8 @@ export class TicketCreateComponent implements OnInit {
       return;
     }
 
-    this.availability = [];
-    this.ticketForm.controls.tmReserve.reset();
+    this.avIntervals = [];
+    this.ticketForm.controls.tmIntervals.reset();
 
     this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
       if (data.ok) {
@@ -222,19 +241,19 @@ export class TicketCreateComponent implements OnInit {
         this.tellUserNotAvailable = false;
         data.availability.forEach(av => {
 
-          if (av.tables.length > 0) {
-            this.availability.push({
+          if (av.compatible.length > 0) {
+            this.avIntervals.push({
               disabled: false,
-              value: new Date(av.interval).getHours(),
-              text: new Date(av.interval).getHours() + ':00',
-              tables: av.tables
+              date: new Date(av.interval),
+              text: this.dateToInterval.transform(new Date(av.interval)),
+              compatible: av.compatible
             })
           } else {
-            this.availability.push({
+            this.avIntervals.push({
               disabled: true,
-              value: new Date(av.interval).getHours(),
-              text: new Date(av.interval).getHours() + ':00 No disponible',
-              tables: null
+              date: new Date(av.interval),
+              text: this.dateToInterval.transform(new Date(av.interval)) + ' No disponible',
+              compatible: null
             })
           }
         })
@@ -244,16 +263,20 @@ export class TicketCreateComponent implements OnInit {
         this.tellUserNotAvailable = true;
         this.ticketForm.controls.cdTables.disable();
         data.availability.forEach(av => {
-          this.availability.push({
+          this.avIntervals.push({
             disabled: this.ticketForm.value.nmPersons > av.capacity,
-            value: new Date(av.interval).getHours(),
-            text: new Date(av.interval).getHours() + ':00 Max ' + av.capacity + ' Pers',
-            tables: [0]
+            date: new Date(av.interval),
+            text: this.dateToInterval.transform(new Date(av.interval)) + ' Max ' + av.capacity,
+            compatible: [0]
           })
         })
       }
 
     })
+  }
+
+  setInterval(interval: any) {
+    this.tmIntervals.includes(interval.date) ? this.tmIntervals.filter(int => int !== interval.date) : this.tmIntervals.push(interval.date);
   }
 
   createTicket(): void {
@@ -273,15 +296,12 @@ export class TicketCreateComponent implements OnInit {
     let txName = this.ticketForm.value.txName;
     let nmPersons = this.ticketForm.value.nmPersons;
     let idSection = this.ticketForm.value.idSection;
-    let tmReserve = this.ticketForm.value.tmReserve || null;
-    let dtReserve = this.ticketForm.value.dtReserve || null;
+    let tmIntervals = this.ticketForm.value.tmIntervals || null;
 
     let cdTables = this.ticketForm.value.cdTables; // 0 if not compatible tables
     this.loading = true;
 
-    tmReserve = dtReserve ? new Date(dtReserve.getTime() + tmReserve * 60 * 60 * 1000) : null;
-
-    this.publicService.createTicket(txName, nmPersons, idSection, tmReserve, cdTables, blContingent, idSocket).subscribe(
+    this.publicService.createTicket(txName, nmPersons, idSection, tmIntervals, cdTables, blContingent, idSocket).subscribe(
       (data: TicketResponse) => {
         if (data.ok) {
           this.loading = false;

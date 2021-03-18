@@ -14,6 +14,9 @@ import { AtencionComponent } from './atencion/atencion.component';
 import { SatisfaccionComponent } from './satisfaccion/satisfaccion.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MetricsComponent } from './metrics.component';
+import { MaterialModule } from '../material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../../pipes/pipes.module';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import { MetricsComponent } from './metrics.component';
   ],
   imports: [
     CommonModule,
-    MetricsRoutingModule
+    MetricsRoutingModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    PipesModule
   ]
 })
 export class MetricsModule { }

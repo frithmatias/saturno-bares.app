@@ -52,4 +52,8 @@ export class ContingencyTicketComponent implements OnInit {
     );
   }
 
+  closeBottomSheet() {
+    this.bottomSheetRef.dismiss();
+  }
+
 }

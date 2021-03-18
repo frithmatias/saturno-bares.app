@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { availability, avTable } from '../../../../interfaces/availability.interface';
+import { availability, avData } from '../../../../interfaces/availability.interface';
 import { Table } from 'src/app/interfaces/table.interface';
 import { PublicService } from '../../../public/public.service';
 import { BottomsheetComponent } from '../bottomsheet/bottomsheet.component';
@@ -18,17 +18,16 @@ export class CalendarComponent implements OnInit {
 
   @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
-  tableSelected: avTable;
+  tableSelected: avData;
 
   constructor(
     private publicService: PublicService,
     private bottomSheet: MatBottomSheet
-
   ) { }
 
   ngOnInit(): void { }
 
-  openBottomSheet = (table: avTable, availability: availability): void => {
+  openBottomSheet = (table: avData, availability: availability): void => {
     this.tableSelected = table;
     const idSection = this.idSection;
     // table.blReserved ? release : create;

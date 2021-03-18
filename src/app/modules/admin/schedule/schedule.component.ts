@@ -39,7 +39,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     if (view === 'month') {
       const date = cellDate.getDate();
-      return this.pendingMonth.filter(ticket => new Date(ticket.tm_reserve).getDate() === date).length > 0 ? 'tickets-pending-class' : '';
+      return this.pendingMonth.filter(ticket => new Date(ticket.tm_intervals[0]).getDate() === date).length > 0 ? 'tickets-pending-class' : '';
     }
     return '';
   }
@@ -126,7 +126,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   filterPendingsDate(){
     // pendinetes del día seleccionado
     this.pending = this.pendingMonth.filter(ticket => {
-      return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate();
+      return new Date(ticket.tm_intervals[0]).getDate() === new Date(this.dtSelected).getDate();
     });
     this.adminService.sections.forEach(section => {
       this.pendingBySectionMap.set(section.tx_section, this.pending.filter(pending => pending.id_section.tx_section === section.tx_section).length);
@@ -136,7 +136,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   filterPendingsDateSector() {
     // pendinetes del día seleccionado y el sector seleccionado
     this.pending = this.pendingMonth.filter(ticket => {
-      return new Date(ticket.tm_reserve).getDate() === new Date(this.dtSelected).getDate() && ticket.id_section._id === this.idSection;
+      return new Date(ticket.tm_intervals[0]).getDate() === new Date(this.dtSelected).getDate() && ticket.id_section._id === this.idSection;
     });
   }
 

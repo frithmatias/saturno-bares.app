@@ -5,6 +5,7 @@ import { WaiterService } from '../../../waiter/waiter.service';
 import { PublicService } from '../../../public/public.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { MessageResponse } from '../../../../interfaces/messenger.interface';
+import { availability, avData } from '../../../../interfaces/availability.interface';
 
 @Component({
   selector: 'app-pending',
@@ -20,12 +21,12 @@ import { MessageResponse } from '../../../../interfaces/messenger.interface';
 })
 export class PendingComponent implements OnInit {
 
-  @Input() availability: intervalAvailability[];
+  @Input() availability: availability[];
   @Input() pending: Ticket[] = []
   @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
-  tablesAvailability: tableAvailability[];
-  displayedColumns: string[] = ['nmPersons', 'txName', 'tmReserve'];
+  tablesAvailability: avData[];
+  displayedColumns: string[] = ['nmPersons', 'txName', 'tmIntervals'];
   showMessageForm = false;
 
   constructor(
@@ -39,7 +40,7 @@ export class PendingComponent implements OnInit {
   }
 
   // ADD OR REMOVE TABLES FOR ASSIGNATION
-  setReserve = (table: tableAvailability, ticket: Ticket) => {
+  setReserve = (table: avData, ticket: Ticket) => {
     if (ticket.cd_tables.includes(0)) { ticket.cd_tables = ticket.cd_tables.filter(table => table !== 0); }
     ticket.cd_tables = ticket.cd_tables.includes(table.nmTable)
       ? ticket.cd_tables.filter((numtable) => numtable !== table.nmTable)
@@ -86,6 +87,7 @@ export class PendingComponent implements OnInit {
           this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
               if (resp.ok) {
                 this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
+                this.pendingUpdated.emit(resp.ticket);
               }
             });
         }
@@ -94,9 +96,17 @@ export class PendingComponent implements OnInit {
   };
 
   getIntervalAvailability(pending: Ticket): void {
-    const intervalRequest = new Date(pending.tm_reserve).getHours();
-    const interval = this.availability.find((av: intervalAvailability) => new Date(av.interval).getHours() === intervalRequest);
-    this.tablesAvailability = interval.tables;
+    
+    const interval = this.availability.find((av: availability) => 
+    new Date(av.interval).getTime() === new Date(pending.tm_intervals[0]).getTime() 
+    );
+
+    if(!interval) {
+      this.publicService.snack('El ticket pendiente está fuera del horario comercial', 5000);
+      return;
+    }
+    
+    this.tablesAvailability = interval.available;
   }
 
   messageResponse(response: MessageResponse){
@@ -107,14 +117,3 @@ export class PendingComponent implements OnInit {
 
 
 
-interface intervalAvailability {
-  interval: number;
-  capacity: number;
-  tables: tableAvailability[];
-}
-
-interface tableAvailability {
-  nmTable: number;
-  nmPersons: number;
-  blReserved: boolean;
-}

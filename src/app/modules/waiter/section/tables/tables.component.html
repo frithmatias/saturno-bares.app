@@ -156,9 +156,9 @@
                 <tr>
                     <td>Circuito</td>
                     <td class="text-right">
-                        <span *ngIf="table?.id_session?.id_ticket.tm_reserve !== null">Agenda</span>
+                        <span *ngIf="table?.id_session?.id_ticket.tm_intervals.length > 0">Agenda</span>
                         <span
-                            *ngIf="table?.id_session?.id_ticket.tm_reserve === null && table?.id_session?.id_ticket.bl_contingent === false">Web</span>
+                            *ngIf="table?.id_session?.id_ticket.tm_intervals.length === 0 && table?.id_session?.id_ticket.bl_contingent === false">Web</span>
                         <span *ngIf="table?.id_session?.id_ticket.bl_contingent === true">Contingencia</span>
                     </td>
                 </tr>

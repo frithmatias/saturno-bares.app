@@ -193,12 +193,12 @@ export class AdminService {
 		txName: string,
 		nmPersons: number,
 		idSection: string,
-		tmReserve: Date,
+		tmIntervals: Date[],
 		txEmail: string,
 		nmPhone: number,
 		cdTables: number[]
 	): Observable<object> {
-		let data = { blContingent, txName, nmPersons, idSection, tmReserve, txEmail, nmPhone, cdTables };
+		let data = { blContingent, txName, nmPersons, idSection, tmIntervals, txEmail, nmPhone, cdTables };
 		return this.http.post(environment.api + '/t/createticket/', data);
 	}
 

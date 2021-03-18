@@ -41,11 +41,11 @@
         </tr>
         <tr>
           <td>Fecha</td>
-          <td class="text-accent text-right">{{ticket.tm_reserve | dateToString : 'DD[/]MM HH:mm[hs]'}}</td>
+          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToString : 'DD[/]MM HH:mm[hs]'}}</td>
         </tr>
         <tr>
           <td>Faltan</td>
-          <td class="text-accent text-right">{{ticket.tm_reserve | dateToRemaining}}</td>
+          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToRemaining}}</td>
         </tr>
         <tr>
           <td>Nombre</td>
@@ -118,8 +118,8 @@
             </td>
 
             <td class="text-left">
-              {{ticket.tm_reserve | dateToString : 'DD/MM HH:mm'}} <span class="sm text-accent">(
-                {{ticket.tm_reserve | dateToRemaining}} )</span>
+              {{ticket.tm_intervals[0] | dateToString : 'DD/MM HH:mm'}} <span class="sm text-accent">(
+                {{ticket.tm_intervals[0] | dateToRemaining}} )</span>
             </td>
             <td class="text-right text-warn">
               {{ticket.tx_status}}

@@ -15,13 +15,13 @@
                     wordMaxLength : '2'}}</th>
             </thead>
             <tr *ngFor="let interval of allIntervals ; let i = index" [ngClass]="{'odd-row': i%2==0}">
-                <td class="fw4">{{interval.str}}</td>
+                <td class="fw4">{{interval.local_str}}</td>
                 <td class="pointer text-info mdi mdi-select-all" (click)="selectAllWeekDays(interval)"></td>
                 <td *ngFor="let weekDay of allWeekDays" (click)="selectCell(interval, weekDay)">
 
-                    <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.utc)"
+                    <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)"
                         class="pointer md text-accent mdi mdi-check"></span>
-                    <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.utc)" class="pointer text-info">-</span>
+                    <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)" class="pointer text-info">-</span>
 
 
                 </td>

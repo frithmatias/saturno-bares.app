@@ -1,7 +1,7 @@
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { avTable, availability } from '../../../../interfaces/availability.interface';
+import { avData, availability } from '../../../../interfaces/availability.interface';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { PublicService } from '../../../public/public.service';
 import { WaiterService } from '../../../waiter/waiter.service';
@@ -11,7 +11,7 @@ import { MessageResponse } from '../../../../interfaces/messenger.interface';
 
 
 interface dataSheet {
-  table: avTable,
+  table: avData,
   availability: availability,
   idSection: string
 }
@@ -44,7 +44,6 @@ export class BottomsheetComponent implements OnInit {
     } else {
       this.cdTables.push(this.data.table.nmTable);
     }
-
   }
 
   ngOnInit(): void {
@@ -60,7 +59,7 @@ export class BottomsheetComponent implements OnInit {
     })
   }
 
-  setReserve = (table: avTable) => {
+  setReserve = (table: avData) => {
     this.cdTables = this.cdTables.includes(table.nmTable)
       ? this.cdTables.filter((numtable) => numtable !== table.nmTable)
       : [...this.cdTables, table.nmTable];
@@ -85,9 +84,9 @@ export class BottomsheetComponent implements OnInit {
     const txEmail = this.ticketForm.value.txEmail;
     const nmPhone = this.ticketForm.value.nmPhone;
     const cdTables = this.cdTables;
-    const tmReserve = this.data.availability.interval;
+    const tmintervals = [this.data.availability.interval];
 
-    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmReserve, txEmail, nmPhone, cdTables).subscribe((resp: TicketResponse) => {
+    this.adminService.createTicket(blContingent, txName, nmPersons, idSection, tmintervals, txEmail, nmPhone, cdTables).subscribe((resp: TicketResponse) => {
       if (resp.ok) {
         this.bottomSheetRef.dismiss({
           action: 'create',
@@ -133,7 +132,7 @@ export class BottomsheetComponent implements OnInit {
 
     const idTicket = ticket._id;
     const reqBy = 'client';
-    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Si, finalizar.').then((ok: boolean) => {
+    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'FINALIZAR').then((ok: boolean) => {
       if (ok) {
         // publicService.endTicket() 
         // -> reqBy: 'waiter' -> tx_status: 'finished'

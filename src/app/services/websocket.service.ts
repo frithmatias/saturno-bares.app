@@ -27,13 +27,13 @@ export class WebsocketService {
 
 		this.socket.on('connect', () => {
 			this.idSocket = this.socket.ioSocket.id;
-			this.snack.open('Conectado al servidor de reservas', null, { duration: 2000 });
+			this.publicService.snack('Conectado al servidor de turnos', 2000 );
 			this.socketStatus = true;
 			this.updateSocket();
 		});
-
+		
 		this.socket.on('disconnect', () => {
-			this.snack.open('Desconectado del servidor de reservas.', null, { duration: 2000 });
+			this.publicService.snack('Desconectado del servidor de turnos.', 2000 );
 			this.socketStatus = false;
 		});
 	}

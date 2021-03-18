@@ -1,5 +1,6 @@
 <div class="page-container animated fadeIn">
     <mat-card>
+        <span class="mdi mdi-close lg x-position" (click)="closeBottomSheet()"></span>
 
         <mat-card-header class="text-accent">
 
@@ -66,7 +67,8 @@
                         </tr>
                         <tr>
                             <td class="text-accent">Reserva:</td>
-                            <td>{{data.table.ticketOwner.tm_reserve | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
+                            <td>{{data.table.ticketOwner.tm_intervals[0] | dateToString : 'DD [de] MMMM [a las] HH:mm'}}
+                            </td>
                         </tr>
                         <tr>
                             <td class="text-accent">Inicio:</td>
@@ -103,16 +105,6 @@
                 <hr>
 
                 <div class="ticket-actions mt-2">
-                    <div>
-                        <button mat-raised-button class="action-button" color="primary" (click)="closeBottomSheet()">
-                            <table>
-                                <tr>
-                                    <td class="button-icon mdi mdi-close lg"></td>
-                                    <td class="button-text">Salir</td>
-                                </tr>
-                            </table>
-                        </button>
-                    </div>
                     <div>
                         <button mat-raised-button class="action-button" color="active" (click)="assignTablesPending()">
                             <table>
@@ -183,7 +175,7 @@
                             name="txEmail" required>
                     </mat-form-field>
 
-                    <hr>
+
                     <!-- PERSONS EXCEEDS: TABLES BUTTONS SELECTION -->
 
                     <div class="sm text-left text-accent mt-3" *ngIf="personsExceeds">
@@ -198,7 +190,7 @@
                         <div class="my-2">
                             <button type="button" mat-raised-button
                                 [color]="cdTables.includes(table.nmTable)?'active':''"
-                                *ngFor="let table of data.availability.tables" class="action-button-flex"
+                                *ngFor="let table of data.availability.available" class="action-button-flex"
                                 (click)="setReserve(table)" [disabled]="table.blReserved">
 
                                 <table>
@@ -217,20 +209,7 @@
 
                     </div>
 
-                    <hr>
-
                     <div class="ticket-actions mt-2">
-                        <div>
-                            <button mat-raised-button class="action-button" color="primary" type="button"
-                                (click)="closeBottomSheet()">
-                                <table>
-                                    <tr>
-                                        <td class="button-icon mdi mdi-close lg"></td>
-                                        <td class="button-text">Cancelar</td>
-                                    </tr>
-                                </table>
-                            </button>
-                        </div>
                         <div>
                             <button mat-raised-button class="action-button" color="active" (click)="createTicket()"
                                 [disabled]="ticketForm.invalid || cdTables.length === 0">
@@ -245,10 +224,9 @@
                     </div>
 
                 </form>
-
-
             </div>
 
         </mat-card-content>
+
     </mat-card>
 </div>

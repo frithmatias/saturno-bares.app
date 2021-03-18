@@ -64,14 +64,12 @@ export class HomeComponent implements OnInit {
     let idWaiter = this.loginService.user._id;
 
     this.waiterService.takeSection(idSection, idWaiter).subscribe((data: SessionResponse) => {
-      this.snack.open(data.msg, null, { duration: 2000 });
+      this.publicService.snack(data.msg, 2000);
       if (data.ok) {
         this.waiterService.session = data.session;
         localStorage.setItem('session', JSON.stringify(data.session));
         this.router.navigate(['/waiter/section']);
-      } else {
-        this.snack.open('No se pudo tomar un escritorio', null, { duration: 2000 });
-      }
+      } 
     }, () => { })
   }
 
@@ -91,20 +89,20 @@ export class HomeComponent implements OnInit {
   readSessions(idCompany: string): void {
     this.waiterService.readSessions(idCompany).subscribe((data: SessionsResponse) => {
       if (data.ok) {
-        
+
         // pick my session
         let mySession = data.sessions.filter(session => session.id_waiter === this.loginService.user?._id);
-        
-        if(mySession.length > 0 ) {
+
+        if (mySession.length > 0) {
           this.waiterService.session = mySession[0];
           localStorage.setItem('session', JSON.stringify(mySession[0]))
         };
 
 
-        for ( let sector of this.sections ) {
+        for (let sector of this.sections) {
           this.sessions.set(sector.tx_section, data.sessions.filter(session => session.id_section.tx_section === sector.tx_section).length)
         }
-        
+
       } else {
         delete this.sessions;
       }

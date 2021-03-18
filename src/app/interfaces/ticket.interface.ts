@@ -23,7 +23,7 @@ export interface Ticket {
     id_position: number; // assigned
     id_socket_client: string; // primary
     id_socket_waiter?: string | null; // assigned
-	tm_reserve: Date | null;
+	tm_intervals: Date[] | null;
 	tm_provided?: Date | null;
 	tm_call: Date | null;
 	tm_start: Date | null;

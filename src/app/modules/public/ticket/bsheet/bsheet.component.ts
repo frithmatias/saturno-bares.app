@@ -12,7 +12,6 @@ export class BsheetComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BsheetComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public ticket: Ticket
-
   ) { }
 
   ngOnInit(): void { }

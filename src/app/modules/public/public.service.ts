@@ -43,7 +43,7 @@ export class PublicService {
 
   snack(msg: string, dur: number, button?: string): Promise<boolean> {
     return new Promise((resolve) => {
-      this._snack.open(msg, button, { duration: dur }).afterDismissed().subscribe(data => {
+      this._snack.open(msg, button, { duration: dur, horizontalPosition: 'start' }).afterDismissed().subscribe(data => {
         if (data.dismissedByAction) {
           resolve(true);
         } else {
@@ -196,7 +196,7 @@ export class PublicService {
       tickets.push(ticket); // agrego el nuevo
       tickets.sort((b, a) => +new Date(a.tm_start) - +new Date(b.tm_start));
       localStorage.setItem('tickets', JSON.stringify(tickets));
-      console.table(tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_reserve', '_id'])
+      console.table(tickets, ['tx_status', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_intervals', '_id'])
       resolve(tickets);
     })
   }
@@ -205,12 +205,12 @@ export class PublicService {
     txName: string,
     nmPersons: number,
     idSection: string,
-    tmReserve: Date,
+    tmIntervals: Date[],
     cdTables: number[],
     blContingent: boolean,
     idSocket: string,
   ): Observable<object> {
-    let data = { txName, nmPersons, idSection, tmReserve, cdTables, blContingent, idSocket };
+    let data = { txName, nmPersons, idSection, tmIntervals, cdTables, blContingent, idSocket };
     return this.http.post(environment.api + '/t/createticket/', data);
   }
 

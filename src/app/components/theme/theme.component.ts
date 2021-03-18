@@ -20,7 +20,7 @@ export class ThemeComponent implements OnInit {
 
       if (hours >= 6 && hours < 20) {
         // light theme
-        this.config.theme = 'grey-orange.css'
+        this.config.theme = 'light-blue.css'
       } else {
         // dark theme
         this.config.theme = 'dark-pink.css';

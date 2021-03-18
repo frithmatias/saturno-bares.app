@@ -49,7 +49,7 @@ export class QueuedComponent implements OnInit {
     let blPriority = ticket.bl_priority;
     // si el ticket viene de agenda y el waiter re-asigna mesas asignadas por admin, no debe tener en cuenta si es 
     // el primero, porque la provisión de un assignado de agenda la hace el cron a la hora exacta de la reserva.
-    let blFirst = ticket.tm_reserve ? false: activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
+    let blFirst = ticket.tm_intervals.length > 0 ? false : activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
 
