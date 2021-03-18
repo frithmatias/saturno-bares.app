@@ -60,13 +60,13 @@
         ¡Comenzar!
       </button>
 
-      <button class="px-1" mat-button color="warn" [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
-        (click)="endTicket(ticket)">
+      <button class="px-1" mat-button color="warn"
+        [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
         Cancelar
       </button>
 
-      <button class="px-1" mat-button *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
-        Confirmar
+      <button class="px-1 text-active" mat-button *ngIf="ticket.tx_status==='waiting'" (click)="validateTicket(ticket)">
+        ¡Confirmar!
       </button>
 
 
@@ -93,9 +93,6 @@
         <thead>
           <tr class="text-info">
             <td class="text-left">
-              Bar - Restaurante
-            </td>
-            <td class="text-left">
               Fecha de Reserva
             </td>
             <td class="text-right">
@@ -104,13 +101,10 @@
           </tr>
         </thead>
         <tbody>
+
           <tr *ngFor="let ticket of ticketsInactive">
 
-            <td class="text-left" *ngIf="ticket.id_company">
-              <div class="pointer text-info" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-                {{ticket.id_company.tx_company_name}}
-              </div>
-            </td>
+
             <td class="text-left" *ngIf="!ticket.id_company">
               <div class="pointer text-info">
                 Comercio eliminado
@@ -118,8 +112,11 @@
             </td>
 
             <td class="text-left">
-              {{ticket.tm_intervals[0] | dateToString : 'DD/MM HH:mm'}} <span class="sm text-accent">(
-                {{ticket.tm_intervals[0] | dateToRemaining}} )</span>
+              {{ticket.tm_intervals[0] | dateToString : 'dd DD HH:mm' | capitalizarPipe}}, 
+
+              <span class="sm text-accent">
+                {{ticket.tm_intervals[0] | dateToRemaining}}
+              </span>
             </td>
             <td class="text-right text-warn">
               {{ticket.tx_status}}

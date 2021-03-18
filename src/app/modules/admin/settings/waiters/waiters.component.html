@@ -1,45 +1,53 @@
-<mat-card-content>
-    <table mat-table [dataSource]="adminService.waiters">
-        <ng-container matColumnDef="id_role">
-            <th mat-header-cell *matHeaderCellDef class="text-left"> Rol </th>
-            <td mat-cell *matCellDef="let element" class="text-left">
-                <span *ngIf="element.id_role==='ADMIN_ROLE'" class="mdi mdi-police-badge-outline lg text-accent"></span>
-                <span *ngIf="element.id_role!=='ADMIN_ROLE'"
-                    class="mdi mdi-silverware-fork-knife lg text-accent"></span>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="tx_name">
-            <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
-            <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="_id">
-            <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
-            <td mat-cell *matCellDef="let element" class="text-right">
-                <span class="mdi mdi-pencil ml-2 xl text-success pointer" (click)="editWaiter(element)"></span>
-                <span *ngIf="element._id !== loginService.user._id" class="mdi mdi-delete ml-2 xl text-danger pointer"
-                    (click)="deleteWaiter(element)"></span>
-            </td>
-        </ng-container>
+<div class="page-container animated fadeIn">
+    <mat-card>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</mat-card-content>
+        <mat-card-content>
+            <table mat-table [dataSource]="adminService.waiters">
+                <ng-container matColumnDef="id_role">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Rol </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">
+                        <span *ngIf="element.id_role==='ADMIN_ROLE'"
+                            class="mdi mdi-police-badge-outline lg text-accent"></span>
+                        <span *ngIf="element.id_role!=='ADMIN_ROLE'"
+                            class="mdi mdi-silverware-fork-knife lg text-accent"></span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tx_name">
+                    <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
+                    <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
+                    <td mat-cell *matCellDef="let element" class="text-right">
+                        <span class="mdi mdi-pencil ml-2 xl text-success pointer" (click)="editWaiter(element)"></span>
+                        <span *ngIf="element._id !== loginService.user._id"
+                            class="mdi mdi-delete ml-2 xl text-danger pointer" (click)="deleteWaiter(element)"></span>
+                    </td>
+                </ng-container>
 
-<mat-card-actions>
-    <button *ngIf="!waiterCreate" mat-button (click)="waiterCreate=true"><span class="lg mdi mdi-plus"></span>
-        CREAR CAMARERO/A </button>
-    <button *ngIf="waiterCreate" mat-button (click)="waiterCreate=false"><span class="lg mdi mdi-chevron-up"></span>
-        CERRAR FORMULARIO </button>
-</mat-card-actions>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button *ngIf="!waiterCreate" mat-button (click)="waiterCreate=true"><span class="lg mdi mdi-plus"></span>
+                CREAR CAMARERO/A </button>
+            <button *ngIf="waiterCreate" mat-button (click)="waiterCreate=false"><span
+                    class="lg mdi mdi-chevron-up"></span>
+                CERRAR FORMULARIO </button>
+        </mat-card-actions>
 
 
-<div *ngIf="waiterCreate" class="my-4 animated fadeIn">
-    <div class="card-left-border sm my-2">
-        Tené en cuenta que los camareros/as que podés dar de alta acá deben ingresar con email y contraseña
-        desde el login normal de usuarios (no desde el login con cuenta de Google).
-    </div>
+        <div *ngIf="waiterCreate" class="my-4 animated fadeIn">
+            <div class="card-left-border sm my-2">
+                Tené en cuenta que los camareros/as que podés dar de alta acá deben ingresar con email y contraseña
+                desde el login normal de usuarios (no desde el login con cuenta de Google).
+            </div>
 
-    <app-waiter-create [waiterEdit]="waiterEdit" (idWaiterUpdated)="waiterUpdated($event)"></app-waiter-create>
+            <app-waiter-create [waiterEdit]="waiterEdit" (idWaiterUpdated)="waiterUpdated($event)"></app-waiter-create>
 
+        </div>
+
+    </mat-card>
 </div>

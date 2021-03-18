@@ -1,71 +1,77 @@
-<div *ngIf="!publicService.settings">
-    <mat-card-content>
-        <div class="p-2">
-            Tenés que tener al menos una empresa creada y seleccionada.
-        </div>
-    </mat-card-content>
-</div>
+<div class="page-container animated fadeIn">
+    <mat-card>
 
-<div *ngIf="publicService.settings">
-
-    <mat-card-content class="p-2">
-        <!-- virtual queue on/off -->
-        <div class="d-flex mt-2">
-            <div class="w-50 text-left">
-                <mat-slide-toggle [(ngModel)]="publicService.settings.bl_queue"
-                    [checked]="publicService.settings.bl_queue" (change)="check('queue')"> Cola Virtual
-                </mat-slide-toggle>
-            </div>
-            <div class="w-50 text-right">
-                <apan *ngIf="publicService.settings.bl_queue">Activado</apan>
-                <apan *ngIf="!publicService.settings.bl_queue">Desactivado</apan>
-                <span class="mdi mdi-help-circle-outline ml-2 pointer"
-                    (click)="openBottomSheet('adminSettingsVirtualQueue')"></span>
-            </div>
+        <div *ngIf="!publicService.settings">
+            <mat-card-content>
+                <div class="p-2">
+                    Tenés que tener al menos una empresa creada y seleccionada.
+                </div>
+            </mat-card-content>
         </div>
 
-        <!-- spm on/off -->
-        <div class="d-flex mt-2">
-            <div class="w-50 text-left">
-                <mat-slide-toggle [(ngModel)]="publicService.settings.bl_spm" [checked]="publicService.settings.bl_spm"
-                    (change)="check('spm')"> SPM
-                </mat-slide-toggle>
-            </div>
-            <div class="w-50 text-right">
-                <apan *ngIf="publicService.settings.bl_spm">Activado</apan>
-                <apan *ngIf="!publicService.settings.bl_spm">Desactivado</apan>
-                <span class="mdi mdi-help-circle-outline ml-2 pointer"
-                    (click)="openBottomSheet('adminSettingsSPM')"></span>
-            </div>
+        <div *ngIf="publicService.settings">
+
+            <mat-card-content class="p-2">
+                <!-- virtual queue on/off -->
+                <div class="d-flex mt-2">
+                    <div class="w-50 text-left">
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_queue"
+                            [checked]="publicService.settings.bl_queue" (change)="check('queue')"> Cola Virtual
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="w-50 text-right">
+                        <apan *ngIf="publicService.settings.bl_queue">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_queue">Desactivado</apan>
+                        <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                            (click)="openBottomSheet('adminSettingsVirtualQueue')"></span>
+                    </div>
+                </div>
+
+                <!-- spm on/off -->
+                <div class="d-flex mt-2">
+                    <div class="w-50 text-left">
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_spm"
+                            [checked]="publicService.settings.bl_spm" (change)="check('spm')"> SPM
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="w-50 text-right">
+                        <apan *ngIf="publicService.settings.bl_spm">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_spm">Desactivado</apan>
+                        <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                            (click)="openBottomSheet('adminSettingsSPM')"></span>
+                    </div>
+                </div>
+
+                <!-- schedule on/off -->
+                <div class="d-flex mt-2">
+                    <div class="w-50 text-left">
+                        <mat-slide-toggle [(ngModel)]="publicService.settings.bl_schedule"
+                            [checked]="publicService.settings.bl_schedule" (change)="check('schedule')"> Agenda
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="w-50 text-right">
+                        <apan *ngIf="publicService.settings.bl_schedule">Activado</apan>
+                        <apan *ngIf="!publicService.settings.bl_schedule">Desactivado</apan>
+                        <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                            (click)="openBottomSheet('adminSettingsSchedule')"></span>
+
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions class="p-2 text-right">
+                <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+                    [disabled]="saveDisabled">
+                    <table>
+                        <tr>
+                            <td class="button-icon mdi  mdi-content-save xl"></td>
+                            <td class="button-text">Guardar</td>
+                        </tr>
+                    </table>
+                </button>
+            </mat-card-actions>
+
         </div>
 
-        <!-- schedule on/off -->
-        <div class="d-flex mt-2">
-            <div class="w-50 text-left">
-                <mat-slide-toggle [(ngModel)]="publicService.settings.bl_schedule"
-                    [checked]="publicService.settings.bl_schedule" (change)="check('schedule')"> Agenda
-                </mat-slide-toggle>
-            </div>
-            <div class="w-50 text-right">
-                <apan *ngIf="publicService.settings.bl_schedule">Activado</apan>
-                <apan *ngIf="!publicService.settings.bl_schedule">Desactivado</apan>
-                <span class="mdi mdi-help-circle-outline ml-2 pointer"
-                    (click)="openBottomSheet('adminSettingsSchedule')"></span>
-
-            </div>
-        </div>
-    </mat-card-content>
-
-    <mat-card-actions class="p-2 text-right">
-        <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
-            [disabled]="saveDisabled">
-            <table>
-                <tr>
-                    <td class="button-icon mdi  mdi-content-save xl"></td>
-                    <td class="button-text">Guardar</td>
-                </tr>
-            </table>
-        </button>
-    </mat-card-actions>
-
+    </mat-card>
 </div>

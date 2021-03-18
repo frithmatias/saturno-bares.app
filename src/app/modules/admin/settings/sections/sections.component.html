@@ -1,37 +1,45 @@
-<mat-card-content>
+<div class="page-container animated fadeIn">
+    <mat-card>
 
-    <div *ngIf="!adminService.sections || adminService.sections?.length === 0"
-        class="row align-items-center justify-content-center">
-        <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
-        <span>Debe crear aquí al menos un sector</span>
-    </div>
+        <mat-card-content>
 
-    <div *ngIf="adminService.sections && adminService.sections?.length > 0">
-        <table mat-table [dataSource]="adminService.sections">
-            <ng-container matColumnDef="tx_section">
-                <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
-                <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_section}}</td>
-            </ng-container>
-            <ng-container matColumnDef="_id">
-                <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
-                <td mat-cell *matCellDef="let element" class="text-right">
-                    <span class="mdi mdi-delete ml-2 xl text-danger pointer" (click)="deleteSection(element)"></span>
-                </td>
-            </ng-container>
+            <div *ngIf="!adminService.sections || adminService.sections?.length === 0"
+                class="row align-items-center justify-content-center">
+                <span class="mdi mdi-alert-box-outline xxl mx-2 text-danger"></span>
+                <span>Debe crear aquí al menos un sector</span>
+            </div>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
-</mat-card-content>
+            <div *ngIf="adminService.sections && adminService.sections?.length > 0">
+                <table mat-table [dataSource]="adminService.sections">
+                    <ng-container matColumnDef="tx_section">
+                        <th mat-header-cell *matHeaderCellDef class="text-left"> Sector </th>
+                        <td mat-cell *matCellDef="let element" class="text-left">{{element.tx_section}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Acción </th>
+                        <td mat-cell *matCellDef="let element" class="text-right">
+                            <span class="mdi mdi-delete ml-2 xl text-danger pointer"
+                                (click)="deleteSection(element)"></span>
+                        </td>
+                    </ng-container>
 
-<mat-card-actions>
-    <button *ngIf="!sectionCreate" mat-button (click)="sectionCreate=true"><span class="lg mdi mdi-plus"></span>
-        CREAR SECTOR </button>
-    <button *ngIf="sectionCreate" mat-button (click)="sectionCreate=false"><span class="lg mdi mdi-chevron-up"></span>
-        CERRAR FORMULARIO </button>
-</mat-card-actions>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
 
-<div *ngIf="sectionCreate" class="my-2 animated fadeIn">
-    <app-section-create (sectionCreated)="sectionCreated($event)"></app-section-create>
+        <mat-card-actions>
+            <button *ngIf="!sectionCreate" mat-button (click)="sectionCreate=true"><span class="lg mdi mdi-plus"></span>
+                CREAR SECTOR </button>
+            <button *ngIf="sectionCreate" mat-button (click)="sectionCreate=false"><span
+                    class="lg mdi mdi-chevron-up"></span>
+                CERRAR FORMULARIO </button>
+        </mat-card-actions>
+
+        <div *ngIf="sectionCreate" class="my-2 animated fadeIn">
+            <app-section-create (sectionCreated)="sectionCreated($event)"></app-section-create>
+        </div>
+
+    </mat-card>
 </div>

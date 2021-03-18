@@ -16,7 +16,6 @@ import { AdminComponent } from './admin.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
-import { TicketsComponent } from './tickets/tickets.component';
 
 import { CompaniesComponent } from './settings/companies/companies.component';
 import { CompanyCreateComponent } from './settings/companies/company-create/company-create.component';
@@ -45,7 +44,6 @@ import { WorkingComponent } from './settings/working/working.component';
 		HomeComponent,
 		DashboardComponent,
 		ProfileComponent,
-		TicketsComponent,
 		
 		CompaniesComponent,
 		CompanyCreateComponent,

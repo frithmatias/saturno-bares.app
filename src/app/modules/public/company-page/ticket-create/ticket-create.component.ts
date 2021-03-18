@@ -287,7 +287,7 @@ export class TicketCreateComponent implements OnInit {
     }
 
     if (localStorage.getItem('user')) {
-      this.publicService.snack('Cerrá primero la sesión de comercio o abrí una pestaña en modo incógnito.', 5000)
+      this.publicService.snack('Tenes una sesión de comercio activa.', 5000)
       return;
     }
 
@@ -320,6 +320,7 @@ export class TicketCreateComponent implements OnInit {
   }
 
   validateTicket(ticket: Ticket) {
+    
     if (!this.customer) {
       return;
     }

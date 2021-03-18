@@ -1,42 +1,44 @@
-<mat-card-content>
-    <div class="working-container">
+<div class="page-container animated fadeIn">
+    <mat-card>
 
-        <table class="working sm" *ngIf="publicService.settings?.tm_working">
-            <thead>
-                <th class="tbl px-1">Int</th>
-                <th class="tbl px-1">#</th>
-                <th class="tbl px-1 pointer text-info mdi mdi-select-all" *ngFor="let weekDay of allWeekDays"
-                    (click)="selectAllIntervals(weekDay)"></th>
-            </thead>
-            <thead>
-                <th class="cap px-1"></th>
-                <th class="cap px-1"></th>
-                <th class="cap px-1" *ngFor="let weekDay of allWeekDays">{{weekDay.str | capitalizarPipe |
-                    wordMaxLength : '2'}}</th>
-            </thead>
-            <tr *ngFor="let interval of allIntervals ; let i = index" [ngClass]="{'odd-row': i%2==0}">
-                <td class="fw4">{{interval.local_str}}</td>
-                <td class="pointer text-info mdi mdi-select-all" (click)="selectAllWeekDays(interval)"></td>
-                <td *ngFor="let weekDay of allWeekDays" (click)="selectCell(interval, weekDay)">
+        <mat-card-content>
+            <table class="working sm" *ngIf="publicService.settings?.tm_working">
+                <thead>
+                    <th class="tbl px-1">Int</th>
+                    <th class="tbl px-1">#</th>
+                    <th class="tbl px-1 pointer text-info mdi mdi-select-all" *ngFor="let weekDay of allWeekDays"
+                        (click)="selectAllIntervals(weekDay)"></th>
+                </thead>
+                <thead>
+                    <th class="cap px-1"></th>
+                    <th class="cap px-1"></th>
+                    <th class="cap px-1" *ngFor="let weekDay of allWeekDays">{{weekDay.str | capitalizarPipe |
+                        wordMaxLength : '2'}}</th>
+                </thead>
+                <tr *ngFor="let interval of allIntervals ; let i = index" [ngClass]="{'odd-row': i%2==0}">
+                    <td class="fw4">{{interval.local_str}}</td>
+                    <td class="pointer text-info mdi mdi-select-all" (click)="selectAllWeekDays(interval)"></td>
+                    <td *ngFor="let weekDay of allWeekDays" (click)="selectCell(interval, weekDay)">
 
-                    <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)"
-                        class="pointer md text-accent mdi mdi-check"></span>
-                    <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)" class="pointer text-info">-</span>
+                        <span *ngIf="publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)"
+                            class="pointer md text-accent mdi mdi-check"></span>
+                        <span *ngIf="!publicService.settings.tm_working[weekDay.int]?.includes(interval.utc_code)"
+                            class="pointer text-info">-</span>
+                    </td>
+                </tr>
+            </table>
+        </mat-card-content>
+        <mat-card-actions class="p-2 text-right">
+            <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+                [disabled]="saveDisabled">
+                <table>
+                    <tr>
+                        <td class="button-icon mdi  mdi-content-save xl"></td>
+                        <td class="button-text">Guardar</td>
+                    </tr>
+                </table>
+            </button>
+        </mat-card-actions>
 
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</mat-card-content>
-<mat-card-actions class="p-2 text-right">
-    <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
-        [disabled]="saveDisabled">
-        <table>
-            <tr>
-                <td class="button-icon mdi  mdi-content-save xl"></td>
-                <td class="button-text">Guardar</td>
-            </tr>
-        </table>
-    </button>
-</mat-card-actions>
+    </mat-card>
+</div>

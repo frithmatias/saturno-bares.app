@@ -1,19 +1,25 @@
-<mat-card-content class="p-2">
-    <mat-form-field color="accent" class="w-100">
-        <mat-label>Mensaje</mat-label>
-        <input matInput maxlength="100" placeholder="Escribí acá el mensaje" [(ngModel)]="txMessage"
-            name="txCompanySlogan" type="text">
-    </mat-form-field>
-</mat-card-content>
+<div class="page-container animated fadeIn">
+    <mat-card>
 
-<mat-card-actions class="p-2 text-right">
-    <button mat-raised-button color="primary" class="action-button" (click)="sendMessage()"
-        [disabled]="txMessage.length === 0">
-        <table>
-            <tr>
-                <td class="button-icon mdi  mdi-send xl"></td>
-                <td class="button-text">Enviar</td>
-            </tr>
-        </table>
-    </button>
-</mat-card-actions>
+        <mat-card-content class="p-2">
+            <mat-form-field color="accent" class="w-100">
+                <mat-label>Mensaje</mat-label>
+                <input matInput maxlength="100" placeholder="Escribí acá el mensaje" [(ngModel)]="txMessage"
+                    name="txCompanySlogan" type="text">
+            </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions class="p-2 text-right">
+            <button mat-raised-button color="primary" class="action-button" (click)="sendMessage()"
+                [disabled]="txMessage.length === 0">
+                <table>
+                    <tr>
+                        <td class="button-icon mdi  mdi-send xl"></td>
+                        <td class="button-text">Enviar</td>
+                    </tr>
+                </table>
+            </button>
+        </mat-card-actions>
+
+    </mat-card>
+</div>

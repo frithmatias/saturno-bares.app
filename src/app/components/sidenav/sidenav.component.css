@@ -1,11 +1,27 @@
-.mat-expansion-panel-header {
-    height: 40px;
+.item {
+    color: white;
 }
 
-.sidenav-subitems-icon {
-    opacity: .2;
+.item .mdi {
+    color: rgba(255,255,255, 0.3);
 }
 
-.sidenav-subitems-text {
-    opacity: .8;
+.subitem {
+    height      : 32px;
+    padding-left: 16px;
+    cursor      : pointer;
+}
+
+.subitem .mdi {
+    color: rgba(255,255,255, 0.3);
+
+}
+
+
+.mdi {
+    margin-right: 10px;
+}
+
+mat-expansion-panel-header {
+    height: 36px;
 }
