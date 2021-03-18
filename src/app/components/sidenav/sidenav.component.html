@@ -10,8 +10,10 @@
         </mat-select>
     </mat-form-field>
 
-    <!-- MENU -->
     <mat-accordion multi="false">
+
+
+        <!-- MENU -->
         <mat-expansion-panel *ngFor="let menu of loginService.menu">
 
             <mat-expansion-panel-header>
@@ -21,28 +23,29 @@
                 </div>
             </mat-expansion-panel-header>
 
-      
-                <mat-expansion-panel [hideToggle]="!item.subitems" [disabled]="!item.subitems" *ngFor="let item of menu.items" style="box-shadow: none;">
-                   
-                    <mat-expansion-panel-header>
-                        <div *ngIf="item.tx_url" class="item" routerLink="/{{item.tx_url}}" (click)="toggleNav()">
-                            <span class="{{item.tx_icon}}"></span>
-                            <span>{{item.tx_titulo}}</span>
-                        </div>
-                        <div *ngIf="!item.tx_url" class="item">
-                            <span class="{{item.tx_icon}}"></span>
-                            <span>{{item.tx_titulo}}</span>
-                        </div>
-                    </mat-expansion-panel-header>
+            <mat-expansion-panel [hideToggle]="!item.subitems" [disabled]="!item.subitems"
+                *ngFor="let item of menu.items" style="box-shadow: none;">
 
-                   
-                        <div class="subitem" *ngFor="let subitem of item.subitems" (click)="toggleNav()"
-                            routerLink="/{{subitem.tx_url}}">
-                            <span class="{{subitem.tx_icon}}"></span>
-                            <span>{{subitem.tx_titulo}}</span>
-                        </div>
-                    
-                </mat-expansion-panel>
+                <!-- ITEMS -->
+                <mat-expansion-panel-header>
+                    <div *ngIf="item.tx_url" class="item" routerLink="/{{item.tx_url}}" (click)="toggleNav()">
+                        <span class="{{item.tx_icon}}"></span>
+                        <span>{{item.tx_titulo}}</span>
+                    </div>
+                    <div *ngIf="!item.tx_url" class="item">
+                        <span class="{{item.tx_icon}}"></span>
+                        <span>{{item.tx_titulo}}</span>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <!-- SUBITEMS -->
+                <div class="subitem" *ngFor="let subitem of item.subitems" (click)="toggleNav()"
+                    routerLink="/{{subitem.tx_url}}">
+                    <span class="{{subitem.tx_icon}}"></span>
+                    <span>{{subitem.tx_titulo}}</span>
+                </div>
+
+            </mat-expansion-panel>
 
 
         </mat-expansion-panel>

@@ -1,9 +1,20 @@
 .item {
-    color: white;
+    color: var(--text);
 }
 
-.item .mdi {
-    color: rgba(255,255,255, 0.3);
+.menu .mdi,
+.item .mdi,
+.subitem .mdi {
+    color         : var(--text);
+    opacity       : .2;
+    font-size     : 1.5em;
+    vertical-align: middle;
+}
+
+.subitem .mdi {
+    color  : var(--accent);
+    opacity: 1;
+    margin-left: 1px;
 }
 
 .subitem {
@@ -12,16 +23,14 @@
     cursor      : pointer;
 }
 
-.subitem .mdi {
-    color: rgba(255,255,255, 0.3);
-
-}
-
-
 .mdi {
     margin-right: 10px;
 }
 
 mat-expansion-panel-header {
     height: 36px;
+}
+
+mat-expansion-panel-body {
+    padding: 0px !important;
 }

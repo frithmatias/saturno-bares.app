@@ -1,4 +1,5 @@
 :root {
+    --text               : rgba(0, 0, 0, .87);
     --primary            : #2e7d32;
     --accent             : #ff6700;
     --accent-invert      : #41d019;
