@@ -1,0 +1,63 @@
+<mat-card>
+
+    <table *ngIf="ticket">
+        <tr>
+            <td class="row-item">Circuito:</td>
+            <td class="row-data">
+                <span *ngIf="!ticket.tm_intervals && !ticket.bl_contingent" class="mdi mdi-web"> Web </span>
+                <span *ngIf="!ticket.tm_intervals && ticket.bl_contingent" class="mdi mdi-account-tie"> Waiter </span>
+                <span *ngIf="ticket.tm_intervals && !ticket.bl_contingent" class="mdi mdi-calendar-account"> Schedule
+                </span>
+                <span *ngIf="ticket.tm_intervals && ticket.bl_contingent" class="mdi mdi-police-badge-outline"> Admin
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="row-item">Contingencia:</td>
+            <td class="row-data">{{ticket.bl_contingent}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Estado:</td>
+            <td class="row-data">{{ticket.tx_status}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Nombre:</td>
+            <td class="row-data">{{ticket.tx_name}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Personas:</td>
+            <td class="row-data">{{ticket.nm_persons}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Sector:</td>
+            <td class="row-data">{{ticket.id_section.tx_section}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Posición:</td>
+            <td class="row-data">{{ticket.id_position}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Reserva:</td>
+            <td class="row-data" *ngIf="ticket.tm_intervals">{{ticket.tm_intervals[0] | dateToString : 'DD [de] MMMM [a
+                las] HH:mm'}}</td>
+            <td class="row-data" *ngIf="!ticket.tm_intervals">No</td>
+        </tr>
+        <tr>
+            <td class="row-item">Provisión:</td>
+            <td class="row-data">{{ticket.tm_provided | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Prioridad:</td>
+            <td class="row-data">{{ticket.bl_priority}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Plataforma:</td>
+            <td class="row-data">{{ticket.tx_platform}}</td>
+        </tr>
+        <tr>
+            <td class="row-item">Cuenta:</td>
+            <td class="row-data">{{ticket.tx_email}}</td>
+        </tr>
+    </table>
+
+</mat-card>

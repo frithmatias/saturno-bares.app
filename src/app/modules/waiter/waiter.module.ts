@@ -19,7 +19,7 @@ import { TablesComponent } from './section/tables/tables.component';
 import { SectionsComponent } from './section/sections/sections.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ComponentsModule } from '../../components/components.module';
-import { TableInfoComponent } from './section/tables/table-info/table-info.component';
+import { TableStautsComponent } from './section/tables/table-status/table-status.component';
 import { ContingencyTicketComponent } from './section/contingency-ticket/contingency-ticket.component';
 
 
@@ -34,7 +34,7 @@ import { ContingencyTicketComponent } from './section/contingency-ticket/conting
     TablesComponent,
     SectionsComponent,
     ProfileComponent,
-    TableInfoComponent,
+    TableStautsComponent,
     ContingencyTicketComponent
   ],
   imports: [

@@ -3,148 +3,162 @@
 <!------------------------------>
 
 
-  <div *ngIf="queued.length === 0">No hay clientes esperando mesas</div>
+<div *ngIf="queued.length === 0">No hay clientes esperando mesas</div>
 
-  <table *ngIf="queued.length > 0" mat-table [dataSource]="queued" multiTemplateDataRows>
+<table *ngIf="queued.length > 0" mat-table [dataSource]="queued" multiTemplateDataRows>
 
-    <ng-container matColumnDef="id_position">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> # </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.tm_intervals">Agenda</span>
-        <span>{{ ticket.id_position }}</span>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="id_position">
+    <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePosition')"></div>
+      <div>Posición</div>
+    </th>
 
-
-    <ng-container matColumnDef="tx_persons">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Pers </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span>{{ ticket.nm_persons}}</span>
-      </td>
-    </ng-container>
+    <td mat-cell *matCellDef="let ticket" class="text-center">
+      <span *ngIf="ticket.tm_intervals">Agenda</span>
+      <span>{{ ticket.id_position }}</span>
+    </td>
+  </ng-container>
 
 
-    <ng-container matColumnDef="tx_status">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Mesa </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.tx_status==='assigned'" class="lg mdi mdi-checkbox-marked text-active align-middle"></span>
-        <span *ngIf="ticket.tx_status==='queued'" class="lg mdi mdi-help-circle align-middle"></span>
-        <span *ngIf="ticket.tx_status==='requested'" class="lg mdi mdi-alert text-warn align-middle"></span>
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="tx_persons">
+    <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePersons')"></div>
+      <div>Personas</div>
+    </th>
+    <td mat-cell *matCellDef="let ticket" class="text-center">
+      <span>{{ ticket.nm_persons}}</span>
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Nomb </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span>{{ ticket.tx_name}}</span>
-      </td>
-    </ng-container>
 
-    <ng-container matColumnDef="prioritario">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prio </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="!ticket.bl_priority" class="sm align-middle">NO</span>
-        <span *ngIf="ticket.bl_priority" class="lg mdi mdi-human-wheelchair text-accent align-middle"></span>
+  <ng-container matColumnDef="tx_status">
+    <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueueStatus')"></div>
+      <div>Estado</div>
+    </th>
+    <td mat-cell *matCellDef="let ticket" class="text-center">
+      <span *ngIf="ticket.tx_status==='assigned'" class="lg mdi mdi-checkbox-marked text-active align-middle"></span>
+      <span *ngIf="ticket.tx_status==='queued'" class="lg mdi mdi-help-circle align-middle"></span>
+      <span *ngIf="ticket.tx_status==='requested'" class="lg mdi mdi-alert text-warn align-middle"></span>
+    </td>
+  </ng-container>
 
-      </td>
-    </ng-container>
+ <ng-container matColumnDef="prioritario">
+    <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePrioritary')"></div>
+      <div>Prioridad</div>
+    </th>
+    <td mat-cell *matCellDef="let ticket" class="text-center">
+      <span *ngIf="!ticket.bl_priority" class="sm align-middle">NO</span>
+      <span *ngIf="ticket.bl_priority" class="lg mdi mdi-human-wheelchair text-accent align-middle"></span>
 
-    <ng-container matColumnDef="circuito">
-      <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Circ </th>
-      <td mat-cell *matCellDef="let ticket" class="text-center">
-        <span *ngIf="ticket.tm_intervals" class="mdi mdi-calendar-account"></span>
-        <span *ngIf="ticket.tm_intervals && ticket.bl_contingent === false" class="mdi mdi-web"></span>
-        <span *ngIf="ticket.bl_contingent === true" class="mdi mdi-account-tie"></span>
-      </td>
-    </ng-container>
+    </td>
+  </ng-container>
 
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-      <td class="td-expanded px-0" mat-cell *matCellDef="let ticket" [attr.colspan]="displayedColumns.length">
-        <div class="ticket-container" [@detailExpand]="ticket == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="p-2 w-100">
+  <ng-container matColumnDef="circuito">
+    <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueueCircuit')"></div>
+      <div>Circuito</div>
+    </th>
+    <td mat-cell *matCellDef="let ticket" class="text-center">
+      <span *ngIf="!ticket.tm_intervals && !ticket.bl_contingent" class="mdi mdi-web"></span>
+      <span *ngIf="!ticket.tm_intervals && ticket.bl_contingent" class="mdi mdi-account-tie"></span>
+      <span *ngIf="ticket.tm_intervals && !ticket.bl_contingent" class="mdi mdi-calendar-account"></span>
+      <span *ngIf="ticket.tm_intervals && ticket.bl_contingent" class="mdi mdi-police-badge-outline"></span>
+    </td>
+  </ng-container>
 
-            <!------------------------------>
-            <!-- TABLES BUTTONS -->
-            <!------------------------------>
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td class="td-expanded px-0" mat-cell *matCellDef="let ticket" [attr.colspan]="displayedColumns.length">
+      <div class="ticket-container" [@detailExpand]="ticket == expandedElement ? 'expanded' : 'collapsed'">
+        <div class="p-2 w-100">
 
-            <div class="text-center py-2">
-              <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
-                *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
+          <!------------------------------>
+          <!-- TABLES BUTTONS -->
+          <!------------------------------>
 
-                <!-- TABLE NUMBER -->
-                <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">
-                  {{ table.nm_table }}
-                </div>
-
-                <!-- ICON STATUS -->
-                <div *ngIf="ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                  class="xl mdi mdi-check-circle"></div>
-
-                <div *ngIf="!ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                  class="lg mdi mdi-human-male">{{table.nm_persons }}</div>
-              </button>
+          <div class="text-center py-2">
+            <div class="sm text-accent my-3">
+              Seleccioná las mesas que queres asignar al ticket de {{ticket.tx_name}}, luego hace click en Guardar.
             </div>
+            <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
+              *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
 
-            <hr>
-            <!------------------------------>
-            <!-- TICKET DATA -->
-            <!------------------------------>
+              <!-- TABLE NUMBER -->
+              <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">
+                {{ table.nm_table }}
+              </div>
 
-            <div class="ticket-actions">
+              <!-- ICON STATUS -->
+              <div *ngIf="ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
+                class="xl mdi mdi-check-circle"></div>
 
-              <button mat-raised-button color="primary" class="action-button">
-                <table>
-                  <tr>
-                    <td class="button-icon mdi mdi-human-wheelchair xl"></td>
-                    <td class="button-text">
-                      <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
-                      </mat-slide-toggle>
-                    </td>
-                  </tr>
-                </table>
-              </button>
+              <div *ngIf="!ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
+                class="lg mdi mdi-human-male">{{table.nm_persons }}</div>
+            </button>
 
-              <button mat-raised-button color="active" class="action-button" (click)="assignTablesRequested(ticket)">
-                <table>
-                  <tr>
-                    <td class="button-icon bg-primary mdi mdi-content-save xl"></td>
-                    <td class="button-text">Guardar</td>
-                  </tr>
-                </table>
-              </button>
-
-              <button mat-raised-button color="telegram" class="action-button"
-                (click)="sendMessage(ticket)">
-                <table>
-                  <tr>
-                    <td class="button-icon mdi mdi-send xl"></td>
-                    <td class="button-text">Mensaje</td>
-                  </tr>
-                </table>
-              </button>
-
-              <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
-                <table>
-                  <tr>
-                    <td class="button-icon mdi mdi-lock xl"></td>
-                    <td class="button-text">Finalizar</td>
-                  </tr>
-                </table>
-              </button>
-
-
+            <div class="px-4 pt-3">
+              <app-ticket-info [ticket]="ticket"></app-ticket-info>
             </div>
+          </div>
+
+          <hr>
+          <!------------------------------>
+          <!-- TICKET DATA -->
+          <!------------------------------>
+
+          <div class="ticket-actions">
+
+            <button mat-raised-button color="primary" class="action-button">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-human-wheelchair xl"></td>
+                  <td class="button-text">
+                    <mat-slide-toggle [(ngModel)]="ticket.bl_priority">
+                    </mat-slide-toggle>
+                  </td>
+                </tr>
+              </table>
+            </button>
+
+            <button mat-raised-button color="active" class="action-button" (click)="assignTablesRequested(ticket)">
+              <table>
+                <tr>
+                  <td class="button-icon bg-primary mdi mdi-content-save xl"></td>
+                  <td class="button-text">Guardar</td>
+                </tr>
+              </table>
+            </button>
+
+            <button mat-raised-button color="telegram" class="action-button" (click)="sendMessage(ticket)">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-send xl"></td>
+                  <td class="button-text">Mensaje</td>
+                </tr>
+              </table>
+            </button>
+
+            <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-lock xl"></td>
+                  <td class="button-text">Finalizar</td>
+                </tr>
+              </table>
+            </button>
+
 
           </div>
+
         </div>
-      </td>
-    </ng-container>
+      </div>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let ticket; columns: displayedColumns;" [class.expanded-row]="expandedElement === ticket"
-      (click)="expandedElement = expandedElement === ticket ? null : ticket" class="tables-row"></tr>
-    <tr mat-row *matRowDef="let ticket; columns: ['expandedDetail']" class="detail-row"></tr>
-  </table>
-
-
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let ticket; columns: displayedColumns;" [class.expanded-row]="expandedElement === ticket"
+    (click)="expandedElement = expandedElement === ticket ? null : ticket" class="tables-row"></tr>
+  <tr mat-row *matRowDef="let ticket; columns: ['expandedDetail']" class="detail-row"></tr>
+</table>

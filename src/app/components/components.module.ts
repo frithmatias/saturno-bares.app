@@ -20,6 +20,7 @@ import { SocialComponent } from './social/social.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { HelpComponent } from './help/help.component';
+import { TicketInfoComponent } from './ticket-info/ticket-info.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HelpComponent } from './help/help.component';
     MessengerComponent,
     SpinnerComponent,
     HelpComponent,
+    TicketInfoComponent,
   ],
   imports: [
     RouterModule,
@@ -57,6 +59,8 @@ import { HelpComponent } from './help/help.component';
     MessengerComponent,
     SpinnerComponent,
     HelpComponent,
+    TicketInfoComponent,
+
   ]
 })
 export class ComponentsModule { }

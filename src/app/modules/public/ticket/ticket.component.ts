@@ -132,7 +132,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 					this.showAlert = false;
 				}
 
-				if (this.ticket && this.ticket.tm_provided === null && this.ticket.tm_intervals.length === 0) { this.calculateTimeToAtt(); }
+				if (this.ticket && this.ticket.tm_provided === null && this.ticket.tm_intervals) { this.calculateTimeToAtt(); }
 
 				const audio = new Audio();
 				audio.src = '../../assets/bell.wav';
@@ -300,7 +300,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 			})
 		})
 	}
-
 
 	setScore(idItem: string, nmScore: number): void {
 		this.scores.set(idItem, nmScore);

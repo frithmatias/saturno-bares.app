@@ -6,6 +6,8 @@ import { WaiterService } from '../../waiter.service';
 import { TicketResponse } from '../../../../interfaces/ticket.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PublicService } from '../../../public/public.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { HelpComponent } from '../../../../components/help/help.component';
 
 
 @Component({
@@ -25,11 +27,13 @@ export class QueuedComponent implements OnInit {
   @Input() queued: Ticket[];
   @Input() tables: Table[];
 
-  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'nombre', 'prioritario', 'circuito'];
+  displayedColumns: string[] = ['id_position', 'tx_persons', 'tx_status', 'prioritario', 'circuito'];
 
   constructor(
     public publicService: PublicService,
-    public waiterService: WaiterService
+    public waiterService: WaiterService,
+    private bottomSheet: MatBottomSheet
+
   ) { }
 
   ngOnInit(): void { }
@@ -49,7 +53,7 @@ export class QueuedComponent implements OnInit {
     let blPriority = ticket.bl_priority;
     // si el ticket viene de agenda y el waiter re-asigna mesas asignadas por admin, no debe tener en cuenta si es 
     // el primero, porque la provisión de un assignado de agenda la hace el cron a la hora exacta de la reserva.
-    let blFirst = ticket.tm_intervals.length > 0 ? false : activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
+    let blFirst = ticket.tm_intervals ? false : activeQueue.length === 0 ? true : activeQueue[0]._id === ticket._id;
     let idTicket = ticket._id;
     let cdTables = ticket.cd_tables;
 
@@ -95,4 +99,8 @@ export class QueuedComponent implements OnInit {
     }
   };
 
+
+  openBottomSheet = (idHelp: string): void => {
+    this.bottomSheet.open(HelpComponent, { data: { idHelp } });
+  }
 }

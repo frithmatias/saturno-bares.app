@@ -3,112 +3,110 @@
 <!------------------------------>
 
 
-    <mat-checkbox [(ngModel)]="listmode" color="accent" (click)="setListMode()">Modo Lista</mat-checkbox>
+<mat-checkbox [(ngModel)]="listmode" color="accent" (click)="setListMode()">Modo Lista</mat-checkbox>
 
-    <!------------------------------>
-    <!-- TABLES [LIST MODE] -->
-    <!------------------------------>
+<!------------------------------>
+<!-- TABLES [LIST MODE] -->
+<!------------------------------>
 
-    <div *ngIf="listmode">
+<div *ngIf="listmode">
 
-        <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
+    <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
 
-            <ng-container matColumnDef="estado">
-                <th mat-header-cell *matHeaderCellDef class="sm text-left text-accent">Est</th>
-                <td mat-cell *matCellDef="let element" class="text-left">
-                    <app-table-info [listmode]="listmode" [table]="element"></app-table-info>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef class="sm text-left text-accent">Est</th>
+            <td mat-cell *matCellDef="let element" class="text-left">
+                <app-table-status [listmode]="listmode" [table]="element"></app-table-status>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="mesa">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> # </th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ element.nm_table }}</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="mesa">
+            <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> # </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+                <span class="font-monospace">{{ element.nm_table }}</span>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="capacidad">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Cap </th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ element.nm_persons }}</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="capacidad">
+            <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Cap </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+                <span class="font-monospace">{{ element.nm_persons }}</span>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="ticket">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Tkt </th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ element.id_session?.id_ticket.id_position }}</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="ticket">
+            <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Tkt </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+                <span class="font-monospace">{{ element.id_session?.id_ticket.id_position }}</span>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="ocupacion">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ocup </th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ element.nm_persons | getOccupation :
-                        element.id_session?.id_ticket.nm_persons }}%</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="ocupacion">
+            <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Ocup </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+                <span class="font-monospace">{{ element.nm_persons | getOccupation :
+                    element.id_session?.id_ticket.nm_persons }}%</span>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="tp">
-                <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prov </th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_provided }}</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="tp">
+            <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent"> Prov </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+                <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_provided }}</span>
+            </td>
+        </ng-container>
 
-            <ng-container matColumnDef="ta">
-                <th mat-header-cell *matHeaderCellDef class="sm text-right text-accent"> Asis </th>
-                <td mat-cell *matCellDef="let element" class="text-right">
-                    <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_call }}</span>
-                </td>
-            </ng-container>
+        <ng-container matColumnDef="ta">
+            <th mat-header-cell *matHeaderCellDef class="sm text-right text-accent"> Asis </th>
+            <td mat-cell *matCellDef="let element" class="text-right">
+                <span class="font-monospace">{{ busyTablesTimes.get(element.nm_table)?.tm_call }}</span>
+            </td>
+        </ng-container>
 
-            <!-------------------------------------->
-            <!-- EXPANDED ROW: STATUS AND ACTIONS -->
-            <!-------------------------------------->
+        <!-------------------------------------->
+        <!-- EXPANDED ROW: STATUS AND ACTIONS -->
+        <!-------------------------------------->
 
-            <ng-container matColumnDef="expandedDetail">
-                <td class="td-expanded px-0" mat-cell *matCellDef="let element"
-                    [attr.colspan]="displayedColumns.length">
-                    <div class="ticket-container"
-                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <ng-container matColumnDef="expandedDetail">
+            <td class="td-expanded px-0" mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="ticket-container" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-                        <!-- ng-template to table status, ticket info and action buttons -->
-                        <div *ngIf="table then expandTable"></div>
-                    </div>
-                </td>
-            </ng-container>
+                    <!-- ng-template to table status, ticket info and action buttons -->
+                    <div *ngIf="table then expandTable"></div>
+                </div>
+            </td>
+        </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-                [class.expanded-row]="expandedElement === element" (click)="selectTable(element)"
-                (click)="expandedElement = expandedElement === element ? null : element" class="tables-row"></tr>
-            <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="detail-row"></tr>
-        </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+            [class.expanded-row]="expandedElement === element" (click)="selectTable(element)"
+            (click)="expandedElement = expandedElement === element ? null : element" class="tables-row"></tr>
+        <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
 
 
-    </div>
+</div>
 
-    <!------------------------------>
-    <!-- TABLES [BUTTONS MODE] -->
-    <!------------------------------>
+<!------------------------------>
+<!-- TABLES [BUTTONS MODE] -->
+<!------------------------------>
 
-    <div *ngIf="!listmode">
-        <button mat-raised-button
-            [color]="t.id_session ? t.id_session?.id_ticket?.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
-            class="m-1 table-button-inactive" *ngFor="let t of tables"
-            [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
+<div *ngIf="!listmode">
+    <button mat-raised-button
+        [color]="t.id_session ? t.id_session?.id_ticket?.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
+        class="m-1 table-button-inactive" *ngFor="let t of tables"
+        [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
-            <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ t.nm_table }}</div>
-            <div class="table-button-icon">
-                <app-table-info [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-info>
-            </div>
+        <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ t.nm_table }}</div>
+        <div class="table-button-icon">
+            <app-table-status [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-status>
+        </div>
 
-        </button>
+    </button>
 
-        <!-- ng-template to table status, ticket info and action buttons -->
-        <div *ngIf="table then expandTable"></div>
-    </div>
+    <!-- ng-template to table status, ticket info and action buttons -->
+    <div *ngIf="table then expandTable"></div>
+</div>
 
 
 
@@ -129,72 +127,36 @@
             <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
         </div>
 
+
+        <div class="px-4 mt-4">
+
         <!------------------------------>
         <!-- TICKET INFO -->
         <!------------------------------>
+            <app-ticket-info [ticket]="table.id_session?.id_ticket"></app-ticket-info>
+       
 
-        <div *ngIf="table?.id_session?.id_ticket" class="p-3">
-            <table class="font-monospace">
-                <tr>
-                    <td>Turno</td>
-                    <td class="text-right">
-                        {{ table?.id_session?.id_ticket.id_position }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cliente</td>
-                    <td class="text-right">
-                        {{ table?.id_session?.id_ticket.tx_name }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Contacto</td>
-                    <td class="text-right">
-                        {{ table?.id_session?.id_ticket.tx_email }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Circuito</td>
-                    <td class="text-right">
-                        <span *ngIf="table?.id_session?.id_ticket.tm_intervals.length > 0">Agenda</span>
-                        <span
-                            *ngIf="table?.id_session?.id_ticket.tm_intervals.length === 0 && table?.id_session?.id_ticket.bl_contingent === false">Web</span>
-                        <span *ngIf="table?.id_session?.id_ticket.bl_contingent === true">Contingencia</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Comensales</td>
-                    <td class="text-right">
-                        {{ table?.id_session?.id_ticket.nm_persons }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Prioridad</td>
-                    <td class="text-right">
-                        <span *ngIf="table?.id_session?.id_ticket.bl_priority === false">No</span>
-                        <span *ngIf="table?.id_session?.id_ticket.bl_priority === true">Si</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Provisión</td>
-                    <td class="text-right">
-                        {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Solicitud de asistencia
-                    </td>
-                    <td class="text-right">
-                        {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <!------------------------------>
+        <!-- TICKET TIMERS -->
+        <!------------------------------>
 
-
-        <hr>
-
+        <table class="px-4 my-4" *ngIf="table.id_session?.id_ticket">
+            <tr>
+                <td>Provisión</td>
+                <td class="text-right">
+                    {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Solicitud de asistencia
+                </td>
+                <td class="text-right">
+                    {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
+                </td>
+            </tr>
+        </table>
+    </div>
         <!------------------------------>
         <!-- ACTIONS -->
         <!------------------------------>

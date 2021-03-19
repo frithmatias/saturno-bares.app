@@ -1,5 +1,9 @@
 <div class="toolbar">
 
+    <!-- ======================================================== -->
+    <!-- FIRST ROW: LOGO & COMPANY NAME -->
+    <!-- ======================================================== -->
+
     <div class="toolbar-header">
 
         <!-- TOGGLE MENU ICON -->
@@ -52,9 +56,6 @@
                 </div>
             </div>
 
-            <app-theme class="app-theme"></app-theme>
-
-
         </div>
 
         <!-- COMPANY NAME -->
@@ -65,11 +66,12 @@
         </div>
 
         <div class="d-flex md">
+            <app-theme class="mr-2"></app-theme>
 
             <!-- LOG IN -->
             <div *ngIf="!loginService.user" class="pointer" routerLink="/login">
                 <span class="mdi mdi-account-circle mr-1"></span>
-                <span>
+                <span class="md">
                     Ingreso a Comercios
                 </span>
             </div>
@@ -79,16 +81,16 @@
 
                 <!-- GOOGLE LOGIN IMAGE -->
                 <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
-                    <img class="user-image ml-3" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+                    <img class="user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
                 </div>
 
                 <!-- FACEBOOK HAS NO LOGIN IMAGE -->
                 <div *ngIf="loginService.user.bl_social && !loginService.user.tx_img"
-                    class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+                    class="mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
                 </div>
 
                 <!-- NORMAL LOGIN WITH IMAGE -->
-                <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="ml-3 pointer"
+                <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="pointer"
                     [matMenuTriggerFor]="menu">
                     <img class="user-image"
                         [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
@@ -96,7 +98,7 @@
 
                 <!-- NORMAL LOGIN WO IMAGE -->
                 <div *ngIf="!loginService.user.bl_social && !loginService.user.tx_img"
-                    class="ml-3 mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+                    class="mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
                 </div>
 
                 <mat-menu #menu="matMenu">
@@ -135,8 +137,10 @@
 
     </div>
 
-    <!-- SECOND ROW : LINKS -->
-    
+    <!-- ======================================================== -->
+    <!-- SECOND ROW: LINKS -->
+    <!-- ======================================================== -->
+
     <div>
 
         <div class="toolbar-links-base" *ngIf="url==='howworks'">
@@ -149,64 +153,49 @@
             <div class="toolbar-base-item pointer" routerLink="/login">
                 Ingresar
             </div>
-            <app-theme></app-theme>
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='login' || url==='register'">
             <div class="toolbar-base-item pointer" routerLink="/home">
                 Volver al Inicio
             </div>
-            <app-theme></app-theme>
         </div>
 
         <div class="toolbar-links-base" *ngIf="!url || url === '' || url==='home'">
-
             <div class="toolbar-base-item pointer" routerLink="/howworks">
                 ¿Cómo funciona?
             </div>
-
             <div class="toolbar-base-item pointer" routerLink="/public/tickets">
                 Mis Reservas
             </div>
-
             <div class="toolbar-base-item pointer" (click)="scrollToElement()">
                 Buscá por Zona
             </div>
-            <app-theme></app-theme>
-
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='public'">
             <div class="toolbar-base-item pointer" routerLink="/home">
                 Volver al Inicio
             </div>
-            <app-theme></app-theme>
-
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='admin'">
             <div class="toolbar-base-item pointer" routerLink="/admin/home">
                 Inicio
             </div>
-
             <div class="toolbar-base-item pointer" routerLink="/admin/wizard">
                 Wizard
             </div>
-
             <div class="toolbar-base-item pointer" routerLink="/waiter/home">
                 Atender
             </div>
-            <app-theme></app-theme>
-
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='waiter'">
             <div class="toolbar-base-item pointer" routerLink="/waiter/home">
                 Inicio
             </div>
-            <app-theme></app-theme>
         </div>
-
 
     </div>
 

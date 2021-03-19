@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Table } from 'src/app/interfaces/table.interface';
 
 @Component({
-  selector: 'app-table-info',
-  templateUrl: './table-info.component.html',
-  styleUrls: ['./table-info.component.css']
+  selector: 'app-table-status',
+  templateUrl: './table-status.component.html',
+  styleUrls: ['./table-status.component.css']
 })
-export class TableInfoComponent implements OnInit {
+export class TableStautsComponent implements OnInit {
 
   @Input() table: Table;
   @Input() listmode: boolean;

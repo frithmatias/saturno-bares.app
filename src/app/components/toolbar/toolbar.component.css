@@ -35,11 +35,6 @@
     top          : 2px;
 }
 
-.app-theme {
-    position: relative;
-    top     : -2px;
-}
-
 .toolbar-links-base {
     display        : none;
     justify-content: flex-end;
