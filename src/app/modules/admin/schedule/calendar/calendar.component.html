@@ -5,12 +5,12 @@
         <thead>
             <th class="cap px-1"></th>
             <th class="cap px-1"></th>
-            <th class="cap px-1 mdi mdi-human-male" *ngFor="let t of tables"> {{t.nm_persons}} </th>
+            <th class="cap px-1 sm" *ngFor="let t of tables"> {{t.nm_persons}} </th>
         </thead>
         <thead>
-            <th class="tbl px-1">Intervalo</th>
+            <th class="tbl px-1">Mesas</th>
             <th class="tbl px-1"></th>
-            <th class="tbl px-1" *ngFor="let t of tables"> #{{t.nm_table}} </th>
+            <th class="tbl px-1" *ngFor="let t of tables"> {{t.nm_table}} </th>
         </thead>
         <tbody>
             <!-- intervals -->
@@ -19,8 +19,8 @@
                 <td class="px-1">
                     <span>{{av.interval | dateToInterval}}</span>
                 </td>
-                <td>
-                    <span class="text-accent mdi mdi-human-male md">{{av.capacity}}</span>
+                <td class="text-accent sm">
+                    {{av.capacity}}
                 </td>
 
                 <!-- tables -->

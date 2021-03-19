@@ -6,15 +6,16 @@
 .item .mdi,
 .subitem .mdi {
     color         : var(--text);
-    opacity       : .2;
-    font-size     : 1.5em;
+    opacity       : .3;
+    font-size     : 1.4em;
     vertical-align: middle;
 }
 
 .subitem .mdi {
-    color  : var(--accent);
-    opacity: 1;
-    margin-left: 1px;
+    color      : var(--accent);
+    opacity    : 1;
+    font-size  : 1.2em;
+    margin-left: 3px;
 }
 
 .subitem {

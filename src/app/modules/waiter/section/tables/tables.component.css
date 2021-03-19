@@ -1,4 +1,13 @@
 /* MESAS  */
+.table-button {
+    width: 80px;
+    padding: 0px !important;
+    margin: 5px !important;
+}
+
+.monospace {
+    font-family: monospace;
+}
 
 .ticket-container {
     overflow : hidden;
@@ -10,10 +19,6 @@
     width     : 100%;
     padding   : 1.5em;
     text-align: center;
-}
-
-.table-button-icon {
-    height: 42px;
 }
 
 .ticket-actions {

@@ -94,13 +94,16 @@
 <div *ngIf="!listmode">
     <button mat-raised-button
         [color]="t.id_session ? t.id_session?.id_ticket?.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
-        class="m-1 table-button-inactive" *ngFor="let t of tables"
+        class="table-button table-button-inactive" *ngFor="let t of tables"
         [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
-        <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">{{ t.nm_table }}</div>
-        <div class="table-button-icon">
-            <app-table-status [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-status>
-        </div>
+        <table>
+            <td class="button-icon monospace px-2 xl" style="background-color: rgba(0,0,0,.1);"><span
+                    *ngIf="t.nm_table < 10">0</span>{{ t.nm_table }}</td>
+            <td class="button-text">
+                <app-table-status [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-status>
+            </td>
+        </table>
 
     </button>
 
@@ -118,45 +121,47 @@
     <div *ngIf="table" class="py-4">
 
 
-        <div class="p-2 lg text-center">
+        <div class="p-2 xl text-center">
             Mesa {{ table.nm_table }}:
-            <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
-            <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
-            <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
-            <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
-            <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
+            <span class="text-accent">
+                <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
+                <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
+                <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
+                <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
+                <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
+            </span>
         </div>
 
 
         <div class="px-4 mt-4">
 
-        <!------------------------------>
-        <!-- TICKET INFO -->
-        <!------------------------------>
+            <!------------------------------>
+            <!-- TICKET INFO -->
+            <!------------------------------>
             <app-ticket-info [ticket]="table.id_session?.id_ticket"></app-ticket-info>
-       
 
-        <!------------------------------>
-        <!-- TICKET TIMERS -->
-        <!------------------------------>
 
-        <table class="px-4 my-4" *ngIf="table.id_session?.id_ticket">
-            <tr>
-                <td>Provisión</td>
-                <td class="text-right">
-                    {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Solicitud de asistencia
-                </td>
-                <td class="text-right">
-                    {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
-                </td>
-            </tr>
-        </table>
-    </div>
+            <!------------------------------>
+            <!-- TICKET TIMERS -->
+            <!------------------------------>
+
+            <table class="px-4 my-4" *ngIf="table.id_session?.id_ticket">
+                <tr>
+                    <td>Provisión</td>
+                    <td class="text-right monospace text-accent">
+                        {{ busyTablesTimes.get(table.nm_table)?.tm_provided }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Solicitud de asistencia
+                    </td>
+                    <td class="text-right monospace text-accent">
+                        {{ busyTablesTimes.get(table.nm_table)?.tm_call }}
+                    </td>
+                </tr>
+            </table>
+        </div>
         <!------------------------------>
         <!-- ACTIONS -->
         <!------------------------------>
