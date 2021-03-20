@@ -7,6 +7,8 @@ import { TicketResponse, Ticket } from '../../../../interfaces/ticket.interface'
 import { TableResponse } from '../../../../interfaces/table.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PublicService } from '../../../public/public.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { TicketInfoComponent } from '../../../../components/ticket-info/ticket-info.component';
 
 @Component({
   selector: 'app-tables',
@@ -35,7 +37,9 @@ export class TablesComponent implements OnInit {
     public loginService: LoginService,
     public waiterService: WaiterService,
     public publicService: PublicService,
-    private intervalToHmsPipe: IntervalToHmsPipe
+    private intervalToHmsPipe: IntervalToHmsPipe,
+    private bottomSheet: MatBottomSheet
+
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +49,7 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    
+
     if (changes.tables && this.table) {
       this.table = changes.tables.currentValue.filter((table: Table) => this.table._id === table._id)[0];
     }
@@ -206,5 +210,9 @@ export class TablesComponent implements OnInit {
     table.id_session = null;
   };
 
+  openSheetTicketInfo(ticket: Ticket) {
+    if (!ticket) { return; }
+    this.bottomSheet.open(TicketInfoComponent, { data: ticket });
+  }
 
 }

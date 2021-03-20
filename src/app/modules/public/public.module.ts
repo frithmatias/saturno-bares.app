@@ -21,7 +21,6 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { TicketComponent } from './ticket/ticket.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { BsheetComponent } from './ticket/bsheet/bsheet.component';
 
 
 @NgModule({
@@ -35,7 +34,6 @@ import { BsheetComponent } from './ticket/bsheet/bsheet.component';
 		TicketsComponent,
 		LoginComponent,
 		RegisterComponent,
-		BsheetComponent,
 	],
 	imports: [
 		CommonModule,

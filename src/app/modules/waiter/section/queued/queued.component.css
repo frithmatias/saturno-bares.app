@@ -1,3 +1,11 @@
+/* MESAS  */
+.table-button {
+    width: 80px;
+    padding: 0px !important;
+    margin: 5px !important;
+}
+
+
 .row:hover {
     background-color: orangered;
 }

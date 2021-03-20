@@ -35,7 +35,7 @@ import { ContingencyTicketComponent } from './section/contingency-ticket/conting
     SectionsComponent,
     ProfileComponent,
     TableStautsComponent,
-    ContingencyTicketComponent
+    ContingencyTicketComponent,
   ],
   imports: [
     ReactiveFormsModule,

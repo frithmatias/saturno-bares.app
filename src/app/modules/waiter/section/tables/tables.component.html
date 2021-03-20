@@ -98,8 +98,7 @@
         [ngClass]="{'table-button-active': t?._id === table?._id}" (click)="selectTable(t)">
 
         <table>
-            <td class="button-icon monospace px-2 xl" style="background-color: rgba(0,0,0,.1);"><span
-                    *ngIf="t.nm_table < 10">0</span>{{ t.nm_table }}</td>
+            <td class="button-icon monospace px-2 xl"><span *ngIf="t.nm_table < 10">0</span>{{ t.nm_table }}</td>
             <td class="button-text">
                 <app-table-status [listmode]="listmode" [table]="t" [toggling]="toggling"></app-table-status>
             </td>
@@ -121,24 +120,19 @@
     <div *ngIf="table" class="py-4">
 
 
-        <div class="p-2 xl text-center">
+        <div class="p-2 lg text-center">
             Mesa {{ table.nm_table }}:
             <span class="text-accent">
-                <span *ngIf="table.tx_status === 'busy'"> Ocupada </span>
-                <span *ngIf="table.tx_status === 'paused'"> Pausada </span>
-                <span *ngIf="table.tx_status === 'idle'"> Disponible </span>
-                <span *ngIf="table.tx_status === 'reserved'"> Reservada </span>
-                <span *ngIf="table.tx_status === 'waiting'"> Esperando al cliente... </span>
+                <span *ngIf="table.tx_status === 'busy'" class="text-warn"> Ocupada </span>
+                <span *ngIf="table.tx_status === 'paused'" class="text-info"> Pausada </span>
+                <span *ngIf="table.tx_status === 'idle'" class="text-active"> Disponible </span>
+                <span *ngIf="table.tx_status === 'reserved'" class="text-primary"> Reservada </span>
+                <span *ngIf="table.tx_status === 'waiting'" class="text-accent"> Esperando al cliente... </span>
             </span>
         </div>
 
 
         <div class="px-4 mt-4">
-
-            <!------------------------------>
-            <!-- TICKET INFO -->
-            <!------------------------------>
-            <app-ticket-info [ticket]="table.id_session?.id_ticket"></app-ticket-info>
 
 
             <!------------------------------>
@@ -238,6 +232,17 @@
                     <tr>
                         <td class="button-icon mdi mdi-close xl"></td>
                         <td class="button-text">Finalizar</td>
+                    </tr>
+                </table>
+            </button>
+
+            <!-- ticket info -->
+            <button mat-raised-button color="telegram" class="action-button"
+                (click)="openSheetTicketInfo(table.id_session?.id_ticket)">
+                <table>
+                    <tr>
+                        <td class="button-icon mdi mdi-information-outline xl"></td>
+                        <td class="button-text">Ticket</td>
                     </tr>
                 </table>
             </button>

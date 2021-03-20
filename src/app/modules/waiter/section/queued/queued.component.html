@@ -9,7 +9,8 @@
 
   <ng-container matColumnDef="id_position">
     <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
-      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePosition')"></div>
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openSheetHelp('waiterVirtualQueuePosition')">
+      </div>
       <div>Posición</div>
     </th>
 
@@ -22,7 +23,8 @@
 
   <ng-container matColumnDef="tx_persons">
     <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
-      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePersons')"></div>
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openSheetHelp('waiterVirtualQueuePersons')">
+      </div>
       <div>Personas</div>
     </th>
     <td mat-cell *matCellDef="let ticket" class="text-center">
@@ -33,7 +35,8 @@
 
   <ng-container matColumnDef="tx_status">
     <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
-      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueueStatus')"></div>
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openSheetHelp('waiterVirtualQueueStatus')">
+      </div>
       <div>Estado</div>
     </th>
     <td mat-cell *matCellDef="let ticket" class="text-center">
@@ -43,9 +46,10 @@
     </td>
   </ng-container>
 
- <ng-container matColumnDef="prioritario">
+  <ng-container matColumnDef="prioritario">
     <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
-      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueuePrioritary')"></div>
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openSheetHelp('waiterVirtualQueuePrioritary')">
+      </div>
       <div>Prioridad</div>
     </th>
     <td mat-cell *matCellDef="let ticket" class="text-center">
@@ -57,7 +61,8 @@
 
   <ng-container matColumnDef="circuito">
     <th mat-header-cell *matHeaderCellDef class="sm text-center text-accent">
-      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openBottomSheet('waiterVirtualQueueCircuit')"></div>
+      <div class="mdi mdi-help-circle sm text-accent pointer" (click)="openSheetHelp('waiterVirtualQueueCircuit')">
+      </div>
       <div>Circuito</div>
     </th>
     <td mat-cell *matCellDef="let ticket" class="text-center">
@@ -79,28 +84,30 @@
           <!------------------------------>
 
           <div class="text-center py-2">
+
             <div class="sm text-accent my-3">
               Seleccioná las mesas que queres asignar al ticket de {{ticket.tx_name}}, luego hace click en Guardar.
             </div>
+
             <button mat-raised-button [color]="ticket.cd_tables.includes(table.nm_table)?'active':''"
-              *ngFor="let table of tables" class="m-1" (click)="setReserve(table, ticket)">
+              *ngFor="let table of tables" class="table-button" (click)="setReserve(table, ticket)">
 
-              <!-- TABLE NUMBER -->
-              <div class="xl px-3" style="background-color: rgba(0,0,0,.1);">
-                {{ table.nm_table }}
-              </div>
+              <table>
+                <td class="button-icon monospace px-2 xl"><span *ngIf="table.nm_table < 10">0</span>{{ table.nm_table }}
+                </td>
+                <td class="button-text">
+                  <!-- ICON STATUS -->
+                  <span *ngIf="ticket.cd_tables.includes(table.nm_table)" class="lg mdi mdi-check-circle">
+                  </span>
+                  <span *ngIf="!ticket.cd_tables.includes(table.nm_table)" class="md mdi mdi-human-male">
+                    {{table.nm_persons }}
+                  </span>
+                </td>
+              </table>
 
-              <!-- ICON STATUS -->
-              <div *ngIf="ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                class="xl mdi mdi-check-circle"></div>
-
-              <div *ngIf="!ticket.cd_tables.includes(table.nm_table)" style="background-color: rgba(0,0,0,.1);"
-                class="lg mdi mdi-human-male">{{table.nm_persons }}</div>
             </button>
 
-            <div class="px-4 pt-3">
-              <app-ticket-info [ticket]="ticket"></app-ticket-info>
-            </div>
+
           </div>
 
           <hr>
@@ -131,15 +138,6 @@
               </table>
             </button>
 
-            <button mat-raised-button color="telegram" class="action-button" (click)="sendMessage(ticket)">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-send xl"></td>
-                  <td class="button-text">Mensaje</td>
-                </tr>
-              </table>
-            </button>
-
             <button mat-raised-button color="warn" class="action-button" (click)="endTicket(ticket)">
               <table>
                 <tr>
@@ -149,6 +147,14 @@
               </table>
             </button>
 
+            <button mat-raised-button color="telegram" class="action-button" (click)="openSheetTicketInfo(ticket)">
+              <table>
+                <tr>
+                  <td class="button-icon mdi mdi-information-outline xl"></td>
+                  <td class="button-text">Ticket</td>
+                </tr>
+              </table>
+            </button>
 
           </div>
 

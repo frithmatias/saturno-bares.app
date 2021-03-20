@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td class="row-item">Sector:</td>
-            <td class="row-data">{{ticket.id_section.tx_section}}</td>
+            <td class="row-data"><span *ngIf="ticket.id_section?.tx_section">{{ticket.id_section.tx_section}}</span></td>
         </tr>
         <tr>
             <td class="row-item">Posición:</td>

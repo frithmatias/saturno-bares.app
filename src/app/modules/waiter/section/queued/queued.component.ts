@@ -8,6 +8,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { PublicService } from '../../../public/public.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { HelpComponent } from '../../../../components/help/help.component';
+import { TicketInfoComponent } from '../../../../components/ticket-info/ticket-info.component';
 
 
 @Component({
@@ -71,15 +72,6 @@ export class QueuedComponent implements OnInit {
     );
   };
 
-  sendMessage = (ticket: Ticket) => {
-
-    if (ticket.bl_contingent) {
-      // El ticket es de contingencia, no tiene asignado un socket
-      return;
-    }
-
-  }
-
   endTicket = (ticket: Ticket) => {
     if (!ticket) {
       this.publicService.snack('Seleccione una mesa primero', 3000);
@@ -99,8 +91,11 @@ export class QueuedComponent implements OnInit {
     }
   };
 
-
-  openBottomSheet = (idHelp: string): void => {
+  openSheetTicketInfo(ticket: Ticket) {
+    if (!ticket) { return; }
+    this.bottomSheet.open(TicketInfoComponent, { data: ticket });
+  }
+  openSheetHelp = (idHelp: string): void => {
     this.bottomSheet.open(HelpComponent, { data: { idHelp } });
   }
 }

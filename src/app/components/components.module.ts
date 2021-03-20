@@ -21,6 +21,7 @@ import { MessengerComponent } from './messenger/messenger.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { HelpComponent } from './help/help.component';
 import { TicketInfoComponent } from './ticket-info/ticket-info.component';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,10 @@ import { TicketInfoComponent } from './ticket-info/ticket-info.component';
     CommonModule,
     MaterialModule,
     PipesModule
+  ],
+  providers: [
+    { provide: MatBottomSheetRef, useValue: {} },
+    { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
   ],
   exports: [
     ToolbarComponent,

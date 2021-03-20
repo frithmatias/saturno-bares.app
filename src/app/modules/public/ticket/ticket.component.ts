@@ -16,7 +16,7 @@ import moment from 'moment';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 import { Company } from '../../../interfaces/company.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BsheetComponent } from './bsheet/bsheet.component';
+import { TicketInfoComponent } from '../../../components/ticket-info/ticket-info.component';
 
 const TAIL_LENGTH = 5;
 
@@ -342,7 +342,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 	}
 
 	openBottomSheet = (): void => {
-		this.bottomSheet.open(BsheetComponent, { data: this.ticket });
+		this.bottomSheet.open(TicketInfoComponent, { data: this.ticket });
 	}
 
 	ngOnDestroy() {
