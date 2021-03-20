@@ -11,11 +11,11 @@
     .welcome-title {
         font-size     : 3em !important;
         margin-top    : 0px !important;
-        letter-spacing: .05em;
+        font-weight   : 500 !important;
     }
 
     .welcome-subtitle {
-        font-size     : 1em !important;
+        font-size     : 1.3em !important;
         margin-top    : 5px !important;
         letter-spacing: .1em;
     }
@@ -81,8 +81,8 @@ mat-card {
 }
 
 .welcome-title {
-    font-size  : 4em;
-    font-weight: 200;
+    font-size  : 4.5em;
+    font-weight: 700;
 }
 
 .welcome-subtitle {

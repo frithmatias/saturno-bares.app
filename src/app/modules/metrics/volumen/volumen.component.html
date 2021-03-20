@@ -36,8 +36,8 @@
                 </tr>
                 <tr *ngFor="let ticket of ticketsFiltered">
                     <td>{{ticket.id_section.tx_section}}</td>
-                    <td>{{ticket.tm_start | dateToString : 'DD[/]MM HH[:]mm'}}</td>
-                    <td>{{ticket.tm_end | dateToString : 'DD[/]MM HH[:]mm'}}</td>
+                    <td>{{ticket.tm_start | dateToString | capitalizarPipe}}</td>
+                    <td>{{ticket.tm_end | dateToString | capitalizarPipe}}</td>
                     <td>{{ticket.tx_status}}</td>
                 </tr>
             </table>

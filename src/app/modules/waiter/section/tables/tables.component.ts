@@ -37,7 +37,6 @@ export class TablesComponent implements OnInit {
     public loginService: LoginService,
     public waiterService: WaiterService,
     public publicService: PublicService,
-    private intervalToHmsPipe: IntervalToHmsPipe,
     private bottomSheet: MatBottomSheet
 
   ) { }

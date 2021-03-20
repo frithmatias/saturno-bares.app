@@ -1,7 +1,4 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import moment from 'moment';
-import { timer, interval } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
 import { PublicService } from '../../modules/public/public.service';
 import { FormControl } from '@angular/forms';
 import { Location } from 'src/app/interfaces/location.interface';
@@ -10,7 +7,6 @@ import { CapitalizarPipe } from '../../pipes/capitalizar.pipe';
 import { CompaniesResponse, Company } from 'src/app/interfaces/company.interface';
 import { MatStepper } from '@angular/material/stepper';
 
-moment.locale('es');
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -35,18 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-
-    
-
-    let timer$ = interval(1000);
-
-    timer$.pipe(map(data => new Date().getTime())).subscribe(data => {
-      this.date = moment().format('LL H:mm:ss');
-
-    })
-
     this.publicService.drawerScrollTop();
-
 
     // search locations
     this.localidadesControl.valueChanges.subscribe(data => {

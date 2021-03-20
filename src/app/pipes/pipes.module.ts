@@ -5,7 +5,6 @@ import { GetidstringPipe } from './getidstring.pipe';
 import { ImagenPipe } from './imagen.pipe';
 import { IntervalToHmsPipe } from './interval-to-hms.pipe';
 import { MessageTimePipe } from './message-time.pipe';
-import { TimeToHmsPipe } from './time-to-hms.pipe';
 import { WordMaxLengthPipe } from './word-max-length.pipe';
 import { GetOccupationPipe } from './get-ocuppation.pipe';
 import { DateToStringPipe } from './date-to-string.pipe';
@@ -20,7 +19,6 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     GetidstringPipe,
     IntervalToHmsPipe,
     MessageTimePipe,
-    TimeToHmsPipe,
     WordMaxLengthPipe,
     CapitalizarPipe,
     ImagenPipe,
@@ -37,7 +35,6 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     GetidstringPipe,
     IntervalToHmsPipe,
     MessageTimePipe,
-    TimeToHmsPipe,
     WordMaxLengthPipe,
     CapitalizarPipe,
     ImagenPipe,

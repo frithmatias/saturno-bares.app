@@ -21,7 +21,7 @@
 
             <div class="logo-text-container pointer" routerLink="/home">
                 <div> SATURNO </div>
-                <div class="xs">{{version}}</div>
+                <div class="xs">{{version}} </div>
             </div>
         </div>
 
@@ -66,13 +66,13 @@
         </div>
 
         <div class="d-flex md">
-            <app-theme class="mr-2"></app-theme>
+            <app-theme class="mr-3"></app-theme>
 
             <!-- LOG IN -->
             <div *ngIf="!loginService.user" class="pointer" routerLink="/login">
                 <span class="mdi mdi-account-circle mr-1"></span>
                 <span class="md">
-                    Ingreso a Comercios
+                    Comercios
                 </span>
             </div>
 

@@ -4,11 +4,11 @@
 
 .notification-icon {
   position: fixed;
-  top     : 1.05em;
-  right   : 11.8em;
+  top     : 4.25em;
+  right   : 0.7em;
   z-index : 2;
   cursor  : pointer;
-  width   : 18px;
+  width   : 14px;
 }
 
 .opacity {

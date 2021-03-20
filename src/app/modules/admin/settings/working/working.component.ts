@@ -1,26 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import * as moment from 'moment';
 import { PublicService } from '../../../public/public.service';
 import { AdminService } from '../../admin.service';
-import { Settings } from 'src/app/interfaces/settings.interface';
 import { SettingsResponse } from '../../../../interfaces/settings.interface';
 import { IntervalToHmPipe } from '../../../../pipes/interval-to-hm.pipe';
 
 
 interface interval {
-interval?: number;
-local_code?: number;
-local_hr?: number;
-local_min?: number;
-local_str?: string;
-mins?: number;
-oclock?: boolean;
-utc_code?: number;
-utc_date?: Date;
-utc_hr?: number;
-utc_min?: number;
-utc_str?: string;
+  interval?: number;
+  local_code?: number;
+  local_hr?: number;
+  local_min?: number;
+  local_str?: string;
+  mins?: number;
+  oclock?: boolean;
+  utc_code?: number;
+  utc_date?: Date;
+  utc_hr?: number;
+  utc_min?: number;
+  utc_str?: string;
 }
 
 // interval: 45
@@ -71,10 +68,18 @@ export class WorkingComponent implements OnInit {
 
     // set all days
     const days = [...Array(7).keys()]; // 0-6 
+    let wDays: String[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     days.forEach(day => {
-      this.allWeekDays.push({ str: moment().day(day).format("dddd").toString(), int: day });
+
+      this.allWeekDays.push({ str: wDays[day], int: day });
+      console.log(this.allWeekDays)
+
+      // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      // var prnDt = 'Printed on ' + new Date().toLocaleTimeString('es-AR', options);
+      // Printed on sábado, 20 de marzo de 2021 16:18:06
+      // console.log(prnDt);
     })
-    
+
   }
 
   selectAllWeekDays(interval: interval) {

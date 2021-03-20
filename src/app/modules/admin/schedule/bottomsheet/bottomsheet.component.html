@@ -12,13 +12,15 @@
 
                 <span *ngIf="data.table.blReserved">Ticket asignado a la mesa <span
                         class="text-accent">{{data.table.nmTable}}</span> para
-                    el {{data.availability.interval | dateToString : 'DD [de] MMMM'}}
-                    a las <span class="text-accent">{{data.availability.interval | dateToString : 'HH:mm'}}</span>
+                    el {{data.availability.interval | dateToString | capitalizarPipe}}
+                    a las <span class="text-accent">{{data.availability.interval | dateToString |
+                        capitalizarPipe}}</span>
                 </span>
 
                 <span *ngIf="!data.table.blReserved">Crear un ticket de contingencia para
-                    el {{data.availability.interval | dateToString : 'DD [de] MMMM'}}
-                    a las <span class="text-accent">{{data.availability.interval | dateToString : 'HH:mm'}}</span> y
+                    el {{data.availability.interval | dateToString | capitalizarPipe}}
+                    a las <span class="text-accent">{{data.availability.interval | dateToString |
+                        capitalizarPipe}}</span> y
                     asignarle la mesa
                     <span class="text-accent">{{data.table.nmTable}}</span>
                 </span>
@@ -67,12 +69,12 @@
                         </tr>
                         <tr>
                             <td class="text-accent">Reserva:</td>
-                            <td>{{data.table.ticketOwner.tm_intervals[0] | dateToString : 'DD [de] MMMM [a las] HH:mm'}}
+                            <td>{{data.table.ticketOwner.tm_intervals[0] | dateToString | capitalizarPipe}}
                             </td>
                         </tr>
                         <tr>
                             <td class="text-accent">Inicio:</td>
-                            <td>{{data.table.ticketOwner.tm_start | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
+                            <td>{{data.table.ticketOwner.tm_start | dateToString | capitalizarPipe}}</td>
                         </tr>
                         <tr>
                             <td class="text-accent">Estado:</td>
@@ -104,7 +106,7 @@
 
                 <hr>
 
-                <div class="ticket-actions mt-2">
+                <div class="buttons-container">
                     <div>
                         <button mat-raised-button class="action-button" color="active" (click)="assignTablesPending()">
                             <table>
@@ -187,7 +189,7 @@
                         <div *ngIf="cdTables.length === 0">
                             Debe seleccionar al menos una mesa.
                         </div>
-                        <div class="my-2">
+                        <div class="text-center my-2">
                             <button type="button" mat-raised-button
                                 [color]="cdTables.includes(table.nmTable)?'active':''"
                                 *ngFor="let table of data.availability.available" class="action-button-flex"
@@ -195,21 +197,20 @@
 
                                 <table>
                                     <tr>
-                                        <td class="button-icon w-25 lg">{{ table.nmTable }}</td>
-
+                                        <td class="button-icon w-25 lg"><span *ngIf="table.nmTable < 10">0</span>{{
+                                            table.nmTable }}</td>
                                         <td *ngIf="cdTables.includes(table.nmTable)"
                                             class="button-text mdi mdi-check-circle"></td>
                                         <td *ngIf="!cdTables.includes(table.nmTable)"
                                             class="button-text mdi mdi-human-male">{{table.nmPersons }}</td>
                                     </tr>
                                 </table>
-
                             </button>
                         </div>
 
                     </div>
 
-                    <div class="ticket-actions mt-2">
+                    <div class="mt-2">
                         <div>
                             <button mat-raised-button class="action-button" color="active" (click)="createTicket()"
                                 [disabled]="ticketForm.invalid || cdTables.length === 0">

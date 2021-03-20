@@ -25,11 +25,9 @@
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.52",
     "angularx-qrcode": "^10.0.11",
-    "moment": "^2.27.0",
     "ng-image-slider": "^2.6.4",
     "ngx-socket-io": "^3.2.0",
     "rxjs": "~6.6.3",
-    "sweetalert2": "^9.15.3",
     "tslib": "^2.0.0",
     "urlsafe-base64": "^1.0.0",
     "zone.js": "~0.10.3"

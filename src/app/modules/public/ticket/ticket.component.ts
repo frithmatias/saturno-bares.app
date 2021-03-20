@@ -11,8 +11,6 @@ import { PublicService } from '../public.service';
 
 // libs
 import { Subject, interval, Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
-import moment from 'moment';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 import { Company } from '../../../interfaces/company.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -253,7 +251,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 		let AvgTo = sumTo / ticketsEndDesc.length;
 
 		let AvgAtt = ((AvgTa + AvgTo) * (this.ticketsAhead)) + ((AvgTa + AvgTo) / 4);
-		this.averageToAtt = `Su mesa estará lista en ${moment.duration(AvgAtt).humanize()}`;
+	//	this.averageToAtt = `Su mesa estará lista en ${mom_ent.duration(AvgAtt).humanize()}`;
 	}
 
 	toggle(chat): void {
@@ -315,29 +313,12 @@ export class TicketComponent implements OnInit, OnDestroy {
 			this.publicService.sendScores(dataScores).subscribe((d: ScoresResponse) => {
 				if (d.ok) {
 					delete this.ticket;
+					this.publicService.snack('Gracias!', 5000).then(ok => {
+						if (ok) this.publicService.clearPublicSession();
+					})
 				}
 			})
 
-			const Toast = Swal.mixin({
-				toast: true,
-				position: 'center',
-				showConfirmButton: false,
-				timer: 3000,
-				timerProgressBar: true,
-				onOpen: (toast) => {
-					toast.addEventListener('mouseenter', Swal.stopTimer)
-					toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-
-			Toast.fire({
-				icon: 'success',
-				title: '¡Gracias!'
-			}).then(data => {
-				if (data.isDismissed) {
-					this.publicService.clearPublicSession();
-				}
-			})
 		}
 	}
 

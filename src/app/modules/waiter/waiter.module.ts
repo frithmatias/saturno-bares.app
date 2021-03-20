@@ -12,7 +12,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 // components
 import { WaiterComponent } from './waiter.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { SectionComponent } from './section/section.component';
 import { QueuedComponent } from './section/queued/queued.component';
 import { TablesComponent } from './section/tables/tables.component';
@@ -28,7 +27,6 @@ import { ContingencyTicketComponent } from './section/contingency-ticket/conting
   declarations: [
     WaiterComponent,
     HomeComponent,
-    DashboardComponent,
     SectionComponent,
     QueuedComponent,
     TablesComponent,

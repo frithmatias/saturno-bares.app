@@ -51,8 +51,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     public websocketService: WebsocketService
   ) { 
     const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-    this.minDate = today;
-    this.maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); //30 days
+    // this.minDate = today;
+    // this.maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); //30 days
   }
 
   myFilter = (d: Date | null): boolean => {

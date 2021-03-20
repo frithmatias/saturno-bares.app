@@ -29,14 +29,6 @@ tr.element-row:not(.expanded-row):active {
     flex-flow: wrap;
 }
 
-.ticket-actions {
-    /* justify-content: space-between; */
-    justify-content: center;
-    width      : 100%;
-    display    : flex;
-    flex-flow  : wrap;
-}
-
 .tables-row:hover {
     background-color: rgba(120,20,120,0.2);
     cursor: pointer;

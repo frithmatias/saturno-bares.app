@@ -41,7 +41,7 @@
         </tr>
         <tr>
           <td>Fecha</td>
-          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToString : 'DD[/]MM HH:mm[hs]'}}</td>
+          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToString | capitalizarPipe }}</td>
         </tr>
         <tr>
           <td>Faltan</td>
@@ -112,7 +112,7 @@
             </td>
 
             <td class="text-left">
-              {{ticket.tm_intervals[0] | dateToString : 'dd DD HH:mm' | capitalizarPipe}}, 
+              {{ticket.tm_intervals[0] | dateToString | capitalizarPipe}}, 
 
               <span class="sm text-accent">
                 {{ticket.tm_intervals[0] | dateToRemaining}}

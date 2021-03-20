@@ -70,7 +70,7 @@ SCROLL BAR
 } */
 
 
-  
+
 .btn {
     border: none;
 }
@@ -157,6 +157,12 @@ SATURNO
 .page-container-full {
     width    : 100%;
     font-size: medium;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 @media (max-width: 575px) {
@@ -315,6 +321,7 @@ td.button-icon {
     background-color: rgba(0, 0, 0, .3);
     border-radius   : 3px 0 0 3px;
     padding         : 0px 5px;
+    font-family     : sans-serif;
 }
 
 td.button-text {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +9,6 @@ export class DashboardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    // this._adapter.setLocale('es');
-  }
+  ngOnInit(): void { }
 
 }

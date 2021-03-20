@@ -4,13 +4,6 @@
     font-size  : small;
 }
 
-.ticket-actions {
-    justify-content: center;
-    width: 100%;
-    display: flex;
-    flex-flow: wrap;
-}
-
 .x-position {
     position: absolute;
     cursor  : pointer;

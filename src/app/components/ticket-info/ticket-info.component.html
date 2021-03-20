@@ -30,7 +30,8 @@
         </tr>
         <tr>
             <td class="row-item">Sector:</td>
-            <td class="row-data"><span *ngIf="ticket.id_section?.tx_section">{{ticket.id_section.tx_section}}</span></td>
+            <td class="row-data"><span *ngIf="ticket.id_section?.tx_section">{{ticket.id_section.tx_section}}</span>
+            </td>
         </tr>
         <tr>
             <td class="row-item">Posición:</td>
@@ -38,13 +39,13 @@
         </tr>
         <tr>
             <td class="row-item">Reserva:</td>
-            <td class="row-data" *ngIf="ticket.tm_intervals">{{ticket.tm_intervals[0] | dateToString : 'DD [de] MMMM [a
-                las] HH:mm'}}</td>
+            <td class="row-data" *ngIf="ticket.tm_intervals">{{ticket.tm_intervals[0] | dateToString | capitalizarPipe}}
+            </td>
             <td class="row-data" *ngIf="!ticket.tm_intervals">No</td>
         </tr>
         <tr>
             <td class="row-item">Provisión:</td>
-            <td class="row-data">{{ticket.tm_provided | dateToString : 'DD [de] MMMM [a las] HH:mm'}}</td>
+            <td class="row-data">{{ticket.tm_provided | dateToString | capitalizarPipe }}</td>
         </tr>
         <tr>
             <td class="row-item">Prioridad:</td>

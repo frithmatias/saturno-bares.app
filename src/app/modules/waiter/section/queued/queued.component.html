@@ -93,7 +93,7 @@
               *ngFor="let table of tables" class="table-button" (click)="setReserve(table, ticket)">
 
               <table>
-                <td class="button-icon monospace px-2 xl"><span *ngIf="table.nm_table < 10">0</span>{{ table.nm_table }}
+                <td class="button-icon px-2 xl"><span *ngIf="table.nm_table < 10">0</span>{{ table.nm_table }}
                 </td>
                 <td class="button-text">
                   <!-- ICON STATUS -->
@@ -115,7 +115,7 @@
           <!-- TICKET DATA -->
           <!------------------------------>
 
-          <div class="ticket-actions">
+          <div class="buttons-container">
 
             <button mat-raised-button color="primary" class="action-button">
               <table>

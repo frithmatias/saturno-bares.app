@@ -74,7 +74,7 @@
               Hola {{ ticket.tx_name }}, tu reserva quedó confirmada.
             </p>
             <p>
-              Te esperan el {{ ticket.tm_intervals[0] | dateToString : 'DD [de] MMMM [a las] HH:mm'}} ( {{ ticket.tm_intervals[0]
+              Te esperan el {{ ticket.tm_intervals[0] | dateToString | capitalizarPipe }} ( {{ ticket.tm_intervals[0]
               | dateToRemaining }} )
             </p>
             <p>

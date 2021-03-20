@@ -1,76 +1,90 @@
 <div class="page-container p-2 pt-3 animated fadeIn" *ngIf="waiterService.session">
 
-    <div *ngIf="loading" class="m-5 animated fadeIn">
-      <app-spinner text="LOADING..."></app-spinner>
+  <div *ngIf="loading" class="m-5 animated fadeIn">
+    <app-spinner text="LOADING..."></app-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="animated fadeIn">
+
+
+    <div class="text-center text-accent xxl">
+      {{waiterService.session.id_section.tx_section}}
     </div>
 
-    <div *ngIf="!loading" class="animated fadeIn">
+    <mat-card-content>
+      <mat-accordion multi="false">
+
+        <!-- ======================================================== -->
+        <!-- SECTIONS -->
+        <!-- ======================================================== -->
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="xl mdi mdi-select-group text-deco"></span>
+              <span class="badge text-white bg-primary">{{publicService.sections.length}}</span>
+              <span class="sidenav-title-text mx-2 align-self-center md">Sectores</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
+          </app-sections>
+        </mat-expansion-panel>
+
+        <!-- ======================================================== -->
+        <!-- TABLES -->
+        <!-- ======================================================== -->
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="xl mdi mdi-silverware-fork-knife text-deco"></span>
+              <span class="badge text-white bg-primary">{{tables.length}}</span>
+              <span class="sidenav-title-text mx-2 align-self-center md">Mesas</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes" (updateTables)="readTables()"></app-tables>
+        </mat-expansion-panel>
+
+        <!-- ======================================================== -->
+        <!-- VIRTUAL QUEUE -->
+        <!-- ======================================================== -->
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="xl mdi mdi-human-queue text-deco"></span>
+              <span class="badge text-white bg-primary">{{queued.length}}</span>
+              <span class="sidenav-title-text mx-2 align-self-center md">Cola Virtual</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
+          <app-queued [tables]="tables" [queued]="queued"></app-queued>
+        </mat-expansion-panel>
+
+        
+      </mat-accordion>
+    </mat-card-content>
 
 
-      <div class="text-center text-accent xxl">
-        {{waiterService.session.id_section.tx_section}}
-      </div>
+    <mat-card-actions>
+      <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
+        <table>
+          <tr>
+            <td class="button-icon mdi mdi-ticket-account xl"></td>
+            <td class="button-text">+Ticket</td>
+          </tr>
+        </table>
+      </button>
+      <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
+        <table>
+          <tr>
+            <td class="button-icon mdi mdi-power xl"></td>
+            <td class="button-text">Salir</td>
+          </tr>
+        </table>
+      </button>
+    </mat-card-actions>
 
-      <mat-card-content>
-        <mat-accordion multi="false">
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="xl mdi mdi-select-group text-deco"></span>
-                <span class="badge text-white bg-primary">{{publicService.sections.length}}</span>
-                <span class="sidenav-title-text mx-2 align-self-center md">Sectores</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-sections [ticketsDataBySection]="ticketsDataBySection" [tablesDataBySection]="tablesDataBySection">
-            </app-sections>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="xl mdi mdi-silverware-fork-knife text-deco"></span>
-                <span class="badge text-white bg-primary">{{tables.length}}</span>
-                <span class="sidenav-title-text mx-2 align-self-center md">Mesas</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <app-tables [tables]="tables" [busyTablesTimes]="busyTablesTimes" (updateTables)="readTables()"></app-tables>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="xl mdi mdi-human-queue text-deco"></span>
-                <span class="badge text-white bg-primary">{{queued.length}}</span>
-                <span class="sidenav-title-text mx-2 align-self-center md">Cola Virtual</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <!-- <app-requested [tables]="tables" [requested]="requested"></app-requested> -->
-            <app-queued [tables]="tables" [queued]="queued"></app-queued>
-          </mat-expansion-panel>
-
-        </mat-accordion>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button mat-raised-button class="action-button" color="active" (click)="createTicket()">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-ticket-account xl"></td>
-              <td class="button-text">+Ticket</td>
-            </tr>
-          </table>
-        </button>
-        <button mat-raised-button class="action-button" color="warn" (click)="releaseSection()">
-          <table>
-            <tr>
-              <td class="button-icon mdi mdi-power xl"></td>
-              <td class="button-text">Salir</td>
-            </tr>
-          </table>
-        </button>
-      </mat-card-actions>
-
-    </div>
+  </div>
 
 </div>

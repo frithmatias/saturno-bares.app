@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
-import moment from 'moment';
 
 @Pipe({
   name: 'intervalToHm'

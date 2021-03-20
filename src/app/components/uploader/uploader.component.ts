@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef }
 import { FileUpload, FileUploadResponse } from './uploader.model';
 import { UploaderService } from './uploader.service';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
-import { duration } from 'moment';
 
 @Component({
 	selector: 'app-uploader',
@@ -134,7 +133,7 @@ export class UploaderComponent implements OnInit {
 
 		if (this.multi) {
 			if((uploadedDB + inCache + newAppend) > maxUpload) {
-				this.snack.open(`Supera el máximo de ${this.maxupload} archivos permitidos.`, 'Aceptar', {duration: 333000});
+				this.snack.open(`Supera el máximo de ${this.maxupload} archivos permitidos.`, 'Aceptar', {duration: 3000});
 				return;
 			}
 		}
