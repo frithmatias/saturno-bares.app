@@ -10,19 +10,34 @@
             </mat-card-title>
             <mat-card-subtitle>
 
-                <span *ngIf="data.table.blReserved">Ticket asignado a la mesa <span
-                        class="text-accent">{{data.table.nmTable}}</span> para
-                    el {{data.availability.interval | dateToString | capitalizarPipe}}
-                    a las <span class="text-accent">{{data.availability.interval | dateToString |
-                        capitalizarPipe}}</span>
+                <span *ngIf="data.table.blReserved">
+                    Reserva asignada a la mesa
+                    <span class="text-accent">
+                        {{data.table.nmTable}}
+                    </span>
+                    para el
+                    <span class="text-accent">
+                        {{data.availability.interval | dateToString : 'date'| capitalizarPipe}}
+                    </span>
+                    a las
+                    <span class="text-accent">
+                        {{data.availability.interval | dateToString : 'time-24-short' | capitalizarPipe}}
+                    </span>
                 </span>
 
-                <span *ngIf="!data.table.blReserved">Crear un ticket de contingencia para
-                    el {{data.availability.interval | dateToString | capitalizarPipe}}
-                    a las <span class="text-accent">{{data.availability.interval | dateToString |
-                        capitalizarPipe}}</span> y
-                    asignarle la mesa
-                    <span class="text-accent">{{data.table.nmTable}}</span>
+                <span *ngIf="!data.table.blReserved">
+                    Crear una reserva para el
+                    <span class="text-accent">
+                        {{data.availability.interval | dateToString : 'date' | capitalizarPipe }}
+                    </span>
+                    a las
+                    <span class="text-accent">
+                        {{data.availability.interval | dateToString : 'time-24' | capitalizarPipe}}
+                    </span>
+                    y asignarle la mesa
+                    <span class="text-accent">
+                        {{data.table.nmTable}}
+                    </span>
                 </span>
             </mat-card-subtitle>
         </mat-card-header>
