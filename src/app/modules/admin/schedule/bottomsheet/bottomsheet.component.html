@@ -50,69 +50,7 @@
 
             <div class="mx-3" *ngIf="data.table.blReserved">
 
-                <div class="ticket-data mb-2">
-                    <table>
-                        <tr>
-                            <td class="text-accent">Mesa(s):</td>
-                            <td>{{data.table.ticketOwner.cd_tables}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Capacidad:</td>
-                            <td>{{data.table.nmPersons}} Personas</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Personas:</td>
-                            <td>{{data.table.ticketOwner.nm_persons}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Ocupación:</td>
-                            <td>{{nmOccupation}}%</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Contingencia:</td>
-                            <td>
-                                <span *ngIf="!data.table.ticketOwner.bl_contingent" class="sm align-middle">No</span>
-                                <span *ngIf="data.table.ticketOwner.bl_contingent" class="sm align-middle">Si</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Prioridad:</td>
-                            <td>
-                                <span *ngIf="!data.table.ticketOwner.bl_priority" class="sm align-middle">No</span>
-                                <span *ngIf="data.table.ticketOwner.bl_priority" class="sm align-middle">Si</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Reserva:</td>
-                            <td>{{data.table.ticketOwner.tm_intervals[0] | dateToString | capitalizarPipe}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Inicio:</td>
-                            <td>{{data.table.ticketOwner.tm_start | dateToString | capitalizarPipe}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Estado:</td>
-                            <td>{{data.table.ticketOwner.tx_status}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Plataforma:</td>
-                            <td>{{data.table.ticketOwner.tx_platform}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Teléfono:</td>
-                            <td>{{data.table.ticketOwner.nm_phone}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Email:</td>
-                            <td>{{data.table.ticketOwner.tx_email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-accent">Cliente:</td>
-                            <td>{{data.table.ticketOwner.tx_name}}</td>
-                        </tr>
-                    </table>
-                </div>
+                <app-ticket-info [ticket]="data.table.ticketOwner"></app-ticket-info>
 
                 <div *ngIf="showMessageForm" class="my-4">
                     <app-messenger [ticket]="data.table.ticketOwner" (messageResponse)="messageResponse($event)">

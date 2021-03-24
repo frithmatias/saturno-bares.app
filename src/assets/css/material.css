@@ -2434,7 +2434,7 @@ td.mat-footer-cell {
 }
 
 .mat-drawer-backdrop.mat-drawer-shown {
-    background-color: var(--text-o60)
+    background-color: var(--main-o50)
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {

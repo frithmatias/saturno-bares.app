@@ -13,7 +13,12 @@ export class TokenService implements HttpInterceptor {
 
   constructor(
     private loginService: LoginService,
-    private publicService: PublicService) { }
+    private publicService: PublicService,
+    private router: Router
+    ) { 
+
+
+    }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -41,7 +46,9 @@ export class TokenService implements HttpInterceptor {
 
   manejarRespuesta(resp: HttpResponse<any>) {
     if (resp.type === 4) { //HttpResponse (Not 2 -> HttpHeadersResponse i.e.)
-      console.log(resp.body);
+      if(location.host.split(':')[0] === 'localhost'){
+        console.log(resp.body);
+      }
     }
   }
 

@@ -30,6 +30,7 @@
                     <span *ngIf="table.ticketOwner" class="mdi  mdi-account-box-outline text-accent pointer"
                         (click)="openBottomSheet(table, avInterval)">
                     </span>
+                    
                     <!-- reserved to system flag (has not ticketOwner)-->
                     <span *ngIf="table.blReserved && !table.ticketOwner" class="mdi  mdi-flag-triangle text-warn">
                     </span>

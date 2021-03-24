@@ -1,5 +1,7 @@
 :root {
     /* color principal dark/light */
+    --main-o10: rgba(255, 255, 255, .1);
+    --main-o30: rgba(255, 255, 255, .3);
     --main-o50: rgba(255, 255, 255, .5);
     --main-o80: rgba(255, 255, 255, .8);
     --main    : rgba(255, 255, 255, 1);

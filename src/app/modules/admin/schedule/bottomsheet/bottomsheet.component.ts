@@ -50,7 +50,6 @@ export class BottomsheetComponent implements OnInit {
       // las mesas seleccionadas.
       this.checkIntervalsAvailability();
     }
-
   }
 
   ngOnInit(): void {

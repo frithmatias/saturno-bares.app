@@ -9,10 +9,16 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 })
 
 export class TicketInfoComponent implements OnInit {
-  ticket: Ticket;
+  @Input() ticket: Ticket;
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: Ticket
-   ) { this.ticket = data; }
+   ) { 
+     
+     // el componente ticket-info puede ser "inyectado" directamente en un bottomsheet o puede ser "consumido"
+     // desde una vista con <app-ticket-info [ticket]="ticket">, en este caso la data del ticket se recibe desde @Input() ticket.
+     this.ticket = this.ticket ? this.ticket : data; 
+
+     }
 
   ngOnInit(): void { }
 
