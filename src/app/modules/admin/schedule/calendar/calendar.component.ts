@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { availability, avData } from '../../../../interfaces/availability.interface';
+import { avInterval, avTable } from '../../../../interfaces/availability.interface';
 import { Table } from 'src/app/interfaces/table.interface';
 import { PublicService } from '../../../public/public.service';
 import { BottomsheetComponent } from '../bottomsheet/bottomsheet.component';
@@ -12,13 +12,19 @@ import { Ticket } from 'src/app/interfaces/ticket.interface';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  @Input() availability: availability[] = [];
+  @Input() availability: avInterval[] = [];
   @Input() tables: Table[] = [];
   @Input() idSection: string;
 
   @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
-  tableSelected: avData;
+  // show ticket 
+  selectedTable: avTable;
+
+  // create ticket 
+  selectedTables: avTable[] = [];
+  selectedIntervals: avInterval[] = [];
+
 
   constructor(
     private publicService: PublicService,
@@ -27,12 +33,14 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  openBottomSheet = (table: avData, availability: availability): void => {
-    this.tableSelected = table;
+
+  openBottomSheet = (table: avTable, avInterval: avInterval): void => {
+    this.selectedTable = table;
     const idSection = this.idSection;
     // table.blReserved ? release : create;
+    const availability = this.availability;
+    this.bottomSheet.open(BottomsheetComponent, { data: { table, avInterval, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
 
-    this.bottomSheet.open(BottomsheetComponent, { data: { table, availability, idSection } }).afterDismissed().subscribe((data: bottomSheetRelease) => {
       if (data?.action === 'create') {
         this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron asignadas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);
@@ -41,12 +49,13 @@ export class CalendarComponent implements OnInit {
       if (data?.action === 'release') {
         this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron liberadas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);
-
       }
+
       if (data?.action === 'cancel') {
         this.publicService.snack(`Las mesas ${data.ticket.cd_tables} fueron canceladas correctamente`, 2000, 'Aceptar');
         this.pendingUpdated.emit(data.ticket);
       }
+
     })
   }
 

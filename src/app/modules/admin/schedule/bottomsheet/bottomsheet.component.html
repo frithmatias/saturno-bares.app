@@ -17,22 +17,22 @@
                     </span>
                     para el
                     <span class="text-accent">
-                        {{data.availability.interval | dateToString : 'date'| capitalizarPipe}}
+                        {{data.avInterval.interval | dateToString : 'date'| capitalizarPipe}}
                     </span>
                     a las
                     <span class="text-accent">
-                        {{data.availability.interval | dateToString : 'time-24-short' | capitalizarPipe}}
+                        {{data.avInterval.interval | dateToString : 'time-24' | capitalizarPipe}}
                     </span>
                 </span>
 
                 <span *ngIf="!data.table.blReserved">
                     Crear una reserva para el
                     <span class="text-accent">
-                        {{data.availability.interval | dateToString : 'date' | capitalizarPipe }}
+                        {{data.avInterval.interval | dateToString : 'date' | capitalizarPipe }}
                     </span>
                     a las
                     <span class="text-accent">
-                        {{data.availability.interval | dateToString : 'time-24' | capitalizarPipe}}
+                        {{data.avInterval.interval | dateToString : 'time-24' | capitalizarPipe}}
                     </span>
                     y asignarle la mesa
                     <span class="text-accent">
@@ -159,7 +159,7 @@
             </div>
 
             <!-- ----------------------------------------------------- -->
-            <!-- CONTINGENCY TICKET FORM -->
+            <!-- NEW TICKET FORM -->
             <!-- ----------------------------------------------------- -->
 
             <div *ngIf="!data.table.blReserved" class="px-3">
@@ -180,18 +180,6 @@
                             formControlName="nmPersons" name="nmPersons" required>
                     </mat-form-field>
 
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Número de Contacto</mat-label>
-                        <input type="number" matInput placeholder="01155551234" formControlName="nmPhone" name="nmPhone"
-                            required>
-                    </mat-form-field>
-
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Email de Contacto</mat-label>
-                        <input type="email" matInput placeholder="cliente@mail.com" formControlName="txEmail"
-                            name="txEmail" required>
-                    </mat-form-field>
-
 
                     <!-- PERSONS EXCEEDS: TABLES BUTTONS SELECTION -->
 
@@ -207,7 +195,7 @@
                         <div class="text-center my-2">
                             <button type="button" mat-raised-button
                                 [color]="cdTables.includes(table.nmTable)?'active':''"
-                                *ngFor="let table of data.availability.available" class="action-button-flex"
+                                *ngFor="let table of data.avInterval.available" class="action-button-flex"
                                 (click)="setReserve(table)" [disabled]="table.blReserved">
 
                                 <table>
@@ -224,6 +212,32 @@
                         </div>
 
                     </div>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Agregar Intervalos</mat-label>
+                        <mat-select formControlName="tmIntervals" multiple>
+                          <mat-option  *ngFor="let avInterval of data.availability" [value]="avInterval.interval" 
+                          [disabled]="!avInterval.enabled || avInterval.interval === data.avInterval.interval"> 
+                          <!-- data.avInterval trae los datos del intervalo seleccionado, deshabilito el intervalo por defecto -->
+                            {{avInterval.interval | dateToString : 'time-24' }} 
+                            <span *ngIf="avInterval.reserved.length > 0 && !avInterval.enabled">Mesas con reserva {{avInterval.reserved}}</span>
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Número de Contacto</mat-label>
+                        <input type="number" matInput placeholder="01155551234" formControlName="nmPhone" name="nmPhone"
+                            required>
+                    </mat-form-field>
+
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Email de Contacto</mat-label>
+                        <input type="email" matInput placeholder="cliente@mail.com" formControlName="txEmail"
+                            name="txEmail" required>
+                    </mat-form-field>
+
+
 
                     <div class="mt-2">
                         <div>

@@ -92,6 +92,9 @@
       <table class="sm text-center">
         <thead>
           <tr class="text-info">
+            <td>
+              Comercio
+            </td>
             <td class="text-left">
               Fecha de Reserva
             </td>
@@ -110,9 +113,11 @@
                 Comercio eliminado
               </div>
             </td>
-
+            <td class="pointer text-info" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+              {{ticket.id_company?.tx_company_name}}
+            </td>
             <td class="text-left">
-              {{ticket.tm_intervals[0] | dateToString | capitalizarPipe}}, 
+              {{ticket.tm_intervals[0] | dateToString : 'date-long' | capitalizarPipe}},
 
               <span class="sm text-accent">
                 {{ticket.tm_intervals[0] | dateToRemaining}}

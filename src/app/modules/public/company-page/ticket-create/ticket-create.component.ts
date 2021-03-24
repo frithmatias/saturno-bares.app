@@ -15,8 +15,7 @@ import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
 import { DateToIntervalPipe } from '../../../../pipes/date-to-interval.pipe';
-import { availabilityResponse } from 'src/app/interfaces/availability.interface';
-import { availability, avInterval } from '../../../../interfaces/availability.interface';
+import { availabilityResponse, selectInterval } from 'src/app/interfaces/availability.interface';
 
 @Component({
   selector: 'app-ticket-create',
@@ -39,7 +38,7 @@ export class TicketCreateComponent implements OnInit {
 
   minDate: Date;
   maxDate: Date;
-  avIntervals: avInterval[] = [];
+  selectInterval: selectInterval[] = [];
   availableTables: number[];
   updateTicketsSub: Subscription;
   tellUserNotAvailable = false;
@@ -204,8 +203,8 @@ export class TicketCreateComponent implements OnInit {
       }
       // recibo un array de dates 
       // cruzo con availability para esos intervalos y traigo las tables que estén en todos los intervalos 
-      let avIntervals: avInterval[] = this.avIntervals.filter(av => data.includes(av.date));
-      let avTablesFirstInterval = avIntervals[0].compatible;
+      let selectInterval: selectInterval[] = this.selectInterval.filter(av => data.includes(av.date));
+      let avTablesFirstInterval = selectInterval[0].compatible;
 
       // intervalo 0: [1,3,4,5] -> avTablesFirstInterval
       // intervalo 1: [1,4] -> filtro las mesas 3 y 5
@@ -213,7 +212,7 @@ export class TicketCreateComponent implements OnInit {
       // ...
       // resultado [4] solo disponible la mesa 4
 
-      avIntervals.forEach((av: avInterval) => {
+      selectInterval.forEach((av: selectInterval) => {
         this.availableTables = avTablesFirstInterval.filter(n => av.compatible.includes(n))
       })
 
@@ -232,7 +231,7 @@ export class TicketCreateComponent implements OnInit {
       return;
     }
 
-    this.avIntervals = [];
+    this.selectInterval = [];
     this.ticketForm.controls.tmIntervals.reset();
 
     this.publicService.readAvailability(nmPersons, idSection, dtReserve).subscribe((data: availabilityResponse) => {
@@ -242,14 +241,14 @@ export class TicketCreateComponent implements OnInit {
         data.availability.forEach(av => {
 
           if (av.compatible.length > 0) {
-            this.avIntervals.push({
+            this.selectInterval.push({
               disabled: false,
               date: new Date(av.interval),
               text: this.dateToInterval.transform(new Date(av.interval)),
               compatible: av.compatible
             })
           } else {
-            this.avIntervals.push({
+            this.selectInterval.push({
               disabled: true,
               date: new Date(av.interval),
               text: this.dateToInterval.transform(new Date(av.interval)) + ' No disponible',
@@ -263,7 +262,7 @@ export class TicketCreateComponent implements OnInit {
         this.tellUserNotAvailable = true;
         this.ticketForm.controls.cdTables.disable();
         data.availability.forEach(av => {
-          this.avIntervals.push({
+          this.selectInterval.push({
             disabled: this.ticketForm.value.nmPersons > av.capacity,
             date: new Date(av.interval),
             text: this.dateToInterval.transform(new Date(av.interval)) + ' Max ' + av.capacity,

@@ -1,42 +1,42 @@
 <div class="schedule-container">
-
+    
     <table class="schedule sm" *ngIf="availability.length > 0">
 
         <thead>
             <th class="cap px-1"></th>
             <th class="cap px-1"></th>
-            <th class="cap px-1 sm" *ngFor="let t of tables"> {{t.nm_persons}} </th>
+            <th class="cap px-1 sm" *ngFor="let table of tables"> {{table.nm_persons}} </th>
         </thead>
         <thead>
             <th class="tbl px-1">Mesas</th>
             <th class="tbl px-1"></th>
-            <th class="tbl px-1" *ngFor="let t of tables"> {{t.nm_table}} </th>
+            <th class="tbl px-1" *ngFor="let table of tables"> {{table.nm_table}} </th>
         </thead>
         <tbody>
             <!-- intervals -->
-            <tr *ngFor="let av of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
+            <tr *ngFor="let avInterval of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
 
                 <td class="px-1">
-                    <span>{{av.interval | dateToInterval}}</span>
+                    <span>{{avInterval.interval | dateToInterval}}</span>
                 </td>
                 <td class="text-accent sm">
-                    {{av.capacity}}
+                    {{avInterval.capacity}}
                 </td>
 
                 <!-- tables -->
-                <td class="px-1" *ngFor="let t of av.available">
+                <td class="px-1" *ngFor="let table of avInterval.available">
 
                     <!-- reserved to client-->
-                    <span *ngIf="t.ticketOwner" class="mdi  mdi-account-box-outline text-accent pointer"
-                        (click)="openBottomSheet(t, av)">
+                    <span *ngIf="table.ticketOwner" class="mdi  mdi-account-box-outline text-accent pointer"
+                        (click)="openBottomSheet(table, avInterval)">
                     </span>
-                    <!-- reserved to system (has not ticketOwner)-->
-                    <span *ngIf="t.blReserved && !t.ticketOwner" class="mdi  mdi-flag-triangle text-warn">
+                    <!-- reserved to system flag (has not ticketOwner)-->
+                    <span *ngIf="table.blReserved && !table.ticketOwner" class="mdi  mdi-flag-triangle text-warn">
                     </span>
 
                     <!-- available -->
-                    <span *ngIf="!t.blReserved" class="mdi mdi-checkbox-blank-outline text-info pointer"
-                        (click)="openBottomSheet(t, av)">
+                    <span *ngIf="!table.blReserved" class="mdi mdi-checkbox-blank-outline text-info pointer"
+                        (click)="openBottomSheet(table, avInterval)">
                     </span>
 
                 </td>

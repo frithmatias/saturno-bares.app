@@ -3,18 +3,18 @@ import { Ticket } from './ticket.interface';
 export interface availabilityResponse {
     ok: boolean;
     msg: string;
-    availability: availability[];
+    availability: avInterval[];
 }
 
-export interface availability {
+export interface avInterval {
     interval: Date;
     compatible: number[];
-    available: avData[] | null;
+    available: avTable[] | null;
     capacity: number | null;
 
 }
 
-export interface avData {
+export interface avTable {
     nmTable: number,
     nmPersons: number,
     blReserved: boolean,
@@ -22,7 +22,7 @@ export interface avData {
 }
 
 // list of intervals to show in intervals select in create ticket page
-export interface avInterval {
+export interface selectInterval {
     disabled: boolean,
     date: Date,
     text: string,

@@ -70,14 +70,7 @@ export class WorkingComponent implements OnInit {
     const days = [...Array(7).keys()]; // 0-6 
     let wDays: String[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     days.forEach(day => {
-
       this.allWeekDays.push({ str: wDays[day], int: day });
-      console.log(this.allWeekDays)
-
-      // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-      // var prnDt = 'Printed on ' + new Date().toLocaleTimeString('es-AR', options);
-      // Printed on sábado, 20 de marzo de 2021 16:18:06
-      // console.log(prnDt);
     })
 
   }

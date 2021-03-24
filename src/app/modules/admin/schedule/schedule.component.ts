@@ -5,7 +5,7 @@ import { Table } from '../../../interfaces/table.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { LoginService } from '../../../services/login.service';
-import { availabilityResponse, availability } from '../../../interfaces/availability.interface';
+import { availabilityResponse, avInterval } from '../../../interfaces/availability.interface';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -24,7 +24,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   minDate: Date;
   maxDate: Date;
 
-  availability: availability[] = [];
+  availability: avInterval[] = [];
   tables: Table[] = [];
   pendingMonth: Ticket[] = [];
   pendingDate: Ticket[] = [];

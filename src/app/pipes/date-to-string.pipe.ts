@@ -21,6 +21,12 @@ export class DateToStringPipe implements PipeTransform {
       case 'date': // 20 de Marzo
         options = { month: 'long', day: 'numeric' };
         break;
+      case 'date-time': // Sábado, 20 de Marzo 21:05
+        options = { weekday: 'long', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+        break;
+      case 'date-time-short': // Sáb, 20 Mar. 21:05
+        options = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+        break;
       case 'date-short': // 20-03
         options = { month: 'numeric', day: 'numeric' };
         break;

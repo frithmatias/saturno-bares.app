@@ -12,11 +12,8 @@ export class TicketInfoComponent implements OnInit {
   ticket: Ticket;
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: Ticket
-   ) { 
-    console.log(data) 
-    this.ticket = data; }
+   ) { this.ticket = data; }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

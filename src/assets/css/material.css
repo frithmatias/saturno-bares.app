@@ -1,6 +1,6 @@
 :root {
     /* inmutables */
-    --dark: rgba(0, 0, 0, 1);
+    --dark    : rgba(0, 0, 0, 1);
     --dark-o80: rgba(0, 0, 0, .8);
     --dark-o50: rgba(0, 0, 0, .5);
     --dark-o20: rgba(0, 0, 0, .2);
@@ -787,7 +787,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 }
 
 .mat-option {
-    color: var(--dark-o80)
+    color: var(--text);
 }
 
 .mat-option:hover:not(.mat-option-disabled),
@@ -972,7 +972,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 }
 
 .mat-autocomplete-panel {
-    background: #fff;
+    background: var(--bg);
     color     : var(--text)
 }
 

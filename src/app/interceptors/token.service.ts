@@ -36,10 +36,7 @@ export class TokenService implements HttpInterceptor {
       return next.handle(req).pipe(
         tap(this.manejarRespuesta),
         catchError(this.manejarError.bind(this)));
-
     }
-
-
   }
 
   manejarRespuesta(resp: HttpResponse<any>) {

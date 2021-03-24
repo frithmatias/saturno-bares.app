@@ -5,7 +5,7 @@ import { WaiterService } from '../../../waiter/waiter.service';
 import { PublicService } from '../../../public/public.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { MessageResponse } from '../../../../interfaces/messenger.interface';
-import { availability, avData } from '../../../../interfaces/availability.interface';
+import { avInterval, avTable } from '../../../../interfaces/availability.interface';
 
 @Component({
   selector: 'app-pending',
@@ -21,11 +21,11 @@ import { availability, avData } from '../../../../interfaces/availability.interf
 })
 export class PendingComponent implements OnInit {
 
-  @Input() availability: availability[];
+  @Input() availability: avInterval[];
   @Input() pending: Ticket[] = []
   @Output() pendingUpdated: EventEmitter<Ticket> = new EventEmitter();
 
-  tablesAvailability: avData[];
+  tablesAvailability: avTable[];
   displayedColumns: string[] = ['nmPersons', 'txName', 'tmIntervals'];
   showMessageForm = false;
 
@@ -40,7 +40,7 @@ export class PendingComponent implements OnInit {
   }
 
   // ADD OR REMOVE TABLES FOR ASSIGNATION
-  setReserve = (table: avData, ticket: Ticket) => {
+  setReserve = (table: avTable, ticket: Ticket) => {
     if (ticket.cd_tables.includes(0)) { ticket.cd_tables = ticket.cd_tables.filter(table => table !== 0); }
     ticket.cd_tables = ticket.cd_tables.includes(table.nmTable)
       ? ticket.cd_tables.filter((numtable) => numtable !== table.nmTable)
@@ -97,7 +97,7 @@ export class PendingComponent implements OnInit {
 
   getIntervalAvailability(pending: Ticket): void {
     
-    const interval = this.availability.find((av: availability) => 
+    const interval = this.availability.find((av: avInterval) => 
     new Date(av.interval).getTime() === new Date(pending.tm_intervals[0]).getTime() 
     );
 
