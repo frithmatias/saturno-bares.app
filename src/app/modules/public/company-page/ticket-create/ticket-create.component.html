@@ -248,7 +248,7 @@
               <mat-form-field color="accent" class="w-33 px-1">
                 <mat-label>Intervalos</mat-label>
                 <mat-select formControlName="tmIntervals" multiple>
-                  <mat-option *ngFor="let interval of avIntervals" [value]="interval.date"
+                  <mat-option *ngFor="let interval of optionInterval" [value]="interval.date"
                     [disabled]="interval.disabled" (click)="setInterval(interval)">
                     <!-- (click)="intervalTables = interval.tables" -->
                     {{interval.text}}

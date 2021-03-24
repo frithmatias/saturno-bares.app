@@ -3,6 +3,7 @@ import { Ticket } from './ticket.interface';
 export interface availabilityResponse {
     ok: boolean;
     msg: string;
+    compatible: boolean; //tiene mesas compatibles
     availability: avInterval[];
 }
 
@@ -22,7 +23,7 @@ export interface avTable {
 }
 
 // list of intervals to show in intervals select in create ticket page
-export interface selectInterval {
+export interface optionInterval {
     disabled: boolean,
     date: Date,
     text: string,
