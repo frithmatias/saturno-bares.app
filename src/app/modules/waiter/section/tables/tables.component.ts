@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Table } from 'src/app/interfaces/table.interface';
-import { IntervalToHmsPipe } from '../../../../pipes/interval-to-hms.pipe';
 import { WaiterService } from '../../waiter.service';
 import { LoginService } from '../../../../services/login.service';
 import { TicketResponse, Ticket } from '../../../../interfaces/ticket.interface';

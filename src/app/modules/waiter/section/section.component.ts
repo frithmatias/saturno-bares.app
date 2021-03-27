@@ -12,7 +12,7 @@ import { Table, TablesResponse } from '../../../interfaces/table.interface';
 
 // libraries
 import { interval, Subscription } from 'rxjs';
-import { IntervalToHmsPipe } from '../../../pipes/interval-to-hms.pipe';
+import { DiffToHMSPipe } from '../../../pipes/diff-to-hms.pipe';
 import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PublicService } from '../../public/public.service';
@@ -62,7 +62,7 @@ export class SectionComponent implements OnInit, OnDestroy {
     public publicService: PublicService,
     private wsService: WebsocketService,
     private router: Router,
-    private intervalToHmsPipe: IntervalToHmsPipe,
+    private diffToHMSPipe: DiffToHMSPipe,
     private bottomSheet: MatBottomSheet
   ) { }
 
@@ -113,8 +113,8 @@ export class SectionComponent implements OnInit, OnDestroy {
               for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
                 if (table.id_session.id_ticket) {
                   this.busyTablesTimes.set(table.nm_table, {
-                    tm_provided: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
-                    tm_call: this.intervalToHmsPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
+                    tm_provided: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
+                    tm_call: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
                   });
                 }
               }

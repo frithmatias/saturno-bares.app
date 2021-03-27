@@ -34,9 +34,11 @@
     --text-o95: rgba(0, 0, 0, .95);
     --text    : rgba(0, 0, 0, 1);
 
-    --text               : rgba(0, 0, 0, .87);
-    --primary            : #3f51b5;
-    --accent             : #247d3b;
+    --primary-o25        : rgba(63, 81, 181, .25);
+    --primary-o50        : rgba(63, 81, 181, .50);
+    --primary-o75        : rgba(63, 81, 181, .75);
+    --primary            : rgb(63, 81, 181);
+    --accent             : #a121bf;
     --accent-invert      : #708dff;
     --warn               : #f44336;
     --deco               : #07b326;

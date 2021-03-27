@@ -2,39 +2,35 @@
     <mat-card-header>
         <mat-card-title class="md text-accent">
             <span class="mdi mdi-help-box mr-2"></span>
-            {{ helpTitle }} 
+            {{ helpTitle }}
         </mat-card-title>
     </mat-card-header>
 
     <mat-card-content *ngIf="data.idHelp==='adminSettingsVirtualQueue'">
-        Es un sistema de generación de "tickets" virtuales que se asigna a un
-        cliente cuando solicita una mesa en tiempo real desde la App y antes de ingresar a tu negocio.
-        Esto te permite lograr una trazabilidad punta a punta sobre el circuito de tus clientes y te 
-        permite obtener datos para analizar métricas e indicadores. Te permite también abrir un canal 
-        de comunicación con un cliente que espera una mesa y notificarlo cuando es asignada. 
-        Los camareros podrán atender las solicitudes de asistencia de los clientes, los clientes podrán 
-        responder encuestas que generen datos que permitan retroalimentar y mejorar el servicio a tus 
-        clientes. El sistema está fuertemente basado en este módulo, recomendamos mantener activado 
-        este módulo.
+        <span class="text-accent">La cola virtual es un sistema de generación de "tickets" virtuales</span> que se
+        genera cuando un cliente solicita una mesa y se le signa en el mismo momento que es solicitada. Cada ticket
+        está numerado y en caso de que tu negocio esté lleno, servirá para administrar los
+        "turnos" de ingreso a tu comercio.
+
     </mat-card-content>
 
     <mat-card-content *ngIf="data.idHelp==='adminSettingsSPM'">
-        Es un Sistema de Provisión de Mesas automático. Si esta opción esta activada el sistema
-        asignará automáticamente las mesas disponibles a los clientes que esperan una mesa en la cola
-        virtual. Si esta opcion NO esta activada el cliente debe esperar a que un camarero o
-        administrador asigne su mesa.
+        <span class="text-accent">Sistema de Provisión de Mesas</span>. Este sistema opera cuando la Cola Virtual esta
+        activada, y si el SPM está activado el sistema asignará y proveerá automáticamente las mesas disponibles a los
+        clientes que esperan una mesa en la cola virtual. Si esta opción NO esta activada el cliente debe esperar a que
+        un camarero o administrador asigne su mesa.
     </mat-card-content>
 
     <mat-card-content *ngIf="data.idHelp==='adminSettingsSchedule'">
-        Es un sistema de generación de "tickets" virtuales a futuro. Si ésta opción está
-        activada, tus clientes podrán ver desde el formulario en tu página la disponibilidad de mesas 
-        en tiempo real y crear una reserva en forma automática para un día y horario determinado. 
-        El administrador también puede hacer reservas o re-asignar mesas ya reservadas de forma manual. 
-
-        Si el cliente solicita una mesa para un grupo de personas para el cual no existe mesa que pueda 
-        cumplimentar el requerimiento, tendrá la opción de iniciar una solicitud de mesa especial. 
-        Cuando la hora de reserva se encuentre próxima, el sistema comenzará a reservar las mesas asignadas 
-        en forma automática y a la hora de la reserva proveera la mesa (o las mesas) y notificará al cliente.
+        <span class="text-accent">Es un sistema de reservas a futuro.</span> Si ésta opción está activada, tus clientes
+        podrán auto reservarse mesas disponibles en tiempo real para un día y horario definido por el administrador
+        según los horarios hábiles del comercio. El administrador también puede hacer reservas o re-asignar mesas ya
+        reservadas de forma manual.
+        <hr>
+        Si el cliente solicita una mesa para un grupo de personas para el cual no existe mesa que pueda
+        cumplimentar el requerimiento, tendrá la opción de iniciar una solicitud de mesa especial.
+        Cuando la hora de reserva se encuentre próxima, el sistema comenzará a reservar las mesas asignadas
+        en forma automática y a la hora de la reserva proveerá la mesa (o las mesas) y notificará al cliente.
     </mat-card-content>
 
     <mat-card-content *ngIf="data.idHelp==='waiterVirtualQueuePosition'">

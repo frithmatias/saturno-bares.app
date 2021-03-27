@@ -35,6 +35,10 @@
     --text-o95: rgba(255, 255, 255, .95);
     --text    : #ffffff;
 
+
+    --primary-o25        : rgba(233, 30, 99, .25);
+    --primary-o50        : rgba(233, 30, 99, .50);
+    --primary-o75        : rgba(233, 30, 99, .75);
     --primary            : #e91e63;
     --accent             : #fff700;
     --accent-invert      : #ff4d00;

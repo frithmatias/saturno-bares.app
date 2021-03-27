@@ -3,7 +3,7 @@ import { CapitalizarPipe } from './capitalizar.pipe';
 import { DomseguroPipe } from './domseguro.pipe';
 import { GetidstringPipe } from './getidstring.pipe';
 import { ImagenPipe } from './imagen.pipe';
-import { IntervalToHmsPipe } from './interval-to-hms.pipe';
+import { DiffToHMSPipe } from './diff-to-hms.pipe';
 import { MessageTimePipe } from './message-time.pipe';
 import { WordMaxLengthPipe } from './word-max-length.pipe';
 import { GetOccupationPipe } from './get-ocuppation.pipe';
@@ -17,7 +17,7 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
   declarations: [
     DomseguroPipe,
     GetidstringPipe,
-    IntervalToHmsPipe,
+    DiffToHMSPipe,
     MessageTimePipe,
     WordMaxLengthPipe,
     CapitalizarPipe,
@@ -33,7 +33,7 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
   exports: [
     DomseguroPipe,
     GetidstringPipe,
-    IntervalToHmsPipe,
+    DiffToHMSPipe,
     MessageTimePipe,
     WordMaxLengthPipe,
     CapitalizarPipe,

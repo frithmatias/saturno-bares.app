@@ -37,7 +37,7 @@
         <div *ngIf="dtSelected && pendingBySectionMap" class="sm">
             <table>
                 <tr class="text-accent">
-                    Solicitudes Pendientes para el {{ dtSelected | dateToString : 'date-full'| capitalizarPipe}}
+                    Solicitudes Pendientes para el {{ dtSelected | dateToString : 'date-long' | capitalizarPipe}}
                 </tr>
                 <tr *ngFor="let section of adminService.sections">
                     <td>
@@ -78,7 +78,7 @@
                 <span class="lg mdi mdi-calendar text-deco"></span>
                 <span class="sidenav-title-text mx-2 align-self-center md">Agenda <span
                         class="text-accent">{{adminService.sectionsMap.get(idSection)}}</span> {{ dtSelected |
-                    dateToString : 'date-full'| capitalizarPipe}} </span>
+                    dateToString : 'date-long'| capitalizarPipe}} </span>
             </mat-panel-title>
         </mat-expansion-panel-header>
 

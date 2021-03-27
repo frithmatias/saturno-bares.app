@@ -32,8 +32,3 @@ div {
 .subtitle {
     font-size: medium;
 }
-
-.paragraph {
-    font-size: small;
-    color: var(--info);
-}

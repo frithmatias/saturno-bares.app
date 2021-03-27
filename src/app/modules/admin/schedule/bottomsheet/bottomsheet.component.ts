@@ -86,6 +86,15 @@ export class BottomsheetComponent implements OnInit {
     this.data.availability.forEach(av => {
       av['enabled'] = this.cdTables.every(t => av.available.filter(a => !a.blReserved).map(a => a.nmTable).includes(t));
       av['reserved'] = av.available.filter(a => a.blReserved).map(a => a.nmTable);
+      let selectedReserved = av['reserved'].filter( (table: number) => this.cdTables.includes(table));
+      let selectedText: string = selectedReserved.length > 1 ? 'Las mesas ' : 'La mesa ';
+      for (let [index, table] of selectedReserved.entries()){
+        if (index >= selectedReserved.length - 1 && selectedReserved.length > 1) selectedText += ' y '
+        selectedText += table.toString();
+      }
+
+      selectedText += selectedReserved.length > 1 ? ' están reservas.' : ' está reservada.'
+      av['msg'] = selectedText;
     });
   }
 

@@ -158,7 +158,9 @@
                           [disabled]="!avInterval.enabled || avInterval.interval === data.avInterval.interval"> 
                           <!-- data.avInterval trae los datos del intervalo seleccionado, deshabilito el intervalo por defecto -->
                             {{avInterval.interval | dateToString : 'time-24' }} 
-                            <span *ngIf="avInterval.reserved.length > 0 && !avInterval.enabled">Mesas con reserva {{avInterval.reserved}}</span>
+                            <span *ngIf="avInterval.reserved.length > 0 && !avInterval.enabled">
+                                {{avInterval.msg}}
+                            </span>
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

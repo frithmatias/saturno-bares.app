@@ -31,10 +31,11 @@ export class CapitalizarPipe implements PipeTransform {
 			return;
 		}
 		value = value.toLowerCase();
-		const nombres = value.split(' ');
+		const nombres = value.split(/[\s,]+/) // splitters: 'espacios , -'
+
 		if (todas) {
 			nombres.forEach((nombre , i) => {
-			// for (const i in nombres) {
+				// for (const i in nombres) {
 				nombres[i] = nombres[i][0].toUpperCase() + nombres[i].substr(1); // .substr(1) concateno desde la primera posición en adelante
 			});
 		} else {

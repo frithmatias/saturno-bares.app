@@ -37,19 +37,19 @@
       <table class="sm my-2">
         <tr>
           <td>Estado</td>
-          <td class="text-accent text-right">{{ticket.tx_status | ticketStatus}}</td>
+          <td class="text-info text-right">{{ticket.tx_status | ticketStatus}}</td>
         </tr>
         <tr>
           <td>Fecha</td>
-          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToString | capitalizarPipe }}</td>
+          <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' | capitalizarPipe}}</td>
         </tr>
         <tr>
           <td>Faltan</td>
-          <td class="text-accent text-right">{{ticket.tm_intervals[0] | dateToRemaining}}</td>
+          <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToRemaining}}</td>
         </tr>
         <tr>
           <td>Nombre</td>
-          <td class="text-accent text-right"> {{ticket.tx_name}}</td>
+          <td class="text-info text-right"> {{ticket.tx_name}}</td>
         </tr>
       </table>
 
@@ -113,15 +113,11 @@
                 Comercio eliminado
               </div>
             </td>
-            <td class="pointer text-info" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+            <td class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
               {{ticket.id_company?.tx_company_name}}
             </td>
-            <td class="text-left">
-              {{ticket.tm_intervals[0] | dateToString : 'date-long' | capitalizarPipe}},
-
-              <span class="sm text-accent">
-                {{ticket.tm_intervals[0] | dateToRemaining}}
-              </span>
+            <td class="text-left text-info">
+              {{ticket.tm_intervals[0] | date : 'd-MMM hh:mm' | capitalizarPipe}}
             </td>
             <td class="text-right text-warn">
               {{ticket.tx_status}}
