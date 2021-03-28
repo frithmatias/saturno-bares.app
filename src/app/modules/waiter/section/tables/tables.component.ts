@@ -131,12 +131,24 @@ export class TablesComponent implements OnInit {
 
   initTables = (table: Table) => {
 
+    // TODO
+    // Las mesas deben poder inicializarse si: 
+    // 1. esta en estado WAITING 
+    // 2. está en estado RESERVED <-
+    // Si está en estado RESERVED, hay que inicializar la sesión de la mesa (que lo hace SPM automáticamente al aprovisionar) 
+    // asegurandose de que TODAS las mesas en el ticket estén reservadas y estén reservadas para ese ticket.
+    
     if (!table) {
       this.publicService.snack('Seleccione una mesa primero', 3000);
     }
 
+    if(!table.id_session){
+      this.publicService.snack('Esta mesa no tiene una sesión iniciada todavía', 3000);
+      return;
+    }
+
     const idTables = table.id_session.id_tables;
-    this.publicService.snack('Desea inicializar la mesa?', 5000, 'Aceptar').then((resp: boolean) => {
+    this.publicService.snack('¿El cliente ya está en la mesa?', 5000, 'SI, INICIAR').then((resp: boolean) => {
       if (resp) {
         this.waiterService.initTables(idTables).subscribe((resp: TableResponse) => {
           if (resp.ok) {

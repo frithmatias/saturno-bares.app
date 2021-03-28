@@ -14,7 +14,8 @@
         </tr>
         <tr>
             <td class="row-item">Contingencia:</td>
-            <td class="row-data">{{ticket.bl_contingent}}</td>
+            <td class="row-data" *ngIf="ticket.bl_contingent">Si</td>
+            <td class="row-data" *ngIf="!ticket.bl_contingent">No</td>
         </tr>
         <tr>
             <td class="row-item">Estado:</td>
@@ -35,7 +36,8 @@
         </tr>
         <tr>
             <td class="row-item">Posición:</td>
-            <td class="row-data">{{ticket.id_position}}</td>
+            <td class="row-data" *ngIf="ticket.id_position">{{ticket.id_position}}</td>
+            <td class="row-data" *ngIf="!ticket.id_position">Sin número (Agenda)</td>
         </tr>
         <tr>
             <td class="row-item">Reserva:</td>
@@ -49,7 +51,8 @@
         </tr>
         <tr>
             <td class="row-item">Prioridad:</td>
-            <td class="row-data">{{ticket.bl_priority}}</td>
+            <td class="row-data" *ngIf="ticket.bl_priority">Si</td>
+            <td class="row-data" *ngIf="!ticket.bl_priority">No</td>
         </tr>
         <tr>
             <td class="row-item">Plataforma:</td>

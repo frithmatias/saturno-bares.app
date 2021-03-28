@@ -183,7 +183,8 @@
 
             <!-- Init Table Service -->
             <button mat-raised-button color="active" class="action-button" (click)="initTables(table)"
-                [disabled]="table.tx_status !== 'waiting'">
+                [disabled]="table.tx_status!=='waiting'">
+                <!-- [disabled]="!['waiting','reserved'].includes(table.tx_status)" -->
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-play xl"></td>
@@ -229,7 +230,7 @@
 
             <!-- ticket info -->
             <button mat-raised-button color="telegram" class="action-button"
-                (click)="openSheetTicketInfo(table.id_session?.id_ticket)" [disabled]="!table.id_session?.id_ticket">
+                (click)="openSheetTicketInfo(table.id_session?.id_ticket || table.id_ticket)" [disabled]="!table.id_session?.id_ticket && !table.id_ticket">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-information-outline xl"></td>

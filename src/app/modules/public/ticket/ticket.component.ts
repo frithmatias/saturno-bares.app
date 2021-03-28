@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 // interfaces
 import { TicketResponse, TicketsResponse } from '../../../interfaces/ticket.interface';
@@ -10,7 +10,7 @@ import { WebsocketService } from '../../../services/websocket.service';
 import { PublicService } from '../public.service';
 
 // libs
-import { Subject, interval, Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { ScoreItemsResponse, ScoreItem, ScoresResponse } from '../../../interfaces/score.interface';
 import { Company } from '../../../interfaces/company.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -45,12 +45,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 	scoreItems: ScoreItem[] = [];
 	scores = new Map();
 
-	private subjectUpdateTickets$ = new Subject();
-
 	constructor(
 		private wsService: WebsocketService,
 		public publicService: PublicService,
-		private router: Router,
 		private route: ActivatedRoute,
 		private bottomSheet: MatBottomSheet
 	) { }
@@ -64,7 +61,6 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 		if (!this.idTicket) {
 			this.publicService.clearPublicSession();
-			this.router.navigate(['/home']);
 			this.publicService.snack('No hay ticket para gestionar', 5000)
 			return;
 		}
@@ -288,11 +284,9 @@ export class TicketComponent implements OnInit, OnDestroy {
 							resolve();
 							this.publicService.snack(data.msg, 3000, 'ACEPTAR')
 							this.publicService.clearPublicSession();
-							this.router.navigate(['/home']);
 						}
 					}, () => {
 						this.publicService.clearPublicSession();
-						this.router.navigate(['/home']);
 					});
 				}
 			})
@@ -310,12 +304,11 @@ export class TicketComponent implements OnInit, OnDestroy {
 				dataScores.push({ id_ticket: idTicket, id_scoreitem: llave, cd_score: valor });
 			});
 
-			this.publicService.sendScores(dataScores).subscribe((d: ScoresResponse) => {
-				if (d.ok) {
+			this.publicService.sendScores(dataScores).subscribe((data: ScoresResponse) => {
+				if (data.ok) {
 					delete this.ticket;
-					this.publicService.snack('Gracias!', 5000).then(ok => {
-						if (ok) this.publicService.clearPublicSession();
-					})
+					this.publicService.snack('¡ Gracias por tu visita !', 5000);
+					this.publicService.clearPublicSession();
 				}
 			})
 

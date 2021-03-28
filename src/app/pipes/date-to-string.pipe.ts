@@ -5,7 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateToStringPipe implements PipeTransform {
   transform(time: Date, format: string): string {
-
+    if(!time){
+      return 'n/a';
+    }
     var options = {};
 
     switch (format) {
