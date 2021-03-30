@@ -25,7 +25,6 @@
     "@types/gapi": "0.0.39",
     "@types/gapi.auth2": "0.0.52",
     "angularx-qrcode": "^10.0.11",
-    "ng-image-slider": "^2.6.4",
     "ngx-socket-io": "^3.2.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",

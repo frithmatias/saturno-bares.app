@@ -9,7 +9,6 @@ import { PublicRoutingModule } from './public-routing.module';
 import { MaterialModule } from '../../modules/material.module';
 import { ComponentsModule } from '../../components/components.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { NgImageSliderModule } from 'ng-image-slider';
 
 // components
 import { PublicComponent } from './public.component';
@@ -43,7 +42,6 @@ import { RegisterComponent } from './register/register.component';
 		ComponentsModule,
 		PublicRoutingModule,
 		PipesModule,
-		NgImageSliderModule
 	]
 })
 export class PublicModule { }

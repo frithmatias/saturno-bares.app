@@ -1,23 +1,53 @@
 @media (max-width: 575px) {
-    .company-page-title {
-        font-size : xx-large !important;
-        margin-top: 10px;
+    .company-page-logo {
+        width: 60px !important;
+    }
+
+    .company-page-name {
+        font-size: xx-large !important;
     }
 }
 
 .company-page-banner {
-    padding: 20px 20px 0px 20px;
+    padding         : 0px 0px 0px 0px;
+    background-color: var(--primary-o50);
+    position        : relative;
+    overflow        : hidden;
+    max-height      : 350px;
+
 }
 
-.company-page-title {
-    font-size: xxx-large;
-    color    : var(--accent);
+.company-page-image {
+    margin-top: -15%;
 }
 
-.company-page-subtitle {
+
+.company-title-container {
+    align-self: center;
+}
+
+.company-title {
+    position        : absolute;
+    top             : 0px;
+    width           : 100%;
+    height          : 100%;
+    font-family     : Federant;
+    background-color: var(--primary-o50);
+    display         : flex;
+    justify-content : center;
+}
+
+.company-page-name {
+    font-size  : xxx-large;
+    color      : white;
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 50%);
+}
+
+.company-page-slogan {
     font-size    : medium;
     margin-bottom: 10px;
-
+    color        : yellow;
+    text-shadow  : 0px 0px 2px rgb(0 0 0 / 50%);
 }
 
 .company-page-tab-icon {
@@ -27,18 +57,20 @@
     opacity  : 0.8;
 }
 
-.company-page-logo {
-    border-radius: 50%;
-    position     : relative;
-    margin-bottom: -60px;
-    top          : -60px;
-    width        : 100px;
-    /* box-shadow   : 0px 0px 4px rgb(0 0 0 / 50%); */
+.company-logo-container {
+    align-self: center;
 }
+
+.company-page-logo {
+    border-radius: 5px;
+    width        : 89px;
+    box-shadow   : 0px 0px 2px rgb(0 0 0 / 20%);
+}
+
+
 
 .company-page-tabs {
     /* vh - header - subtitle-margin-bottom - banner - footer */
-    min-height      : calc(100vh - 64px - 10px - 356px - 80px);
     background-color: var(--mat-card-bg);
 }
 

@@ -40,8 +40,13 @@
             <td class="row-data" *ngIf="!ticket.id_position">Sin número (Agenda)</td>
         </tr>
         <tr>
+            <td class="row-item">Iniciado:</td>
+            <td class="row-data">{{ticket.tm_start | dateToString : 'date-time' | capitalizarPipe}} </td>
+        </tr>
+        <tr>
             <td class="row-item">Reserva:</td>
-            <td class="row-data" *ngIf="ticket.tm_intervals">{{ticket.tm_intervals[0] | dateToString : 'date-time' | capitalizarPipe}} 
+            <td class="row-data" *ngIf="ticket.tm_intervals">{{ticket.tm_intervals[0] | dateToString : 'date-time' |
+                capitalizarPipe}}
             </td>
             <td class="row-data" *ngIf="!ticket.tm_intervals">No</td>
         </tr>

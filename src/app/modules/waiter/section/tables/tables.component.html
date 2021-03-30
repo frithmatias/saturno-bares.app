@@ -3,6 +3,7 @@
 <!------------------------------>
 <!-- TABLES [LIST MODE] -->
 <!------------------------------>
+
 <div *ngIf="listmode">
 
     <table *ngIf="tables && busyTablesTimes" mat-table [dataSource]="tables" multiTemplateDataRows>
@@ -60,6 +61,7 @@
         <!-------------------------------------->
         <!-- EXPANDED ROW: STATUS AND ACTIONS -->
         <!-------------------------------------->
+
         <ng-container matColumnDef="expandedDetail">
             <td class="td-expanded px-0" mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                 <div class="ticket-container" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
@@ -83,6 +85,7 @@
 <!------------------------------>
 <!-- TABLES [BUTTONS MODE] -->
 <!------------------------------>
+
 <div *ngIf="!listmode">
     <button mat-raised-button
         [color]="t.id_session ? t.id_session?.id_ticket?.tm_init ? 'warn' : 'accent' : t.tx_status==='idle'?'active':t.tx_status==='reserved'?'primary':''"
@@ -115,6 +118,7 @@
         <!------------------------------>
         <!-- TABLE STATUS -->
         <!------------------------------>
+
         <div class="p-2 lg text-center">
             Mesa {{ table.nm_table }}:
             <span class="text-accent">
@@ -122,14 +126,14 @@
                 <span *ngIf="table.tx_status === 'paused'" class="text-info"> Pausada </span>
                 <span *ngIf="table.tx_status === 'idle'" class="text-active"> Disponible </span>
                 <span *ngIf="table.tx_status === 'reserved'" class="text-primary"> Reservada </span>
-                <span *ngIf="table.tx_status === 'waiting'" class="text-accent"> Esperando al cliente... </span>
+                <span *ngIf="table.tx_status === 'waiting'" class="text-accent"> Esperando a {{table.id_session.id_ticket.tx_name}} </span>
             </span>
         </div>
-
 
         <!------------------------------>
         <!-- TICKET TIMERS -->
         <!------------------------------>
+
         <div class="px-4 mt-4">
             <table class="px-4 my-4" *ngIf="table.id_session?.id_ticket">
                 <tr>
@@ -152,6 +156,7 @@
         <!------------------------------>
         <!-- ACTIONS -->
         <!------------------------------>
+
         <div>
             <!-- activate table -->
             <button mat-raised-button [color]="table.tx_status==='paused'? '' : 'active'" class="action-button"

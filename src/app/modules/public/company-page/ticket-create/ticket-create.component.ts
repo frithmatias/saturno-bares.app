@@ -300,9 +300,8 @@ export class TicketCreateComponent implements OnInit {
     let txName = this.ticketForm.value.txName;
     let nmPersons = this.ticketForm.value.nmPersons;
     let idSection = this.ticketForm.value.idSection;
-    let tmIntervals = this.ticketForm.value.tmIntervals || null;
-
-    let cdTables = this.ticketForm.value.cdTables; // 0 if not compatible tables
+    let tmIntervals = this.ticketForm.value.tmIntervals || [];
+    let cdTables: number[] = this.ticketForm.value.cdTables || []; // 0 if not compatible tables
     this.loading = true;
 
     this.publicService.createTicket(txName, nmPersons, idSection, tmIntervals, cdTables, blContingent, idSocket).subscribe(

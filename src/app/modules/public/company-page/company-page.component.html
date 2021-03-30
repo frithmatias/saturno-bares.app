@@ -1,43 +1,38 @@
 <div *ngIf="company">
-
     <!-- PAGE IMAGE SLIDER -->
     <div class="company-page-banner">
-
-        <div *ngIf="images.length > 1" style="max-width: 600px; border-radius: 20px;">
-            <ng-image-slider [images]="images" [infinite]="true" [autoSlide]="0" [imagePopup]="true"
-                [animationSpeed]="1" [slideImage]="1" [imageSize]="imageSize" [showArrow]="true" #nav></ng-image-slider>
-        </div>
-
-        <div *ngIf="images.length === 1" style="max-width: 600px;">
-            <img [height]="imageSize.height" width="100%" [src]="images[0].image">
-        </div>
-
-        <div *ngIf="images.length > 0">
-            <img class="company-page-logo img-fluid"
-                [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
-        </div>
-
+        
         <!-- PAGE TITLE TABS -->
-        <div class="text-center">
-            <div class="company-page-title">{{company.tx_company_name}}</div>
-            <div class="company-page-subtitle">{{company.tx_company_slogan}}</div>
+        <div class="company-title">
+            <div class="mr-3 company-logo-container">
+                <img class="company-page-logo img-fluid"
+                    [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+            </div>
+            <div class="ml-3 company-title-container">
+                <div class="company-page-name">{{company.tx_company_name}}</div>
+                <div class="company-page-slogan">{{company.tx_company_slogan}}</div>
+            </div>
         </div>
+
+        <img class="company-page-image" width="100%" *ngIf="images.length > 0" [src]="images[0].image">
+ 
+
+
     </div>
 
     <!-- PAGE TABS -->
     <div class="company-page-tabs">
         <mat-tab-group mat-align-tabs="center" dynamicHeight>
             <mat-tab>
-                <ng-template mat-tab-label><div><div class="mdi mdi-home company-page-tab-icon"></div><div>Home</div></div></ng-template>
+                <ng-template mat-tab-label>Home</ng-template>
                 <app-home [company]="company"></app-home>
             </mat-tab>
             <mat-tab>
-                <ng-template mat-tab-label><div><div class="mdi mdi-food company-page-tab-icon"></div><div>Menú</div></div></ng-template>
+                <ng-template mat-tab-label>Menú</ng-template>
                 <app-menu [company]="company"></app-menu>
             </mat-tab>
             <mat-tab *ngIf="publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-                <ng-template mat-tab-label><div><div class="mdi mdi-ticket-account company-page-tab-icon"></div><div>Reservar</div></div>
-                </ng-template>
+                <ng-template mat-tab-label>Reservar</ng-template>
                 <app-ticket-create [company]="company"></app-ticket-create>
             </mat-tab>
         </mat-tab-group>
