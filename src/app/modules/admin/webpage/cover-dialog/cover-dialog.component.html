@@ -1,0 +1,13 @@
+
+<mat-card-content>
+    <div>
+        <div class="predefined-cover-title">{{data.name}}</div>
+    </div>
+    <div>
+        <img class="predefined-cover-preview" [src]="data.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
+    </div>
+</mat-card-content>
+<mat-card-actions>
+    <button mat-button (click)="closeDialog()">Cancelar</button>
+    <button mat-button (click)="selectCover(data)">Seleccionar</button>
+</mat-card-actions>

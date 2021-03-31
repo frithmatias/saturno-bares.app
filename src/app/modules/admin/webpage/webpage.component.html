@@ -94,10 +94,28 @@
 
             <hr>
 
-            <app-uploader [multi]="true" [idDocument]="this.loginService.user.id_company._id"
-                idField="tx_company_banners" [documentData]="this.loginService.user.id_company"
-                [header]="header.banners" (dataUpdated)="dataUpdated($event)">
+            <div class="thumb-container pointer">
+                <div *ngFor="let img of defaultCovers" (click)="openDialog(img)">
+                    <div class="predefined-cover-title">
+                        {{img.name}}
+                        <span *ngIf="coverSelected === img.filename" class="mdi mdi-check text-accent"></span>
+                    </div>
+                    <div>
+                        <img class="cover-thumb" [src]="img.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
+                    </div>
+                </div>
+            </div>
+
+
+            <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id"
+                idField="tx_company_cover" [documentData]="this.loginService.user.id_company" [header]="header.cover"
+                (dataUpdated)="dataUpdated($event)">
             </app-uploader>
+
+            <!-- <app-uploader [multi]="true" [idDocument]="this.loginService.user.id_company._id"
+                idField="tx_company_images" [documentData]="this.loginService.user.id_company"
+                [header]="header.banners" (dataUpdated)="dataUpdated($event)">
+            </app-uploader> -->
         </mat-card-content>
 
     </mat-card>

@@ -1883,7 +1883,7 @@ td.mat-footer-cell {
 
 .mat-dialog-container {
     box-shadow: 0px 11px 15px -7px var(--dark-o20), 0px 24px 38px 3px var(--dark-o14), 0px 9px 46px 8px var(--dark-o12);
-    background: #fff;
+    background: var(--bg);
     color     : var(--text)
 }
 

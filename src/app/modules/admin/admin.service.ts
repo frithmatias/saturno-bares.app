@@ -8,7 +8,7 @@ import { LoginService } from '../../services/login.service';
 
 // Interfaces
 import { User, UserResponse } from '../../interfaces/user.interface';
-import { Company, CompaniesResponse, CompanyResponse } from '../../interfaces/company.interface';
+import { Company, CompaniesResponse, CompanyResponse, Cover } from '../../interfaces/company.interface';
 import { Table } from '../../interfaces/table.interface';
 import { Section } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
@@ -57,6 +57,17 @@ export class AdminService {
 	readCompanies(idUser: string) {
 		const url = environment.api + '/c/readcompanies/' + idUser;
 		return this.http.get(url);
+	}
+
+	readCovers() {
+		const url = environment.api + '/c/readcovers';
+		return this.http.get(url);
+	}
+
+	updateCover(idCompany: string, coverFilename: string) {
+		const data = {idCompany, coverFilename};
+		const url = environment.api + '/c/updatecover';
+		return this.http.post(url, data);
 	}
 
 	updateCompany(company: Company) {

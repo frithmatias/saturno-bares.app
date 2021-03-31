@@ -1,17 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { AdminService } from '../admin.service';
 import { LoginService } from '../../../services/login.service';
-import { CompanyResponse } from '../../../interfaces/company.interface';
+import { CompanyResponse, Cover, ReadCoversResponse } from '../../../interfaces/company.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PublicService } from '../../public/public.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CoverDialogComponent } from './cover-dialog/cover-dialog.component';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-webpage',
   templateUrl: './webpage.component.html',
   styleUrls: ['./webpage.component.css']
 })
-export class WebPageComponent implements OnInit {
+export class WebPageComponent implements OnInit, OnDestroy {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
@@ -25,17 +29,22 @@ export class WebPageComponent implements OnInit {
       title: 'Logo',
       subtitle: null
     },
-    banners: {
+    cover: {
       icon: 'mdi mdi-image',
-      title: 'Fotos',
+      title: 'Portada',
       subtitle: null
     }
   }
 
+  userSubscription: Subscription;
+  defaultCovers: Cover[];
+  coverSelected: string;
+
   constructor(
     private publicService: PublicService,
     public loginService: LoginService,
-    public adminService: AdminService
+    public adminService: AdminService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +59,19 @@ export class WebPageComponent implements OnInit {
       txWelcome: new FormControl(this.loginService.user.id_company?.tx_company_welcome, [Validators.required, Validators.maxLength(1000)])
     })
 
+    // obtengo las portadas predefinidas
+    this.adminService.readCovers().subscribe((data: ReadCoversResponse) => {
+      this.defaultCovers = data.covers;
+    })
+
+    // me suscribo al observable user para obtener los cambios de portada 
+    this.userSubscription = this.loginService.user$.subscribe((user: User) => {
+      if (user?._id) {
+        this.coverSelected = this.loginService.user.id_company.tx_company_cover;
+      }
+    });
+
+    this.coverSelected = this.loginService.user.id_company.tx_company_cover;
   }
 
 
@@ -92,5 +114,18 @@ export class WebPageComponent implements OnInit {
   dataUpdated(dataUpdated: any): void {
     this.loginService.pushUser(this.loginService.user)
   }
+
+
+  openDialog(cover: Cover){
+    const dialogRef = this.dialog.open(CoverDialogComponent, {data: cover});
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
+
 
 }

@@ -37,6 +37,7 @@ import { CalendarComponent } from './schedule/calendar/calendar.component';
 import { ModulesComponent } from './settings/modules/modules.component';
 import { MessageComponent } from './settings/message/message.component';
 import { WorkingComponent } from './settings/working/working.component';
+import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -68,6 +69,7 @@ import { WorkingComponent } from './settings/working/working.component';
 		ModulesComponent,
 		MessageComponent,
 		WorkingComponent,
+		CoverDialogComponent,
 	],
 	imports: [
 		CommonModule,

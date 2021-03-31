@@ -5,8 +5,7 @@
         <!-- PAGE TITLE TABS -->
         <div class="company-title">
             <div class="mr-3 company-logo-container">
-                <img class="company-page-logo img-fluid"
-                    [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+                <img class="company-page-logo img-fluid" [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
             </div>
             <div class="ml-3 company-title-container">
                 <div class="company-page-name">{{company.tx_company_name}}</div>
@@ -14,10 +13,8 @@
             </div>
         </div>
 
-        <img class="company-page-image" width="100%" *ngIf="images.length > 0" [src]="images[0].image">
+        <img class="company-page-image" width="100%" [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
  
-
-
     </div>
 
     <!-- PAGE TABS -->

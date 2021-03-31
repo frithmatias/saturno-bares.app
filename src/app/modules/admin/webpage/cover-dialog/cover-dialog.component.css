@@ -1,0 +1,17 @@
+.predefined-cover-title {
+    font-size  : xx-large;
+    color      : var(--accent);
+    font-family: Federant;
+}
+
+.predefined-cover-preview {
+    width: 45vw;
+    max-width: 45vw;
+}
+
+@media (max-width: 575px) {
+    .predefined-cover-preview {
+        width: 65vw;
+        max-width: 65vw;
+    }
+}

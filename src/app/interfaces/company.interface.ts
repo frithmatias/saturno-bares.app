@@ -29,7 +29,8 @@ export interface Company {
 	
 	//uploader
     tx_company_logo: string;
-	tx_company_banners: string[];
+    tx_company_cover: string;
+	tx_company_images: string[];
 
 	tm_start: Date;
     tm_end: Date;
@@ -47,4 +48,21 @@ export interface CompaniesResponse {
 	ok: boolean;
 	msg: string;
 	companies: Company[] | null;
+}
+
+export interface ReadCoversResponse {
+	ok: boolean;
+	msg: string;
+	covers: Cover[] | null;
+}
+
+export interface UpdateCoverResponse {
+	ok: boolean;
+	msg: string;
+	company: Company | null;
+}
+
+export interface Cover {
+	name: string;
+	filename: string;
 }

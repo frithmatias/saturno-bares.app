@@ -10,12 +10,13 @@ import { environment } from 'src/environments/environment';
 export class ImagenPipe implements PipeTransform {
 	transform(idFile: string, idType: string, idCompany: string): any {
 		let url = environment.api + '/image';
-
-		if (!idFile) {
-			return url + '/noCompany/noType/noFile'; // ruta que no existe, devuelve una imagen por defecto
+		
+		if (idFile && idFile.indexOf('cover') >= 0) {
+			idCompany = 'predefined'; // la imagen es una url por ejemplo la de una cuenta de Google
 		}
 
-		if (idFile.indexOf('https') >= 0) {
+
+		if (idFile && idFile.indexOf('https') >= 0) {
 			return idFile; // la imagen es una url por ejemplo la de una cuenta de Google
 		}
 
