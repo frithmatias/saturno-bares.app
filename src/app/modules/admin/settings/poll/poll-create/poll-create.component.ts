@@ -56,7 +56,6 @@ export class PollCreateComponent implements OnInit {
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
-		this.publicService.scrollTop();
 	}
 
 	sectionChange(section: Section): void {

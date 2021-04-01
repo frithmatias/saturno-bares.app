@@ -10,7 +10,6 @@
 
 .company-page-banner {
     padding         : 0px 0px 0px 0px;
-    background-color: var(--primary-o50);
     position        : relative;
     overflow        : hidden;
     max-height      : 350px;
@@ -32,7 +31,7 @@
     width           : 100%;
     height          : 100%;
     font-family     : Federant;
-    background-color: var(--primary-o50);
+    background-color: var(--primary-o25);
     display         : flex;
     justify-content : center;
 }

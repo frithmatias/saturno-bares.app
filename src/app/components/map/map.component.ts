@@ -47,36 +47,8 @@ export class MapComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
 
-
-
-    if (localStorage.getItem('config')) {
-      this.config = JSON.parse(localStorage.getItem('config'));
-    }
-
-    if (!this.config.theme) {
-
-      let hours = new Date().getHours();
-
-      if (hours >= 6 && hours < 20) {
-        // light theme
-        this.config.maptheme = 'streets-v11'
-      } else {
-        // dark theme
-        this.config.maptheme = 'dark-v10';
-      }
-
-    } else {
-
-      if (['deeppurple-amber.css', 'indigo-pink.css'].includes(this.config.theme)) {
-        // light theme
-        this.config.maptheme = 'streets-v11'
-      } else {
-        // dark theme
-        this.config.maptheme = 'dark-v10';
-      }
-
-    }
-
+    let hours = new Date().getHours();
+    this.config.maptheme = (hours >= 6 && hours < 20) ? 'streets-v11' : 'dark-v10';
     await this.inicializarMapa(this.mapbox);
 
   }

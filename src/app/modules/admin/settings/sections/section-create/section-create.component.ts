@@ -64,7 +64,6 @@ export class SectionCreateComponent implements OnInit {
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
 		this.forma.reset();
-		this.publicService.scrollTop();
 	}
 
 

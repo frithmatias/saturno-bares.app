@@ -1,14 +1,14 @@
-        <!-- THEME -->
-        <div [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors md pointer"></div>
-        <mat-menu #colorpicker="matMenu">
-            <div class="d-flex px-2">
-                <div class="pointer box-dark-purple" (click)="changeTheme('dark-purple.css')"></div>
-                <div class="pointer box-grey-dark" (click)="changeTheme('grey-dark.css')"></div>
-                <div class="pointer box-light-blue" (click)="changeTheme('light-blue.css')"></div>
-            </div>
-            <div class="d-flex px-2">
-                <div class="pointer box-dark-pink" (click)="changeTheme('dark-pink.css')"></div>
-                <div class="pointer box-grey-orange" (click)="changeTheme('grey-orange.css')"></div>
-                <div class="pointer box-light-green" (click)="changeTheme('light-green.css')"></div>
-            </div>
-        </mat-menu>
+<!-- THEME -->
+<div [matMenuTriggerFor]="colorpicker" class="mdi mdi-invert-colors md pointer"></div>
+<mat-menu #colorpicker="matMenu">
+    <div class="d-flex px-2">
+        <div class="pointer box-dark-purple" (click)="changeTheme('dark-purple.css')"></div>
+        <div class="pointer box-grey-dark" (click)="changeTheme('grey-dark.css')"></div>
+        <div class="pointer box-light-blue" (click)="changeTheme('light-blue.css')"></div>
+    </div>
+    <div class="d-flex px-2">
+        <div class="pointer box-dark-pink" (click)="changeTheme('dark-pink.css')"></div>
+        <div class="pointer box-grey-orange" (click)="changeTheme('grey-orange.css')"></div>
+        <div class="pointer box-light-green" (click)="changeTheme('light-green.css')"></div>
+    </div>
+</mat-menu>

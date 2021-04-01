@@ -20,6 +20,9 @@ export class PublicComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+    // read company param
     this.route.params.subscribe((data: any) => {
       if (data.txCompanyString) {
         let txCompanyString = data.txCompanyString;

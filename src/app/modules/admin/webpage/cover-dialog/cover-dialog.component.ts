@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Cover, UpdateCoverResponse } from '../../../../interfaces/company.interface';
+import { Cover, CompanyResponse } from '../../../../interfaces/company.interface';
 import { AdminService } from '../../admin.service';
 import { PublicService } from '../../../public/public.service';
 import { LoginService } from '../../../../services/login.service';
@@ -28,7 +28,7 @@ export class CoverDialogComponent implements OnInit {
   selectCover(cover: Cover) {
     const idCompany = this.loginService.user.id_company._id;
     const coverFilename = cover.filename;
-    this.adminService.updateCover(idCompany, coverFilename).subscribe((data: UpdateCoverResponse) => {
+    this.adminService.updateCover(idCompany, coverFilename).subscribe((data: CompanyResponse) => {
       this.publicService.snack(data.msg, 5000)
       if (data.ok) {
         this.loginService.user.id_company = data.company;

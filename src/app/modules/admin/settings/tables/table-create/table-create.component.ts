@@ -82,7 +82,6 @@ export class TableCreateComponent implements OnInit {
 
 	resetForm(formDirective: FormGroupDirective) {
 		formDirective.resetForm();
-		this.publicService.scrollTop();
 	}
 
 }

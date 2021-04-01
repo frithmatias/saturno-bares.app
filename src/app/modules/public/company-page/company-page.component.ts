@@ -20,7 +20,6 @@ export class CompanyPageComponent implements OnInit {
 	) { }
 	ngOnInit(): void {
 
-
 		if (!this.company && localStorage.getItem('company')) {
 			this.company = JSON.parse(localStorage.getItem('company'));
 		}
@@ -37,6 +36,10 @@ export class CompanyPageComponent implements OnInit {
 			this.publicService.settings = data.settings; // rompo la referencia la objeto original
 		})
 
+		if (this.company.tx_theme) {
+			let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+			cssLink.href = `./assets/css/themes/${this.company.tx_theme}`;
+		}
 
 	}
 

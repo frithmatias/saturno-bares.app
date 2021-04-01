@@ -4,7 +4,7 @@
 
         <mat-card-header>
             <mat-card-title class="md">
-                <span class="mdi mdi-card-account-details-outline md text-accent"></span> Página Web
+                <span class="mdi mdi-card-account-details-outline md text-accent"></span> Portal Web
             </mat-card-title>
         </mat-card-header>
 
@@ -96,7 +96,7 @@
 
             <div class="thumb-container pointer">
                 <div *ngFor="let img of defaultCovers" (click)="openDialog(img)">
-                    <div class="predefined-cover-title">
+                    <div class="sm predefined-cover-title">
                         {{img.name}}
                         <span *ngIf="coverSelected === img.filename" class="mdi mdi-check text-accent"></span>
                     </div>

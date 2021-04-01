@@ -1,10 +1,12 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivationEnd, NavigationEnd } from '@angular/router';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../../modules/waiter/waiter.service';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { AdminService } from '../../modules/admin/admin.service';
+import { CompanyResponse } from '../../interfaces/company.interface';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,10 +24,13 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     public loginService: LoginService,
+    public adminService: AdminService,
     public waiterService: WaiterService,
     public publicService: PublicService,
     public router: Router
-  ) { }
+  ) { 
+    console.log(this)
+  }
 
   ngOnInit(): void {
 
@@ -66,6 +71,15 @@ export class ToolbarComponent implements OnInit {
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
       // map((evento: NavigationEnd ) => {evento})
     )
+  }
+
+  themeSelected(theme: string){
+    const idCompany = this.loginService.user.id_company._id || null;
+    if(idCompany){
+      this.adminService.updateTheme(idCompany, theme).subscribe((data: CompanyResponse) => {
+        this.publicService.snack(data.msg, 3000);
+      })
+    }
   }
 
 }

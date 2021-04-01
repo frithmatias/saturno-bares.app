@@ -8,11 +8,11 @@ import { LoginService } from '../../services/login.service';
 
 // Interfaces
 import { User, UserResponse } from '../../interfaces/user.interface';
-import { Company, CompaniesResponse, CompanyResponse, Cover } from '../../interfaces/company.interface';
+import { Company, CompanyResponse } from '../../interfaces/company.interface';
 import { Table } from '../../interfaces/table.interface';
 import { Section } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
-import { Settings, SettingsResponse } from 'src/app/interfaces/settings.interface';
+import { Settings } from 'src/app/interfaces/settings.interface';
 import { Observable } from 'rxjs';
 
 
@@ -59,16 +59,7 @@ export class AdminService {
 		return this.http.get(url);
 	}
 
-	readCovers() {
-		const url = environment.api + '/c/readcovers';
-		return this.http.get(url);
-	}
 
-	updateCover(idCompany: string, coverFilename: string) {
-		const data = {idCompany, coverFilename};
-		const url = environment.api + '/c/updatecover';
-		return this.http.post(url, data);
-	}
 
 	updateCompany(company: Company) {
 		const url = environment.api + '/c/update';
@@ -99,9 +90,30 @@ export class AdminService {
 		return this.http.post(url, data);
 	}
 
+
+	// WEB PAGE
+
 	updateWebPage(data: any, idCompany: string) {
 		const url = environment.api + '/c/updatewebpage/' + idCompany;
 		return this.http.put(url, data);
+	}
+	
+	readCovers() {
+		const url = environment.api + '/c/readcovers';
+		return this.http.get(url);
+	}
+
+	updateCover(idCompany: string, coverFilename: string) {
+		const data = {idCompany, coverFilename};
+		const url = environment.api + '/c/updatecover';
+		return this.http.post(url, data);
+	}
+
+
+	updateTheme(idCompany: string, themeFilename: string) {
+		const data = {idCompany, themeFilename};
+		const url = environment.api + '/c/updatetheme';
+		return this.http.post(url, data);
 	}
 
 	// ========================================================

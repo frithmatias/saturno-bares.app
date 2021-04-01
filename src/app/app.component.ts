@@ -10,9 +10,17 @@ import { LoginService } from './services/login.service';
 export class AppComponent {
   opened: boolean;
   unreadMessages: number;
-  constructor(public loginService: LoginService) {}
-  toggle(htmlRef: MatDrawer ): void {
+  constructor(public loginService: LoginService) {
+    // set day/night theme
+    let hours = new Date().getHours();
+    const theme = (hours >= 6 && hours < 20) ? 'light-blue.css' : 'dark-pink.css';
+    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+    cssLink.href = `./assets/css/themes/${theme}`;
+  }
+
+  toggle(htmlRef: MatDrawer): void {
     htmlRef.toggle();
   }
+  
 }
 

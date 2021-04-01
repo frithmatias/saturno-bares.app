@@ -3,7 +3,7 @@
         <i class="mdi mdi-magnify"></i>
     </span>
     <input type="text" maxlength="20" class="input-company w-100" id="inputCompanyToolbar" #inputCompanyToolbar [matAutocomplete]="auto"
-    placeholder="Buscar un Comercio" (keyup)="findCompany(inputCompanyToolbar)" [value]="companySelected?.tx_company_name">
+    placeholder="Buscar un comercio" (keyup)="findCompany(inputCompanyToolbar)" [value]="companySelected?.tx_company_name">
     
     <mat-autocomplete (optionSelected)="setCompany($event.option.value)" #auto="matAutocomplete">
         <mat-option [value]="company" *ngFor="let company of companies">

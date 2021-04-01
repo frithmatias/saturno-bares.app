@@ -170,6 +170,5 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 		this.forma.enable();
 		this.forma.reset();
 		if(formDirective){formDirective.resetForm();}
-		this.publicService.scrollTop();
 	}
 }

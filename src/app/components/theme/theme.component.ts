@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-theme',
@@ -6,42 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./theme.component.css']
 })
 export class ThemeComponent implements OnInit {
-  config: any = {};
+  @Output() themeSelected: EventEmitter<string> = new EventEmitter();
+  theme: string;
   constructor() { }
 
-  ngOnInit(): void {
-    
-    if (localStorage.getItem('config')) {
-      this.config = JSON.parse(localStorage.getItem('config'));
-    }
-
-    if (!this.config.theme) {
-      let hours = new Date().getHours();
-
-      if (hours >= 6 && hours < 20) {
-        // light theme
-        this.config.theme = 'light-blue.css'
-      } else {
-        // dark theme
-        this.config.theme = 'dark-pink.css';
-      }
-
-    }
-
-    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `./assets/css/themes/${this.config.theme}`;
-  }
+  ngOnInit(): void { }
 
   changeTheme(theme: string): void {
+
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
     cssLink.href = `./assets/css/themes/${theme}`;
+    this.themeSelected.emit(theme);
 
-    if (localStorage.getItem('config')) {
-      this.config = JSON.parse(localStorage.getItem('config'));
-    }
-
-    this.config.theme = theme;
-    localStorage.setItem('config', JSON.stringify(this.config));
   }
 
 }
