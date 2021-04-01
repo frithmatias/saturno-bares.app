@@ -25,7 +25,6 @@ export class AdminService {
 	public loading = false;
 
 	public companies: Company[] = [];
-	public company: Company; // todo: selected company
 
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];

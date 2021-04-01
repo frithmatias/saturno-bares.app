@@ -23,6 +23,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+
+    const txTheme = this.loginService.user.id_company?.tx_theme;
+    if(txTheme) this.setTheme(txTheme);
+
     let idCompany = this.loginService.user.id_company?._id;
 
     if (idCompany) {
@@ -30,12 +34,24 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
 
     this.userSubscription = this.loginService.user$.subscribe(user => {
+     
+      // if company changes set the theme
+      if(user){
+        const txTheme = user.id_company?.tx_theme;
+        if(txTheme) this.setTheme(txTheme);
+      }
+
       let idCompany = user?.id_company?._id;
       if (idCompany) {
         this.readCompanyData(idCompany);
       }
     });
 
+  }
+
+  setTheme(theme: string){
+    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+    cssLink.href = `./assets/css/themes/${theme}`;
   }
 
   readCompanyData(idCompany: string) {
@@ -88,7 +104,10 @@ export class AdminComponent implements OnInit, OnDestroy {
         }
 
         this.adminService.loading = false;
+
       })
+
+    
 
   }
 

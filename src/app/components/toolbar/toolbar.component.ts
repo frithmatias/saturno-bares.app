@@ -28,9 +28,7 @@ export class ToolbarComponent implements OnInit {
     public waiterService: WaiterService,
     public publicService: PublicService,
     public router: Router
-  ) { 
-    console.log(this)
-  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -73,9 +71,9 @@ export class ToolbarComponent implements OnInit {
     )
   }
 
-  themeSelected(theme: string){
+  themeSelected(theme: string) {
     const idCompany = this.loginService.user.id_company._id || null;
-    if(idCompany){
+    if (idCompany) {
       this.adminService.updateTheme(idCompany, theme).subscribe((data: CompanyResponse) => {
         this.publicService.snack(data.msg, 3000);
       })

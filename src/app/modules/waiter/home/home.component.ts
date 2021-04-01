@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { WaiterService } from '../../../modules/waiter/waiter.service';
 import { LoginService } from '../../../services/login.service';
@@ -17,14 +16,13 @@ export class HomeComponent implements OnInit {
   loading = false;
   sections: Section[] = [];
   sessions = new Map();
-  userSuscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
     private router: Router,
     public loginService: LoginService,
     private waiterService: WaiterService,
     private publicService: PublicService,
-    private snack: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +39,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.userSuscription = this.loginService.user$.subscribe(data => {
+    this.userSubscription = this.loginService.user$.subscribe(data => {
       if (data) {
         this.readSections(data.id_company._id);
         this.readSessions(data.id_company._id);
@@ -49,29 +47,6 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  takeSection(section: Section): void {
-
-    if (!section) {
-      return;
-    }
-
-    if (this.waiterService.session) {
-      this.router.navigate(['/waiter/section']);
-      return;
-    }
-
-    let idSection = section._id;
-    let idWaiter = this.loginService.user._id;
-
-    this.waiterService.takeSection(idSection, idWaiter).subscribe((data: SessionResponse) => {
-      this.publicService.snack(data.msg, 2000);
-      if (data.ok) {
-        this.waiterService.session = data.session;
-        localStorage.setItem('session', JSON.stringify(data.session));
-        this.router.navigate(['/waiter/section']);
-      } 
-    }, () => { })
-  }
 
   readSections(idCompany: string): void {
     this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
@@ -98,7 +73,6 @@ export class HomeComponent implements OnInit {
           localStorage.setItem('session', JSON.stringify(mySession[0]))
         };
 
-
         for (let sector of this.sections) {
           this.sessions.set(sector.tx_section, data.sessions.filter(session => session.id_section.tx_section === sector.tx_section).length)
         }
@@ -108,6 +82,30 @@ export class HomeComponent implements OnInit {
       }
     },
       () => { this.loading = false; }, () => { this.loading = false; });
+  }
+
+  takeSection(section: Section): void {
+
+    if (!section) {
+      return;
+    }
+
+    if (this.waiterService.session) {
+      this.router.navigate(['/waiter/section']);
+      return;
+    }
+
+    let idSection = section._id;
+    let idWaiter = this.loginService.user._id;
+
+    this.waiterService.takeSection(idSection, idWaiter).subscribe((data: SessionResponse) => {
+      this.publicService.snack(data.msg, 2000);
+      if (data.ok) {
+        this.waiterService.session = data.session;
+        localStorage.setItem('session', JSON.stringify(data.session));
+        this.router.navigate(['/waiter/section']);
+      } 
+    }, () => { })
   }
 
   releaseSection(section: Section): void {
@@ -124,6 +122,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.userSuscription) { this.userSuscription.unsubscribe(); }
+    if (this.userSubscription) { this.userSubscription.unsubscribe(); }
   }
 }
