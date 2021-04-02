@@ -25,8 +25,8 @@
             </div>
         </div>
 
-        <!-- LINKS -->
-        <div *ngIf="!loginService.user" class="toolbar-links-header">
+        <!-- SATURNO LINKS -->
+        <div *ngIf="!loginService.user && url!=='public'" class="toolbar-links-header">
 
             <div class="toolbar-base-item pointer mr-4" routerLink="/howworks">
                 <div class="mdi mdi-help-box"></div>
@@ -58,6 +58,33 @@
 
         </div>
 
+        <!-- PUBLIC PAGE LINKS -->
+        <div *ngIf="!loginService.user && url==='public'" class="toolbar-links-header">
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
+                <div class="mdi mdi-help-box"></div>
+                <div>
+                    HOME
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
+                <div class="mdi mdi-storefront-outline"></div>
+                <div>
+                    ORDENAR MENÚ
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
+                *ngIf="publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
+                <div class="mdi mdi-ticket-account"></div>
+                <div>
+                    RESERVAR MESA
+                </div>
+            </div>
+
+        </div>
+
         <!-- COMPANY NAME -->
         <div *ngIf="loginService.user" class="company-name md ml-2">
             <!-- <div class="marquee"> -->
@@ -65,7 +92,7 @@
             <!-- </div> -->
         </div>
 
-        <div class="d-flex md">
+        <div class="d-flex md" *ngIf="url==='home'">
             <app-theme *ngIf="loginService.user" class="mr-3" (themeSelected)="themeSelected($event)"></app-theme>
 
             <!-- LOG IN -->
@@ -143,6 +170,30 @@
 
     <div>
 
+        <!-- PUBLIC PAGE LINKS -->
+        <div class="toolbar-links-base" *ngIf="!loginService.user && url==='public'">
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
+                <div>
+                    HOME
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
+                <div>
+                    ORDENAR MENÚ
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
+                *ngIf="publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
+                <div>
+                    RESERVAR MESA
+                </div>
+            </div>
+
+        </div>
+
         <div class="toolbar-links-base" *ngIf="url==='howworks'">
             <div class="toolbar-base-item pointer" routerLink="/home">
                 Volver al Inicio
@@ -170,12 +221,6 @@
             </div>
             <div class="toolbar-base-item pointer" (click)="scrollToElement()">
                 Buscá por Zona
-            </div>
-        </div>
-
-        <div class="toolbar-links-base" *ngIf="url==='public'">
-            <div class="toolbar-base-item pointer" routerLink="/home">
-                Volver al Inicio
             </div>
         </div>
 

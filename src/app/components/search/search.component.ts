@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit {
   setCompany(e: any): void {
     this.companySelected = e;
     localStorage.setItem('company', JSON.stringify(e));
-    this.router.navigate(['/public/', e.tx_company_string]);
+    this.router.navigate(['/public/page', e.tx_company_string, 'home']);
   }
 
   cleanInput(inputCompany) {

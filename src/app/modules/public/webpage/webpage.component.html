@@ -1,11 +1,12 @@
 <div *ngIf="company">
     <!-- PAGE IMAGE SLIDER -->
     <div class="company-page-banner">
-        
+
         <!-- PAGE TITLE TABS -->
         <div class="company-title">
             <div class="mr-3 company-logo-container">
-                <img class="company-page-logo img-fluid" [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+                <img class="company-page-logo img-fluid"
+                    [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
             </div>
             <div class="ml-3 company-title-container">
                 <div class="company-page-name">{{company.tx_company_name}}</div>
@@ -13,27 +14,18 @@
             </div>
         </div>
 
-        <img class="company-page-image" width="100%" [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
- 
+        <img class="company-page-image" width="100%"
+            [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
+
     </div>
 
     <!-- PAGE TABS -->
-    <div class="company-page-tabs">
-        <mat-tab-group mat-align-tabs="center" dynamicHeight>
-            <mat-tab>
-                <ng-template mat-tab-label>Home</ng-template>
-                <app-home [company]="company"></app-home>
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>Menú</ng-template>
-                <app-menu [company]="company"></app-menu>
-            </mat-tab>
-            <mat-tab *ngIf="publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-                <ng-template mat-tab-label>Reservar</ng-template>
-                <app-ticket-create [company]="company"></app-ticket-create>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
+
+    <app-home *ngIf="pageSection==='home'" [company]="company"></app-home>
+
+    <app-menu *ngIf="pageSection==='menu'" [company]="company"></app-menu>
+
+    <app-ticket-create *ngIf="pageSection==='ticket'" [company]="company"></app-ticket-create>
 
     <!-- PAGE FOOTER -->
     <div class="company-page-footer">

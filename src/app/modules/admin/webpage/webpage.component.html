@@ -117,6 +117,10 @@
                 [header]="header.banners" (dataUpdated)="dataUpdated($event)">
             </app-uploader> -->
         </mat-card-content>
-
+        <mat-card-actions>
+            <a [routerLink]="['/public', loginService.user.id_company.tx_company_string]" target="_blank">
+                <button mat-raised-button color="warn"  >Previsualizar</button>
+            </a>
+        </mat-card-actions>
     </mat-card>
 </div>

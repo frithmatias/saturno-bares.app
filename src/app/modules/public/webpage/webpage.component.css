@@ -9,10 +9,10 @@
 }
 
 .company-page-banner {
-    padding         : 0px 0px 0px 0px;
-    position        : relative;
-    overflow        : hidden;
-    max-height      : 350px;
+    padding   : 0px 0px 0px 0px;
+    position  : relative;
+    overflow  : hidden;
+    max-height: 350px;
 
 }
 
@@ -34,6 +34,7 @@
     background-color: var(--primary-o25);
     display         : flex;
     justify-content : center;
+    padding         : 0px 36px;
 }
 
 .company-page-name {

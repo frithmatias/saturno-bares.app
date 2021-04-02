@@ -1,5 +1,12 @@
 @media (max-width: 575px) {
+    .inputs-container {
+        padding: 20px;
+    }
 
+    mat-form-field {
+        width: 100% !important;
+
+    }
 }
 
 .mat-card-avatar {
@@ -41,4 +48,16 @@
 .screen-ticket-button-container {
     display        : flex;
     justify-content: space-around;
+}
+
+.inputs-container {
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : wrap;
+    place-content : center;
+}
+
+mat-form-field {
+    width : 200px;
+    margin: 0px 8px;
 }

@@ -11,6 +11,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { map, catchError } from 'rxjs/operators';
 import { Coords } from '../../components/map/map.component';
+import { Company } from 'src/app/interfaces/company.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class PublicService {
   tickets: Ticket[] = [];
   sections: Section[] = [];
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
+  company: Company;
   settings: Settings;
   customer: any;
 	token: string;

@@ -1,0 +1,14 @@
+@media (max-width: 575px) {}
+
+.public-home-content {
+    font-family  : 'Baloo Bhai 2', 'system-ui';
+    margin-top   : 0;
+    margin-bottom: 1rem;
+    line-height  : 2em;
+    font-size    : large;
+    font-variant : small-caps;
+}
+
+.mat-card {
+    box-shadow: none;
+}

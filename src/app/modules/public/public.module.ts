@@ -12,10 +12,10 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
 import { PublicComponent } from './public.component';
-import { CompanyPageComponent } from './company-page/company-page.component';
-import { HomeComponent } from './company-page/home/home.component';
-import { MenuComponent } from './company-page/menu/menu.component';
-import { TicketCreateComponent } from './company-page/ticket-create/ticket-create.component';
+import { WebPageComponent } from './webpage/webpage.component';
+import { HomeComponent } from './webpage/home/home.component';
+import { MenuComponent } from './webpage/menu/menu.component';
+import { TicketCreateComponent } from './webpage/ticket-create/ticket-create.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketComponent } from './ticket/ticket.component';
 import { LoginComponent } from './login/login.component';
@@ -24,7 +24,7 @@ import { RegisterComponent } from './register/register.component';
 
 @NgModule({
 	declarations: [
-		CompanyPageComponent,
+		WebPageComponent,
 		PublicComponent,
 		TicketCreateComponent,
 		HomeComponent,
