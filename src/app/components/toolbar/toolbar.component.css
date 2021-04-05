@@ -19,20 +19,31 @@
 
 }
 
-.toolbar-header {
+.first-row {
     display    : flex;
     align-items: center;
     padding    : 8px 16px;
     height     : 55px;
 }
 
+
+
+/* first row  */
 .toolbar-links-header {
     display      : flex;
-    padding      : 10px;
-    padding-right: 20px;
     place-content: flex-end;
     position     : relative;
     top          : 2px;
+    align-items  : center;
+}
+
+/* first row for public */
+.toolbar-links-public {
+    display      : flex;
+    place-content: flex-end;
+    position     : relative;
+    top          : 2px;
+    align-items  : center;
 }
 
 .toolbar-links-base {

@@ -1,314 +1,250 @@
-<div class="page-tab-container mx-0 animated fadeIn">
-  <!-- <pre *ngIf="tickets.length > 0" class="xs text-left text-accent">
-    {{ticket | json}}
-  </pre> -->
-  <div *ngIf="company">
+<div *ngIf="company" class="page-tab-container animated fadeIn">
 
-    <div class="text-accent sm" *ngIf="loading">
-      Cargando...
-    </div>
+  <!-- loading availability -->
+  <app-spinner *ngIf="loading" text="Obteniendo disponibilidad..."></app-spinner>
 
-    <div *ngIf="!loading">
+  <!-- Ticket Create Form  -->
+  <div *ngIf="!loading && !ticket">
+    <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
-      <!------------------------------>
-      <!-- Has active ticket -->
-      <!------------------------------>
+      <div class="inputs-container">
 
-      <mat-card-content *ngIf="ticket">
+        <mat-form-field color="accent">
+          <mat-label>Tu Nombre</mat-label>
+          <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
+            type="text" maxlength="20" required>
+        </mat-form-field>
 
-        <!-- waiting, terminated, scheduled, queued, requested, assigned, cancelled, provided, finished  -->
+        <mat-form-field color="accent">
+          <mat-label>Cantidad de Personas</mat-label>
+          <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
+            formControlName="nmPersons" name="nmPersons" required>
+        </mat-form-field>
 
-        <!------------------------------>
-        <!-- WAITING -->
-        <!------------------------------>
+        <mat-form-field color="accent">
+          <mat-label>Sector</mat-label>
+          <mat-select formControlName="idSection" name="idSection" required>
+            <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
-          <div>
-            Tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
-          </div>
-
-          <button *ngIf="customer && publicService.token" class="mt-2" mat-raised-button color="active"
-            (click)="validateTicket(ticket)">Confirmar</button>
-
-          <button *ngIf="!customer || !publicService.token" class="mt-2" mat-raised-button color="warn"
-            routerLink="/public/login">Ingresar</button>
-
-        </div>
-
-        <!------------------------------>
-        <!-- TERMINATED -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'terminated'" class="my-4">
-
-          Tu solicitud fue rechazada o finalizó el tiempo para validar tu reserva.
-
-          <div *ngIf="serverMessage">
-            Respuesta del servidor:
-            <div class="m-4 text-accent">
-              {{serverMessage}}
-            </div>
-          </div>
-        </div>
-
-        <!------------------------------>
-        <!-- PENDING -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'pending'" class="my-4">
-
-          Tu solicitud esta pendiente de aprobación. Te vamos a avisar si tu pedido queda en agenda
-          lo antes posible y por el mismo medio que usaste para validar el ticket.
-
-        </div>
-
-        <!------------------------------>
-        <!-- SCHEDULED -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'scheduled'" class="my-4">
-
-          <p>
-            Hola {{ ticket.tx_name }}, tu reserva quedó confirmada.
-          </p>
-          <p>
-            Te esperan el {{ ticket.tm_intervals[0] | dateToString | capitalizarPipe }} ( {{ ticket.tm_intervals[0]
-            | dateToRemaining }} )
-          </p>
-          <p>
-            Reserva confirmada con tu cuenta {{ ticket.id_user }} de {{ ticket.tx_platform }}.
-          </p>
-
-        </div>
-
-        <!------------------------------>
-        <!-- QUEUED: VIRTUAL QUEUE -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'queued'">
-          Estas en la cola virutal, tu número es el {{ticket.id_position}}.
-          <div *ngIf="ticket">
-            <button mat-raised-button class="action-button-flex" color="active"
-              routerLink="/public/ticket/{{ticket._id}}">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-ticket-account xl"></td>
-                  <td class="button-text">¡Comenzar!</td>
-                </tr>
-              </table>
-            </button>
-          </div>
-        </div>
-
-        <!------------------------------>
-        <!-- REQUESTED: VIRTUAL QUEUE -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'requested'">
-          Tu requerimiento de mesa esta siendo procesado.
-          <div *ngIf="ticket">
-            <button mat-raised-button class="action-button-flex" color="active"
-              routerLink="/public/ticket/{{ticket._id}}">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-ticket-account xl"></td>
-                  <td class="button-text">¡Comenzar!</td>
-                </tr>
-              </table>
-            </button>
-          </div>
-        </div>
-
-        <!------------------------------>
-        <!-- ASSIGNED -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'assigned'">
-          <p>
-            ¡Tu ticket ya tiene mesa asignada!
-          </p>
-          <p>
-            Sólo tenes que esperar a que se libere una mesa.
-          </p>
-          <div *ngIf="ticket">
-            <button mat-raised-button class="action-button-flex" color="active"
-              routerLink="/public/ticket/{{ticket._id}}">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-ticket-account xl"></td>
-                  <td class="button-text">¡Comenzar!</td>
-                </tr>
-              </table>
-            </button>
-          </div>
-        </div>
-
-        <!------------------------------>
-        <!-- PROVIDED -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'provided'">
-          <p>
-            !{{ticket.tx_name}} tu mesa ya está lista!
-          </p>
-          <p>
-            Por favor pasá a la mesa {{ticket.cd_tables[0]}}. Para comunicarte con una camarero/a por favor
-            hace click en ¡Comenzar!.
-          </p>
+        <mat-form-field color="accent">
+          <mat-label>Para cuando?</mat-label>
+          <mat-select formControlName="txWhen" name="txWhen" required>
+            <mat-option [disabled]="!publicService.settings.bl_queue" value="ahora"><span
+                class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
+            <mat-option [disabled]="!publicService.settings.bl_schedule" value="otrodia"><span
+                class="text-accent mdi mdi-calendar-month"></span> Otro día
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
 
-          <div *ngIf="ticket">
-            <button mat-raised-button class="action-button-flex" color="active"
-              routerLink="/public/ticket/{{ticket._id}}">
-              <table>
-                <tr>
-                  <td class="button-icon mdi mdi-ticket-account xl"></td>
-                  <td class="button-text">¡Comenzar!</td>
-                </tr>
-              </table>
-            </button>
-          </div>
+        <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
+          <mat-label>Fecha</mat-label>
+          <input matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-        </div>
+        <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
+          <mat-label>Intervalos</mat-label>
+          <mat-select formControlName="tmIntervals" multiple>
+            <mat-option *ngFor="let interval of optionInterval" [value]="interval.date" [disabled]="interval.disabled"
+              (click)="setInterval(interval)">
+              <!-- (click)="intervalTables = interval.tables" -->
+              {{interval.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <!------------------------------>
-        <!-- CANCELLED -->
-        <!------------------------------>
+        <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
+          <mat-label>Mesa</mat-label>
+          <mat-select formControlName="cdTables">
+            <mat-option *ngFor="let table of availableTables" [value]="table">
+              <span *ngIf="table===0">Solicitar Mesa</span>
+              <span *ngIf="table>0">{{table}}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <div *ngIf="ticket.tx_status === 'cancelled'" class="my-4">
-          Hola {{ticket.tx_name}} tu ticket quedó cancelado ¡te esperamos pronto!.
-        </div>
-
-        <!------------------------------>
-        <!-- FINISHED -->
-        <!------------------------------>
-
-        <div *ngIf="ticket.tx_status === 'finished'" class="my-4">
-          Hola {{ticket.tx_name}} gracias por tu visita, ¡te esperamos pronto!.
-        </div>
-
-      </mat-card-content>
-
-      <!------------------------------>
-      <!-- Ticket Create Form  -->
-      <!------------------------------>
-
-      <mat-card-content *ngIf="!ticket">
-        <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
-
-          <div class="inputs-container">
-
-            <mat-form-field color="accent">
-              <mat-label>Tu Nombre</mat-label>
-              <input maxlength="30" matInput placeholder="Ingresa tu nombre" formControlName="txName" name="txName"
-                type="text" maxlength="20" required>
-            </mat-form-field>
-
-            <mat-form-field color="accent">
-              <mat-label>Cantidad de Personas</mat-label>
-              <input min="1" max="1000" type="number" matInput placeholder="Cantidad de Personas"
-                formControlName="nmPersons" name="nmPersons" required>
-            </mat-form-field>
-
-            <mat-form-field color="accent">
-              <mat-label>Sector</mat-label>
-              <mat-select formControlName="idSection" name="idSection" required>
-                <mat-option *ngFor="let section of sections" [value]="section._id"> {{ section.tx_section }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field color="accent">
-              <mat-label>Para cuando?</mat-label>
-              <mat-select formControlName="txWhen" name="txWhen" required>
-                <mat-option [disabled]="!publicService.settings.bl_queue" value="ahora"><span
-                    class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
-                <mat-option [disabled]="!publicService.settings.bl_schedule" value="otrodia"><span
-                    class="text-accent mdi mdi-calendar-month"></span> Otro día
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-  
-              <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
-                <mat-label>Fecha</mat-label>
-                <input matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker">
-                </mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-
-              <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
-                <mat-label>Intervalos</mat-label>
-                <mat-select formControlName="tmIntervals" multiple>
-                  <mat-option *ngFor="let interval of optionInterval" [value]="interval.date"
-                    [disabled]="interval.disabled" (click)="setInterval(interval)">
-                    <!-- (click)="intervalTables = interval.tables" -->
-                    {{interval.text}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
-                <mat-label>Mesa</mat-label>
-                <mat-select formControlName="cdTables">
-                  <mat-option *ngFor="let table of availableTables" [value]="table">
-                    <span *ngIf="table===0">Solicitar Mesa</span>
-                    <span *ngIf="table>0">{{table}}</span>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-        
-
-          </div>
-
-          <div class="w-100">
-
-            <div *ngIf="tellUserNotAvailable===true" class="sm text-accent">
-              <p>
-                No existe una mesa que pueda cumplimentar la solicitud, dejanos una solcitud de mesa especial y te
-                contactamos a la brevedad.
-              </p>
-            </div>
-
-            <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
-              *ngIf="tellUserNotAvailable===true && ticketForm.controls.txWhen.value==='otrodia'"
-              [disabled]="ticketForm.invalid">
-              Solicitar Mesa Especial
-            </button>
-
-            <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
-              *ngIf="tellUserNotAvailable===false && ticketForm.controls.txWhen.value==='ahora'"
-              [disabled]="ticketForm.invalid">
-              Solicitar Mesa
-            </button>
-
-            <button mat-raised-button color="active" class="my-2" (click)="createTicket()"
-              *ngIf="tellUserNotAvailable===false && ticketForm.controls.txWhen.value==='otrodia'"
-              [disabled]="ticketForm.invalid">
-              Reservar Mesa
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
-
-      <!------------------------------>
-      <!-- Actions  -->
-      <!------------------------------>
-
-      <div class="my-4">
-
-        <button mat-button routerLink="/public/tickets">
-          <span class="mdi mdi-ticket-account mr-1"></span> Mis Reservas
-        </button>
-
-        <button mat-button (click)="salir()">
-          <span class="mdi mdi-power mr-1"></span> Salir
-        </button>
 
       </div>
 
+      <div class="w-100">
+
+        <div *ngIf="tellUserNotAvailable===true" class="sm text-accent">
+          <p>
+            No existe una mesa que pueda cumplimentar la solicitud, dejanos una solcitud de mesa especial y te
+            contactamos a la brevedad.
+          </p>
+        </div>
+
+        <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
+          *ngIf="tellUserNotAvailable===true && ticketForm.controls.txWhen.value==='otrodia'"
+          [disabled]="ticketForm.invalid">
+          Solicitar Mesa Especial
+        </button>
+
+        <button mat-raised-button color="primary" class="my-2" (click)="createTicket()"
+          *ngIf="tellUserNotAvailable===false && ticketForm.controls.txWhen.value==='ahora'"
+          [disabled]="ticketForm.invalid">
+          Solicitar Mesa
+        </button>
+
+        <button mat-raised-button color="active" class="my-2" (click)="createTicket()"
+          *ngIf="tellUserNotAvailable===false && ticketForm.controls.txWhen.value==='otrodia'"
+          [disabled]="ticketForm.invalid">
+          Reservar Mesa
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Has active ticket -->
+
+  <div *ngIf="!loading && ticket" class="public-ticket-content">
+
+    <!-- WAITING -->
+    <div *ngIf="ticket.tx_status === 'waiting'" class="my-4">
+      <div>
+        Tu ticket esta creado, tenés que confirmarlo dentro de los próximos 10 minutos
+      </div>
+      <button *ngIf="customer && publicService.token" class="mt-2" mat-raised-button color="active"
+        (click)="validateTicket(ticket)">Confirmar</button>
+      <button *ngIf="!customer || !publicService.token" class="mt-2" mat-raised-button color="warn"
+        routerLink="/public/login">Ingresar</button>
+    </div>
+
+    <!-- TERMINATED -->
+    <div *ngIf="ticket.tx_status === 'terminated'" class="my-4">
+      Tu solicitud fue rechazada o finalizó el tiempo para validar tu reserva.
+      <div *ngIf="serverMessage">
+        Respuesta del servidor:
+        <div class="m-4 text-accent">
+          {{serverMessage}}
+        </div>
+      </div>
+    </div>
+
+    <!-- PENDING -->
+    <div *ngIf="ticket.tx_status === 'pending'" class="my-4">
+
+      Tu solicitud esta pendiente de aprobación. Te vamos a avisar si tu pedido queda en agenda
+      lo antes posible y por el mismo medio que usaste para validar el ticket.
+
+    </div>
+
+    <!-- SCHEDULED -->
+    <div *ngIf="ticket.tx_status === 'scheduled'" class="my-4">
+      <p>
+        Tu reserva está confirmada.
+      </p>
+      <p>
+        Te esperan el
+        <span class="text-accent">{{ ticket.tm_intervals[0] | dateToString : 'date-long' }}</span>
+        a las
+        <span class="text-accent">{{ticket.tm_intervals[0] | dateToString : 'time-12'}} </span>
+      </p>
+      <p>
+        ( {{ ticket.tm_intervals[0] | dateToRemaining }} )
+      </p>
+    </div>
+
+    <!-- QUEUED: VIRTUAL QUEUE -->
+    <div *ngIf="ticket.tx_status === 'queued'">
+      Estas en la cola virutal, tu número es el {{ticket.id_position}}.
+      <div *ngIf="ticket">
+        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account xl"></td>
+              <td class="button-text">¡Comenzar!</td>
+            </tr>
+          </table>
+        </button>
+      </div>
+    </div>
+
+    <!-- REQUESTED: VIRTUAL QUEUE -->
+    <div *ngIf="ticket.tx_status === 'requested'">
+      Tu requerimiento de mesa esta siendo procesado.
+      <div *ngIf="ticket">
+        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account xl"></td>
+              <td class="button-text">¡Comenzar!</td>
+            </tr>
+          </table>
+        </button>
+      </div>
+    </div>
+
+    <!-- ASSIGNED -->
+    <div *ngIf="ticket.tx_status === 'assigned'">
+      <p>
+        ¡Tu ticket ya tiene mesa asignada!
+      </p>
+      <p>
+        Sólo tenes que esperar a que se libere una mesa.
+      </p>
+      <div *ngIf="ticket">
+        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account xl"></td>
+              <td class="button-text">¡Comenzar!</td>
+            </tr>
+          </table>
+        </button>
+      </div>
+    </div>
+
+    <!-- PROVIDED -->
+    <div *ngIf="ticket.tx_status === 'provided'">
+      <p>
+        !{{ticket.tx_name}} tu mesa ya está lista!
+      </p>
+      <p>
+        Por favor pasá a la mesa {{ticket.cd_tables[0]}}. Para comunicarte con una camarero/a por favor
+        hace click en ¡Comenzar!.
+      </p>
+
+      <div *ngIf="ticket">
+        <button mat-raised-button class="action-button-flex" color="active" routerLink="/public/ticket/{{ticket._id}}">
+          <table>
+            <tr>
+              <td class="button-icon mdi mdi-ticket-account xl"></td>
+              <td class="button-text">¡Comenzar!</td>
+            </tr>
+          </table>
+        </button>
+      </div>
+    </div>
+
+    <!-- CANCELLED -->
+    <div *ngIf="ticket.tx_status === 'cancelled'" class="my-4">
+      Hola {{ticket.tx_name}} tu ticket quedó cancelado ¡te esperamos pronto!.
+    </div>
+
+    <!-- FINISHED -->
+    <div *ngIf="ticket.tx_status === 'finished'" class="my-4">
+      Hola {{ticket.tx_name}} gracias por tu visita, ¡te esperamos pronto!.
+    </div>
+
+    <!-- Actions  -->
+    <div class="my-4">
+      <button mat-button routerLink="/public/tickets">
+        <span class="mdi mdi-ticket-account mr-1"></span> Mis Reservas
+      </button>
+      <button mat-button (click)="salir()">
+        <span class="mdi mdi-power mr-1"></span> Salir
+      </button>
     </div>
 
   </div>
+
 </div>

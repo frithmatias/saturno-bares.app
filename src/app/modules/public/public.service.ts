@@ -271,6 +271,7 @@ export class PublicService {
     this.chatMessages = [];
     delete this.tickets;
     delete this.token;
+    delete this.customer;
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
     if (localStorage.getItem('token')) { localStorage.removeItem('token'); }

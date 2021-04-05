@@ -82,11 +82,6 @@ export class TablesComponent implements OnInit {
     this.waiterService.toggleTableStatus(idTable, actualStatus).subscribe(
       (data: TableResponse) => {
         this.toggling = null;
-        if (data.ok) {
-          this.publicService.snack(data.msg, 3000);
-        } else {
-          this.publicService.snack(data.msg, 3000);
-        }
       },
       () => {
         // on error update all tables (ie other waiter change table status)

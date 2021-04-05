@@ -24,7 +24,7 @@ export class WebPageComponent implements OnInit {
 	async ngOnInit(): Promise<any> {
 
 		this.route.params.subscribe((data: any) => {
-			this.pageSection = data.section;
+			this.pageSection = data.section || 'home';
 			this.companyString = data.txCompanyString;
 		});
 

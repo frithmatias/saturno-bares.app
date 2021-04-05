@@ -118,7 +118,7 @@
             </app-uploader> -->
         </mat-card-content>
         <mat-card-actions>
-            <a [routerLink]="['/public', loginService.user.id_company.tx_company_string]" target="_blank">
+            <a [routerLink]="['/public/page', loginService.user.id_company.tx_company_string, 'home']" target="_blank">
                 <button mat-raised-button color="warn"  >Previsualizar</button>
             </a>
         </mat-card-actions>

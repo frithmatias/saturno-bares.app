@@ -47,6 +47,7 @@ export class TicketsComponent implements OnInit {
 
     if (localStorage.getItem('customer')) {
       this.customer = JSON.parse(localStorage.getItem('customer'));
+      this.publicService.customer = this.customer;
       const txPlatform = this.customer.tx_platform;
       const txEmail = this.customer.tx_email;
       if (txPlatform && txEmail) {

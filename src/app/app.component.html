@@ -1,5 +1,5 @@
 <mat-drawer-container class="h-100" style="background-color: var(--bg);">
-        
+
     <app-toolbar (toggleSideNav)="toggle( sidenav )" [unreadMessages]="unreadMessages" (toggleChat)="toggle( chat )">
     </app-toolbar>
 
@@ -16,7 +16,9 @@
 
     <!-- container -->
     <div class="main-wrapper" id="main-wrapper">
+        <!-- second row spacer only for non public pages -->
+        <div [ngClass]="{'second-row-spacer': url!=='public'}"></div>
         <router-outlet></router-outlet>
     </div>
-    
+
 </mat-drawer-container>

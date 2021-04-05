@@ -1,21 +1,7 @@
-<div class="page-container-full animated fadeIn">
-
-  <div *ngIf="loading">
-    <app-spinner text="Loading tickets..."></app-spinner>
-  </div>
-
-  <div *ngIf="!loading && customer" class="sm d-flex justify-content-end py-3 px-2 text-accent">
-    <!-- social header -->
-    <div class="mdi mdi-account-circle mx-1"></div>
-    <div>
-      {{customer.tx_email}}
-    </div>
-    <div class="pointer text-warn ml-2" (click)="publicService.clearPublicSession()">
-      [Salir]
-    </div>
-  </div>
-
+<div *ngIf="loading">
+  <app-spinner text="Loading tickets..."></app-spinner>
 </div>
+
 
 <!-- CARD TICKETS -->
 <div class="tickets-container">
@@ -23,25 +9,35 @@
     <!-- card with ticket data -->
     <mat-card class="p-2">
 
-      <!-- logo -->
-      <img class="company-logo img-fluid"
-        [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
 
       <!-- header with company name and address -->
-      <div class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-        <div class="md text-accent"> {{ticket.id_company?.tx_company_name}} </div>
-        <div class="sm text-info"> {{ticket.id_company?.tx_address_street}}
-          {{ticket.id_company?.tx_address_number}}</div>
+      <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}">
+        <!-- logo -->
+
+        <img card-avatar class="company-logo"
+          [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+
+        <div class="company-title">
+          <div class="md text-accent">
+            {{ticket.id_company?.tx_company_name}}
+          </div>
+          <div class="sm text-info">
+            {{ticket.id_company?.tx_address_street}}
+            {{ticket.id_company?.tx_address_number}}
+          </div>
+          <hr class="my-1">
+          <div>
+            {{ticket.tx_status | ticketStatus}}
+          </div>
+        </div>
+
       </div>
 
       <table class="sm my-2">
         <tr>
-          <td>Estado</td>
-          <td class="text-info text-right">{{ticket.tx_status | ticketStatus}}</td>
-        </tr>
-        <tr>
           <td>Fecha</td>
-          <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' | capitalizarPipe}}</td>
+          <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' |
+            capitalizarPipe}}</td>
         </tr>
         <tr>
           <td>Faltan</td>
@@ -60,8 +56,8 @@
         ¡Comenzar!
       </button>
 
-      <button class="px-1" mat-button color="warn"
-        [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'" (click)="endTicket(ticket)">
+      <button class="px-1" mat-button [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
+        (click)="endTicket(ticket)">
         Cancelar
       </button>
 
@@ -74,58 +70,56 @@
   </div>
 </div>
 
-<div *ngIf="ticketsInactive.length > 0 && (social || customer)" class="page-container p-1">
-  <mat-card>
+<div *ngIf="ticketsInactive.length > 0 && (social || customer)" class="history box-shadow">
 
-    <mat-card-header>
-      <span class="mdi mdi-ticket xxxl mr-2 mb-1 op2" mat-card-avatar></span>
+  <mat-card-header>
+    <span class="mdi mdi-ticket xxxl mr-2 mb-1 op2" mat-card-avatar></span>
 
-      <mat-card-title class="text-accent">
-        Historial de reservas
-      </mat-card-title>
-      <mat-card-subtitle>
-        Historial de reservas
-      </mat-card-subtitle>
-    </mat-card-header>
+    <mat-card-title class="text-accent">
+      Historial de reservas
+    </mat-card-title>
+    <mat-card-subtitle>
+      Historial de reservas
+    </mat-card-subtitle>
+  </mat-card-header>
 
-    <mat-card-content>
-      <table class="sm text-center">
-        <thead>
-          <tr class="text-info">
-            <td>
-              Comercio
-            </td>
-            <td class="text-left">
-              Fecha de Reserva
-            </td>
-            <td class="text-right">
-              Estado
-            </td>
-          </tr>
-        </thead>
-        <tbody>
+  <mat-card-content>
+    <table class="sm text-center">
+      <thead>
+        <tr class="text-info">
+          <td class="text-left">
+            Comercio
+          </td>
+          <td class="text-left">
+            Fecha de Reserva
+          </td>
+          <td class="text-right">
+            Estado
+          </td>
+        </tr>
+      </thead>
+      <tbody>
 
-          <tr *ngFor="let ticket of ticketsInactive">
+        <tr *ngFor="let ticket of ticketsInactive">
 
 
-            <td class="text-left" *ngIf="!ticket.id_company">
-              <div class="pointer text-info">
-                Comercio eliminado
-              </div>
-            </td>
-            <td class="pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
-              {{ticket.id_company?.tx_company_name}}
-            </td>
-            <td class="text-left text-info">
-              {{ticket.tm_intervals[0] | date : 'd-MMM hh:mm' | capitalizarPipe}}
-            </td>
-            <td class="text-right text-warn">
-              {{ticket.tx_status}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </mat-card-content>
+          <td class="text-left" *ngIf="!ticket.id_company">
+            <div class="pointer text-info">
+              Comercio eliminado
+            </div>
+          </td>
+          <td class="text-left pointer" routerLink="/public/{{ticket.id_company.tx_company_string}}">
+            {{ticket.id_company?.tx_company_name}}
+          </td>
+          <td class="text-left text-info">
+            {{ticket.tm_intervals[0] | date : 'd-MMM hh:mm' | capitalizarPipe}}
+          </td>
+          <td class="text-right text-warn">
+            {{ticket.tx_status}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
 
-  </mat-card>
 </div>

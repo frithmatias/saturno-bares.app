@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 const publicRoutes: Routes = [
 
   { path: 'page/:txCompanyString/:section', component: WebPageComponent, data: { titulo: 'Página Web' } },
+  { path: 'page/:txCompanyString', component: WebPageComponent, data: { titulo: 'Página Web' } },
   { path: 'login', component: LoginComponent, data: { titulo: 'Login Cliente' } },
   { path: 'register', component: RegisterComponent, data: { titulo: 'Registro Cliente' } },
   { path: 'tickets', component: TicketsComponent, data: { titulo: 'Mis Reservas' } },

@@ -9,45 +9,11 @@
     }
 }
 
-.mat-card-avatar {
-    height: 100px;
-    width : 100px;
-}
-
-.mat-card-avatar img {
-    height       : 80px;
-    width        : 80px;
-    margin       : 10px;
-    border-radius: 50%;
-}
-
-
-.mat-card-title {
-    font-size: xx-large;
-    color    : var(--accent);
-}
-
-
-.mat-card-subtitle {
-    width    : 100%;
-    font-size: large;
-}
-
-.mat-card {
-    box-shadow: none;
-}
-
-
-.screen-ticket-button-confirm {
-    display        : flex;
-    flex-direction : row;
-    flex-wrap      : wrap;
-    justify-content: center;
-}
-
-.screen-ticket-button-container {
-    display        : flex;
-    justify-content: space-around;
+.public-ticket-content {
+    font-family  : 'Baloo Bhai 2', 'system-ui';
+    margin-top   : 0;
+    margin-bottom: 1rem;
+    font-variant : small-caps;
 }
 
 .inputs-container {

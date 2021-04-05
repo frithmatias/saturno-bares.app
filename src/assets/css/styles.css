@@ -130,6 +130,10 @@ SATURNO
 -------------------------------------------
 */
 
+.box-shadow {
+    box-shadow: 0px 2px 1px -1px var(--dark-o20), 0px 1px 1px 0px var(--dark-o14), 0px 1px 3px 0px var(--dark-o12);
+}
+
 .page-container {
     margin   : 20px 0px;
     min-width: 300px;
@@ -722,16 +726,9 @@ ANIMACIONES
 ANGULAR MATERIAL 
 -------------------------------------------
 */
-@media (max-width: 850px) {
 
-    /* higher specificity */
-    body>app-root>mat-drawer-container>mat-drawer-content {
-        top   : 96px !important;
-        height: calc(100vh - 96px) !important;
-    }
-}
+/* desplaza el contenedor hacia abajo por el alto del toolbar */
 
-/* lower specificity */
 mat-drawer-content {
     top   : 55px !important;
     height: calc(100vh - 55px) !important;
