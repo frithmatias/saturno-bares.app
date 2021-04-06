@@ -84,78 +84,86 @@
         </div>
 
         <!-- PUBLIC PAGE LINKS -->
-        <div *ngIf="!loginService.user && url==='public'" class="toolbar-links-public">
+        <div *ngIf="url==='public'" class="toolbar-links-public">
 
-            <div class="toolbar-base-item pointer mr-3" routerLink="/home">
-                <div class="mdi mdi-home"></div>
+            <div class="toolbar-base-item pointer"
+                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
                 <div>
-                    HOME
+                    Inicio
                 </div>
             </div>
 
-            <div *ngIf="publicService.company" class="toolbar-base-item pointer mr-3"
+            <div *ngIf="publicService.company" class="toolbar-base-item pointer"
                 [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
-                <div class="mdi mdi-food"></div>
                 <div>
-                    MENÚ
+                    Menú
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer mr-3"
+            <div class="toolbar-base-item pointer"
                 [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
                 *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-                <div class="mdi mdi-ticket"></div>
                 <div>
-                    RESERVAR
+                    Reservar
                 </div>
             </div>
 
-            <!-- LOGGED IN -->
-            <div *ngIf="publicService.customer" class="d-flex md">
-
-                <!-- GOOGLE LOGIN IMAGE -->
-                <div *ngIf="publicService.customer.bl_social && publicService.customer.tx_img">
-                    <img class="user-image" [src]="publicService.customer.tx_img" [matMenuTriggerFor]="menu">
-                </div>
-    
-                <!-- FACEBOOK HAS NO LOGIN IMAGE -->
-                <div *ngIf="publicService.customer.bl_social && !publicService.customer.tx_img" class="mdi mdi-account-tie pointer"
-                    [matMenuTriggerFor]="menu">
-                </div>
-    
-                <!-- NORMAL LOGIN WITH IMAGE -->
-                <div *ngIf="!publicService.customer.bl_social && publicService.customer.tx_img" class="pointer"
-                    [matMenuTriggerFor]="menu">
-                    <img class="user-image"
-                        [src]="publicService.customer.tx_img | imagenPipe : 'tx_img' : publicService.customer._id">
-                </div>
-    
-                <!-- NORMAL LOGIN WO IMAGE -->
-                <div *ngIf="!publicService.customer.bl_social && !publicService.customer.tx_img" class="mdi mdi-account-tie pointer"
-                    [matMenuTriggerFor]="menu">
-                </div>
-    
-                <mat-menu #menu="matMenu">
-                    <div routerLink="/waiter/profile" mat-menu-item>
-                        <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
-                        <span class="ml-2 align-middle">{{publicService.customer?.tx_email}}</span>
-                    </div>
-                    <hr>
-                    <button mat-raised-button class="action-button" color="warn" (click)="publicService.clearPublicSession()">
-                        <table>
-                            <tr>
-                                <td class="button-icon mdi mdi-power xl"></td>
-                                <td class="button-text">Salir</td>
-                            </tr>
-                        </table>
-                    </button>
-                </mat-menu>
-    
-            </div>
-            
         </div>
 
+        <!-- CUSTOMER NOT LOGGED IN -->
+        <div *ngIf="!publicService.customer && url==='public'" class="toolbar-links-public">
+            <div class="toolbar-base-item pointer" routerLink="/public/login">
+                <span class="mdi mdi-account-circle mr-1"></span>
+            </div>
+        </div>
 
+        <!-- CUSTOMER LOGGED IN -->
+        <div *ngIf="publicService.customer && url==='public'" class="d-flex md ml-3">
+
+            <!-- GOOGLE LOGIN IMAGE -->
+            <div *ngIf="publicService.customer.bl_social && publicService.customer.tx_img">
+                <img class="user-image" [src]="publicService.customer.tx_img" [matMenuTriggerFor]="menu">
+            </div>
+
+            <!-- FACEBOOK HAS NO LOGIN IMAGE -->
+            <div *ngIf="publicService.customer.bl_social && !publicService.customer.tx_img"
+                class="mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+            </div>
+
+            <!-- NORMAL LOGIN WITH IMAGE -->
+            <div *ngIf="!publicService.customer.bl_social && publicService.customer.tx_img" class="pointer"
+                [matMenuTriggerFor]="menu">
+                <img class="user-image"
+                    [src]="publicService.customer.tx_img | imagenPipe : 'tx_img' : publicService.customer._id">
+            </div>
+
+            <!-- NORMAL LOGIN WO IMAGE -->
+            <div *ngIf="!publicService.customer.bl_social && !publicService.customer.tx_img"
+                class="mdi mdi-account-tie pointer" [matMenuTriggerFor]="menu">
+            </div>
+
+            <mat-menu #menu="matMenu">
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
+                    <span class="ml-2 align-middle">{{publicService.customer?.tx_email}}</span>
+                </div>
+                <div routerLink="/public/tickets" mat-menu-item>
+                    <span disabled class="lg toolbar-menu-icon mdi mdi-ticket-account mx-1"></span>
+                    <span class="ml-2 align-middle">Mis Reservas</span>
+                </div>
+                <hr>
+                <button mat-raised-button class="action-button" color="warn"
+                    (click)="publicService.clearPublicSession()">
+                    <table>
+                        <tr>
+                            <td class="button-icon mdi mdi-power xl"></td>
+                            <td class="button-text">Salir</td>
+                        </tr>
+                    </table>
+                </button>
+            </mat-menu>
+
+        </div>
 
         <!-- COMPANY NAME -->
         <div *ngIf="loginService.user" class="company-name md ml-2">
@@ -166,7 +174,7 @@
 
         <app-theme *ngIf="loginService.user" class="mr-3" (themeSelected)="themeSelected($event)"></app-theme>
 
-        <!-- LOG IN -->
+        <!-- USER NOT LOGGED IN -->
         <div *ngIf="!loginService.user && (url==='home' || url==='register')" class="pointer" routerLink="/login">
             <span class="mdi mdi-account-circle mr-1"></span>
             <span class="md">
@@ -174,7 +182,7 @@
             </span>
         </div>
 
-        <!-- LOGGED IN -->
+        <!-- USER LOGGED IN -->
         <div *ngIf="loginService.user" class="d-flex md">
 
             <!-- GOOGLE LOGIN IMAGE -->
@@ -242,9 +250,6 @@
             </div>
             <div class="toolbar-base-item pointer" routerLink="/register">
                 Registrar Comercio
-            </div>
-            <div class="toolbar-base-item pointer" routerLink="/login">
-                Ingresar
             </div>
         </div>
 

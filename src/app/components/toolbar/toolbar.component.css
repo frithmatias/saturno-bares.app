@@ -15,14 +15,14 @@
 
 .toolbar {
     color    : white;
-    font-size: small;
+    font-size: medium;
 
 }
 
 .first-row {
     display    : flex;
     align-items: center;
-    padding    : 8px 16px;
+    padding    : 8px 12px;
     height     : 55px;
 }
 
@@ -55,7 +55,7 @@
 .toolbar-base-item {
     display     : flex;
     flex-wrap   : wrap;
-    margin-right: 20px;
+    margin-left: 15px;
 
 }
 
@@ -84,8 +84,8 @@
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;
-    height             : 4em;
-    width              : 4em;
+    height             : 3em;
+    width              : 3em;
 }
 
 .logo-text-container {

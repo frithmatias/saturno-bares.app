@@ -3,7 +3,6 @@ import { Ticket } from 'src/app/interfaces/ticket.interface';
 import { Router } from '@angular/router';
 import { PublicService } from '../public.service';
 import { TicketsResponse, TicketResponse } from '../../../interfaces/ticket.interface';
-import { Social } from '../../../components/social/social.component';
 import { User } from 'src/app/interfaces/user.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -19,14 +18,15 @@ import { WebsocketService } from '../../../services/websocket.service';
 export class TicketsComponent implements OnInit {
 
   loading = false;
-  social: Social; // customer logged with social
   customer: User; // customer logged with email
 
   tickets: Ticket[] = [];
   ticketsRunning: Ticket[] = [];
   ticketsActive: Ticket[] = [];
   ticketsInactive: Ticket[] = [];
+  ticketsAll: Ticket[] = [];
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
+
   updateTicketsSub: Subscription;
 
 
@@ -43,7 +43,6 @@ export class TicketsComponent implements OnInit {
   }
 
   checkSession() {
-    // Get social data
 
     if (localStorage.getItem('customer')) {
       this.customer = JSON.parse(localStorage.getItem('customer'));
@@ -70,10 +69,12 @@ export class TicketsComponent implements OnInit {
     }
     // ------------------------
     this.tickets = this.tickets.sort((b, a) => +new Date(a.tm_intervals[0]) - +new Date(b.tm_intervals[0]));
+
     this.ticketsRunning = this.tickets.filter(ticket => ticket.tx_status === 'provided');
     this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
     this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
-
+    this.ticketsAll = [...this.ticketsRunning,...this.ticketsActive, ...this.ticketsInactive];
+    
     // Entro a las empresas con tickets ACTIVOS (estudiar si es conveniente entrar sólo a empresas con tickets RUNNING)
     this.ticketsActive.forEach(ticket => {
       this.websocketService.emit('enterCompany', ticket.id_company._id);
@@ -142,4 +143,9 @@ export class TicketsComponent implements OnInit {
     });
   }
 
+
+
+  showReserveDate(date: string){
+    console.log(date)
+  }
 }

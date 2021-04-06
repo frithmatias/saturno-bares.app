@@ -32,10 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     // set day/night theme
-    let hours = new Date().getHours();
-    const theme = (hours >= 6 && hours < 19) ? 'grey-orange.css' : 'dark-pink.css';
-    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    cssLink.href = `../../../assets/css/themes/${theme}`;
+ 
 
     this.publicService.drawerScrollTop();
 

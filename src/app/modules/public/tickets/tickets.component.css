@@ -22,7 +22,6 @@
   }
 
   .company-title {
-    margin-top : 10px;
     margin-left: 0px !important;
   }
 }
@@ -35,27 +34,33 @@
 }
 
 .ticket-card {
-  width     : 300px;
-  margin-top: 42px;
+  width: 300px;
 }
 
 .company-header {
-  display    : flex;
   cursor     : pointer;
   align-items: center;
-  text-align : left;
-  padding    : 10px;
 }
 
 .company-logo {
-  border-radius: 10%;
-  width        : 70px;
-  height       : 70px;
+  margin-top   : -25px;
+  border-radius: 50%;
+  opacity      : .9;
+  width        : 50px;
+  height       : 50px;
   box-shadow   : 0px 0px 2px rgb(100 100 100 / 20%);
 }
 
+.company-cover {
+  width: 100%;
+}
+
+.company-conver-container {
+  max-height: 80px;
+  overflow: hidden;
+}
+
 .company-title {
-  margin-left: 15px;
   width      : 100%;
 }
 
@@ -65,4 +70,13 @@
   margin          : 10px;
   border-radius   : 5px;
   max-width       : 600px;
+}
+
+
+.ticket-active {
+  background-color: var(--mat-card-bg);
+}
+
+.ticket-inactive {
+  opacity: .5;
 }

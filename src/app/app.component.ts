@@ -15,7 +15,12 @@ export class AppComponent {
 
   constructor(
     public router: Router
-  ) {}
+  ) {
+    let hours = new Date().getHours();
+    const theme = (hours >= 6 && hours < 19) ? 'grey-orange.css' : 'dark-pink.css';
+    let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+    cssLink.href = `../../../assets/css/themes/${theme}`;
+  }
 
   ngOnInit(): void {
     this.router.events.pipe(
