@@ -272,11 +272,8 @@
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='admin'">
-            <div class="toolbar-base-item pointer" routerLink="/admin/home">
-                Inicio
-            </div>
             <div class="toolbar-base-item pointer" routerLink="/admin/wizard">
-                Wizard
+                Iniciar Asistente
             </div>
             <div class="toolbar-base-item pointer" routerLink="/waiter/home">
                 Atender
@@ -284,7 +281,7 @@
         </div>
 
         <div class="toolbar-links-base" *ngIf="url==='waiter'">
-            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
+            <div class="toolbar-base-item pointer" routerLink="/admin/home">
                 Inicio
             </div>
         </div>

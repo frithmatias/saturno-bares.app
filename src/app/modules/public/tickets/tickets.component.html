@@ -4,14 +4,14 @@
 
 
 <!-- CARD TICKETS -->
-<div class="tickets-container">
+<div class="tickets-container p-1 pt-2">
   <div class="ticket-card p-1" *ngFor="let ticket of ticketsAll">
     <!-- card with ticket data -->
     <mat-card class="p-0" [class]="ticket.tm_end ? 'ticket-inactive' : 'ticket-active'">
 
 
       <!-- header with company name and address -->
-      <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}">
+      <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}/ticket">
         <!-- logo -->
           <div class="company-conver-container">
             <img class="company-cover"
@@ -40,7 +40,7 @@
 
           <tr class="pointer" (click)="showReserveDate(ticket.tm_intervals[0])">
             <td>Fecha</td>
-            <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToRemaining}}</td>
+            <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' | capitalizarPipe}}</td>
           </tr>
           <tr>
             <td>Nombre</td>

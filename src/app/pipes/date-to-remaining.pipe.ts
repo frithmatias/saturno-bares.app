@@ -25,17 +25,17 @@ export class DateToRemainingPipe implements PipeTransform {
     } 
 
     if(mins_remaining < 0 && mins_remaining >= -60) {
-      res = 'hace ' + Math.floor(mins_remaining) + ' minutos';
+      res = 'desde hace ' + Math.floor(mins_remaining) + ' minutos';
     } 
 
     if(mins_remaining < -60 && mins_remaining >= -24 * 60) {
       mins_remaining = mins_remaining * -1;
-      res = 'hace ' + Math.floor(mins_remaining / 60) + ' horas';
+      res = 'fué hace ' + Math.floor(mins_remaining / 60) + ' horas';
     } 
     
     if(mins_remaining < -24 * 60) {
       mins_remaining = mins_remaining * -1;
-      res = 'hace ' + Math.floor(mins_remaining / (24 * 60)) + ' dias';
+      res = 'fué hace ' + Math.floor(mins_remaining / (24 * 60)) + ' dias';
     }
 
     return res;

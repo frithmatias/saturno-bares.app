@@ -7,6 +7,8 @@ import { User } from 'src/app/interfaces/user.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { WebsocketService } from '../../../services/websocket.service';
+import { DateToStringPipe } from '../../../pipes/date-to-string.pipe';
+import { CapitalizarPipe } from '../../../pipes/capitalizar.pipe';
 
 
 
@@ -33,7 +35,9 @@ export class TicketsComponent implements OnInit {
   constructor(
     private router: Router,
     public publicService: PublicService,
-    private websocketService: WebsocketService
+    private websocketService: WebsocketService,
+    private dateToString: DateToStringPipe,
+    private capitalizar: CapitalizarPipe
   ) { }
 
   ngOnInit(): void {
@@ -143,9 +147,8 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-
-
-  showReserveDate(date: string){
-    console.log(date)
+  showReserveDate(date: Date){
+    this.publicService.snack(this.capitalizar.transform(this.dateToString.transform(date,'full')), 5000);
   }
+
 }

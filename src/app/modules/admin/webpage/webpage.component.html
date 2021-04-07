@@ -117,8 +117,8 @@
                 [header]="header.banners" (dataUpdated)="dataUpdated($event)">
             </app-uploader> -->
         </mat-card-content>
-        <mat-card-actions>
-            <a [routerLink]="['/public/page', loginService.user.id_company.tx_company_string, 'home']" target="_blank">
+        <mat-card-actions *ngIf="loginService.user.id_company?.tx_company_string">
+            <a [routerLink]="['/public/page', loginService.user.id_company?.tx_company_string, 'home']" target="_blank">
                 <button mat-raised-button color="warn"  >Previsualizar</button>
             </a>
         </mat-card-actions>

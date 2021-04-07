@@ -56,12 +56,13 @@
 }
 
 .company-conver-container {
-  max-height: 80px;
-  overflow: hidden;
+  max-height   : 80px;
+  overflow     : hidden;
+  border-radius: 4px 4px 0px 0px;
 }
 
 .company-title {
-  width      : 100%;
+  width: 100%;
 }
 
 .history {

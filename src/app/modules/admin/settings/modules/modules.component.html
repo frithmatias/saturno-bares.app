@@ -4,8 +4,9 @@
         <div *ngIf="!publicService.settings">
             <mat-card-content>
                 <div class="p-2">
-                    Tenés que tener al menos una empresa creada y seleccionada.
+                    Tenés que tener al menos un comercio creado y seleccionado.
                 </div>
+                <button mat-raised-button color="accent" routerLink="/admin/wizard">Iniciar Asistente</button>
             </mat-card-content>
         </div>
 

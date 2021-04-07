@@ -71,7 +71,7 @@ export class WebPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.coverSelected = this.loginService.user.id_company.tx_company_cover;
+    this.coverSelected = this.loginService.user.id_company?.tx_company_cover || null;
   }
 
 
