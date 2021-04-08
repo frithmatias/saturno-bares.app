@@ -143,10 +143,11 @@ SATURNO
 }
 
 .page-tab-container {
-    margin   : 36px 16px;
-    min-width: 300px;
-    max-width: 600px;
-    font-size: medium;
+    font-variant: small-caps;
+    font-family : 'Baloo Bhai 2', 'system-ui';
+    margin      : 36px 16px;
+    min-width   : 300px;
+    max-width   : 600px;
 }
 
 .page-container-wide {
@@ -913,8 +914,12 @@ MAT-SIDENAV
     height: 36px !important;
 } */
 
+.mat-expansion-panel-header {
+    padding: 0 16px !important;
+}
+
 .mat-expansion-panel-body {
-    padding: .5rem !important;
+    padding: 0rem !important;
 }
 
 .mat-radio-outer-circle {

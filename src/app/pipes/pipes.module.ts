@@ -10,7 +10,6 @@ import { GetOccupationPipe } from './get-ocuppation.pipe';
 import { DateToStringPipe } from './date-to-string.pipe';
 import { DateToRemainingPipe } from './date-to-remaining.pipe';
 import { TicketStatusPipe } from './ticket-status.pipe';
-import { DateToIntervalPipe } from './date-to-interval.pipe';
 import { IntervalToHmPipe } from './interval-to-hm.pipe';
 
 @NgModule({
@@ -26,7 +25,6 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    DateToIntervalPipe,
     IntervalToHmPipe
   ],
   imports: [],
@@ -42,7 +40,6 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    DateToIntervalPipe,
     IntervalToHmPipe
 
   ]

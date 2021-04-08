@@ -1,0 +1,130 @@
+<div class="page-container animated fadeIn">
+    <mat-card>
+
+        <div *ngIf="!publicService.settings">
+            <mat-card-content>
+                <div class="p-2">
+                    Tenés que tener al menos un comercio creado y seleccionado.
+                </div>
+                <button mat-raised-button color="accent" routerLink="/admin/wizard">Iniciar Asistente</button>
+            </mat-card-content>
+        </div>
+
+        <div *ngIf="publicService.settings">
+
+            <mat-card-content class="p-2">
+
+
+
+                <mat-card class="subcard mb-2">
+                    <mat-card-title class="md text-accent text-left">
+                        <span class="md mdi mdi-human-queue"></span>
+                        Cola Virtual
+                    </mat-card-title>
+                    <!-- virtual queue on/off -->
+                    <div class="d-flex mt-2">
+                        <div class="w-50 text-left">
+                            <mat-slide-toggle [(ngModel)]="publicService.settings.bl_queue"
+                                [checked]="publicService.settings.bl_queue" (change)="check('queue')">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="w-50 text-right">
+                            <apan *ngIf="publicService.settings.bl_queue">Activado</apan>
+                            <apan *ngIf="!publicService.settings.bl_queue">Desactivado</apan>
+                            <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                                (click)="openBottomSheet('adminSettingsVirtualQueue')"></span>
+                        </div>
+                    </div>
+                </mat-card>
+
+                <!-- spm on/off -->
+                <mat-card class="subcard mb-2">
+                    <mat-card-title class="md text-accent text-left">
+                        <span *ngIf="publicService.settings.bl_spm" class="md mdi mdi-boom-gate-up-outline"></span>
+                        <span *ngIf="!publicService.settings.bl_spm" class="md mdi mdi-boom-gate-outline"></span>
+
+                        Provisión de mesas automático
+                    </mat-card-title>
+                    <div class="d-flex mt-2">
+                        <div class="w-50 text-left">
+                            <mat-slide-toggle [(ngModel)]="publicService.settings.bl_spm"
+                                [checked]="publicService.settings.bl_spm" (change)="check('spm')">
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="w-50 text-right">
+                            <apan *ngIf="publicService.settings.bl_spm">Activado</apan>
+                            <apan *ngIf="!publicService.settings.bl_spm">Desactivado</apan>
+                            <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                                (click)="openBottomSheet('adminSettingsSPM')"></span>
+                        </div>
+                    </div>
+                </mat-card>
+
+                <!-- schedule on/off -->
+                <mat-card class="subcard mb-2">
+                    <mat-card-title class="md text-accent text-left">
+                        <span class="md mdi mdi-calendar-account"></span>
+                        Agenda
+                    </mat-card-title>
+                    <div class="d-flex mt-2">
+                        <div class="w-50 text-left">
+                            <mat-slide-toggle [(ngModel)]="publicService.settings.bl_schedule"
+                                [checked]="publicService.settings.bl_schedule" (change)="check('schedule')"> 
+                            </mat-slide-toggle>
+                        </div>
+                        <div class="w-50 text-right">
+                            <apan *ngIf="publicService.settings.bl_schedule">Activado</apan>
+                            <apan *ngIf="!publicService.settings.bl_schedule">Desactivado</apan>
+                            <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                                (click)="openBottomSheet('adminSettingsSchedule')"></span>
+                        </div>
+                    </div>
+                </mat-card>
+
+                <mat-card class="subcard mb-2">
+                    <mat-card-title class="md text-accent text-left">
+                        <span class="md mdi mdi-timelapse"></span>
+
+                        Cantidad máxima de intervalos
+                    </mat-card-title>
+                    <div class="d-flex mt-2">
+                        <div class="w-25 text-left">
+                            <mat-select [(ngModel)]="publicService.settings.nm_intervals" (click)="check('schedule')">
+                                <mat-option [value]="1"> 1 </mat-option>
+                                <mat-option [value]="2"> 2 </mat-option>
+                                <mat-option [value]="3"> 3 </mat-option>
+                                <mat-option [value]="4"> 4 </mat-option>
+                                <mat-option [value]="5"> 5 </mat-option>
+                                <mat-option [value]="6"> 6 </mat-option>
+                                <mat-option [value]="7"> 7 </mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="w-75 text-right">
+                            {{(publicService.settings.nm_intervals | intervalToHm).local_hr}} hr
+                            <span *ngIf="(publicService.settings.nm_intervals | intervalToHm).local_min > 0">
+                                y {{(publicService.settings.nm_intervals | intervalToHm).local_min}} min
+                            </span>
+                            <span class="mdi mdi-help-circle-outline ml-2 pointer"
+                            (click)="openBottomSheet('adminSettingsIntervals')"></span>
+                        </div>
+                    </div>
+                </mat-card>
+            </mat-card-content>
+
+
+            <mat-card-actions class="p-2 text-right">
+                <button mat-raised-button color="primary" class="action-button-flex" (click)="updateSettings()"
+                    [disabled]="saveDisabled">
+                    <table>
+                        <tr>
+                            <td class="button-icon mdi  mdi-content-save xl"></td>
+                            <td class="button-text">Guardar</td>
+                        </tr>
+                    </table>
+                </button>
+            </mat-card-actions>
+
+        </div>
+
+    </mat-card>
+</div>

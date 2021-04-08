@@ -145,7 +145,7 @@
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
         <div class="text-info md">
-          <span class="mdi mdi-view-module mr-2"></span> Módulos
+          <span class="mdi mdi-view-module mr-2"></span> Ajustes
         </div>
 
         <mat-card-content>
@@ -186,6 +186,15 @@
                 </td>
               </tr>
 
+              <tr>
+                <td class="text-left">
+                  <span class="mdi mdi-timelapse mr-2"></span>
+                  Intervalos
+                </td>
+                <td class="text-right text-accent">
+                  <span>{{publicService.settings?.nm_intervals}}</span>
+                </td>
+              </tr>
             </table>
             <hr>
             <button mat-raised-button color="primary" routerLink="/admin/settings">Ir a Ajustes</button>

@@ -33,6 +33,9 @@ export class HelpComponent implements OnInit {
       case 'adminSettingsSchedule':
         this.helpTitle = `AGENDA`;
         break;
+      case 'adminSettingsIntervals':
+        this.helpTitle = 'INTERVALOS';
+        break;
       case 'waiterVirtualQueuePosition':
         this.helpTitle = `POSICIÓN`;
         break;

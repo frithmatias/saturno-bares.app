@@ -17,26 +17,26 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 
-import { CompaniesComponent } from './settings/companies/companies.component';
-import { CompanyCreateComponent } from './settings/companies/company-create/company-create.component';
-import { TablesComponent } from './settings/tables/tables.component';
-import { TableCreateComponent } from './settings/tables/table-create/table-create.component';
-import { WaitersComponent } from './settings/waiters/waiters.component';
-import { WaiterCreateComponent } from './settings/waiters/waiter-create/waiter-create.component';
-import { SectionsComponent } from './settings/sections/sections.component';
-import { SectionCreateComponent } from './settings/sections/section-create/section-create.component';
+import { CompaniesComponent } from './config/companies/companies.component';
+import { CompanyCreateComponent } from './config/companies/company-create/company-create.component';
+import { TablesComponent } from './config/tables/tables.component';
+import { TableCreateComponent } from './config/tables/table-create/table-create.component';
+import { WaitersComponent } from './config/waiters/waiters.component';
+import { WaiterCreateComponent } from './config/waiters/waiter-create/waiter-create.component';
+import { SectionsComponent } from './config/sections/sections.component';
+import { SectionCreateComponent } from './config/sections/section-create/section-create.component';
 import { WizardComponent } from './wizard/wizard.component';
-import { PollComponent } from './settings/poll/poll.component';
-import { PollCreateComponent } from './settings/poll/poll-create/poll-create.component';
+import { PollComponent } from './config/poll/poll.component';
+import { PollCreateComponent } from './config/poll/poll-create/poll-create.component';
 import { WebPageComponent } from './webpage/webpage.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ConfigComponent } from './config/config.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PendingComponent } from './schedule/pending/pending.component';
 import { BottomsheetComponent } from './schedule/bottomsheet/bottomsheet.component';
 import { CalendarComponent } from './schedule/calendar/calendar.component';
-import { ModulesComponent } from './settings/modules/modules.component';
-import { MessageComponent } from './settings/message/message.component';
-import { WorkingComponent } from './settings/working/working.component';
+import { SettingsComponent } from './config/settings/settings.component';
+import { MessageComponent } from './config/message/message.component';
+import { WorkingComponent } from './config/working/working.component';
 import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.component';
 
 @NgModule({
@@ -61,12 +61,12 @@ import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.compon
 		PollComponent,
 		PollCreateComponent,
 		WebPageComponent,
-		SettingsComponent,
+		ConfigComponent,
 		ScheduleComponent,
 		PendingComponent,
 		BottomsheetComponent,
 		CalendarComponent,
-		ModulesComponent,
+		SettingsComponent,
 		MessageComponent,
 		WorkingComponent,
 		CoverDialogComponent,

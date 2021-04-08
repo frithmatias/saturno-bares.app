@@ -8,6 +8,7 @@ export interface Settings {
 	bl_schedule: boolean,
 	bl_queue: boolean,
 	tm_working: number[][];
+	nm_intervals: number;
 	__v?: number;
 	_id?: string;
 }

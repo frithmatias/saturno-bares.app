@@ -1,7 +1,9 @@
-@media (max-width: 575px) {}
+@media (max-width: 575px) {
+    .page-tab-container {
+        font-size: medium !important;
+    }
+}
 
-.public-home-content {
-    font-family : 'Baloo Bhai 2', 'system-ui';
-    margin-top  : 0;
-    font-variant: small-caps;
+.page-tab-container {
+    font-size   : larger;
 }

@@ -34,7 +34,6 @@ export class ToolbarComponent implements OnInit {
 
     this.getDataRoute().subscribe((data: NavigationEnd) => {
       this.url = data.url.split('/')[1]; // admin - waiter - (public path)
-      console.log(this.url)
     });
     
   }

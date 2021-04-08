@@ -7,11 +7,11 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { HelpComponent } from '../../../../components/help/help.component';
 
 @Component({
-  selector: 'app-modules',
-  templateUrl: './modules.component.html',
-  styleUrls: ['./modules.component.css']
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.css']
 })
-export class ModulesComponent implements OnInit {
+export class SettingsComponent implements OnInit {
 
   @Input() nomargin: boolean;
   @Input() nopadding: boolean;
@@ -27,6 +27,9 @@ export class ModulesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { }
+
+
+
 
   updateSettings() {
     this.adminService.updateSettings(this.publicService.settings).subscribe((data: SettingsResponse) => {

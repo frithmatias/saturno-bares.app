@@ -33,6 +33,13 @@
         en forma automática y a la hora de la reserva proveerá la mesa (o las mesas) y notificará al cliente.
     </mat-card-content>
 
+    <mat-card-content *ngIf="data.idHelp==='adminSettingsIntervals'">
+        <span class="text-accent">Cantidad máxima de intervalos de 30 minutos que un cliente puede tomar en
+            una reserva</span>. Además, los intervalos que un cliente puede tomar al momento hacer una reserva deben
+        ser siempre consecutivos. Desde la agenda el administrador NO tiene ningún límite de asignación de intervalos al
+        crear un ticket de contingencia.
+    </mat-card-content>
+
     <mat-card-content *ngIf="data.idHelp==='waiterVirtualQueuePosition'">
         asdfasdf
     </mat-card-content>

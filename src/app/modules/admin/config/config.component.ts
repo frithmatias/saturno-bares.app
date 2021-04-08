@@ -4,11 +4,11 @@ import { AdminService } from '../admin.service';
 import { PublicService } from '../../public/public.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  selector: 'app-config',
+  templateUrl: './config.component.html',
+  styleUrls: ['./config.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class ConfigComponent implements OnInit {
 
   constructor(
     public loginService: LoginService,

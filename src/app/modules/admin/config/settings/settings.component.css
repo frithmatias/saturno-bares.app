@@ -1,0 +1,4 @@
+.subcard {
+    background-color: var(--mat-panel-bg);
+    padding: 10px 15px;
+}

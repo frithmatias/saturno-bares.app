@@ -14,8 +14,8 @@ import { Subscription } from 'rxjs';
 import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
-import { DateToIntervalPipe } from '../../../../pipes/date-to-interval.pipe';
 import { availabilityResponse, optionInterval } from 'src/app/interfaces/availability.interface';
+import { DateToStringPipe } from '../../../../pipes/date-to-string.pipe';
 
 @Component({
   selector: 'app-ticket-create',
@@ -50,7 +50,7 @@ export class TicketCreateComponent implements OnInit {
     private wsService: WebsocketService,
     public publicService: PublicService,
     private router: Router,
-    private dateToInterval: DateToIntervalPipe
+    private dateToString: DateToStringPipe
   ) {
 
     const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
@@ -245,14 +245,14 @@ export class TicketCreateComponent implements OnInit {
               this.optionInterval.push({
                 disabled: false,
                 date: new Date(av.interval),
-                text: this.dateToInterval.transform(new Date(av.interval)),
+                text: this.dateToString.transform(new Date(av.interval), 'time-24'),
                 compatible: av.compatible
               })
             } else {
               this.optionInterval.push({
                 disabled: true,
                 date: new Date(av.interval),
-                text: this.dateToInterval.transform(new Date(av.interval)) + ' No disponible',
+                text: this.dateToString.transform(new Date(av.interval), 'time-24') + ' No disponible',
                 compatible: null
               })
             }
@@ -267,7 +267,7 @@ export class TicketCreateComponent implements OnInit {
             this.optionInterval.push({
               disabled: this.ticketForm.value.nmPersons > av.capacity,
               date: new Date(av.interval),
-              text: this.dateToInterval.transform(new Date(av.interval)) + ' Max ' + av.capacity,
+              text: this.dateToString.transform(new Date(av.interval), 'time-24') + ' Max ' + av.capacity,
               compatible: [0]
             })
           })

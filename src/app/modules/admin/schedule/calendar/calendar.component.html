@@ -17,7 +17,7 @@
             <tr *ngFor="let avInterval of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
 
                 <td class="px-1">
-                    <span>{{avInterval.interval | dateToInterval}}</span>
+                    <span>{{avInterval.interval | dateToString : 'time-24'}}</span>
                 </td>
                 <td class="text-accent sm">
                     {{avInterval.capacity}}
