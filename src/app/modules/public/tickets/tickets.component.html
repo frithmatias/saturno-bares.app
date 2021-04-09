@@ -13,13 +13,13 @@
       <!-- header with company name and address -->
       <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}/ticket">
         <!-- logo -->
-          <div class="company-conver-container">
+          <div class="company-cover-container">
             <img class="company-cover"
-            [src]="ticket.id_company?.tx_company_cover | imagenPipe : 'tx_company_cover' : ticket.id_company?._id">
+            [src]="'thumb-'+ticket.id_company?.tx_company_cover | imagenPipe : 'tx_company_cover' : ticket.id_company?._id">
           </div>
           <div>
             <img card-avatar class="company-logo"
-            [src]="ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+            [src]="'thumb-'+ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
           </div>
         <div class="company-title">
           <div class="md text-accent">

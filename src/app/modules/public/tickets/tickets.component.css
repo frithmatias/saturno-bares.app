@@ -1,4 +1,5 @@
 @media (max-width: 575px) {
+
   mat-card {
     width: 100% !important;
   }
@@ -7,23 +8,19 @@
     width: 50% !important;
   }
 
-  .company-banner {
-    height: 84px !important;
-  }
-
-  .select-status {
-    width  : 100%;
-    padding: 10px;
-  }
-
   .company-header {
     flex-direction: column;
     text-align    : center !important;
   }
 
+  .company-cover-container {
+    height: 80px;
+  }
+
   .company-title {
     margin-left: 0px !important;
   }
+  
 }
 
 .tickets-container {
@@ -51,28 +48,19 @@
   box-shadow   : 0px 0px 2px rgb(100 100 100 / 20%);
 }
 
-.company-cover {
-  width: 100%;
-}
-
-.company-conver-container {
-  max-height   : 80px;
+.company-cover-container {
+  max-height   : 120px;
   overflow     : hidden;
   border-radius: 4px 4px 0px 0px;
+}
+
+.company-cover {
+  width: 100%;
 }
 
 .company-title {
   width: 100%;
 }
-
-.history {
-  background-color: var(--main-o10);
-  padding         : 10px;
-  margin          : 10px;
-  border-radius   : 5px;
-  max-width       : 600px;
-}
-
 
 .ticket-active {
   background-color: var(--mat-card-bg);
