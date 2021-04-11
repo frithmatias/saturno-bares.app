@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { WebsocketService } from '../../../../services/websocket.service';
 import { PublicService } from '../../public.service';
@@ -11,11 +11,11 @@ import { SectionsResponse } from '../../../../interfaces/section.interface';
 
 import { Company } from '../../../../interfaces/company.interface';
 import { Subscription } from 'rxjs';
-import { Social } from '../../../../components/social/social.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
 import { availabilityResponse, optionInterval } from 'src/app/interfaces/availability.interface';
 import { DateToStringPipe } from '../../../../pipes/date-to-string.pipe';
+import { Settings } from 'src/app/interfaces/settings.interface';
 
 @Component({
   selector: 'app-ticket-create',
@@ -25,13 +25,15 @@ import { DateToStringPipe } from '../../../../pipes/date-to-string.pipe';
 export class TicketCreateComponent implements OnInit {
 
   @Input() company: Company;
+  @Input() settings: Settings;
 
-  social: Social; // customer logged with social
   customer: User; // customer logged with email
   loading: boolean = false;
+
   sections: Section[] = [];
   ticket: Ticket = null; // ACTIVE ticket
   tickets: Ticket[] = [];
+
 
   ticketForm: FormGroup;
   tmIntervals: Date[] = [];
@@ -50,6 +52,7 @@ export class TicketCreateComponent implements OnInit {
     private wsService: WebsocketService,
     public publicService: PublicService,
     private router: Router,
+    private route: ActivatedRoute,
     private dateToString: DateToStringPipe
   ) {
 
@@ -60,15 +63,16 @@ export class TicketCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSections();
+
     this.createTicketForm();
     this.checkFormChanges();
-    this.checkCustomer();
-    this.checkWaitingTicket();
-    this.checkTicketUpdate();
+    this.getCompanySections();
+    this.getUserTickets();
+    this.ticketsSubscribe();
+
   }
 
-  checkTicketUpdate() {
+  ticketsSubscribe() {
     this.updateTicketsSub = this.wsService.updateTicket().subscribe((ticket: Ticket) => {
       // id_company en el metodo provide() del backend NO viene populado
       ticket.id_company = this.ticket?.id_company;
@@ -77,45 +81,36 @@ export class TicketCreateComponent implements OnInit {
     });
   }
 
-  getSections() {
-    // get sections
-    if (!this.company) {
-      this.publicService.snack('Por favor elegí un bar primero.', 2000);
-      this.router.navigate(['/public']);
-    } else {
-      let idCompany = this.company._id;
-      this.wsService.emit('enterCompany', idCompany);
-      this.loading = true;
-      this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
-        this.loading = false;
-        this.sections = data.sections;
-      })
-    }
+  getCompanySections() {
+
+    const idCompany = this.company._id;
+    this.wsService.emit('enterCompany', idCompany);
+    this.loading = true;
+    this.publicService.readSections(idCompany).subscribe((data: SectionsResponse) => {
+      this.loading = false;
+      this.sections = data.sections;
+    })
+
   }
 
-  checkCustomer() {
-    // Get social data
+  getUserTickets(): void {
 
-    if (localStorage.getItem('customer')) {
-      this.customer = JSON.parse(localStorage.getItem('customer'));
-      const txPlatform = this.customer.tx_platform;
-      const txEmail = this.customer.tx_email;
-      if (txPlatform && txEmail) {
-        this.getUserTickets(txPlatform, txEmail); // update tickets
-      }
-    }
-  }
-
-  checkWaitingTicket(): void {
-    // si se recarga la página cuando hay un ticket 'waiting', el ticket se salva y queda en 'tickets' 
-    // ahora tengo que levantarlo y guardarlo en mi 'ticket' (ticket activo)
     if (localStorage.getItem('tickets')) {
       this.tickets = JSON.parse(localStorage.getItem('tickets'));
       this.ticket = this.tickets.find(ticket => this.activeTickets.includes(ticket.tx_status));
     }
-  }
 
-  getUserTickets(txPlatform: string, txEmail: string): void {
+    if (localStorage.getItem('customer')) {
+      this.customer = JSON.parse(localStorage.getItem('customer'));
+    }
+
+    if (!this.customer?.tx_platform || !this.customer?.tx_email) {
+      return;
+    }
+
+    const txPlatform = this.customer.tx_platform;
+    const txEmail = this.customer.tx_email;
+
     this.loading = true;
 
     // if exists get waiting ticket
@@ -138,7 +133,6 @@ export class TicketCreateComponent implements OnInit {
   }
 
   createTicketForm() {
-
     this.ticketForm = new FormGroup({
       txName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       nmPersons: new FormControl('', [Validators.required, Validators.min(1), Validators.max(1000)]),
@@ -271,7 +265,7 @@ export class TicketCreateComponent implements OnInit {
               compatible: [0]
             })
           })
-          
+
         }
 
       }
@@ -349,6 +343,7 @@ export class TicketCreateComponent implements OnInit {
     this.publicService.clearPublicSession();
     this.router.navigate(['/home'])
   }
+
 }
 
 

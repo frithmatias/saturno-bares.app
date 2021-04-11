@@ -87,6 +87,7 @@
 
             <hr>
 
+            <!-- LOGO IMAGE -->
             <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id" idField="tx_company_logo"
                 [documentData]="this.loginService.user.id_company" [header]="header.logo"
                 (dataUpdated)="dataUpdated($event)">
@@ -101,12 +102,12 @@
                         <span *ngIf="coverSelected === img.filename" class="mdi mdi-check text-accent"></span>
                     </div>
                     <div>
-                        <img class="cover-thumb" [src]="img.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
+                        <img class="cover-thumb" [src]="'thumb-'+img.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
                     </div>
                 </div>
             </div>
 
-
+            <!-- COVER IMAGE -->
             <app-uploader [multi]="false" [idDocument]="this.loginService.user.id_company._id"
                 idField="tx_company_cover" [documentData]="this.loginService.user.id_company" [header]="header.cover"
                 (dataUpdated)="dataUpdated($event)">

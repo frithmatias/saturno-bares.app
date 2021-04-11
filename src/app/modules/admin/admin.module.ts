@@ -13,6 +13,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
 import { AdminComponent } from './admin.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -42,6 +43,7 @@ import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.compon
 @NgModule({
 	declarations: [
 		AdminComponent,
+		ToolbarComponent,
 		HomeComponent,
 		DashboardComponent,
 		ProfileComponent,

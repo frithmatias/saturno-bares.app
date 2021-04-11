@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<div class="main-wrapper main-center">
+
+    <app-toolbar (toggleSideNav)="toggle( sidenav )"></app-toolbar>
+    
+    <mat-drawer-container>
+        <mat-drawer #sidenav id="sidenav" mode="over">
+            <app-sidenav (toggleSideNav)="toggle( sidenav )"></app-sidenav>
+        </mat-drawer>
+
+        <mat-drawer-content>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

@@ -7,7 +7,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 import { UploaderDirective } from './uploader/uploader.directive';
 
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ChatComponent } from './chat/chat.component';
 import { SearchComponent } from './search/search.component';
@@ -25,7 +24,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 
 @NgModule({
   declarations: [
-    ToolbarComponent,
     SidenavComponent,
     ChatComponent,
     SearchComponent,
@@ -52,7 +50,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     { provide: MAT_BOTTOM_SHEET_DATA, useValue: {} }
   ],
   exports: [
-    ToolbarComponent,
     SidenavComponent,
     ChatComponent,
     SearchComponent,

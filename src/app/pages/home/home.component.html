@@ -2,163 +2,165 @@
 <!-- HOME -->
 <!-- ======================================================== -->
 
-<mat-horizontal-stepper linear #stepper>
-  <mat-step>
 
-    <div class="animated fadeIn home-bg">
+<app-toolbar></app-toolbar>
 
-      <div id="header" #header class="welcome-wrapper">
-        <div class="welcome-container">
-          <div class="welcome-title">
-            Volvé a Salir
-          </div>
-          <div class="welcome-subtitle">
-            Reservá tu lugar ahora y evita demoras y congestiones.
-          </div>
+<div class="main-center main-wrapper">
+
+  <div class="animated fadeIn home-bg">
+
+    <div id="header" #header class="welcome-wrapper">
+      <div class="welcome-container">
+        <div class="welcome-title">
+          Volvé a Salir
         </div>
-        
+        <div class="welcome-subtitle">
+          Reservá tu lugar ahora y evita demoras y congestiones.
+        </div>
       </div>
-      
-      
-      <!-- <svg width="100%" viewBox="0 0 400 70" xmlns="http://www.w3.org/2000/svg">
+
+    </div>
+
+
+    <!-- <svg width="100%" viewBox="0 0 400 70" xmlns="http://www.w3.org/2000/svg">
         <path d="M 0,0 L 0,0 0,50 C 70,70 130,70 200,50 S 330,30 400,50 L 400,50 400,0" fill="var(--primary-o75)" />
       </svg> -->
-      
-      <div class="company-input-wrapper">
-        <app-search></app-search>
-      </div>
 
+    <div class="company-input-wrapper">
+      <app-search></app-search>
     </div>
 
-
-  </mat-step>
-</mat-horizontal-stepper>
-
-<!-- ======================================================== -->
-<!-- BANNERS -->
-<!-- ======================================================== -->
+  </div>
 
 
-<div class="animated fadeIn banner-container">
-  <div class="banner-container-col-left">
 
-    <!-- BANNER RIGHT 1: FIND COMPANY -->
-    <div class="banner banner-container-map">
-      <div class="banner-image banner-img-map">
-      </div>
-      <div class="my-5 m-2 text-white">
-        <div class="banner-title text-white m-2 mb-4">
-          BUSCÁ UN BAR
+  <!-- ======================================================== -->
+  <!-- BANNERS -->
+  <!-- ======================================================== -->
+
+
+  <div class="animated fadeIn banner-container">
+    <div class="banner-container-col-left">
+
+      <!-- BANNER RIGHT 1: FIND COMPANY -->
+      <div class="banner banner-container-map">
+        <div class="banner-image banner-img-map">
         </div>
-        <div class="banner-text">
-          Busca un bar o restaurante por su nombre o por zona usando el mapa.
+        <div class="my-5 m-2 text-white">
+          <div class="banner-title text-white m-2 mb-4">
+            BUSCÁ UN BAR
+          </div>
+          <div class="banner-text">
+            Busca un bar o restaurante por su nombre o por zona usando el mapa.
+          </div>
+        </div>
+      </div>
+
+      <!-- BANNER RIGHT 2: ADMINISTRÁ -->
+      <div class="banner banner-container-tickets">
+        <div class="my-5 m-2 text-white">
+          <div class="banner-title text-white m-2 mb-4">
+            ADMINISTRÁ TUS RESERVAS
+          </div>
+          <div class="banner-text">
+            Administra todas tus reservas desde un sólo lugar.
+          </div>
+        </div>
+        <div class="banner-image banner-img-tickets">
+        </div>
+      </div>
+
+
+      <!-- BANNER LEFT 3: GESTIONÁ -->
+      <div class="banner banner-container-myticket">
+        <div class="my-5 text-white mx-2">
+          <div class="banner-title text-white m-2 mb-4">
+            COMUNICATE A TRAVÉS DE LA APLICACIÓN
+          </div>
+          <div class="banner-text">
+            Podes pedir la carta o la cuenta y llamar al servicio de camareros/as a través de la app todo en tiempo
+            real.
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- BANNER RIGHT 2: ADMINISTRÁ -->
-    <div class="banner banner-container-tickets">
-      <div class="my-5 m-2 text-white">
-        <div class="banner-title text-white m-2 mb-4">
-          ADMINISTRÁ TUS RESERVAS
+    <div class="banner-container-col-right">
+
+      <!-- BANNER LEFT 1: TELEGRAM -->
+      <div class="banner banner-container-telegram">
+        <div class="banner-img-telegram my-4">
         </div>
-        <div class="banner-text">
-          Administra todas tus reservas desde un sólo lugar.
+        <div class="my-5 m-2">
+          <div class="banner-title m-2 mb-4">
+            INTEGRACION CON TELEGRAM
+          </div>
+          <div class="banner-text">
+            Si usas esta plataforma podés gestionar tus tickets directamente a través de Telegram sin necesidad de
+            entrar
+            en la App.
+          </div>
         </div>
       </div>
-      <div class="banner-image banner-img-tickets">
-      </div>
-    </div>
 
-
-    <!-- BANNER LEFT 3: GESTIONÁ -->
-    <div class="banner banner-container-myticket">
-      <div class="my-5 text-white mx-2">
-        <div class="banner-title text-white m-2 mb-4">
-          COMUNICATE A TRAVÉS DE LA APLICACIÓN
+      <!-- BANNER LEFT 2: RESERVÁ -->
+      <div class="banner banner-container-createticket">
+        <div class="banner-image banner-img-createticket">
         </div>
-        <div class="banner-text">
-          Podes pedir la carta o la cuenta y llamar al servicio de camareros/as a través de la app todo en tiempo real.
+        <div class="my-5 m-2 text-white">
+          <div class="banner-title text-white m-2 mb-4">
+            RESERVÁ TU MESA
+          </div>
+          <div class="banner-text">
+            Pedí una mesa para el momento y las personas que quieras. El sistema te ofrece las mesas disponibles a cada
+            momento.
+          </div>
+        </div>
+      </div>
+
+      <!-- BANNER RIGHT 3: CALIFICÁ -->
+      <div class="banner banner-container-scores">
+        <div class="my-5 m-2 text-white">
+          <div class="banner-title text-white m-2 mb-4">
+            DEJÁ TU OPINIÓN
+          </div>
+          <div class="banner-text">
+            Al finalizar podés recibir una breve encuesta de calidad donde podés
+            calificar la atención y dejar tu opinión.
+          </div>
+        </div>
+        <div class="banner-image banner-img-scores">
         </div>
       </div>
     </div>
   </div>
 
-  <div class="banner-container-col-right">
+  <!-- ======================================================== -->
+  <!-- MAPA -->
+  <!-- ======================================================== -->
 
-    <!-- BANNER LEFT 1: TELEGRAM -->
-    <div class="banner banner-container-telegram">
-      <div class="banner-img-telegram my-4">
+  <div #map id="home-map-container">
+
+    <div class="location-input-wrapper">
+      <div class="icon-magnify-wrapper" (click)="cleanInput(inputFindLocation)">
+        <i class="mdi mdi-magnify icon-magnify"></i>
       </div>
-      <div class="my-5 m-2">
-        <div class="banner-title m-2 mb-4">
-          INTEGRACION CON TELEGRAM
-        </div>
-        <div class="banner-text">
-          Si usas esta plataforma podés gestionar tus tickets directamente a través de Telegram sin necesidad de entrar
-          en la App.
-        </div>
-      </div>
+      <input #inputFindLocation maxlength="30" class="input-location" type="text" [formControl]="localidadesControl"
+        [matAutocomplete]="auto" placeholder="Buscar por ciudad o barrio" (click)="cleanInput(inputFindLocation)" />
     </div>
 
-    <!-- BANNER LEFT 2: RESERVÁ -->
-    <div class="banner banner-container-createticket">
-      <div class="banner-image banner-img-createticket">
-      </div>
-      <div class="my-5 m-2 text-white">
-        <div class="banner-title text-white m-2 mb-4">
-          RESERVÁ TU MESA
-        </div>
-        <div class="banner-text">
-          Pedí una mesa para el momento y las personas que quieras. El sistema te ofrece las mesas disponibles a cada
-          momento.
-        </div>
-      </div>
+    <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
+      <mat-option [value]="option" *ngFor="let option of localidades">
+        {{ option.properties.nombre | capitalizarPipe }},
+        {{ option.properties.departamento.nombre }},
+        {{ option.properties.provincia.nombre }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <div class="home-map">
+      <app-map [(companies)]="companies" [(center)]="centerMap" [initmap]="publicService.canAksPositionUser"> </app-map>
     </div>
 
-    <!-- BANNER RIGHT 3: CALIFICÁ -->
-    <div class="banner banner-container-scores">
-      <div class="my-5 m-2 text-white">
-        <div class="banner-title text-white m-2 mb-4">
-          DEJÁ TU OPINIÓN
-        </div>
-        <div class="banner-text">
-          Al finalizar podés recibir una breve encuesta de calidad donde podés
-          calificar la atención y dejar tu opinión.
-        </div>
-      </div>
-      <div class="banner-image banner-img-scores">
-      </div>
-    </div>
   </div>
+  <app-footer></app-footer>
 </div>
-
-<!-- ======================================================== -->
-<!-- MAPA -->
-<!-- ======================================================== -->
-
-<div #map id="home-map-container">
-
-  <div class="location-input-wrapper">
-    <div class="icon-magnify-wrapper" (click)="cleanInput(inputFindLocation)">
-      <i class="mdi mdi-magnify icon-magnify"></i>
-    </div>
-    <input #inputFindLocation maxlength="30" class="input-location" type="text" [formControl]="localidadesControl"
-      [matAutocomplete]="auto" placeholder="Buscar por ciudad o barrio" (click)="cleanInput(inputFindLocation)" />
-  </div>
-
-  <mat-autocomplete iniciocss #auto="matAutocomplete" [displayWith]="setLocalidad.bind(this)">
-    <mat-option [value]="option" *ngFor="let option of localidades">
-      {{ option.properties.nombre | capitalizarPipe }},
-      {{ option.properties.departamento.nombre }},
-      {{ option.properties.provincia.nombre }}
-    </mat-option>
-  </mat-autocomplete>
-
-  <div class="home-map">
-    <app-map [(companies)]="companies" [(center)]="centerMap" [initmap]="publicService.canAksPositionUser"> </app-map>
-  </div>
-
-</div>
-
-<app-footer></app-footer>

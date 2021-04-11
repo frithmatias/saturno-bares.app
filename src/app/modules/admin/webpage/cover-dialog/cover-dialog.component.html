@@ -4,7 +4,7 @@
         <div class="predefined-cover-title">{{data.name}}</div>
     </div>
     <div>
-        <img class="predefined-cover-preview" [src]="data.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
+        <img class="predefined-cover-preview" [src]="'thumb-'+data.filename | imagenPipe : 'tx_company_cover' : 'predefined' ">
     </div>
 </mat-card-content>
 <mat-card-actions>

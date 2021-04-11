@@ -4,6 +4,7 @@ import { AdminService } from './admin.service';
 import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../waiter/waiter.service';
 import { PublicService } from '../public/public.service';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-admin',
@@ -77,8 +78,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       tablesResponse: tables$,
       scoreitemsResponse: scoreItems$,
       settingsResponse: settings$
-    })
-      .subscribe((data: any) => {
+    }).subscribe((data: any) => {
 
         // set companies
         this.adminService.companies = data.companiesResponse.companies;
@@ -111,6 +111,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   }
 
+  toggle(htmlRef: MatDrawer): void {
+    htmlRef.toggle();
+  }
+  
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
   }

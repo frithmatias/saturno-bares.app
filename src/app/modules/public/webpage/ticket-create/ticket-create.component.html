@@ -32,9 +32,9 @@
         <mat-form-field color="accent">
           <mat-label>Para cuando?</mat-label>
           <mat-select formControlName="txWhen" name="txWhen" required>
-            <mat-option [disabled]="!publicService.settings.bl_queue" value="ahora"><span
+            <mat-option [disabled]="!settings.bl_queue" value="ahora"><span
                 class="text-accent mdi mdi-timelapse"></span> Ahora </mat-option>
-            <mat-option [disabled]="!publicService.settings.bl_schedule" value="otrodia"><span
+            <mat-option [disabled]="!settings.bl_schedule" value="otrodia"><span
                 class="text-accent mdi mdi-calendar-month"></span> Otro día
             </mat-option>
           </mat-select>

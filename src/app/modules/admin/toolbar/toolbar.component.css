@@ -36,15 +36,6 @@
     align-items  : center;
 }
 
-/* first row for public */
-.toolbar-links-public {
-    display      : flex;
-    place-content: flex-end;
-    position     : relative;
-    top          : 2px;
-    align-items  : center;
-}
-
 .toolbar-links-base {
     display        : none;
     justify-content: center;
@@ -79,7 +70,7 @@
 }
 
 .logo-img {
-    background-image   : url('../../../assets/img/saturno-logo.png');
+    background-image   : url('../../../../assets/img/saturno-logo.png');
     background-size    : contain;
     background-repeat  : no-repeat;
     background-position: center center;

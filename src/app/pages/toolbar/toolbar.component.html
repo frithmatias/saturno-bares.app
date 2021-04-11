@@ -1,0 +1,76 @@
+<div class="toolbar" >
+
+    <div class="first-row">
+
+        <!-- LOGO -->
+        <div class="logo-container">
+
+            <!-- LOGO IMG -->
+            <div class="logo-img pointer" routerLink="/home"> </div>
+
+            <!-- LOGO TITLE -->
+
+            <div *ngIf="url!=='public'" class="logo-text-container pointer" routerLink="/home">
+                <div class="md"> SATURNO </div>
+                <div class="xs">{{version}} </div>
+            </div>
+        </div>
+
+        <!-- HOME LINKS -->
+        <div class="toolbar-links-header">
+
+            <div class="toolbar-base-item pointer mr-4" routerLink="/howworks">
+                <div class="mdi mdi-help-box"></div>
+                <div>
+                    ¿Qué es Saturno?
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" routerLink="/register">
+                <div class="mdi mdi-storefront-outline"></div>
+                <div>
+                    Registrar Negocio
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
+                <div class="mdi mdi-ticket-account"></div>
+                <div>
+                    Mis Reservas
+                </div>
+            </div>
+
+            <div class="toolbar-base-item pointer mr-4" (click)="scrollToElement()">
+                <div class="mdi mdi-map-marker"></div>
+                <div>
+                    Buscá por Zona
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar-base-item pointer" routerLink="/login">
+            <div class="mdi mdi-account-circle"></div>
+            <div>
+                Comercios
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="second-row">
+
+        <div class="toolbar-links-base">
+            <div class="toolbar-base-item pointer" routerLink="/howworks">
+                ¿Qué es Saturno?
+            </div>
+            <div class="toolbar-base-item pointer" routerLink="/public/tickets">
+                Mis Reservas
+            </div>
+            <div class="toolbar-base-item pointer" (click)="scrollToElement()">
+                Buscá por Zona
+            </div>
+        </div>
+
+    </div>
+
+</div>

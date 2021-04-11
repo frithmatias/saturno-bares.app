@@ -3,6 +3,7 @@ import { PublicService } from '../public.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Company, CompanyResponse } from 'src/app/interfaces/company.interface';
 import { SettingsResponse } from '../../../interfaces/settings.interface';
+import { Settings } from 'src/app/interfaces/settings.interface';
 
 @Component({
 	selector: 'app-webpage',
@@ -11,8 +12,9 @@ import { SettingsResponse } from '../../../interfaces/settings.interface';
 })
 export class WebPageComponent implements OnInit {
 	company: Company;
+	settings: Settings;
 	pageSection: string = 'home';
-	companyString: string;
+
 	// width 528: page-container 600px - 2x20px padding - mat-card padding 2x16 
 	// [imageSize]="imageSize"
 	imageSize = { width: '100%', height: 200, space: 0 };
@@ -21,49 +23,34 @@ export class WebPageComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute
 	) { }
-	async ngOnInit(): Promise<any> {
+
+
+	ngOnInit() {
 
 		this.route.params.subscribe((data: any) => {
+
 			this.pageSection = data.section || 'home';
-			this.companyString = data.txCompanyString;
-		});
+			this.publicService.readCompany(data.txCompanyString).toPromise().then((resp: CompanyResponse) => {
+				
+				localStorage.setItem('company', JSON.stringify(resp.company));
+				this.company = resp.company;
+				this.publicService.company = resp.company;
+				if (resp.company.tx_theme) {
+					let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
+					cssLink.href = `./assets/css/themes/${resp.company.tx_theme}`;
+				}
 
-		await this.getCompanyInfo(this.companyString).then(company => {
-			this.publicService.company = company;
-			this.company = company;
-			if (company.tx_theme) {
-				let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-				cssLink.href = `./assets/css/themes/${company.tx_theme}`;
-			}
-			const idCompany = company._id;
-			this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
-				this.publicService.settings = data.settings; // rompo la referencia la objeto original
+				const idCompany = resp.company._id;
+				this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
+					this.settings = data.settings;
+					this.publicService.settings = data.settings; 
+				})
+
+			}).catch(() => {
+				this.router.navigate(['/home'])
 			})
-		}).catch(() => {
-			this.router.navigate(['/home'])
-		})
+
+		});
 	}
-
-	async getCompanyInfo(companyString: string): Promise<Company | null> {
-		return new Promise((resolve, reject) => {
-			let txCompanyString = companyString;
-			this.publicService.readCompany(txCompanyString).subscribe((resp: CompanyResponse) => {
-				if (resp.ok) {
-					localStorage.setItem('company', JSON.stringify(resp.company));
-					resolve(resp.company)
-				} else {
-					this.publicService.snack('No existe la empresa', 3000, 'Aceptar');
-					reject(null);
-				}
-			},
-				(err) => {
-					this.publicService.snack('Error al buscar la empresa', 3000, 'Aceptar');
-					reject(null);
-				}
-			);
-		})
-
-	}
-
 }
 

@@ -25,8 +25,6 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.publicService.drawerScrollTop();
-
 		// this.publicUrl = document.
 		// this.publicUrl = location.origin + '/public/';
 		let defaults = {

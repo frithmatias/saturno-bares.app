@@ -1,5 +1,7 @@
 .item {
-    color: var(--text);
+    color      : var(--text);
+    font-size  : small;
+    margin-left: 10px;
 }
 
 .menu .mdi,
@@ -22,6 +24,8 @@
     height      : 28px;
     padding-left: 36px;
     cursor      : pointer;
+    text-align  : left;
+    font-size   : small;
 }
 
 .mdi {

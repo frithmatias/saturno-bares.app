@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav/drawer';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -32,9 +31,7 @@ export class AppComponent {
     });
   }
   
-  toggle(htmlRef: MatDrawer): void {
-    htmlRef.toggle();
-  }
+
   
 }
 

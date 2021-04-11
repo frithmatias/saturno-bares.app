@@ -5,8 +5,8 @@
 }
 
 .predefined-cover-preview {
-    width: 45vw;
-    max-width: 45vw;
+    width: 25vw;
+    max-width: 25vw;
 }
 
 @media (max-width: 575px) {

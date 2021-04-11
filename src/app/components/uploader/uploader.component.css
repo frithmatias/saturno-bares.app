@@ -1,5 +1,5 @@
 .drop-zone {
-    border        : dotted 1px gray;
+    border        : dotted 1px var(--text-o20);
     color         : #666;
     text-align    : center;
     vertical-align: top;
@@ -87,13 +87,15 @@
     position: relative;
     display : flex;
     margin  : 1px;
-    width: 5em;
-    height: 5em;
+    width   : 200px;
+    max-width: 300px;
+    /* width: 5em;
+    height  : 5em; */
 }
 
 
 
 
 .image:hover {
-    border         : none;
+    border: none;
 }

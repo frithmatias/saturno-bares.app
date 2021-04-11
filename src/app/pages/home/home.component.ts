@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // set day/night theme
  
 
-    this.publicService.drawerScrollTop();
+    this.publicService.scrollTop();
 
     // search locations
     this.localidadesControl.valueChanges.subscribe(data => {

@@ -22,7 +22,7 @@
 
                 <!-- Imagenes cargadas en el server -->
                 <div *ngIf="filesToUpload.length === 0 && documentData[idField]" class="image">
-                    <img src="{{documentData[idField] | imagenPipe : idField : idDocument }}">
+                    <img src="{{'thumb-'+documentData[idField] | imagenPipe : idField : idDocument }}">
                     <span *ngIf="editable" class="mdi mdi-close delete-icon"
                         (click)="deleteImage(documentData[idField])"></span>
                 </div>
@@ -61,7 +61,7 @@
 
                 <!-- Imagenes cargadas en el server -->
                 <div *ngFor="let img of documentData[idField]" class="image">
-                    <img src="{{img | imagenPipe : idField : idDocument }}">
+                    <img src="{{'thumb-'+img | imagenPipe : idField : idDocument }}">
                     <span class="mdi mdi-close delete-icon" (click)="deleteImage(img)"></span>
                 </div>
 

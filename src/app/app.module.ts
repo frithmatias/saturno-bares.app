@@ -17,6 +17,7 @@ const config: SocketIoConfig = { url: environment.api, options: {} };
 
 // COMPONENTS
 import { AppComponent } from './app.component';
+import { ToolbarComponent } from './pages/toolbar/toolbar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -40,10 +41,12 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivateComponent } from './pages/activate/activate.component';
+import { EmbedComponent } from './pages/embed/embed.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		ToolbarComponent,
 		HomeComponent,
 		RegisterComponent,
 		LoginComponent,
@@ -52,6 +55,7 @@ import { ActivateComponent } from './pages/activate/activate.component';
 		HowWorksComponent,
 		FooterComponent,
 		ActivateComponent,
+		EmbedComponent,
 	],
 	imports: [
 		MaterialModule,

@@ -1,0 +1,105 @@
+<div class="toolbar" >
+
+    <div class="first-row">
+
+        <!-- TOGGLE MENU ICON -->
+        <div class="mdi mdi-menu mt-1 xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
+            <!-- <span class="example-spacer"></span> -->
+        </div>
+
+        <!-- LOGO -->
+        <div *ngIf="!loginService.user" class="logo-container">
+
+            <!-- LOGO IMG -->
+            <div class="logo-img pointer" routerLink="/home"> </div>
+
+            <!-- LOGO TITLE -->
+            <div *ngIf="url!=='public'" class="logo-text-container pointer" routerLink="/home">
+                <div class="md"> SATURNO </div>
+                <div class="xs">{{version}} </div>
+            </div>
+        </div>
+
+        <!-- COMPANY NAME -->
+        <div *ngIf="loginService.user" class="company-name md ml-2">
+            <!-- <div class="marquee"> -->
+            {{loginService.user?.id_company?.tx_company_name || loginService.user?.tx_name}}
+            <!-- </div> -->
+        </div>
+
+        <app-theme *ngIf="loginService.user" class="mr-3" (themeSelected)="themeSelected($event)"></app-theme>
+
+        <!-- USER LOGGED IN -->
+        <div *ngIf="loginService.user" class="d-flex md">
+
+            <!-- GOOGLE LOGIN IMAGE -->
+            <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
+                <img class="user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+            </div>
+
+            <!-- FACEBOOK HAS NO LOGIN IMAGE -->
+            <div *ngIf="loginService.user.bl_social && !loginService.user.tx_img" class="mdi mdi-account-tie pointer"
+                [matMenuTriggerFor]="menu">
+            </div>
+
+            <!-- NORMAL LOGIN WITH IMAGE -->
+            <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="pointer"
+                [matMenuTriggerFor]="menu">
+                <img class="user-image"
+                    [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
+            </div>
+
+            <!-- NORMAL LOGIN WO IMAGE -->
+            <div *ngIf="!loginService.user.bl_social && !loginService.user.tx_img" class="mdi mdi-account-tie pointer"
+                [matMenuTriggerFor]="menu">
+            </div>
+
+            <mat-menu #menu="matMenu">
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Página de Administrador</span>
+                </div>
+                <div routerLink="/waiter/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Atender mis Mesas</span>
+                </div>
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
+                    <span class="ml-2 align-middle">Iniciar Asistente</span>
+                </div>
+                <div routerLink="/waiter/dashboard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
+                    <span class="ml-2 align-middle">Métricas</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
+                    <span class="ml-2 align-middle">Perfil</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
+                    <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
+                </div>
+                <hr>
+                <div class="px-2 pb-2 text-center">
+                    <app-button></app-button>
+                </div>
+            </mat-menu>
+
+        </div>
+
+    </div>
+
+    <div class="second-row">
+
+        <div class="toolbar-links-base">
+            <div class="toolbar-base-item pointer" routerLink="/admin/wizard">
+                Iniciar Asistente
+            </div>
+            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
+                Atender
+            </div>
+        </div>
+
+    </div>
+
+</div>

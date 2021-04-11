@@ -11,6 +11,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
 import { WaiterComponent } from './waiter.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeComponent } from './home/home.component';
 import { SectionComponent } from './section/section.component';
 import { QueuedComponent } from './section/queued/queued.component';
@@ -26,6 +27,7 @@ import { ContingencyTicketComponent } from './section/contingency-ticket/conting
 @NgModule({
   declarations: [
     WaiterComponent,
+    ToolbarComponent,
     HomeComponent,
     SectionComponent,
     QueuedComponent,

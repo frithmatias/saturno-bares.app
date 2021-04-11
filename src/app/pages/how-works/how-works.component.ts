@@ -12,16 +12,16 @@ export class HowWorksComponent implements OnInit {
 	constructor(private publicService: PublicService) { }
 
 	ngOnInit(): void {
-		this.publicService.drawerScrollTop();
+		this.publicService.scrollTop();
 	}
 
 	stepperGoBack(stepper: MatStepper) {
-		this.publicService.drawerScrollTop();
+		this.publicService.scrollTop();
 		stepper.previous();
 	}
 
 	stepperGoNext(stepper: MatStepper) {
-		this.publicService.drawerScrollTop();
+		this.publicService.scrollTop();
 		stepper.next();
 	}
 

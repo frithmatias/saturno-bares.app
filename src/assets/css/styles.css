@@ -1,7 +1,7 @@
 html,
 body {
     height               : 100vh;
-    background-color     : whitesmoke;
+    background-color     : var(--bg);
     -webkit-touch-callout: none;
     -webkit-user-select  : none;
     -khtml-user-select   : none;
@@ -130,16 +130,45 @@ SATURNO
 -------------------------------------------
 */
 
+.main-wrapper {
+    display       : flex;
+    flex-direction: column;
+    position      : absolute;
+    top           : 94px;
+    bottom        : 0;
+    left          : 0;
+    right         : 0;
+    overflow      : auto;
+}
+
+.main-center {
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+mat-drawer-container {
+    background-color: unset !important;
+    height          : 100%;
+}
+
+@media (min-width: 850px) {
+    .main-wrapper {
+        top: 55px;
+    }
+}
+
 .box-shadow {
     box-shadow: 0px 2px 1px -1px var(--dark-o20), 0px 1px 1px 0px var(--dark-o14), 0px 1px 3px 0px var(--dark-o12);
 }
 
 .page-container {
-    margin   : 20px 0px;
-    min-width: 300px;
-    max-width: 600px;
-    font-size: medium;
-    height   : 100%;
+    margin          : 20px 0px;
+    min-width       : 300px;
+    max-width       : 600px;
+    font-size       : medium;
+    height          : 100%;
+    background-color: var(--bg);
+
 }
 
 .page-tab-container {
@@ -151,14 +180,17 @@ SATURNO
 }
 
 .page-container-wide {
-    min-width: 18rem;
-    max-width: 50rem;
-    font-size: medium;
+    min-width       : 18rem;
+    max-width       : 50rem;
+    font-size       : medium;
+    height          : 100%;
+    background-color: var(--bg);
 }
 
 .page-container-full {
-    width    : 100%;
-    font-size: medium;
+    height          : 100%;
+    background-color: var(--bg);
+    font-size       : medium;
 }
 
 .buttons-container {
@@ -730,10 +762,6 @@ ANGULAR MATERIAL
 
 /* desplaza el contenedor hacia abajo por el alto del toolbar */
 
-mat-drawer-content {
-    top   : 55px !important;
-    height: calc(100vh - 55px) !important;
-}
 
 /*
 -------------------------------------------

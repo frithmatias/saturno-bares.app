@@ -57,7 +57,7 @@ export class PublicService {
   scrollTop() {
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Other
-    document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
+    document.getElementsByClassName('main-wrapper')[0].scrollTop = 0;
   }
 
   stepperGoBack(stepper: MatStepper) {
@@ -260,11 +260,6 @@ export class PublicService {
   sendContact(data: any) {
     const url = environment.api + `/p/contact`;
     return this.http.post(url, data);
-  }
-
-  drawerScrollTop(): void {
-    let ref = document.getElementsByClassName('mat-drawer-content')[0];
-    ref.scrollTop = 0;
   }
 
   clearPublicSession(): void {

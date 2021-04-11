@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { PublicService } from '../public/public.service';
 import { Router } from '@angular/router';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-waiter',
@@ -32,6 +33,10 @@ export class WaiterComponent implements OnInit {
 
   }
 
+  toggle(htmlRef: MatDrawer): void {
+    htmlRef.toggle();
+  }
+  
   setTheme(theme: string){
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
     cssLink.href = `./assets/css/themes/${theme}`;

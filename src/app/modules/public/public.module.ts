@@ -12,6 +12,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
 import { PublicComponent } from './public.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 import { WebPageComponent } from './webpage/webpage.component';
 import { HomeComponent } from './webpage/home/home.component';
 import { MenuComponent } from './webpage/menu/menu.component';
@@ -24,8 +25,9 @@ import { RegisterComponent } from './register/register.component';
 
 @NgModule({
 	declarations: [
-		WebPageComponent,
+		ToolbarComponent,
 		PublicComponent,
+		WebPageComponent,
 		TicketCreateComponent,
 		HomeComponent,
 		MenuComponent,

@@ -1,0 +1,199 @@
+@media (max-width: 575px) {}
+
+@media (max-width: 850px) {
+    .toolbar-links-header {
+        display: none !important;
+    }
+
+    .toolbar-links-base {
+        display      : flex !important;
+        padding      : 10px;
+        padding-right: 15px;
+    }
+}
+
+.toolbar {
+    color    : white;
+    font-size: medium;
+
+}
+
+.first-row {
+    display    : flex;
+    align-items: center;
+    padding    : 8px 12px;
+    height     : 55px;
+}
+
+
+
+/* first row  */
+.toolbar-links-header {
+    display      : flex;
+    place-content: flex-end;
+    position     : relative;
+    top          : 2px;
+    align-items  : center;
+}
+
+.toolbar-links-base {
+    display        : none;
+    justify-content: center;
+    font-size      : small;
+}
+
+.toolbar-base-item {
+    display     : flex;
+    flex-wrap   : wrap;
+    margin-left: 15px;
+
+}
+
+.toolbar-base-item .mdi {
+    margin-right: 6px;
+}
+
+.toolbar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 2;
+    background-color: var(--primary);
+    box-shadow      : 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
+
+
+.logo-container {
+    display  : flex;
+    flex-grow: 1;
+}
+
+.logo-img {
+    background-image   : url('../../../assets/img/saturno-logo.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+    background-position: center center;
+    height             : 3em;
+    width              : 3em;
+}
+
+.logo-text-container {
+    align-self    : center;
+    font-size     : 1.1em;
+    letter-spacing: .1em;
+    font-weight   : 200;
+    margin-left   : 5px;
+    line-height   : 1em;
+}
+
+.logo-title {
+    font-size     : .6em;
+    letter-spacing: .1em;
+    line-height   : 1em;
+    color         : whitesmoke;
+    font-family   : system-ui;
+}
+
+.logo-subtitle {
+    font-size     : .45em;
+    font-weight   : 200;
+    line-height   : 1em;
+    text-transform: uppercase;
+    font-family   : system-ui;
+}
+
+.company-name {
+    overflow      : hidden;
+    font-weight   : 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+    flex-grow     : 1;
+    text-align    : center;
+}
+
+.marquee {
+    /* width            : fit-content;
+    -moz-animation   : marquee 50s linear infinite;
+    -webkit-animation: marquee 50s linear infinite;
+    animation        : marquee 50s linear infinite; */
+    overflow: hidden;
+}
+
+@-moz-keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marquee {
+    0% {
+        -moz-transform   : translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform        : translateX(100%)
+    }
+
+    100% {
+        -moz-transform   : translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform        : translateX(-100%);
+    }
+}
+
+.company-slogan {
+    line-height   : normal;
+    font-weight   : 200;
+    font-style    : italic;
+    color         : yellow;
+    font-family   : monospace;
+    letter-spacing: .2em;
+    opacity       : 0.8;
+}
+
+.user-image {
+    width        : 25px;
+    height       : 25px;
+    border-radius: 50%;
+    cursor       : pointer;
+}
+
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+
+.example-spacer {
+    color          : black;
+    /* Tres valores: flex-grow | flex-shrink | flex-basis */
+    flex           : 1 1 auto;
+}
+
+
+
+
+/* USER LOGGED-IN MENU */
+
+.mat-menu-item {
+    font-family: inherit;
+    font-size  : inherit;
+}
+
+.toolbar-menu-icon {
+    opacity: .4;
+}
