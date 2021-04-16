@@ -21,6 +21,11 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
+    if(localStorage.getItem('customer')){
+      this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
+    }
     this.router.events
       .pipe(filter(evento => evento instanceof NavigationEnd))
       .subscribe((data: NavigationEnd) => {

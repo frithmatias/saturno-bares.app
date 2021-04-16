@@ -39,6 +39,8 @@ import { SettingsComponent } from './config/settings/settings.component';
 import { MessageComponent } from './config/message/message.component';
 import { WorkingComponent } from './config/working/working.component';
 import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 
 @NgModule({
 	declarations: [
@@ -47,16 +49,16 @@ import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.compon
 		HomeComponent,
 		DashboardComponent,
 		ProfileComponent,
-		
+
 		CompaniesComponent,
 		CompanyCreateComponent,
-		
+
 		SectionsComponent,
 		SectionCreateComponent,
-		
+
 		TablesComponent,
 		TableCreateComponent,
-		
+
 		WaitersComponent,
 		WaiterCreateComponent,
 		WizardComponent,
@@ -81,7 +83,8 @@ import { CoverDialogComponent } from './webpage/cover-dialog/cover-dialog.compon
 		ComponentsModule,
 		AdminRoutingModule,
 		PipesModule,
-		QRCodeModule
+		QRCodeModule,
+		ClipboardModule
 	]
 })
 export class AdminModule { }

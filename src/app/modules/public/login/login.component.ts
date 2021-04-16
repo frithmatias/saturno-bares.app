@@ -1,11 +1,12 @@
 import { NgForm } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PublicService } from '../public.service';
 import { LoginResponse } from '../../../interfaces/login.interface';
 import { Social } from 'src/app/components/social/social.component';
+import { User } from 'src/app/interfaces/user.interface';
 
 
 declare const gapi: any;
@@ -16,7 +17,7 @@ declare const gapi: any;
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+	@Output() customer: EventEmitter<User> = new EventEmitter;
 	email: string;
 	hidepass = true;
 	recuerdame = false;
@@ -68,7 +69,8 @@ export class LoginComponent implements OnInit {
 	loginCustomer(platform: string, token: string, emailForm: any, remember: boolean){
 		this.publicService.loginCustomer(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
-				this.router.navigate(['/public/tickets']);
+				this.customer.emit(data.user);
+				// this.router.navigate(['/public/tickets']);
 			}
 		}, (err: HttpErrorResponse) => {
 			if (err.error.msg) {

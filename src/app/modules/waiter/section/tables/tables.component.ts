@@ -111,15 +111,14 @@ export class TablesComponent implements OnInit {
     }
 
     const idTable = table._id;
-    this.publicService.snack('Desea resetear la mesa? Si tiene un ticket adjunto se perderá.', 5000, 'Aceptar').then((resp: boolean) => {
-      if (resp) {
-        this.waiterService.resetTable(idTable).subscribe((resp: TableResponse) => {
-          if (resp.ok) {
-            this.table.tx_status = 'paused';
-            this.table.id_session = null;
-          }
-        });
-      }
+    this.publicService.snack('Desea resetear la mesa? Si tiene un ticket adjunto se perderá.', 5000, 'Aceptar').then(() => {
+      this.waiterService.resetTable(idTable).subscribe((resp: TableResponse) => {
+        if (resp.ok) {
+          this.table.tx_status = 'paused';
+          this.table.id_session = null;
+        }
+      });
+
     });
 
   };
@@ -132,25 +131,25 @@ export class TablesComponent implements OnInit {
     // 2. está en estado RESERVED <-
     // Si está en estado RESERVED, hay que inicializar la sesión de la mesa (que lo hace SPM automáticamente al aprovisionar) 
     // asegurandose de que TODAS las mesas en el ticket estén reservadas y estén reservadas para ese ticket.
-    
+
     if (!table) {
       this.publicService.snack('Seleccione una mesa primero', 3000);
     }
 
-    if(!table.id_session){
+    if (!table.id_session) {
       this.publicService.snack('Esta mesa no tiene una sesión iniciada todavía', 3000);
       return;
     }
 
     const idTables = table.id_session.id_tables;
-    this.publicService.snack('¿El cliente ya está en la mesa?', 5000, 'SI, INICIAR').then((resp: boolean) => {
-      if (resp) {
-        this.waiterService.initTables(idTables).subscribe((resp: TableResponse) => {
-          if (resp.ok) {
-            this.table.tx_status = 'busy'
-          }
-        });
-      }
+    this.publicService.snack('¿El cliente ya está en la mesa?', 5000, 'SI, INICIAR').then(() => {
+
+      this.waiterService.initTables(idTables).subscribe((resp: TableResponse) => {
+        if (resp.ok) {
+          this.table.tx_status = 'busy'
+        }
+      });
+
     });
 
   };
@@ -164,19 +163,19 @@ export class TablesComponent implements OnInit {
     let snackMsg = 'Desea soltar el ticket y devolverlo a su estado anterior?';
     this.publicService
       .snack(snackMsg, 5000, 'ACEPTAR')
-      .then((resp: boolean) => {
-        if (resp) {
-          this.waiterService
-            .releaseTicket(ticket)
-            .subscribe((resp: TicketResponse) => {
-              if (resp.ok) {
-                this.tickets = this.tickets.filter(
-                  (ticket) => ticket._id !== ticket._id
-                );
-                this.clearTicketSession(ticket);
-              }
-            });
-        }
+      .then(() => {
+
+        this.waiterService
+          .releaseTicket(ticket)
+          .subscribe((resp: TicketResponse) => {
+            if (resp.ok) {
+              this.tickets = this.tickets.filter(
+                (ticket) => ticket._id !== ticket._id
+              );
+              this.clearTicketSession(ticket);
+            }
+          });
+
       });
   };
 
@@ -188,15 +187,15 @@ export class TablesComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'waiter';
     if (this.tickets) {
-      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Aceptar').then((resp: boolean) => {
-        if (resp) {
-          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-            if (resp.ok) {
-              this.clearTicketSession(ticket);
-              this.clearTableSession(ticket);
-            }
-          });
-        }
+      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Aceptar').then(() => {
+
+        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+          if (resp.ok) {
+            this.clearTicketSession(ticket);
+            this.clearTableSession(ticket);
+          }
+        });
+
       });
     }
   };

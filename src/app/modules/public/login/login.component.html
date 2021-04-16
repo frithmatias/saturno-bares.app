@@ -10,7 +10,6 @@
                 <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
                     <div class="mt-3 xl text-danger">Ingreso público</div>
-                    <hr class="mt-3 hr-red">
                     <app-social [logout]="true" [platforms]="['facebook', 'google']"
                         (socialResponse)="loginSocial($event)"></app-social>
                 </div>
@@ -22,7 +21,6 @@
 
             <div class="login-email">
 
-                <div class="my-2 md">Ingresar con email y contraseña.</div>
                 <form ngNativeValidate #f="ngForm" (ngSubmit)="loginEmail( f )" autocomplete="off">
 
                     <!---------------------------------------------------------------------->
@@ -76,7 +74,7 @@
                     <!---------------------------------------------------------------------->
 
                     <div class="border-top text-center pt-2">
-                        <span class="p-2">No registraste tu e-mail?</span>
+                        <span class="p-2">No tenés cuenta?</span>
                         <span class="p-2 text-accent pointer" routerLink="/public/register"><b>Registrarme</b></span>
                     </div>
                     

@@ -42,13 +42,13 @@ export class PublicService {
   ) { }
 
 
-  snack(msg: string, dur: number, button?: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      this._snack.open(msg, button, { duration: dur, horizontalPosition: 'start' }).afterDismissed().subscribe(data => {
+  snack(msg: string, dur: number, button?: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._snack.open(msg, button, { duration: dur, horizontalPosition: 'center' }).afterDismissed().subscribe(data => {
         if (data.dismissedByAction) {
-          resolve(true);
+          resolve();
         } else {
-          resolve(false);
+          reject();
         }
       })
     })
@@ -272,7 +272,6 @@ export class PublicService {
     if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-    this.router.navigate(['/home']);
   }
 
 }

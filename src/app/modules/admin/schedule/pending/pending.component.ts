@@ -62,13 +62,13 @@ export class PendingComponent implements OnInit {
     let cdTables = ticket.cd_tables;
 
     this.waiterService.assignTablesPending(idTicket, blPriority, blFirst, cdTables).subscribe((resp: TicketResponse) => {
-        if (resp.ok) {
-          this.pending = this.pending.filter(ticket => ticket._id !== resp.ticket._id);
-          this.pendingUpdated.emit(resp.ticket);
-        } else {
-          this.publicService.snack('Error al asignar las mesas!', 2000);
-        }
-      },
+      if (resp.ok) {
+        this.pending = this.pending.filter(ticket => ticket._id !== resp.ticket._id);
+        this.pendingUpdated.emit(resp.ticket);
+      } else {
+        this.publicService.snack('Error al asignar las mesas!', 2000);
+      }
+    },
       () => {
         this.publicService.snack('Error al asignar las mesas!', 2000);
       }
@@ -82,34 +82,34 @@ export class PendingComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'client'; // cancelled (not finished)
     if (this.pending) {
-      this.publicService.snack(`Querés finalizar el ticket de ${ticket.tx_name}?`, 5000, 'Si, finalizar').then((resp: boolean) => {
-        if (resp) {
-          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-              if (resp.ok) {
-                this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
-                this.pendingUpdated.emit(resp.ticket);
-              }
-            });
-        }
+      this.publicService.snack(`Querés finalizar el ticket de ${ticket.tx_name}?`, 5000, 'Si, finalizar').then(() => {
+
+        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+          if (resp.ok) {
+            this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
+            this.pendingUpdated.emit(resp.ticket);
+          }
+        });
+
       });
     }
   };
 
   getIntervalAvailability(pending: Ticket): void {
-    
-    const interval = this.availability.find((av: avInterval) => 
-    new Date(av.interval).getTime() === new Date(pending.tm_intervals[0]).getTime() 
+
+    const interval = this.availability.find((av: avInterval) =>
+      new Date(av.interval).getTime() === new Date(pending.tm_intervals[0]).getTime()
     );
 
-    if(!interval) {
+    if (!interval) {
       this.publicService.snack('El ticket pendiente está fuera del horario comercial', 5000);
       return;
     }
-    
+
     this.tablesAvailability = interval.available;
   }
 
-  messageResponse(response: MessageResponse){
+  messageResponse(response: MessageResponse) {
     this.publicService.snack(response.msg, 5000, 'Aceptar');
     this.showMessageForm = false;
   }

@@ -9,13 +9,14 @@ import { Section } from 'src/app/interfaces/section.interface';
 import { TicketResponse, Ticket, TicketsResponse } from '../../../../interfaces/ticket.interface';
 import { SectionsResponse } from '../../../../interfaces/section.interface';
 
-import { Company } from '../../../../interfaces/company.interface';
+import { Company, CompanyResponse } from '../../../../interfaces/company.interface';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
 import { availabilityResponse, optionInterval } from 'src/app/interfaces/availability.interface';
 import { DateToStringPipe } from '../../../../pipes/date-to-string.pipe';
 import { Settings } from 'src/app/interfaces/settings.interface';
+import { SettingsResponse } from '../../../../interfaces/settings.interface';
 
 @Component({
   selector: 'app-ticket-create',
@@ -48,6 +49,12 @@ export class TicketCreateComponent implements OnInit {
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
   serverMessage: string;
 
+
+  isEmbed: boolean = false;
+  showLogin: boolean = false;
+  hideCancel: boolean = false;
+  errorEmbed: string = null;
+
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
@@ -62,14 +69,69 @@ export class TicketCreateComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    console.log(this)
 
+    if(localStorage.getItem('customer')){
+      this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
+    }
+
+    this.route.params.subscribe(async (data: any) => {
+      if (data.embedcompanystring) {
+        this.isEmbed = true;
+        let resp = await this.getDataForEmbed(data.embedcompanystring)
+          .then(() => {
+            this.getData();
+          })
+          .catch(() => {
+            this.errorEmbed = 'No existe el comercio!';
+            return;
+          })
+      } else {
+        this.isEmbed = false;
+        this.getData();
+      }
+
+    })
+
+  }
+
+  getData() {
     this.createTicketForm();
     this.checkFormChanges();
     this.getCompanySections();
     this.getUserTickets();
     this.ticketsSubscribe();
+  }
 
+
+  getDataForEmbed(embedcompanystring: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.route.params.subscribe((data: any) => {
+
+        if (!embedcompanystring) {
+          return resolve(false);
+        }
+
+        this.publicService.readCompany(embedcompanystring).toPromise().then((resp: CompanyResponse) => {
+          if (resp.ok) {
+            this.company = resp.company;
+            const idCompany = resp.company._id;
+            this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
+              this.settings = data.settings;
+              return resolve(true);
+            })
+
+          } else {
+            return reject(false);
+          }
+
+        }).catch(() => {
+          return reject(false);
+        })
+      });
+
+    })
   }
 
   ticketsSubscribe() {
@@ -308,7 +370,7 @@ export class TicketCreateComponent implements OnInit {
             this.tickets = tickets;
           })
           // this.router.navigate(['/public/tickets']);
-        }
+        } 
       }, (err) => {
         this.loading = false;
         this.publicService.snack(err.error.msg, 5000)
@@ -325,13 +387,15 @@ export class TicketCreateComponent implements OnInit {
     const idTicket = ticket._id;
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
+      console.log(data)
       if (data.ok) {
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
           this.tickets = tickets;
-          this.ticket = tickets.find(ticket => ticket._id === this.ticket._id);
+          this.ticket = data.ticket;
           this.publicService.snack(data.msg, 5000, 'Aceptar');
         })
       } else {
+        this.ticket = data.ticket;
         this.publicService.snack(data.msg, 5000, 'Aceptar');
       }
     }, (err: HttpErrorResponse) => {
@@ -339,9 +403,35 @@ export class TicketCreateComponent implements OnInit {
     });
   }
 
+  cancel(ticket: Ticket) {
+
+    this.publicService.snack('¿Querés cancelar tu turno?', 5000, 'CANCELAR')
+    .then(() => {
+      this.publicService.endTicket(ticket._id, 'client').subscribe((data: TicketResponse) => {
+        if (data.ok) {
+          this.ticket = data.ticket;
+          this.hideCancel = true;
+          this.publicService.snack(data.msg, 3000).catch(() => {
+            this.ticketForm.reset();
+            delete this.ticket;
+          })
+        }
+      })
+    }).catch(() => {
+      return;
+    })
+
+  }
+
+  loggedIn(customer: User){
+    this.publicService.customer = customer;
+    this.getUserTickets();
+    this.showLogin = false;
+  }
+
   salir(): void {
     this.publicService.clearPublicSession();
-    this.router.navigate(['/home'])
+    delete this.ticket;
   }
 
 }

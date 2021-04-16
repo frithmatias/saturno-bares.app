@@ -20,6 +20,7 @@ import { ActivateComponent } from './pages/activate/activate.component';
 import { LoginGuard } from './guards/login.guard';
 import { TokenGuard } from './guards/token.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { TicketCreateComponent } from './modules/public/webpage/ticket-create/ticket-create.component';
 
 
 const appRoutes: Routes = [
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
 	{ path: 'activate/:email/:hash', component: ActivateComponent, data: {titulo: 'Activar Cuenta'} },
 	{ path: 'contact', component: ContactComponent, data: {titulo: 'Contacto'} },
 	{ path: 'howworks', component: HowWorksComponent, data: {titulo: 'Como Funciona'} },
-
+	{ path: 'ticketform/:embedcompanystring', component: TicketCreateComponent, data: { titulo: 'Crear un Ticket' } },
+	
 	{ path: 'public',
 	  component: PublicComponent,
 	  loadChildren: () => import('./modules/public/public.module').then((m) => m.PublicModule),

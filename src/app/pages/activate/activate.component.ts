@@ -29,7 +29,7 @@ export class ActivateComponent implements OnInit {
         this.loginService.activateUser(email, hash).subscribe((data: UserResponse) => {
           if (data.ok) {
             this.activated = true;
-            this.publicService.snack('Usuario activado correctamente!', 5000);
+            this.publicService.snack('Usuario Activado! Por favor, Ingresa con tu usuario y contraseña.', 10000);
             const destination = data.user.id_role === 'CUSTOMER_ROLE' ? '/public/login' : '/login';
             this.router.navigate([destination]);
           }

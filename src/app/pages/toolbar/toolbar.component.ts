@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,6 +16,7 @@ export class ToolbarComponent implements OnInit {
   hiddenBadge: boolean;
   version = environment.version;
   constructor(
+    public loginService: LoginService,
     public publicService: PublicService,
     public router: Router
   ) { }

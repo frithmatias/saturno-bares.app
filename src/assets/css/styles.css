@@ -1,6 +1,5 @@
 html,
 body {
-    height               : 100vh;
     background-color     : var(--bg);
     -webkit-touch-callout: none;
     -webkit-user-select  : none;
@@ -161,15 +160,7 @@ mat-drawer-container {
     box-shadow: 0px 2px 1px -1px var(--dark-o20), 0px 1px 1px 0px var(--dark-o14), 0px 1px 3px 0px var(--dark-o12);
 }
 
-.page-container {
-    margin          : 20px 0px;
-    min-width       : 300px;
-    max-width       : 600px;
-    font-size       : medium;
-    height          : 100%;
-    background-color: var(--bg);
 
-}
 
 .page-tab-container {
     font-variant: small-caps;
@@ -179,7 +170,17 @@ mat-drawer-container {
     max-width   : 600px;
 }
 
+.page-container {
+    margin          : 20px 0px;
+    min-width       : 300px;
+    max-width       : 600px;
+    font-size       : medium;
+    height          : 100%;
+    background-color: var(--bg);
+}
+
 .page-container-wide {
+    margin          : 20px 0px;
     min-width       : 18rem;
     max-width       : 50rem;
     font-size       : medium;
@@ -188,9 +189,10 @@ mat-drawer-container {
 }
 
 .page-container-full {
+    margin          : 20px 0px;
+    font-size       : medium;
     height          : 100%;
     background-color: var(--bg);
-    font-size       : medium;
 }
 
 .buttons-container {
@@ -200,7 +202,9 @@ mat-drawer-container {
 }
 
 @media (max-width: 575px) {
-
+    .page-container,.page-container-wide,.page-container-full {
+        margin: 0px 0px !important;
+    }
 
     .page-container {
         margin : 0em;
@@ -211,9 +215,6 @@ mat-drawer-container {
         padding-top: 30px;
     }
 
-    .page-container-wide {
-        padding: 0em;
-    }
 
     .page-container-login {
         height: 100vh;

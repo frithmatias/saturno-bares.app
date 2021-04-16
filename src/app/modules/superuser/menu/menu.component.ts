@@ -9,7 +9,7 @@ import { PublicService } from '../../public/public.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  
+
   allItems: MenuItem[] = [];
   menuItems: MenuItem[] = [];
   submenuItems: MenuItem[];
@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private superuserService: SuperuserService,
     private publicService: PublicService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.readMenus();
@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit {
   // menu was created or updated
   menuItemUpdated(itemUpdated: MenuItem): void {
     let i = this.submenuItems.findIndex(item => item._id === itemUpdated._id)
-    if(i>0){ 
+    if (i > 0) {
       this.submenuItems[i] = itemUpdated;
     } else {
       // si findIndex responde -1, el item no esta en la lista, 
@@ -49,20 +49,20 @@ export class MenuComponent implements OnInit {
       this.menuItems = data.menuitem.filter(item => item.id_parent === null);
     })
   }
-  
+
   deleteMenuItem(idMenuItem: string): void {
-    this.publicService.snack('Desea eliminar el menu?', 5000, 'ELIMINAR').then((ok: boolean) => {
-      if (ok) {
-        this.superuserService.deleteMenu(idMenuItem).subscribe((data: MenuResponse) => {
-          this.publicService.snack(data.msg, 5000);
-          this.submenuItems = this.submenuItems.filter(menu => menu._id != idMenuItem);
-        },
-          (err: MenuResponse) => {
-            this.publicService.snack(err.msg, 5000);
-          }
-        )
-      }
-    }).catch(()=>{})
+    this.publicService.snack('Desea eliminar el menu?', 5000, 'ELIMINAR').then(() => {
+
+      this.superuserService.deleteMenu(idMenuItem).subscribe((data: MenuResponse) => {
+        this.publicService.snack(data.msg, 5000);
+        this.submenuItems = this.submenuItems.filter(menu => menu._id != idMenuItem);
+      },
+        (err: MenuResponse) => {
+          this.publicService.snack(err.msg, 5000);
+        }
+      )
+
+    }).catch(() => { })
   }
 
 

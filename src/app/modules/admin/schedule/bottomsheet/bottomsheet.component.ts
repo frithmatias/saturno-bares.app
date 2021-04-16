@@ -166,8 +166,8 @@ export class BottomsheetComponent implements OnInit {
 
     const idTicket = ticket._id;
     const reqBy = 'client';
-    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'FINALIZAR').then((ok: boolean) => {
-      if (ok) {
+    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'FINALIZAR').then(() => {
+     
         // publicService.endTicket() 
         // -> reqBy: 'waiter' -> tx_status: 'finished'
         // -> reqBy: 'client' -> tx_status: 'cancelled'
@@ -178,7 +178,7 @@ export class BottomsheetComponent implements OnInit {
             this.publicService.snack('Error al asignar las mesas!', 2000);
           }
         });
-      }
+      
     });
 
   };

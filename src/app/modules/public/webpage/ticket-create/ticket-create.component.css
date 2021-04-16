@@ -14,7 +14,10 @@
     margin-top   : 0;
     margin-bottom: 1rem;
     font-variant : small-caps;
+    color        : var(--text);
 }
+
+
 
 .inputs-container {
     display       : flex;
@@ -26,4 +29,17 @@
 mat-form-field {
     width : 200px;
     margin: 0px 8px;
+}
+
+
+/* only embed form */
+.user-image {
+    width        : 50px;
+    height       : 50px;
+    border-radius: 50%;
+    cursor       : pointer;
+}
+
+a {
+    text-decoration: none;
 }

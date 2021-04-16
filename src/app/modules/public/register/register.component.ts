@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
 
 		this.publicService.registerUser(user).subscribe((data: any) => {
 			if (data.ok) {
-				this.publicService.snack('Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
+				this.publicService.snack('Email enviado!.', 3000, 'Aceptar');
 				this.router.navigate(['/activate'])
 			}
 		},

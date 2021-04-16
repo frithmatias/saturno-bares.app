@@ -4,7 +4,7 @@ a {
 
 p {
     font-size: .9em;
-    opacity: .8;
+    opacity  : .8;
 }
 
 .minicard {
@@ -13,4 +13,12 @@ p {
     max-width: 18rem;
     padding  : 1.2em;
     font-size: medium;
+}
+
+.widget-snippet {
+    font-family: monospace;
+    font-size  : x-small;
+    width      : -webkit-fill-available;
+    border     : none;
+    padding    : 10px;
 }

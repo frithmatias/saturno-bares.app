@@ -77,8 +77,8 @@ export class TicketsComponent implements OnInit {
     this.ticketsRunning = this.tickets.filter(ticket => ticket.tx_status === 'provided');
     this.ticketsActive = this.tickets.filter(ticket => this.activeTickets.includes(ticket.tx_status));
     this.ticketsInactive = this.tickets.filter(ticket => !this.activeTickets.includes(ticket.tx_status));
-    this.ticketsAll = [...this.ticketsRunning,...this.ticketsActive, ...this.ticketsInactive];
-    
+    this.ticketsAll = [...this.ticketsRunning, ...this.ticketsActive, ...this.ticketsInactive];
+
     // Entro a las empresas con tickets ACTIVOS (estudiar si es conveniente entrar sólo a empresas con tickets RUNNING)
     this.ticketsActive.forEach(ticket => {
       this.websocketService.emit('enterCompany', ticket.id_company._id);
@@ -99,21 +99,21 @@ export class TicketsComponent implements OnInit {
   }
 
   endTicket(ticket: Ticket): void {
-    this.publicService.snack('Querés cancelar este turno?', 5000, 'CANCELAR').then((cancellResponse) => {
-      if (cancellResponse) {
-        const idTicket = ticket._id;
-        const reqBy = 'client';
-        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-          if (resp.ok) {
-            // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
-            resp.ticket.id_company = ticket.id_company;
-            this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
-              this.updateTickets(tickets);
-              this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
-            })
-          }
-        })
-      }
+    this.publicService.snack('Querés cancelar este turno?', 5000, 'CANCELAR').then(() => {
+
+      const idTicket = ticket._id;
+      const reqBy = 'client';
+      this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+        if (resp.ok) {
+          // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
+          resp.ticket.id_company = ticket.id_company;
+          this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
+            this.updateTickets(tickets);
+            this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
+          })
+        }
+      })
+
     })
   }
 
@@ -122,7 +122,7 @@ export class TicketsComponent implements OnInit {
     if (!this.customer) {
       return;
     }
-    
+
     const idTicket = ticket._id;
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
@@ -147,8 +147,8 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  showReserveDate(date: Date){
-    this.publicService.snack(this.capitalizar.transform(this.dateToString.transform(date,'full')), 5000);
+  showReserveDate(date: Date) {
+    this.publicService.snack(this.capitalizar.transform(this.dateToString.transform(date, 'full')), 5000);
   }
 
 }

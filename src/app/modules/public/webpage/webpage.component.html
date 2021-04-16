@@ -1,3 +1,5 @@
+<app-toolbar></app-toolbar>
+
 <div *ngIf="company">
     <!-- PAGE IMAGE SLIDER -->
     <div class="company-page-banner">
@@ -20,11 +22,8 @@
     </div>
 
     <!-- PAGE TABS -->
-
     <app-home *ngIf="pageSection==='home'" [company]="company"></app-home>
-
     <app-menu *ngIf="pageSection==='menu'" [company]="company"></app-menu>
-
     <app-ticket-create *ngIf="pageSection==='ticket'" [company]="company" [settings]="settings"></app-ticket-create>
 
     <!-- PAGE FOOTER -->

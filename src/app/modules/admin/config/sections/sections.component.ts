@@ -28,18 +28,18 @@ export class SectionsComponent implements OnInit {
   ngOnInit(): void { }
 
   deleteSection(section: Section): void {
-    this.publicService.snack(`Desea eliminar el sector ${section.tx_section}`, 2000, 'Aceptar').then(ok => {
-      if (ok) {
-        let idSection = section._id;
-        this.adminService.deleteSection(idSection).subscribe((data: SectionResponse) => {
-          this.publicService.snack(data.msg, 1000);
-          this.adminService.sections = this.adminService.sections.filter(section => section._id != idSection);
-        },
-          (err: SectionResponse) => {
-            this.publicService.snack(err.msg, 3000);
-          }
-        )
-      }
+    this.publicService.snack(`Desea eliminar el sector ${section.tx_section}`, 2000, 'Aceptar').then(() => {
+
+      let idSection = section._id;
+      this.adminService.deleteSection(idSection).subscribe((data: SectionResponse) => {
+        this.publicService.snack(data.msg, 1000);
+        this.adminService.sections = this.adminService.sections.filter(section => section._id != idSection);
+      },
+        (err: SectionResponse) => {
+          this.publicService.snack(err.msg, 3000);
+        }
+      )
+
     })
   }
 

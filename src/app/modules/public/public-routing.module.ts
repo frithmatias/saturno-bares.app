@@ -15,15 +15,14 @@ const publicRoutes: Routes = [
   { path: 'login', component: LoginComponent, data: { titulo: 'Login Cliente' } },
   { path: 'register', component: RegisterComponent, data: { titulo: 'Registro Cliente' } },
   { path: 'tickets', component: TicketsComponent, data: { titulo: 'Mis Reservas' } },
-	{ path: 'ticket/:idTicket', component: TicketComponent, data: { titulo: 'Mi Reserva' } },
+  { path: 'ticket/:idTicket', component: TicketComponent, data: { titulo: 'Mi Reserva' } },
   { path: '', component: HomeComponent, data: { titulo: 'Inicio' } },
-  { path: '**', component: NopagefoundComponent}
+  { path: '**', component: NopagefoundComponent }
 ];
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forChild(publicRoutes)], 
+  imports: [RouterModule.forChild(publicRoutes)],
   exports: [RouterModule]
 })
 export class PublicRoutingModule { }
- 
