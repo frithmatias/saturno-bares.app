@@ -1,82 +1,88 @@
 <app-toolbar></app-toolbar>
 
-<div *ngIf="loading">
-  <app-spinner text="Loading tickets..."></app-spinner>
-</div>
+<div class="toolbar-spacer">
 
 
-<!-- CARD TICKETS -->
-<div class="tickets-container p-1 pt-2">
-  <div class="ticket-card p-1" *ngFor="let ticket of ticketsAll">
-    <!-- card with ticket data -->
-    <mat-card class="p-0" [class]="ticket.tm_end ? 'ticket-inactive' : 'ticket-active'">
+  <div *ngIf="loading">
+    <app-spinner text="Loading tickets..."></app-spinner>
+  </div>
 
 
-      <!-- header with company name and address -->
-      <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}/ticket">
-        <!-- logo -->
+  <!-- CARD TICKETS -->
+  <div class="tickets-container p-1 pt-2">
+    <div class="ticket-card p-1" *ngFor="let ticket of ticketsAll">
+      <!-- card with ticket data -->
+      <mat-card class="p-0" [class]="ticket.tm_end ? 'ticket-inactive' : 'ticket-active'">
+
+
+        <!-- header with company name and address -->
+        <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}/ticket">
+          <!-- logo -->
           <div class="company-cover-container">
             <img class="company-cover"
-            [src]="'thumb-'+ticket.id_company?.tx_company_cover | imagenPipe : 'tx_company_cover' : ticket.id_company?._id">
+              [src]="'thumb-'+ticket.id_company?.tx_company_cover | imagenPipe : 'tx_company_cover' : ticket.id_company?._id">
           </div>
           <div>
             <img card-avatar class="company-logo"
-            [src]="'thumb-'+ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
+              [src]="'thumb-'+ticket.id_company?.tx_company_logo | imagenPipe : 'tx_company_logo' : ticket.id_company?._id">
           </div>
-        <div class="company-title">
-          <div class="md text-accent">
-            {{ticket.id_company?.tx_company_name}}
+          <div class="company-title">
+            <div class="md text-accent">
+              {{ticket.id_company?.tx_company_name}}
+            </div>
+            <div class="sm text-info">
+              {{ticket.id_company?.tx_address_street}}
+              {{ticket.id_company?.tx_address_number}}
+            </div>
           </div>
-          <div class="sm text-info">
-            {{ticket.id_company?.tx_address_street}}
-            {{ticket.id_company?.tx_address_number}}
+
+        </div>
+
+        <!-- bottom info card -->
+        <div class="p-2">
+
+          <table class="sm">
+
+            <tr class="pointer" (click)="showReserveDate(ticket.tm_intervals[0])">
+              <td>Fecha</td>
+              <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' |
+                capitalizarPipe}}</td>
+            </tr>
+            <tr>
+              <td>Nombre</td>
+              <td class="text-info text-right"> {{ticket.tx_name}}</td>
+            </tr>
+          </table>
+
+          <hr class="my-1 mt-3">
+
+          <div *ngIf="ticket.tm_end === null">
+
+            <button class="px-1" mat-button routerLink="/public/ticket/{{ticket._id}}"
+              *ngIf="ticket?.tm_provided && !ticket.tm_end">
+              ¡Comenzar!
+            </button>
+
+            <button class="px-1" mat-button [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
+              (click)="endTicket(ticket)">
+              Cancelar
+            </button>
+
+            <button class="px-1 text-active" mat-button *ngIf="ticket.tx_status==='waiting'"
+              (click)="validateTicket(ticket)">
+              ¡Confirmar!
+            </button>
+          </div>
+
+          <div *ngIf="ticket.tm_end">
+            <button class="px-1 text-warn" mat-button>
+              {{ticket.tx_status | ticketStatus}}
+            </button>
           </div>
         </div>
 
-      </div>
-
-      <!-- bottom info card -->
-      <div class="p-2">
-
-        <table class="sm">
-
-          <tr class="pointer" (click)="showReserveDate(ticket.tm_intervals[0])">
-            <td>Fecha</td>
-            <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' | capitalizarPipe}}</td>
-          </tr>
-          <tr>
-            <td>Nombre</td>
-            <td class="text-info text-right"> {{ticket.tx_name}}</td>
-          </tr>
-        </table>
-
-        <hr class="my-1 mt-3">
-
-        <div *ngIf="ticket.tm_end === null">
-
-          <button class="px-1" mat-button routerLink="/public/ticket/{{ticket._id}}"
-            *ngIf="ticket?.tm_provided && !ticket.tm_end">
-            ¡Comenzar!
-          </button>
-
-          <button class="px-1" mat-button [disabled]="ticket.tx_status==='cancelled' || ticket.tx_status==='finished'"
-            (click)="endTicket(ticket)">
-            Cancelar
-          </button>
-
-          <button class="px-1 text-active" mat-button *ngIf="ticket.tx_status==='waiting'"
-            (click)="validateTicket(ticket)">
-            ¡Confirmar!
-          </button>
-        </div>
-
-        <div *ngIf="ticket.tm_end">
-          <button class="px-1 text-warn" mat-button>
-            {{ticket.tx_status | ticketStatus}}
-          </button>
-        </div>
-      </div>
-
-    </mat-card>
+      </mat-card>
+    </div>
   </div>
+
 </div>

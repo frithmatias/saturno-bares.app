@@ -26,6 +26,12 @@ export class PublicService {
   customer: any;
 	token: string;
 
+  urlModule: string; // admin waiter public
+  urlComponent: string; // login register 
+  
+  isEmbed: boolean = false; // if ticket form is embed
+  companyString: string = null; 
+
   chatMessages: {
     own: boolean,
     time: Date,
@@ -42,13 +48,13 @@ export class PublicService {
   ) { }
 
 
-  snack(msg: string, dur: number, button?: string): Promise<void> {
-    return new Promise((resolve, reject) => {
+  snack(msg: string, dur: number, button?: string): Promise<boolean> {
+    return new Promise((resolve) => {
       this._snack.open(msg, button, { duration: dur, horizontalPosition: 'center' }).afterDismissed().subscribe(data => {
         if (data.dismissedByAction) {
-          resolve();
+          resolve(true);
         } else {
-          reject();
+          resolve(false);
         }
       })
     })
@@ -57,7 +63,7 @@ export class PublicService {
   scrollTop() {
     document.body.scrollTop = 0; // Safari
     document.documentElement.scrollTop = 0; // Other
-    document.getElementsByClassName('main-wrapper')[0].scrollTop = 0;
+    document.getElementsByClassName('main-center')[0].scrollTop = 0;
   }
 
   stepperGoBack(stepper: MatStepper) {

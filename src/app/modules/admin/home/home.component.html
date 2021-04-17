@@ -16,8 +16,6 @@
           <span class="mdi mdi-cogs mr-2"></span> Estado
         </div>
 
-
-
         <!-- loading -->
         <div *ngIf="adminService.loading">
           <app-spinner text="LOADING DATA..."></app-spinner>
@@ -49,13 +47,14 @@
               Todo esta en orden.
             </div>
             <hr>
-            <div class="text-left">
-              <button mat-raised-button color="active" routerLink="/waiter/home">Entrar a un Sector</button>
+            <div class="text-center">
+              <button mat-raised-button color="active" routerLink="/waiter/home">
+                <span class="mdi mdi-silverware-fork-knife mr-1"></span>
+                Atender Mesas
+              </button>
             </div>
           </div>
         </div>
-
-
 
       </mat-card>
 
@@ -151,12 +150,16 @@
         </div>
 
         <textarea class="widget-snippet" rows="7" [(ngModel)]="widget">
-          
+
         </textarea>
         <hr>
 
-        <button mat-raised-button color="warn" [cdkCopyToClipboard]="widget"><span class="mdi mdi-content-copy"></span>
-          Copiar</button>
+        <div class="text-center">
+          <button mat-raised-button color="warn" [cdkCopyToClipboard]="widget">
+            <span class="mdi mdi-content-copy mr-1"></span>
+            Copiar Código
+          </button>
+        </div>
 
       </mat-card>
     </div>
@@ -167,7 +170,7 @@
       <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
 
         <div class="text-info md">
-          <span class="mdi mdi-view-module mr-2"></span> Ajustes
+          <span class="mdi mdi-tune mr-2"></span> Ajustes
         </div>
 
         <mat-card-content>
@@ -218,9 +221,15 @@
                 </td>
               </tr>
             </table>
+
             <hr>
-            <div class="text-left">
-              <button mat-raised-button color="primary" routerLink="/admin/settings">Ir a Ajustes</button>
+
+            <div class="text-center">
+              <button mat-raised-button color="primary" routerLink="/admin/settings">
+                <span class="mdi mdi-tune mr-1"></span>
+
+                Ir a Ajustes
+              </button>
             </div>
           </div>
         </mat-card-content>
@@ -276,14 +285,22 @@
         </div>
 
         <div class="m-1">
-          Podés imprimir este código QR de acceso a tu portal web y pegarlo en tu comercio:
+          Este código QR es un acceso directo al formulario para crear turnos a tu comercio. Podés imprimirlo y pegarlo
+          en la puerta de tu comercio para que tus clientes puedan accedar facilmente a sacar turnos aunque tu comercio
+          esté cerrado.
         </div>
 
-        <div class="m-1 text-center my-4">
-          <qrcode
-            qrdata="https://saturno.fun/public/{{loginService.user.id_company?.tx_company_string || 'nombredetucomercio'}}"
-            [width]="256" [errorCorrectionLevel]="'M'">
+        <div class="text-center my-4">
+          <qrcode qrdata="https://saturno.fun/public/page/{{loginService.user.id_company?.tx_company_string}}/ticket"
+            [width]="256" [errorCorrectionLevel]="'M'" usesvg="true">
           </qrcode>
+        </div>
+        <hr>
+        <div class="text-center">
+          <button mat-raised-button color="telegram" disabled>
+            <span class="mdi mdi-printer mr-1"></span>
+            Imprimir Cartel
+          </button>
         </div>
 
       </mat-card>

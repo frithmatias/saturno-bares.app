@@ -129,11 +129,12 @@ SATURNO
 -------------------------------------------
 */
 
-.main-wrapper {
+.toolbar-spacer {
     display       : flex;
     flex-direction: column;
-    position      : absolute;
+    position      : relative;
     top           : 94px;
+    margin-bottom : 94px;
     bottom        : 0;
     left          : 0;
     right         : 0;
@@ -202,7 +203,10 @@ mat-drawer-container {
 }
 
 @media (max-width: 575px) {
-    .page-container,.page-container-wide,.page-container-full {
+
+    .page-container,
+    .page-container-wide,
+    .page-container-full {
         margin: 0px 0px !important;
     }
 

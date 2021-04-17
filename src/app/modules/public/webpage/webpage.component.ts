@@ -29,7 +29,6 @@ export class WebPageComponent implements OnInit {
 
 		this.route.params.subscribe((data: any) => {
 			this.pageSection = data.section || 'home';
-			console.log(this.pageSection)
 			this.publicService.readCompany(data.txCompanyString).toPromise().then((resp: CompanyResponse) => {
 				
 				localStorage.setItem('company', JSON.stringify(resp.company));

@@ -12,13 +12,14 @@ import { environment } from 'src/environments/environment.prod';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+  
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
 
-  url: string = '';
   hiddenBadge: boolean;
   version = environment.version;
+
   constructor(
     public loginService: LoginService,
     public waiterService: WaiterService,
@@ -26,13 +27,7 @@ export class ToolbarComponent implements OnInit {
     public router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.router.events
-    .pipe(filter(evento => evento instanceof NavigationEnd))
-    .subscribe((data: NavigationEnd) => {
-      this.url = data.url.split('/')[2]; // admin - waiter - (public path)
-    });
-  }
+  ngOnInit(): void { }
 
   toggle(component: string): void {
     switch (component) {

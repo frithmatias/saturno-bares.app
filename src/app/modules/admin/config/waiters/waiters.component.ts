@@ -77,18 +77,18 @@ export class WaitersComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.publicService.snack(`Desea eliminar el asistente ${waiter.tx_name}?`, 3000, 'Aceptar').then(() => {
-
-      this.adminService.deleteWaiter(idWaiter).subscribe((data: UserResponse) => {
-        this.waiterEdit = 'clear_form';
-        this.publicService.snack(data.msg, 1000);
-        this.adminService.waiters = this.adminService.waiters.filter(waiter => waiter._id != idWaiter);
-      },
-        (err: UserResponse) => {
-          this.publicService.snack(err.msg, 3000)
-        }
-      )
-
+    this.publicService.snack(`Desea eliminar el asistente ${waiter.tx_name}?`, 3000, 'Aceptar').then((ok) => {
+      if (ok) {
+        this.adminService.deleteWaiter(idWaiter).subscribe((data: UserResponse) => {
+          this.waiterEdit = 'clear_form';
+          this.publicService.snack(data.msg, 1000);
+          this.adminService.waiters = this.adminService.waiters.filter(waiter => waiter._id != idWaiter);
+        },
+          (err: UserResponse) => {
+            this.publicService.snack(err.msg, 3000)
+          }
+        )
+      }
     })
   }
 

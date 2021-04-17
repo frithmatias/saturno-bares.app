@@ -93,27 +93,26 @@ export class TicketsComponent implements OnInit {
       this.loading = false;
       if (data.ok) {
         this.updateTickets(data.tickets);
-        console.table(this.tickets, ['tx_status', 'id_company[tx_company_name]', 'id_user', 'tx_platform', 'id_company.tx_company_name', 'tm_intervals', '_id'])
       }
     }, () => { this.loading = false; })
   }
 
   endTicket(ticket: Ticket): void {
-    this.publicService.snack('Querés cancelar este turno?', 5000, 'CANCELAR').then(() => {
-
-      const idTicket = ticket._id;
-      const reqBy = 'client';
-      this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-        if (resp.ok) {
-          // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
-          resp.ticket.id_company = ticket.id_company;
-          this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
-            this.updateTickets(tickets);
-            this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
-          })
-        }
-      })
-
+    this.publicService.snack('Querés cancelar este turno?', 5000, 'CANCELAR').then((ok) => {
+      if (ok) {
+        const idTicket = ticket._id;
+        const reqBy = 'client';
+        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+          if (resp.ok) {
+            // le 'inyecto' id_company debido a que la respuesta de endTicket no popula id_company
+            resp.ticket.id_company = ticket.id_company;
+            this.publicService.updateStorageTickets(resp.ticket).then((tickets: Ticket[]) => {
+              this.updateTickets(tickets);
+              this.publicService.snack(`El ticket fué cancelado, te esperamos pronto.`, 5000);
+            })
+          }
+        })
+      }
     })
   }
 

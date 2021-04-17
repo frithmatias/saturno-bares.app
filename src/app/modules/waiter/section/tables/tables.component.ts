@@ -111,16 +111,16 @@ export class TablesComponent implements OnInit {
     }
 
     const idTable = table._id;
-    this.publicService.snack('Desea resetear la mesa? Si tiene un ticket adjunto se perderá.', 5000, 'Aceptar').then(() => {
-      this.waiterService.resetTable(idTable).subscribe((resp: TableResponse) => {
-        if (resp.ok) {
-          this.table.tx_status = 'paused';
-          this.table.id_session = null;
-        }
-      });
-
+    this.publicService.snack('Desea resetear la mesa? Si tiene un ticket adjunto se perderá.', 5000, 'Aceptar').then((ok) => {
+      if (ok) {
+        this.waiterService.resetTable(idTable).subscribe((resp: TableResponse) => {
+          if (resp.ok) {
+            this.table.tx_status = 'paused';
+            this.table.id_session = null;
+          }
+        });
+      }
     });
-
   };
 
   initTables = (table: Table) => {
@@ -142,16 +142,15 @@ export class TablesComponent implements OnInit {
     }
 
     const idTables = table.id_session.id_tables;
-    this.publicService.snack('¿El cliente ya está en la mesa?', 5000, 'SI, INICIAR').then(() => {
-
-      this.waiterService.initTables(idTables).subscribe((resp: TableResponse) => {
-        if (resp.ok) {
-          this.table.tx_status = 'busy'
-        }
-      });
-
+    this.publicService.snack('¿El cliente ya está en la mesa?', 5000, 'SI, INICIAR').then((ok) => {
+      if (ok) {
+        this.waiterService.initTables(idTables).subscribe((resp: TableResponse) => {
+          if (resp.ok) {
+            this.table.tx_status = 'busy'
+          }
+        });
+      }
     });
-
   };
 
   releaseTicket = (ticket: Ticket) => {
@@ -187,15 +186,15 @@ export class TablesComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'waiter';
     if (this.tickets) {
-      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Aceptar').then(() => {
-
-        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-          if (resp.ok) {
-            this.clearTicketSession(ticket);
-            this.clearTableSession(ticket);
-          }
-        });
-
+      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'Aceptar').then((ok) => {
+        if (ok) {
+          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+            if (resp.ok) {
+              this.clearTicketSession(ticket);
+              this.clearTableSession(ticket);
+            }
+          });
+        }
       });
     }
   };

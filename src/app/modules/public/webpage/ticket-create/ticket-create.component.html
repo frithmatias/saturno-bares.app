@@ -8,7 +8,7 @@
   </div>
 
   <!-- CUSTOMER NOT LOGGED IN -->
-  <div *ngIf="!publicService.customer && !showLogin && isEmbed===true" class="pointer mt-4"
+  <div *ngIf="!publicService.customer && !showLogin && publicService.isEmbed===true" class="pointer mt-4"
     (click)="showLogin=!showLogin">
     <div class="xxl op4 mdi mdi-account-circle"></div>
     <div>
@@ -19,7 +19,7 @@
   <app-login *ngIf="showLogin && !publicService.customer" (customer)="loggedIn($event)"></app-login>
 
   <!-- CUSTOMER LOGGED IN -->
-  <div *ngIf="publicService.customer && isEmbed===true" class="mt-4">
+  <div *ngIf="publicService.customer && publicService.isEmbed===true" class="mt-4">
 
     <!-- GOOGLE LOGIN IMAGE -->
     <div *ngIf="publicService.customer.bl_social && publicService.customer.tx_img">
@@ -184,7 +184,7 @@
           </button>
         </div>
 
-        <app-login *ngIf="!publicService.customer" (customer)="publicService.customer=$event"></app-login>
+        <app-login *ngIf="!publicService.customer" (customer)="loggedIn($event)"></app-login>
 
       </div>
 
@@ -328,10 +328,10 @@
 
       <!-- ACTIONS -->
       <div class="my-4">
-        <button *ngIf="!isEmbed" mat-button routerLink="/public/tickets">
+        <button *ngIf="!publicService.isEmbed" mat-button  routerLink="/public/tickets">
           <span class="mdi mdi-ticket-account mr-1"></span> Mis Reservas
         </button>
-        <button *ngIf="isEmbed && !hideCancel" mat-raised-button color="warn" (click)="cancel(ticket)">
+        <button *ngIf="!hideCancel" mat-button color="warn" (click)="cancel(ticket)">
           <span class="mdi mdi-close-circle mr-1"></span> Cancelar
         </button>
       </div>

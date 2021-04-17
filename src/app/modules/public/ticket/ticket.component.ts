@@ -275,20 +275,20 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 	endTicket(): Promise<void> {
 		return new Promise(resolve => {
-			this.publicService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then(() => {
-
-				const idTicket = this.ticket._id;
-				const reqBy = 'client';
-				this.publicService.endTicket(idTicket, reqBy).subscribe((data: TicketResponse) => {
-					if (data.ok) {
-						resolve();
-						this.publicService.snack(data.msg, 3000, 'ACEPTAR')
+			this.publicService.snack('Esta acción finalizara su turno', 5000, 'TERMINAR').then((ok) => {
+				if (ok) {
+					const idTicket = this.ticket._id;
+					const reqBy = 'client';
+					this.publicService.endTicket(idTicket, reqBy).subscribe((data: TicketResponse) => {
+						if (data.ok) {
+							resolve();
+							this.publicService.snack(data.msg, 3000, 'ACEPTAR')
+							this.publicService.clearPublicSession();
+						}
+					}, () => {
 						this.publicService.clearPublicSession();
-					}
-				}, () => {
-					this.publicService.clearPublicSession();
-				});
-
+					});
+				}
 			})
 		})
 	}

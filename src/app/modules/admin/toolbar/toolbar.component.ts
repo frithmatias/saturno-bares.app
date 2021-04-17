@@ -19,7 +19,6 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleChat: EventEmitter<boolean> = new EventEmitter();
   @Input() unreadMessages: number;
 
-  url: string = '';
   hiddenBadge: boolean;
   version = environment.version;
   constructor(
@@ -30,13 +29,7 @@ export class ToolbarComponent implements OnInit {
     public router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.router.events
-    .pipe(filter(evento => evento instanceof NavigationEnd))
-    .subscribe((data: NavigationEnd) => {
-      this.url = data.url.split('/')[2]; // admin - waiter - (public path)
-    });
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: any) {
     this.hiddenBadge = false;

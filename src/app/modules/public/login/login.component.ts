@@ -17,12 +17,13 @@ declare const gapi: any;
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
 	@Output() customer: EventEmitter<User> = new EventEmitter;
+
 	email: string;
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
-
 	constructor(
 		public publicService: PublicService,
 		public router: Router,
@@ -66,11 +67,12 @@ export class LoginComponent implements OnInit {
 	}
 
 
-	loginCustomer(platform: string, token: string, emailForm: any, remember: boolean){
+	loginCustomer(platform: string, token: string, emailForm: any, remember: boolean) {
 		this.publicService.loginCustomer(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
 			if (data.ok) {
 				this.customer.emit(data.user);
-				// this.router.navigate(['/public/tickets']);
+				// navigate only if login is NOT embeded.
+				if (!this.publicService.isEmbed) { this.router.navigate(['/public/tickets']); }
 			}
 		}, (err: HttpErrorResponse) => {
 			if (err.error.msg) {
@@ -87,6 +89,10 @@ export class LoginComponent implements OnInit {
 		if (localStorage.getItem('email')) {
 			localStorage.removeItem('email');
 		}
+	}
+
+	backToForm() {
+		this.customer.emit(null);
 	}
 
 }

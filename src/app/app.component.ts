@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { PublicService } from './modules/public/public.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent {
   url: string = '';
 
   constructor(
-    public router: Router
+    public router: Router,
+    public publicService: PublicService
   ) {
     // let hours = new Date().getHours();
     // const theme = (hours >= 6 && hours < 19) ? 'grey-orange.css' : 'dark-pink.css';
@@ -27,7 +29,10 @@ export class AppComponent {
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
       // map((evento: NavigationEnd ) => {evento})
     ).subscribe((data: NavigationEnd) => {
-      this.url = data.url.split('/')[1]; // admin - waiter - (public path)
+      
+      this.publicService.urlModule = data.url.split('/')[1] || null; // admin - waiter - (public path)
+      this.publicService.urlComponent = data.url.split('/')[2] || null; // admin - waiter - (public path)
+      console.log('module:' + this.publicService.urlModule, 'component:' + this.publicService.urlComponent)
     });
   }
   

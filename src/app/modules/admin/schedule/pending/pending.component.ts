@@ -82,15 +82,15 @@ export class PendingComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'client'; // cancelled (not finished)
     if (this.pending) {
-      this.publicService.snack(`Querés finalizar el ticket de ${ticket.tx_name}?`, 5000, 'Si, finalizar').then(() => {
-
-        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-          if (resp.ok) {
-            this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
-            this.pendingUpdated.emit(resp.ticket);
-          }
-        });
-
+      this.publicService.snack(`Querés finalizar el ticket de ${ticket.tx_name}?`, 5000, 'Si, finalizar').then((ok) => {
+        if (ok) {
+          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+            if (resp.ok) {
+              this.pending = this.pending.filter(thisTicket => thisTicket._id !== ticket._id);
+              this.pendingUpdated.emit(resp.ticket);
+            }
+          });
+        }
       });
     }
   };

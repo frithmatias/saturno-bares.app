@@ -1,4 +1,11 @@
 .subcard {
     background-color: var(--mat-panel-bg);
-    padding: 10px 15px;
+    padding         : 10px 15px;
+}
+
+mat-select {
+    background-color: var(--mat-card-bg);
+    padding         : 2px 6px;
+    border          : 1px solid var(--text-o10);
+    border-radius   : 5px;
 }

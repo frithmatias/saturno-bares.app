@@ -85,14 +85,9 @@
                     <span class="ml-2 align-middle">Mis Reservas</span>
                 </div>
                 <hr>
-                <button mat-raised-button class="action-button" color="warn"
-                    (click)="publicService.clearPublicSession()">
-                    <table>
-                        <tr>
-                            <td class="button-icon mdi mdi-power xl"></td>
-                            <td class="button-text">Salir</td>
-                        </tr>
-                    </table>
+                <button mat-raised-button color="warn" (click)="salir()">
+                    <span class="mdi mdi-power xl"></span>
+                    Salir
                 </button>
             </mat-menu>
 

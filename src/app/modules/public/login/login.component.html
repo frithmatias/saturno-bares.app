@@ -12,6 +12,13 @@
                     <div class="mt-3 xl text-danger">Ingreso público</div>
                     <app-social [logout]="true" [platforms]="['facebook', 'google']"
                         (socialResponse)="loginSocial($event)"></app-social>
+
+                    <div *ngIf="publicService.isEmbed">
+                        <button mat-button (click)="backToForm()">Volver al Formulario</button>
+                    </div>
+                    <div *ngIf="!publicService.isEmbed">
+                        <button mat-button routerLink="/home">Volver al Inicio</button>
+                    </div>
                 </div>
             </div>
 

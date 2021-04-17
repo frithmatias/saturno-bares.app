@@ -1,9 +1,5 @@
 @media (max-width: 575px) {
 
-    .welcome-wrapper {
-        width: 100% !important;
-    }
-
     .welcome-title {
         font-size  : 3.2em !important;
         font-weight: 500 !important;
@@ -25,10 +21,6 @@
         padding-left: 0px !important;
     }
 
-    .banner-container-col {
-        width: 100% !important;
-    }
-
     .banner {
         border: 10px solid white;
         color : cornflowerblue;
@@ -41,40 +33,40 @@
     .banner-text {
         font-size  : large;
         font-weight: 300;
-
     }
 
+    .search-wrapper {
+        max-width: unset !important;
+    }
+}
+
+@media (min-width: 850px) {
+    .welcome-bg {
+        top: 55px !important;
+    }
 }
 
 mat-card {
     box-shadow: unset !important;
 }
 
-.home-bg {
+.welcome-bg {
+    position           : relative;
+    top                : 94px;
     background-image   : url('../../../assets/img/resto.jpg');
     background-size    : cover;
     background-repeat  : no-repeat;
     background-position: center center;
-    height             : 500px;
+    height             : 450px;
 }
 
 .welcome-wrapper {
+
     padding         : 20px;
     color           : whitesmoke;
-    height          : 50%;
     background-color: var(--primary-o75);
-    opacity         : .98;
     border-bottom   : 2px solid var(--primary);
     box-shadow      : 0px 1px 6px 3px rgb(0 0 0 / 60%);
-}
-
-.welcome-container {
-
-    display       : flex;
-    flex-direction: column;
-    height        : 100%;
-    place-content : center;
-
 }
 
 .welcome-title {
@@ -87,13 +79,9 @@ mat-card {
     font-family: system-ui;
 }
 
-
-.company-input-wrapper {
-    width        : 70%;
-    place-content: center;
-    height       : 50%;
-    position     : relative;
-    top          : 18%;
+.search-wrapper {
+    max-width: 50%;
+    margin   : 36px;
 }
 
 /*--------------------------------*/
@@ -185,20 +173,23 @@ mat-card {
 
 /* RIGHT BANNERS */
 
-.banner-container-telegram {
-    background-color: #f4f4f4;
+.banner-container-ticketform {
+    background-color: #71366f;
+    border-radius   : 10px 0 0 10px;
+    overflow        : hidden;
 
-    border-radius: 10px 0 0 10px;
 }
 
-.banner-img-telegram {
-    display          : block;
-    text-indent      : -9999px;
-    height           : 10em;
-    background       : center;
-    background-image : url('../../../assets/img/svg/telegram.svg');
-    background-size  : contain;
-    background-repeat: no-repeat;
+.banner-img-ticketform {
+    position           : relative;
+    margin-top         : -210px;
+    display            : block;
+    text-indent        : -9999px;
+    height             : 28em;
+    background-position: center;
+    background-image   : url('../../../assets/img/screenshots/public_ticketform.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
 }
 
 .banner-container-createticket {
@@ -209,7 +200,7 @@ mat-card {
 
 .banner-img-createticket {
     position           : relative;
-    margin-top         : -210px;
+    margin-bottom      : -250px;
     display            : block;
     text-indent        : -9999px;
     height             : 28em;
@@ -228,7 +219,7 @@ mat-card {
 
 .banner-img-scores {
     position           : relative;
-    margin-bottom      : -150px;
+    margin-bottom      : -170px;
     display            : block;
     text-indent        : -9999px;
     height             : 28em;

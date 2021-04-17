@@ -86,9 +86,9 @@ export class BottomsheetComponent implements OnInit {
     this.data.availability.forEach(av => {
       av['enabled'] = this.cdTables.every(t => av.available.filter(a => !a.blReserved).map(a => a.nmTable).includes(t));
       av['reserved'] = av.available.filter(a => a.blReserved).map(a => a.nmTable);
-      let selectedReserved = av['reserved'].filter( (table: number) => this.cdTables.includes(table));
+      let selectedReserved = av['reserved'].filter((table: number) => this.cdTables.includes(table));
       let selectedText: string = selectedReserved.length > 1 ? 'Las mesas ' : 'La mesa ';
-      for (let [index, table] of selectedReserved.entries()){
+      for (let [index, table] of selectedReserved.entries()) {
         if (index >= selectedReserved.length - 1 && selectedReserved.length > 1) selectedText += ' y '
         selectedText += table.toString();
       }
@@ -166,11 +166,12 @@ export class BottomsheetComponent implements OnInit {
 
     const idTicket = ticket._id;
     const reqBy = 'client';
-    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'FINALIZAR').then(() => {
-     
-        // publicService.endTicket() 
-        // -> reqBy: 'waiter' -> tx_status: 'finished'
-        // -> reqBy: 'client' -> tx_status: 'cancelled'
+    this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'FINALIZAR').then((ok) => {
+
+      // publicService.endTicket() 
+      // -> reqBy: 'waiter' -> tx_status: 'finished'
+      // -> reqBy: 'client' -> tx_status: 'cancelled'
+      if (ok) {
         this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
           if (resp.ok) {
             this.bottomSheetRef.dismiss({ action: 'cancel', ticket: resp.ticket });
@@ -178,9 +179,8 @@ export class BottomsheetComponent implements OnInit {
             this.publicService.snack('Error al asignar las mesas!', 2000);
           }
         });
-      
+      }
     });
-
   };
 
   closeBottomSheet() {

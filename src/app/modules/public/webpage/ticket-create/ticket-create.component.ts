@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { WebsocketService } from '../../../../services/websocket.service';
 import { PublicService } from '../../public.service';
@@ -49,8 +49,6 @@ export class TicketCreateComponent implements OnInit {
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
   serverMessage: string;
 
-
-  isEmbed: boolean = false;
   showLogin: boolean = false;
   hideCancel: boolean = false;
   errorEmbed: string = null;
@@ -58,7 +56,6 @@ export class TicketCreateComponent implements OnInit {
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
-    private router: Router,
     private route: ActivatedRoute,
     private dateToString: DateToStringPipe
   ) {
@@ -70,15 +67,15 @@ export class TicketCreateComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log(this)
 
-    if(localStorage.getItem('customer')){
+    if (localStorage.getItem('customer')) {
       this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
     }
 
     this.route.params.subscribe(async (data: any) => {
       if (data.embedcompanystring) {
-        this.isEmbed = true;
+        this.publicService.isEmbed = true;
+        this.publicService.companyString = data.embedcompanystring;
         let resp = await this.getDataForEmbed(data.embedcompanystring)
           .then(() => {
             this.getData();
@@ -88,7 +85,7 @@ export class TicketCreateComponent implements OnInit {
             return;
           })
       } else {
-        this.isEmbed = false;
+        this.publicService.isEmbed = false;
         this.getData();
       }
 
@@ -370,7 +367,7 @@ export class TicketCreateComponent implements OnInit {
             this.tickets = tickets;
           })
           // this.router.navigate(['/public/tickets']);
-        } 
+        }
       }, (err) => {
         this.loading = false;
         this.publicService.snack(err.error.msg, 5000)
@@ -387,7 +384,6 @@ export class TicketCreateComponent implements OnInit {
     const idTicket = ticket._id;
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
-      console.log(data)
       if (data.ok) {
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
           this.tickets = tickets;
@@ -404,27 +400,28 @@ export class TicketCreateComponent implements OnInit {
   }
 
   cancel(ticket: Ticket) {
-
     this.publicService.snack('¿Querés cancelar tu turno?', 5000, 'CANCELAR')
-    .then(() => {
-      this.publicService.endTicket(ticket._id, 'client').subscribe((data: TicketResponse) => {
-        if (data.ok) {
-          this.ticket = data.ticket;
-          this.hideCancel = true;
-          this.publicService.snack(data.msg, 3000).catch(() => {
-            this.ticketForm.reset();
-            delete this.ticket;
+      .then((ok) => {
+        if (ok) {
+          this.publicService.endTicket(ticket._id, 'client').subscribe((data: TicketResponse) => {
+            if (data.ok) {
+              this.ticket = data.ticket;
+              this.hideCancel = true;
+              this.publicService.snack(data.msg, 3000).then(() => {
+                this.ticketForm.reset();
+                delete this.ticket;
+              })
+            }
           })
         }
+      }).catch(() => {
+        return;
       })
-    }).catch(() => {
-      return;
-    })
 
   }
 
-  loggedIn(customer: User){
-    this.publicService.customer = customer;
+  loggedIn(customer: User) {
+    if (customer) { this.publicService.customer = customer; } // login form can return null for back to form
     this.getUserTickets();
     this.showLogin = false;
   }

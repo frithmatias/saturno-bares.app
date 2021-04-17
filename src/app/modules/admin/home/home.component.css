@@ -16,9 +16,11 @@ p {
 }
 
 .widget-snippet {
-    font-family: monospace;
-    font-size  : x-small;
-    width      : -webkit-fill-available;
-    border     : none;
-    padding    : 10px;
+    font-family  : monospace;
+    font-size    : x-small;
+    width        : -webkit-fill-available;
+    border       : none;
+    padding      : 10px;
+    border-radius: 5px;
 }
+

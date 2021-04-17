@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { PublicService } from 'src/app/modules/public/public.service';
-import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 
 
@@ -26,11 +25,11 @@ export class ToolbarComponent implements OnInit {
     if(localStorage.getItem('customer')){
       this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
     }
-    this.router.events
-      .pipe(filter(evento => evento instanceof NavigationEnd))
-      .subscribe((data: NavigationEnd) => {
-        this.url = data.url.split('/')[2]; // admin - waiter - (public path)
-      });
+
   }
 
+  salir(){
+    this.publicService.clearPublicSession();
+    this.router.navigate(['/home']);
+  }
 }

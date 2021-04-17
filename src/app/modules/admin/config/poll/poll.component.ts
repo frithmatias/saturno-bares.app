@@ -29,18 +29,19 @@ export class PollComponent implements OnInit {
   ngOnInit(): void { }
 
   deleteScoreItem(item: ScoreItem): void {
-    this.publicService.snack(`Desea eliminar el item ${item.tx_item} para calificar?`, 3000, 'Aceptar').then(() => {
-      let idScoreItem = item._id;
-      this.adminService.deleteScoreItem(idScoreItem).subscribe((data: ScoreItemResponse) => {
-        this.publicService.snack(data.msg, 1000);
-        this.adminService.scoreItems = this.adminService.scoreItems.filter(item => item._id != idScoreItem);
-        this.adminService.scoreItemsSection = this.adminService.scoreItemsSection.filter(table => table._id != idScoreItem);
-      },
-        (err: TableResponse) => {
-          this.publicService.snack(err.msg, 3000);
-        }
-      )
-
+    this.publicService.snack(`Desea eliminar el item ${item.tx_item}?`, 3000, 'Aceptar').then((ok) => {
+      if (ok) {
+        let idScoreItem = item._id;
+        this.adminService.deleteScoreItem(idScoreItem).subscribe((data: ScoreItemResponse) => {
+          this.publicService.snack(data.msg, 1000);
+          this.adminService.scoreItems = this.adminService.scoreItems.filter(item => item._id != idScoreItem);
+          this.adminService.scoreItemsSection = this.adminService.scoreItemsSection.filter(table => table._id != idScoreItem);
+        },
+          (err: TableResponse) => {
+            this.publicService.snack(err.msg, 3000);
+          }
+        )
+      }
     });
   }
 

@@ -79,14 +79,14 @@ export class QueuedComponent implements OnInit {
     const idTicket = ticket._id;
     const reqBy = 'waiter';
     if (this.queued) {
-      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then(() => {
-
-        this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
-          if (resp.ok) {
-            this.queued = this.queued.filter(thisTicket => thisTicket._id !== ticket._id);
-          }
-        });
-
+      this.publicService.snack('Desea finalizar el ticket actual?', 5000, 'ACEPTAR').then((ok) => {
+        if (ok) {
+          this.publicService.endTicket(idTicket, reqBy).subscribe((resp: TicketResponse) => {
+            if (resp.ok) {
+              this.queued = this.queued.filter(thisTicket => thisTicket._id !== ticket._id);
+            }
+          });
+        }
       });
     }
   };

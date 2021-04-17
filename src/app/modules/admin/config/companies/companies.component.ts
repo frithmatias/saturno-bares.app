@@ -52,21 +52,20 @@ export class CompaniesComponent implements OnInit {
   }
 
   deleteCompany(company: Company): void {
-    this.publicService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 5000, 'BORRAR').then(() => {
-
-      let idCompany = company._id;
-      this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
-        this.publicService.snack(data.msg, 3000);
-        this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
-        if (idCompany === this.loginService.user.id_company?._id) {
-          this.loginService.user.id_company = null;
-          localStorage.setItem('user', JSON.stringify(this.loginService.user));
-        }
-      }, (err: CompanyResponse) => {
-        this.publicService.snack(err.msg, 3000);
+    this.publicService.snack(`CUIDADO: Estás por borrar la empresa ${company.tx_company_name} y TODAS sus dependencias.`, 5000, 'BORRAR').then((ok) => {
+      if (ok) {
+        let idCompany = company._id;
+        this.adminService.deleteCompany(idCompany).subscribe((data: CompanyResponse) => {
+          this.publicService.snack(data.msg, 3000);
+          this.adminService.companies = this.adminService.companies.filter(company => company._id != idCompany);
+          if (idCompany === this.loginService.user.id_company?._id) {
+            this.loginService.user.id_company = null;
+            localStorage.setItem('user', JSON.stringify(this.loginService.user));
+          }
+        }, (err: CompanyResponse) => {
+          this.publicService.snack(err.msg, 3000);
+        })
       }
-      )
-
     })
   }
 
