@@ -33,7 +33,7 @@ mat-form-field {
 
 
 /* only embed form */
-.user-image {
+.toolbar-user-image {
     width        : 50px;
     height       : 50px;
     border-radius: 50%;

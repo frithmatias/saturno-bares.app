@@ -125,21 +125,136 @@ td {
 
 /*
 -------------------------------------------
-SATURNO 
+SATURNO TOOLBAR
 -------------------------------------------
 */
+
+@media (max-width: 850px) {
+    .toolbar-links-first-row {
+        display: none !important;
+    }
+
+    .toolbar-second-row {
+        display      : flex !important;
+        padding      : 10px 5px; 
+    }
+
+    .toolbar-spacer {
+        top          : 94px !important;
+        margin-bottom: 94px !important;
+    }
+}
+
+.toolbar-wrapper {
+    color           : white;
+    text-transform  : uppercase;
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 2;
+    background-color: var(--primary);
+    box-shadow      : 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
+
+/* ------------------------------------------- */
+/* TOOLBAR LOGO FOR PUBLIC */
+.logo-container {
+    display  : flex;
+    flex-grow: 1;
+}
+
+.logo-img {
+    background-image   : url('./../img/saturno-logo.png');
+    background-size    : contain;
+    background-repeat  : no-repeat;
+    background-position: center center;
+    height             : 3em;
+    width              : 3em;
+}
+
+.logo-text-container {
+    align-self    : center;
+    text-align    : left;
+    font-size     : 1.1em;
+    letter-spacing: .1em;
+    font-weight   : 200;
+    margin-left   : 10px;
+    line-height   : .8em;
+}
+
+/* END TOOLBAR LOGO FOR PUBLIC */
+/* ------------------------------------------- */
+
+.toolbar-user-image {
+    width        : 30px;
+    height       : 30px;
+    border-radius: 50%;
+    cursor       : pointer;
+}
+
+.company-name {
+    overflow      : hidden;
+    font-weight   : 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+    flex-grow     : 1;
+    text-align    : center;
+}
+
+.toolbar-first-row {
+    display    : flex;
+    align-items: center;
+    padding    : 8px 12px;
+    height     : 55px;
+}
+
+.toolbar-second-row {
+    display        : none;
+    justify-content: center;
+    font-size      : small;
+}
+
+
+.toolbar-item {
+    display  : flex;
+    flex-wrap: wrap;
+    margin   : 0px 10px;
+    cursor   : pointer;
+}
+
+.toolbar-item .mdi {
+    margin-right: 6px;
+}
+
+.toolbar-links-first-row {
+    display      : flex;
+    place-content: flex-end;
+    position     : relative;
+    top          : 2px;
+    align-items  : center;
+}
 
 .toolbar-spacer {
     display       : flex;
     flex-direction: column;
     position      : relative;
-    top           : 94px;
-    margin-bottom : 94px;
+    top           : 55px;
+    margin-bottom : 55px;
     bottom        : 0;
     left          : 0;
     right         : 0;
     overflow      : auto;
 }
+
+
+
+/*
+-------------------------------------------
+END SATURNO TOOLBAR
+-------------------------------------------
+*/
 
 .main-center {
     text-align: -webkit-center;

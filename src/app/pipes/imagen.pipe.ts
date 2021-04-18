@@ -12,7 +12,7 @@ export class ImagenPipe implements PipeTransform {
 		let url = environment.api + '/image';
 		
 		if (idFile && idFile.indexOf('cover') >= 0) {
-			idCompany = 'predefined'; // la imagen es una url por ejemplo la de una cuenta de Google
+			idCompany = 'predefined'; 
 		}
 
 

@@ -1,6 +1,6 @@
-<div class="toolbar">
+<div class="toolbar-wrapper">
 
-    <div class="first-row">
+    <div class="toolbar-first-row">
 
         <!-- LOGO -->
         <div class="logo-container">
@@ -17,23 +17,23 @@
         </div>
 
         <!-- PUBLIC PAGE LINKS -->
-        <div *ngIf="publicService.company" class="toolbar-links-header">
+        <div *ngIf="publicService.company" class="toolbar-links-first-row">
 
-            <div class="toolbar-base-item pointer"
+            <div class="toolbar-item"
                 [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
                 <div>
                     Inicio
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer"
+            <div class="toolbar-item"
                 [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
                 <div>
                     Menú
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer"
+            <div class="toolbar-item"
                 [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
                 *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
                 <div>
@@ -45,7 +45,7 @@
 
         <!-- PUBLIC NOT LOGGED IN -->
         <div *ngIf="!publicService.customer">
-            <div class="toolbar-base-item pointer" routerLink="/public/login">
+            <div class="toolbar-item" routerLink="/public/login">
                 <span class="mdi mdi-account-circle mr-1"></span>
             </div>
         </div>
@@ -55,7 +55,7 @@
 
             <!-- GOOGLE LOGIN IMAGE -->
             <div *ngIf="publicService.customer.bl_social && publicService.customer.tx_img">
-                <img class="user-image" [src]="publicService.customer.tx_img" [matMenuTriggerFor]="menu">
+                <img class="toolbar-user-image" [src]="publicService.customer.tx_img" [matMenuTriggerFor]="menu">
             </div>
 
             <!-- FACEBOOK HAS NO LOGIN IMAGE -->
@@ -66,7 +66,7 @@
             <!-- NORMAL LOGIN WITH IMAGE -->
             <div *ngIf="!publicService.customer.bl_social && publicService.customer.tx_img" class="pointer"
                 [matMenuTriggerFor]="menu">
-                <img class="user-image"
+                <img class="toolbar-user-image"
                     [src]="publicService.customer.tx_img | imagenPipe : 'tx_img' : publicService.customer._id">
             </div>
 
@@ -96,29 +96,27 @@
 
     </div>
 
-    <div class="second-row">
+    <div class="toolbar-second-row">
 
-        <div class="toolbar-links-base">
-            <div class="toolbar-base-item pointer"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
-                <div>
-                    Inicio
-                </div>
+        <div class="toolbar-item"
+            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
+            <div>
+                Inicio
             </div>
+        </div>
 
-            <div class="toolbar-base-item pointer"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
-                <div>
-                    Menú
-                </div>
+        <div class="toolbar-item"
+            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
+            <div>
+                Menú
             </div>
+        </div>
 
-            <div class="toolbar-base-item pointer"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
-                *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-                <div>
-                    Reservar
-                </div>
+        <div class="toolbar-item"
+            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
+            *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
+            <div>
+                Reservar
             </div>
         </div>
 

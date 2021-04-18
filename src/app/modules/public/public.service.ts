@@ -26,9 +26,10 @@ export class PublicService {
   customer: any;
 	token: string;
 
+
+  //https://saturno.fun/urlModule/urlComponent
   urlModule: string; // admin waiter public
   urlComponent: string; // login register 
-  
   isEmbed: boolean = false; // if ticket form is embed
   companyString: string = null; 
 
@@ -125,8 +126,8 @@ export class PublicService {
     return this.http.post(url, data).pipe(map((resp: any) => {
 			localStorage.setItem('token', JSON.stringify(resp.token));
       localStorage.setItem('customer', JSON.stringify(resp.user));
+      this.customer = resp.user;
 			this.token = resp.token;
-      this.customer = resp.customer;
       return resp;
     }),
       catchError(err => {

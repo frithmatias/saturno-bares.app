@@ -74,7 +74,8 @@ export class TicketCreateComponent implements OnInit {
 
     this.route.params.subscribe(async (data: any) => {
       if (data.embedcompanystring) {
-        this.publicService.isEmbed = true;
+        localStorage.setItem('isembed', data.embedcompanystring)
+        this.publicService.isEmbed = true;  
         this.publicService.companyString = data.embedcompanystring;
         let resp = await this.getDataForEmbed(data.embedcompanystring)
           .then(() => {
@@ -112,6 +113,8 @@ export class TicketCreateComponent implements OnInit {
 
         this.publicService.readCompany(embedcompanystring).toPromise().then((resp: CompanyResponse) => {
           if (resp.ok) {
+            localStorage.setItem('company', JSON.stringify(resp.company));
+            this.publicService.company = resp.company;
             this.company = resp.company;
             const idCompany = resp.company._id;
             this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
@@ -421,14 +424,18 @@ export class TicketCreateComponent implements OnInit {
   }
 
   loggedIn(customer: User) {
-    if (customer) { this.publicService.customer = customer; } // login form can return null for back to form
     this.getUserTickets();
     this.showLogin = false;
+    this.customer = customer; // de todas formas la vista lo levanta de publiService.customer
   }
+
 
   salir(): void {
     this.publicService.clearPublicSession();
     delete this.ticket;
+    delete this.customer;
+    this.ticketForm.reset();
+    this.showLogin = false;
   }
 
 }

@@ -8,6 +8,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 // modules
 import { ComponentsModule } from 'src/app/components/components.module';
 import { MaterialModule } from 'src/app/modules/material.module';
+import { QRCodeModule } from 'angularx-qrcode';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
@@ -82,7 +83,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 		ComponentsModule,
 		AdminRoutingModule,
 		PipesModule,
-		ClipboardModule
+		ClipboardModule,
+		QRCodeModule
 	]
 })
 export class AdminModule { }

@@ -1,6 +1,6 @@
-<div class="toolbar" >
+<div class="toolbar-wrapper">
 
-    <div class="first-row">
+    <div class="toolbar-first-row">
 
         <!-- LOGO -->
         <div class="logo-container">
@@ -17,30 +17,30 @@
         </div>
 
         <!-- HOME LINKS -->
-        <div class="toolbar-links-header">
+        <div class="toolbar-links-first-row">
 
-            <div class="toolbar-base-item pointer mr-4" routerLink="/howworks">
+            <div class="toolbar-item mr-4" routerLink="/howworks">
                 <div class="mdi mdi-help-box"></div>
                 <div>
                     ¿Qué es Saturno?
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer mr-4" routerLink="/register">
+            <div class="toolbar-item mr-4" routerLink="/register">
                 <div class="mdi mdi-storefront-outline"></div>
                 <div>
                     Registrar Negocio
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer mr-4" routerLink="/public/tickets">
+            <div class="toolbar-item mr-4" routerLink="/public/tickets">
                 <div class="mdi mdi-ticket-account"></div>
                 <div>
                     Mis Reservas
                 </div>
             </div>
 
-            <div class="toolbar-base-item pointer mr-4" (click)="scrollToElement()">
+            <div class="toolbar-item mr-4" (click)="scrollToElement()">
                 <div class="mdi mdi-map-marker"></div>
                 <div>
                     Buscá por Zona
@@ -54,7 +54,7 @@
 
             <!-- GOOGLE LOGIN IMAGE -->
             <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
-                <img class="user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+                <img class="toolbar-user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
             </div>
 
             <!-- FACEBOOK HAS NO LOGIN IMAGE -->
@@ -65,7 +65,7 @@
             <!-- NORMAL LOGIN WITH IMAGE -->
             <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="pointer"
                 [matMenuTriggerFor]="menu">
-                <img class="user-image"
+                <img class="toolbar-user-image"
                     [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
             </div>
 
@@ -107,27 +107,25 @@
 
         </div>
 
-        <div *ngIf="!loginService.user" class="toolbar-base-item pointer" routerLink="/login">
+        <div *ngIf="!loginService.user" class="toolbar-item" routerLink="/login">
             <div class="mdi mdi-account-circle"></div>
             <div>
                 Comercios
             </div>
         </div>
-        
+
     </div>
 
-    <div class="second-row">
+    <div class="toolbar-second-row">
 
-        <div class="toolbar-links-base">
-            <div class="toolbar-base-item pointer" routerLink="/howworks">
-                ¿Qué es Saturno?
-            </div>
-            <div class="toolbar-base-item pointer" routerLink="/public/tickets">
-                Mis Reservas
-            </div>
-            <div class="toolbar-base-item pointer" (click)="scrollToElement()">
-                Buscá por Zona
-            </div>
+        <div class="toolbar-item" routerLink="/howworks">
+            ¿Qué es Saturno?
+        </div>
+        <div class="toolbar-item" routerLink="/public/tickets">
+            Mis Reservas
+        </div>
+        <div class="toolbar-item" (click)="scrollToElement()">
+            Buscá por Zona
         </div>
 
     </div>

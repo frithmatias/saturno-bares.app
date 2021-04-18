@@ -1,71 +1,71 @@
 <div class="ticket-create-container animated fadeIn">
-
-
-  <!-- Has active ticket -->
-
-  <div *ngIf="errorEmbed || !company" class="public-ticket-content">
+  
+  <!-- NO COMPANY ERROR -->
+  <div *ngIf="errorEmbed || !company" class="public-ticket-content animated fadeIn">
     Error: No existe el comercio
   </div>
 
-  <!-- CUSTOMER NOT LOGGED IN -->
-  <div *ngIf="!publicService.customer && !showLogin && publicService.isEmbed===true" class="pointer mt-4"
-    (click)="showLogin=!showLogin">
-    <div class="xxl op4 mdi mdi-account-circle"></div>
-    <div>
-      Ingresar
-    </div>
-  </div>
+  <!-- LOGIN -->
+  <div>
 
-  <app-login *ngIf="showLogin && !publicService.customer" (customer)="loggedIn($event)"></app-login>
-
-  <!-- CUSTOMER LOGGED IN -->
-  <div *ngIf="publicService.customer && publicService.isEmbed===true" class="mt-4">
-
-    <!-- GOOGLE LOGIN IMAGE -->
-    <div *ngIf="publicService.customer.bl_social && publicService.customer.tx_img">
-      <img class="user-image" [src]="publicService.customer.tx_img" [matMenuTriggerFor]="menu">
-    </div>
-
-    <!-- FACEBOOK HAS NO LOGIN IMAGE -->
-    <div *ngIf="publicService.customer.bl_social && !publicService.customer.tx_img" class="mdi mdi-account-tie pointer"
-      [matMenuTriggerFor]="menu">
-    </div>
-
-    <!-- NORMAL LOGIN WITH IMAGE -->
-    <div *ngIf="!publicService.customer.bl_social && publicService.customer.tx_img" class="pointer"
-      [matMenuTriggerFor]="menu">
-      <img class="user-image"
-        [src]="publicService.customer.tx_img | imagenPipe : 'tx_img' : publicService.customer._id">
-    </div>
-
-    <!-- NORMAL LOGIN WO IMAGE -->
-    <div *ngIf="!publicService.customer.bl_social && !publicService.customer.tx_img" class="mdi mdi-account-tie pointer"
-      [matMenuTriggerFor]="menu">
-    </div>
-
-    <mat-menu #menu="matMenu">
-      <div mat-menu-item>
-        <span disabled class="lg op5 toolbar-menu-icon mdi mdi-email mx-1"></span>
-        <span class="ml-2 op8 align-middle">{{publicService.customer?.tx_email}}</span>
+    <!-- CUSTOMER NOT LOGGED IN -->
+    <div *ngIf="!customer && !showLogin && publicService.isEmbed===true" class="pointer mt-4"
+      (click)="showLogin=!showLogin">
+      <div class="xxl op4 mdi mdi-account-circle"></div>
+      <div>
+        Ingresar
       </div>
-      <a target="_blank" href="https://saturno.fun/public/tickets" mat-menu-item>
-        <span disabled class="lg op5 toolbar-menu-icon mdi mdi-ticket-account mx-1"></span>
-        <span class="ml-2 op8 align-middle">Mis Reservas</span>
-      </a>
-      <hr>
-      <button mat-raised-button color="warn" (click)="salir()">
-        <span class="mdi mdi-power"></span> Salir
-      </button>
-    </mat-menu>
+    </div>
 
+    <!-- CUSTOMER LOGGED IN -->
+    <div *ngIf="customer && publicService.isEmbed===true" class="mt-4">
+
+      <!-- GOOGLE LOGIN IMAGE -->
+      <div *ngIf="customer.bl_social && customer.tx_img">
+        <img class="toolbar-user-image" [src]="customer.tx_img" [matMenuTriggerFor]="menu">
+      </div>
+
+      <!-- FACEBOOK HAS NO LOGIN IMAGE -->
+      <div *ngIf="customer.bl_social && !customer.tx_img" class="mdi mdi-account-tie pointer"
+        [matMenuTriggerFor]="menu">
+      </div>
+
+      <!-- NORMAL LOGIN WITH IMAGE -->
+      <div *ngIf="!customer.bl_social && customer.tx_img" class="pointer" [matMenuTriggerFor]="menu">
+        <img class="toolbar-user-image" [src]="customer.tx_img | imagenPipe : 'tx_img' : customer._id">
+      </div>
+
+      <!-- NORMAL LOGIN WO IMAGE -->
+      <div *ngIf="!customer.bl_social && !customer.tx_img" class="mdi mdi-account-tie pointer"
+        [matMenuTriggerFor]="menu">
+      </div>
+
+      <mat-menu #menu="matMenu">
+        <div mat-menu-item>
+          <span disabled class="lg op5 toolbar-menu-icon mdi mdi-email mx-1"></span>
+          <span class="ml-2 op8 align-middle">{{customer?.tx_email}}</span>
+        </div>
+        <a target="_blank" href="https://saturno.fun/public/tickets" mat-menu-item>
+          <span disabled class="lg op5 toolbar-menu-icon mdi mdi-ticket-account mx-1"></span>
+          <span class="ml-2 op8 align-middle">Mis Reservas</span>
+        </a>
+        <hr>
+        <button mat-raised-button color="warn" (click)="salir()">
+          <span class="mdi mdi-power"></span> Salir
+        </button>
+      </mat-menu>
+
+
+    </div>
+
+    <!-- LOGIN FORM -->
+    <app-login *ngIf="showLogin && !customer" (logged)="loggedIn($event)"></app-login>
 
   </div>
 
-
-  <!-- TICKET FORM OR TICKET STATUS -->
+  <!-- TICKET FORM || TICKET INFO -->
   <div *ngIf="company && ticketForm" class="page-tab-container animated fadeIn">
 
-    <!-- LOADING AVAILABILITY -->
     <app-spinner *ngIf="loading" text="Obteniendo disponibilidad..."></app-spinner>
 
     <!-- TICKET FORM  -->
@@ -105,13 +105,13 @@
             </mat-select>
           </mat-form-field>
 
-
           <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
             <mat-label>Fecha</mat-label>
-            <input matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+            <input (click)="picker.open()" matInput formControlName="dtReserve" [min]="minDate" [max]="maxDate"
+              [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker">
             </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field *ngIf="ticketForm.controls.txWhen.value==='otrodia'" color="accent">
@@ -175,16 +175,14 @@
       <div *ngIf="ticket.tx_status === 'waiting'">
 
         <div class="my-4">
-          ¡Tu ticket esta creado! ahora sólo tenés que confirmarlo dentro de los próximos 10 minutos.
+          ¡Tu ticket esta creado! Hacé click en Ingresar y confirmalo dentro de los próximos 10 minutos.
         </div>
 
-        <div *ngIf="publicService.customer" class="my-4">
+        <div *ngIf="customer" class="my-4">
           <button class="mt-2" mat-raised-button color="active" (click)="validateTicket(ticket)">
             <span class="mdi mdi-check-circle-outline mr-1"></span>¡Confirmar!
           </button>
         </div>
-
-        <app-login *ngIf="!publicService.customer" (customer)="loggedIn($event)"></app-login>
 
       </div>
 
@@ -325,14 +323,13 @@
         </p>
       </div>
 
-
       <!-- ACTIONS -->
       <div class="my-4">
-        <button *ngIf="!publicService.isEmbed" mat-button  routerLink="/public/tickets">
+        <button *ngIf="!publicService.isEmbed" mat-button routerLink="/public/tickets">
           <span class="mdi mdi-ticket-account mr-1"></span> Mis Reservas
         </button>
         <button *ngIf="!hideCancel" mat-button color="warn" (click)="cancel(ticket)">
-          <span class="mdi mdi-close-circle mr-1"></span> Cancelar
+          <span class="mdi mdi-close-circle mr-1"></span> Cancelar Reserva
         </button>
       </div>
 

@@ -1,23 +1,10 @@
-<div class="toolbar" >
+<div class="toolbar-wrapper">
 
-    <div class="first-row">
+    <div class="toolbar-first-row">
 
         <!-- TOGGLE MENU ICON -->
         <div class="mdi mdi-menu mt-1 xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
-            <!-- <span class="example-spacer"></span> -->
-        </div>
 
-        <!-- LOGO -->
-        <div *ngIf="!loginService.user" class="logo-container">
-
-            <!-- LOGO IMG -->
-            <div class="logo-img pointer" routerLink="/home"> </div>
-
-            <!-- LOGO TITLE -->
-            <div class="logo-text-container pointer" routerLink="/home">
-                <div class="md"> SATURNO </div>
-                <div class="xs">{{version}} </div>
-            </div>
         </div>
 
         <!-- COMPANY NAME -->
@@ -34,7 +21,7 @@
 
             <!-- GOOGLE LOGIN IMAGE -->
             <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
-                <img class="user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+                <img class="toolbar-user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
             </div>
 
             <!-- FACEBOOK HAS NO LOGIN IMAGE -->
@@ -45,7 +32,7 @@
             <!-- NORMAL LOGIN WITH IMAGE -->
             <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="pointer"
                 [matMenuTriggerFor]="menu">
-                <img class="user-image"
+                <img class="toolbar-user-image"
                     [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
             </div>
 
@@ -67,15 +54,11 @@
                     <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
                     <span class="ml-2 align-middle">Iniciar Asistente</span>
                 </div>
-                <div routerLink="/waiter/dashboard" mat-menu-item>
-                    <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
-                    <span class="ml-2 align-middle">Métricas</span>
-                </div>
-                <div routerLink="/waiter/profile" mat-menu-item>
+                <div routerLink="/admin/profile" mat-menu-item>
                     <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
                     <span class="ml-2 align-middle">Perfil</span>
                 </div>
-                <div routerLink="/waiter/profile" mat-menu-item>
+                <div routerLink="/admin/profile" mat-menu-item>
                     <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
                     <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
                 </div>
@@ -89,15 +72,13 @@
 
     </div>
 
-    <div class="second-row">
+    <div class="toolbar-second-row">
 
-        <div class="toolbar-links-base">
-            <div class="toolbar-base-item pointer" routerLink="/admin/wizard">
-                Iniciar Asistente
-            </div>
-            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
-                Atender
-            </div>
+        <div class="toolbar-item" routerLink="/admin/wizard">
+            Iniciar Asistente
+        </div>
+        <div class="toolbar-item" routerLink="/waiter/home">
+            Atender
         </div>
 
     </div>

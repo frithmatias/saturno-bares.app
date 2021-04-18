@@ -29,14 +29,12 @@ export class AppComponent {
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
       // map((evento: NavigationEnd ) => {evento})
     ).subscribe((data: NavigationEnd) => {
-      
       this.publicService.urlModule = data.url.split('/')[1] || null; // admin - waiter - (public path)
       this.publicService.urlComponent = data.url.split('/')[2] || null; // admin - waiter - (public path)
-      console.log('module:' + this.publicService.urlModule, 'component:' + this.publicService.urlComponent)
     });
   }
-  
 
-  
+
+
 }
 

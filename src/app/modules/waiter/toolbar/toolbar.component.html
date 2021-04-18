@@ -1,10 +1,10 @@
-<div class="toolbar" >
+<div class="toolbar-wrapper">
 
-    <div class="first-row">
+    <div class="toolbar-first-row">
 
         <!-- TOGGLE MENU ICON -->
         <div class="mdi mdi-menu mt-1 xl pointer" *ngIf="loginService.user" (click)="toggle('sidenav')">
-            <!-- <span class="example-spacer"></span> -->
+
         </div>
 
         <!-- COMPANY NAME -->
@@ -19,7 +19,7 @@
 
             <!-- GOOGLE LOGIN IMAGE -->
             <div *ngIf="loginService.user.bl_social && loginService.user.tx_img">
-                <img class="user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
+                <img class="toolbar-user-image" [src]="loginService.user.tx_img" [matMenuTriggerFor]="menu">
             </div>
 
             <!-- FACEBOOK HAS NO LOGIN IMAGE -->
@@ -30,7 +30,7 @@
             <!-- NORMAL LOGIN WITH IMAGE -->
             <div *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="pointer"
                 [matMenuTriggerFor]="menu">
-                <img class="user-image"
+                <img class="toolbar-user-image"
                     [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
             </div>
 
@@ -62,12 +62,10 @@
 
     </div>
 
-    <div class="second-row">
+    <div class="toolbar-second-row">
 
-        <div class="toolbar-links-base">
-            <div class="toolbar-base-item pointer" routerLink="/waiter/home">
-                Inicio
-            </div>
+        <div class="toolbar-item" routerLink="/waiter/home">
+            Inicio
         </div>
 
     </div>

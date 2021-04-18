@@ -12,7 +12,7 @@ export class UploaderComponent implements OnInit {
 	@ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 	@Input() editable: boolean = true; // (i.e. google profile images are not editable)
 	@Input() multi: boolean = false;
-	@Input() documentData: any;  // files in db
+	@Input() documentData: any;  
 	@Input() idDocument: string;
 	@Input() idField: string;
 	@Input() header: { icon: string, title: string, subtitle: string };
