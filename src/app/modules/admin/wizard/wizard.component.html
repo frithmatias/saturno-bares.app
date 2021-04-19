@@ -98,13 +98,13 @@
             </mat-card>
         </mat-step>
 
-        <!-- Modules -->
+        <!-- Settings -->
         <mat-step [completed]="publicService.settings">
             <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
                     <mat-card-title>
-                        Configuración
+                        Ajustes
                     </mat-card-title>
                     <mat-card-subtitle class="step-header">
                         ¿Cómo preferís usar el sistema?
@@ -119,7 +119,7 @@
                         </p>
                     </div>
 
-                    <app-modules [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-modules>
+                    <app-settings [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-settings>
 
                     
                 </mat-card-content>

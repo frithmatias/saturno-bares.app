@@ -135,13 +135,15 @@ SATURNO TOOLBAR
     }
 
     .toolbar-second-row {
-        display      : flex !important;
-        padding      : 10px 5px; 
+        display: flex !important;
+        padding: 10px 5px;
     }
 
     .toolbar-spacer {
         top          : 94px !important;
         margin-bottom: 94px !important;
+        height       : calc(100vh - 94px) !important;
+
     }
 }
 
@@ -208,6 +210,7 @@ SATURNO TOOLBAR
     align-items: center;
     padding    : 8px 12px;
     height     : 55px;
+    font-size  : small;
 }
 
 .toolbar-second-row {
@@ -242,6 +245,7 @@ SATURNO TOOLBAR
     position      : relative;
     top           : 55px;
     margin-bottom : 55px;
+    height        : calc(100vh - 55px) !important;
     bottom        : 0;
     left          : 0;
     right         : 0;
@@ -287,7 +291,7 @@ mat-drawer-container {
 }
 
 .page-container {
-    margin          : 20px 0px;
+    padding-top     : 30px;
     min-width       : 300px;
     max-width       : 600px;
     font-size       : medium;
@@ -329,11 +333,6 @@ mat-drawer-container {
         margin : 0em;
         padding: 0em;
     }
-
-    .page-container .mat-card {
-        padding-top: 30px;
-    }
-
 
     .page-container-login {
         height: 100vh;
