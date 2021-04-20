@@ -54,9 +54,9 @@ export class LoginService {
 	// Login Methods
 	// ========================================================
 
-	loginUser(platform: string, token: string, emailForm: any, recordar: boolean = false) {
+	loginUser(platform: string, token: string, emailForm: any) {
 
-		recordar ? localStorage.setItem('email', emailForm.tx_email) : localStorage.removeItem('email');
+		if (emailForm) { localStorage.setItem('email', emailForm.tx_email); }
 
 		let api: string;
 		let data: any;

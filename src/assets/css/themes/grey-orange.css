@@ -34,7 +34,7 @@
     --text-o95: rgba(0, 0, 0, .95);
     --text    : rgba(0, 0, 0, 1);
 
-    
+
     --primary-o25        : rgba(255, 87, 34, .25);
     --primary-o50        : rgba(255, 87, 34, .50);
     --primary-o75        : rgba(255, 87, 34, .75);
@@ -44,7 +44,8 @@
     --warn               : #f44336;
     --deco               : #277127;
     --info               : #3f3f3f;
-    --bg                 : #e2e2e2;
+    --bg                 : rgb(226, 226, 226);
+    --bg-o90             : rgba(226, 226, 226, .9);
     --mat-card-bg        : #f6f6f6;
     --mat-panel-bg       : #ffffff;
     --mat-bottom-sheet-bg: #d0d0d0;

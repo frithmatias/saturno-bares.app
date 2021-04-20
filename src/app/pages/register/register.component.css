@@ -1,57 +1,7 @@
-@media (max-width: 575px) {
 
-    .register-social {
-        width  : 100% !important;
-        padding: 0px !important;
-
-    }
-
-    .register-email {
-        width  : 100% !important;
-        padding: 0px !important;
-
-    }
-
-    .banner-container-col-left {
-        width        : 100% !important;
-        padding-right: 0px;
-    }
-
-    .banner-container-col-right {
-        width       : 100% !important;
-        padding-left: 0px;
-    }
-
-    .banner-container-col {
-        width: 100% !important;
-    }
-
-    .banner {
-        border: 10px solid var(--bg);
-    }
-
-}
-
-.register-wrapper {
-    display       : flex;
-    flex-direction: row;
-    flex-wrap     : wrap;
-}
-
-.register-social {
-    padding: 0px 20px 0px 0px;
-    width  : 50%;
-}
-
-
-.register-email {
-    width: 50%;
-}
-
-
-/*--------------------------------*/
-/* banners */
-/*--------------------------------*/
+/* -------------------------------- */
+/* BANNERS */
+/* -------------------------------- */
 
 .banner-container {
     font-family   : -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -99,9 +49,15 @@
 
 
 /* LEFT BANNERS */
+.banner-container-howworks {
+    background-color: #659767;
+    border-radius   : 0 5px 5px 0;
+}
 
 .banner-container-tables {
     background-color: #ff6666;
+    border-radius   : 0 5px 5px 0;
+
 }
 
 .banner-img-tables {
@@ -116,9 +72,12 @@
 
 /* RIGHT BANNERS */
 
+
+
 .banner-container-virtual-queue {
     background-color: var(--primary);
     overflow        : hidden;
+    border-radius   : 5px 0 0 5px;
 
 }
 
@@ -136,6 +95,8 @@
 
 .banner-container-schedule {
     background-color: #009688;
+    border-radius   : 5px 0 0 5px;
+
 }
 
 .banner-img-schedule {
@@ -147,9 +108,4 @@
     background-image   : url('../../../assets/img/screenshots/admin_schedule.png');
     background-size    : contain;
     background-repeat  : no-repeat;
-}
-
-
-.banner-container-howworks {
-    background-color: #659767;
 }

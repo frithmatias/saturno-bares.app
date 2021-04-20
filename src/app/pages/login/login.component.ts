@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
-
+	loggingEmail = false;
+	loggingSocial = false;
 	constructor(
 		public publicService: PublicService,
 		public router: Router,
@@ -48,9 +49,10 @@ export class LoginComponent implements OnInit {
 			tx_password: forma.value.password,
 			bl_admin: true //admin || customer 
 		};
-		const recordar = forma.value.recuerdame;
 		const platform = 'email';
-		this.loginUser(platform, null, emailForm, recordar);
+
+		this.loggingEmail = true;
+		this.loginUser(platform, null, emailForm);
 	}
 
 	loginSocial(social: Social) {
@@ -61,11 +63,17 @@ export class LoginComponent implements OnInit {
 		}
 		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.loginUser(platform, token, null, false);
+
+		this.loggingSocial = true;
+		this.loginUser(platform, token, null);
 	}
 
-	loginUser(platform: string, token: string, emailForm: any, remember: boolean) {
-		this.loginService.loginUser(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
+	loginUser(platform: string, token: string, emailForm: any) {
+
+		this.loginService.loginUser(platform, token, emailForm).subscribe((data: LoginResponse) => {
+			this.loggingSocial = false;
+			this.loggingEmail = false;
+
 			if (data.ok) {
 				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;

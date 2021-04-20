@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
+	loggingEmail = false;
+	loggingSocial = false;
 	constructor(
 		public publicService: PublicService,
 		public router: Router,
@@ -46,9 +48,10 @@ export class LoginComponent implements OnInit {
 
 		};
 
-		const recordar = forma.value.recuerdame;
 		const platform = 'email';
-		this.loginCustomer(platform, null, emailForm, recordar);
+
+		this.loggingEmail = true;
+		this.loginCustomer(platform, null, emailForm);
 	}
 
 	loginSocial(social: Social) {
@@ -61,23 +64,27 @@ export class LoginComponent implements OnInit {
 
 		const token = social.txToken;
 		const platform = social.txPlatform;
-		this.loginCustomer(platform, token, null, false);
+
+		this.loggingSocial = true;
+		this.loginCustomer(platform, token, null);
 	}
 
 
-	loginCustomer(platform: string, token: string, emailForm: any, remember: boolean) {
-		this.publicService.loginCustomer(platform, token, emailForm, remember).subscribe((data: LoginResponse) => {
+	loginCustomer(platform: string, token: string, emailForm: any) {
+		this.publicService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
+			this.loggingSocial = false;
+			this.loggingEmail = false;
 			if (data.ok) {
-				if(localStorage.getItem('isembed')){
+				if (localStorage.getItem('isembed')) {
 					const companyString = localStorage.getItem('isembed');
 					const companyFormURL = '/ticketform/' + companyString;
 					this.logged.emit(data.user);
 					this.router.navigate([companyFormURL]);
-					
-				  } else {
+
+				} else {
 					const destination = '/public/tickets';
 					this.router.navigate([destination]);
-				  }
+				}
 			}
 		}, (err: HttpErrorResponse) => {
 			if (err.error.msg) {
@@ -96,6 +103,12 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-
+	backToForm() {
+		this.logged.emit(null);
+		if (localStorage.getItem('isembed')) {
+			const companyString = localStorage.getItem('isembed');
+			this.router.navigate(['/ticketform/' + companyString]);
+		}
+	}
 
 }

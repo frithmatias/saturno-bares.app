@@ -26,12 +26,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.user = this.loginService.user;
 		this.user$ = this.loginService.user$.subscribe((user: User) => {
 			this.user = user;
-			this.widget = `<iframe
-src="https://saturno.fun/ticketform/${this.user.id_company?.tx_company_string}" 
-width="100%" 
-height="400px" 
-frameborder="0">
-</iframe>`;
+			if (this.user) {
+				this.widget = `<iframe
+	src="https://saturno.fun/ticketform/${this.user.id_company?.tx_company_string}" 
+	width="100%" 
+	height="400px" 
+	frameborder="0">
+	</iframe>`;
+			}
 		})
 
 		this.widget = `<iframe

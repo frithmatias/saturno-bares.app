@@ -58,6 +58,7 @@ mat-card {
     background-repeat  : no-repeat;
     background-position: center center;
     height             : 450px;
+    opacity            : .9;
 }
 
 .welcome-wrapper {

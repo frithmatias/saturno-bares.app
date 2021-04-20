@@ -44,7 +44,8 @@
     --warn               : #f44336;
     --deco               : #8d8d8d;
     --info               : #3f3f3f;
-    --bg                 : #c1c1c1;
+    --bg                 : rgb(193, 193, 193);
+    --bg-o90             : rgba(193, 193, 193, .9);
     --mat-card-bg        : #efefef;
     --mat-panel-bg       : #ffffff;
     --mat-bottom-sheet-bg: #d0d0d0;

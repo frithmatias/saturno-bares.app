@@ -1,32 +1,5 @@
-@media (max-width: 575px) {
-
-    .login-social {
-        width        : 100% !important;
-        padding      : 0px !important;
-        margin-bottom: 30px;
 
 
-    }
-
-    .login-email {
-        width  : 100% !important;
-        padding: 0px !important;
-
-    }
-}
-
-.login-wrapper {
-    display       : flex;
-    flex-direction: row;
-    flex-wrap     : wrap;
-}
-
-.login-social {
-    padding: 0px 20px 0px 0px;
-    width  : 50%;
-}
 
 
-.login-email {
-    width: 50%;
-}
+

@@ -1,12 +1,12 @@
 <div class="ticket-create-container animated fadeIn">
   
   <!-- NO COMPANY ERROR -->
-  <div *ngIf="errorEmbed || !company" class="public-ticket-content animated fadeIn">
+  <div *ngIf="errorEmbed || !company" class="create-ticket-error">
     Error: No existe el comercio
   </div>
 
   <!-- LOGIN -->
-  <div>
+  <div *ngIf="!errorEmbed" class="my-1">
 
     <!-- CUSTOMER NOT LOGGED IN -->
     <div *ngIf="!customer && !showLogin && publicService.isEmbed===true" class="pointer mt-4"
@@ -64,7 +64,7 @@
   </div>
 
   <!-- TICKET FORM || TICKET INFO -->
-  <div *ngIf="company && ticketForm" class="page-tab-container animated fadeIn">
+  <div *ngIf="company && ticketForm && !errorEmbed" class="my-1">
 
     <app-spinner *ngIf="loading" text="Obteniendo disponibilidad..."></app-spinner>
 

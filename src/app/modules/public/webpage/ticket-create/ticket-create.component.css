@@ -17,8 +17,6 @@
     color        : var(--text);
 }
 
-
-
 .inputs-container {
     display       : flex;
     flex-direction: row;
@@ -42,4 +40,10 @@ mat-form-field {
 
 a {
     text-decoration: none;
+}
+
+.create-ticket-error {
+    display      : flex;
+    place-items  : center;
+    place-content: center;
 }

@@ -1,72 +1,86 @@
-<div class="page-container-wide animated fadeIn">
-    <mat-card>
-        <div class="register-wrapper">
+<div class="page-wrapper animated fadeIn">
+    <div class="page-image">
+
+        Registrar Comercio
+
+    </div>
+    <div class="page-login">
+
+        <mat-card>
 
             <!---------------------------------------------------------------------->
-            <!-- SOCIAL REGISTRATION -->
+            <!-- SOCIAL -->
             <!---------------------------------------------------------------------->
 
-            <div class="register-social">
-                <div class="bg-light text-dark rounded h-100 p-4">
-                    <div class="mt-3 xl text-danger">Registrar Comercio</div>
+            <div>
+                <div class="jumbotron m-0 py-3 h-100 text-dark">
+                    <div class="login-title mt-3 xl text-danger">Registrar Comercio</div>
                     <app-social [platforms]="['facebook', 'google']" (socialResponse)="registerSocial($event)">
                     </app-social>
-                    <button mat-button routerLink="/home">Volver al Inicio</button>
                 </div>
             </div>
 
             <!---------------------------------------------------------------------->
-            <!-- EMAIL REGISTRATION -->
+            <!-- EMAIL -->
             <!---------------------------------------------------------------------->
 
-            <div class="register-email">
-                <div class="my-2 md">Registrar comercio con mi cuenta de email.</div>
+            <div class="mt-3">
                 <form [formGroup]="forma" (ngSubmit)="registerUser()" id="loginform">
 
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Nombre</mat-label>
-                        <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name"
-                            type="text" required>
-                    </mat-form-field>
-
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Email</mat-label>
-                        <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado
-                        </mat-error>
-                        <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email"
-                            name="email" type="email" (keyup)="checkEmailExists()" required>
-                    </mat-form-field>
-
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Clave</mat-label>
-                        <input maxlength="30" matInput placeholder="Clave" formControlName="password1" name="password1"
-                            type="password" required>
-                    </mat-form-field>
-
-                    <mat-form-field color="accent" class="w-100">
-                        <mat-label>Clave</mat-label>
-                        <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2"
-                            type="password" required>
-                    </mat-form-field>
-
-                    <div class="form-group text-center px-4 py-2">
-                        <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
-                            Registrarme
-                        </button>
+                    <div>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Nombre</mat-label>
+                            <input maxlength="30" matInput formControlName="name" name="name" type="text" required>
+                        </mat-form-field>
                     </div>
 
-                    <div class="border-top text-center label pt-2 mt-3">
-                        <span class="p-2">Ya tenés cuenta?</span>
-                        <span class="p-2 text-accent pointer" routerLink="/login"><b>Entrar</b></span>
+                    <div>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Email</mat-label>
+                            <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado
+                            </mat-error>
+                            <input maxlength="50" matInput formControlName="email" name="email" type="email"
+                                (keyup)="checkEmailExists()" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Clave</mat-label>
+                            <input maxlength="30" matInput formControlName="password1" name="password1" type="password"
+                                required>
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Clave</mat-label>
+                            <input maxlength="30" matInput formControlName="password2" name="password2" type="password"
+                                required>
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <div class="form-group text-center px-4 py-2 w-100">
+                            <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
+                                Registrarme
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
+                        <button mat-button color="active" routerLink="/login">Ingresar</button>
                     </div>
                 </form>
 
             </div>
 
-        </div>
 
-    </mat-card>
 
+        </mat-card>
+
+    </div>
 </div>
 
 <!-- ======================================================== -->

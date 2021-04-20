@@ -102,8 +102,10 @@ export class PublicService {
     return this.http.post(url, data);
   }
 
-  loginCustomer(platform: string, token: string, emailForm: any, recordar: boolean = false) {
-    recordar ? localStorage.setItem('email', emailForm.tx_email) : localStorage.removeItem('email');
+  loginCustomer(platform: string, token: string, emailForm: any) {
+
+		if (emailForm) { localStorage.setItem('email', emailForm.tx_email); }
+
     let api: string;
     let data: any;
     switch (platform) {

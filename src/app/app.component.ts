@@ -16,25 +16,19 @@ export class AppComponent {
   constructor(
     public router: Router,
     public publicService: PublicService
-  ) {
-    // let hours = new Date().getHours();
-    // const theme = (hours >= 6 && hours < 19) ? 'grey-orange.css' : 'dark-pink.css';
-    // let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
-    // cssLink.href = `../../../assets/css/themes/${theme}`;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.router.events.pipe(
       filter(evento => evento instanceof NavigationEnd),
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
-      // map((evento: NavigationEnd ) => {evento})
+      // map((evento: ActivationEnd) => evento.snapshot.data)
     ).subscribe((data: NavigationEnd) => {
-      this.publicService.urlModule = data.url.split('/')[1] || null; // admin - waiter - (public path)
-      this.publicService.urlComponent = data.url.split('/')[2] || null; // admin - waiter - (public path)
+      // https://localhost:4200/ticketform/pizzasjavascript
+      this.publicService.urlModule = data.url.split('/')[1] || null; //ticketform
+      this.publicService.urlComponent = data.url.split('/')[2] || null; //pizzasjavascript
     });
   }
-
-
 
 }
 
