@@ -20,7 +20,30 @@
   .company-title {
     margin-left: 0px !important;
   }
-  
+
+  .no-tickets .search {
+    max-width: unset !important;
+  }
+}
+
+.no-tickets {
+  margin: 50px 10px;
+}
+
+.no-tickets .banner {
+  font-size: xx-large;
+  color    : var(--accent);
+}
+
+.no-tickets .text {
+  font-size: medium;
+  color    : var(--text);
+  opacity  : .8;
+}
+
+.no-tickets .search {
+  max-width: 50%;
+  margin   : 26px;
 }
 
 .tickets-container {

@@ -68,6 +68,7 @@ export class TicketCreateComponent implements OnInit {
 
   async ngOnInit() {
 
+
     if (localStorage.getItem('customer')) {
       this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
     }
@@ -75,7 +76,7 @@ export class TicketCreateComponent implements OnInit {
     this.route.params.subscribe(async (data: any) => {
       if (data.embedcompanystring) {
         localStorage.setItem('isembed', data.embedcompanystring)
-        this.publicService.isEmbed = true;  
+        this.publicService.isEmbed = true;
         this.publicService.companyString = data.embedcompanystring;
         let resp = await this.getDataForEmbed(data.embedcompanystring)
           .then(() => {
@@ -87,6 +88,7 @@ export class TicketCreateComponent implements OnInit {
           })
       } else {
         this.publicService.isEmbed = false;
+        if (localStorage.getItem('isembed')) { localStorage.removeItem('isembed'); }
         this.getData();
       }
 
@@ -388,6 +390,8 @@ export class TicketCreateComponent implements OnInit {
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
       if (data.ok) {
+        this.hideCancel = false;
+
         this.publicService.updateStorageTickets(data.ticket).then((tickets: Ticket[]) => {
           this.tickets = tickets;
           this.ticket = data.ticket;

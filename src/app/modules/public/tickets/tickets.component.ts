@@ -58,6 +58,9 @@ export class TicketsComponent implements OnInit {
       }
     }
 
+    // embed form cant show my tickets
+    if (localStorage.getItem('isembed')) { localStorage.removeItem('isembed'); }
+
     if (!this.customer) {
       this.router.navigate(['/public/login']);
     }

@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
 	loggingEmail = false;
 	loggingSocial = false;
+
 	constructor(
 		public publicService: PublicService,
 		public router: Router,
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
 		this.loginCustomer(platform, null, emailForm);
 	}
 
+
 	loginSocial(social: Social) {
 
 		if (!social) return;
@@ -80,7 +82,6 @@ export class LoginComponent implements OnInit {
 					const companyFormURL = '/ticketform/' + companyString;
 					this.logged.emit(data.user);
 					this.router.navigate([companyFormURL]);
-
 				} else {
 					const destination = '/public/tickets';
 					this.router.navigate([destination]);

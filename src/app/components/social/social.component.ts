@@ -12,15 +12,16 @@ declare const window: any;
   styleUrls: ['./social.component.css']
 })
 export class SocialComponent implements OnInit, AfterViewInit {
-  
+
   @ViewChild('validateTicketGoogle') gButton: any;
-  @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter();
+  @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter(); // devuelve el estado para el spinner
   @Input() logout: boolean = false;
   @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
   facebookFrontendResponse: facebookFrontendResponse;
   isMobile = false;
+  loading: string = null;
 
   constructor(
     private publicService: PublicService,
@@ -40,7 +41,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
     }
 
 
-    if(this.platforms){
+    if (this.platforms) {
       if (this.platforms.includes('google')) { this.googleInit(); }
       if (this.platforms.includes('facebook')) { this.facebookInit(); }
     }
@@ -69,7 +70,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
     });
   }
 
-  googleValidate(e) {
+  googleLogin(e) {
     this.attachSignin();
   }
 
@@ -80,6 +81,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
           txPlatform: 'google',
           txToken: googleUser.getAuthResponse().id_token
         };
+        this.loading = null;
         this.socialResponse.emit(social)
       });
     }, () => { });
@@ -110,6 +112,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   facebookLogin() {
     FB.getLoginStatus((loginResponse) => {
+
       if (loginResponse.status === 'connected') {
         this.facebookGetData(loginResponse);
       } else {
@@ -129,6 +132,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
           txPlatform: 'facebook',
           txToken: loginResponse.authResponse.accessToken
         };
+        
         this.socialResponse.emit(social)
       });
     });

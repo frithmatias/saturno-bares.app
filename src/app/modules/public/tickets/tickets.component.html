@@ -2,21 +2,32 @@
 
 <div class="toolbar-spacer">
 
-
   <div *ngIf="loading">
     <app-spinner text="Loading tickets..."></app-spinner>
   </div>
 
+  <div class="no-tickets" *ngIf="ticketsActive.length===0 && !loading">
+    <div class="banner">
+      ¡NADA POR AQUÍ!
+    </div>
+    <div class="text">
+      No tenés ninguna reserva todavía. Podés buscar acá un bar, café o restaurante y reservar tu mesa.
+    </div>
+    <div class="search">
+      <app-search></app-search>
+    </div>
+  </div>
 
   <!-- CARD TICKETS -->
-  <div class="tickets-container p-1 pt-2">
+  <div class="tickets-container" *ngIf="ticketsAll.length>0">
     <div class="ticket-card p-1" *ngFor="let ticket of ticketsAll">
+
       <!-- card with ticket data -->
       <mat-card class="p-0" [class]="ticket.tm_end ? 'ticket-inactive' : 'ticket-active'">
 
-
         <!-- header with company name and address -->
         <div class="company-header" routerLink="/public/page/{{ticket.id_company.tx_company_string}}/ticket">
+
           <!-- logo -->
           <div class="company-cover-container">
             <img class="company-cover"
@@ -48,6 +59,7 @@
               <td class="text-info text-right">{{ticket.tm_intervals[0] | dateToString : 'date-time-short' |
                 capitalizarPipe}}</td>
             </tr>
+
             <tr>
               <td>Nombre</td>
               <td class="text-info text-right"> {{ticket.tx_name}}</td>

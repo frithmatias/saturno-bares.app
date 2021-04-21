@@ -53,7 +53,7 @@ mat-card {
 .welcome-bg {
     position           : relative;
     top                : 94px;
-    background-image   : url('../../../assets/img/resto.jpg');
+    background-image   : url('../../../assets/img/bghome.jpg');
     background-size    : cover;
     background-repeat  : no-repeat;
     background-position: center center;

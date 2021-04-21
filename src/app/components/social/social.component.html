@@ -44,7 +44,7 @@
         <!-- GOOGLE -->
         <div *ngIf="platforms.includes('google')">
             <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
-                data-toggle="tooltip" (click)="googleValidate(validateTicketGoogle)">
+                data-toggle="tooltip" (click)="googleLogin(validateTicketGoogle)">
                 <table>
                     <tr>
                         <td class="button-icon mdi mdi-google xl"></td>
