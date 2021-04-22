@@ -181,8 +181,8 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   releaseSection = () => {
 
-    let idSection = this.waiterService.session.id_section._id;
-    let idWaiter = this.loginService.user._id;
+    const idSection = this.waiterService.session.id_section._id;
+    const idWaiter = this.loginService.user._id;
 
     this.waiterService
       .releaseSection(idSection, idWaiter)
