@@ -2,7 +2,13 @@
     <div class="page-image">
 
         Ingreso Público
-
+        <div class="login-buttons text-center pt-2">
+            <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver al
+                Inicio</button>
+            <button type="button" *ngIf="publicService.isEmbed" mat-button (click)="backToForm()">Volver al
+                Formulario</button>
+            <button type="button" mat-button color="active" routerLink="/public/register">Registrarme</button>
+        </div>
     </div>
     <div class="page-login">
 
@@ -16,11 +22,10 @@
                 <div class="login-social">
                     <div class="jumbotron m-0 py-3 h-100 text-dark">
                         <!-- Google Login -->
-                        <div class="login-title mt-3 xl">Ingreso público</div>
+                        <div class="login-title">Ingreso público</div>
                         <app-social *ngIf="!loggingSocial" [logout]="true" [platforms]="['facebook', 'google']"
                             (socialResponse)="loginSocial($event)"></app-social>
                         <app-spinner *ngIf="loggingSocial" text="Iniciando Sesión..."></app-spinner>
-
                     </div>
                 </div>
 
@@ -69,22 +74,21 @@
                             </span>
                         </div>
 
-                        <!---------------------------------------------------------------------->
-                        <!-- SIGN UP LINK -->
-                        <!---------------------------------------------------------------------->
-
-                        <div class="border-top text-center pt-2">
-                            <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver al
-                                Inicio</button>
-                            <button type="button" *ngIf="publicService.isEmbed" mat-button (click)="backToForm()">Volver al
-                                Formulario</button>
-                            <button type="button" mat-button color="active" routerLink="/public/register">Registrarme</button>
-                        </div>
-
                     </form>
                 </div>
-
             </div>
+
+            <div class="login-buttons-inform text-center pt-2">
+                <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver al
+                    Inicio</button>
+                <button type="button" *ngIf="publicService.isEmbed" mat-button (click)="backToForm()">Volver al
+                    Formulario</button>
+                <button type="button" mat-button color="active" routerLink="/public/register">Registrarme</button>
+            </div>
+
         </mat-card>
+   
+
+        
     </div>
 </div>

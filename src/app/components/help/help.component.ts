@@ -31,7 +31,7 @@ export class HelpComponent implements OnInit {
         this.helpTitle = `SPM`;
         break;
       case 'adminSettingsSchedule':
-        this.helpTitle = `AGENDA`;
+        this.helpTitle = `RESERVAS`;
         break;
       case 'adminSettingsIntervals':
         this.helpTitle = 'INTERVALOS';

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -23,7 +23,7 @@ import { SettingsResponse } from '../../../../interfaces/settings.interface';
   templateUrl: './ticket-create.component.html',
   styleUrls: ['./ticket-create.component.css']
 })
-export class TicketCreateComponent implements OnInit {
+export class TicketCreateComponent implements OnInit, OnDestroy {
 
   @Input() company: Company;
   @Input() settings: Settings;
@@ -53,6 +53,8 @@ export class TicketCreateComponent implements OnInit {
   hideCancel: boolean = false;
   errorEmbed: string = null;
 
+  paramsSubscription: Subscription;
+
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
@@ -73,7 +75,8 @@ export class TicketCreateComponent implements OnInit {
       this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
     }
 
-    this.route.params.subscribe(async (data: any) => {
+    this.paramsSubscription = this.route.params.subscribe(async (data: any) => {
+
       if (data.embedcompanystring) {
         localStorage.setItem('isembed', data.embedcompanystring)
         this.publicService.isEmbed = true;
@@ -103,7 +106,6 @@ export class TicketCreateComponent implements OnInit {
     this.getUserTickets();
     this.ticketsSubscribe();
   }
-
 
   getDataForEmbed(embedcompanystring: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -146,7 +148,6 @@ export class TicketCreateComponent implements OnInit {
   }
 
   getCompanySections() {
-
     const idCompany = this.company._id;
     this.wsService.emit('enterCompany', idCompany);
     this.loading = true;
@@ -154,7 +155,6 @@ export class TicketCreateComponent implements OnInit {
       this.loading = false;
       this.sections = data.sections;
     })
-
   }
 
   getUserTickets(): void {
@@ -433,7 +433,6 @@ export class TicketCreateComponent implements OnInit {
     this.customer = customer; // de todas formas la vista lo levanta de publiService.customer
   }
 
-
   salir(): void {
     this.publicService.clearPublicSession();
     delete this.ticket;
@@ -442,6 +441,9 @@ export class TicketCreateComponent implements OnInit {
     this.showLogin = false;
   }
 
+  ngOnDestroy(): void {
+    if (this.paramsSubscription) { this.paramsSubscription.unsubscribe(); }
+  }
 }
 
 

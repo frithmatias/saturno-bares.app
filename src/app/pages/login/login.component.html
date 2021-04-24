@@ -2,7 +2,11 @@
     <div class="page-image">
 
         Ingreso a Comercios
-
+        <div class="login-buttons text-center pt-2">
+            <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
+            <button mat-button color="active" routerLink="/register">Registrar
+                Comercio</button>
+        </div>
     </div>
     <div class="page-login">
 
@@ -15,7 +19,7 @@
             <div>
                 <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
-                    <div class="login-title mt-3 xl">Ingreso a Comercios</div>
+                    <div class="login-title">Ingreso a Comercios</div>
                     <app-social *ngIf="!loggingSocial" [logout]="true" [platforms]="['facebook', 'google']"
                         (socialResponse)="loginSocial($event)">
                     </app-social>
@@ -74,16 +78,18 @@
                     <!-- SIGN UP LINK -->
                     <!---------------------------------------------------------------------->
 
-                    <div class="border-top text-center pt-2">
-                        <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
-                        <button mat-button color="active" routerLink="/register">Registrar
-                            Comercio</button>
-                    </div>
-
+                    
                 </form>
             </div>
 
+            <div class="login-buttons-inform text-center pt-2">
+                <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
+                <button mat-button color="active" routerLink="/register">Registrar
+                    Comercio</button>
+            </div>
+
         </mat-card>
+        
 
     </div>
 </div>

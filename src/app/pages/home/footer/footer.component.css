@@ -23,13 +23,15 @@ a:hover {
 
 
 .footer-tech {
-    display: flex;
+    display        : flex;
     justify-content: center;
+    height         : 25px;
 }
 
 @media (max-width: 500px) {
-    .footer-tech {
-        display: none;
+    .footer {
+        height   : 15em;
+        flex-flow: wrap-reverse;
     }
 }
 

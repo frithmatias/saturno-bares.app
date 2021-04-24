@@ -7,11 +7,9 @@
 
         </div>
 
-        <!-- COMPANY NAME -->
+        <!-- SECTION NAME -->
         <div class="company-name md ml-2">
-            <!-- <div class="marquee"> -->
-            {{loginService.user?.id_company?.tx_company_name || loginService.user?.tx_name}}
-            <!-- </div> -->
+            <span *ngIf="waiterService.session">{{waiterService.session?.id_section.tx_section}}</span>
         </div>
 
         <!-- USER LOGGED IN -->

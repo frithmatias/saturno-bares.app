@@ -138,15 +138,17 @@
 
       </mat-card>
 
-      <!-- WIDGET -->
+      <!-- EMBED FORM -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1">
 
         <div class="text-info md">
-          <span class="mdi mdi-widgets-outline mr-2"></span> Widget
+          <span class="mdi mdi-widgets-outline mr-2"></span> Formulario Web
         </div>
 
         <div class="m-1">
-          Copia y pega el siguinte código HTML en tu página Web para mostrar un formulario de reservas.
+          Si ya tenés una página Web para tu comercio podes llevarte un formulario de reserva automática de mesas para
+          que tus clientes puedan hacer reservas directamente desde tu Web. Sólo tenes que copiar el siguinte código
+          HTML y pegarlo en tu Web.
         </div>
 
         <textarea class="widget-snippet" rows="7" [(ngModel)]="widget">
@@ -162,6 +164,7 @@
         </div>
 
       </mat-card>
+
     </div>
 
     <div>
@@ -236,6 +239,47 @@
 
       </mat-card>
 
+
+      <!-- SUPPORT -->
+      <mat-card class="saturno-minicard text-left mb-2 mx-1 pointer">
+        <div class="text-info md">
+          <span class="mdi mdi-face-agent mr-2"></span> Soporte
+        </div>
+
+        <div class="sm text-accent my-2">
+          Por cualquier consulta o sugerencia no dudes en contactarnos.
+        </div>
+
+        <mat-card-content>
+
+          <div class="table-responsive-sm mt-2">
+            <table class="table-sm mb-0 sm text-center">
+
+              <tr>
+                <td class="text-left">
+                  <span class="mdi mdi-whatsapp mr-2"></span>
+                  Whatsapp
+                </td>
+                <td class="text-right text-accent">
+                  <a href="https://wa.me/541164906542">15.6490.6542</a>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="text-left">
+                  <span class="mdi mdi-email-outline mr-2"></span>
+                  Email
+                </td>
+                <td class="text-right text-accent">
+                  <a href="mailto:soporte@saturno.fun">soporte@saturno.fun</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+
       <!-- ADMIN & WAITERS -->
       <mat-card class="saturno-minicard text-left mb-2 mx-1" *ngIf="loginService.user.id_company">
 
@@ -285,9 +329,8 @@
         </div>
 
         <div class="m-1">
-          Este código QR es un acceso directo al formulario para crear turnos a tu comercio. Podés imprimirlo y pegarlo
-          en la puerta de tu comercio para que tus clientes puedan accedar facilmente a sacar turnos aunque tu comercio
-          esté cerrado.
+          Con este código QR tus clientes puedan accedar rápidamente al formulario de turnos de tu comercio. Podes
+          imprimirlo y colocarlo en la puerta de tu local.
         </div>
 
         <div class="text-center my-4">

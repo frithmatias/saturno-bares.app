@@ -134,7 +134,10 @@ SATURNO LOGIN/REGISTER
     .page-image {
         font-size  : xx-large !important;
         font-weight: 300;
+    }
 
+    .login-buttons button {
+        font-size: medium !important;
     }
 }
 
@@ -148,7 +151,7 @@ SATURNO LOGIN/REGISTER
         width          : 100%;
         padding        : 0px !important;
         justify-content: flex-start !important;
-        background     : var(--mat-card-bg);
+        background     : var(--mat-card-bg) !important;
     }
 
     mat-card {
@@ -157,12 +160,16 @@ SATURNO LOGIN/REGISTER
 
     .login-title {
         display: block !important;
-
     }
+
+    .login-buttons-inform {
+        display: block !important;
+    }
+
 }
 
 .page-wrapper {
-    height          : 100%;
+    min-height      : 100vh;
     display         : flex;
     flex-direction  : row;
     background-image: url('../img/bghome.jpg');
@@ -190,7 +197,15 @@ SATURNO LOGIN/REGISTER
 }
 
 .login-title {
-    color  : var(--accent);
+    display  : none;
+    font-size: large;
+}
+
+.login-buttons button{
+    font-size: x-large;
+}
+
+.login-buttons-inform {
     display: none;
 }
 
@@ -286,16 +301,16 @@ SATURNO TOOLBAR
 
 .toolbar-second-row {
     display        : none;
-    justify-content: center;
+    justify-content: space-evenly;
     font-size      : small;
 }
 
 
 .toolbar-item {
-    display    : flex;
-    flex-wrap  : wrap;
-    margin-left: 20px;
-    cursor     : pointer;
+    display  : flex;
+    flex-wrap: wrap;
+    margin   : 0px 8px;
+    cursor   : pointer;
 }
 
 .toolbar-item .mdi {
@@ -332,6 +347,7 @@ END SATURNO TOOLBAR
 */
 
 .main-center {
+    min-height: 100%;
     text-align: -webkit-center;
     text-align: -moz-center;
 }

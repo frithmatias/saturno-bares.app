@@ -1,5 +1,6 @@
 a {
-    color: rgb(255, 201, 100);
+    text-decoration: none;
+    color          : var(--text-accent);
 }
 
 p {
@@ -23,4 +24,3 @@ p {
     padding      : 10px;
     border-radius: 5px;
 }
-

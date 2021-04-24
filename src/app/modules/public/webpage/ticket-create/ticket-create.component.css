@@ -9,7 +9,15 @@
     }
 }
 
-.public-ticket-content {
+mat-form-field {
+    margin: 0px 8px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.ticket-create-reserve-info {
     font-family  : 'Baloo Bhai 2', 'system-ui';
     margin-top   : 0;
     margin-bottom: 1rem;
@@ -17,7 +25,7 @@
     color        : var(--text);
 }
 
-.inputs-container {
+.ticket-create-inputs-container {
     max-width     : 500px;
     display       : flex;
     flex-direction: row;
@@ -25,26 +33,14 @@
     place-content : center;
 }
 
-mat-form-field {
-    width : 200px;
-    margin: 0px 8px;
-}
-
-
-/* only embed form */
-.toolbar-user-image {
-    width        : 50px;
-    height       : 50px;
-    border-radius: 50%;
-    cursor       : pointer;
-}
-
-a {
-    text-decoration: none;
-}
-
-.create-ticket-error {
+.ticket-create-error {
     display      : flex;
     place-items  : center;
     place-content: center;
+}
+
+.ticket-create-label {
+    font-size: xx-large;
+    margin   : 20px;
+    color    : var(--accent);
 }

@@ -2,71 +2,67 @@
     <div class="page-image">
 
         Ingreso Público
+        <div class="login-buttons text-center label pt-2 mt-3">
+            <button type="button" mat-button color="active" routerLink="/public/login">Ya estoy registrado</button>
+        </div>
 
     </div>
     <div class="page-login">
         <mat-card>
-            <div class="register-wrapper">
 
-                <!---------------------------------------------------------------------->
-                <!-- EMAIL REGISTRATION -->
-                <!---------------------------------------------------------------------->
+            <!---------------------------------------------------------------------->
+            <!-- EMAIL REGISTRATION -->
+            <!---------------------------------------------------------------------->
 
-                <div class="register-email">
-                    <div class="my-2 md">Registrarme con mi cuenta de email.</div>
-                    <form [formGroup]="forma" (ngSubmit)="registerCustomer()" id="loginform">
-                        <div>
+            <div class="my-2 md">Registrarme con mi cuenta de email.</div>
+            <form [formGroup]="forma" (ngSubmit)="registerCustomer()" id="loginform">
+                <div>
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Nombre</mat-label>
-                                <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name"
-                                    name="name" type="text" required>
-                            </mat-form-field>
-                        </div>
-                        <div>
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name"
+                            type="text" required>
+                    </mat-form-field>
+                </div>
+                <div>
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Email</mat-label>
-                                <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado
-                                </mat-error>
-                                <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email"
-                                    name="email" type="email" (keyup)="checkEmailExists()" required>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Clave</mat-label>
-                                <input maxlength="30" matInput placeholder="Clave" formControlName="password1"
-                                    name="password1" type="password" required>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Clave</mat-label>
-                                <input maxlength="30" matInput placeholder="Clave" formControlName="password2"
-                                    name="password2" type="password" required>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="form-group text-center px-4 py-2">
-                            <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
-                                Registrarme
-                            </button>
-                        </div>
-
-
-                        <div class="border-top text-center label pt-2 mt-3">
-                            <span class="p-2">Ya tenés cuenta?</span>
-                            <span class="p-2 text-accent pointer" routerLink="/public/login"><b>Entrar</b></span>
-                        </div>
-
-                    </form>
-
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado
+                        </mat-error>
+                        <input maxlength="50" matInput placeholder="diego@perez.com" formControlName="email"
+                            name="email" type="email" (keyup)="checkEmailExists()" required>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Clave</mat-label>
+                        <input maxlength="30" matInput placeholder="Clave" formControlName="password1" name="password1"
+                            type="password" required>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent" class="w-100">
+                        <mat-label>Clave</mat-label>
+                        <input maxlength="30" matInput placeholder="Clave" formControlName="password2" name="password2"
+                            type="password" required>
+                    </mat-form-field>
                 </div>
 
-            </div>
+                <div class="form-group text-center px-4 py-2">
+                    <button mat-raised-button color="accent" [disabled]="!forma.valid" type="submit">
+                        Registrarme
+                    </button>
+                </div>
 
+            </form>
+
+            <div class="login-buttons-inform text-center label pt-2 mt-3">
+                <button type="button" mat-button color="active" routerLink="/public/login">Ya estoy registrado</button>
+            </div>
+    
         </mat-card>
+
 
     </div>
 </div>

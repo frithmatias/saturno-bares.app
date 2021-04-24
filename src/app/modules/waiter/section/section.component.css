@@ -5,3 +5,14 @@
     text-transform: uppercase;
     color         : whitesmoke;
 }
+
+mat-card {
+    border-top: 2px solid gray;
+    margin: 10px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

@@ -7,3 +7,10 @@
 .page-tab-container {
     font-size   : larger;
 }
+
+
+.home-label {
+    font-size: xx-large;
+    margin   : 20px;
+    color    : var(--accent);
+}
