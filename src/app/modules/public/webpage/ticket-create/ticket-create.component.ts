@@ -389,6 +389,7 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
     const idTicket = ticket._id;
 
     this.publicService.validateTicket(idTicket).subscribe((data: TicketResponse) => {
+
       if (data.ok) {
         this.hideCancel = false;
 

@@ -1,15 +1,16 @@
 .footer {
-    font-size      : small;
-    font-family    : 'system-ui';
-    line-height    : 1.4em;
-    font-weight    : 200;
-    align-items    : center;
-    display        : flex;
-    flex-flow      : row wrap;
-    padding        : 1em;
-    text-decoration: none;
-    justify-content: space-around;
-    height         : 8em;
+    background-color: #1d1d1d;
+    font-size       : small;
+    font-family     : 'system-ui';
+    line-height     : 1.4em;
+    font-weight     : 200;
+    align-items     : center;
+    display         : flex;
+    flex-flow       : row wrap;
+    padding         : 1em;
+    text-decoration : none;
+    justify-content : space-around;
+    height          : 12em;
 }
 
 a {
@@ -28,10 +29,14 @@ a:hover {
     height         : 25px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 650px) {
     .footer {
-        height   : 15em;
+        height   : 17em;
         flex-flow: wrap-reverse;
+    }
+
+    .footer-copyright {
+        margin-bottom: 10px;
     }
 }
 

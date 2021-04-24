@@ -313,7 +313,10 @@
 
         <!-- CANCELLED -->
         <div *ngIf="ticket.tx_status === 'cancelled'" class="my-4">
-          Hola {{ticket.tx_name}} tu ticket quedó cancelado ¡te esperamos pronto!.
+          Hola {{ticket.tx_name}} tu ticket quedó cancelado 
+          <div>
+            ¡te esperamos pronto!
+          </div>
         </div>
 
         <!-- FINISHED -->

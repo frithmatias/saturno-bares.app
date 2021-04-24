@@ -12,6 +12,7 @@
 
         <!-- Welcome -->
         <mat-step>
+            <ng-template matStepLabel>Bienvenido</ng-template>
             <mat-card>
                 <mat-card-content>
                     <div>
@@ -44,6 +45,8 @@
 
         <!-- Companies -->
         <mat-step [completed]="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
+            <ng-template matStepLabel>Comercios</ng-template>
+
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-store-outline"></div>
@@ -100,6 +103,8 @@
 
         <!-- Settings -->
         <mat-step [completed]="publicService.settings">
+            <ng-template matStepLabel>Ajustes</ng-template>
+
             <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
@@ -150,6 +155,8 @@
 
         <!-- Working Hours -->
         <mat-step [completed]="publicService.settings?.tm_working.length > 0">
+            <ng-template matStepLabel>Horarios</ng-template>
+
             <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
@@ -200,6 +207,7 @@
         <!-- Sections -->
         <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue"
             [completed]="adminService.sections?.length > 0">
+            <ng-template matStepLabel>Sectores</ng-template>
 
             <mat-card>
                 <mat-card-header>
@@ -246,6 +254,8 @@
         <!-- Tables -->
         <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue"
             [completed]="adminService.tables?.length > 0">
+            <ng-template matStepLabel>Mesas</ng-template>
+
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-table-furniture"></div>
@@ -288,6 +298,8 @@
 
         <!-- Waiters -->
         <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
+            <ng-template matStepLabel>Camareros</ng-template>
+
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-account-tie"></div>
@@ -326,6 +338,8 @@
 
         <!-- Poll -->
         <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
+            <ng-template matStepLabel>Encuestas</ng-template>
+
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-poll-box"></div>
@@ -368,6 +382,8 @@
 
         <!-- Webpage -->
         <mat-step>
+            <ng-template matStepLabel>Portal</ng-template>
+
             <mat-card>
                 <mat-card-header>
                     <div mat-card-avatar class="step-header mdi xxxl mdi-web-box"></div>

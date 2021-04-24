@@ -27,7 +27,6 @@ export class WaiterComponent implements OnInit {
       if(user){
         const txTheme = user.id_company?.tx_theme;
         if(txTheme) this.setTheme(txTheme);
-        this.router.navigate(['/waiter/home']);
       }
     })
 

@@ -277,9 +277,9 @@ export class PublicService {
     delete this.token;
     delete this.customer;
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-    if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
-    if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
+    if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
+    if (localStorage.getItem('company')) { localStorage.removeItem('company'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
   }
 

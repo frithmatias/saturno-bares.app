@@ -119,18 +119,16 @@ export class LoginService {
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
-
+		
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
-
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
 		if (localStorage.getItem('session')) { localStorage.removeItem('session'); }
 		// if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-
-
+		
+		delete this.user;
 		delete this.token;
 		delete this.menu;
-		delete this.user;
 
 		this.userSource.next(null)
 		this.router.navigate(['/home']);
