@@ -1,3 +1,15 @@
 <div class="main-center">
-    <router-outlet></router-outlet>
+
+    <!-- chat -->
+    <mat-drawer-container>
+        <mat-drawer [(opened)]="opened" #chat id="chat" mode="over" position="end" class="drawer-wrapper">
+            <app-chat (toggleChat)="toggle( chat )" [chatOpenStatus]="opened" (unreadMessages)="unreadMessages=$event">
+            </app-chat>
+        </mat-drawer>
+        
+        <router-outlet></router-outlet>
+
+        <button mat-fab color="warn" class="xxl mdi mdi-face-agent" (click)="toggle(chat)"></button>
+    </mat-drawer-container>
+
 </div>

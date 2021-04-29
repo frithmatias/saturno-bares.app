@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-superuser',
@@ -11,5 +12,10 @@ export class SuperuserComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  toggle(htmlRef: MatDrawer): void {
+    htmlRef.toggle();
+  }
+  
 
 }

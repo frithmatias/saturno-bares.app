@@ -21,6 +21,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { HelpComponent } from './help/help.component';
 import { TicketInfoComponent } from './ticket-info/ticket-info.component';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { UserimageComponent } from './userimage/userimage.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     SpinnerComponent,
     HelpComponent,
     TicketInfoComponent,
+    UserimageComponent,
   ],
   imports: [
     RouterModule,
@@ -62,6 +64,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
     SpinnerComponent,
     HelpComponent,
     TicketInfoComponent,
+    UserimageComponent
 
   ]
 })

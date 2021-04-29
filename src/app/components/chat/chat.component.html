@@ -1,36 +1,93 @@
-<div>
+<div class="chat-wrapper">
 
-    <div>
-        <div class="close-button">
-            <button class="btn btn-success btn-sm" (click)="closeChat()">Cerrar</button>
-        </div>
-        <!-- MESSAGES -->
-        <div #chatmessages id="chatmessages" class="row-messages">
-            <div *ngFor="let message of publicService.chatMessages" class="d-flex message"
-                [ngClass]="{'message-me': message.own}">
-                <div>
-                    {{ message.message }}
-                </div>
-                <div class="message-time ml-2">
-                    {{ message.time | messageTime }}
-                </div>
+    <!-- no session -->
+    <div *ngIf="!chatSession || !client" class="chat-client-content">
+        <!-- client = customer || user -->
+        <button *ngIf="client" mat-raised-button color="warn" (click)="startSession()">Iniciar Chat</button>
+        <button *ngIf="!client" mat-raised-button color="primary" routerLink="/public/login"
+            (click)="closeChatWindow()">Login</button>
+
+    </div>
+
+    <!-- session-->
+    <div *ngIf="chatSession && client" class="chat-client-content">
+
+        <!-- not initialized -->
+        <div *ngIf="!chatSession.tm_init" class="chat-notinit">
+            <div class="chat-notinit-top">
+                <div>Hola {{client.tx_name}}</div>
+            </div>
+            <div class="chat-notinit-bottom">
+                <mat-card class="loading fadeInUp fast">
+                    <div class="m-2">
+                        <app-spinner text="Esperando un asistente..."></app-spinner>
+                    </div>
+                    <button mat-raised-button color="warn" (click)="endChat()">Finalizar</button>
+                </mat-card>
+                <mat-card class="subject fadeInUp animated">
+                    <div *ngIf="showSubjectForm">
+                        <div class="sm">
+                            <p class="fadeIn veryslow">
+                                Si queres podes dejarnos tu consulta acá. Si no te podemos atender ahora te contastamos
+                                por
+                                email.
+                            </p>
+                        </div>
+                        <div>
+                            <mat-form-field class="w-100">
+                                <mat-label>Consulta</mat-label>
+                                <textarea #subject matInput class="sm" placeholder="Dejanos tu consulta acá"></textarea>
+                            </mat-form-field>
+
+                        </div>
+                        <div>
+                            <button type="button" mat-flat-button color="accent"
+                                (click)="submitSubject(subject)">Enviar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="!showSubjectForm">
+                        <p class="fadeIn animated sm">
+                            Gracias por dejarnos tu consulta. Si no te podemos atender de inmediato te respondemos por
+                            email.
+                        </p>
+                    </div>
+                </mat-card>
             </div>
         </div>
-    </div>
 
-    <div class="row row-messages-send">
-        <!-- INPUT TEXT -->
-        <div class="col-10" style="align-self: center">
-            <!-- <mat-label>CONSULTA A INFORMES</mat-label> -->
-            <input type="text" autocomplete="off" class="chat-input" #textmsg matInput placeholder="INFORMES"
-                (keydown.enter)="sendMessage( textmsg, chatmessages )">
+        <!-- initialized -->
+        <div *ngIf="chatSession.tm_init" class="chat-messages-container animated fadeIn">
+
+            <!-- ASSISTANT INFO -->
+            <div class="chat-info">
+                <div class="chat-info-name" *ngIf="chatSession">{{chatSession.tx_assistant_name}}</div>
+                <div class="chat-info-initialize">
+                    <button mat-raised-button color="warn" (click)="endChat()">Finalizar</button>
+                </div>
+            </div>
+
+            <!-- MESSAGES -->
+            <div class="chat-messages" #chatmessages id="chatmessages">
+                <div *ngFor="let message of chatService.chatMessages" class="message-him"
+                    [ngClass]="{'message-me': message.own}">
+                    <div>
+                        {{ message.message }}
+                    </div>
+                    <div class="message-time">
+                        {{ message.time | messageTime }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT TEXT / SEND BUTTON -->
+            <div class="chat-send">
+                <input type="text" autocomplete="off" class="chat-input" #textmsg matInput
+                    (keydown.enter)="sendMessage( textmsg, chatmessages )">
+                <button mat-raised-button color="warn" (click)="sendMessage( textmsg, chatmessages )"
+                    class="mdi mdi-send"></button>
+            </div>
         </div>
 
-        <!-- SEND BUTTON -->
-        <div class="col-2 p-0">
-            <button (click)="sendMessage( textmsg, chatmessages )" class="send-button" mat-mini-fab>
-                <span class="mdi mdi-send xl"></span>
-            </button>
-        </div>
     </div>
+
 </div>

@@ -3,31 +3,22 @@
     <div class="toolbar-first-row">
 
         <!-- LOGO -->
-        <div class="logo-container">
+        <div class="toolbar-logo-container">
 
             <!-- LOGO IMG -->
             <div class="logo-img pointer" routerLink="/home"> </div>
 
-            <!-- LOGO TITLE -->
-
-            <div class="logo-text-container pointer" routerLink="/home">
-                <div class="md"> SATURNO </div>
-                <div class="xs">{{version}} </div>
-            </div>
         </div>
 
-        <!-- PUBLIC PAGE LINKS -->
         <div *ngIf="publicService.company" class="toolbar-links-first-row">
 
-            <div class="toolbar-item"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
+            <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
                 <div>
                     Inicio
                 </div>
             </div>
 
-            <div class="toolbar-item"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
+            <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
                 <div>
                     Menú
                 </div>
@@ -38,6 +29,17 @@
                 *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
                 <div>
                     Reservar
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="!publicService.company" class="toolbar-links-first-row">
+
+            <div class="toolbar-item" routerLink="/home">
+                <div class="mdi mdi-home"></div>
+                <div>
+                    Volver al Inicio
                 </div>
             </div>
 
@@ -93,33 +95,41 @@
 
         </div>
 
-
     </div>
 
-    <div class="toolbar-second-row">
+    <div *ngIf="publicService.company" class="toolbar-second-row">
 
-        <div class="toolbar-item"
-            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
+        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
             <div>
                 Inicio
             </div>
         </div>
 
-        <div class="toolbar-item"
-            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
+        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
             <div>
                 Menú
             </div>
         </div>
 
-        <div class="toolbar-item"
-            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
+        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
             *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
             <div>
                 Reservar
             </div>
         </div>
+    </div>
+
+    <div *ngIf="!publicService.company" class="toolbar-second-row">
+
+        <div class="toolbar-item" routerLink="/home">
+            <div class="mdi mdi-home"></div>
+            <div>
+                Volver al Inicio
+            </div>
+        </div>
 
     </div>
+
+
 
 </div>

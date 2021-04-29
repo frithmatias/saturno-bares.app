@@ -10,6 +10,22 @@ export class SuperuserService {
 
 	constructor(private http: HttpClient) { }
 
+	readChatsRequests() {
+		const url = environment.api + '/chat/readchatsrequests';
+		return this.http.get(url);
+	}
+
+	initializeChatSession(idSession: string, idSocket: string) {
+		const data = { idSession, idSocket };
+		const url = environment.api + '/chat/initializesession/';
+		return this.http.post(url, data);
+	}
+
+	endChat(idSession: string) {
+		const url = environment.api + '/chat/endsession/' + idSession;
+		return this.http.get(url);
+	}
+
 	createMenu(menu: MenuItem) {
 		const url = environment.api + '/superuser/createmenu';
 		return this.http.post(url, menu);

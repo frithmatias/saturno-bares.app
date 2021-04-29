@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { PublicService } from './modules/public/public.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,10 @@ export class AppComponent {
       this.publicService.urlModule = data.url.split('/')[1] || null; //ticketform
       this.publicService.urlComponent = data.url.split('/')[2] || null; //pizzasjavascript
     });
+  }
+
+  toggle(htmlRef: MatSidenav): void {
+    htmlRef.toggle();
   }
 
 }

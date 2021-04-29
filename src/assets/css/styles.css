@@ -47,23 +47,28 @@ SCROLL BAR
     width: 8px;
 }
 
+/* width */
+/* ::-webkit-scrollbar {
+    width: 10px;
+} */
+
 /* Track */
 /* ::-webkit-scrollbar-track {
-    box-shadow   : inset 0 0 5px grey;
-    border-radius: 10px;
+    box-shadow   : inset 0 0 5px var(--primary);
+    background-color: var(--primary-o50);
+    border-radius: 0px;
 } */
 
 /* Handle */
-.company-welcome-textarea::-webkit-scrollbar-thumb {
-    background   : var(--primary);
+/* ::-webkit-scrollbar-thumb {
+    background   : var(--primary-o75);
     border-radius: 0px;
-}
+} */
 
 /* Handle on hover */
 /* ::-webkit-scrollbar-thumb:hover {
-    background: #b30000;
+    background: var(--primary);
 } */
-
 
 
 
@@ -154,7 +159,7 @@ SATURNO LOGIN/REGISTER
         background     : var(--mat-card-bg) !important;
     }
 
-    mat-card {
+    .page-login mat-card {
         box-shadow: none !important;
     }
 
@@ -201,7 +206,7 @@ SATURNO LOGIN/REGISTER
     font-size: large;
 }
 
-.login-buttons button{
+.login-buttons button {
     font-size: x-large;
 }
 
@@ -216,6 +221,11 @@ SATURNO TOOLBAR
 */
 
 @media (max-width: 850px) {
+
+    .toolbar-logo-container {
+        flex-grow: 1;
+    }
+
     .toolbar-links-first-row {
         display: none !important;
     }
@@ -247,9 +257,8 @@ SATURNO TOOLBAR
 
 /* ------------------------------------------- */
 /* TOOLBAR LOGO FOR PUBLIC */
-.logo-container {
-    display  : flex;
-    flex-grow: 1;
+.toolbar-logo-container {
+    display: flex;
 }
 
 .logo-img {
@@ -309,7 +318,7 @@ SATURNO TOOLBAR
 .toolbar-item {
     display  : flex;
     flex-wrap: wrap;
-    margin   : 0px 8px;
+    margin   : 0px 16px;
     cursor   : pointer;
 }
 
@@ -319,10 +328,10 @@ SATURNO TOOLBAR
 
 .toolbar-links-first-row {
     display      : flex;
-    place-content: flex-end;
+    flex-grow    : 1;
+    place-content: center;
     position     : relative;
     top          : 2px;
-    align-items  : center;
 }
 
 .toolbar-spacer {
@@ -331,7 +340,7 @@ SATURNO TOOLBAR
     position      : relative;
     top           : 55px;
     margin-bottom : 55px;
-    height        : calc(100vh - 55px) !important;
+    height        : calc(100vh - 55px);
     bottom        : 0;
     left          : 0;
     right         : 0;
@@ -345,6 +354,93 @@ SATURNO TOOLBAR
 END SATURNO TOOLBAR
 -------------------------------------------
 */
+
+/*
+-------------------------------------------
+START SATURNO CHAT
+-------------------------------------------
+*/
+
+.chat-info {
+    background-image: url('../img/bg-tile.png');
+    height          : 60px;
+    background-size : 80px;
+    color           : white;
+    align-items     : center;
+    display         : flex;
+    justify-content : left;
+    padding         : 16px;
+}
+
+.chat-info-name {
+    flex-grow: 0;
+}
+
+.chat-info-initialize {
+    display        : flex;
+    flex-grow      : 1;
+    justify-content: flex-end;
+}
+
+.chat-messages {
+    flex-grow     : 1;
+    overflow      : scroll;
+    overflow-x    : hidden;
+    display       : flex;
+    flex-direction: column;
+}
+
+.message-him {
+    background-color: lightskyblue;
+    padding         : 0.5em;
+    font-size       : medium;
+    font-weight     : 300;
+    border-radius   : 5px;
+    margin          : .3em;
+    max-width       : 80%;
+    text-align      : left;
+    overflow-wrap   : anywhere;
+    align-self      : self-start;
+    line-height     : 0.9em;
+}
+
+
+.message-me {
+    background-color: lightgoldenrodyellow;
+    align-self      : flex-end;
+}
+
+
+.message-time {
+    font-size : x-small;
+    color     : #727780;
+    text-align: right;
+}
+
+.chat-send {
+    display       : flex;
+    flex-direction: row;
+    flex-grow     : 0;
+}
+
+.chat-input {
+    border          : 0px;
+    background-color: white;
+    width           : -webkit-fill-available;
+    padding         : .5rem 1rem 0.5rem 1rem;
+}
+
+.chat-send button {
+    border-radius: 0px;
+}
+
+
+/*
+-------------------------------------------
+END SATURNO CHAT
+-------------------------------------------
+*/
+
 
 .main-center {
     min-height: 100%;
@@ -372,13 +468,14 @@ mat-drawer-container {
 .page-tab-container {
     font-variant: small-caps;
     font-family : 'Baloo Bhai 2', 'system-ui';
-    margin      : 36px 16px;
+    margin      : 16px;
     min-width   : 300px;
     max-width   : 600px;
 }
 
 .page-container {
-    padding-top     : 30px;
+    height          : 100%;
+    padding         : 30px 0px;
     min-width       : 300px;
     max-width       : 600px;
     font-size       : medium;
@@ -386,17 +483,8 @@ mat-drawer-container {
     background-color: var(--bg);
 }
 
-.page-container-wide {
-    margin          : 20px 0px;
-    min-width       : 18rem;
-    max-width       : 50rem;
-    font-size       : medium;
-    height          : 100%;
-    background-color: var(--bg);
-}
-
 .page-container-full {
-    margin          : 20px 0px;
+    padding         : 30px 0px;
     font-size       : medium;
     height          : 100%;
     background-color: var(--bg);
@@ -411,9 +499,8 @@ mat-drawer-container {
 @media (max-width: 575px) {
 
     .page-container,
-    .page-container-wide,
     .page-container-full {
-        margin: 0px 0px !important;
+        padding: 0px 0px !important;
     }
 
     .page-container {
@@ -946,6 +1033,21 @@ ANIMACIONES
     animation-fill-mode        : both;
 }
 
+
+.slow {
+    -webkit-animation-duration : 2s;
+    animation-duration         : 2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode        : both;
+}
+
+.veryslow {
+    -webkit-animation-duration : 4s;
+    animation-duration         : 4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode        : both;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -959,6 +1061,25 @@ ANIMACIONES
 .fadeIn {
     animation-name: fadeIn;
 }
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  .fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+  }
 
 /*
 -------------------------------------------

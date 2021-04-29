@@ -148,7 +148,7 @@ export class MapComponent implements OnInit {
           <div class="md text-info mt-2">${company.tx_address_street} ${company.tx_address_number}</div>
            <hr>
           <div class="sm company-welcome-textarea">${company.tx_company_welcome}</div>
-            <a href="/public/${company.tx_company_string}">
+            <a href="/public/page/${company.tx_company_string}">
               <button class="btn btn-block btn-sm btn-secondary">
                 <i class="lg mdi mdi-glass-mug-variant"></i> Ir a este lugar! 
               </button>

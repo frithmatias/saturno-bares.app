@@ -7,21 +7,27 @@ import { HomeComponent } from './home/home.component';
 import { MenuCreateFormComponent } from './menu/menu-create-form/menu-create-form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../modules/material.module';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ComponentsModule } from '../../components/components.module';
+import { ChatComponent } from './chat/chat.component';
+import { PipesModule } from '../../pipes/pipes.module';
 
 
 
 @NgModule({
   declarations: [
     SuperuserComponent, 
+		ToolbarComponent,
     MenuComponent, 
     HomeComponent, 
-    MenuCreateFormComponent,
-    
+    MenuCreateFormComponent, ChatComponent,
   ],
   imports: [
     CommonModule,
+		ComponentsModule,
     SuperuserRoutingModule,
     ReactiveFormsModule,
+    PipesModule,
     FormsModule,
     MaterialModule
   ]

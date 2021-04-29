@@ -31,7 +31,6 @@ export class LoginService {
 			let user = JSON.parse(localStorage.getItem('user'));
 			this.pushUser(user);
 		}
-
 	}
 
 	// ========================================================

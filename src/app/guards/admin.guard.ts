@@ -10,7 +10,7 @@ export class AdminGuard implements CanLoad {
 	) { }
 
 	canLoad() {
-		if (this.loginService.user.id_role === 'ADMIN_ROLE') {
+		if (['ADMIN_ROLE', 'SUPERUSER_ROLE'].includes(this.loginService.user.id_role)) {
 			return true;
 		} else {
 			this.loginService.logout();

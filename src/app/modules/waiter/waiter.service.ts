@@ -20,14 +20,6 @@ export class WaiterService {
 	// set on section (contingent ticket)
 	contingentTicket: Ticket;
 
-	chatMessages: {
-		id_ticket: string,
-		bl_own: boolean,
-		tm_time: Date,
-		tx_message: string,
-		bl_viewed: boolean
-	}[] = [];
-
 	constructor(
 		private http: HttpClient,
 		private loginService: LoginService

@@ -1,0 +1,14 @@
+.mdi {
+    position: fixed;
+    bottom  : 20px;
+    right   : 31px;
+    z-index : 1;
+}
+
+.drawer-wrapper {
+    margin       : 36px;
+    border-radius: 10px;
+    height       : 450px;
+    width        : 300px;
+    border       : 1px solid #da253669;
+}

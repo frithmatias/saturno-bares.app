@@ -40,33 +40,24 @@
     }
 }
 
-@media (min-width: 850px) {
-    .welcome-bg {
-        top: 55px !important;
-    }
-}
-
 mat-card {
     box-shadow: unset !important;
 }
 
 .welcome-bg {
-    position           : relative;
-    top                : 94px;
     background-image   : url('../../../assets/img/bghome.jpg');
     background-size    : cover;
     background-repeat  : no-repeat;
     background-position: center center;
-    height             : 450px;
+    height             : 600px;
     opacity            : .9;
 }
 
 .welcome-wrapper {
-
-    padding         : 20px;
+    padding         : 70px 10px;
     color           : whitesmoke;
     background-color: var(--primary-o75);
-    border-bottom   : 2px solid var(--primary);
+    border          : 8px solid var(--primary-o25);
     box-shadow      : 0px 1px 6px 3px rgb(0 0 0 / 60%);
 }
 
@@ -82,7 +73,7 @@ mat-card {
 
 .search-wrapper {
     max-width: 50%;
-    margin   : 36px;
+    margin   : 100px 20px;
 }
 
 /*--------------------------------*/

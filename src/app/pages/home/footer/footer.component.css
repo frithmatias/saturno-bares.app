@@ -23,12 +23,6 @@ a:hover {
 }
 
 
-.footer-tech {
-    display        : flex;
-    justify-content: center;
-    height         : 25px;
-}
-
 @media (max-width: 650px) {
     .footer {
         height   : 17em;
@@ -40,48 +34,3 @@ a:hover {
     }
 }
 
-
-
-/*
--------------------------------------------
-TECH ICONS 
--------------------------------------------
-*/
-
-.tech-div {
-    display    : block;
-    text-indent: -9999px;
-    width      : 1.5em;
-    height     : 1.5em;
-    opacity    : .98;
-}
-
-.tech-mongodb {
-    background       : url(../../../../assets/img/svg/mongodb2.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-angular {
-    background       : url(../../../../assets/img/svg/angular.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-js {
-    background       : url(../../../../assets/img/svg/javascript.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-ts {
-    background       : url(../../../../assets/img/svg/typescript.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}
-
-.tech-nodejs {
-    background       : url(../../../../assets/img/svg/nodejs.svg);
-    background-size  : contain;
-    background-repeat: no-repeat;
-}

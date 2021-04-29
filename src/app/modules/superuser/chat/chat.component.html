@@ -1,0 +1,50 @@
+<div class="page-container">
+    <div class="chat-wrapper">
+
+        <!-- CHAT CLIENT LIST -->
+        <div class="chat-list">
+
+            <button *ngFor="let session of chatsSessions" mat-flat-button class="chat-client-button" color="active"
+                (click)="selectSession(session)" [disabled]="chatSession?.tm_init">
+
+                <app-userimage [user]="session.id_user" [showname]="true"></app-userimage>
+
+            </button>
+
+        </div>
+
+        <div class="chat-window">
+            <!-- CLIENT INFO -->
+            <div class="chat-info">
+                <div class="chat-info-name">{{chatSession?.id_user.tx_name}}</div>
+                <div class="chat-info-initialize">
+                    <button *ngIf="chatSession && chatSession.tm_init === null" mat-raised-button color="active"
+                        (click)="initializeChatSession(session)">Inicializar</button>
+                    <button *ngIf="chatSession && chatSession?.tm_init !== null" mat-raised-button color="warn"
+                        (click)="endChat(session)">Finalizar</button>
+                </div>
+            </div>
+
+            <!-- MESSAGES -->
+            <div #chatsuperuser id="chatsuperuser" class="chat-messages">
+                <div *ngFor="let message of chatMessages" class="message-him" [ngClass]="{'message-me': message.own}">
+                    <div>
+                        {{ message.message }}
+                    </div>
+                    <div class="message-time">
+                        {{ message.time | messageTime }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT TEXT / SEND BUTTON -->
+            <div class="chat-send">
+                <input type="text" autocomplete="off" class="chat-input" #textmsg matInput
+                    (keydown.enter)="sendMessage( textmsg, chatsuperuser )">
+                <button mat-raised-button color="warn" (click)="sendMessage( textmsg, chatsuperuser )"
+                    class="mdi mdi-send"></button>
+            </div>
+        </div>
+
+    </div>
+</div>

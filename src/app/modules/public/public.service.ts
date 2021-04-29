@@ -12,6 +12,7 @@ import { Settings } from 'src/app/interfaces/settings.interface';
 import { map, catchError } from 'rxjs/operators';
 import { Coords } from '../../components/map/map.component';
 import { Company } from 'src/app/interfaces/company.interface';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class PublicService {
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
   company: Company;
   settings: Settings;
-  customer: any;
+  customer: User;
 	token: string;
 
 
@@ -33,19 +34,10 @@ export class PublicService {
   isEmbed: boolean = false; // if ticket form is embed
   companyString: string = null; 
 
-  chatMessages: {
-    own: boolean,
-    time: Date,
-    message: string,
-    viewed: boolean
-  }[] = [];
-
-
   constructor(
     private http: HttpClient,
     private router: Router,
     private _snack: MatSnackBar
-
   ) { }
 
 
@@ -243,9 +235,14 @@ export class PublicService {
     return this.http.get(url);
   }
 
-  actualizarSocket(idTicket: string, newSocket: string, isClient: boolean): Observable<object> {
-    const socketsData = { idTicket, newSocket, isClient };
-    return this.http.put(environment.api + '/t/actualizarsocket', socketsData);
+  actualizarChatSessionSocket(idSession: string, txSocket: string, blClient: boolean): Observable<object> {
+    const socketData = { idSession, txSocket, blClient };
+    return this.http.post(environment.api + '/chat/actualizarsocket', socketData);
+  }
+
+  actualizarSocket(idTicket: string, txSocket: string, blClient: boolean): Observable<object> {
+    const socketData = { idTicket, txSocket, blClient };
+    return this.http.put(environment.api + '/t/actualizarsocket', socketData);
   }
 
   callWaiter(idTicket: string, txCall: string) {
@@ -272,10 +269,12 @@ export class PublicService {
   }
 
   clearPublicSession(): void {
-    this.chatMessages = [];
+
     delete this.tickets;
     delete this.token;
     delete this.customer;
+    delete this.company;
+    
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
     if (localStorage.getItem('token')) { localStorage.removeItem('token'); }

@@ -1,59 +1,62 @@
-::-webkit-scrollbar {
-    display: none;
+.chat-wrapper {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    height         : 100%;
+    flex-direction : column;
 }
 
-.close-button {
-    margin: .5em;
-    text-align: end;
+.chat-client-content {
+    height         : 100%;
+    width          : 100%;
+    align-items    : center;
+    justify-content: center;
+    display        : flex;
 }
 
-.row-messages {
-    overflow: scroll;
-    height  : 70vh;
+/* SESSION NOT INITIALIZED */
+
+.chat-notinit {
+    display       : flex;
+    flex-direction: column;
+    height        : 100%;
+    width         : 100%;
 }
 
-.row-messages-send {
-    position        : fixed;
-    bottom          : 0px;
-    left            : 0px;
-    width           : 110%;
-    padding         : .5rem;
-    background-color: darkslategrey;
-}
-
-.send-button {
+.chat-notinit-top {
+    flex-grow       : 1;
+    background-color: purple;
+    font-size       : xx-large;
     color           : white;
-    background-color: seagreen;
-    box-shadow      : none;
-    border-radius: 50%;
+    background-image: url('../../../assets/img/bg-tile.png');
+    background-size : contain;
+    display         : flex;
+    align-items     : start;
+    padding-top     : 10px;
+    justify-content : center;
 }
 
-.chat-input {
-    border          : 0px;
+.chat-notinit-bottom {
+    flex-grow       : 0;
     background-color: white;
-    width           : -webkit-fill-available;
-    border-radius   : .2em;
-    padding         : .5rem 1rem 0.5rem 1rem;
+    color           : var(--dark-o80);
 }
 
-.message {
-    background-color: lightskyblue;
-    padding         : 0.5em;
-    font-size       : medium;
-    font-weight     : 300;
-    border-radius   : 5px;
-    margin          : .5em;
-    width           : max-content;
-    max-width       : 15em;
+.chat-notinit-bottom .loading {
+    margin    : 20px;
+    margin-top: -50px;
 }
 
-.message-me {
-    background-color: lightgoldenrodyellow;
-    margin-left     : auto;
+.chat-notinit-bottom .subject {
+    margin    : 20px;
+    margin-top: 0px;
 }
 
-.message-time {
-    font-size: small;
-    color    : cornflowerblue;
-    align-self: flex-end;
+/* SESSION INITIALIZED */
+
+.chat-messages-container {
+    height        : 100%;
+    width         : 100%;
+    flex-direction: column;
+    display       : flex;
 }
