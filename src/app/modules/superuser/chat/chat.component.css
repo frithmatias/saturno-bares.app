@@ -1,11 +1,7 @@
 .chat-wrapper {
-    display         : flex;
-    flex-direction  : row;
-    height          : 100%;
-    background-color: var(--mat-card-bg);
-    border-radius   : 5px;
+    display: flex;
+    height : 100%;
 }
-
 
 .chat-list {
     flex-grow   : 1;
@@ -15,8 +11,9 @@
 
 .chat-window {
     display       : flex;
-    flex-grow     : 2;
     flex-direction: column;
+    flex-grow     : 10;
+    width         : 0px;
 }
 
 .chat-client-button {
@@ -24,4 +21,15 @@
     padding   : 2px 7px;
     width     : -webkit-fill-available;
     text-align: left;
+}
+
+.chat-input {
+    border          : 0px;
+    background-color: white;
+    width           : -webkit-fill-available;
+    padding         : .5rem 1rem 0.5rem 1rem;
+    margin-right    : 10px;
+    border-radius   : 23px;
+    color           : var(--dark);
+    text-align      : left;
 }

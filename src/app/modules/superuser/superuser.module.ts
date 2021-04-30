@@ -11,20 +11,25 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ChatComponent } from './chat/chat.component';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ChatNotInitComponent } from './chat-not-init/chat-not-init.component';
+import { BsheetComponent } from './chat-not-init/bsheet/bsheet.component';
 
 
 
 @NgModule({
   declarations: [
-    SuperuserComponent, 
-		ToolbarComponent,
-    MenuComponent, 
-    HomeComponent, 
-    MenuCreateFormComponent, ChatComponent,
+    SuperuserComponent,
+    ToolbarComponent,
+    MenuComponent,
+    HomeComponent,
+    MenuCreateFormComponent,
+    ChatComponent,
+    ChatNotInitComponent,
+    BsheetComponent
   ],
   imports: [
     CommonModule,
-		ComponentsModule,
+    ComponentsModule,
     SuperuserRoutingModule,
     ReactiveFormsModule,
     PipesModule,

@@ -2,15 +2,11 @@
     <div class="chat-wrapper">
 
         <!-- CHAT CLIENT LIST -->
-        <div class="chat-list">
-
+        <div class="chat-list fadeInLeft animated" *ngIf="chatsSessions?.length > 0 && !chatSession?.tm_init">
             <button *ngFor="let session of chatsSessions" mat-flat-button class="chat-client-button" color="active"
                 (click)="selectSession(session)" [disabled]="chatSession?.tm_init">
-
                 <app-userimage [user]="session.id_user" [showname]="true"></app-userimage>
-
             </button>
-
         </div>
 
         <div class="chat-window">
@@ -38,10 +34,10 @@
             </div>
 
             <!-- INPUT TEXT / SEND BUTTON -->
-            <div class="chat-send">
+            <div class="chat-send" *ngIf="chatSession">
                 <input type="text" autocomplete="off" class="chat-input" #textmsg matInput
                     (keydown.enter)="sendMessage( textmsg, chatsuperuser )">
-                <button mat-raised-button color="warn" (click)="sendMessage( textmsg, chatsuperuser )"
+                <button mat-mini-fab (click)="sendMessage( textmsg, chatsuperuser )"
                     class="mdi mdi-send"></button>
             </div>
         </div>

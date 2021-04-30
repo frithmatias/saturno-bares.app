@@ -15,6 +15,11 @@ export class SuperuserService {
 		return this.http.get(url);
 	}
 
+	readChatsNotInit() {
+		const url = environment.api + '/chat/readchatsnotinit';
+		return this.http.get(url);
+	}
+	
 	initializeChatSession(idSession: string, idSocket: string) {
 		const data = { idSession, idSocket };
 		const url = environment.api + '/chat/initializesession/';

@@ -58,7 +58,7 @@
                     </div>
 
                     <div *ngIf="showMessageForm" class="mt-4">
-                        <app-messenger [ticket]="ticket" (messageResponse)="messageResponse($event)"></app-messenger>
+                        <app-messenger [email]="ticket.tx_email" (messageResponse)="messageResponse($event)"></app-messenger>
                     </div>
 
                     <hr>

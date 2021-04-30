@@ -10,7 +10,7 @@ import { MessageResponse } from '../../interfaces/messenger.interface';
   styleUrls: ['./messenger.component.css']
 })
 export class MessengerComponent implements OnInit {
-  @Input() ticket: Ticket;
+  @Input() email: string;
   @Output() messageResponse: EventEmitter<MessageResponse> = new EventEmitter();
   loading = false;
 
@@ -27,7 +27,7 @@ export class MessengerComponent implements OnInit {
 
     if (message.value.length > 0) {
       this.loading = true;
-      this.messengerService.sendMail(this.ticket.tx_email, message.value).subscribe((data: MessageResponse) => {
+      this.messengerService.sendMail(this.email, message.value).subscribe((data: MessageResponse) => {
         if(data.ok){
           this.loading = false;
           this.messageResponse.emit(data);

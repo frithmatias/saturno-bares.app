@@ -4,11 +4,13 @@ import { NopagefoundComponent } from '../../pages/nopagefound/nopagefound.compon
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { ChatComponent } from './chat/chat.component';
+import { ChatNotInitComponent } from './chat-not-init/chat-not-init.component';
 
 const publicRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'chatnotinit', component: ChatNotInitComponent },
 
   { path: '', redirectTo: '/superuser/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent}

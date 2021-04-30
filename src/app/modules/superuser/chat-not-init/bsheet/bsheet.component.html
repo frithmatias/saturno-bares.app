@@ -1,0 +1,9 @@
+<mat-card>
+    <p>
+        {{data.session.tx_subject}}
+    </p>
+
+    <app-messenger [email]="data.session.id_user.tx_email" (messageResponse)="messageResponse($event)">
+    </app-messenger>
+
+</mat-card>

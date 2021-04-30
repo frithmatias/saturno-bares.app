@@ -83,7 +83,7 @@
             <div class="chat-send">
                 <input type="text" autocomplete="off" class="chat-input" #textmsg matInput
                     (keydown.enter)="sendMessage( textmsg, chatmessages )">
-                <button mat-raised-button color="warn" (click)="sendMessage( textmsg, chatmessages )"
+                <button mat-mini-fab color="active" (click)="sendMessage( textmsg, chatmessages )"
                     class="mdi mdi-send"></button>
             </div>
         </div>

@@ -50,7 +50,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.readChatsRequests();
       delete this.chatSession;
       this.chatMessages = [];
-
     })
 
     this.escucharChat = this.wsService.escucharChat().subscribe((msg: string) => {
@@ -67,6 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     })
 
     this.readChatsRequests();
+
   }
 
   scrollTop(): void {
@@ -81,12 +81,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.superuserService.readChatsRequests().subscribe((data: chatsSessionsResponse) => {
       this.chatsSessions = data.sessions;
 
-      // si se recibe acutalizar la lista actualizo la sesión en curso si existiera
+      // si se recibe actualizar la lista actualizo la sesión en curso si existiera
       if(this.chatSession){
         this.chatSession = this.chatsSessions.find(session => session._id === this.chatSession._id);
       }
     })
   }
+
 
   sendMessage(message: HTMLTextAreaElement, chatref: HTMLElement): void {
 
@@ -108,8 +109,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       message.value = '';
       message.focus();
     }
-
-
   }
 
 
@@ -122,7 +121,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     const idSocket = this.wsService.idSocket;
     this.superuserService.initializeChatSession(idSession, idSocket).subscribe((data: chatSessionResponse) => {
       if (data.ok) {
-        this.chatSession = data.session;
+        
+        this.chatSession.id_assistant = data.session.id_assistant;
+        this.chatSession.id_assistant_socket = data.session.id_assistant_socket;
+        this.chatSession.tx_assistant_name = data.session.tx_assistant_name;
+        this.chatSession.tm_init = data.session.tm_init;
+        
         this.publicService.snack('Sesion inicializada correctamente', 2000);
       }
     })

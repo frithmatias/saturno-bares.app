@@ -4,7 +4,7 @@
     </div>
     <div *ngIf="!loading">
         <mat-form-field color="accent" class="mt-4 w-100">
-            <mat-label>Enviar un email a {{ticket.tx_email}}</mat-label>
+            <mat-label>Enviar un email a {{email}}</mat-label>
             <input type="text" autocomplete="off" #textmsg matInput placeholder="Mensaje"
                 (keydown.enter)="sendMessage( textmsg )">
         </mat-form-field>

@@ -1,9 +1,9 @@
 .chat-wrapper {
     display        : flex;
+    flex-direction : column;
     align-items    : center;
     justify-content: center;
     height         : 100%;
-    flex-direction : column;
 }
 
 .chat-client-content {
@@ -28,8 +28,8 @@
     background-color: purple;
     font-size       : xx-large;
     color           : white;
-    background-image: url('../../../assets/img/bg-tile.png');
-    background-size : contain;
+    background-image: url('../../../assets/img/tiles/food-red.png');
+    background-size : 80px;
     display         : flex;
     align-items     : start;
     padding-top     : 10px;
@@ -38,8 +38,7 @@
 
 .chat-notinit-bottom {
     flex-grow       : 0;
-    background-color: white;
-    color           : var(--dark-o80);
+    background-color: var(--mat-panel-bg);
 }
 
 .chat-notinit-bottom .loading {
@@ -59,4 +58,15 @@
     width         : 100%;
     flex-direction: column;
     display       : flex;
+}
+
+.chat-input {
+    border          : 0px;
+    background-color: white;
+    width           : -webkit-fill-available;
+    padding         : .5rem 1rem 0.5rem 1rem;
+    margin-right    : 10px;
+    border-radius   : 23px;
+    color           : var(--dark);
+    text-align      : left;
 }

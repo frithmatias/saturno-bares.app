@@ -53,7 +53,7 @@
                 <app-ticket-info [ticket]="data.table.ticketOwner"></app-ticket-info>
 
                 <div *ngIf="showMessageForm" class="my-4">
-                    <app-messenger [ticket]="data.table.ticketOwner" (messageResponse)="messageResponse($event)">
+                    <app-messenger [email]="data.table.ticketOwner.tx_email" (messageResponse)="messageResponse($event)">
                     </app-messenger>
                 </div>
 
