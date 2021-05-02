@@ -13,6 +13,7 @@ import { ChatComponent } from './chat/chat.component';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ChatNotInitComponent } from './chat-not-init/chat-not-init.component';
 import { BsheetComponent } from './chat-not-init/bsheet/bsheet.component';
+import { CompaniesComponent } from './companies/companies.component';
 
 
 
@@ -25,7 +26,8 @@ import { BsheetComponent } from './chat-not-init/bsheet/bsheet.component';
     MenuCreateFormComponent,
     ChatComponent,
     ChatNotInitComponent,
-    BsheetComponent
+    BsheetComponent,
+    CompaniesComponent
   ],
   imports: [
     CommonModule,

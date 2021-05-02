@@ -1,0 +1,165 @@
+<div class="page-container">
+
+    <table mat-table [dataSource]="companies" class="box-shadow">
+
+        <ng-container matColumnDef="tx_company_name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{element.tx_company_name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tx_company_type">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{element.tx_company_type}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pointer" (click)="selectCompany(row)"></tr>
+
+    </table>
+
+    <!-- USER -->
+    <mat-card *ngIf="company?.id_user">
+        <table class="sm">
+            <tr class="xl text-accent">
+                <td colspan="2">
+                    {{company.id_user.tx_name}}
+                </td>
+            </tr>
+            <tr>
+                <td>bl_active</td>
+                <td>{{company.id_user.bl_active}}</td>
+            </tr>
+            <tr>
+                <td>bl_social</td>
+                <td>{{company.id_user.bl_social}}</td>
+            </tr>
+            <tr>
+                <td>cd_pricing</td>
+                <td>{{company.id_user.cd_pricing}}</td>
+            </tr>
+            <tr>
+                <td>id_company</td>
+                <td>{{company.id_user.id_company}}</td>
+            </tr>
+            <tr>
+                <td>id_role</td>
+                <td>{{company.id_user.id_role}}</td>
+            </tr>
+            <tr>
+                <td>tm_createdat</td>
+                <td>{{company.id_user.tm_createdat}}</td>
+            </tr>
+            <tr>
+                <td>tm_lastlogin</td>
+                <td>{{company.id_user.tm_lastlogin}}</td>
+            </tr>
+            <tr>
+                <td>tx_email</td>
+                <td>{{company.id_user.tx_email}}</td>
+            </tr>
+            <tr>
+                <td>tx_img</td>
+                <td>{{company.id_user.tx_img}}</td>
+            </tr>
+            <tr>
+                <td>tx_name</td>
+                <td>{{company.id_user.tx_name}}</td>
+            </tr>
+            <tr>
+                <td>tx_password</td>
+                <td>{{company.id_user.tx_password}}</td>
+            </tr>
+            <tr>
+                <td>tx_platform</td>
+                <td>{{company.id_user.tx_platform}}</td>
+            </tr>
+        </table>
+    </mat-card>
+
+    <!-- COMPANY DATA -->
+    <mat-card *ngIf="company">
+        <table class="sm">
+            <tr class="xl text-accent">
+                <td colspan="2">
+                    {{company.tx_company_name}}
+                </td>
+            </tr>
+            <tr>
+                <td>tx_company_name</td>
+                <td>{{company.tx_company_name}}</td>
+            </tr>
+            <tr>
+                <td>tx_company_location</td>
+                <td>{{company.tx_company_location}}</td>
+            </tr>
+            <tr>
+                <td>tx_address</td>
+                <td>{{company.tx_address_street}} {{company.tx_address_number}}</td>
+            </tr>
+            <tr>
+                <td>tx_company_slogan</td>
+                <td>{{company.tx_company_slogan}}</td>
+            </tr>
+            <tr>
+                <td>tx_company_type</td>
+                <td>{{company.tx_company_type}}</td>
+            </tr>
+            <tr>
+                <td>tx_email</td>
+                <td>{{company.tx_email}}</td>
+            </tr>
+            <tr>
+                <td>tx_facebook</td>
+                <td>{{company.tx_facebook}}</td>
+            </tr>
+            <tr>
+                <td>tx_instagram</td>
+                <td>{{company.tx_instagram}}</td>
+            </tr>
+            <tr>
+                <td>tx_telegram</td>
+                <td>{{company.tx_telegram}}</td>
+            </tr>
+            <tr>
+                <td>tx_theme</td>
+                <td>{{company.tx_theme}}</td>
+            </tr>
+            <tr>
+                <td>tx_twitter</td>
+                <td>{{company.tx_twitter}}</td>
+            </tr>
+            <tr>
+                <td>tx_whatsapp</td>
+                <td>{{company.tx_whatsapp}}</td>
+            </tr>
+        </table>
+    </mat-card>
+
+    <!-- TABLES AND SECTIONS -->
+    <mat-card *ngIf="tablesSection">
+        <table *ngFor="let section of sections" class="sm">
+            <tr class="xl text-accent">
+                <td colspan="6">
+                    {{ section.tx_section}}
+                </td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>CAPA</td>
+                <td>STAT</td>
+                <td>SECT</td>
+                <td>SESS</td>
+                <td>TCKT</td>
+            </tr>
+            <tr *ngFor="let table of tablesSection.get(section.tx_section)">
+                <td>{{table.nm_table}}</td>
+                <td>{{table.nm_persons}}</td>
+                <td>{{table.tx_status}}</td>
+                <td>{{table.tx_section}}</td>
+                <td>{{table.id_session}}</td>
+                <td>{{table.id_ticket}}</td>
+            </tr>
+        </table>
+    </mat-card>
+
+</div>

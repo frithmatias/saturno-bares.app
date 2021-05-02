@@ -10,6 +10,12 @@ export class SuperuserService {
 
 	constructor(private http: HttpClient) { }
 
+
+	readAllCompanies() {
+		const url = environment.api + '/superuser/readallcompanies/';
+		return this.http.get(url);
+	}
+
 	readChatsRequests() {
 		const url = environment.api + '/chat/readchatsrequests';
 		return this.http.get(url);
