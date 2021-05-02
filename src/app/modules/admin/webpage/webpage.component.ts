@@ -17,8 +17,6 @@ import { User } from 'src/app/interfaces/user.interface';
 })
 export class WebPageComponent implements OnInit, OnDestroy {
 
-  @Input() nomargin: boolean;
-  @Input() nopadding: boolean;
   loading = false;
   formWebPage: FormGroup;
   webpageEdit: false;

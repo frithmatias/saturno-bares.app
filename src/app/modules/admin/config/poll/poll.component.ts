@@ -12,8 +12,6 @@ import { PublicService } from 'src/app/modules/public/public.service';
   styleUrls: ['./poll.component.css']
 })
 export class PollComponent implements OnInit {
-  @Input() nomargin: boolean;
-  @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['id_section', 'tx_item', '_id'];
   scoreItemCreate = false;

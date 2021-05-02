@@ -12,8 +12,6 @@ import { PublicService } from 'src/app/modules/public/public.service';
   styleUrls: ['./waiters.component.css']
 })
 export class WaitersComponent implements OnInit, OnDestroy {
-  @Input() nomargin: boolean;
-  @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['id_role', 'tx_name', '_id'];
 

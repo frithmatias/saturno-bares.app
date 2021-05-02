@@ -11,7 +11,7 @@ import { PublicService } from 'src/app/modules/public/public.service';
   styleUrls: ['./tables.component.css']
 })
 export class TablesComponent implements OnInit {
-  @Input() nomargin: boolean;
+
   @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['id_section', 'nm_table', 'nm_persons', 'tx_status', '_id'];

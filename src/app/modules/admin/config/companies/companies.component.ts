@@ -14,7 +14,6 @@ import { PublicService } from 'src/app/modules/public/public.service';
   styleUrls: ['./companies.component.css']
 })
 export class CompaniesComponent implements OnInit {
-  @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['tx_company_name', '_id'];

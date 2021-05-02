@@ -40,7 +40,6 @@ interface interval {
 })
 export class WorkingComponent implements OnInit {
 
-  @Input() nomargin: boolean;
   @Input() nopadding: boolean;
   @Output() canContinue: EventEmitter<boolean> = new EventEmitter();
 

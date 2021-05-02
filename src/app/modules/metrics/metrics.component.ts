@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-metrics',
@@ -11,5 +12,8 @@ export class MetricsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  toggle(htmlRef: MatDrawer): void {
+    htmlRef.toggle();
+  }
+  
 }

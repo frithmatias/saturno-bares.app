@@ -533,10 +533,6 @@ mat-drawer-container {
 /*------------------------------------------------*/
 
 /* using childs */
-.nomargin {
-    margin: 0 !important;
-}
-
 .nopadding {
     padding: 0 !important;
 }

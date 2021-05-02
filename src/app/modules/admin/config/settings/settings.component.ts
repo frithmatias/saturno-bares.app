@@ -13,9 +13,6 @@ import { HelpComponent } from '../../../../components/help/help.component';
 })
 export class SettingsComponent implements OnInit {
 
-  @Input() nomargin: boolean;
-  @Input() nopadding: boolean;
-
   @Output() canContinue: EventEmitter<boolean> = new EventEmitter(); // wizard
   saveDisabled = true;
 

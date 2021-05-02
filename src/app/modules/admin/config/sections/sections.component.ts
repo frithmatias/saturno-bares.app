@@ -12,7 +12,6 @@ import { PublicService } from 'src/app/modules/public/public.service';
 })
 export class SectionsComponent implements OnInit {
 
-  @Input() nomargin: boolean;
   @Input() nopadding: boolean;
 
   displayedColumns: string[] = ['tx_section', '_id'];

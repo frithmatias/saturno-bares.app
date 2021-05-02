@@ -12,11 +12,12 @@ import { CanceladosComponent } from './cancelados/cancelados.component';
 import { VolumenComponent } from './volumen/volumen.component';
 import { AtencionComponent } from './atencion/atencion.component';
 import { SatisfaccionComponent } from './satisfaccion/satisfaccion.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { MetricsComponent } from './metrics.component';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
@@ -29,10 +30,11 @@ import { PipesModule } from '../../pipes/pipes.module';
     VolumenComponent, 
     AtencionComponent, 
     SatisfaccionComponent, 
-    DashboardComponent
+    ToolbarComponent
   ],
   imports: [
     CommonModule,
+    ComponentsModule,
     MetricsRoutingModule,
     ReactiveFormsModule,
     MaterialModule,

@@ -79,7 +79,7 @@
                             el menu principal <span class="md align-top mdi mdi-menu"></span>
                         </p>
                     </div>
-                    <app-companies [nomargin]="true" [nopadding]="true"></app-companies>
+                    <app-companies [nopadding]="true"></app-companies>
                 </mat-card-content>
 
                 <mat-card-actions class="text-right">
@@ -98,58 +98,6 @@
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
                 </mat-card-actions>
-            </mat-card>
-        </mat-step>
-
-        <!-- Settings -->
-        <mat-step [completed]="publicService.settings">
-            <ng-template matStepLabel>Ajustes</ng-template>
-
-            <mat-card *ngIf="adminService.companies?.length > 0 && loginService.user?.id_company?._id">
-                <mat-card-header>
-                    <div mat-card-avatar class="step-header mdi xxxl mdi-cogs"></div>
-                    <mat-card-title>
-                        Ajustes
-                    </mat-card-title>
-                    <mat-card-subtitle class="step-header">
-                        ¿Cómo preferís usar el sistema?
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-
-                    <div>
-                        <p>
-                            Acá podes activar algunas funciones para definir como va a funcionar tu comercio. 
-                            Hacé un click en el ícono (?) para obtener mas detalles.
-                        </p>
-                    </div>
-
-                    <app-settings [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-settings>
-
-                    
-                </mat-card-content>
-                
-                <mat-card-actions class="text-right">
-                    <div *ngIf="!canContinueValue" class="sm text-right text-accent">
-                        Tenés que guardar los cambios para continuar
-                    </div>
-                    <!-- previous / next -->
-                    <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
-                        ATRAS
-                    </button>
-                    <button *ngIf="adminService.companies && loginService.user?.id_company?._id && canContinueValue && publicService.settings"
-                        mat-button (click)="stepperGoNext(stepper)">
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
-                    </button>
-                    <button *ngIf="!adminService.companies || !loginService.user?.id_company || !canContinueValue || !publicService.settings"
-                        mat-button disabled>
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
-                    </button>
-                </mat-card-actions>
-
             </mat-card>
         </mat-step>
 
@@ -175,7 +123,7 @@
                         </p>
                     </div>
 
-                    <app-working [nomargin]="true" [nopadding]="true" (canContinue)="canContinue($event)"></app-working>
+                    <app-working [nopadding]="true" (canContinue)="canContinue($event)"></app-working>
 
                     
                 </mat-card-content>
@@ -228,7 +176,7 @@
                             Por ejemplo: "Terraza", "Patio", "Fumadores", "Primer Piso", "Segundo Piso" etc.
                         </p>
                     </div>
-                    <app-sections [nomargin]="true" [nopadding]="true"></app-sections>
+                    <app-sections [nopadding]="true"></app-sections>
                 </mat-card-content>
 
                 <mat-card-actions class="text-right">
@@ -275,7 +223,7 @@
                     </div>
                 </mat-card-content>
 
-                <app-tables [nomargin]="true" [nopadding]="true"></app-tables>
+                <app-tables [nopadding]="true"></app-tables>
 
                 <mat-card-actions class="text-right">
                     <!-- previous / next -->
@@ -283,141 +231,20 @@
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
-                    <button *ngIf="adminService.tables?.length > 0" mat-button (click)="stepperGoNext(stepper)">
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
+
+                    <button *ngIf="adminService.tables?.length > 0" mat-button (click)="endWizard()">
+                        FINALIZAR
+                        <span class="mdi align-top mdi-check text-success"></span>
                     </button>
+
                     <button *ngIf="adminService.tables?.length === 0" mat-button disabled>
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
-                    </button>
-                </mat-card-actions>
-
-            </mat-card>
-        </mat-step>
-
-        <!-- Waiters -->
-        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
-            <ng-template matStepLabel>Camareros</ng-template>
-
-            <mat-card>
-                <mat-card-header>
-                    <div mat-card-avatar class="step-header mdi xxxl mdi-account-tie"></div>
-                    <mat-card-title>
-                        Camareros/as
-                    </mat-card-title>
-                    <mat-card-subtitle class="step-header">
-                        Opcional
-                    </mat-card-subtitle>
-                </mat-card-header>
-
-                <mat-card-content>
-                    <div>
-                        <p>
-                            Acá podés registrar a tus camareros/as. Para entrar a sus cuentas, los mismos, tienen que
-                            ingresar desde la pestaña de 'Soy Camarero/a' en la página de Login de usuario.
-                        </p>
-                    </div>
-
-                    <app-waiters [nomargin]="true" [nopadding]="true"></app-waiters>
-                </mat-card-content>
-
-                <mat-card-actions class="text-right">
-                    <!-- previous / next -->
-                    <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
-                        ATRAS
-                    </button>
-                    <button mat-button (click)="stepperGoNext(stepper)">
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-step>
-
-        <!-- Poll -->
-        <mat-step *ngIf="publicService.settings?.bl_schedule || publicService.settings?.bl_queue">
-            <ng-template matStepLabel>Encuestas</ng-template>
-
-            <mat-card>
-                <mat-card-header>
-                    <div mat-card-avatar class="step-header mdi xxxl mdi-poll-box"></div>
-                    <mat-card-title>
-                        Encuestas
-                    </mat-card-title>
-                    <mat-card-subtitle class="step-header">
-                        Opcional
-                    </mat-card-subtitle>
-                </mat-card-header>
-
-                <mat-card-content>
-                    <div>
-                        <p>
-                            Acá podés dar de alta items que tus clientes pueden calificar
-                            de 1 a 5 estrellas.
-                        </p>
-                        <p>
-                            Estos Items tienen que ser palabras o frases cortas.
-                            Por ejemplo "Atención", "Comida", "Limpieza", etc.
-                        </p>
-                    </div>
-
-                    <app-poll [nomargin]="true" [nopadding]="true"></app-poll>
-                </mat-card-content>
-
-                <mat-card-actions class="text-right">
-                    <!-- previous / next -->
-                    <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
-                        ATRAS
-                    </button>
-                    <button mat-button (click)="stepperGoNext(stepper)">
-                        SIGUIENTE
-                        <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-step>
-
-        <!-- Webpage -->
-        <mat-step>
-            <ng-template matStepLabel>Portal</ng-template>
-
-            <mat-card>
-                <mat-card-header>
-                    <div mat-card-avatar class="step-header mdi xxxl mdi-web-box"></div>
-                    <mat-card-title>
-                        Web Page
-                    </mat-card-title>
-                    <mat-card-subtitle class="step-header">
-                        Opcional
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <div>
-                        <p>
-                            Acá tenés que subir una serie de datos de tu comercio que se van a mostrar
-                            en la página web de recepción a tus clientes.
-                        </p>
-                    </div>
-                    <app-webpage [nomargin]="true" [nopadding]="true"></app-webpage>
-                </mat-card-content>
-
-                <mat-card-actions class="text-right">
-                    <!-- previous / next -->
-                    <button mat-button (click)="stepperGoBack(stepper)">
-                        <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
-                        ATRAS
-                    </button>
-                    <button mat-button (click)="endWizard()">
                         FINALIZAR
                         <span class="mdi align-top mdi-check text-success"></span>
                     </button>
                 </mat-card-actions>
+
             </mat-card>
         </mat-step>
-
 
     </mat-horizontal-stepper>
 </div>

@@ -10,26 +10,23 @@ import { PendientesComponent } from './pendientes/pendientes.component';
 import { PuntualidadComponent } from './puntualidad/puntualidad.component';
 import { SatisfaccionComponent } from './satisfaccion/satisfaccion.component';
 import { VolumenComponent } from './volumen/volumen.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 const metricsRoutes: Routes = [
-   { path: 'atencion', component: AtencionComponent, data: { titulo: 'Atención' } },
-   { path: 'cancelados', component: CanceladosComponent, data: { titulo: 'Cancelados' } },
-   { path: 'ocio', component: OcioComponent, data: { titulo: 'Ocio' } },
-   { path: 'pendientes', component: PendientesComponent, data: { titulo: 'Pendientes' } },
-   { path: 'puntualidad', component: PuntualidadComponent, data: { titulo: 'Puntualidad' } },
-   { path: 'satisfaccion', component: SatisfaccionComponent, data: { titulo: 'Satisfacción' } },
-   { path: 'volumen', component: VolumenComponent, data: { titulo: 'Volúmen' } },
-   { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+  { path: 'atencion', component: AtencionComponent, data: { titulo: 'Atención' } },
+  { path: 'cancelados', component: CanceladosComponent, data: { titulo: 'Cancelados' } },
+  { path: 'ocio', component: OcioComponent, data: { titulo: 'Ocio' } },
+  { path: 'pendientes', component: PendientesComponent, data: { titulo: 'Pendientes' } },
+  { path: 'puntualidad', component: PuntualidadComponent, data: { titulo: 'Puntualidad' } },
+  { path: 'satisfaccion', component: SatisfaccionComponent, data: { titulo: 'Satisfacción' } },
+  { path: 'volumen', component: VolumenComponent, data: { titulo: 'Volúmen' } },
 
-	{ path: '', redirectTo: '/metrics/dashboard', pathMatch: 'full' },
-  { path: '**', component: NopagefoundComponent}
+  { path: '**', component: NopagefoundComponent }
 ];
 
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forChild(metricsRoutes)], 
+  imports: [RouterModule.forChild(metricsRoutes)],
   exports: [RouterModule]
 })
 export class MetricsRoutingModule { }
