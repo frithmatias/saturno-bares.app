@@ -1,61 +1,62 @@
-<app-toolbar></app-toolbar>
-
 <div class="toolbar-spacer">
 
-<div *ngIf="company">
-    <!-- PAGE IMAGE SLIDER -->
-    <div class="company-page-banner">
+    <app-toolbar></app-toolbar>
 
-        <!-- PAGE TITLE TABS -->
-        <div class="company-title">
-            <div class="mr-3 company-logo-container">
-                <img class="company-page-logo img-fluid"
-                    [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+    <div *ngIf="company">
+        <!-- PAGE IMAGE SLIDER -->
+        <div class="company-page-banner">
+
+            <!-- PAGE TITLE TABS -->
+            <div class="company-title">
+                <div class="company-logo-container">
+                    <img class="company-page-logo img-fluid"
+                        [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
+                </div>
+                <div class="company-title-container">
+                    <div class="company-page-name">{{company.tx_company_name}}</div>
+                    <div class="company-page-slogan">{{company.tx_company_slogan}}</div>
+                </div>
             </div>
-            <div class="ml-3 company-title-container">
-                <div class="company-page-name">{{company.tx_company_name}}</div>
-                <div class="company-page-slogan">{{company.tx_company_slogan}}</div>
-            </div>
+
+            <img class="company-page-image"
+                [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
+
         </div>
 
-        <img class="company-page-image" width="100%"
-            [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
+        <!-- PAGE TABS -->
+        <app-home *ngIf="pageSection==='home' && company.tx_company_welcome" [company]="company"></app-home>
+        <app-menu *ngIf="pageSection==='menu'" [company]="company"></app-menu>
+        <hr class="my-3">
+        <app-ticket-create [company]="company" [settings]="settings"></app-ticket-create>
+
+        <!-- PAGE FOOTER -->
+        <div class="company-page-footer">
+            <div>
+                <div class="md text-white">
+                    {{company.tx_company_name}}
+                </div>
+                <div class="sm text-white">
+                    {{company.tx_address_street}}
+                    {{company.tx_address_number}}
+                </div>
+            </div>
+
+            <div *ngIf="company.tx_whatsapp || company.tx_facebook || company.tx_twitter || company.tx_instagram"
+                class="footer-social">
+                <span *ngIf="company.tx_telegram"><a class="xl mx-2 text-white mdi mdi-telegram" target="_blank"
+                        href="https://t.me/{{company.tx_telegram}}"></a></span>
+                <span *ngIf="company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp" target="_blank"
+                        href="https://wa.me/{{company.tx_whatsapp}}"></a></span>
+                <span *ngIf="company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook" target="_blank"
+                        href="https://www.facebook.com/{{company.tx_facebook}}"></a></span>
+                <span *ngIf="company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
+                        href="https://www.twitter.com/{{company.tx_twitter}}"></a></span>
+                <span *ngIf="company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram" target="_blank"
+                        href="https://www.instagram.com/{{company.tx_instagram}}"></a></span>
+            </div>
+
+        </div>
 
     </div>
-
-    <!-- PAGE TABS -->
-    <app-home *ngIf="pageSection==='home'" [company]="company"></app-home>
-    <app-menu *ngIf="pageSection==='menu'" [company]="company"></app-menu>
-    <app-ticket-create *ngIf="pageSection==='ticket'" [company]="company" [settings]="settings"></app-ticket-create>
-
-    <!-- PAGE FOOTER -->
-    <div class="company-page-footer">
-        <div>
-            <div class="md text-white">
-                {{company.tx_company_name}}
-            </div>
-            <div class="sm text-white">
-                {{company.tx_address_street}}
-                {{company.tx_address_number}}
-            </div>
-        </div>
-
-        <div *ngIf="company.tx_whatsapp || company.tx_facebook || company.tx_twitter || company.tx_instagram"
-            class="footer-social">
-            <span *ngIf="company.tx_telegram"><a class="xl mx-2 text-white mdi mdi-telegram" target="_blank"
-                    href="https://t.me/{{company.tx_telegram}}"></a></span>
-            <span *ngIf="company.tx_whatsapp"><a class="xl mx-2 text-white mdi mdi-whatsapp" target="_blank"
-                    href="https://wa.me/{{company.tx_whatsapp}}"></a></span>
-            <span *ngIf="company.tx_facebook"><a class="xl mx-2 text-white mdi mdi-facebook" target="_blank"
-                    href="https://www.facebook.com/{{company.tx_facebook}}"></a></span>
-            <span *ngIf="company.tx_twitter"><a class="xl mx-2 text-white mdi mdi-twitter" target="_blank"
-                    href="https://www.twitter.com/{{company.tx_twitter}}"></a></span>
-            <span *ngIf="company.tx_instagram"><a class="xl mx-2 text-white mdi mdi-instagram" target="_blank"
-                    href="https://www.instagram.com/{{company.tx_instagram}}"></a></span>
-        </div>
-
-    </div>
-
-</div>
 
 </div>

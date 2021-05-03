@@ -77,11 +77,11 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.params.subscribe(async (data: any) => {
 
-      if (data.embedcompanystring) {
-        localStorage.setItem('isembed', data.embedcompanystring)
+      if (data.companystring) {
+        localStorage.setItem('isembed', data.companystring)
         this.publicService.isEmbed = true;
-        this.publicService.companyString = data.embedcompanystring;
-        let resp = await this.getDataForEmbed(data.embedcompanystring)
+        this.publicService.companyString = data.companystring;
+        let resp = await this.getDataForEmbed(data.companystring)
           .then(() => {
             this.getData();
           })
@@ -107,15 +107,15 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
     this.ticketsSubscribe();
   }
 
-  getDataForEmbed(embedcompanystring: string): Promise<boolean> {
+  getDataForEmbed(companystring: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.route.params.subscribe((data: any) => {
 
-        if (!embedcompanystring) {
+        if (!companystring) {
           return resolve(false);
         }
 
-        this.publicService.readCompany(embedcompanystring).toPromise().then((resp: CompanyResponse) => {
+        this.publicService.readCompany(companystring).toPromise().then((resp: CompanyResponse) => {
           if (resp.ok) {
             localStorage.setItem('company', JSON.stringify(resp.company));
             this.publicService.company = resp.company;

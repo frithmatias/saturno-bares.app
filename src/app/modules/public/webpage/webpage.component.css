@@ -1,27 +1,56 @@
+@media (max-width: 850px) {
+
+    .toolbar-spacer {
+        top          : 55px !important;
+        margin-bottom: 55px !important;
+        height       : calc(100vh - 55px) !important;
+    }
+
+
+}
+
 @media (max-width: 575px) {
+    .company-page-image {
+        width : unset !important;
+        height: 90vh;
+    }
 
     .company-page-logo {
-        width: 100px !important;
+        width : 120px !important;
+        height: 120px !important;
+    }
+
+    .company-logo-container {
+        margin-right : 0px !important;
+        margin-bottom: 3em;
     }
 
     .company-page-name {
         font-size: xx-large !important;
     }
 
+    .company-title {
+        flex-direction: column;
+    }
+
+}
+
+.toolbar-spacer {
+    top          : 0px !important;
+    margin-bottom: 0px !important;
+    height       : 100vh !important;
 }
 
 .company-page-banner {
-    padding      : 0px 0px 0px 0px;
-    position     : relative;
-    overflow     : hidden;
-    max-height   : 350px;
-    border-bottom: 2px solid var(--primary);
+    padding   : 0px 0px 0px 0px;
+    position  : relative;
+    overflow  : hidden;
+    max-height: 550px;
 }
 
 .company-page-image {
-    margin-top: -15%;
+    width: 100%;
 }
-
 
 .company-title-container {
     align-self: center;
@@ -60,16 +89,16 @@
 }
 
 .company-logo-container {
-    align-self: center;
+    align-self  : center;
+    margin-right: 3rem;
 }
 
 .company-page-logo {
-    border-radius: 5px;
+    border-radius: 50%;
     width        : 150px;
+    height       : 150px;
     box-shadow   : 0px 0px 2px rgb(0 0 0 / 20%);
 }
-
-
 
 .company-page-tabs {
     /* vh - header - subtitle-margin-bottom - banner - footer */

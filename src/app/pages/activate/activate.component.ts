@@ -33,7 +33,7 @@ export class ActivateComponent implements OnInit {
             this.publicService.snack('Usuario Activado! Por favor, Ingresa con tu usuario y contraseña.', 10000);
             if(localStorage.getItem('isembed')){
               const companyString = localStorage.getItem('isembed');
-              const companyFormURL = '/ticketform/' + companyString;
+              const companyFormURL = '/embed/' + companyString;
               this.router.navigate([companyFormURL]);
             } else {
               const destination = data.user.id_role === 'CUSTOMER_ROLE' ? '/public/login' : '/login';

@@ -1,4 +1,4 @@
-<div class="toolbar-wrapper">
+<div class="toolbar-wrapper" [ngClass]="{'flatbar':publicHomePage}">
 
     <div class="toolbar-first-row">
 
@@ -10,8 +10,10 @@
 
         </div>
 
-        <div *ngIf="publicService.company" class="toolbar-links-first-row">
+        <!-- COMPANY SELECTED -->
 
+        <div class="toolbar-links-first-row">
+            <!-- 
             <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
                 <div>
                     Inicio
@@ -22,28 +24,19 @@
                 <div>
                     Menú
                 </div>
-            </div>
-
+            </div> 
+            
             <div class="toolbar-item"
-                [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
-                *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-                <div>
-                    Reservar
-                </div>
+            [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
+            *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
+            <div>
+                Reservar
             </div>
-
         </div>
+    -->
+        
+    </div>
 
-        <div *ngIf="!publicService.company" class="toolbar-links-first-row">
-
-            <div class="toolbar-item" routerLink="/home">
-                <div class="mdi mdi-home"></div>
-                <div>
-                    Volver al Inicio
-                </div>
-            </div>
-
-        </div>
 
         <!-- PUBLIC NOT LOGGED IN -->
         <div *ngIf="!publicService.customer">
@@ -96,40 +89,5 @@
         </div>
 
     </div>
-
-    <div *ngIf="publicService.company" class="toolbar-second-row">
-
-        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'home']">
-            <div>
-                Inicio
-            </div>
-        </div>
-
-        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'menu']">
-            <div>
-                Menú
-            </div>
-        </div>
-
-        <div class="toolbar-item" [routerLink]="['/public/page', publicService.company?.tx_company_string, 'ticket']"
-            *ngIf="publicService.company && publicService.settings?.bl_queue || publicService.settings?.bl_schedule">
-            <div>
-                Reservar
-            </div>
-        </div>
-    </div>
-
-    <div *ngIf="!publicService.company" class="toolbar-second-row">
-
-        <div class="toolbar-item" routerLink="/home">
-            <div class="mdi mdi-home"></div>
-            <div>
-                Volver al Inicio
-            </div>
-        </div>
-
-    </div>
-
-
 
 </div>

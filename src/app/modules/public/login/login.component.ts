@@ -7,6 +7,7 @@ import { PublicService } from '../public.service';
 import { LoginResponse } from '../../../interfaces/login.interface';
 import { Social } from 'src/app/components/social/social.component';
 import { User } from '../../../interfaces/user.interface';
+import { Company } from 'src/app/interfaces/company.interface';
 
 
 declare const gapi: any;
@@ -17,7 +18,7 @@ declare const gapi: any;
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	@Output() logged: EventEmitter<User> = new EventEmitter();
+
 	email: string;
 	hidepass = true;
 	recuerdame = false;
@@ -78,13 +79,11 @@ export class LoginComponent implements OnInit {
 			this.loggingEmail = false;
 			if (data.ok) {
 				if (localStorage.getItem('isembed')) {
-					const companyString = localStorage.getItem('isembed');
-					const companyFormURL = '/ticketform/' + companyString;
-					this.logged.emit(data.user);
-					this.router.navigate([companyFormURL]);
+					const companystring: string = localStorage.getItem('isembed');
+					this.router.navigate(['/embed', companystring])
 				} else {
-					const destination = '/public/tickets';
-					this.router.navigate([destination]);
+					const company: Company = JSON.parse(localStorage.getItem('company'));
+					this.router.navigate(['/public/page', company.tx_company_string])
 				}
 			}
 		}, (err: HttpErrorResponse) => {
@@ -105,10 +104,9 @@ export class LoginComponent implements OnInit {
 	}
 
 	backToForm() {
-		this.logged.emit(null);
 		if (localStorage.getItem('isembed')) {
 			const companyString = localStorage.getItem('isembed');
-			this.router.navigate(['/ticketform/' + companyString]);
+			this.router.navigate(['/embed/' + companyString]);
 		}
 	}
 

@@ -41,7 +41,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FooterComponent } from './pages/home/footer/footer.component';
 import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ActivateComponent } from './pages/activate/activate.component';
-import { EmbedComponent } from './pages/embed/embed.component';
 
 @NgModule({
 	declarations: [
@@ -55,7 +54,6 @@ import { EmbedComponent } from './pages/embed/embed.component';
 		HowWorksComponent,
 		FooterComponent,
 		ActivateComponent,
-		EmbedComponent,
 	],
 	imports: [
 		MaterialModule,

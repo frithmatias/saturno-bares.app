@@ -56,14 +56,12 @@ export class TicketsComponent implements OnInit {
       if (txPlatform && txEmail) {
         this.getUserTickets(txPlatform, txEmail); // update tickets
       }
-    }
-
-    // embed form cant show my tickets
-    if (localStorage.getItem('isembed')) { localStorage.removeItem('isembed'); }
-
-    if (!this.customer) {
+    } else {
       this.router.navigate(['/public/login']);
     }
+
+    if (localStorage.getItem('isembed')) { localStorage.removeItem('isembed'); }
+
   }
 
   updateTickets(tickets: Ticket[]) {

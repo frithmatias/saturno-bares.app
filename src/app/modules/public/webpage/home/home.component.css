@@ -4,6 +4,10 @@
     }
 }
 
+.toolbar-wrapper {
+    background-color: unset !important;
+}
+
 .page-tab-container {
     font-size   : larger;
 }

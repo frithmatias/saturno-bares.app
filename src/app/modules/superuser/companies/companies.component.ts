@@ -53,7 +53,7 @@ export class CompaniesComponent implements OnInit {
         this.sections.forEach(section => {
           this.tablesSection.set(section.tx_section, this.tables.filter(table => table.id_section === section._id))
         })
-        console.log(this)
+
       })
     })
   }

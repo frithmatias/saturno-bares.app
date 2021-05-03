@@ -25,8 +25,8 @@ export class AppComponent {
       // filter((evento: ActivationEnd) => evento.snapshot.firstChild === null),
       // map((evento: ActivationEnd) => evento.snapshot.data)
     ).subscribe((data: NavigationEnd) => {
-      // https://localhost:4200/ticketform/pizzasjavascript
-      this.publicService.urlModule = data.url.split('/')[1] || null; //ticketform
+      // https://localhost:4200/embed/pizzasjavascript
+      this.publicService.urlModule = data.url.split('/')[1] || null; //embed
       this.publicService.urlComponent = data.url.split('/')[2] || null; //pizzasjavascript
     });
   }

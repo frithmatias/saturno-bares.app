@@ -33,7 +33,7 @@ const appRoutes: Routes = [
 	{ path: 'activate/:email/:hash', component: ActivateComponent, data: { titulo: 'Activar Cuenta' } },
 	{ path: 'contact', component: ContactComponent, data: { titulo: 'Contacto' } },
 	{ path: 'howworks', component: HowWorksComponent, data: { titulo: 'Como Funciona' } },
-	{ path: 'ticketform/:embedcompanystring', component: TicketCreateComponent, data: { titulo: 'Crear un Ticket' } },
+	{ path: 'embed/:companystring', component: TicketCreateComponent, data: { titulo: 'Crear un Ticket' } },
 
 	{
 		path: 'public',

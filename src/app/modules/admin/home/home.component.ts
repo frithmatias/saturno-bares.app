@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			this.user = user;
 			if (this.user) {
 				this.widget = `<iframe
-	src="https://saturno.fun/ticketform/${this.user.id_company?.tx_company_string}" 
+	src="https://saturno.fun/embed/${this.user.id_company?.tx_company_string}" 
 	width="100%" 
 	height="400px" 
 	frameborder="0">
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		})
 
 		this.widget = `<iframe
-src="https://saturno.fun/ticketform/${this.user.id_company?.tx_company_string}" 
+src="https://saturno.fun/embed/${this.user.id_company?.tx_company_string}" 
 width="100%" 
 height="400px" 
 frameborder="0">

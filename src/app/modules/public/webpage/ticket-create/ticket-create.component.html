@@ -8,12 +8,20 @@
   <!-- NO ERROR -->
   <div *ngIf="!errorEmbed" class="my-1">
 
-    <!-- EMBED FORM (LOGIN) -->
-    <div *ngIf="publicService.isEmbed === true">
+
+    <!-- NOT EMBED (LABEL)  -->
+    <div *ngIf="publicService.isEmbed === false" class="text-accent">
+      <div *ngIf="!ticket" class="ticket-create-label">Reserva tu Mesa</div>
+      <div *ngIf="ticket" class="ticket-create-label">¡Tu Reserva!</div>
+    </div>
+
+
+    <!-- LOGIN -->
+    <div>
 
       <!-- CUSTOMER NOT LOGGED IN -->
-      <div *ngIf="!customer && !showLogin" (click)="showLogin=!showLogin">
-        <div class="xxxl op4 mdi mdi-account-circle"></div>
+      <div *ngIf="!customer" routerLink="/public/login">
+        <div class="xxxl op4 mdi mdi-account-circle pointer"></div>
         <div>
           Ingresar
         </div>
@@ -61,15 +69,8 @@
 
       </div>
 
-      <!-- LOGIN  -->
-      <app-login *ngIf="showLogin && !customer" (logged)="loggedIn($event)"></app-login>
-
     </div>
 
-    <!-- NOT EMBED (LABEL)  -->
-    <div *ngIf="publicService.isEmbed === false">
-      <div class="ticket-create-label">Reserva tu Mesa</div>
-    </div>
 
 
     <!-- TICKET FORM || TICKET INFO -->
@@ -78,7 +79,7 @@
       <app-spinner *ngIf="loading" text="Obteniendo disponibilidad..."></app-spinner>
 
       <!-- TICKET FORM  -->
-      <div *ngIf="!loading && !ticket && !showLogin" class="my-4 animated fadeIn">
+      <div *ngIf="!loading && !ticket" class="my-4 animated fadeIn">
         <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="ticketForm">
 
           <div class="ticket-create-inputs-container">
