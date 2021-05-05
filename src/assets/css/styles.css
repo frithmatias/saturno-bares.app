@@ -16,6 +16,10 @@ body {
     height               : 100%;
 }
 
+.inherit {
+    all:inherit
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -222,11 +226,7 @@ SATURNO TOOLBAR
 
 @media (max-width: 850px) {
 
-    .toolbar-logo-container {
-        flex-grow: 1;
-    }
-
-    .toolbar-links-first-row {
+    .toolbar-first-row-center-inner {
         display: none !important;
     }
 
@@ -255,8 +255,42 @@ SATURNO TOOLBAR
     box-shadow      : 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
 }
 
-/* ------------------------------------------- */
-/* TOOLBAR LOGO FOR PUBLIC */
+.toolbar-first-row {
+    display    : flex;
+    align-items: center;
+    padding    : 8px 12px;
+    height     : 55px;
+    font-size  : small;
+}
+
+.toolbar-first-row-left {
+    flex-grow: 0;
+}
+
+.toolbar-first-row-center {
+    flex-grow    : 1;
+}
+
+.toolbar-first-row-center-inner {
+    display      : flex;
+    place-content: center;
+    position     : relative;
+    top          : 2px;
+}
+
+.toolbar-first-row-right {
+    flex-grow: 0;
+}
+
+.toolbar-second-row {
+    display        : none;
+    justify-content: space-evenly;
+    font-size      : small;
+}
+
+
+/* LOGO */
+
 .toolbar-logo-container {
     display: flex;
 }
@@ -268,6 +302,8 @@ SATURNO TOOLBAR
     background-position: center center;
     height             : 3em;
     width              : 3em;
+    background-color   : rgba(0, 0, 0, 0.2);
+    border-radius      : 50%;
 }
 
 .logo-text-container {
@@ -280,8 +316,7 @@ SATURNO TOOLBAR
     line-height   : .8em;
 }
 
-/* END TOOLBAR LOGO FOR PUBLIC */
-/* ------------------------------------------- */
+/* END LOGO */
 
 .toolbar-user-image {
     width        : 30px;
@@ -300,20 +335,6 @@ SATURNO TOOLBAR
     text-align    : center;
 }
 
-.toolbar-first-row {
-    display    : flex;
-    align-items: center;
-    padding    : 8px 12px;
-    height     : 55px;
-    font-size  : small;
-}
-
-.toolbar-second-row {
-    display        : none;
-    justify-content: space-evenly;
-    font-size      : small;
-}
-
 
 .toolbar-item {
     display  : flex;
@@ -326,13 +347,7 @@ SATURNO TOOLBAR
     margin-right: 6px;
 }
 
-.toolbar-links-first-row {
-    display      : flex;
-    flex-grow    : 1;
-    place-content: center;
-    position     : relative;
-    top          : 2px;
-}
+
 
 .toolbar-spacer {
     display       : flex;
@@ -466,7 +481,7 @@ mat-drawer-container {
 .page-tab-container {
     font-variant: small-caps;
     font-family : 'Baloo Bhai 2', 'system-ui';
-    margin      : 16px;
+    margin      : 50px 28px;
     min-width   : 300px;
     max-width   : 600px;
 }

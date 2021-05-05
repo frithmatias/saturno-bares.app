@@ -17,7 +17,6 @@ const config: SocketIoConfig = { url: environment.api, options: {} };
 
 // COMPONENTS
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from './pages/toolbar/toolbar.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -30,6 +29,7 @@ import { MaterialModule } from './modules/material.module';
 import { ComponentsModule } from './components/components.module';
 
 // GUARDS
+import { SuperGuard } from './guards/super.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { TokenGuard } from './guards/token.guard';
 import { LoginGuard } from './guards/login.guard';
@@ -45,7 +45,6 @@ import { ActivateComponent } from './pages/activate/activate.component';
 @NgModule({
 	declarations: [
 		AppComponent,
-		ToolbarComponent,
 		HomeComponent,
 		RegisterComponent,
 		LoginComponent,
@@ -68,6 +67,7 @@ import { ActivateComponent } from './pages/activate/activate.component';
 	],
 	exports: [],
 	providers: [
+		SuperGuard,
 		AdminGuard,
 		TokenGuard,
 		LoginGuard,

@@ -16,7 +16,6 @@ import { MetricsComponent } from './metrics.component';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes.module';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ComponentsModule } from '../../components/components.module';
 
 
@@ -30,7 +29,6 @@ import { ComponentsModule } from '../../components/components.module';
     VolumenComponent, 
     AtencionComponent, 
     SatisfaccionComponent, 
-    ToolbarComponent
   ],
   imports: [
     CommonModule,

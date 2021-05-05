@@ -13,7 +13,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 // components
 import { AdminComponent } from './admin.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -45,20 +44,15 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 @NgModule({
 	declarations: [
 		AdminComponent,
-		ToolbarComponent,
 		HomeComponent,
 		DashboardComponent,
 		ProfileComponent,
-
 		CompaniesComponent,
 		CompanyCreateComponent,
-
 		SectionsComponent,
 		SectionCreateComponent,
-
 		TablesComponent,
 		TableCreateComponent,
-
 		WaitersComponent,
 		WaiterCreateComponent,
 		WizardComponent,

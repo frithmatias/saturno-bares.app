@@ -3,7 +3,9 @@
         {{data.session.tx_subject}}
     </p>
 
-    <app-messenger [email]="data.session.id_user.tx_email" (messageResponse)="messageResponse($event)">
+    <app-messenger *ngIf="data.session.id_user?.tx_email" [email]="data.session.id_user.tx_email" (messageResponse)="messageResponse($event)">
     </app-messenger>
-
+    <div *ngIf="!data.session.id_user?.tx_email">
+        No se pudo obtener el usuario o el email del usuario.
+    </div>
 </mat-card>

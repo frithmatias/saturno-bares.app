@@ -6,15 +6,16 @@
         <!-- PAGE IMAGE SLIDER -->
         <div class="company-page-banner">
 
-            <!-- PAGE TITLE TABS -->
-            <div class="company-title">
+            <!-- LOGO, COMPANYNAME, SLOGAN -->
+            <div class="company-info">
                 <div class="company-logo-container">
                     <img class="company-page-logo img-fluid"
                         [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
                 </div>
-                <div class="company-title-container">
+                <div class="company-info-container">
                     <div class="company-page-name">{{company.tx_company_name}}</div>
                     <div class="company-page-slogan">{{company.tx_company_slogan}}</div>
+                    <button mat-flat-button class="mt-3" color="warn" (click)="scrollToElement()">RESERVAR MESA</button>
                 </div>
             </div>
 
@@ -23,11 +24,16 @@
 
         </div>
 
+
         <!-- PAGE TABS -->
-        <app-home *ngIf="pageSection==='home' && company.tx_company_welcome" [company]="company"></app-home>
-        <app-menu *ngIf="pageSection==='menu'" [company]="company"></app-menu>
-        <hr class="my-3">
-        <app-ticket-create [company]="company" [settings]="settings"></app-ticket-create>
+        <div class="company-sections-container">
+            <div class="company-section-home" *ngIf="pageSection==='home' && company.tx_company_welcome">
+                <app-home [company]="company"></app-home>
+            </div>
+            <div class=company-section-ticket>
+                <app-ticket-create id="app-ticket-create" [company]="company" [settings]="settings"></app-ticket-create>
+            </div>
+        </div>
 
         <!-- PAGE FOOTER -->
         <div class="company-page-footer">

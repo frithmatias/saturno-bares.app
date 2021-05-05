@@ -22,6 +22,7 @@ import { LoginGuard } from './guards/login.guard';
 import { TokenGuard } from './guards/token.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { TicketCreateComponent } from './modules/public/webpage/ticket-create/ticket-create.component';
+import { SuperGuard } from './guards/super.guard';
 
 
 const appRoutes: Routes = [
@@ -59,7 +60,7 @@ const appRoutes: Routes = [
 	},
 	{
 		path: 'superuser',
-		canLoad: [LoginGuard, TokenGuard, AdminGuard],
+		canLoad: [LoginGuard, TokenGuard, AdminGuard, SuperGuard],
 		component: SuperuserComponent,
 		loadChildren: () => import('./modules/superuser/superuser.module').then((m) => m.SuperuserModule),
 		data: { titulo: 'Superuser' }

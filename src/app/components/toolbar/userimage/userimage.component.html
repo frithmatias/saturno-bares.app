@@ -1,6 +1,5 @@
 <!-- social image -->
-<img *ngIf="user.bl_social && user.tx_img" class="toolbar-user-image"
-    [src]="user.tx_img">
+<img *ngIf="user.bl_social && user.tx_img" class="toolbar-user-image" [src]="user.tx_img">
 
 <!-- social no image -->
 <span *ngIf="user.bl_social && !user.tx_img" class="mdi mdi-account-tie pointer"></span>

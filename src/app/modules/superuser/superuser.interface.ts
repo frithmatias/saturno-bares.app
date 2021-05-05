@@ -1,7 +1,3 @@
-// ========================================================
-// SUPERUSER
-// ========================================================
-
 export interface MenusResponse {
 	ok: boolean;
 	msg: string;
@@ -23,6 +19,3 @@ export interface MenuItem { // menu OR submenu
 	tx_url?: string,
 	_id: string;
 }
-
-
-

@@ -1,0 +1,44 @@
+        <!-- USER LOGGED IN -->
+        <div *ngIf="loginService.user" class="d-flex md">
+
+           <app-userimage [user]="loginService.user" [matMenuTriggerFor]="menu"></app-userimage>
+
+            <mat-menu #menu="matMenu">
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-shield-star-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Página de Administrador</span>
+                </div>
+                <div routerLink="/waiter/home" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-tie-outline mx-1"></span>
+                    <span class="ml-2 align-middle">Atender mis Mesas</span>
+                </div>
+                <div *ngIf="loginService.user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-wizard-hat mx-1"></span>
+                    <span class="ml-2 align-middle">Iniciar Asistente</span>
+                </div>
+                <div routerLink="/waiter/dashboard" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-view-dashboard-variant mx-1"></span>
+                    <span class="ml-2 align-middle">Métricas</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span class="lg toolbar-menu-icon mdi mdi-account-circle mx-1"></span>
+                    <span class="ml-2 align-middle">Perfil</span>
+                </div>
+                <div routerLink="/waiter/profile" mat-menu-item>
+                    <span disabled class="lg toolbar-menu-icon mdi mdi-email mx-1"></span>
+                    <span class="ml-2 align-middle">{{loginService.user?.tx_email}}</span>
+                </div>
+                <hr>
+                <div class="px-2 pb-2 text-center">
+                    <app-button></app-button>
+                </div>
+            </mat-menu>
+
+        </div>
+
+        <div *ngIf="!loginService.user" class="toolbar-item" routerLink="/login">
+            <div class="mdi mdi-account-circle"></div>
+            <div>
+                Comercios
+            </div>
+        </div>

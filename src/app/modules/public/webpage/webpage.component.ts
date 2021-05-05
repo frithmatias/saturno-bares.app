@@ -30,7 +30,7 @@ export class WebPageComponent implements OnInit {
 		this.route.params.subscribe((data: any) => {
 			this.pageSection = data.section || 'home';
 			this.publicService.readCompany(data.txCompanyString).toPromise().then((resp: CompanyResponse) => {
-				
+
 				localStorage.setItem('company', JSON.stringify(resp.company));
 				this.company = resp.company;
 				this.publicService.company = resp.company;
@@ -42,7 +42,7 @@ export class WebPageComponent implements OnInit {
 				const idCompany = resp.company._id;
 				this.publicService.readSettings(idCompany).subscribe((data: SettingsResponse) => {
 					this.settings = data.settings;
-					this.publicService.settings = data.settings; 
+					this.publicService.settings = data.settings;
 				})
 
 			}).catch(() => {
@@ -51,5 +51,15 @@ export class WebPageComponent implements OnInit {
 
 		});
 	}
+
+
+	scrollToElement(): void {
+		const elem = document.getElementById('app-ticket-create');
+		elem?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+	}
+
+
+
+
 }
 

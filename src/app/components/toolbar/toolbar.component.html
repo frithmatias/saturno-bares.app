@@ -1,0 +1,89 @@
+<div class="toolbar-wrapper" [ngClass]="{'flatbar':publicHomePage}">
+
+    <div class="toolbar-first-row">
+
+        <div class="toolbar-first-row-left">
+
+            <!-- TOGGLE MENU ICON -->
+            <div *ngIf="loginService.user" class="mdi mdi-menu mt-1 xl pointer" (click)="toggle('sidenav')"></div>
+
+            <!-- LOGO -->
+            <div class="toolbar-logo-container pointer" *ngIf="!loginService.user" routerLink="/home">
+                <!-- LOGO IMG -->
+                <div class="logo-img"> </div>
+
+                <!-- LOGO TITLE -->
+                <div class="logo-text-container text-left ml-2">
+                    <div class="md"> SATURNO </div>
+                    <div class="xs">{{version}} </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="toolbar-first-row-center">
+            <div class="toolbar-first-row-center-inner">
+
+                <div *ngIf="loginService.user" class="inherit">
+                    <!-- SECTION NAME -->
+                    <div *ngIf="waiterService.session" class="company-name md ml-2">
+                        <span>{{waiterService.session?.id_section.tx_section}}</span>
+                    </div>
+                </div>
+
+                <div *ngIf="!loginService.user" class="inherit">
+
+                    <div class="toolbar-item" routerLink="/howworks">
+                        <div class="mdi mdi-help-box"></div>
+                        <div>
+                            ¿Qué es Saturno?
+                        </div>
+                    </div>
+
+                    <div class="toolbar-item" routerLink="/register">
+                        <div class="mdi mdi-storefront-outline"></div>
+                        <div>
+                            Registrar Negocio
+                        </div>
+                    </div>
+
+                    <div class="toolbar-item" routerLink="/public/tickets">
+                        <div class="mdi mdi-ticket-account"></div>
+                        <div>
+                            Mis Reservas
+                        </div>
+                    </div>
+
+                    <div class="toolbar-item" (click)="scrollToElement()">
+                        <div class="mdi mdi-map-marker"></div>
+                        <div>
+                            Buscá por Zona
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="toolbar-first-row-right">
+            <app-menu></app-menu>
+        </div>
+
+    </div>
+
+    <div class="toolbar-second-row" *ngIf="publicService.urlComponent !== 'page'">
+
+        <div class="toolbar-item" routerLink="/howworks">
+            ¿Qué es Saturno?
+        </div>
+        <div class="toolbar-item" routerLink="/public/tickets">
+            Mis Reservas
+        </div>
+        <div class="toolbar-item" (click)="scrollToElement()">
+            Buscá por Zona
+        </div>
+
+    </div>
+
+</div>

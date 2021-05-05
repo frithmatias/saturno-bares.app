@@ -3,3 +3,8 @@
         display: none;
     }
 }
+
+.flatbar {
+    background-color: unset;
+    box-shadow      : none;
+}

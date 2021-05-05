@@ -14,14 +14,17 @@ import { MapComponent } from './map/map.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { ButtonComponent } from './button/button.component';
 import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
-import { ThemeComponent } from './theme/theme.component';
+import { ThemeComponent } from './toolbar/theme/theme.component';
 import { SocialComponent } from './social/social.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { HelpComponent } from './help/help.component';
 import { TicketInfoComponent } from './ticket-info/ticket-info.component';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { UserimageComponent } from './userimage/userimage.component';
+import { UserimageComponent } from './toolbar/userimage/userimage.component';
+import { NotificationsComponent } from './toolbar/notifications/notifications.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MenuComponent } from './toolbar/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { UserimageComponent } from './userimage/userimage.component';
     HelpComponent,
     TicketInfoComponent,
     UserimageComponent,
+    NotificationsComponent,
+    ToolbarComponent,
+    MenuComponent,
   ],
   imports: [
     RouterModule,
@@ -64,7 +70,8 @@ import { UserimageComponent } from './userimage/userimage.component';
     SpinnerComponent,
     HelpComponent,
     TicketInfoComponent,
-    UserimageComponent
+    UserimageComponent,
+    ToolbarComponent
 
   ]
 })

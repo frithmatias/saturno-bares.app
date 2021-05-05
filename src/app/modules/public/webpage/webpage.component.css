@@ -6,18 +6,20 @@
         height       : calc(100vh - 55px) !important;
     }
 
+    .company-sections-container {
+        flex-direction: column !important;
+    }
 
 }
 
 @media (max-width: 575px) {
     .company-page-image {
         width : unset !important;
-        height: 90vh;
+        height: 100vh !important;
     }
 
-    .company-page-logo {
-        width : 120px !important;
-        height: 120px !important;
+    .company-page-banner {
+        max-height: 100vh !important;
     }
 
     .company-logo-container {
@@ -25,15 +27,14 @@
         margin-bottom: 3em;
     }
 
-    .company-page-name {
-        font-size: xx-large !important;
-    }
-
-    .company-title {
+    .company-info {
         flex-direction: column;
     }
 
+
+
 }
+
 
 .toolbar-spacer {
     top          : 0px !important;
@@ -52,11 +53,11 @@
     width: 100%;
 }
 
-.company-title-container {
+.company-info-container {
     align-self: center;
 }
 
-.company-title {
+.company-info {
     position        : absolute;
     top             : 0px;
     width           : 100%;
@@ -69,16 +70,32 @@
 }
 
 .company-page-name {
-    font-size  : xxx-large;
-    color      : white;
-    text-shadow: -1px 0 2px var(--primary), 0px 1px 2px var(--primary), 0px -1px 2px var(--primary), 1px 0px 2px var(--primary)
+    font-size: xxx-large;
+    color    : rgb(255, 255, 255);
+    text-shadow:
+        -1px 0 2px rgb(50 50 50 / 40%),
+        0px 1px 2px rgb(50 50 50 / 40%),
+        0px -1px 2px rgb(50 50 50 / 40%),
+        1px 0px 2px rgb(50 50 50 / 40%),
+        -3px 0 2px rgb(50 50 50 / 20%),
+        0px 3px 2px rgb(50 50 50 / 20%),
+        0px -3px 2px rgb(50 50 50 / 20%),
+        3px 0px 2px rgb(50 50 50 / 20%);
 }
 
 .company-page-slogan {
-    font-size    : medium;
+    font-size    : x-large;
     margin-bottom: 10px;
-    color        : yellow;
-    text-shadow  : -1px 0 2px var(--primary), 0px 1px 2px var(--primary), 0px -1px 2px var(--primary), 1px 0px 2px var(--primary)
+    color        : rgb(255, 255, 255);
+    text-shadow  :
+        -1px 0 2px rgb(50 50 50 / 40%),
+        0px 1px 2px rgb(50 50 50 / 40%),
+        0px -1px 2px rgb(50 50 50 / 40%),
+        1px 0px 2px rgb(50 50 50 / 40%),
+        -3px 0 2px rgb(50 50 50 / 20%),
+        0px 3px 2px rgb(50 50 50 / 20%),
+        0px -3px 2px rgb(50 50 50 / 20%),
+        3px 0px 2px rgb(50 50 50 / 20%);
 }
 
 .company-page-tab-icon {
@@ -103,6 +120,21 @@
 .company-page-tabs {
     /* vh - header - subtitle-margin-bottom - banner - footer */
     background-color: var(--mat-card-bg);
+}
+
+.company-sections-container {
+    display       : flex;
+    flex-direction: row;
+    place-content : center;
+}
+
+.company-section-home {
+    background-color: var(--mat-card-bg);
+    flex-grow       : 1;
+}
+
+.company-sections-ticket {
+    flex-grow: 0;
 }
 
 .company-page-footer {

@@ -10,7 +10,7 @@
     padding         : 1em;
     text-decoration : none;
     justify-content : space-around;
-    height          : 12em;
+    height          : auto;
 }
 
 a {
@@ -23,14 +23,30 @@ a:hover {
 }
 
 
+.footer-copyright,
+.footer-ssl,
+.footer-crab {
+    align-self: flex-end;
+}
+
+.footer-ssl .mdi-shield-lock {
+    position: relative;
+    top     : -15px;
+}
+
+.footer-crab img {
+    width: 40px;
+}
+
 @media (max-width: 650px) {
     .footer {
         height   : 17em;
-        flex-flow: wrap-reverse;
+        flex-flow: wrap;
     }
 
     .footer-copyright {
+        margin-top   : 20px;
         margin-bottom: 10px;
+        width        : 100%;
     }
 }
-
