@@ -15,7 +15,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   @ViewChild('validateTicketGoogle') gButton: any;
   @Output() socialResponse: EventEmitter<Social | null> = new EventEmitter(); // devuelve el estado para el spinner
-  @Input() logout: boolean = false;
   @Input() platforms: string[];
 
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
@@ -30,9 +29,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    if (this.logout) {
-      this.logOut();
-    }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       this.isMobile = true;
@@ -159,15 +155,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
       this.socialResponse.emit(social);
 
     })
-  }
-
-  // ==========================================================
-  // VALIDATE EMAIL USER
-  // ==========================================================
-
-
-  logOut(): void {
-    this.socialResponse.emit(null);
   }
 
 }

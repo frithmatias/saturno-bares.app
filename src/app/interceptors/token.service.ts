@@ -58,8 +58,10 @@ export class TokenService implements HttpInterceptor {
     if (error.error.code == 1001) { // token expired
 
       if(localStorage.getItem('customer')){
-        this.publicService.clearPublicSession();
-      } else {
+        this.publicService.logout();
+      } 
+
+      if(localStorage.getItem('user')){
         this.loginService.logout();
       }
 

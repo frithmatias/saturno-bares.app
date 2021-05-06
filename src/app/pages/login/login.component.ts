@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	loginUser(platform: string, token: string, emailForm: any) {
+		this.publicService.logout();  // end public session if exist
 
 		this.loginService.loginUser(platform, token, emailForm).subscribe((data: LoginResponse) => {
 			this.loggingSocial = false;

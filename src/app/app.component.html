@@ -9,7 +9,7 @@
         
         <router-outlet></router-outlet>
 
-        <button *ngIf="publicService.urlModule !== 'public'" mat-fab color="warn" class="xxl mdi mdi-face-agent" (click)="toggle(chat)"></button>
+        <button *ngIf="!['public','embed'].includes(publicService.urlModule)" mat-fab color="warn" class="xxl mdi mdi-face-agent" (click)="toggle(chat)"></button>
     </mat-drawer-container>
 
 </div>

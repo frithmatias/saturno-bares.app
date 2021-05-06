@@ -1,0 +1,80 @@
+<!-- USER LOGGED IN -->
+<div *ngIf="user && !showlogin">
+
+    <div [matMenuTriggerFor]="menu">
+
+        <!-- social image -->
+        <img *ngIf="user.bl_social && user.tx_img" class="toolbar-user-image" [src]="user.tx_img">
+
+        <!-- social no image -->
+        <span *ngIf="user.bl_social && !user.tx_img" class="mdi mdi-account-tie pointer"></span>
+
+        <!-- no social with image -->
+        <img *ngIf="!user.bl_social && user.tx_img" class="toolbar-user-image"
+            [src]="user.tx_img | imagenPipe : 'tx_img' : user._id">
+
+        <!-- no social wo image -->
+        <span *ngIf="!user.bl_social && !user.tx_img" class="mdi mdi-account-tie pointer"></span>
+
+        <div *ngIf="showname" class="mt-1">
+            {{user.tx_name}}
+        </div>
+    </div>
+
+
+    <mat-menu #menu="matMenu">
+
+
+        <!-- if logged as customer or is on public page -->
+        <div *ngIf="publicService.urlModule === 'public'">
+            <div routerLink="/public/tickets" mat-menu-item>
+                <span class="lg op5 mdi mdi-ticket mx-1"></span>
+                <span class="ml-2 align-middle">Mis tickets</span>
+            </div>
+        </div>
+
+
+        <div *ngIf="role==='user'">
+            <div *ngIf="user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/home" mat-menu-item>
+                <span class="lg op5 mdi mdi-shield-star-outline mx-1"></span>
+                <span class="ml-2 align-middle">Página de Administrador</span>
+            </div>
+            <div *ngIf="user?.id_role === 'ADMIN_ROLE' || user?.id_role === 'WAITER_ROLE'" routerLink="/waiter/home"
+                mat-menu-item>
+                <span class="lg op5 mdi mdi-account-tie-outline mx-1"></span>
+                <span class="ml-2 align-middle">Atender mis Mesas</span>
+            </div>
+            <div *ngIf="user?.id_role === 'ADMIN_ROLE'" routerLink="/admin/wizard" mat-menu-item>
+                <span class="lg op5 mdi mdi-wizard-hat mx-1"></span>
+                <span class="ml-2 align-middle">Iniciar Asistente</span>
+            </div>
+        </div>
+        
+        <div class="py-2">
+            <div routerLink="/waiter/profile" mat-menu-item>
+                <span disabled class="lg op5 mdi mdi-email mx-1"></span>
+                <span class="ml-2 align-middle">{{user?.tx_email}}</span>
+            </div>
+            <hr>
+            <button mat-raised-button color="warn" (click)="logout()">Salir</button>
+        </div>
+    </mat-menu>
+
+</div>
+
+
+<div *ngIf="!user || showlogin">
+    <div *ngIf="login==='company'" routerLink="/login">
+        <div class="mdi mdi-account-circle"></div>
+        <div>
+            Comercios
+        </div>
+    </div>
+
+    <div *ngIf="login==='public'" routerLink="/public/login">
+        <div class="mdi mdi-account-circle"></div>
+        <div>
+            Login
+        </div>
+    </div>
+</div>

@@ -60,7 +60,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 
 
 		if (!this.idTicket) {
-			this.publicService.clearPublicSession();
+			this.publicService.logout();
 			this.publicService.snack('No hay ticket para gestionar', 5000)
 			return;
 		}
@@ -145,7 +145,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 					this.scoreItems = data.scoreitems;
 				} else {
 					setTimeout(() => {
-						this.publicService.clearPublicSession();
+						this.publicService.logout();
 					}, 5000);
 				}
 			})
@@ -283,10 +283,10 @@ export class TicketComponent implements OnInit, OnDestroy {
 						if (data.ok) {
 							resolve();
 							this.publicService.snack(data.msg, 3000, 'ACEPTAR')
-							this.publicService.clearPublicSession();
+							this.publicService.logout();
 						}
 					}, () => {
-						this.publicService.clearPublicSession();
+						this.publicService.logout();
 					});
 				}
 			})
@@ -308,7 +308,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 				if (data.ok) {
 					delete this.ticket;
 					this.publicService.snack('¡ Gracias por tu visita !', 5000);
-					this.publicService.clearPublicSession();
+					this.publicService.logout();
 				}
 			})
 

@@ -12,7 +12,6 @@ import { ChatComponent } from './chat/chat.component';
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './map/map.component';
 import { UploaderComponent } from './uploader/uploader.component';
-import { ButtonComponent } from './button/button.component';
 import { BottomsheetComponent } from './bottomsheet/bottomsheet.component';
 import { ThemeComponent } from './toolbar/theme/theme.component';
 import { SocialComponent } from './social/social.component';
@@ -21,10 +20,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { HelpComponent } from './help/help.component';
 import { TicketInfoComponent } from './ticket-info/ticket-info.component';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { UserimageComponent } from './toolbar/userimage/userimage.component';
 import { NotificationsComponent } from './toolbar/notifications/notifications.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { MenuComponent } from './toolbar/menu/menu.component';
+import { UserComponent } from './toolbar/user/user.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +32,6 @@ import { MenuComponent } from './toolbar/menu/menu.component';
     MapComponent,
     UploaderComponent,
     UploaderDirective,
-    ButtonComponent,
     BottomsheetComponent,
     ThemeComponent,
     SocialComponent,
@@ -42,10 +39,9 @@ import { MenuComponent } from './toolbar/menu/menu.component';
     SpinnerComponent,
     HelpComponent,
     TicketInfoComponent,
-    UserimageComponent,
     NotificationsComponent,
     ToolbarComponent,
-    MenuComponent,
+    UserComponent,
   ],
   imports: [
     RouterModule,
@@ -62,7 +58,6 @@ import { MenuComponent } from './toolbar/menu/menu.component';
     ChatComponent,
     SearchComponent,
     MapComponent,
-    ButtonComponent,
     UploaderComponent,
     ThemeComponent,
     SocialComponent,
@@ -70,8 +65,9 @@ import { MenuComponent } from './toolbar/menu/menu.component';
     SpinnerComponent,
     HelpComponent,
     TicketInfoComponent,
-    UserimageComponent,
-    ToolbarComponent
+    NotificationsComponent,
+    ToolbarComponent,
+    UserComponent,
 
   ]
 })

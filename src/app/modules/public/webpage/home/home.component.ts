@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void { }
   salir(): void {
-    this.publicService.clearPublicSession();
+    this.publicService.logout();
     this.router.navigate(['/home'])
   }
 }

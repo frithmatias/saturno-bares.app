@@ -1,1 +1,17 @@
-<p>notifications works!</p>
+<div class="mdi mdi-bell" [matMenuTriggerFor]="notif">
+   
+</div>
+
+
+<mat-menu #notif="matMenu">
+
+
+    <!-- if logged as customer or is on public page -->
+    <div>
+        <div routerLink="/public/tickets" mat-menu-item>
+            <span class="lg op5 mdi mdi-ticket mx-1"></span>
+            <span class="ml-2 align-middle">Mis tickets</span>
+        </div>
+    </div>
+
+</mat-menu>

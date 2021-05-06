@@ -4,7 +4,7 @@ import { PublicService } from '../../modules/public/public.service';
 import { environment } from '../../../environments/environment.prod';
 import { WaiterService } from '../../modules/waiter/waiter.service';
 import { AdminService } from '../../modules/admin/admin.service';
-import { CompanyResponse } from '../../interfaces/company.interface';
+import { CompanyResponse, Company } from '../../interfaces/company.interface';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,10 @@ export class ToolbarComponent implements OnInit {
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
 
   version = environment.version;
-  publicHomePage: boolean;
+  
+  module: string;
+  component: string;
+  company: Company;
 
   constructor(
     public adminService: AdminService,
@@ -28,10 +31,14 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.publicHomePage = this.publicService.urlComponent === 'page' ? true : false;
-    if (localStorage.getItem('customer')) {
-      this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
+    
+    this.module = this.publicService.urlModule;
+    this.component = this.publicService.urlComponent;
+
+    if (localStorage.getItem('company')) {
+      this.company = JSON.parse(localStorage.getItem('company'));
     }
+
   }
 
 
@@ -55,10 +62,5 @@ export class ToolbarComponent implements OnInit {
     elem?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
-
-  salir() {
-    this.publicService.clearPublicSession();
-    this.router.navigate(['/home']);
-  }
 
 }

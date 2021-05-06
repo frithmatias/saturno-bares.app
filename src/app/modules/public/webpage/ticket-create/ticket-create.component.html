@@ -15,63 +15,8 @@
       <div *ngIf="ticket" class="ticket-create-label">¡Tu Reserva!</div>
     </div>
 
-
     <!-- LOGIN -->
-    <div>
-
-      <!-- CUSTOMER NOT LOGGED IN -->
-      <div *ngIf="!customer" routerLink="/public/login">
-        <div class="xxxl op4 mdi mdi-account-circle pointer"></div>
-        <div>
-          Ingresar
-        </div>
-      </div>
-
-      <!-- CUSTOMER LOGGED IN -->
-      <div *ngIf="customer" class="my-4">
-
-        <!-- GOOGLE LOGIN IMAGE -->
-        <div *ngIf="customer.bl_social && customer.tx_img">
-          <img class="toolbar-user-image" [src]="customer.tx_img" [matMenuTriggerFor]="menu">
-        </div>
-
-        <!-- FACEBOOK HAS NO LOGIN IMAGE -->
-        <div *ngIf="customer.bl_social && !customer.tx_img" class="mdi mdi-account-tie pointer"
-          [matMenuTriggerFor]="menu">
-        </div>
-
-        <!-- NORMAL LOGIN WITH IMAGE -->
-        <div *ngIf="!customer.bl_social && customer.tx_img" class="pointer" [matMenuTriggerFor]="menu">
-          <img class="toolbar-user-image" [src]="customer.tx_img | imagenPipe : 'tx_img' : customer._id">
-        </div>
-
-        <!-- NORMAL LOGIN WO IMAGE -->
-        <div *ngIf="!customer.bl_social && !customer.tx_img" class="mdi mdi-account-tie pointer"
-          [matMenuTriggerFor]="menu">
-        </div>
-
-        <mat-menu #menu="matMenu">
-          <div mat-menu-item>
-            <span disabled class="lg op5 toolbar-menu-icon mdi mdi-email mx-1"></span>
-            <span class="ml-2 op8 align-middle">{{customer?.tx_email}}</span>
-          </div>
-          <a target="_blank" href="https://saturno.fun/public/tickets" mat-menu-item>
-            <span disabled class="lg op5 toolbar-menu-icon mdi mdi-ticket-account mx-1"></span>
-            <span class="ml-2 op8 align-middle">Mis Reservas</span>
-          </a>
-          <hr>
-          <button mat-raised-button color="warn" (click)="salir()">
-            <span class="mdi mdi-power"></span> Salir
-          </button>
-        </mat-menu>
-
-        <div class="md my-2">{{customer.tx_name}}</div>
-
-      </div>
-
-    </div>
-
-
+    <app-user [showname]="true" class="pointer"></app-user>
 
     <!-- TICKET FORM || TICKET INFO -->
     <div *ngIf="company && ticketForm" class="my-1">

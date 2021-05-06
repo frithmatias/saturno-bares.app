@@ -114,7 +114,6 @@ export class LoginService {
 
 	logout() {
 
-
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }

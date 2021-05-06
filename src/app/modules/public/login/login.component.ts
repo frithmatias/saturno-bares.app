@@ -8,6 +8,7 @@ import { LoginResponse } from '../../../interfaces/login.interface';
 import { Social } from 'src/app/components/social/social.component';
 import { User } from '../../../interfaces/user.interface';
 import { Company } from 'src/app/interfaces/company.interface';
+import { LoginService } from '../../../services/login.service';
 
 
 declare const gapi: any;
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
 	loggingSocial = false;
 
 	constructor(
+		private loginService: LoginService,
 		public publicService: PublicService,
 		public router: Router,
 		public activatedRoute: ActivatedRoute,
@@ -74,6 +76,7 @@ export class LoginComponent implements OnInit {
 
 
 	loginCustomer(platform: string, token: string, emailForm: any) {
+		this.loginService.logout(); // end user session if exist
 		this.publicService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
 			this.loggingSocial = false;
 			this.loggingEmail = false;

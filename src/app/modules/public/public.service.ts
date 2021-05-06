@@ -268,16 +268,17 @@ export class PublicService {
     return this.http.post(url, data);
   }
 
-  clearPublicSession(): void {
+  logout(): void {
 
     delete this.tickets;
     delete this.token;
     delete this.customer;
-    
+
     // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
     if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
+    
   }
 
 }

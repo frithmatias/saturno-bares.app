@@ -17,7 +17,7 @@ body {
 }
 
 .inherit {
-    all:inherit
+    all: inherit
 }
 
 input:-webkit-autofill,
@@ -218,136 +218,13 @@ SATURNO LOGIN/REGISTER
     display: none;
 }
 
-/*
--------------------------------------------
-SATURNO TOOLBAR
--------------------------------------------
-*/
-
 @media (max-width: 850px) {
-
-    .toolbar-first-row-center-inner {
-        display: none !important;
-    }
-
-    .toolbar-second-row {
-        display: flex !important;
-        padding: 10px 5px;
-    }
-
     .toolbar-spacer {
         top          : 94px !important;
         margin-bottom: 94px !important;
         height       : calc(100vh - 94px) !important;
-
     }
 }
-
-.toolbar-wrapper {
-    color           : white;
-    text-transform  : uppercase;
-    position        : absolute;
-    top             : 0;
-    left            : 0;
-    right           : 0;
-    z-index         : 2;
-    background-color: var(--primary);
-    box-shadow      : 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
-}
-
-.toolbar-first-row {
-    display    : flex;
-    align-items: center;
-    padding    : 8px 12px;
-    height     : 55px;
-    font-size  : small;
-}
-
-.toolbar-first-row-left {
-    flex-grow: 0;
-}
-
-.toolbar-first-row-center {
-    flex-grow    : 1;
-}
-
-.toolbar-first-row-center-inner {
-    display      : flex;
-    place-content: center;
-    position     : relative;
-    top          : 2px;
-}
-
-.toolbar-first-row-right {
-    flex-grow: 0;
-}
-
-.toolbar-second-row {
-    display        : none;
-    justify-content: space-evenly;
-    font-size      : small;
-}
-
-
-/* LOGO */
-
-.toolbar-logo-container {
-    display: flex;
-}
-
-.logo-img {
-    background-image   : url('./../img/saturno-logo.png');
-    background-size    : contain;
-    background-repeat  : no-repeat;
-    background-position: center center;
-    height             : 3em;
-    width              : 3em;
-    background-color   : rgba(0, 0, 0, 0.2);
-    border-radius      : 50%;
-}
-
-.logo-text-container {
-    align-self    : center;
-    text-align    : left;
-    font-size     : 1.1em;
-    letter-spacing: .1em;
-    font-weight   : 200;
-    margin-left   : 10px;
-    line-height   : .8em;
-}
-
-/* END LOGO */
-
-.toolbar-user-image {
-    width        : 30px;
-    height       : 30px;
-    border-radius: 50%;
-    cursor       : pointer;
-}
-
-.company-name {
-    overflow      : hidden;
-    font-weight   : 300;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color         : whitesmoke;
-    flex-grow     : 1;
-    text-align    : center;
-}
-
-
-.toolbar-item {
-    display  : flex;
-    flex-wrap: wrap;
-    margin   : 0px 16px;
-    cursor   : pointer;
-}
-
-.toolbar-item .mdi {
-    margin-right: 6px;
-}
-
-
 
 .toolbar-spacer {
     display       : flex;
@@ -361,14 +238,6 @@ SATURNO TOOLBAR
     right         : 0;
     overflow      : auto;
 }
-
-
-
-/*
--------------------------------------------
-END SATURNO TOOLBAR
--------------------------------------------
-*/
 
 /*
 -------------------------------------------

@@ -36,7 +36,6 @@ export class ChatNotInitComponent implements OnInit {
 
   readChatsNotInit() {
     this.superuserService.readChatsNotInit().subscribe((data: chatsSessionsResponse) => {
-      console.log(data)
       this.chatsNotInit = data.sessions;
     })
   }

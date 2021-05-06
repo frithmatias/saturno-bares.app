@@ -435,7 +435,7 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
   }
 
   salir(): void {
-    this.publicService.clearPublicSession();
+    this.publicService.logout();
     delete this.ticket;
     delete this.customer;
     this.ticketForm.reset();
