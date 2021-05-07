@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Notification } from '../../../interfaces/notification.interface';
 
 @Component({
   selector: 'app-notifications',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsComponent implements OnInit {
 
+  @Input() notifications: Notification[] = [];
   constructor() { }
 
   ngOnInit(): void {

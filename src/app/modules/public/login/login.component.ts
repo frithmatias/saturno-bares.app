@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
-	loggingEmail = false;
-	loggingSocial = false;
+	logging = false;
 
 	constructor(
 		private loginService: LoginService,
@@ -54,7 +53,7 @@ export class LoginComponent implements OnInit {
 
 		const platform = 'email';
 
-		this.loggingEmail = true;
+		this.logging = true;
 		this.loginCustomer(platform, null, emailForm);
 	}
 
@@ -70,7 +69,7 @@ export class LoginComponent implements OnInit {
 		const token = social.txToken;
 		const platform = social.txPlatform;
 
-		this.loggingSocial = true;
+		this.logging = true;
 		this.loginCustomer(platform, token, null);
 	}
 
@@ -78,15 +77,13 @@ export class LoginComponent implements OnInit {
 	loginCustomer(platform: string, token: string, emailForm: any) {
 		this.loginService.logout(); // end user session if exist
 		this.publicService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
-			this.loggingSocial = false;
-			this.loggingEmail = false;
+			this.logging = false;
 			if (data.ok) {
 				if (localStorage.getItem('isembed')) {
 					const companystring: string = localStorage.getItem('isembed');
 					this.router.navigate(['/embed', companystring])
 				} else {
-					const company: Company = JSON.parse(localStorage.getItem('company'));
-					this.router.navigate(['/public/page', company.tx_company_string])
+					this.router.navigate(['/public/tickets'])
 				}
 			}
 		}, (err: HttpErrorResponse) => {

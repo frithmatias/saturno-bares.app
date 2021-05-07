@@ -1,4 +1,32 @@
+.page-container-full {
+  display        : flex;
+  flex-direction : row;
+  justify-content: center;
+}
+
 .tickets-pending-class {
-    background: orange;
-    border-radius: 100%;
+  background   : orange;
+  border-radius: 100%;
+}
+
+form {
+  display       : flex;
+  flex-direction: row;
+}
+
+.half-container {
+  padding: 10px;
+}
+
+@Media (max-width: 575px) {
+  .page-container-full {
+    flex-direction : column !important;
+    justify-content: unset !important;
+
   }
+
+  .half-container {
+    padding: none !important;
+  }
+
+}

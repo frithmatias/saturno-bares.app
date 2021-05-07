@@ -350,7 +350,7 @@ mat-drawer-container {
 .page-tab-container {
     font-variant: small-caps;
     font-family : 'Baloo Bhai 2', 'system-ui';
-    margin      : 50px 28px;
+    margin      : 100px 28px;
     min-width   : 300px;
     max-width   : 600px;
 }

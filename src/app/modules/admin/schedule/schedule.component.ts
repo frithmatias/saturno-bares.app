@@ -49,8 +49,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     public adminService: AdminService,
     public loginService: LoginService,
     public websocketService: WebsocketService
-  ) { 
-    const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
+  ) {
     // this.minDate = today;
     // this.maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); //30 days
   }
@@ -64,8 +63,10 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.updateSub = this.websocketService.updateAdmin().subscribe(async () => {
-      await this.readAvailability();
+    this.updateSub = this.websocketService.updateAdmin().subscribe(() => {
+      if (this.idSection && this.dtSelected) {
+        this.readAvailability();
+      }
     });
 
 
@@ -74,11 +75,16 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       dtSelected: new FormControl('', [Validators.required])
     });
 
+    const today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    this.dtSelected = today;
+    this.scheduleForm.patchValue({dtSelected: today}); // set today as default value
+
     this.scheduleForm.valueChanges.subscribe((data) => {
+      
       this.idSection = data.idSection;
       this.dtSelected = data.dtSelected;
 
-      if(this.dtSelected){
+        if (this.dtSelected) {
         this.filterPendingsDate();
       }
 
@@ -99,6 +105,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     const nmPersons = 5000; // high value for availability response
     const idSection = this.scheduleForm.value.idSection;
     const dtSelected = this.scheduleForm.value.dtSelected;
+
     this.publicService.readAvailability(nmPersons, idSection, dtSelected).subscribe((data: availabilityResponse) => {
       this.availability = data.availability;
       // data.availability.map(av => {
@@ -110,7 +117,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   readPendingsMonth() {
 
-    if(!this.loginService.user){
+    if (!this.loginService.user) {
       return;
     }
     const idCompany = this.loginService.user.id_company._id;
@@ -123,7 +130,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     })
   }
 
-  filterPendingsDate(){
+  filterPendingsDate() {
     // pendinetes del día seleccionado
     this.pending = this.pendingMonth.filter(ticket => {
       return new Date(ticket.tm_intervals[0]).getDate() === new Date(this.dtSelected).getDate();

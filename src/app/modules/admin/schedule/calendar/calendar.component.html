@@ -3,28 +3,29 @@
     <table class="schedule sm" *ngIf="availability.length > 0">
 
         <thead>
-            <th class="cap px-1"></th>
-            <th class="cap px-1"></th>
-            <th class="cap px-1 sm" *ngFor="let table of tables"> {{table.nm_persons}} </th>
+            <th class="cap"></th>
+            <th class="cap"></th>
+            <th class="cap sm" *ngFor="let table of tables"> {{table.nm_persons}} </th>
         </thead>
         <thead>
-            <th class="tbl px-1">Mesas</th>
-            <th class="tbl px-1"></th>
-            <th class="tbl px-1" *ngFor="let table of tables"> {{table.nm_table}} </th>
+            <th class="tbl">Mesas</th>
+            <th class="tbl"></th>
+            <th class="tbl" *ngFor="let table of tables"> {{table.nm_table}} </th>
         </thead>
         <tbody>
             <!-- intervals -->
             <tr *ngFor="let avInterval of availability; let i = index" [ngClass]="{'odd-row': i%2==0}">
 
-                <td class="px-1">
+                <td class="px-2">
                     <span>{{avInterval.interval | dateToString : 'time-24'}}</span>
                 </td>
+
                 <td class="text-accent sm">
                     {{avInterval.capacity}}
                 </td>
 
                 <!-- tables -->
-                <td class="px-1" *ngFor="let table of avInterval.available">
+                <td *ngFor="let table of avInterval.available" class="px-2">
 
                     <!-- reserved to client-->
                     <span *ngIf="table.ticketOwner" class="mdi  mdi-account-box-outline text-accent pointer"
@@ -36,7 +37,7 @@
                     </span>
 
                     <!-- available -->
-                    <span *ngIf="!table.blReserved" class="mdi mdi-checkbox-blank-outline text-info pointer"
+                    <span *ngIf="!table.blReserved" class="mdi mdi-ticket ticket-icon text-info pointer"
                         (click)="openBottomSheet(table, avInterval)">
                     </span>
 

@@ -1,0 +1,11 @@
+.notifications-wrapper {
+    color         : var(--text);
+    padding       : 5px 15px;
+    display       : flex;
+    flex-direction: row;
+    text-align    : left;
+}
+
+.message {
+    line-height: 1.2em;
+}

@@ -279,6 +279,8 @@ export class PublicService {
     if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
     
+    this.router.navigate(['/home']);
+
   }
 
 }

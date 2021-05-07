@@ -5,6 +5,9 @@ import { LoginService } from '../../services/login.service';
 import { WaiterService } from '../waiter/waiter.service';
 import { PublicService } from '../public/public.service';
 import { MatDrawer } from '@angular/material/sidenav';
+import { CompaniesResponse } from 'src/app/interfaces/company.interface';
+import { WebsocketService } from '../../services/websocket.service';
+import { NotificationsResponse, Notification } from '../../interfaces/notification.interface';
 
 @Component({
   selector: 'app-admin',
@@ -13,109 +16,116 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-  userSubscription: Subscription;
-
+  userSubscription: Subscription; // user changes
+  adminSubscription: Subscription; // system messages for admin updates
+  
   constructor(
-    private adminService: AdminService,
+    public adminService: AdminService,
     private waiterService: WaiterService,
     private publicService: PublicService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private wsService: WebsocketService
   ) { }
 
   ngOnInit(): void {
 
-
     const txTheme = this.loginService.user.id_company?.tx_theme;
-    if(txTheme) this.setTheme(txTheme);
+    if (txTheme) this.setTheme(txTheme);
 
     let idCompany = this.loginService.user.id_company?._id;
 
     if (idCompany) {
       this.readCompanyData(idCompany);
+    } else {
+      let idUser = this.loginService.user._id;
+      this.adminService.readCompanies(idUser).subscribe((data: CompaniesResponse) => {
+        this.adminService.companies = data.companies;
+      })
     }
 
     this.userSubscription = this.loginService.user$.subscribe(user => {
-     
+
       // if company changes set the theme
-      if(user){
+      if (user) {
         const txTheme = user.id_company?.tx_theme;
-        if(txTheme) this.setTheme(txTheme);
+        if (txTheme) this.setTheme(txTheme);
       }
 
       let idCompany = user?.id_company?._id;
       if (idCompany) {
         this.readCompanyData(idCompany);
       }
+
     });
+
+    this.adminSubscription = this.wsService.updateAdmin().subscribe((data)=>{
+     this.adminService.readNotifications(idCompany).subscribe((data: NotificationsResponse) => {
+       this.adminService.notifications = data.notifications;
+     })
+    })  
+
 
   }
 
-  setTheme(theme: string){
+  setTheme(theme: string) {
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
     cssLink.href = `./assets/css/themes/${theme}`;
   }
 
   readCompanyData(idCompany: string) {
-    
-    if(!idCompany) {
-      this.adminService.loading = false;
-      return;
-    } else {
-      this.adminService.loading = true;
-    }
-    
-    
+
+    this.wsService.emit('enterCompany', idCompany)
     let idUser = this.loginService.user._id;
-    const companies$ = this.adminService.readCompanies(idUser)
-    const sections$ = this.publicService.readSections(idCompany)
-    const tables$ = this.waiterService.readTables(idCompany)
-    const scoreItems$ = this.adminService.readScoreItems(idCompany)
-    const settings$ = this.publicService.readSettings(idCompany)
+    const companies$ = this.adminService.readCompanies(idUser);
+    const notifications$ = this.adminService.readNotifications(idCompany);
+    const sections$ = this.publicService.readSections(idCompany);
+    const tables$ = this.waiterService.readTables(idCompany);
+    const scoreItems$ = this.adminService.readScoreItems(idCompany);
+    const settings$ = this.publicService.readSettings(idCompany);
 
     forkJoin({
       companiesResponse: companies$,
+      notificationsResponse: notifications$,
       sectionsResponse: sections$,
       tablesResponse: tables$,
       scoreitemsResponse: scoreItems$,
       settingsResponse: settings$
     }).subscribe((data: any) => {
 
-        // set companies
-        this.adminService.companies = data.companiesResponse.companies;
+      // set companies
+      this.adminService.companies = data.companiesResponse.companies;
 
-        // set sections and sectionsMap
-        this.adminService.sections = data.sectionsResponse.sections;
-        for (let section of data.sectionsResponse.sections) {
-          this.adminService.sectionsMap.set(section._id, section.tx_section);
-        }
+      this.adminService.notifications = data.notificationsResponse.notifications;
+      // set sections and sectionsMap
+      this.adminService.sections = data.sectionsResponse.sections;
 
-        // set tables
-        this.adminService.tables = data.tablesResponse.tables;
-        this.adminService.tablesSection = data.tablesResponse.tables;
+      for (let section of data.sectionsResponse.sections) {
+        this.adminService.sectionsMap.set(section._id, section.tx_section);
+      }
 
-        // set score items
-        this.adminService.scoreItems = data.scoreitemsResponse.scoreitems;
-        this.adminService.scoreItemsSection = data.scoreitemsResponse.scoreitems;
+      this.adminService.tables = data.tablesResponse.tables;
+      this.adminService.scoreItems = data.scoreitemsResponse.scoreitems;
 
-        //set settings and working hours
-        this.publicService.settings = data.settingsResponse.settings;
-        if (this.publicService.settings.tm_working.length === 0) {
-          this.publicService.settings.tm_working = [[], [], [], [], [], [], []]; //7 days of week
-        }
+      //set settings and working hours
+      this.publicService.settings = data.settingsResponse.settings;
+      if (this.publicService.settings.tm_working.length === 0) {
+        this.publicService.settings.tm_working = [[], [], [], [], [], [], []]; //7 days of week
+      }
 
-        this.adminService.loading = false;
+      this.adminService.loading = false;
 
-      })
+    })
 
-    
+
 
   }
 
   toggle(htmlRef: MatDrawer): void {
     htmlRef.toggle();
   }
-  
+
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
+    this.adminSubscription?.unsubscribe(); 
   }
 }

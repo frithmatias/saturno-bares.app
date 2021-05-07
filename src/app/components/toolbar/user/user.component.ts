@@ -3,6 +3,7 @@ import { LoginService } from '../../../services/login.service';
 import { User } from '../../../interfaces/user.interface';
 import { PublicService } from '../../../modules/public/public.service';
 import { Router } from '@angular/router';
+import { AdminService } from '../../../modules/admin/admin.service';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,7 @@ export class UserComponent implements OnInit {
   showlogin: boolean;
   constructor(
     public loginService: LoginService,
+    private adminService: AdminService,
     public publicService: PublicService,
     public router: Router
   ) { }
@@ -60,8 +62,19 @@ export class UserComponent implements OnInit {
     }
 
     if (localStorage.getItem('user')) {
+
+      this.adminService.companies = [];
+      this.adminService.sections = [];
+      this.adminService.sectionsMap.clear();
+      this.adminService.tables = [];
+      this.adminService.tablesSection = [];
+      this.adminService.waiters = [];
+      this.adminService.scoreItems = [];
+      this.adminService.scoreItemsSection = [];
+
       this.loginService.logout();
-    }
+
+      }
 
   }
 

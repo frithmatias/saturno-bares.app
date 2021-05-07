@@ -17,7 +17,9 @@ export class AppComponent {
   constructor(
     public router: Router,
     public publicService: PublicService
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.router.events.pipe(

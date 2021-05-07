@@ -1,16 +1,25 @@
-<div class="mdi mdi-bell" [matMenuTriggerFor]="notif">
-   
+<div [matBadge]="notifications.length" matBadgeOverlap="true" matBadgeColor="warn" matBadgeSize="small" class="md mdi mdi-bell" [matMenuTriggerFor]="notif">
+
 </div>
 
 
 <mat-menu #notif="matMenu">
 
+    <div *ngIf="notifications.length === 0" class="notifications-wrapper">
+        <div class="sm text-accent">
+            No tenes notificaciones
+        </div>
+    </div>
 
     <!-- if logged as customer or is on public page -->
-    <div>
-        <div routerLink="/public/tickets" mat-menu-item>
-            <span class="lg op5 mdi mdi-ticket mx-1"></span>
-            <span class="ml-2 align-middle">Mis tickets</span>
+    <div *ngFor="let notif of notifications" class="notifications-wrapper">
+        <div>
+            <span class="lg op5 mdi {{notif.tx_icon}} mr-3"></span>
+        </div>
+        <div>
+            <div class="sm text-accent">{{notif.tx_title}}</div>
+            <div class="sm text-info message">{{notif.tx_message | stringReplaceDateTime : notif.tm_event }}</div>
+            <div class="xs text-info">{{notif.tm_notification | dateToString : 'date-time'}}</div>
         </div>
     </div>
 

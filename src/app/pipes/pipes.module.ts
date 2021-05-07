@@ -11,6 +11,7 @@ import { DateToStringPipe } from './date-to-string.pipe';
 import { DateToRemainingPipe } from './date-to-remaining.pipe';
 import { TicketStatusPipe } from './ticket-status.pipe';
 import { IntervalToHmPipe } from './interval-to-hm.pipe';
+import { StringReplaceDateTimePipe } from './string-replace-date-time.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    IntervalToHmPipe
+    IntervalToHmPipe,
+    StringReplaceDateTimePipe
   ],
   imports: [],
   exports: [
@@ -40,7 +42,8 @@ import { IntervalToHmPipe } from './interval-to-hm.pipe';
     DateToStringPipe,
     DateToRemainingPipe,
     TicketStatusPipe,
-    IntervalToHmPipe
+    IntervalToHmPipe,
+    StringReplaceDateTimePipe
 
   ]
 })

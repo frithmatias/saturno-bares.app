@@ -1,92 +1,101 @@
-<div class="page-container animated fadeIn">
+<div class="page-container-full animated fadeIn">
+
+    <div class="half-container">
+
+        <!------------------------------>
+        <!-- DATE && SECTION FORM -->
+        <!------------------------------>
+        <mat-card>
+            <!-- Form -->
+            <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
+
+                <mat-form-field color="accent" class="w-50 px-2">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [matDatepickerFilter]="myFilter" formControlName="dtSelected" [min]="minDate"
+                        [max]="maxDate" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                </mat-form-field>
 
 
-    <!------------------------------>
-    <!-- DATE && SECTION FORM -->
-    <!------------------------------>
-    <mat-card>
-        <!-- Form -->
-        <form autocomplete="off" ngNativeValidate #formDirective="ngForm" [formGroup]="scheduleForm">
+                <mat-form-field color="accent" class="w-50 px-2">
+                    <mat-label>Sector</mat-label>
+                    <mat-select formControlName="idSection" name="idSection" required>
+                        <mat-option *ngFor="let section of adminService.sections" [value]="section._id">
+                            {{ section.tx_section }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field color="accent" class="w-50 px-2">
-                <mat-label>Fecha</mat-label>
-                <input matInput [matDatepickerFilter]="myFilter" formControlName="dtSelected" [min]="minDate"
-                    [max]="maxDate" [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker">
-                </mat-datepicker-toggle>
-                <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
-            </mat-form-field>
+            </form>
 
+            <div *ngIf="dtSelected && pendingBySectionMap" class="md">
+                <table class="sm">
+                    <tr class="text-accent">
+                        Solicitudes Pendientes para el {{ dtSelected | dateToString : 'date-long' | capitalizarPipe}}
+                    </tr>
+                    <tr *ngFor="let section of adminService.sections">
+                        <td>
+                            {{ section.tx_section }}
+                        </td>
+                        <td>
+                            {{pendingBySectionMap.get(section.tx_section)}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card>
 
-            <mat-form-field color="accent" class="w-50 px-2">
-                <mat-label>Sector</mat-label>
-                <mat-select formControlName="idSection" name="idSection" required>
-                    <mat-option *ngFor="let section of adminService.sections" [value]="section._id">
-                        {{ section.tx_section }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <!------------------------------>
+        <!-- PENDINGS -->
+        <!------------------------------>
+        <mat-card class="my-3" *ngIf="idSection && dtSelected && pending.length > 0">
+            <div>
+                <mat-panel-title>
+                    <span class="lg mdi mdi-account-clock text-deco"></span>
+                    <span class="badge text-white bg-primary">{{pending.length}}</span>
+                    <span class="sidenav-title-text mx-2 align-self-center md">Solicitudes de Mesa</span>
+                </mat-panel-title>
+            </div>
 
-        </form>
+            <!-- PENDING COMPONENT -->
+            <app-pending *ngIf="pending.length > 0" [pending]="pending" [availability]="availability"
+                (pendingUpdated)="pendingUpdated($event)"></app-pending>
 
-        <!-- Pendings by section info -->
-        <div *ngIf="!dtSelected" class="sm text-accent text-center">
-            Seleccioná fecha para ver tu agenda.
-        </div>
+        </mat-card>
 
-        <div *ngIf="dtSelected && pendingBySectionMap" class="sm">
-            <table>
-                <tr class="text-accent">
-                    Solicitudes Pendientes para el {{ dtSelected | dateToString : 'date-long' | capitalizarPipe}}
-                </tr>
-                <tr *ngFor="let section of adminService.sections">
-                    <td>
-                        {{ section.tx_section }}
-                    </td>
-                    <td>
-                        {{pendingBySectionMap.get(section.tx_section)}}
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </mat-card>
+    </div>
 
-    <!------------------------------>
-    <!-- PENDINGS -->
-    <!------------------------------>
-    <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected && pending.length > 0">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <span class="lg mdi mdi-account-clock text-deco"></span>
-                <span class="badge text-white bg-primary">{{pending.length}}</span>
-                <span class="sidenav-title-text mx-2 align-self-center md">Solicitudes de Mesa</span>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+    <div class="half-container">
 
-        <!-- PENDING COMPONENT -->
-        <app-pending *ngIf="pending.length > 0" [pending]="pending" [availability]="availability"
-            (pendingUpdated)="pendingUpdated($event)"></app-pending>
+        <!------------------------------>
+        <!-- CALENDAR -->
+        <!------------------------------>
 
-    </mat-expansion-panel>
+        <mat-card *ngIf="!dtSelected || !idSection" class="sm">
+            <div *ngIf="!dtSelected">
+                Selecciona una Fecha
+            </div>
+            <div *ngIf="!idSection">
+                Selecciona un Sector
+            </div>
+        </mat-card>
 
-    <!------------------------------>
-    <!-- CALENDAR -->
-    <!------------------------------>
-    <mat-expansion-panel class="my-3" *ngIf="idSection && dtSelected">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
+        <mat-card *ngIf="idSection && dtSelected">
+            <div>
                 <span class="lg mdi mdi-calendar text-deco"></span>
                 <span class="sidenav-title-text mx-2 align-self-center md">Agenda <span
                         class="text-accent">{{adminService.sectionsMap.get(idSection)}}</span> {{ dtSelected |
                     dateToString : 'date-long'| capitalizarPipe}} </span>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+            </div>
 
-        <!-- CALENDAR COMPONENT -->
-        <app-calendar [availability]="availability" [tables]="tables" [idSection]="idSection"
-            (pendingUpdated)="pendingUpdated($event)"></app-calendar>
+            <!-- CALENDAR COMPONENT -->
+            <app-calendar *ngIf="availability.length > 0" [availability]="availability" [tables]="tables"
+                [idSection]="idSection" (pendingUpdated)="pendingUpdated($event)"></app-calendar>
 
-    </mat-expansion-panel>
+        </mat-card>
 
+    </div>
 
 </div>

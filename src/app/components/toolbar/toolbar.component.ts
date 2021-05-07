@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { PublicService } from '../../modules/public/public.service';
 import { environment } from '../../../environments/environment.prod';
@@ -6,6 +6,8 @@ import { WaiterService } from '../../modules/waiter/waiter.service';
 import { AdminService } from '../../modules/admin/admin.service';
 import { CompanyResponse, Company } from '../../interfaces/company.interface';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Notification } from '../../interfaces/notification.interface';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,6 +17,7 @@ import { Router } from '@angular/router';
 export class ToolbarComponent implements OnInit {
 
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
+  @Input() notifications: Notification[] = [];
 
   version = environment.version;
   
@@ -41,6 +44,8 @@ export class ToolbarComponent implements OnInit {
 
   }
 
+  ngOnChanges(changes){
+  }
 
   toggle(): void {
     this.toggleSideNav.emit(true);
@@ -61,6 +66,5 @@ export class ToolbarComponent implements OnInit {
     const elem = document.getElementById('home-map-container');
     elem?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
-
 
 }

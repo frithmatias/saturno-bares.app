@@ -36,7 +36,7 @@
             <div *ngIf="loginService.user && module==='admin'" class="inherit">
                 <!-- COMPANY NAME -->
                 <div class="company-name md ml-2">
-                    <span>{{loginService.user.id_company.tx_company_name }}</span>
+                    <span>{{loginService.user.id_company?.tx_company_name }}</span>
                 </div>
             </div>
 
@@ -79,11 +79,11 @@
         <div class="toolbar-first-row-right">
             
             <!-- THEME -->
-            <app-theme class="toolbar-item" *ngIf="loginService.user && loginService.user.id_role === 'ADMIN_ROLE'">
+            <app-theme class="toolbar-item" *ngIf="loginService.user && loginService.user.id_role === 'ADMIN_ROLE' && ['admin'].includes(module)">
             </app-theme>
 
             <!-- NOTIFICATIONS -->
-            <app-notifications *ngIf="loginService.user" class="toolbar-item"></app-notifications>
+            <app-notifications [notifications]="notifications" *ngIf="loginService.user && ['admin','waiter'].includes(module)" class="toolbar-item"></app-notifications>
             
             <!-- USER LOGIN -->
             <app-user class="toolbar-item"></app-user>

@@ -14,6 +14,7 @@ import { Section } from '../../interfaces/section.interface';
 import { ScoreItem } from '../../interfaces/score.interface';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { Observable } from 'rxjs';
+import { Notification } from '../../interfaces/notification.interface';
 
 
 @Injectable({
@@ -21,17 +22,13 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
 
-
 	public loading = false;
-
 	public companies: Company[] = [];
-
+	public notifications: Notification[] = [];
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];
-
 	public scoreItems: ScoreItem[] = [];
 	public scoreItemsSection: ScoreItem[] = [];
-
 	public sections: Section[] = [];
 	public waiters: User[] = [];
 	sectionsMap = new Map();
@@ -41,6 +38,15 @@ export class AdminService {
 		private loginService: LoginService,
 		private http: HttpClient
 	) { }
+
+
+	readNotifications(idOwner: string) {
+		const data = {idOwner};
+		const url = environment.api + '/n/readnotifications';
+		return this.http.post(url, data);
+	}
+
+
 
 	// ========================================================
 	// Company Methods

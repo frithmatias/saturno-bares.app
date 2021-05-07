@@ -26,17 +26,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     public publicService: PublicService,
     private capitalizarPipe: CapitalizarPipe
-  ) { }
-
-  ngOnInit(): void {
-
+  ) {
     // set default theme
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
     cssLink.href = `../../../assets/css/themes/grey-orange.css`;
-
+   
     // scroll home to top
     this.publicService.scrollTop();
+   }
 
+  ngOnInit(): void {
+    
     // search locations
     this.localidadesControl.valueChanges.subscribe(data => {
       if (typeof data !== 'string' || data.length <= 0) {

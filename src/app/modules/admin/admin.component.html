@@ -1,4 +1,4 @@
-<app-toolbar (toggleSideNav)="toggle( sidenav )"></app-toolbar>
+<app-toolbar [notifications]="adminService.notifications" (toggleSideNav)="toggle( sidenav )"></app-toolbar>
 
 <div class="toolbar-spacer">
     <mat-drawer-container>
