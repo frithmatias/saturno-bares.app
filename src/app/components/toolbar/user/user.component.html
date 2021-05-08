@@ -1,3 +1,19 @@
+<div *ngIf="!user || showlogin">
+    <div *ngIf="login==='company'" routerLink="/login">
+        <div class="mdi mdi-account-circle"></div>
+        <div>
+            Comercios
+        </div>
+    </div>
+
+    <div *ngIf="login==='public'" routerLink="/public/login">
+        <div class="mdi mdi-account-circle"></div>
+        <div>
+            Ingresar
+        </div>
+    </div>
+</div>
+
 <!-- USER LOGGED IN -->
 <div *ngIf="user && !showlogin">
 
@@ -49,7 +65,7 @@
                 <span class="ml-2 align-middle">Iniciar Asistente</span>
             </div>
         </div>
-        
+
         <div class="py-2">
             <div routerLink="/waiter/profile" mat-menu-item>
                 <span disabled class="lg op5 mdi mdi-email mx-1"></span>
@@ -60,21 +76,4 @@
         </div>
     </mat-menu>
 
-</div>
-
-
-<div *ngIf="!user || showlogin">
-    <div *ngIf="login==='company'" routerLink="/login">
-        <div class="mdi mdi-account-circle"></div>
-        <div>
-            Comercios
-        </div>
-    </div>
-
-    <div *ngIf="login==='public'" routerLink="/public/login">
-        <div class="mdi mdi-account-circle"></div>
-        <div>
-            Login
-        </div>
-    </div>
 </div>

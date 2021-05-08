@@ -18,27 +18,30 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   userSubscription: Subscription; // user changes
   adminSubscription: Subscription; // system messages for admin updates
-  
+  idUser: string;
+  idCompany: string;
   constructor(
-    public adminService: AdminService,
+    private adminService: AdminService,
     private waiterService: WaiterService,
     private publicService: PublicService,
-    private loginService: LoginService,
+    public loginService: LoginService,
     private wsService: WebsocketService
   ) { }
 
   ngOnInit(): void {
 
+    this.idUser = this.loginService.user._id;
+    this.idCompany = this.loginService.user.id_company?._id;
+
+    this.readUserNotifications(this.idUser);
+
     const txTheme = this.loginService.user.id_company?.tx_theme;
     if (txTheme) this.setTheme(txTheme);
 
-    let idCompany = this.loginService.user.id_company?._id;
-
-    if (idCompany) {
-      this.readCompanyData(idCompany);
+    if (this.idCompany) {
+      this.readCompanyData(this.idCompany);
     } else {
-      let idUser = this.loginService.user._id;
-      this.adminService.readCompanies(idUser).subscribe((data: CompaniesResponse) => {
+      this.adminService.readCompanies(this.idUser).subscribe((data: CompaniesResponse) => {
         this.adminService.companies = data.companies;
       })
     }
@@ -51,16 +54,25 @@ export class AdminComponent implements OnInit, OnDestroy {
         if (txTheme) this.setTheme(txTheme);
       }
 
-      let idCompany = user?.id_company?._id;
-      if (idCompany) {
-        this.readCompanyData(idCompany);
+      this.idCompany = user?.id_company?._id;
+      if (this.idCompany) {
+        this.readCompanyData(this.idCompany);
       }
 
     });
 
+    // subscription messages to admin for update user
+    this.adminSubscription = this.wsService.updateUser().subscribe((data)=>{
+      this.adminService.readNotifications(this.idUser).subscribe((data: NotificationsResponse) => {
+        this.loginService.notifications = data.notifications;
+      })
+     })  
+
+
+    // subscription messages to admin for update company
     this.adminSubscription = this.wsService.updateAdmin().subscribe((data)=>{
-     this.adminService.readNotifications(idCompany).subscribe((data: NotificationsResponse) => {
-       this.adminService.notifications = data.notifications;
+     this.adminService.readNotifications(this.idCompany).subscribe((data: NotificationsResponse) => {
+       this.loginService.notifications = data.notifications;
      })
     })  
 
@@ -72,12 +84,18 @@ export class AdminComponent implements OnInit, OnDestroy {
     cssLink.href = `./assets/css/themes/${theme}`;
   }
 
+
+  readUserNotifications(idUser: string){
+    this.adminService.readNotifications(idUser).subscribe((data: NotificationsResponse) => {
+      this.loginService.notifications.push(...data.notifications);
+    });
+  }
+
   readCompanyData(idCompany: string) {
 
     this.wsService.emit('enterCompany', idCompany)
-    let idUser = this.loginService.user._id;
-    const companies$ = this.adminService.readCompanies(idUser);
-    const notifications$ = this.adminService.readNotifications(idCompany);
+    const companies$ = this.adminService.readCompanies(this.idUser);
+    const notificationsAdmin$ = this.adminService.readNotifications(idCompany);
     const sections$ = this.publicService.readSections(idCompany);
     const tables$ = this.waiterService.readTables(idCompany);
     const scoreItems$ = this.adminService.readScoreItems(idCompany);
@@ -85,7 +103,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     forkJoin({
       companiesResponse: companies$,
-      notificationsResponse: notifications$,
+      notificationsAdminResponse: notificationsAdmin$,
       sectionsResponse: sections$,
       tablesResponse: tables$,
       scoreitemsResponse: scoreItems$,
@@ -94,8 +112,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       // set companies
       this.adminService.companies = data.companiesResponse.companies;
+      this.loginService.notifications.push(...data.notificationsAdminResponse.notifications);
 
-      this.adminService.notifications = data.notificationsResponse.notifications;
       // set sections and sectionsMap
       this.adminService.sections = data.sectionsResponse.sections;
 

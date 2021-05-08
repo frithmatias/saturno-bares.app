@@ -9,6 +9,10 @@
     box-shadow      : none !important;
 }
 
+.nobackground {
+    background: none !important;
+}
+
 
 /*
 -------------------------------------------
@@ -28,7 +32,7 @@ SATURNO TOOLBAR
     }
 
     .company-name {
-        font-size: 1.2em !important;
+        font-size: 1.5em !important;
     }
 }
 
@@ -50,6 +54,7 @@ SATURNO TOOLBAR
     padding    : 8px 12px;
     height     : 55px;
     font-size  : small;
+    background : repeating-linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .1) 10px, var(--primary) 20px);
 }
 
 .toolbar-first-row-left {
@@ -57,7 +62,22 @@ SATURNO TOOLBAR
 }
 
 .toolbar-first-row-center {
-    flex-grow: 1;
+    justify-content: center;
+    display        : flex;
+    flex-grow      : 1;
+}
+
+.company-name {
+    flex-grow     : 1;
+    overflow      : hidden;
+    font-weight   : 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color         : whitesmoke;
+    text-align    : left;
+    padding-left  : 24px;
+    font-size     : 2em;
+    line-height   : 1.1em;
 }
 
 .toolbar-first-row-center-links {
@@ -65,7 +85,6 @@ SATURNO TOOLBAR
     place-content: center;
     position     : relative;
     top          : 2px;
-    width        : 100%;
 }
 
 .toolbar-first-row-right {
@@ -79,7 +98,6 @@ SATURNO TOOLBAR
     font-size      : small;
     width          : 100%;
 }
-
 
 /* LOGO */
 
@@ -112,20 +130,6 @@ SATURNO TOOLBAR
 
 
 
-.company-name {
-    overflow      : hidden;
-    font-weight   : 300;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color         : whitesmoke;
-    flex-grow     : 1;
-    text-align    : center;
-    font-size     : 2em;
-    line-height   : 1.1em;
-    padding       : 0px 8px;
-}
-
-
 .toolbar-item {
     display  : flex;
     flex-wrap: wrap;
@@ -136,10 +140,3 @@ SATURNO TOOLBAR
 .toolbar-item .mdi {
     margin-right: 6px;
 }
-
-
-/*
--------------------------------------------
-END SATURNO TOOLBAR
--------------------------------------------
-*/

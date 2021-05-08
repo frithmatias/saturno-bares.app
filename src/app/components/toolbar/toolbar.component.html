@@ -1,6 +1,6 @@
 <div class="toolbar-wrapper" [ngClass]="{'flatbar':component==='page'}">
 
-    <div class="toolbar-first-row">
+    <div class="toolbar-first-row" [ngClass]="{'nobackground':component==='page'}">
 
         <div class="toolbar-first-row-left">
 
@@ -25,22 +25,25 @@
 
         <div class="toolbar-first-row-center">
 
-            <div *ngIf="loginService.user && module==='admin'" class="inherit">
+            <div *ngIf="['admin','waiter'].includes(module)" class="company-name">
+
                 <!-- COMPANY NAME -->
-                <div class="company-name">
+                <div *ngIf="loginService.user && module === 'admin'">
                     <span>{{loginService.user.id_company?.tx_company_name }}</span>
                 </div>
-            </div>
 
-            <div *ngIf="loginService.user && module==='waiter'" class="inherit">
                 <!-- SECTION NAME -->
-                <div *ngIf="waiterService.session" class="company-name md ml-2">
-                    <span>{{waiterService.session?.id_section.tx_section}}</span>
+                <div *ngIf="loginService.user && module === 'waiter'">
+                    <div *ngIf="waiterService.session">
+                        <span>{{waiterService.session?.id_section.tx_section}}</span>
+                    </div>
                 </div>
+
             </div>
 
             <div class="toolbar-first-row-center-links">
 
+                <!-- HOME -->
                 <div *ngIf="[null,'','home'].includes(module)" class="inherit">
                     <div class="toolbar-item" routerLink="/howworks">
                         <div class="mdi mdi-help-box"></div>
@@ -68,6 +71,7 @@
                     </div>
                 </div>
 
+                <!-- ADMIN -->
                 <div *ngIf="['admin'].includes(module)" class="inherit">
                     <div class="toolbar-item" routerLink="/admin/home">
                         Home
@@ -83,18 +87,31 @@
                     </div>
                 </div>
 
+                <!-- WAITER -->
+                <div *ngIf="['waiter'].includes(module)" class="inherit">
+                    <div class="toolbar-item" routerLink="/waiter/home">
+                        Home
+                    </div>
+                    <div class="toolbar-item" routerLink="/waiter/section">
+                        Mi Sector
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div class="toolbar-first-row-right">
-            
+
             <!-- THEME -->
-            <app-theme class="toolbar-item" *ngIf="loginService.user && loginService.user.id_role === 'ADMIN_ROLE' && ['admin'].includes(module)">
+            <app-theme class="toolbar-item"
+                *ngIf="loginService.user && loginService.user.id_role === 'ADMIN_ROLE' && ['admin'].includes(module)">
             </app-theme>
 
             <!-- NOTIFICATIONS -->
-            <app-notifications [notifications]="notifications" *ngIf="loginService.user && ['admin','waiter'].includes(module)" class="toolbar-item"></app-notifications>
-            
+            <app-notifications [notifications]="notifications"
+                *ngIf="loginService.user && ['admin','waiter'].includes(module)" class="toolbar-item">
+            </app-notifications>
+
             <!-- USER LOGIN -->
             <app-user class="toolbar-item"></app-user>
 
@@ -102,8 +119,15 @@
 
     </div>
 
+    <!-- 
+--------------------------------------------------------
+SECOND ROW
+-------------------------------------------------------- 
+-->
+
     <div class="toolbar-second-row">
 
+        <!-- HOME -->
         <div *ngIf="[null,'','home'].includes(module)" class="inherit">
             <div class="toolbar-item" routerLink="/howworks">
                 ¿Qué es Saturno?
@@ -116,6 +140,7 @@
             </div>
         </div>
 
+        <!-- ADMIN -->
         <div *ngIf="['admin'].includes(module)" class="inherit">
             <div class="toolbar-item" routerLink="/admin/home">
                 Home
@@ -131,7 +156,17 @@
             </div>
         </div>
 
+        <!-- WAITER -->
+        <div *ngIf="['waiter'].includes(module)" class="inherit">
+            <div class="toolbar-item" routerLink="/waiter/home">
+                Home
+            </div>
+            <div class="toolbar-item" routerLink="/waiter/section">
+                Mi Sector
+            </div>
+        </div>
 
+        <!-- PUBLIC -->
         <div *ngIf="component === 'tickets'" class="inherit">
             <div class="toolbar-item" routerLink="/home">
                 Ir a Saturno

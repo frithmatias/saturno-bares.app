@@ -222,13 +222,10 @@ SATURNO LOGIN/REGISTER
     top     : 55px !important;
     position: fixed !important;
     right   : 0px !important;
+    opacity : .95;
 }
 
 @media (max-width: 850px) {
-
-    .mat-menu-panel {
-        top: 94px !important;
-    }
 
     .toolbar-spacer {
         top          : 94px !important;

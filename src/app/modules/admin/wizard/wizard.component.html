@@ -1,7 +1,6 @@
 <div class="page-container animated fadeIn">
 
-    <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear
-        #stepper>
+    <mat-horizontal-stepper style="text-align: left;" labelPosition="bottom" linear #stepper>
 
         <ng-template matStepperIcon="phone">
             <mat-icon>call_end</mat-icon>
@@ -18,16 +17,25 @@
                     <div>
                         <div class="xl text-accent mdi mdi-wizard-hat mr-3"> Asistente </div>
                         <p>
-                            Este asistente te ayuda a crear todo lo necesario para comenzar a gestionar
-                            tus mesas y atender a tus clientes.
+                            Este asistente te ayuda a crear lo necesario para comenzar a gestionar
+                            tus mesas, atender a tus clientes y recibir reservas.
+                        </p>
+                        <p class="text-accent">¿Qué vamos a hacer en este asistente?</p>
+                        <p>
+                            <li> Crear uno o mas comercios.
+                            <li> Configurar los Horarios hábiles de tu o tus comercios.
+                            <li> Crear uno o mas sectores para cada comercio.
+                            <li> Crear las mesas que tenés en cada sector.
                         </p>
                         <p>
-                            Los pasos opcionales podes saltearlos y completarlos mas adelante.
+                            Al final te invitamos a completar tu portal desde Menú > Administrador > Mi Portal, en donde
+                            podes incluir un texto de presentación para recibir a tus clientes, subir fotos y el logo de 
+                            tu comercio.
                         </p>
                         <hr>
 
                         <div class="w-100 text-center">
-                            <button mat-raised-button matStepperNext color="primary" class="action-button fix-width">
+                            <button mat-raised-button matStepperNext color="active" class="action-button fix-width">
                                 <table>
                                     <tr>
                                         <td class="button-icon mdi mdi-send lg"></td>
@@ -82,7 +90,7 @@
                     <app-companies [nopadding]="true"></app-companies>
                 </mat-card-content>
 
-                <mat-card-actions class="text-right">
+                <mat-card-actions class="text-center">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
@@ -117,18 +125,18 @@
                 </mat-card-header>
                 <mat-card-content>
 
-                    <div> 
+                    <div>
                         <p>
-                            Definí en que horarios abre y cierra tu negocio para cada día de la semana. 
+                            Definí en que horarios abre y cierra tu negocio para cada día de la semana.
                         </p>
                     </div>
 
                     <app-working [nopadding]="true" (canContinue)="canContinue($event)"></app-working>
 
-                    
+
                 </mat-card-content>
-                
-                <mat-card-actions class="text-right">
+
+                <mat-card-actions class="text-center">
                     <div *ngIf="!canContinueValue" class="sm text-right text-accent">
                         Tenés que guardar los cambios para continuar
                     </div>
@@ -137,12 +145,14 @@
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
                         ATRAS
                     </button>
-                    <button *ngIf="canContinueValue && publicService.settings && publicService.settings?.tm_working.length > 0"
+                    <button
+                        *ngIf="canContinueValue && publicService.settings && publicService.settings?.tm_working.length > 0"
                         mat-button (click)="stepperGoNext(stepper)">
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
                     </button>
-                    <button *ngIf="!canContinueValue || !publicService.settings || publicService.settings?.tm_working.length === 0"
+                    <button
+                        *ngIf="!canContinueValue || !publicService.settings || publicService.settings?.tm_working.length === 0"
                         mat-button disabled>
                         SIGUIENTE
                         <span class="md align-top mdi mdi-chevron-double-right text-success"></span>
@@ -179,7 +189,7 @@
                     <app-sections [nopadding]="true"></app-sections>
                 </mat-card-content>
 
-                <mat-card-actions class="text-right">
+                <mat-card-actions class="text-center">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>
@@ -225,7 +235,7 @@
 
                 <app-tables [nopadding]="true"></app-tables>
 
-                <mat-card-actions class="text-right">
+                <mat-card-actions class="text-center">
                     <!-- previous / next -->
                     <button mat-button (click)="stepperGoBack(stepper)">
                         <span class="md align-top mdi mdi-chevron-double-left text-info"></span>

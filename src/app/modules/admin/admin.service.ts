@@ -24,7 +24,6 @@ export class AdminService {
 
 	public loading = false;
 	public companies: Company[] = [];
-	public notifications: Notification[] = [];
 	public tables: Table[] = [];
 	public tablesSection: Table[] = [];
 	public scoreItems: ScoreItem[] = [];
@@ -46,8 +45,6 @@ export class AdminService {
 		return this.http.post(url, data);
 	}
 
-
-
 	// ========================================================
 	// Company Methods
 	// ========================================================
@@ -63,8 +60,6 @@ export class AdminService {
 		const url = environment.api + '/c/readcompanies/' + idUser;
 		return this.http.get(url);
 	}
-
-
 
 	updateCompany(company: Company) {
 		const url = environment.api + '/c/update';

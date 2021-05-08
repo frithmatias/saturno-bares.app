@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { throwError, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Notification } from '../interfaces/notification.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +14,8 @@ export class LoginService {
 
 	token: string;
 	menu: any[] = [];
-
+	
+	public notifications: Notification[] = [];
 	// user observable
 	public user: User;
 	private userSource = new Subject<User>();
@@ -127,7 +129,7 @@ export class LoginService {
 		delete this.user;
 		delete this.token;
 		delete this.menu;
-
+		this.notifications = [];
 		this.userSource.next(null)
 		this.router.navigate(['/home']);
 

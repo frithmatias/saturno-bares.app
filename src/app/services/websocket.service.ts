@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable, Observer, of } from 'rxjs';
 import { AjaxError } from 'rxjs/ajax';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from '../modules/public/public.service';
 import { User } from '../interfaces/user.interface';
 import { chatSession } from '../interfaces/chat.session.interface';
@@ -17,13 +16,7 @@ export class WebsocketService {
 	constructor(
 		private socket: Socket,
 		private publicService: PublicService,
-		private snack: MatSnackBar,
 	) {
-		this.escucharConexiones();
-	}
-
-	escucharConexiones(): void {
-
 		this.socket.on('connect', () => {
 			this.idSocket = this.socket.ioSocket.id;
 			this.publicService.snack('Conectado al servidor de turnos', 2000);
@@ -37,16 +30,20 @@ export class WebsocketService {
 		});
 	}
 
+	updateUser(): Observable<string> {
+		return this.listen('update-user'); // to admins in company
+	}
+
 	updateClients(): Observable<string> {
 		return this.listen('update-clients');
 	}
 
 	updateWaiters(): Observable<string> {
-		return this.listen('update-waiters');
+		return this.listen('update-waiters'); // to waiters in company
 	}
 
 	updateAdmin(): Observable<string> {
-		return this.listen('update-admin');
+		return this.listen('update-admin'); // to admins in company
 	}
 
 	updateTicket(): Observable<Object> {
