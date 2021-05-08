@@ -9,11 +9,6 @@
   border-radius: 100%;
 }
 
-form {
-  display       : flex;
-  flex-direction: row;
-}
-
 .half-container {
   padding: 10px;
 }

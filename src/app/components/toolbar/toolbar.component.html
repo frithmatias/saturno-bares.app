@@ -25,6 +25,12 @@
 
         <div class="toolbar-first-row-center">
 
+            <div *ngIf="loginService.user && module==='admin'" class="inherit">
+                <!-- COMPANY NAME -->
+                <div class="company-name">
+                    <span>{{loginService.user.id_company?.tx_company_name }}</span>
+                </div>
+            </div>
 
             <div *ngIf="loginService.user && module==='waiter'" class="inherit">
                 <!-- SECTION NAME -->
@@ -33,44 +39,48 @@
                 </div>
             </div>
 
-            <div *ngIf="loginService.user && module==='admin'" class="inherit">
-                <!-- COMPANY NAME -->
-                <div class="company-name md ml-2">
-                    <span>{{loginService.user.id_company?.tx_company_name }}</span>
-                </div>
-            </div>
-
             <div class="toolbar-first-row-center-links">
-                <div *ngIf="[null,'','home'].includes(module)" class="inherit">
 
+                <div *ngIf="[null,'','home'].includes(module)" class="inherit">
                     <div class="toolbar-item" routerLink="/howworks">
                         <div class="mdi mdi-help-box"></div>
                         <div>
                             ¿Qué es Saturno?
                         </div>
                     </div>
-
                     <div class="toolbar-item" routerLink="/register">
                         <div class="mdi mdi-storefront-outline"></div>
                         <div>
                             Registrar Negocio
                         </div>
                     </div>
-
                     <div class="toolbar-item" routerLink="/public/tickets">
                         <div class="mdi mdi-ticket-account"></div>
                         <div>
                             Mis Reservas
                         </div>
                     </div>
-
                     <div class="toolbar-item" (click)="scrollToElement()">
                         <div class="mdi mdi-map-marker"></div>
                         <div>
                             Buscá por Zona
                         </div>
                     </div>
+                </div>
 
+                <div *ngIf="['admin'].includes(module)" class="inherit">
+                    <div class="toolbar-item" routerLink="/admin/home">
+                        Home
+                    </div>
+                    <div class="toolbar-item" routerLink="/admin/wizard">
+                        Asistente
+                    </div>
+                    <div class="toolbar-item" routerLink="/admin/schedule">
+                        Agenda
+                    </div>
+                    <div class="toolbar-item" routerLink="/admin/webpage">
+                        Mi Portal
+                    </div>
                 </div>
 
             </div>
@@ -95,7 +105,6 @@
     <div class="toolbar-second-row">
 
         <div *ngIf="[null,'','home'].includes(module)" class="inherit">
-
             <div class="toolbar-item" routerLink="/howworks">
                 ¿Qué es Saturno?
             </div>
@@ -105,8 +114,23 @@
             <div class="toolbar-item" (click)="scrollToElement()">
                 Buscá por Zona
             </div>
-
         </div>
+
+        <div *ngIf="['admin'].includes(module)" class="inherit">
+            <div class="toolbar-item" routerLink="/admin/home">
+                Home
+            </div>
+            <div class="toolbar-item" routerLink="/admin/wizard">
+                Asistente
+            </div>
+            <div class="toolbar-item" routerLink="/admin/schedule">
+                Agenda
+            </div>
+            <div class="toolbar-item" routerLink="/admin/webpage">
+                Mi Portal
+            </div>
+        </div>
+
 
         <div *ngIf="component === 'tickets'" class="inherit">
             <div class="toolbar-item" routerLink="/home">

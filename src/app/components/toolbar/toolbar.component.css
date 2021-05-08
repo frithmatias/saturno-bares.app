@@ -24,7 +24,11 @@ SATURNO TOOLBAR
 
     .toolbar-second-row {
         display: flex !important;
-        padding: 5px;
+        padding: 5px 0px;
+    }
+
+    .company-name {
+        font-size: 1.2em !important;
     }
 }
 
@@ -61,6 +65,7 @@ SATURNO TOOLBAR
     place-content: center;
     position     : relative;
     top          : 2px;
+    width        : 100%;
 }
 
 .toolbar-first-row-right {
@@ -72,7 +77,7 @@ SATURNO TOOLBAR
     display        : none;
     justify-content: space-evenly;
     font-size      : small;
-    height         : 39px;
+    width          : 100%;
 }
 
 
@@ -115,13 +120,16 @@ SATURNO TOOLBAR
     color         : whitesmoke;
     flex-grow     : 1;
     text-align    : center;
+    font-size     : 2em;
+    line-height   : 1.1em;
+    padding       : 0px 8px;
 }
 
 
 .toolbar-item {
     display  : flex;
     flex-wrap: wrap;
-    margin   : 0px 16px;
+    margin   : 0px 8px;
     cursor   : pointer;
 }
 

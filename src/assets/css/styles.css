@@ -218,13 +218,27 @@ SATURNO LOGIN/REGISTER
     display: none;
 }
 
+.mat-menu-panel {
+    top     : 55px !important;
+    position: fixed !important;
+    right   : 0px !important;
+}
+
 @media (max-width: 850px) {
+
+    .mat-menu-panel {
+        top: 94px !important;
+    }
+
     .toolbar-spacer {
         top          : 94px !important;
         margin-bottom: 94px !important;
         height       : calc(100vh - 94px) !important;
     }
 }
+
+
+
 
 .toolbar-spacer {
     display       : flex;
