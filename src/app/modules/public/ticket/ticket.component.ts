@@ -78,7 +78,7 @@ export class TicketComponent implements OnInit, OnDestroy {
 		})
 
 		// Update Tickets List Subscription (request for all clients)
-		this.updateTicketsSub = this.wsService.updateClients().subscribe(async () => {
+		this.updateTicketsSub = this.wsService.updateClient().subscribe(async () => {
 			await this.getTickets();
 		});
 

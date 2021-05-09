@@ -44,8 +44,6 @@ export class SocialComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnChanges(): void { }
-
   // ==========================================================
   // VALIDATE GOOGLE USER
   // ==========================================================

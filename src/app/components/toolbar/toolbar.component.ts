@@ -44,9 +44,6 @@ export class ToolbarComponent implements OnInit {
 
   }
 
-  ngOnChanges(changes){
-  }
-
   toggle(): void {
     this.toggleSideNav.emit(true);
   }

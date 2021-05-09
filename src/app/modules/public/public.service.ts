@@ -186,6 +186,12 @@ export class PublicService {
     return this.http.get(url);
   }
 
+	readNotifications(idOwner: string) {
+		const data = {idOwner};
+		const url = environment.api + '/n/readnotifications';
+		return this.http.post(url, data);
+	}
+
   updateStorageTickets(ticket: Ticket): Promise<Ticket[]> {
     return new Promise((resolve) => {
       let tickets: Ticket[] = [];

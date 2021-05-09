@@ -34,12 +34,12 @@ export class WebsocketService {
 		return this.listen('update-user'); // to admins in company
 	}
 
-	updateClients(): Observable<string> {
-		return this.listen('update-clients');
+	updateClient(): Observable<string> {
+		return this.listen('update-client');
 	}
 
-	updateWaiters(): Observable<string> {
-		return this.listen('update-waiters'); // to waiters in company
+	updateWaiter(): Observable<string> {
+		return this.listen('update-waiter'); // to waiters in company
 	}
 
 	updateAdmin(): Observable<string> {

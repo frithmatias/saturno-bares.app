@@ -39,12 +39,6 @@ export class AdminService {
 	) { }
 
 
-	readNotifications(idOwner: string) {
-		const data = {idOwner};
-		const url = environment.api + '/n/readnotifications';
-		return this.http.post(url, data);
-	}
-
 	// ========================================================
 	// Company Methods
 	// ========================================================
@@ -97,21 +91,21 @@ export class AdminService {
 		const url = environment.api + '/c/updatewebpage/' + idCompany;
 		return this.http.put(url, data);
 	}
-	
+
 	readCovers() {
 		const url = environment.api + '/c/readcovers';
 		return this.http.get(url);
 	}
 
 	updateCover(idCompany: string, coverFilename: string) {
-		const data = {idCompany, coverFilename};
+		const data = { idCompany, coverFilename };
 		const url = environment.api + '/c/updatecover';
 		return this.http.post(url, data);
 	}
 
 
 	updateTheme(idCompany: string, themeFilename: string) {
-		const data = {idCompany, themeFilename};
+		const data = { idCompany, themeFilename };
 		const url = environment.api + '/c/updatetheme';
 		return this.http.post(url, data);
 	}
@@ -226,9 +220,9 @@ export class AdminService {
 	}
 
 
-	readPending(idCompany:string, idYear: number, idMonth: number): Observable<object> {
+	readPending(idCompany: string, idYear: number, idMonth: number): Observable<object> {
 		let data = { idCompany, idYear, idMonth };
 		return this.http.post(environment.api + '/t/readpending/', data);
-	  }
-	
+	}
+
 }

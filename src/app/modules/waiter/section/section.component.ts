@@ -17,6 +17,7 @@ import { SessionResponse } from '../../../interfaces/session.interface';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PublicService } from '../../public/public.service';
 import { ContingencyTicketComponent } from './contingency-ticket/contingency-ticket.component';
+import { NotificationsResponse } from '../../../interfaces/notification.interface';
 
 export interface Tile {
   color: string;
@@ -54,7 +55,8 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   //data for contingent
   contingent: Ticket[] = [];
-  updateSub: Subscription;
+  updateWaiterSub: Subscription;
+  idSection: string;
 
   constructor(
     public loginService: LoginService,
@@ -72,105 +74,111 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
+    // subscription messages to admin for update company
+
     if (!this.waiterService.session) {
       this.router.navigate(['/waiter/home']);
       return;
     }
 
     this.loading = true;
-    this.updateSub = this.wsService.updateWaiters().subscribe(async () => {
-      await this.readTables();
-      await this.readTickets();
-    });
+    this.idSection = this.waiterService.session.id_section._id;
 
     await this.readTables();
     await this.readTickets();
+    await this.readNotifications(this.idSection);
+
+    this.updateWaiterSub = this.wsService.updateWaiter().subscribe(async () => {
+      await this.readTables();
+      await this.readTickets();
+      await this.readNotifications(this.idSection);
+    });
+
     this.loading = false;
   }
 
-  readTables = (): Promise<Table[]> => {
-    return new Promise((resolve, reject) => {
-      const idCompany = this.loginService.user.id_company._id;
-      this.waiterService.readTables(idCompany).subscribe(
-        (data: TablesResponse) => {
-          if (data.ok) {
-
-            this.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
-
-            // tables data for sections table
-            for (let section of this.publicService.sections) {
-              this.tablesDataBySection.set(section.tx_section, {
-                id: section._id,
-                sectionselected: this.waiterService.session.id_section._id === section._id,
-                busy: data.tables.filter((table) => table.id_section === section._id && table.id_session !== null).length, // busy && waiting
-                idle: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'idle').length,
-                paused: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'paused').length
-              });
-            }
-
-
-            let counter$ = interval(1000).subscribe(() => {
-              for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
-                if (table.id_session.id_ticket) {
-                  this.busyTablesTimes.set(table.nm_table, {
-                    tm_provided: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
-                    tm_call: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
-                  });
-                }
-              }
-            });
-
-            localStorage.setItem('tables', JSON.stringify(data.tables));
-            resolve([]);
-          } else {
-            reject([]);
-          }
-        },
-        () => {
-          if (localStorage.getItem('tables')) {
-            localStorage.removeItem('tables');
-          }
-          reject([]);
-        }
-      );
+  readNotifications = async (idOwner: string) => {
+    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
+      // notifications for waiter (section)
+      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
+      this.loginService.notifications.push(...data.notifications);
     });
+  }
+
+  readTables = (): Promise<void> => {
+    return new Promise((resolve) => {
+      const idCompany = this.loginService.user.id_company._id;
+      this.waiterService.readTables(idCompany).subscribe((data: TablesResponse) => {
+        if (data.ok) {
+  
+          this.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
+  
+          // tables data for sections table
+          for (let section of this.publicService.sections) {
+            this.tablesDataBySection.set(section.tx_section, {
+              id: section._id,
+              sectionselected: this.waiterService.session.id_section._id === section._id,
+              busy: data.tables.filter((table) => table.id_section === section._id && table.id_session !== null).length, // busy && waiting
+              idle: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'idle').length,
+              paused: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'paused').length
+            });
+          }
+  
+          let counter$ = interval(1000).subscribe(() => {
+            for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
+              if (table.id_session.id_ticket) {
+                this.busyTablesTimes.set(table.nm_table, {
+                  tm_provided: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_provided)),
+                  tm_call: this.diffToHMSPipe.transform(+ new Date(table.id_session.id_ticket.tm_call)),
+                });
+              }
+            }
+          });
+  
+          localStorage.setItem('tables', JSON.stringify(data.tables));
+          resolve();
+        }
+      }, () => {
+        if (localStorage.getItem('tables')) {
+          localStorage.removeItem('tables');
+        }
+      })
+
+    })
   };
 
-  readTickets = (): Promise<Ticket[]> => {
+  readTickets = (): Promise<void> => {
     return new Promise((resolve) => {
       const idCompany = this.loginService.user.id_company?._id;
-      return this.waiterService.readTickets(idCompany).subscribe((data: TicketsResponse) => {
+      this.waiterService.readTickets(idCompany).subscribe((data: TicketsResponse) => {
 
         this.tickets = data.tickets;
 
-        // for input queued child  
+        // for queued child  
         this.queued = this.tickets.filter(ticket => ticket.id_section?._id === this.waiterService.session.id_section._id &&
           ticket.tm_end === null && (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned' || ticket.tx_status === 'requested'))
 
-        // for input sections child
+        // for sections child
         for (let section of this.publicService.sections) {
+
           this.ticketsDataBySection.set(section.tx_section, {
             id: section._id,
-
             sectionselected: this.waiterService.session.id_section._id === section._id,
-
             queued: data.tickets.filter((ticket) =>
               ticket.id_section?._id === section._id &&
               ticket.tm_end === null &&
               (ticket.tx_status === 'queued' || ticket.tx_status === 'assigned')).length,
-
             requested: data.tickets.filter((ticket) =>
               ticket.id_section?._id === section._id &&
               ticket.tm_end === null &&
               ticket.tx_status === 'requested').length,
-
           });
-        }
 
-        resolve(data.tickets);
+        }
         this.loading = false;
+        resolve();
       });
-    });
+    })
   };
 
   createTicket = (): void => {
@@ -195,7 +203,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   };
 
   ngOnDestroy() {
-    this.updateSub?.unsubscribe();
+    this.updateWaiterSub?.unsubscribe();
   }
 
 }

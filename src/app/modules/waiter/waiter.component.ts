@@ -4,6 +4,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { PublicService } from '../public/public.service';
 import { Router } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
+import { WebsocketService } from '../../services/websocket.service';
+import { NotificationsResponse } from '../../interfaces/notification.interface';
 
 @Component({
   selector: 'app-waiter',
@@ -11,25 +13,35 @@ import { MatDrawer } from '@angular/material/sidenav';
   styleUrls: ['./waiter.component.css']
 })
 export class WaiterComponent implements OnInit {
-  userSubscription: Subscription;
 
+  updateUserSub: Subscription; // system messages for user updates
+  idUser: string;
+  
   constructor(
-    private loginService: LoginService,
+    public loginService: LoginService,
+    private publicService: PublicService,
+    private wsService: WebsocketService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
 
+    this.idUser = this.loginService.user._id;
+    this.readNotifications(this.idUser);
 
+    // subscription messages to admin for update user
+    this.updateUserSub = this.wsService.updateUser().subscribe((data)=>{
+      this.readNotifications(this.idUser);
+     })  
 
-    this.userSubscription = this.loginService.user$.subscribe(user => {
-      // if company changes set the theme
-      if(user){
-        const txTheme = user.id_company?.tx_theme;
-        if(txTheme) this.setTheme(txTheme);
-      }
-    })
+  }
 
+  readNotifications(idOwner: string){
+    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
+      // notifications for waiter (user)
+      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
+      this.loginService.notifications.push(...data.notifications);
+    });
   }
 
   toggle(htmlRef: MatDrawer): void {

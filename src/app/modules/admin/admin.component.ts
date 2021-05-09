@@ -16,8 +16,10 @@ import { NotificationsResponse, Notification } from '../../interfaces/notificati
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-  userSubscription: Subscription; // user changes
-  adminSubscription: Subscription; // system messages for admin updates
+  changeUserSub: Subscription; // user changes
+  updateUserSub: Subscription; // system messages for user updates
+  updateAdminSub: Subscription; // system messages for admin updates
+  
   idUser: string;
   idCompany: string;
   constructor(
@@ -33,7 +35,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.idUser = this.loginService.user._id;
     this.idCompany = this.loginService.user.id_company?._id;
 
-    this.readUserNotifications(this.idUser);
+    this.readNotifications(this.idUser);
 
     const txTheme = this.loginService.user.id_company?.tx_theme;
     if (txTheme) this.setTheme(txTheme);
@@ -46,34 +48,26 @@ export class AdminComponent implements OnInit, OnDestroy {
       })
     }
 
-    this.userSubscription = this.loginService.user$.subscribe(user => {
-
-      // if company changes set the theme
+    // subscription user changes 
+    this.changeUserSub = this.loginService.user$.subscribe(user => {
       if (user) {
         const txTheme = user.id_company?.tx_theme;
         if (txTheme) this.setTheme(txTheme);
       }
-
       this.idCompany = user?.id_company?._id;
       if (this.idCompany) {
         this.readCompanyData(this.idCompany);
       }
-
     });
 
     // subscription messages to admin for update user
-    this.adminSubscription = this.wsService.updateUser().subscribe((data)=>{
-      this.adminService.readNotifications(this.idUser).subscribe((data: NotificationsResponse) => {
-        this.loginService.notifications = data.notifications;
-      })
+    this.updateUserSub = this.wsService.updateUser().subscribe((data)=>{
+      this.readNotifications(this.idUser);
      })  
 
-
     // subscription messages to admin for update company
-    this.adminSubscription = this.wsService.updateAdmin().subscribe((data)=>{
-     this.adminService.readNotifications(this.idCompany).subscribe((data: NotificationsResponse) => {
-       this.loginService.notifications = data.notifications;
-     })
+    this.updateAdminSub = this.wsService.updateAdmin().subscribe((data)=>{
+     this.readNotifications(this.idCompany);
     })  
 
 
@@ -85,8 +79,10 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
 
-  readUserNotifications(idUser: string){
-    this.adminService.readNotifications(idUser).subscribe((data: NotificationsResponse) => {
+  readNotifications(idOwner: string){
+    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
+      // notifications for admin (user)
+      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
       this.loginService.notifications.push(...data.notifications);
     });
   }
@@ -95,7 +91,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.wsService.emit('enterCompany', idCompany)
     const companies$ = this.adminService.readCompanies(this.idUser);
-    const notificationsAdmin$ = this.adminService.readNotifications(idCompany);
+    const notificationsAdmin$ = this.publicService.readNotifications(idCompany);
     const sections$ = this.publicService.readSections(idCompany);
     const tables$ = this.waiterService.readTables(idCompany);
     const scoreItems$ = this.adminService.readScoreItems(idCompany);
@@ -112,6 +108,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       // set companies
       this.adminService.companies = data.companiesResponse.companies;
+
+      // notifications for admin (company)
+      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idCompany))
       this.loginService.notifications.push(...data.notificationsAdminResponse.notifications);
 
       // set sections and sectionsMap
@@ -143,7 +142,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
-    this.adminSubscription?.unsubscribe(); 
+    this.changeUserSub?.unsubscribe();
+    this.updateUserSub?.unsubscribe(); 
+    this.updateAdminSub?.unsubscribe(); 
   }
 }

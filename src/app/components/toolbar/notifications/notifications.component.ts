@@ -9,9 +9,13 @@ import { Notification } from '../../../interfaces/notification.interface';
 export class NotificationsComponent implements OnInit {
 
   @Input() notifications: Notification[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes){
+    this.notifications = this.notifications.sort((b, a) => +new Date(a.tm_notification) - +new Date(b.tm_notification));
+  }
 }
