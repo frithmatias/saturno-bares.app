@@ -17,6 +17,7 @@ export class LoginService {
 	role: string;
 
 	public notifications: Notification[] = [];
+ 
 	// user observable
 	public user: User;
 	private userSource = new Subject<User>();
@@ -188,6 +189,29 @@ export class LoginService {
 	checkSuper() {
 		const url = environment.api + '/superuser/checksuper';
 		return this.http.get(url);
+	}
+
+	// ========================================================
+	// Shared Methods
+	// ========================================================
+
+
+	readNotifications(idOwner: string) {
+		const data = { idOwner };
+		const url = environment.api + '/n/readnotifications';
+		return this.http.post(url, data);
+	}
+
+	updateNotificationsRead(idNotifications: string[], idUser: string) {
+		const data = {idNotifications, idUser};
+		const url = environment.api + '/n/updatenotificationsread';
+		return this.http.post(url, data);
+	}
+
+	updateNotificationRead(idNotifications: string, idUser: string) {
+		const data = {idNotifications, idUser};
+		const url = environment.api + '/n/updatenotificationsread';
+		return this.http.post(url, data);
 	}
 
 }

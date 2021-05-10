@@ -23,14 +23,14 @@
         <img *ngIf="loginService.user.bl_social && loginService.user.tx_img" class="toolbar-user-image" [src]="loginService.user.tx_img">
 
         <!-- social no image -->
-        <span *ngIf="loginService.user.bl_social && !loginService.user.tx_img" class="mdi mdi-account-tie pointer"></span>
+        <span *ngIf="loginService.user.bl_social && !loginService.user.tx_img" class="md mdi mdi-account-tie pointer"></span>
 
         <!-- no social with image -->
         <img *ngIf="!loginService.user.bl_social && loginService.user.tx_img" class="toolbar-user-image"
             [src]="loginService.user.tx_img | imagenPipe : 'tx_img' : loginService.user._id">
 
         <!-- no social wo image -->
-        <span *ngIf="!loginService.user.bl_social && !loginService.user.tx_img" class="mdi mdi-account-tie pointer"></span>
+        <span *ngIf="!loginService.user.bl_social && !loginService.user.tx_img" class="md mdi mdi-account-tie pointer"></span>
 
         <div *ngIf="showname" class="mt-1">
             {{loginService.user.tx_name}}

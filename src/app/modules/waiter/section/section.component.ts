@@ -98,9 +98,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   }
 
   readNotifications = async (idOwner: string) => {
-    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      // notifications for waiter (section)
-      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
+    this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
       this.loginService.notifications.push(...data.notifications);
     });
   }

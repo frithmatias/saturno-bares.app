@@ -3,7 +3,8 @@
 // ========================================================
 
 export interface Notification {
-	id_owner: string, 
+	id_owner: string[], 
+	id_read: string[], 
 	tx_icon: string,
 	tx_title: string,
 	tx_message: string,  

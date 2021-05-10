@@ -1,9 +1,9 @@
-<div [matBadge]="notifications.length" matBadgeOverlap="true" matBadgeColor="warn" matBadgeSize="small" class="md mdi mdi-bell" [matMenuTriggerFor]="notif">
+<div [matBadge]="notificationsNotRead.length" (menuOpened)="menuOpened()" matBadgeOverlap="true" matBadgeColor="warn" matBadgeSize="small" class="md mdi mdi-bell" [matMenuTriggerFor]="notif">
 
 </div>
 
 
-<mat-menu #notif="matMenu" xPosition="after" id="matMenu">
+<mat-menu #notif="matMenu" xPosition="after" id="matMenu" >
 
     <div *ngIf="notifications.length === 0" class="notifications-wrapper">
         <div class="sm text-accent">
@@ -11,12 +11,17 @@
         </div>
     </div>
 
-    <div *ngFor="let notif of notifications" class="notifications-wrapper">
+    <div 
+    *ngFor="let notif of notifications" 
+    class="notifications-wrapper pointer" 
+    [ngClass]="{'op8': notif.id_read.includes(this.loginService.user._id)}"
+    (click)="setReaded(notif)"
+    >
         <div>
-            <span class="lg op5 mdi {{notif.tx_icon}} mr-3"></span>
+            <span class="xl op5 mdi {{notif.tx_icon}} mr-3" [ngClass]="{'text-warn': !notif.id_read.includes(this.loginService.user._id)}"></span>
         </div>
         <div>
-            <div class="sm text-accent">{{notif.tx_title}}</div>
+            <div class="sm" [ngClass]="{'text-accent': !notif.id_read.includes(this.loginService.user._id)}">{{notif.tx_title}}</div>
             <div class="sm text-info message">{{notif.tx_message | stringReplaceDateTime : notif.tm_event }}</div>
             <div class="xs text-info">{{notif.tm_notification | dateToString : 'date-time'}}</div>
         </div>

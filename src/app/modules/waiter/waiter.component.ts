@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
-import { PublicService } from '../public/public.service';
-import { Router } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
 import { WebsocketService } from '../../services/websocket.service';
 import { NotificationsResponse } from '../../interfaces/notification.interface';
@@ -19,9 +17,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
   
   constructor(
     public loginService: LoginService,
-    private publicService: PublicService,
-    private wsService: WebsocketService,
-    private router: Router
+    private wsService: WebsocketService
   ) { }
 
   ngOnInit(): void {
@@ -37,9 +33,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
   }
 
   readNotifications(idOwner: string){
-    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      // notifications for waiter (user)
-      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
+    this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
       this.loginService.notifications.push(...data.notifications);
     });
   }

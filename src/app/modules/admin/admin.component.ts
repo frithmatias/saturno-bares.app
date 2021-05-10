@@ -7,7 +7,7 @@ import { PublicService } from '../public/public.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CompaniesResponse } from 'src/app/interfaces/company.interface';
 import { WebsocketService } from '../../services/websocket.service';
-import { NotificationsResponse, Notification } from '../../interfaces/notification.interface';
+import { NotificationsResponse } from '../../interfaces/notification.interface';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   changeUserSub: Subscription; // user changes
   updateUserSub: Subscription; // system messages for user updates
   updateAdminSub: Subscription; // system messages for admin updates
-  
+
   idUser: string;
   idCompany: string;
   constructor(
@@ -61,14 +61,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
 
     // subscription messages to admin for update user
-    this.updateUserSub = this.wsService.updateUser().subscribe((data)=>{
+    this.updateUserSub = this.wsService.updateUser().subscribe((data) => {
       this.readNotifications(this.idUser);
-     })  
+    })
 
     // subscription messages to admin for update company
-    this.updateAdminSub = this.wsService.updateAdmin().subscribe((data)=>{
-     this.readNotifications(this.idCompany);
-    })  
+    this.updateAdminSub = this.wsService.updateAdmin().subscribe((data) => {
+      this.readNotifications(this.idCompany);
+    })
 
 
   }
@@ -79,10 +79,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
 
-  readNotifications(idOwner: string){
-    this.publicService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      // notifications for admin (user)
-      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idOwner))
+  readNotifications(idOwner: string) {
+    this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
       this.loginService.notifications.push(...data.notifications);
     });
   }
@@ -91,7 +89,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.adminService.loading = true;
     this.wsService.emit('enterCompany', idCompany)
     const companies$ = this.adminService.readCompanies(this.idUser);
-    const notificationsAdmin$ = this.publicService.readNotifications(idCompany);
+    const notificationsAdmin$ = this.loginService.readNotifications(idCompany);
     const sections$ = this.publicService.readSections(idCompany);
     const tables$ = this.waiterService.readTables(idCompany);
     const scoreItems$ = this.adminService.readScoreItems(idCompany);
@@ -143,7 +141,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.changeUserSub?.unsubscribe();
-    this.updateUserSub?.unsubscribe(); 
-    this.updateAdminSub?.unsubscribe(); 
+    this.updateUserSub?.unsubscribe();
+    this.updateAdminSub?.unsubscribe();
   }
 }

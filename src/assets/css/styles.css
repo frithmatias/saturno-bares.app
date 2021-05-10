@@ -232,10 +232,17 @@ SATURNO LOGIN/REGISTER
         margin-bottom: 94px !important;
         height       : calc(100vh - 94px) !important;
     }
+
+    mat-drawer-container {
+        min-height      : calc(100vh - 94px) !important;
+    }
+
 }
 
-
-
+mat-drawer-container {
+    background-color: unset !important;
+    min-height      : calc(100vh - 56px);
+}
 
 .toolbar-spacer {
     display       : flex;
@@ -249,6 +256,15 @@ SATURNO LOGIN/REGISTER
     right         : 0;
     overflow      : auto;
 }
+
+.main-center {
+    min-height: 100%;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+
+
 
 /*
 -------------------------------------------
@@ -336,22 +352,7 @@ END SATURNO CHAT
 */
 
 
-.main-center {
-    min-height: 100%;
-    text-align: -webkit-center;
-    text-align: -moz-center;
-}
 
-mat-drawer-container {
-    background-color: unset !important;
-    min-height      : 100vh;
-}
-
-@media (min-width: 850px) {
-    .main-wrapper {
-        top: 55px;
-    }
-}
 
 .box-shadow {
     box-shadow: 0px 2px 1px -1px var(--dark-o20), 0px 1px 1px 0px var(--dark-o14), 0px 1px 3px 0px var(--dark-o12);
