@@ -24,9 +24,6 @@ export class PublicService {
   canAksPositionUser = false; // for best practices, ask user when interacts with UI.
   company: Company;
   settings: Settings;
-  customer: User;
-	token: string;
-
 
   //https://saturno.fun/urlModule/urlComponent
   urlModule: string; // admin waiter public
@@ -92,42 +89,6 @@ export class PublicService {
     let data = { pattern }
     const url = environment.api + '/u/checkemailexists';
     return this.http.post(url, data);
-  }
-
-  loginCustomer(platform: string, token: string, emailForm: any) {
-
-		if (emailForm) { localStorage.setItem('email', emailForm.tx_email); }
-
-    let api: string;
-    let data: any;
-    switch (platform) {
-      case 'google':
-      case 'facebook':
-        api = '/u/loginsocial';
-        data = { platform, token, isAdmin: false }; // isAdmin (ADMIN_ROLE or CUSTOMER_ROLE) used for create if user not exist on login
-        break;
-      case 'email':
-        api = '/u/loginuser';
-        data = emailForm;
-        break;
-      default:
-        api = '/u/loginuser';
-        break;
-    }
-
-    const url = environment.api + api;
-
-    return this.http.post(url, data).pipe(map((resp: any) => {
-			localStorage.setItem('token', JSON.stringify(resp.token));
-      localStorage.setItem('customer', JSON.stringify(resp.user));
-      this.customer = resp.user;
-			this.token = resp.token;
-      return resp;
-    }),
-      catchError(err => {
-        return throwError(err);
-      })
-    );
   }
 
   buscarLocalidades(pattern): Promise<LocationsResponse> {
@@ -275,18 +236,9 @@ export class PublicService {
   }
 
   logout(): void {
-
     delete this.tickets;
-    delete this.token;
-    delete this.customer;
-
-    // if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-    if (localStorage.getItem('customer')) { localStorage.removeItem('customer'); }
-    if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
     if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-    
-    this.router.navigate(['/home']);
-
+        this.router.navigate(['/home']);
   }
 
 }

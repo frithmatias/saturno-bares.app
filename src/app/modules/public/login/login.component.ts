@@ -47,8 +47,7 @@ export class LoginComponent implements OnInit {
 			tx_name: null,
 			tx_email: forma.value.email,
 			tx_password: forma.value.password,
-			bl_admin: false //admin || customer 
-
+			bl_admin: false 
 		};
 
 		const platform = 'email';
@@ -59,7 +58,6 @@ export class LoginComponent implements OnInit {
 
 
 	loginSocial(social: Social) {
-
 		if (!social) return;
 		if (!social.txToken) {
 			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
@@ -75,8 +73,7 @@ export class LoginComponent implements OnInit {
 
 
 	loginCustomer(platform: string, token: string, emailForm: any) {
-		this.loginService.logout(); // end user session if exist
-		this.publicService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
+		this.loginService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
 			this.logging = false;
 			if (data.ok) {
 				if (localStorage.getItem('isembed')) {

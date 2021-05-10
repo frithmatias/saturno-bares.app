@@ -22,14 +22,14 @@ import { Notification } from '../../interfaces/notification.interface';
 })
 export class AdminService {
 
-	public loading = false;
-	public companies: Company[] = [];
-	public tables: Table[] = [];
-	public tablesSection: Table[] = [];
-	public scoreItems: ScoreItem[] = [];
-	public scoreItemsSection: ScoreItem[] = [];
-	public sections: Section[] = [];
-	public waiters: User[] = [];
+	loading = false;
+	companies: Company[] = [];
+	tables: Table[] = [];
+	tablesSection: Table[] = [];
+	scoreItems: ScoreItem[] = [];
+	scoreItemsSection: ScoreItem[] = [];
+	sections: Section[] = [];
+	waiters: User[] = [];
 	sectionsMap = new Map();
 
 
@@ -223,6 +223,18 @@ export class AdminService {
 	readPending(idCompany: string, idYear: number, idMonth: number): Observable<object> {
 		let data = { idCompany, idYear, idMonth };
 		return this.http.post(environment.api + '/t/readpending/', data);
+	}
+
+
+	logout(){
+		this.companies = [];
+		this.sections = [];
+		this.sectionsMap.clear();
+		this.tables = [];
+		this.tablesSection = [];
+		this.scoreItems = [];
+		this.scoreItemsSection = [];
+		this.waiters = [];
 	}
 
 }

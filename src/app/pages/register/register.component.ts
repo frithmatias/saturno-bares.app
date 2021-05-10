@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
 			tx_name: this.forma.value.name,
 			tx_email: this.forma.value.email,
 			tx_password: this.forma.value.password1,
-			bl_admin: true //admin || customer 
+			bl_admin: true
 		};
 
 		this.loginService.createUser(user).subscribe((data: any) => {

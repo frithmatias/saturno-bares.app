@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 			tx_name: null,
 			tx_email: forma.value.email,
 			tx_password: forma.value.password,
-			bl_admin: true //admin || customer 
+			bl_admin: true 
 		};
 		const platform = 'email';
 
@@ -68,11 +68,8 @@ export class LoginComponent implements OnInit {
 	}
 
 	loginUser(platform: string, token: string, emailForm: any) {
-		this.publicService.logout();  // end public session if exist
-
 		this.loginService.loginUser(platform, token, emailForm).subscribe((data: LoginResponse) => {
 			this.logging = false;
-
 			if (data.ok) {
 				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;
@@ -83,7 +80,6 @@ export class LoginComponent implements OnInit {
 			}
 		}, (err: HttpErrorResponse) => {
 			this.logging = false;
-
 			if (err.error.msg) {
 				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
 			} else {

@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-
 import { Ticket } from '../../interfaces/ticket.interface';
-import { LoginService } from '../../services/login.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Section } from '../../interfaces/section.interface';
 import { Session } from '../../interfaces/session.interface';
-import { Table } from '../../interfaces/table.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,8 +17,7 @@ export class WaiterService {
 	contingentTicket: Ticket;
 
 	constructor(
-		private http: HttpClient,
-		private loginService: LoginService
+		private http: HttpClient
 	) { }
 
 
@@ -134,6 +129,12 @@ export class WaiterService {
 		let mStr = m.toString().length === 1 ? '0' + m : m;
 		let sStr = s.toString().length === 1 ? '0' + s : s;
 		return `${hStr}:${mStr}:${sStr}`;
+	}
+
+	logout(){
+		delete this.session;
+		delete this.sectionSelected;
+		delete this.contingentTicket;
 	}
 
 }

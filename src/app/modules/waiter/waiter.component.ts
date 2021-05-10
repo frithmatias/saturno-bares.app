@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { PublicService } from '../public/public.service';
@@ -12,7 +12,7 @@ import { NotificationsResponse } from '../../interfaces/notification.interface';
   templateUrl: './waiter.component.html',
   styleUrls: ['./waiter.component.css']
 })
-export class WaiterComponent implements OnInit {
+export class WaiterComponent implements OnInit, OnDestroy {
 
   updateUserSub: Subscription; // system messages for user updates
   idUser: string;
@@ -53,6 +53,8 @@ export class WaiterComponent implements OnInit {
     cssLink.href = `./assets/css/themes/${theme}`;
   }
 
-
+  ngOnDestroy(): void {
+    this.updateUserSub?.unsubscribe(); 
+  }
 
 }

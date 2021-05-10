@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   escucharChatInitialized: Subscription;
   escucharChatFinished: Subscription;
   chatSession: chatSession = null;
-  client: User; // user or customer
+  client: User; // user 
   showSubjectForm = true;
   constructor(
     private wsService: WebsocketService,
@@ -43,9 +43,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('chatsession')) {
       this.chatSession = JSON.parse(localStorage.getItem('chatsession'));
-    }
-    if (localStorage.getItem('customer')) {
-      this.client = JSON.parse(localStorage.getItem('customer'));
     }
     if (localStorage.getItem('user')) {
       this.client = JSON.parse(localStorage.getItem('user'));
@@ -84,11 +81,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnChanges(changes: any) {
     this.showSubjectForm = true;
 
-    // detect login on toggle
-    if (localStorage.getItem('customer')) {
-      this.client = JSON.parse(localStorage.getItem('customer'));
-    }
-
     if (localStorage.getItem('user')) {
       this.client = JSON.parse(localStorage.getItem('user'));
     }
@@ -122,7 +114,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   startSession() {
 
     if (!this.client) {
-      // client = customer || user
+      // client = user
       this.publicService.snack('Debe iniciar sesion', 3000);
       return;
     }

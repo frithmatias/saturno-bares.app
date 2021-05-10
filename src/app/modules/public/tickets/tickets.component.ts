@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { WebsocketService } from '../../../services/websocket.service';
 import { DateToStringPipe } from '../../../pipes/date-to-string.pipe';
 import { CapitalizarPipe } from '../../../pipes/capitalizar.pipe';
+import { LoginService } from '../../../services/login.service';
 
 
 
@@ -20,21 +21,19 @@ import { CapitalizarPipe } from '../../../pipes/capitalizar.pipe';
 export class TicketsComponent implements OnInit {
 
   loading = false;
-  customer: User; // customer logged with email
-
+  user: User;
   tickets: Ticket[] = [];
   ticketsRunning: Ticket[] = [];
   ticketsActive: Ticket[] = [];
   ticketsInactive: Ticket[] = [];
   ticketsAll: Ticket[] = [];
   activeTickets = ['waiting', 'pending', 'scheduled', 'queued', 'requested', 'assigned', 'provided']; // terminated filtered in backend.
-
   updateTicketsSub: Subscription;
-
 
   constructor(
     private router: Router,
     public publicService: PublicService,
+    public loginService: LoginService,
     private websocketService: WebsocketService,
     private dateToString: DateToStringPipe,
     private capitalizar: CapitalizarPipe
@@ -48,11 +47,11 @@ export class TicketsComponent implements OnInit {
 
   checkSession() {
 
-    if (localStorage.getItem('customer')) {
-      this.customer = JSON.parse(localStorage.getItem('customer'));
-      this.publicService.customer = this.customer;
-      const txPlatform = this.customer.tx_platform;
-      const txEmail = this.customer.tx_email;
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.loginService.user = this.user;
+      const txPlatform = this.user.tx_platform;
+      const txEmail = this.user.tx_email;
       if (txPlatform && txEmail) {
         this.getUserTickets(txPlatform, txEmail); // update tickets
       }
@@ -119,7 +118,7 @@ export class TicketsComponent implements OnInit {
 
   validateTicket(ticket: Ticket) {
 
-    if (!this.customer) {
+    if (!this.user) {
       return;
     }
 

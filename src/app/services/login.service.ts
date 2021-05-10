@@ -14,7 +14,8 @@ export class LoginService {
 
 	token: string;
 	menu: any[] = [];
-	
+	role: string;
+
 	public notifications: Notification[] = [];
 	// user observable
 	public user: User;
@@ -56,7 +57,6 @@ export class LoginService {
 	// ========================================================
 
 	loginUser(platform: string, token: string, emailForm: any) {
-
 		if (emailForm) { localStorage.setItem('email', emailForm.tx_email); }
 
 		let api: string;
@@ -79,9 +79,12 @@ export class LoginService {
 			localStorage.setItem('token', JSON.stringify(resp.token));
 			localStorage.setItem('menu', JSON.stringify(resp.menu));
 			localStorage.setItem('user', JSON.stringify(resp.user));
+			localStorage.setItem('role', 'user');
+
 			this.token = resp.token;
 			this.menu = resp.menu;
 			this.user = resp.user;
+			this.role = 'user';
 			return resp;
 		}),
 			catchError(err => {
@@ -89,6 +92,45 @@ export class LoginService {
 			})
 		);
 	}
+
+	loginCustomer(platform: string, token: string, emailForm: any) {
+
+		if (emailForm) { localStorage.setItem('email', emailForm.tx_email); }
+
+		let api: string;
+		let data: any;
+		switch (platform) {
+			case 'google':
+			case 'facebook':
+				api = '/u/loginsocial';
+				data = { platform, token, isAdmin: false };
+				break;
+			case 'email':
+				api = '/u/loginuser';
+				data = emailForm;
+				break;
+			default:
+				api = '/u/loginuser';
+				break;
+		}
+
+		const url = environment.api + api;
+
+		return this.http.post(url, data).pipe(map((resp: any) => {
+			localStorage.setItem('token', JSON.stringify(resp.token));
+			localStorage.setItem('user', JSON.stringify(resp.user));
+			localStorage.setItem('role', 'customer');
+			this.user = resp.user;
+			this.token = resp.token;
+			this.role = 'customer';
+			return resp;
+		}),
+			catchError(err => {
+				return throwError(err);
+			})
+		);
+	}
+
 
 	pushUser(user: User) {
 		localStorage.setItem('user', JSON.stringify(user));
@@ -117,23 +159,23 @@ export class LoginService {
 	logout() {
 
 		if (localStorage.getItem('user')) { localStorage.removeItem('user'); }
+		if (localStorage.getItem('role')) { localStorage.removeItem('role'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
-
+		
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
 		if (localStorage.getItem('session')) { localStorage.removeItem('session'); }
-		// if (localStorage.getItem('tickets')) { localStorage.removeItem('tickets'); }
-
+		
 		delete this.user;
+		delete this.role;
 		delete this.token;
 		delete this.menu;
+
 		this.notifications = [];
 		this.userSource.next(null)
 		this.router.navigate(['/home']);
-
-		// this.auth2.disconnect(); 
 
 	}
 

@@ -2,7 +2,6 @@
 
     <!-- no session -->
     <div *ngIf="!chatSession || !client" class="chat-client-content">
-        <!-- client = customer || user -->
         <button *ngIf="client" mat-raised-button color="warn" (click)="startSession()">Iniciar Chat</button>
         <button *ngIf="!client" mat-raised-button color="primary" routerLink="/public/login"
             (click)="closeChatWindow()">Login</button>

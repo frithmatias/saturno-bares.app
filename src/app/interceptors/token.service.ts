@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PublicService } from '../modules/public/public.service';
+import { AdminService } from '../modules/admin/admin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,19 @@ export class TokenService implements HttpInterceptor {
   constructor(
     private loginService: LoginService,
     private publicService: PublicService,
+    private adminSerivce: AdminService,
     private router: Router
-    ) { 
+  ) {
 
 
-    }
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.loginService.token || this.publicService.token) {
+    if (this.loginService.token || this.loginService.token) {
 
       const headers = new HttpHeaders({
-        'turnos-token': this.loginService.token || this.publicService.token
+        'turnos-token': this.loginService.token || this.loginService.token
       });
 
       const reqClone = req.clone({
@@ -46,7 +48,7 @@ export class TokenService implements HttpInterceptor {
 
   manejarRespuesta(resp: HttpResponse<any>) {
     if (resp.type === 4) { //HttpResponse (Not 2 -> HttpHeadersResponse i.e.)
-      if(location.host.split(':')[0] === 'localhost'){
+      if (location.host.split(':')[0] === 'localhost') {
         console.log(resp.body);
       }
     }
@@ -56,15 +58,9 @@ export class TokenService implements HttpInterceptor {
 
     // this.publicService.snack(error.error?.msg, 5000);
     if (error.error.code == 1001) { // token expired
-
-      if(localStorage.getItem('customer')){
-        this.publicService.logout();
-      } 
-
-      if(localStorage.getItem('user')){
-        this.loginService.logout();
-      }
-
+      this.publicService.logout();
+      this.adminSerivce.logout();
+      this.loginService.logout();
     }
     return throwError(error); // Devuelve un error al suscriptor de mi observable.
   }

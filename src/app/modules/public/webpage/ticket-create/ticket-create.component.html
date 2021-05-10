@@ -130,12 +130,12 @@
         <div *ngIf="ticket.tx_status === 'waiting'">
 
           <!-- NOT LOGGED IN -->
-          <div class="my-4" *ngIf="!customer">
+          <div class="my-4" *ngIf="!user">
             ¡Tu ticket esta creado! Hacé click en Ingresar y confirmalo dentro de los próximos 10 minutos.
           </div>
 
           <!-- LOGGED IN -->
-          <div *ngIf="customer" class="my-4">
+          <div *ngIf="user" class="my-4">
             <div>
               ¡Confirmalo! Hacé click en Confirmar para confirmar tu reserva.
             </div>

@@ -80,18 +80,17 @@ export class WebsocketService {
 
 		
 		if (localStorage.getItem('chatsession')) { // chatsession is for CLIENTS ONLY
+			
 			let session: chatSession = JSON.parse(localStorage.getItem('chatsession'));
 			session.id_user_socket = this.idSocket;
 			localStorage.setItem('chatsession', JSON.stringify(session));
 
 			let client: User;
+
 			if (localStorage.getItem('user')) {
 				client = JSON.parse(localStorage.getItem('user'));
 			}
-			if (localStorage.getItem('customer')) {
-				client = JSON.parse(localStorage.getItem('customer'));
-			}
-
+	
 			if (client) {
 				let idSession = session._id;
 				let newSocket = this.idSocket;

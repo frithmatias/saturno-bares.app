@@ -17,6 +17,7 @@ import { availabilityResponse, optionInterval } from 'src/app/interfaces/availab
 import { DateToStringPipe } from '../../../../pipes/date-to-string.pipe';
 import { Settings } from 'src/app/interfaces/settings.interface';
 import { SettingsResponse } from '../../../../interfaces/settings.interface';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-ticket-create',
@@ -28,7 +29,7 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
   @Input() company: Company;
   @Input() settings: Settings;
 
-  customer: User; // customer logged with email
+  user: User; // user logged with email
   loading: boolean = false;
 
   sections: Section[] = [];
@@ -58,6 +59,7 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
   constructor(
     private wsService: WebsocketService,
     public publicService: PublicService,
+    public loginService: LoginService,
     private route: ActivatedRoute,
     private dateToString: DateToStringPipe
   ) {
@@ -71,8 +73,8 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
   async ngOnInit() {
 
 
-    if (localStorage.getItem('customer')) {
-      this.publicService.customer = JSON.parse(localStorage.getItem('customer'));
+    if (localStorage.getItem('user')) {
+      this.loginService.user = JSON.parse(localStorage.getItem('user'));
     }
 
     this.paramsSubscription = this.route.params.subscribe(async (data: any) => {
@@ -164,16 +166,16 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
       this.ticket = this.tickets.find(ticket => this.activeTickets.includes(ticket.tx_status));
     }
 
-    if (localStorage.getItem('customer')) {
-      this.customer = JSON.parse(localStorage.getItem('customer'));
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
     }
 
-    if (!this.customer?.tx_platform || !this.customer?.tx_email) {
+    if (!this.user?.tx_platform || !this.user?.tx_email) {
       return;
     }
 
-    const txPlatform = this.customer.tx_platform;
-    const txEmail = this.customer.tx_email;
+    const txPlatform = this.user.tx_platform;
+    const txEmail = this.user.tx_email;
 
     this.loading = true;
 
@@ -382,7 +384,7 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
 
   validateTicket(ticket: Ticket) {
 
-    if (!this.customer) {
+    if (!this.user) {
       return;
     }
 
@@ -428,16 +430,16 @@ export class TicketCreateComponent implements OnInit, OnDestroy {
 
   }
 
-  loggedIn(customer: User) {
+  loggedIn(user: User) {
     this.getUserTickets();
     this.showLogin = false;
-    this.customer = customer; // de todas formas la vista lo levanta de publiService.customer
+    this.user = user; // de todas formas la vista lo levanta de publiService.user
   }
 
   salir(): void {
     this.publicService.logout();
     delete this.ticket;
-    delete this.customer;
+    delete this.user;
     this.ticketForm.reset();
     this.showLogin = false;
   }
