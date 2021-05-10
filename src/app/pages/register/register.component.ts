@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
 	checkEmailExists() {
 		let pattern = this.forma.value.email;
 		if (this.forma.value.email.length > 6)
-			this.publicService.checkEmailExists(pattern).subscribe((data: any) => {
+			this.loginService.checkEmailExists(pattern).subscribe((data: any) => {
 				if (!data.ok) {
 					this.forma.controls['email'].setErrors({ 'incorrect': true });
 					this.forma.setErrors({ 'emailExists': true })
@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
 			bl_admin: true
 		};
 
-		this.loginService.createUser(user).subscribe((data: any) => {
+		this.loginService.registerUser(user).subscribe((data: any) => {
 			if (data.ok) {
 				this.publicService.snack('Te enviamos un email para que confirmes tu cuenta.', 10000, 'Aceptar');
 				this.router.navigate(['/activate'])

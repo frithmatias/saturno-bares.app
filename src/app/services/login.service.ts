@@ -40,9 +40,14 @@ export class LoginService {
 	// Register Methods
 	// ========================================================
 
-	createUser(user: User) {
-		let data = { user };
-		const url = environment.api + '/u/register';
+	registerUser(user: any) {
+		const url = environment.api + '/u/registeruser';
+		return this.http.post(url, user);
+	}
+
+	checkEmailExists(pattern: string) {
+		let data = { pattern }
+		const url = environment.api + '/u/checkemailexists';
 		return this.http.post(url, data);
 	}
 
@@ -162,12 +167,12 @@ export class LoginService {
 		if (localStorage.getItem('role')) { localStorage.removeItem('role'); }
 		if (localStorage.getItem('token')) { localStorage.removeItem('token'); }
 		if (localStorage.getItem('menu')) { localStorage.removeItem('menu'); }
-		
+
 		if (localStorage.getItem('table')) { localStorage.removeItem('table'); }
 		if (localStorage.getItem('tables')) { localStorage.removeItem('tables'); }
 		if (localStorage.getItem('section')) { localStorage.removeItem('section'); }
 		if (localStorage.getItem('session')) { localStorage.removeItem('session'); }
-		
+
 		delete this.user;
 		delete this.role;
 		delete this.token;

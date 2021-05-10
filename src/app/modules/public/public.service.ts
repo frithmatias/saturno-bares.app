@@ -73,24 +73,6 @@ export class PublicService {
   // Register Methods
   // ========================================================
 
-  registerUser(user: any) {
-    let data = { user };
-    const url = environment.api + '/u/registeruser';
-    return this.http.post(url, data);
-  }
-
-  activateUser(email: string, hash: string) {
-    let data = { email, hash };
-    const url = environment.api + '/u/activate';
-    return this.http.post(url, data);
-  }
-
-  checkEmailExists(pattern: string) {
-    let data = { pattern }
-    const url = environment.api + '/u/checkemailexists';
-    return this.http.post(url, data);
-  }
-
   buscarLocalidades(pattern): Promise<LocationsResponse> {
     return new Promise((resolve, reject) => {
       const regex = new RegExp(/^[a-z ñ0-9]+$/i);

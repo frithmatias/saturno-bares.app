@@ -101,7 +101,7 @@ export class WaiterCreateComponent implements OnInit, OnChanges {
 	checkEmailExists() {
 		let pattern = this.forma.value.email;
 		if (this.forma.value.email?.length > 6)
-			this.publicService.checkEmailExists(pattern).subscribe((data: any) => {
+			this.loginService.checkEmailExists(pattern).subscribe((data: any) => {
 				if (!data.ok) {
 					this.forma.controls['email'].setErrors({ 'incorrect': true });
 					this.forma.setErrors({ 'emailExists': true })

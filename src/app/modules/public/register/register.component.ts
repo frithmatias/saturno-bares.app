@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PublicService } from '../public.service';
+import { LoginService } from '../../../services/login.service';
 
 
 declare const gapi: any;
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private publicService: PublicService,
+		private loginService: LoginService
 	) { }
 
 	ngOnInit() {
@@ -61,7 +63,7 @@ export class RegisterComponent implements OnInit {
 	checkEmailExists() {
 		let pattern = this.forma.value.email;
 		if (this.forma.value.email.length > 6)
-			this.publicService.checkEmailExists(pattern).subscribe((data: any) => {
+			this.loginService.checkEmailExists(pattern).subscribe((data: any) => {
 				if (!data.ok) {
 					this.forma.controls['email'].setErrors({ 'incorrect': true });
 					this.forma.setErrors({ 'emailExists': true })
@@ -88,7 +90,7 @@ export class RegisterComponent implements OnInit {
 			bl_admin: false
 		};
 
-		this.publicService.registerUser(user).subscribe((data: any) => {
+		this.loginService.registerUser(user).subscribe((data: any) => {
 			if (data.ok) {
 				this.publicService.snack('Email enviado!.', 3000, 'Aceptar');
 				this.router.navigate(['/activate'])
