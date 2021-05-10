@@ -54,16 +54,21 @@ export class LoginComponent implements OnInit {
 		this.loginUser(platform, null, emailForm);
 	}
 
-	loginSocial(social: Social) {
-		if (!social) return;
-		if (!social.txToken) {
-			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
+	socialResponse(social: Social) {
+
+		if (!social || !social.txToken) {
+			this.publicService.snack('No se pudo conectar con la red social', 5000, 'Aceptar');
 			return;
 		}
+
+		if (social.txToken === 'waiting'){
+			this.logging = true;
+			return;
+		}
+
 		const token = social.txToken;
 		const platform = social.txPlatform;
 
-		this.logging = true;
 		this.loginUser(platform, token, null);
 	}
 

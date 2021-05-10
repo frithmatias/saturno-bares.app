@@ -20,8 +20,8 @@
                 <div class="jumbotron m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
                     <div class="login-title">Ingreso a Comercios</div>
-                    <app-social *ngIf="!logging" [logout]="true" [platforms]="['facebook', 'google']"
-                        (socialResponse)="loginSocial($event)">
+                    <app-social [platforms]="['facebook', 'google']"
+                        (socialResponse)="socialResponse($event)">
                     </app-social>
                     <app-spinner *ngIf="logging" text="Iniciando Sesión..."></app-spinner>
                 </div>
@@ -78,7 +78,7 @@
                     <!-- SIGN UP LINK -->
                     <!---------------------------------------------------------------------->
 
-                    
+
                 </form>
             </div>
 
@@ -89,7 +89,7 @@
             </div>
 
         </mat-card>
-        
+
 
     </div>
 </div>

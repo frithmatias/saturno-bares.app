@@ -88,7 +88,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   readCompanyData(idCompany: string) {
-
+    this.adminService.loading = true;
     this.wsService.emit('enterCompany', idCompany)
     const companies$ = this.adminService.readCompanies(this.idUser);
     const notificationsAdmin$ = this.publicService.readNotifications(idCompany);

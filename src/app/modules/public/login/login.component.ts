@@ -1,13 +1,11 @@
 import { NgForm } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PublicService } from '../public.service';
 import { LoginResponse } from '../../../interfaces/login.interface';
 import { Social } from 'src/app/components/social/social.component';
-import { User } from '../../../interfaces/user.interface';
-import { Company } from 'src/app/interfaces/company.interface';
 import { LoginService } from '../../../services/login.service';
 
 
@@ -30,8 +28,7 @@ export class LoginComponent implements OnInit {
 		private loginService: LoginService,
 		public publicService: PublicService,
 		public router: Router,
-		public activatedRoute: ActivatedRoute,
-		private zone: NgZone
+		public activatedRoute: ActivatedRoute
 	) { }
 
 	ngOnInit() {
@@ -47,27 +44,30 @@ export class LoginComponent implements OnInit {
 			tx_name: null,
 			tx_email: forma.value.email,
 			tx_password: forma.value.password,
-			bl_admin: false 
+			bl_admin: false
 		};
 
-		const platform = 'email';
-
 		this.logging = true;
+		
+		const platform = 'email';
 		this.loginCustomer(platform, null, emailForm);
 	}
 
 
-	loginSocial(social: Social) {
-		if (!social) return;
-		if (!social.txToken) {
-			this.publicService.snack('No se recibio el token de la red social', 5000, 'Aceptar');
+	socialResponse(social: Social) {
+
+		if (!social || !social.txToken) {
+			this.publicService.snack('No se pudo conectar con la red social', 5000, 'Aceptar');
+			return;
+		}
+
+		if (social.txToken === 'waiting'){
+			this.logging = true;
 			return;
 		}
 
 		const token = social.txToken;
 		const platform = social.txPlatform;
-
-		this.logging = true;
 		this.loginCustomer(platform, token, null);
 	}
 
