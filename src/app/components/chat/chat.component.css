@@ -31,7 +31,7 @@
     background-image: url('../../../assets/img/tiles/food-red.png');
     background-size : 80px;
     display         : flex;
-    align-items     : start;
+    align-items     : flex-start;
     padding-top     : 10px;
     justify-content : center;
 }

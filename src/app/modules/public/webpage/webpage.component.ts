@@ -14,7 +14,8 @@ export class WebPageComponent implements OnInit {
 	company: Company;
 	settings: Settings;
 	pageSection: string = 'home';
-
+	imagesLoaded: string[] = [];
+	imagesAreLoaded: boolean = false;
 	// width 528: page-container 600px - 2x20px padding - mat-card padding 2x16 
 	// [imageSize]="imageSize"
 	imageSize = { width: '100%', height: 200, space: 0 };
@@ -58,7 +59,13 @@ export class WebPageComponent implements OnInit {
 		elem?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
 	}
 
+	loadimage(image: string){
+		this.imagesLoaded.push(image);
+		this.imagesAreLoaded = ['cover','logo'].every(img => this.imagesLoaded.includes(img)) ? true : false;
+		console.log(this.imagesLoaded)
+		console.log(this.imagesAreLoaded)
 
+	}
 
 
 }

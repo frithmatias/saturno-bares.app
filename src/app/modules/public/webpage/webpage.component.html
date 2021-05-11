@@ -2,14 +2,18 @@
 
     <app-toolbar></app-toolbar>
 
-    <div *ngIf="company">
+    <div class="spinner-wrapper" *ngIf="!imagesAreLoaded && company">
+        <app-spinner  [text]="company.tx_company_name"></app-spinner>
+    </div>
+
+    <div *ngIf="company" style="display: none;" class="animated fadeIn" [ngClass]="{'showcompany': imagesAreLoaded}">
         <!-- PAGE IMAGE SLIDER -->
         <div class="company-page-banner">
 
             <!-- LOGO, COMPANYNAME, SLOGAN -->
             <div class="company-info">
                 <div class="company-logo-container">
-                    <img class="company-page-logo img-fluid"
+                    <img class="company-page-logo img-fluid" (load)="loadimage('logo')"
                         [src]="company.tx_company_logo | imagenPipe : 'tx_company_logo' : company._id">
                 </div>
                 <div class="company-info-container">
@@ -19,7 +23,7 @@
                 </div>
             </div>
 
-            <img class="company-page-image"
+            <img class="company-page-image" (load)="loadimage('cover')"
                 [src]="company.tx_company_cover | imagenPipe : 'tx_company_cover' : company._id">
 
         </div>

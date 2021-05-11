@@ -103,7 +103,7 @@
         <div class="toolbar-first-row-right">
 
             <!-- THEME -->
-            <app-theme class="toolbar-item"
+            <app-theme class="toolbar-item" (themeSelected)="themeSelected($event)"
                 *ngIf="loginService.user && loginService.user.id_role === 'ADMIN_ROLE' && ['admin'].includes(module)">
             </app-theme>
 

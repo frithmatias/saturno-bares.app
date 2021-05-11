@@ -53,6 +53,8 @@ export class ToolbarComponent implements OnInit {
     if (idCompany) {
       this.adminService.updateTheme(idCompany, theme).subscribe((data: CompanyResponse) => {
         this.publicService.snack(data.msg, 3000);
+        this.loginService.user.id_company.tx_theme = theme;
+        this.loginService.pushUser(this.loginService.user);
       })
     }
   }

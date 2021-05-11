@@ -35,6 +35,16 @@
 
 }
 
+.spinner-wrapper {
+    height         : 100%;
+    display        : flex;
+    justify-content: center;
+    place-items    : center;
+}
+
+.showcompany {
+    display: block !important;
+}
 
 .toolbar-spacer {
     top          : 0px !important;

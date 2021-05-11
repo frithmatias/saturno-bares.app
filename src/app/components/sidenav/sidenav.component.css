@@ -5,10 +5,8 @@
 }
 
 .menu .mdi,
-.item .mdi,
-.subitem .mdi {
-    color         : var(--text);
-    opacity       : .3;
+.item .mdi {
+    color         : var(--primary);
     font-size     : 1.4em;
     vertical-align: middle;
 }

@@ -5,6 +5,7 @@ import { AjaxError } from 'rxjs/ajax';
 import { PublicService } from '../modules/public/public.service';
 import { User } from '../interfaces/user.interface';
 import { chatSession } from '../interfaces/chat.session.interface';
+import { LoginService } from './login.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -16,6 +17,7 @@ export class WebsocketService {
 	constructor(
 		private socket: Socket,
 		private publicService: PublicService,
+		private loginService: LoginService
 	) {
 		this.socket.on('connect', () => {
 			this.idSocket = this.socket.ioSocket.id;
@@ -106,7 +108,7 @@ export class WebsocketService {
 			// update localstorage
 			let user: User = JSON.parse(localStorage.getItem('user'));
 			user.id_socket = this.idSocket;
-			localStorage.setItem('user', JSON.stringify(user));
+			this.loginService.pushUser(user);
 
 			// Enter new socket user to company room
 			let idCompany = user.id_company?._id;

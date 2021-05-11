@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Location, LocationsResponse } from 'src/app/interfaces/location.interface';
 import { PublicService } from 'src/app/modules/public/public.service';
 import { CapitalizarPipe } from 'src/app/pipes/capitalizar.pipe';
+import { WebsocketService } from '../../../../../services/websocket.service';
 
 @Component({
 	selector: 'app-company-create',
@@ -41,7 +42,8 @@ export class CompanyCreateComponent implements OnInit {
 		private loginService: LoginService,
 		public publicService: PublicService,
 		private getidstring: GetidstringPipe,
-		private capitalizarPipe: CapitalizarPipe
+		private capitalizarPipe: CapitalizarPipe,
+		private wsService: WebsocketService
 	) { }
 
 	ngOnInit() {
@@ -201,6 +203,7 @@ export class CompanyCreateComponent implements OnInit {
 			this.adminService.createCompany(company).subscribe((data: CompanyResponse) => {
 				this.loading = false;
 				this.publicService.snack(data.msg, 2000);
+				this.wsService.emit('enterCompany', data.company._id);
 				this.resetForm(formDirective);
 				if (data.ok) {
 					this.newCompany.emit(data.company);

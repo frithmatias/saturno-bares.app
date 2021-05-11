@@ -1,13 +1,13 @@
 /* THEME SELECTION */
-.box-dark-purple {
+.box-dark-green {
     width           : 2em;
     height          : 2em;
     background-color: #343332;
-    border-top      : .5em solid #7b1fa2;
+    border-top      : .5em solid #388e3c;
     margin          : .5em;
 }
 
-/* .box-dark-purple:before {
+/* .box-dark-green:before {
     color  : #00ff4b;
     content: 'A';
     font-weight: 400;

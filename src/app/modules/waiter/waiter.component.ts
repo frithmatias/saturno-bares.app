@@ -22,6 +22,9 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    const txTheme = this.loginService.user.id_company?.tx_theme;
+    if (txTheme) this.setTheme(txTheme);
+    
     this.idUser = this.loginService.user._id;
     this.readNotifications(this.idUser);
 

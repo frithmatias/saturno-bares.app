@@ -76,7 +76,11 @@ export class SectionComponent implements OnInit, OnDestroy {
 
     // subscription messages to admin for update company
 
-    if (!this.waiterService.session) {
+    if (localStorage.getItem('session')) {
+      this.waiterService.session = JSON.parse(localStorage.getItem('session'));
+    } 
+    
+    if(!this.waiterService.session){
       this.router.navigate(['/waiter/home']);
       return;
     }
@@ -108,9 +112,9 @@ export class SectionComponent implements OnInit, OnDestroy {
       const idCompany = this.loginService.user.id_company._id;
       this.waiterService.readTables(idCompany).subscribe((data: TablesResponse) => {
         if (data.ok) {
-  
+
           this.tables = data.tables.filter((table) => table.id_section === this.waiterService.session.id_section._id);
-  
+
           // tables data for sections table
           for (let section of this.publicService.sections) {
             this.tablesDataBySection.set(section.tx_section, {
@@ -121,7 +125,7 @@ export class SectionComponent implements OnInit, OnDestroy {
               paused: data.tables.filter((table) => table.id_section === section._id && table.tx_status === 'paused').length
             });
           }
-  
+
           let counter$ = interval(1000).subscribe(() => {
             for (let table of this.tables.filter((table) => table.id_section === this.waiterService.session?.id_section._id && table.id_session !== null)) {
               if (table.id_session.id_ticket) {
@@ -132,7 +136,7 @@ export class SectionComponent implements OnInit, OnDestroy {
               }
             }
           });
-  
+
           localStorage.setItem('tables', JSON.stringify(data.tables));
           resolve();
         }

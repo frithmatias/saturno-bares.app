@@ -1,14 +1,17 @@
 @media (max-width: 575px) {
 
+    .welcome-wrapper {
+        line-height: 3em !important;
+    }
+
     .welcome-title {
-        font-size  : 3.2em !important;
+        font-size  : 2em !important;
         font-weight: 500 !important;
     }
 
     .welcome-subtitle {
-        font-size     : 1.1em !important;
+        font-size     : 1em !important;
         margin-top    : 5px !important;
-        letter-spacing: .1em;
     }
 
     .banner-container-col-left {
@@ -54,16 +57,21 @@ mat-card {
 }
 
 .welcome-wrapper {
-    padding         : 70px 10px;
-    color           : whitesmoke;
-    background-color: var(--primary-o75);
-    border          : 8px solid var(--primary-o25);
-    box-shadow      : 0px 1px 6px 3px rgb(0 0 0 / 60%);
+    padding            : 70px 10px;
+    color              : whitesmoke;
+    background-color   : var(--primary-o75);
+    border             : 8px solid var(--primary-o25);
+    box-shadow         : 0px 1px 6px 3px rgb(0 0 0 / 60%);
+    line-height: 5em;
 }
 
 .welcome-title {
-    font-size  : 5em;
+    font-size  : 3em;
     font-weight: 500;
+}
+
+.welcome-title .de {
+    font-size: .5em;
 }
 
 .welcome-subtitle {
