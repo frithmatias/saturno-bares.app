@@ -14,7 +14,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
   updateUserSub: Subscription; // system messages for user updates
   idUser: string;
-  
+
   constructor(
     public loginService: LoginService,
     private wsService: WebsocketService
@@ -24,34 +24,37 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     const txTheme = this.loginService.user.id_company?.tx_theme;
     if (txTheme) this.setTheme(txTheme);
-    
+
     this.idUser = this.loginService.user._id;
     this.readNotifications(this.idUser);
 
     // subscription messages to admin for update user
-    this.updateUserSub = this.wsService.updateUser().subscribe((data)=>{
+    this.updateUserSub = this.wsService.updateUser().subscribe((data) => {
       this.readNotifications(this.idUser);
-     })  
+    })
 
   }
 
-  readNotifications(idOwner: string){
+  readNotifications(idOwner: string) {
     this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      this.loginService.notifications.push(...data.notifications);
+      // remove old notifications for this owner
+      this.loginService.notifications = this.loginService.notifications.filter(notification => !notification.id_owner.includes(idOwner))
+      // add remaining (user) + new notifications for this owner
+      this.loginService.notifications = [...this.loginService.notifications, ...data.notifications];
     });
   }
 
   toggle(htmlRef: MatDrawer): void {
     htmlRef.toggle();
   }
-  
-  setTheme(theme: string){
+
+  setTheme(theme: string) {
     let cssLink = <HTMLLinkElement>document.getElementById('themeAsset');
     cssLink.href = `./assets/css/themes/${theme}`;
   }
 
   ngOnDestroy(): void {
-    this.updateUserSub?.unsubscribe(); 
+    this.updateUserSub?.unsubscribe();
   }
 
 }

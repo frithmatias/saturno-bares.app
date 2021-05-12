@@ -35,12 +35,12 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.idUser = this.loginService.user._id;
     this.idCompany = this.loginService.user.id_company?._id;
 
-    this.readNotifications(this.idUser);
-
     const txTheme = this.loginService.user.id_company?.tx_theme;
     if (txTheme) this.setTheme(txTheme);
+    this.readNotifications(this.idUser);
 
     if (this.idCompany) {
+      this.readNotifications(this.idCompany);
       this.readCompanyData(this.idCompany);
     } else {
       this.adminService.readCompanies(this.idUser).subscribe((data: CompaniesResponse) => {
@@ -60,12 +60,12 @@ export class AdminComponent implements OnInit, OnDestroy {
       }
     });
 
-    // subscription messages to admin for update user
+    // subscription to user messages
     this.updateUserSub = this.wsService.updateUser().subscribe((data) => {
       this.readNotifications(this.idUser);
     })
 
-    // subscription messages to admin for update company
+    // subscription to company messages
     this.updateAdminSub = this.wsService.updateAdmin().subscribe((data) => {
       this.readNotifications(this.idCompany);
     })
@@ -81,7 +81,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   readNotifications(idOwner: string) {
     this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      this.loginService.notifications.push(...data.notifications);
+      // remove old notifications for this owner
+      this.loginService.notifications = this.loginService.notifications.filter(notification => !notification.id_owner.includes(idOwner))
+      // add remaining (user) + new notifications for this owner
+      this.loginService.notifications = [...this.loginService.notifications, ...data.notifications];
     });
   }
 
@@ -89,7 +92,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.adminService.loading = true;
     this.wsService.emit('enterCompany', idCompany)
     const companies$ = this.adminService.readCompanies(this.idUser);
-    const notificationsAdmin$ = this.loginService.readNotifications(idCompany);
     const sections$ = this.publicService.readSections(idCompany);
     const tables$ = this.waiterService.readTables(idCompany);
     const scoreItems$ = this.adminService.readScoreItems(idCompany);
@@ -97,7 +99,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     forkJoin({
       companiesResponse: companies$,
-      notificationsAdminResponse: notificationsAdmin$,
       sectionsResponse: sections$,
       tablesResponse: tables$,
       scoreitemsResponse: scoreItems$,
@@ -106,10 +107,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       // set companies
       this.adminService.companies = data.companiesResponse.companies;
-
-      // notifications for admin (company)
-      this.loginService.notifications = this.loginService.notifications.filter(notif => !notif.id_owner.includes(idCompany))
-      this.loginService.notifications.push(...data.notificationsAdminResponse.notifications);
 
       // set sections and sectionsMap
       this.adminService.sections = data.sectionsResponse.sections;

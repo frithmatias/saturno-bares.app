@@ -78,9 +78,9 @@ export class SectionComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('session')) {
       this.waiterService.session = JSON.parse(localStorage.getItem('session'));
-    } 
-    
-    if(!this.waiterService.session){
+    }
+
+    if (!this.waiterService.session) {
       this.router.navigate(['/waiter/home']);
       return;
     }
@@ -103,7 +103,10 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   readNotifications = async (idOwner: string) => {
     this.loginService.readNotifications(idOwner).subscribe((data: NotificationsResponse) => {
-      this.loginService.notifications.push(...data.notifications);
+      // remove old notifications for this owner
+      this.loginService.notifications = this.loginService.notifications.filter(notification => !notification.id_owner.includes(idOwner))
+      // add remaining (user) + new notifications for this owner
+      this.loginService.notifications = [...this.loginService.notifications, ...data.notifications];
     });
   }
 

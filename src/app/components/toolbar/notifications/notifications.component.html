@@ -16,8 +16,7 @@
     class="notifications-wrapper pointer" 
     [ngClass]="{'op8': notif.id_read.includes(this.loginService.user._id)}"
     (click)="setReaded(notif)"
-    [routerLink] = notif.tx_link 
-       >
+    [routerLink] = "notif.tx_link">
         <div>
             <span class="xl op5 mdi {{notif.tx_icon}} mr-3" [ngClass]="{'text-warn': !notif.id_read.includes(this.loginService.user._id)}"></span>
         </div>

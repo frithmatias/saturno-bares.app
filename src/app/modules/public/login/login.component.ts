@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 		};
 
 		this.logging = true;
-		
+
 		const platform = 'email';
 		this.loginCustomer(platform, null, emailForm);
 	}
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 			return;
 		}
 
-		if (social.txToken === 'waiting'){
+		if (social.txToken === 'waiting') {
 			this.logging = true;
 			return;
 		}
@@ -80,7 +80,12 @@ export class LoginComponent implements OnInit {
 					const companystring: string = localStorage.getItem('isembed');
 					this.router.navigate(['/embed', companystring])
 				} else {
-					this.router.navigate(['/public/tickets'])
+					if (localStorage.getItem('company')) {
+						const company = JSON.parse(localStorage.getItem('company'));
+						this.router.navigate(['/public/page', company.tx_company_string]);
+					} else {
+						this.router.navigate(['/public/tickets'])
+					}
 				}
 			}
 		}, (err: HttpErrorResponse) => {

@@ -62,9 +62,6 @@ export class WebPageComponent implements OnInit {
 	loadimage(image: string){
 		this.imagesLoaded.push(image);
 		this.imagesAreLoaded = ['cover','logo'].every(img => this.imagesLoaded.includes(img)) ? true : false;
-		console.log(this.imagesLoaded)
-		console.log(this.imagesAreLoaded)
-
 	}
 
 
