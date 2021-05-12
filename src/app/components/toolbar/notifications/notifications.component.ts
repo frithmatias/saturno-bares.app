@@ -24,9 +24,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   ngOnChanges(changes) {
-    this.notifications = this.notifications.sort((b, a) => +new Date(a.tm_notification) - +new Date(b.tm_notification));
+    console.log(changes)
     this.idUser = this.loginService.user._id;
     this.notificationsNotRead = this.notifications.filter(notif => !notif.id_read.includes(this.idUser));
+    this.notifications = this.notifications.sort((b, a) => +new Date(a.tm_notification) - +new Date(b.tm_notification));
+
   }
 
   menuOpened() {
@@ -35,7 +37,7 @@ export class NotificationsComponent implements OnInit {
 
     for (let notif of this.notifications) {
       if (!notif.id_read.includes(this.idUser)) {
-        idNotifications.push(notif._id);  // send to db to update all
+        idNotifications.push(notif._id);  // send idNotifications to db to update all as read
       }
     }
 
