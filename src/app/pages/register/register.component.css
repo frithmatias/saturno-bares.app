@@ -123,3 +123,8 @@
     background-size    : contain;
     background-repeat  : no-repeat;
 }
+
+mat-card {
+    background-color: rgba(255, 255, 255, .9);
+    min-width       : 300px;
+}

@@ -87,6 +87,10 @@ SATURNO TOOLBAR
     top          : 2px;
 }
 
+.toolbar-first-row-center-links .home {
+    text-transform: none;
+}
+
 .toolbar-first-row-right {
     display  : flex;
     flex-grow: 0;
@@ -97,6 +101,10 @@ SATURNO TOOLBAR
     justify-content: space-evenly;
     font-size      : small;
     width          : 100%;
+}
+
+.toolbar-second-row .home {
+    text-transform: none;
 }
 
 /* LOGO */

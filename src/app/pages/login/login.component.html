@@ -1,13 +1,14 @@
 <div class="page-wrapper animated fadeIn">
-    <div class="page-image">
 
+    <div class="page-image">
         Ingreso a Comercios
-        <div class="login-buttons text-center pt-2">
-            <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
-            <button mat-button color="active" routerLink="/register">Registrar
+        <div class="text-center pt-2">
+            <button mat-raised-button color="primary" class="mx-2" routerLink="/home">Volver al Inicio</button>
+            <button mat-raised-button color="active" class="mx-2" routerLink="/register">Registrar
                 Comercio</button>
         </div>
     </div>
+
     <div class="page-login">
 
         <mat-card>
@@ -17,13 +18,20 @@
             <!---------------------------------------------------------------------->
 
             <div>
-                <div class="jumbotron m-0 py-3 h-100 text-dark">
+                <div class="m-0 py-3 h-100 text-dark">
                     <!-- Google Login -->
                     <div class="login-title">Ingreso a Comercios</div>
-                    <app-social [platforms]="['facebook', 'google']"
+                    <app-social *ngIf="!socialToken" [platforms]="['facebook', 'google']"
                         (socialResponse)="socialResponse($event)">
                     </app-social>
-                    <app-spinner *ngIf="logging" text="Iniciando Sesión..."></app-spinner>
+                    <div *ngIf="socialToken" class="spinner-content">
+                        <app-spinner text="Iniciando Sesión..."></app-spinner>
+                    </div>
+                </div>
+                <div class="separator">
+                    <div class="left"></div>
+                    <div class="center"> ó </div>
+                    <div class="right"></div>
                 </div>
             </div>
 
@@ -44,7 +52,8 @@
                         <input maxlength="50" #inputEmail type="email" matInput placeholder="mail@dominio.com"
                             [ngModel]="email" name="email">
                         <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
-                                class="mdi mdi-close"></i></span>
+                                class="mdi mdi-close"></i>
+                        </span>
                     </mat-form-field>
 
                     <!---------------------------------------------------------------------->

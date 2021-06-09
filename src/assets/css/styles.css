@@ -145,9 +145,6 @@ SATURNO LOGIN/REGISTER
         font-weight: 300;
     }
 
-    .login-buttons button {
-        font-size: medium !important;
-    }
 }
 
 @media (max-width: 575px) {
@@ -190,10 +187,10 @@ SATURNO LOGIN/REGISTER
     flex-direction  : column;
     justify-content : center;
     flex-grow       : 1;
-    color           : var(--accent);
+    color           : var(--primary);
     font-size       : 3em;
     font-weight     : 800;
-    background-color: var(--bg-o90);
+    background-color: rgba(255, 255, 255, .8);
 }
 
 .page-login {
@@ -201,18 +198,38 @@ SATURNO LOGIN/REGISTER
     flex-direction  : column;
     justify-content : center;
     flex-grow       : 0;
-    background-color: var(--bg-o90);
+    background-color: rgba(255, 255, 255, .8);
     padding         : 50px;
 }
 
 .login-title {
     display  : none;
-    font-size: large;
-}
-
-.login-buttons button {
     font-size: x-large;
 }
+
+.separator {
+    display: flex;
+    color  : lightgray;
+}
+
+.separator .left {
+    flex-grow    : 1;
+    border-bottom: double;
+    margin-right : 10px;
+}
+
+.separator .center {
+    flex-grow: 0;
+    position : relative;
+    top      : 11px;
+}
+
+.separator .right {
+    flex-grow    : 1;
+    border-bottom: double;
+    margin-left  : 10px;
+}
+
 
 .login-buttons-inform {
     display: none;
@@ -234,7 +251,7 @@ SATURNO LOGIN/REGISTER
     }
 
     mat-drawer-container {
-        min-height      : calc(100vh - 94px) !important;
+        min-height: calc(100vh - 94px) !important;
     }
 
 }

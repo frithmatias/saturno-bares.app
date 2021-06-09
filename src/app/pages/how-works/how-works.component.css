@@ -1,13 +1,13 @@
 @media (max-width: 575px) {
     .title {
         font-size: large;
-        color: var(--accent);
+        color    : var(--accent);
     }
-    
+
     .subtitle {
         font-size: medium;
     }
-    
+
     .paragraph {
         font-size: medium !important;
     }
@@ -16,7 +16,7 @@
 
 p {
     font-size: .9em;
-    opacity: .8;
+    opacity  : .8;
 }
 
 div {
@@ -26,9 +26,16 @@ div {
 
 .title {
     font-size: large;
-    color: var(--accent);
+    color    : var(--accent);
 }
 
 .subtitle {
     font-size: medium;
+}
+
+.spinner-content {
+    height       : 148px;
+    display      : flex;
+    place-content: center;
+    align-items  : center;
 }

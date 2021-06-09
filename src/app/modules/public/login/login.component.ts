@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
-	logging = false;
+	socialToken: string = null;
 
 	constructor(
 		private loginService: LoginService,
@@ -47,8 +47,6 @@ export class LoginComponent implements OnInit {
 			bl_admin: false
 		};
 
-		this.logging = true;
-
 		const platform = 'email';
 		this.loginCustomer(platform, null, emailForm);
 	}
@@ -60,21 +58,14 @@ export class LoginComponent implements OnInit {
 			this.publicService.snack('No se pudo conectar con la red social', 5000, 'Aceptar');
 			return;
 		}
-
-		if (social.txToken === 'waiting') {
-			this.logging = true;
-			return;
-		}
-
-		const token = social.txToken;
+		this.socialToken = social.txToken;
 		const platform = social.txPlatform;
-		this.loginCustomer(platform, token, null);
+		this.loginCustomer(platform, social.txToken, null);
 	}
 
 
 	loginCustomer(platform: string, token: string, emailForm: any) {
 		this.loginService.loginCustomer(platform, token, emailForm).subscribe((data: LoginResponse) => {
-			this.logging = false;
 			if (data.ok) {
 				if (localStorage.getItem('isembed')) {
 					const companystring: string = localStorage.getItem('isembed');

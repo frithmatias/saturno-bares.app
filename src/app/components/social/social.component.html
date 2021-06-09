@@ -1,9 +1,11 @@
 <div class="social-container p-4">
 
     <!-- <a href="https://t.me/saturnofunbot?start={{ticket._id}}" *ngIf="isMobile"> </a> -->
-
-    <div *ngIf="platforms" class="social-buttons">
-
+   
+    <app-spinner *ngIf="waitingResponse" text="Obteniendo Token..."></app-spinner>
+    
+    <div *ngIf="!waitingResponse && platforms" class="social-buttons">
+        
         <!-- WHATSAPP -->
         <div *ngIf="isMobile && platforms.includes('whatsapp')">
             <button mat-raised-button class="action-button" color="active" disabled>
@@ -30,7 +32,7 @@
 
         <!-- FACEBOOK -->
         <div *ngIf="platforms.includes('facebook')">
-            <button mat-raised-button class="action-button" color="facebook" type="button" data-toggle="tooltip"
+            <button mat-raised-button class="action-button" color="facebook" type="button" data-toggle="tooltip" [disabled]="waitingResponse"
                 (click)="facebookLogin()">
                 <table>
                     <tr>
@@ -43,7 +45,7 @@
 
         <!-- GOOGLE -->
         <div *ngIf="platforms.includes('google')">
-            <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button"
+            <button #validateTicketGoogle mat-raised-button class="action-button" color="warn" type="button" [disabled]="waitingResponse"
                 data-toggle="tooltip" (click)="googleLogin(validateTicketGoogle)">
                 <table>
                     <tr>

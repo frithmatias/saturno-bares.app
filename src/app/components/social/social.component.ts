@@ -20,14 +20,13 @@ export class SocialComponent implements OnInit, AfterViewInit {
   auth2: gapi.auth2.GoogleAuth; // info de google con el token
   facebookFrontendResponse: facebookFrontendResponse;
   isMobile = false;
-
+  waitingResponse = false;
   constructor(
     private publicService: PublicService,
     private zone: NgZone
   ) { }
 
   ngOnInit(): void {
-
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       this.isMobile = true;
@@ -64,7 +63,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
   }
 
   googleLogin(e) {
-    this.socialResponse.emit({ txPlatform: null, txToken: 'waiting' })
+    this.waitingResponse = true;
     this.attachSignin();
   }
 
@@ -75,6 +74,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
           txPlatform: 'google',
           txToken: googleUser.getAuthResponse().id_token
         };
+        this.waitingResponse = false;
         this.socialResponse.emit(social)
       });
     }, () => { });
@@ -104,7 +104,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
   }
 
   facebookLogin() {
-    this.socialResponse.emit({ txPlatform: null, txToken: 'waiting' })
+    this.waitingResponse = true;
     FB.getLoginStatus((loginResponse) => {
 
       if (loginResponse.status === 'connected') {
@@ -126,6 +126,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
           txPlatform: 'facebook',
           txToken: loginResponse.authResponse.accessToken
         };
+        this.waitingResponse = false;
         this.socialResponse.emit(social)
       });
     });

@@ -27,8 +27,8 @@ export class HelpComponent implements OnInit {
       case 'adminSettingsVirtualQueue':
         this.helpTitle = `COLA VIRTUAL`;
         break;
-      case 'adminSettingsSPM':
-        this.helpTitle = `SPM`;
+      case 'adminSettingsPush':
+        this.helpTitle = `PUSH`;
         break;
       case 'adminSettingsSchedule':
         this.helpTitle = `RESERVAS`;

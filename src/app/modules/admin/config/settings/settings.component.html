@@ -43,7 +43,7 @@
                         <span *ngIf="publicService.settings.bl_spm" class="md mdi mdi-boom-gate-up-outline"></span>
                         <span *ngIf="!publicService.settings.bl_spm" class="md mdi mdi-boom-gate-outline"></span>
 
-                        Provisión automática
+                        Push
                     </mat-card-title>
                     <div class="d-flex mt-2">
                         <div class="w-50 text-left">
@@ -55,7 +55,7 @@
                             <apan *ngIf="publicService.settings.bl_spm">Activado</apan>
                             <apan *ngIf="!publicService.settings.bl_spm">Desactivado</apan>
                             <span class="mdi mdi-help-circle-outline ml-2 pointer"
-                                (click)="openBottomSheet('adminSettingsSPM')"></span>
+                                (click)="openBottomSheet('adminSettingsPush')"></span>
                         </div>
                     </div>
                 </mat-card>

@@ -3,9 +3,9 @@
 
         Registrar Comercio
 
-        <div class="login-buttons text-center pt-2">
-            <button mat-button color="warn" routerLink="/home">Volver al Inicio</button>
-            <button mat-button color="active" routerLink="/login">Ya estoy registrado</button>
+        <div class="text-center pt-2">
+            <button mat-raised-button color="primary" class="mx-2" routerLink="/home">Volver al Inicio</button>
+            <button mat-raised-button color="active" class="mx-2" routerLink="/login">Ya estoy registrado</button>
         </div>
     </div>
     <div class="page-login">
@@ -17,10 +17,15 @@
             <!---------------------------------------------------------------------->
 
             <div>
-                <div class="jumbotron m-0 py-3 h-100 text-dark">
+                <div class="m-0 py-3 h-100 text-dark">
                     <div class="login-title">Registrar Comercio</div>
                     <app-social [platforms]="['facebook', 'google']" (socialResponse)="registerSocial($event)">
                     </app-social>
+                </div>
+                <div class="separator">
+                    <div class="left"></div>
+                    <div class="center"> ó </div>
+                    <div class="right"></div>
                 </div>
             </div>
 

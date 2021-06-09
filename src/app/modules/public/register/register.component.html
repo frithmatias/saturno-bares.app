@@ -2,8 +2,9 @@
     <div class="page-image">
 
         Ingreso Público
-        <div class="login-buttons text-center label pt-2 mt-3">
-            <button type="button" mat-button color="active" routerLink="/public/login">Ya estoy registrado</button>
+        <div class="text-center label pt-2 mt-3">
+            <button mat-raised-button color="primary" class="mx-2" routerLink="/home">Volver al Inicio</button>
+            <button mat-raised-button color="active" class="mx-2" routerLink="/public/login">Ya estoy registrado</button>
         </div>
 
     </div>
@@ -17,7 +18,6 @@
             <div class="my-2 md">Registrarme con mi cuenta de email.</div>
             <form [formGroup]="forma" (ngSubmit)="registerCustomer()" id="loginform">
                 <div>
-
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Nombre</mat-label>
                         <input maxlength="30" matInput placeholder="Diego Perez" formControlName="name" name="name"
@@ -25,7 +25,6 @@
                     </mat-form-field>
                 </div>
                 <div>
-
                     <mat-form-field color="accent" class="w-100">
                         <mat-label>Email</mat-label>
                         <mat-error *ngIf="forma.errors?.emailExists">Ups! este e-mail ya se encuentra registrado

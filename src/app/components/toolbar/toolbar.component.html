@@ -44,7 +44,7 @@
             <div class="toolbar-first-row-center-links">
 
                 <!-- HOME -->
-                <div *ngIf="[null,'','home'].includes(module)" class="inherit">
+                <div *ngIf="[null,'','home'].includes(module)" class="inherit home">
                     <div class="toolbar-item" routerLink="/howworks">
                         <div class="mdi mdi-help-box"></div>
                         <div>
@@ -128,7 +128,7 @@ SECOND ROW
     <div class="toolbar-second-row">
 
         <!-- HOME -->
-        <div *ngIf="[null,'','home'].includes(module)" class="inherit">
+        <div *ngIf="[null,'','home'].includes(module)" class="inherit home">
             <div class="toolbar-item" routerLink="/howworks">
                 ¿Qué es Saturno?
             </div>

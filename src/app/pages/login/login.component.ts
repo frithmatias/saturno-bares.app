@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
 	hidepass = true;
 	recuerdame = false;
 	auth2: gapi.auth2.GoogleAuth; // info de google con el token
-	logging = false;
+	socialToken: string = null;
+
 	constructor(
 		public publicService: PublicService,
 		public router: Router,
@@ -49,8 +50,6 @@ export class LoginComponent implements OnInit {
 			bl_admin: true 
 		};
 		const platform = 'email';
-
-		this.logging = true;
 		this.loginUser(platform, null, emailForm);
 	}
 
@@ -61,20 +60,14 @@ export class LoginComponent implements OnInit {
 			return;
 		}
 
-		if (social.txToken === 'waiting'){
-			this.logging = true;
-			return;
-		}
-
-		const token = social.txToken;
+		this.socialToken = social.txToken;
 		const platform = social.txPlatform;
 
-		this.loginUser(platform, token, null);
+		this.loginUser(platform, social.txToken, null);
 	}
 
 	loginUser(platform: string, token: string, emailForm: any) {
 		this.loginService.loginUser(platform, token, emailForm).subscribe((data: LoginResponse) => {
-			this.logging = false;
 			if (data.ok) {
 				if (data.user.id_company) {
 					const idCompany = data.user.id_company._id;
@@ -84,7 +77,6 @@ export class LoginComponent implements OnInit {
 				this.router.navigate([data.home]);
 			}
 		}, (err: HttpErrorResponse) => {
-			this.logging = false;
 			if (err.error.msg) {
 				this.publicService.snack(err.error.msg, 5000, 'Aceptar');
 			} else {

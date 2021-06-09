@@ -1,13 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, SimpleChange, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { WebsocketService } from '../../services/websocket.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { timer, Subscription } from 'rxjs';
 import { ChatService } from './chat.service';
 import { PublicService } from '../../modules/public/public.service';
-import { LoginService } from '../../services/login.service';
 import { User } from 'src/app/interfaces/user.interface';
 import { chatSessionResponse, chatSession } from '../../interfaces/chat.session.interface';
-import { ChatSession } from '../../../../../api/models/chat.session.model';
 
 @Component({
   selector: 'app-chat',
@@ -33,7 +31,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     private snack: MatSnackBar,
     public chatService: ChatService,
     private publicService: PublicService,
-    private loginService: LoginService
   ) { }
 
 
@@ -79,13 +76,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: any) {
+
     this.showSubjectForm = true;
 
     if (localStorage.getItem('user')) {
       this.client = JSON.parse(localStorage.getItem('user'));
-    }
-
-    if (!this.client) {
+    } else {
       delete this.client;
       this.endChatSession();
     }

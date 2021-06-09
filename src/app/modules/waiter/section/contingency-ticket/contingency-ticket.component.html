@@ -1,13 +1,16 @@
 <div class="page-container animated fadeIn">
     <mat-card>
         <span class="mdi mdi-close lg x-position" (click)="closeBottomSheet()"></span>
-        
+
         <mat-card-header class="text-accent">
             <mat-card-title>
-                Nuevo Ticket
+                Registrar Ingreso de Cliente
             </mat-card-title>
             <mat-card-subtitle>
-                Crear un nuevo ticket de contingencia
+                Crear un ticket de contingencia para registrar el ingreso de un nuevo cliente al local.
+                <span class="text-accent">
+                    Debe registrar este ingreso sólo si el cliente no ha obtenido un ticket a través de la web.
+                </span>
             </mat-card-subtitle>
         </mat-card-header>
 
@@ -16,7 +19,7 @@
 
                 <mat-form-field color="accent" class="w-100">
                     <mat-label>Nombre del cliente</mat-label>
-                    <input maxlength="30" type="text" matInput placeholder="Ingresa el nombre del cliente"
+                    <input maxlength="30" type="text" matInput placeholder="Diego López"
                         formControlName="txName" name="txName" required>
                 </mat-form-field>
 

@@ -2,12 +2,15 @@
     <div class="page-image">
 
         Ingreso Público
-        <div class="login-buttons text-center pt-2">
-            <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver al
+        <div class="text-center pt-2">
+            <button type="button" *ngIf="!publicService.isEmbed" class="mx-2" mat-raised-button color="primary"
+                routerLink="/home">Volver al
                 Inicio</button>
-            <button type="button" *ngIf="publicService.isEmbed" mat-button (click)="backToForm()">Volver al
+            <button type="button" *ngIf="publicService.isEmbed" class="mx-2" mat-raised-button color="primary"
+                (click)="backToForm()">Volver al
                 Formulario</button>
-            <button type="button" mat-button color="active" routerLink="/public/register">Registrarme</button>
+            <button type="button" mat-raised-button class="mx-2" color="active"
+                routerLink="/public/register">Registrarme</button>
         </div>
     </div>
     <div class="page-login">
@@ -20,12 +23,19 @@
                 <!---------------------------------------------------------------------->
 
                 <div class="login-social">
-                    <div class="jumbotron m-0 py-3 h-100 text-dark">
+                    <div class="m-0 py-3 h-100 text-dark">
                         <!-- Google Login -->
                         <div class="login-title">Ingreso público</div>
-                        <app-social [platforms]="['facebook', 'google']"
+                        <app-social *ngIf="!socialToken" [platforms]="['facebook', 'google']"
                             (socialResponse)="socialResponse($event)"></app-social>
-                        <app-spinner *ngIf="logging" text="Iniciando Sesión..."></app-spinner>
+                        <div *ngIf="socialToken" class="spinner-content">
+                            <app-spinner text="Iniciando Sesión..."></app-spinner>
+                        </div>
+                    </div>
+                    <div class="separator">
+                        <div class="left"></div>
+                        <div class="center"> ó </div>
+                        <div class="right"></div>
                     </div>
                 </div>
 
@@ -40,26 +50,26 @@
                         <!-- EMAIL -->
                         <!---------------------------------------------------------------------->
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Email</mat-label>
-                                <input maxlength="50" #inputEmail type="email" matInput placeholder="mail@dominio.com"
-                                    [ngModel]="email" name="email">
-                                <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
-                                        class="mdi mdi-close"></i></span>
-                            </mat-form-field>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Email</mat-label>
+                            <input maxlength="50" #inputEmail type="email" matInput placeholder="mail@dominio.com"
+                                [ngModel]="email" name="email">
+                            <span class="input-icon" (click)="cleanEmail(inputEmail, inputPassword)"><i
+                                    class="mdi mdi-close"></i></span>
+                        </mat-form-field>
 
                         <!---------------------------------------------------------------------->
                         <!-- PASSWORD -->
                         <!---------------------------------------------------------------------->
 
-                            <mat-form-field color="accent" class="w-100">
-                                <mat-label>Password</mat-label>
-                                <input maxlength="30" #inputPassword matInput placeholder="password" ngModel
-                                    name="password" [type]="hidepass ? 'password' : 'text'" required>
-                                <span class="input-icon" (click)="hidepass = !hidepass"
-                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidepass"><i
-                                        class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
-                            </mat-form-field>
+                        <mat-form-field color="accent" class="w-100">
+                            <mat-label>Password</mat-label>
+                            <input maxlength="30" #inputPassword matInput placeholder="password" ngModel name="password"
+                                [type]="hidepass ? 'password' : 'text'" required>
+                            <span class="input-icon" (click)="hidepass = !hidepass" [attr.aria-label]="'Hide password'"
+                                [attr.aria-pressed]="hidepass"><i
+                                    class="mdi {{hidepass ? 'mdi-eye-off' : 'mdi-eye'}}"></i></span>
+                        </mat-form-field>
 
                         <!---------------------------------------------------------------------->
                         <!-- LOGIN BUTTON -->
@@ -79,7 +89,8 @@
             </div>
 
             <div class="login-buttons-inform text-center pt-2">
-                <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver al
+                <button type="button" *ngIf="!publicService.isEmbed" mat-button color="warn" routerLink="/home">Volver
+                    al
                     Inicio</button>
                 <button type="button" *ngIf="publicService.isEmbed" mat-button (click)="backToForm()">Volver al
                     Formulario</button>
@@ -87,8 +98,8 @@
             </div>
 
         </mat-card>
-   
 
-        
+
+
     </div>
 </div>

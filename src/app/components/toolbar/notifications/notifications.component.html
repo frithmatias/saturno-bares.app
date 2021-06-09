@@ -18,7 +18,7 @@
     (click)="setReaded(notif)"
     [routerLink] = "notif.tx_link">
         <div>
-            <span class="xl op5 mdi {{notif.tx_icon}} mr-3" [ngClass]="{'text-warn': !notif.id_read.includes(this.loginService.user._id)}"></span>
+            <span class="xl mdi {{notif.tx_icon}} mr-3" [ngClass]="{'text-warn': !notif.id_read.includes(this.loginService.user._id)}"></span>
         </div>
         <div>
             <div class="sm" [ngClass]="{'text-accent': !notif.id_read.includes(this.loginService.user._id)}">{{notif.tx_title}}</div>

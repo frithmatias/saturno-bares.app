@@ -14,11 +14,10 @@
 
     </mat-card-content>
 
-    <mat-card-content *ngIf="data.idHelp==='adminSettingsSPM'">
-        <span class="text-accent">Sistema de Provisión de Mesas</span>. Este sistema opera cuando la Cola Virtual esta
-        activada, y si el SPM está activado el sistema asignará y proveerá automáticamente las mesas disponibles a los
-        clientes que esperan una mesa en la cola virtual. Si esta opción NO esta activada el cliente debe esperar a que
-        un camarero o administrador asigne su mesa.
+    <mat-card-content *ngIf="data.idHelp==='adminSettingsPush'">
+        <span class="text-accent">Sistema Push de Provisión de Mesas</span>. Si esta opción esta activada el sistema
+        intentará proveer automáticamente una mesa compatible y disponible para un nuevo cliente en cola virtual. Si
+        esta opción NO esta activada el cliente debe esperar a que un camarero o administrador asigne su mesa.
     </mat-card-content>
 
     <mat-card-content *ngIf="data.idHelp==='adminSettingsSchedule'">
@@ -35,12 +34,13 @@
 
     <mat-card-content *ngIf="data.idHelp==='adminSettingsIntervals'">
         <span class="text-accent">Cantidad máxima de intervalos de 30 minutos que un cliente puede tomar en
-            una reserva</span>. Los intervalos deben ser consecutivos. Este límite no aplica al momento de crear un ticket
+            una reserva</span>. Los intervalos deben ser consecutivos. Este límite no aplica al momento de crear un
+        ticket
         de contingencia desde la agenda.
     </mat-card-content>
 
     <mat-card-content *ngIf="data.idHelp==='waiterVirtualQueuePosition'">
-        
+
     </mat-card-content>
-    
+
 </mat-card>
