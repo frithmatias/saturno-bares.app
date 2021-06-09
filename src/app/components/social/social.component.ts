@@ -87,7 +87,7 @@ export class SocialComponent implements OnInit, AfterViewInit {
   facebookInit() {
     window.fbAsyncInit = function () {
       FB.init({
-        appId: '1615265112007678',
+        appId: '1272973449800955',
         cookie: true,
         xfbml: true,
         version: 'v9.0'
